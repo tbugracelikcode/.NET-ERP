@@ -133,6 +133,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçilen satırın siparişine ait satırlar silinecektir. Onaylıyor musunuz?.
+        /// </summary>
+        public static string DeleteConfirmationSalesOrderLineBase {
+            get {
+                return ResourceManager.GetString("DeleteConfirmationSalesOrderLineBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Onay.
         /// </summary>
         public static string DeleteConfirmationTitleBase {
@@ -259,6 +268,24 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HESAPLANACAK.
+        /// </summary>
+        public static string LineGridSalesOrderisCalculated {
+            get {
+                return ResourceManager.GetString("LineGridSalesOrderisCalculated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SATIN ALMAYA DÖNÜŞTÜ.
+        /// </summary>
+        public static string LineGridSalesOrderisPurchase {
+            get {
+                return ResourceManager.GetString("LineGridSalesOrderisPurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BİRİM SETİ.
         /// </summary>
         public static string LineGridUnitSetCode {
@@ -349,6 +376,24 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sipariş Satırlarını Sil.
+        /// </summary>
+        public static string MRPLineContextDeleteOrderLines {
+            get {
+                return ResourceManager.GetString("MRPLineContextDeleteOrderLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hesaplamadan Kaldır.
+        /// </summary>
+        public static string MRPLineContextDoNotCalculate {
+            get {
+                return ResourceManager.GetString("MRPLineContextDoNotCalculate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string MRPLineContextRefresh {
@@ -372,6 +417,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         public static string MultiDeleteConfirmationTitleBase {
             get {
                 return ResourceManager.GetString("MultiDeleteConfirmationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ FİŞ NO.
+        /// </summary>
+        public static string OrderGridFicheNo {
+            get {
+                return ResourceManager.GetString("OrderGridFicheNo", resourceCulture);
             }
         }
         

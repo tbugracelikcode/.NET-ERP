@@ -90,6 +90,8 @@ namespace TsiErp.Business.Entities.MRP.Services
                     var queryLine = queryFactory.Query().From(Tables.MRPLines).Insert(new CreateMRPLinesDto
                     {
                         State_ = item.State_,
+                        isCalculated = item.isCalculated,
+                        isPurchase = item.isPurchase,
                         LineNr = item.LineNr,
                         Amount = item.Amount,
                         ProductID = item.ProductID,
@@ -324,6 +326,8 @@ namespace TsiErp.Business.Entities.MRP.Services
                         {
                             State_ = item.State_,
                             LineNr = item.LineNr,
+                            isCalculated = item.isCalculated,
+                            isPurchase = item.isPurchase,
                             Amount = item.Amount,
                             ProductID = item.ProductID,
                             RequirementAmount = item.RequirementAmount,
@@ -358,6 +362,8 @@ namespace TsiErp.Business.Entities.MRP.Services
                                 State_ = item.State_,
                                 LineNr = item.LineNr,
                                 Amount = item.Amount,
+                                isCalculated = item.isCalculated,
+                                isPurchase = item.isPurchase,
                                 ProductID = item.ProductID,
                                 RequirementAmount = item.RequirementAmount,
                                 SalesOrderID = item.SalesOrderID,

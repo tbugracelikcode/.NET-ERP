@@ -40,5 +40,13 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
         /// İhtiyaç Miktar
         /// </summary>
         public int RequirementAmount { get; set; }
+        /// <summary>
+        /// Hesaplanacak
+        /// </summary>
+        public bool isCalculated { get; set; }
+        /// <summary>
+        /// Satın Alınacak
+        /// </summary>
+        public bool isPurchase { get; set; }
     }
 }

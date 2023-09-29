@@ -417,10 +417,10 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.ProductionOrders).Select<ProductionOrders>(null)
+                        .Query().From(Tables.ProductionOrders).Select("*")
                             .Join<SalesOrders>
                             (
-                                so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id },
+                                so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id , CustomerOrderNo  = so.CustomerOrderNr},
                                 nameof(ProductionOrders.OrderID),
                                 nameof(SalesOrders.Id),
                                 JoinType.Left
@@ -517,7 +517,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                    .From(Tables.ProductionOrders).Select<ProductionOrders>(null)
                             .Join<SalesOrders>
                             (
-                                so => new { OrderFicheNo = so.FicheNo },
+                                so => new { OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
                                 nameof(ProductionOrders.OrderID),
                                 nameof(SalesOrders.Id),
                                 JoinType.Left

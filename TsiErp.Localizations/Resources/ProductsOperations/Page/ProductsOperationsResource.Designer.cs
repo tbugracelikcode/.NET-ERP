@@ -80,6 +80,24 @@ namespace TsiErp.Localizations.Resources.ProductsOperations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MİKTAR.
+        /// </summary>
+        public static string AmountAmountGrid {
+            get {
+                return ResourceManager.GetString("AmountAmountGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Emirlerine Göre Toplamlar.
+        /// </summary>
+        public static string AmountsbyProductionOrdersPopup {
+            get {
+                return ResourceManager.GetString("AmountsbyProductionOrdersPopup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alt Tolerans.
         /// </summary>
         public static string BottomTolerancePlanLabel {
@@ -202,6 +220,15 @@ namespace TsiErp.Localizations.Resources.ProductsOperations.Page {
         public static string ControlTypesNamePlanLabel {
             get {
                 return ResourceManager.GetString("ControlTypesNamePlanLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ SİPARİŞ NO.
+        /// </summary>
+        public static string CustomerOrderNrAmountGrid {
+            get {
+                return ResourceManager.GetString("CustomerOrderNrAmountGrid", resourceCulture);
             }
         }
         
@@ -458,6 +485,15 @@ namespace TsiErp.Localizations.Resources.ProductsOperations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ÜRETİM EMRİ NO.
+        /// </summary>
+        public static string ProductionOrderFİcheNrAmountGrid {
+            get {
+                return ResourceManager.GetString("ProductionOrderFİcheNrAmountGrid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string ProductModalGridCode {
@@ -499,6 +535,15 @@ namespace TsiErp.Localizations.Resources.ProductsOperations.Page {
         public static string ProductsOperationContextAdd {
             get {
                 return ResourceManager.GetString("ProductsOperationContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Emirlerine Göre Toplamlar.
+        /// </summary>
+        public static string ProductsOperationContextAmounts {
+            get {
+                return ResourceManager.GetString("ProductsOperationContextAmounts", resourceCulture);
             }
         }
         
@@ -670,6 +715,15 @@ namespace TsiErp.Localizations.Resources.ProductsOperations.Page {
         public static string QualityPlanModalTitle {
             get {
                 return ResourceManager.GetString("QualityPlanModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ NO.
+        /// </summary>
+        public static string SalesOrderFicheNrAmountGrid {
+            get {
+                return ResourceManager.GetString("SalesOrderFicheNrAmountGrid", resourceCulture);
             }
         }
         

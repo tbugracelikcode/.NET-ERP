@@ -12,6 +12,7 @@ using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation.
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlCondition.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
@@ -23,6 +24,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
     {
         private SfGrid<SelectProductsOperationLinesDto> _LineGrid;
         private SfGrid<SelectContractOfProductsOperationsDto> _ContractOfProductsOperationsGrid;
+        private SfGrid<AmountsbyProductionOrders> _AmountsbyProductionOrdersGrid;
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -41,10 +43,33 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
 
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
+        List<AmountsbyProductionOrders> AmountsbyProductionOrdersList = new List<AmountsbyProductionOrders>();
+
+        #region Üretim Emirlerine Göre Toplamlar 
+
+        public class AmountsbyProductionOrders
+        {
+            public Guid ProductionOrderID { get; set; }
+
+            public string ProductionOrderFİcheNr { get; set; }
+
+            public Guid SalesOrderID { get; set; }
+
+            public string SalesOrderFicheNr { get; set; }
+
+            public string CustomerOrderNr { get; set; }
+
+            public decimal Amount { get; set; }
+        };
+
+        #endregion
+
 
         private bool StationLineCrudPopup = false;
 
         private bool QualityPlanLineCrudPopup = false;
+
+        private bool AmountsbyProductionOrdersPopup = false;
 
 
         bool SelectCurrentAccountCardsPopupVisible = false;
@@ -217,7 +242,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                 DataSource.TemplateOperationName = selectedTemplateOperation.Name;
                 DataSource.WorkCenterID = selectedTemplateOperation.WorkCenterID;
                 DataSource.WorkCenterName = selectedTemplateOperation.WorkCenterName;
-                
+
                 foreach (var line in selectedTemplateOperation.SelectTemplateOperationLines)
                 {
                     SelectProductsOperationLinesDto lineModel = new SelectProductsOperationLinesDto
@@ -263,7 +288,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
 
             EditPageVisible = true;
 
-
             await Task.CompletedTask;
         }
 
@@ -296,6 +320,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
             {
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextAdd"], Id = "new" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextAmounts"], Id = "amounts" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextDelete"], Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextRefresh"], Id = "refresh" });
             }
@@ -334,10 +359,44 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                     IsChanged = true;
                     DataSource = (await ProductsOperationsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     StationGridLineList = DataSource.SelectProductsOperationLines.OrderBy(t => t.Priority).ToList();
-                    ContractOfProductsOperationsGridLineList=DataSource.SelectContractOfProductsOperationsLines.OrderBy(t => t.LineNr).ToList();
+                    ContractOfProductsOperationsGridLineList = DataSource.SelectContractOfProductsOperationsLines.OrderBy(t => t.LineNr).ToList();
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "amounts":
+                    DataSource = (await ProductsOperationsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    var workOrdersList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.ProductsOperationID == DataSource.Id).ToList();
+
+
+                    foreach (var workorder in workOrdersList)
+                    {
+                        var productionOrderDataSource = (await ProductionOrdersAppService.GetAsync(workorder.ProductionOrderID.GetValueOrDefault())).Data;
+
+                        if (AmountsbyProductionOrdersList.Where(t => t.ProductionOrderID == productionOrderDataSource.Id).Count() == 0)
+                        {
+                            AmountsbyProductionOrders amountsbyProductionOrdersModel = new AmountsbyProductionOrders
+                            {
+                                ProductionOrderID = productionOrderDataSource.Id,
+                                CustomerOrderNr = productionOrderDataSource.CustomerOrderNo,
+                                ProductionOrderFİcheNr = productionOrderDataSource.FicheNo,
+                                SalesOrderFicheNr = productionOrderDataSource.OrderFicheNo,
+                                SalesOrderID = productionOrderDataSource.OrderID.Value,
+                                Amount = workOrdersList.Where(t => t.ProductionOrderID == productionOrderDataSource.Id).Count()
+                            };
+
+                            AmountsbyProductionOrdersList.Add(amountsbyProductionOrdersModel);
+                            await _AmountsbyProductionOrdersGrid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
+
+                    }
+
+                    AmountsbyProductionOrdersPopup = true;
+
+
                     break;
 
                 case "delete":
@@ -454,6 +513,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         public void HideQualityPlanLinesPopup()
         {
             QualityPlanLineCrudPopup = false;
+        }
+
+        public void HideAmountsbyProductionOrdersPopup()
+        {
+            AmountsbyProductionOrdersPopup = false;
         }
 
 

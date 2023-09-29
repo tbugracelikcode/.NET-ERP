@@ -55,5 +55,15 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine
         /// İhtiyaç Miktar
         /// </summary>
         public int RequirementAmount { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Hesaplanacak
+        /// </summary>
+        public bool isCalculated { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Satın Alınacak
+        /// </summary>
+        public bool isPurchase { get; set; }
     }
 }

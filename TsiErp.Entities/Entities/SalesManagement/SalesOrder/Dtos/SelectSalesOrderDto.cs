@@ -21,7 +21,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// Data Concurrency Stamp
         /// </summary>
         public bool? DataOpenStatus { get; set; }
-
+        /// <summary>
+        /// Müşteri Sipariş No
+        /// </summary>
+        public string CustomerOrderNr { get; set; }
         /// <summary>
         /// Data Concurrency UserID
         /// </summary>
