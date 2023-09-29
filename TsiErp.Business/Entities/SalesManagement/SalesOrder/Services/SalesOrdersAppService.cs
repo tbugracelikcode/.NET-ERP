@@ -78,6 +78,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 {
                     LinkedSalesPropositionID = Guid.Empty,
                     SalesOrderState = input.SalesOrderState,
+                    CustomerOrderNr = input.CustomerOrderNr,
                     FicheNo = input.FicheNo,
                     BranchID = input.BranchID,
                     CurrencyID = input.CurrencyID,
@@ -88,7 +89,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     GrossAmount = input.GrossAmount,
                     NetAmount = input.NetAmount,
                     PaymentPlanID = input.PaymentPlanID,
-                    ShippingAdressID =input.ShippingAdressID == null ? Guid.Empty: input.ShippingAdressID,
+                    ShippingAdressID = input.ShippingAdressID == null ? Guid.Empty : input.ShippingAdressID,
                     SpecialCode = input.SpecialCode,
                     Time_ = time,
                     TotalDiscountAmount = input.TotalDiscountAmount,
@@ -191,6 +192,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     Description_ = input.Description_,
                     ExchangeRate = input.ExchangeRate,
                     GrossAmount = input.GrossAmount,
+                    CustomerOrderNr = input.CustomerOrderNr,
                     NetAmount = input.NetAmount,
                     PaymentPlanID = input.PaymentPlanID,
                     ShippingAdressID = input.ShippingAdressID == null ? Guid.Empty : input.ShippingAdressID,
@@ -511,7 +513,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
                              .Join<ShippingAdresses>
                         (
-                            sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code},
+                            sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code },
                             nameof(SalesOrders.ShippingAdressID),
                             nameof(ShippingAdresses.Id),
                             JoinType.Left
@@ -627,6 +629,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     CurrentAccountCardID = input.CurrentAccountCardID,
                     Date_ = input.Date_,
                     Description_ = input.Description_,
+                    CustomerOrderNr = input.CustomerOrderNr,
                     ExchangeRate = input.ExchangeRate,
                     GrossAmount = input.GrossAmount,
                     NetAmount = input.NetAmount,
@@ -759,6 +762,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     FicheNo = entity.FicheNo,
                     BranchID = entity.BranchID,
                     CurrencyID = entity.CurrencyID,
+                    CustomerOrderNr = entity.CustomerOrderNr,
                     CurrentAccountCardID = entity.CurrentAccountCardID,
                     Date_ = entity.Date_,
                     Description_ = entity.Description_,

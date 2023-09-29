@@ -123,6 +123,12 @@
   <data name="AlternativeLineLabel" xml:space="preserve">
     <value>Alternative:</value>
   </data>
+  <data name="AmountAmountGrid" xml:space="preserve">
+    <value>AMOUNT</value>
+  </data>
+  <data name="AmountsbyProductionOrdersPopup" xml:space="preserve">
+    <value>Amounts by ProductionOrders</value>
+  </data>
   <data name="BottomTolerancePlanLabel" xml:space="preserve">
     <value>Bottom Tolerance:</value>
   </data>
@@ -164,6 +170,9 @@
   </data>
   <data name="ControlTypesNamePlanLabel" xml:space="preserve">
     <value>Control Type:</value>
+  </data>
+  <data name="CustomerOrderNrAmountGrid" xml:space="preserve">
+    <value>CUSTOMER ORDER NR</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -249,6 +258,9 @@
   <data name="ProductCodeLabel" xml:space="preserve">
     <value>Product Code:</value>
   </data>
+  <data name="ProductionOrderFİcheNrAmountGrid" xml:space="preserve">
+    <value>PRODUCTION ORDER NR</value>
+  </data>
   <data name="ProductModalGridCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
   </data>
@@ -263,6 +275,9 @@
   </data>
   <data name="ProductsOperationContextAdd" xml:space="preserve">
     <value>Add</value>
+  </data>
+  <data name="ProductsOperationContextAmounts" xml:space="preserve">
+    <value>Amounts by Production Orders</value>
   </data>
   <data name="ProductsOperationContextChange" xml:space="preserve">
     <value>Change</value>
@@ -321,6 +336,9 @@
   <data name="QualityPlanModalTitle" xml:space="preserve">
     <value>Operation Quality Plan</value>
   </data>
+  <data name="SalesOrderFicheNrAmountGrid" xml:space="preserve">
+    <value>ORDER NR</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -364,7 +382,7 @@
     <value>Template Operations</value>
   </data>
   <data name="TotalAmount" xml:space="preserve">
-    <value>MİKTAR</value>
+    <value>AMOUNT</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The product operation record you selected will be permanently deleted.</value>

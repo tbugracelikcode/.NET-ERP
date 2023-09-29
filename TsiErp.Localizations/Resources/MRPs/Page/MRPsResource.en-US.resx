@@ -141,6 +141,9 @@
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
+  <data name="DeleteConfirmationSalesOrderLineBase" xml:space="preserve">
+    <value>Lines belonging to the order of the selected line will be deleted. Do you confirm?</value>
+  </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
     <value>Confirmation</value>
   </data>
@@ -183,6 +186,12 @@
   <data name="LineGridSalesOrderFicheNo" xml:space="preserve">
     <value>ORDER FICHE NR</value>
   </data>
+  <data name="LineGridSalesOrderisCalculated" xml:space="preserve">
+    <value>WILL BE CALCULATED</value>
+  </data>
+  <data name="LineGridSalesOrderisPurchase" xml:space="preserve">
+    <value>CONVERTED TO PURCHASE</value>
+  </data>
   <data name="LineGridUnitSetCode" xml:space="preserve">
     <value>UNIT SET</value>
   </data>
@@ -213,6 +222,12 @@
   <data name="MRPLineContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="MRPLineContextDeleteOrderLines" xml:space="preserve">
+    <value>Delete Order Lines</value>
+  </data>
+  <data name="MRPLineContextDoNotCalculate" xml:space="preserve">
+    <value>Remove from Calculation</value>
+  </data>
   <data name="MRPLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
@@ -221,6 +236,9 @@
   </data>
   <data name="MultiDeleteConfirmationTitleBase" xml:space="preserve">
     <value>Confirmation</value>
+  </data>
+  <data name="OrderGridFicheNo" xml:space="preserve">
+    <value>ORDER FICHE NR</value>
   </data>
   <data name="OrdersButton" xml:space="preserve">
     <value>Show Sales Orders</value>

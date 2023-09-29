@@ -25,7 +25,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// Saat
         /// </summary>
         public string Time_ { get; set; }
-
+        /// <summary>
+        /// Müşteri Sipariş No
+        /// </summary>
+        public string CustomerOrderNr { get; set; }
         /// <summary>
         /// Kur Tutarı
         /// </summary>

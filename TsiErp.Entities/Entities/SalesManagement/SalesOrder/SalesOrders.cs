@@ -25,6 +25,11 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder
         /// Saat
         /// </summary>
         public string Time_ { get; set; }
+        [SqlColumnType(MaxLength = 250, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Müşteri Sipariş No
+        /// </summary>
+        public string CustomerOrderNr { get; set; }
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Kur Tutarı

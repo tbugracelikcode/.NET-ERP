@@ -17,6 +17,14 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
         /// </summary>
         public Guid? SalesOrderLineID { get; set; }
         /// <summary>
+        /// Hesaplanacak
+        /// </summary>
+        public bool isCalculated { get; set; }
+        /// <summary>
+        /// Satın Alınacak
+        /// </summary>
+        public bool isPurchase { get; set; }
+        /// <summary>
         /// Miktar
         /// </summary>
         public int Amount { get; set; }

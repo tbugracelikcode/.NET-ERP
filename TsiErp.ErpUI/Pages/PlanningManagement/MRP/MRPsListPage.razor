@@ -16,6 +16,7 @@
 @inject IGrandTotalStockMovementsAppService GrandTotalStockMovementsAppService
 
 
+
 @if (!base.IsLoaded)
 {
     <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
@@ -43,9 +44,9 @@ else
                         <CardContent>
                             <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-                                
 
-                                    <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListMRPsDto"></GridEvents>
+
+                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListMRPsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
@@ -69,49 +70,52 @@ else
     </DevGridLayout>
 
     <DxPopup @bind-Visible="base.EditPageVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EditModalTitle"]"
-         Width="68%"
-         Height="83%"
-         MinWidth="120px"
-         MinHeight="900px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="87%"
+             Height="83%"
+             MinWidth="1500px"
+             MinHeight="900px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="18%" />
-                    <DxGridLayoutRow Height="15%" />
-                    <DxGridLayoutRow Height="15%" />
-                    <DxGridLayoutRow Height="50%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="65%" />
                 </Rows>
 
                 <Columns>
                     <DxGridLayoutColumn Width="5%" />
-                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="30%" />
                     <DxGridLayoutColumn Width="5%" />
-                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="30%" />
+                    <DxGridLayoutColumn Width="24%" />
                     <DxGridLayoutColumn Width="5%" />
                 </Columns>
 
                 <Items>
                     <DxGridLayoutItem Row="0" Column="1">
-                        <Template><br />
+                        <Template>
+                            <br />
                             <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
 
                             <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="0" Column="3" RowSpan="2">
-                        <Template><br />
+                    <DxGridLayoutItem Row="0" Column="3" RowSpan="3">
+                        <Template>
+                            <br />
                             <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label>
-                            <SfTextBox Multiline=true CssClass="TSIMemoBox60"  @bind-Value="DataSource.Description_"></SfTextBox>
+                            <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.Description_"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -124,22 +128,64 @@ else
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["State_Label"] </strong></label><br />
-                            <SfTextBox @bind-Value="DataSource.State_" CssClass="TSITxtBox" ></SfTextBox>
+                            <SfTextBox @bind-Value="DataSource.State_" CssClass="TSITxtBox"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="2" Column="3">
+                    <DxGridLayoutItem Row="3" Column="1">
                         <Template>
-                            <br />
-                            <SfMultiSelect @ref="_OrderMultiSelect" TItem="ListSalesOrderDto" TValue="Guid[]" ShowClearButton="false" Placeholder=@L["PlaceholderSalesOrders"] Mode="VisualMode.CheckBox" DataSource="@SalesOrdersList">
-                                <MultiSelectEvents TItem="ListSalesOrderDto" TValue="Guid[]" ValueRemoved="@SalesOrderValueRemovedhandler" OnValueSelect="@SalesOrderOnValueSelecthandler"></MultiSelectEvents>
-                                <MultiSelectFieldSettings Value="Id" Text="FicheNo"></MultiSelectFieldSettings>
-                           </SfMultiSelect>
+                            <SfGrid @ref=_OrdersGrid ID="OrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@SalesOrdersList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListSalesOrderDto.FicheNo) Context="OrdersContext" HeaderText="@L["OrderGridFicheNo"]" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                ListSalesOrderDto order = (OrdersContext as ListSalesOrderDto);
+
+                                                if (GridLineList.Where(t => t.SalesOrderID == order.Id).Count() > 0)
+                                                {
+                                                    <div style="background-color : #69F713;width: 100%;height: 100%;">@order.FicheNo</div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@order.FicheNo</div>
+                                                }
+                                            }
+
+                                        </Template>
+
+                                    </GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="2">
+                        <Template>
+                            <table style="height:100%">
+                                <tr style="height:45%">
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr style="vertical-align:central; height:10%">
+                                    <td>
+                                        <SfButton CssClass="TSISaveButton" OnClick="ArrowRightBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ArrowRight"></SfIcon></SfButton>
+                                    </td>
+                                </tr>
+                                <tr style="height:45%">
+                                    <td>
+                                    </td>
+                                </tr>
+
+                            </table>
                         </Template>
                     </DxGridLayoutItem>
 
 
-                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
+                    <DxGridLayoutItem Row="3" Column="3" ColumnSpan="2">
                         <Template>
                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectMRPLinesDto"></GridEvents>
@@ -149,29 +195,31 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectMRPLinesDto.SalesOrderFicheNo) HeaderText="@L["LineGridSalesOrderFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectMRPLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectMRPLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                   
-                                <GridColumn Field=@nameof(SelectMRPLinesDto.Amount)  Type="ColumnType.Number" HeaderText="@L["LineGridAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectMRPLinesDto.AmountOfStock) HeaderText="@L["LineGridAmountOfStock"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectMRPLinesDto.RequirementAmount) Type="ColumnType.Number" HeaderText="@L["LineGridRequirementAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                            </GridColumns>
-                        </SfGrid>
-                    </Template>
-                </DxGridLayoutItem>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.isCalculated) DisplayAsCheckBox="true" HeaderText="@L["LineGridSalesOrderisCalculated"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.isPurchase) DisplayAsCheckBox="true" HeaderText="@L["LineGridSalesOrderisPurchase"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.SalesOrderFicheNo) HeaderText="@L["LineGridSalesOrderFicheNo"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.Amount) Type="ColumnType.Number" HeaderText="@L["LineGridAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.AmountOfStock) HeaderText="@L["LineGridAmountOfStock"]" TextAlign="TextAlign.Center" Width="280" Format="N2"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.RequirementAmount) Type="ColumnType.Number" HeaderText="@L["LineGridRequirementAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
 
 
-            </Items>
-        </DxGridLayout>
-    </BodyTemplate>
-    <FooterContentTemplate>
-        <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
-    </FooterContentTemplate>
-</DxPopup>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
 
-  
+
 
 }
 

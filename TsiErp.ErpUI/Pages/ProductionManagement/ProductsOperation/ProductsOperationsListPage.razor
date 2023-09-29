@@ -16,6 +16,9 @@
 @inject IControlConditionsAppService ControlConditionsAppService
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
 @inject IFicheNumbersAppService FicheNumbersAppService
+@inject IWorkOrdersAppService WorkOrdersAppService
+@inject IProductionOrdersAppService ProductionOrdersAppService
+@inject IOperationStockMovementsAppService OperationStockMovementsAppService
 
 @if (!base.IsLoaded)
 {
@@ -368,6 +371,55 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnStationLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideStationLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+     <DxPopup @bind-Visible="AmountsbyProductionOrdersPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["AmountsbyProductionOrdersPopup"]"
+             Width="47%"
+             Height="46%"
+             MinWidth="800px"
+             MinHeight="500px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="92%" />
+                    <DxGridLayoutColumn Width="4%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                   
+                     <SfGrid @ref=_AmountsbyProductionOrdersGrid ID="AmountsbyProductionOrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@AmountsbyProductionOrdersList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@ContractOfProductsOperationsGridContextMenu">
+                               <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                               <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                               <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                               <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                               <GridColumns>
+
+                               <GridColumn Field=@nameof(AmountsbyProductionOrders.SalesOrderFicheNr) HeaderText="@L["SalesOrderFicheNrAmountGrid"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                               <GridColumn Field=@nameof(AmountsbyProductionOrders.CustomerOrderNr) HeaderText="@L["CustomerOrderNrAmountGrid"]"TextAlign="TextAlign.Center"Width="120"></GridColumn>
+                               <GridColumn Field=@nameof(AmountsbyProductionOrders.ProductionOrderFİcheNr) HeaderText="@L["ProductionOrderFİcheNrAmountGrid"]"TextAlign="TextAlign.Center"Width="120"></GridColumn>
+                               <GridColumn Field=@nameof(AmountsbyProductionOrders.Amount) Type="ColumnType.Number" HeaderText="@L["AmountAmountGrid"]"TextAlign="TextAlign.Center"Width="120"></GridColumn>
+
+                               </GridColumns>
+                     </SfGrid>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideAmountsbyProductionOrdersPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

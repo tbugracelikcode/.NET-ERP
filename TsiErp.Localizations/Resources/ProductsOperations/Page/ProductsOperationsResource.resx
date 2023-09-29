@@ -123,6 +123,12 @@
   <data name="AlternativeLineLabel" xml:space="preserve">
     <value>Alternatif:</value>
   </data>
+  <data name="AmountAmountGrid" xml:space="preserve">
+    <value>MİKTAR</value>
+  </data>
+  <data name="AmountsbyProductionOrdersPopup" xml:space="preserve">
+    <value>Üretim Emirlerine Göre Toplamlar</value>
+  </data>
   <data name="BottomTolerancePlanLabel" xml:space="preserve">
     <value>Alt Tolerans</value>
   </data>
@@ -164,6 +170,9 @@
   </data>
   <data name="ControlTypesNamePlanLabel" xml:space="preserve">
     <value>Kontrol Türü</value>
+  </data>
+  <data name="CustomerOrderNrAmountGrid" xml:space="preserve">
+    <value>MÜŞTERİ SİPARİŞ NO</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -249,6 +258,9 @@
   <data name="ProductCodeLabel" xml:space="preserve">
     <value>Stok Kodu:</value>
   </data>
+  <data name="ProductionOrderFİcheNrAmountGrid" xml:space="preserve">
+    <value>ÜRETİM EMRİ NO</value>
+  </data>
   <data name="ProductModalGridCode" xml:space="preserve">
     <value>STOK KODU</value>
   </data>
@@ -263,6 +275,9 @@
   </data>
   <data name="ProductsOperationContextAdd" xml:space="preserve">
     <value>Ekle</value>
+  </data>
+  <data name="ProductsOperationContextAmounts" xml:space="preserve">
+    <value>Üretim Emirlerine Göre Toplamlar</value>
   </data>
   <data name="ProductsOperationContextChange" xml:space="preserve">
     <value>Değiştir</value>
@@ -320,6 +335,9 @@
   </data>
   <data name="QualityPlanModalTitle" xml:space="preserve">
     <value>Operasyon Kalite Planı</value>
+  </data>
+  <data name="SalesOrderFicheNrAmountGrid" xml:space="preserve">
+    <value>SİPARİŞ NO</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

@@ -141,6 +141,9 @@
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
+  <data name="DeleteConfirmationSalesOrderLineBase" xml:space="preserve">
+    <value>Seçilen satırın siparişine ait satırlar silinecektir. Onaylıyor musunuz?</value>
+  </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
     <value>Onay</value>
   </data>
@@ -183,6 +186,12 @@
   <data name="LineGridSalesOrderFicheNo" xml:space="preserve">
     <value>SİPARİŞ FİŞ NO</value>
   </data>
+  <data name="LineGridSalesOrderisCalculated" xml:space="preserve">
+    <value>HESAPLANACAK</value>
+  </data>
+  <data name="LineGridSalesOrderisPurchase" xml:space="preserve">
+    <value>SATIN ALMAYA DÖNÜŞTÜ</value>
+  </data>
   <data name="LineGridUnitSetCode" xml:space="preserve">
     <value>BİRİM SETİ</value>
   </data>
@@ -213,6 +222,12 @@
   <data name="MRPLineContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="MRPLineContextDeleteOrderLines" xml:space="preserve">
+    <value>Sipariş Satırlarını Sil</value>
+  </data>
+  <data name="MRPLineContextDoNotCalculate" xml:space="preserve">
+    <value>Hesaplamadan Kaldır</value>
+  </data>
   <data name="MRPLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
@@ -221,6 +236,9 @@
   </data>
   <data name="MultiDeleteConfirmationTitleBase" xml:space="preserve">
     <value>Onay</value>
+  </data>
+  <data name="OrderGridFicheNo" xml:space="preserve">
+    <value>SİPARİŞ FİŞ NO</value>
   </data>
   <data name="OrdersButton" xml:space="preserve">
     <value>Satış Siparişlerini Göster</value>

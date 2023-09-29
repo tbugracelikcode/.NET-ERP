@@ -12,6 +12,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CurrentAccountCard.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.TableConstant;
@@ -73,9 +74,14 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
 
 
 
-        public Task<IDataResult<IList<ListOperationStockMovementsDto>>> GetListAsync(ListOperationStockMovementsParameterDto input)
+        public async Task<IDataResult<IList<ListOperationStockMovementsDto>>> GetListAsync(ListOperationStockMovementsParameterDto input)
         {
-            throw new NotImplementedException();
+            using (var connection = queryFactory.ConnectToDatabase())
+            {
+                var query = queryFactory.Query().From(Tables.OperationStockMovements).Select("*").Where(null, false, false, "");
+                var entity = queryFactory.GetList<ListOperationStockMovementsDto>(query).ToList();
+                return new SuccessDataResult<IList<ListOperationStockMovementsDto>>(entity);
+            }
         }
 
         public Task<IResult> DeleteAsync(Guid id)
