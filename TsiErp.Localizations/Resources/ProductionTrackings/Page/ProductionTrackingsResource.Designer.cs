@@ -791,6 +791,15 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bir önceki iş emrinde miktar girişi bulunmuyor. Bu iş emrine üretilen adet girilemez..
+        /// </summary>
+        public static string UIWarningPreviousWorkOrderMessage {
+            get {
+                return ResourceManager.GetString("UIWarningPreviousWorkOrderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İş emri seçilmeden iş istasyonu seçimi yapılamaz..
         /// </summary>
         public static string UIWarningWorkOrderMessage {
@@ -850,6 +859,15 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         public static string ValidatorEmployeeID {
             get {
                 return ResourceManager.GetString("ValidatorEmployeeID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen üretilen miktarı yazın..
+        /// </summary>
+        public static string ValidatorProducedQuantity {
+            get {
+                return ResourceManager.GetString("ValidatorProducedQuantity", resourceCulture);
             }
         }
         

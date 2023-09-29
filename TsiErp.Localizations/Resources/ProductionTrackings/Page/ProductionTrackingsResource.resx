@@ -360,6 +360,9 @@
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
     <value>Lütfen önce başlangıç tarihini seçiniz.</value>
   </data>
+  <data name="UIWarningPreviousWorkOrderMessage" xml:space="preserve">
+    <value>Bir önceki iş emrinde miktar girişi bulunmuyor. Bu iş emrine üretilen adet girilemez.</value>
+  </data>
   <data name="UIWarningWorkOrderMessage" xml:space="preserve">
     <value>İş emri seçilmeden iş istasyonu seçimi yapılamaz.</value>
   </data>
@@ -380,6 +383,9 @@
   </data>
   <data name="ValidatorEmployeeID" xml:space="preserve">
     <value>Lütfen çalışan seçin.</value>
+  </data>
+  <data name="ValidatorProducedQuantity" xml:space="preserve">
+    <value>Lütfen üretilen miktarı yazın.</value>
   </data>
   <data name="ValidatorShiftID" xml:space="preserve">
     <value>Lütfen vardiya seçin.</value>
