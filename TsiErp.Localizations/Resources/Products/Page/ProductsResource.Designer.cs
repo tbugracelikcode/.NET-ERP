@@ -1060,6 +1060,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Depo Toplamları.
+        /// </summary>
+        public static string ProductContextStockAmounts {
+            get {
+                return ResourceManager.GetString("ProductContextStockAmounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Teknik Resimler.
         /// </summary>
         public static string ProductContextTechnicalDrawings {
@@ -1578,6 +1587,87 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string SawWastageLabel {
             get {
                 return ResourceManager.GetString("SawWastageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NET TOPLAM.
+        /// </summary>
+        public static string StockAmountsGridAmount {
+            get {
+                return ResourceManager.GetString("StockAmountsGridAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞUBE.
+        /// </summary>
+        public static string StockAmountsGridBranchCode {
+            get {
+                return ResourceManager.GetString("StockAmountsGridBranchCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SARF.
+        /// </summary>
+        public static string StockAmountsGridTotalConsumption {
+            get {
+                return ResourceManager.GetString("StockAmountsGridTotalConsumption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÇIKIŞ.
+        /// </summary>
+        public static string StockAmountsGridTotalGoodsIssue {
+            get {
+                return ResourceManager.GetString("StockAmountsGridTotalGoodsIssue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GİRİŞ.
+        /// </summary>
+        public static string StockAmountsGridTotalGoodsReceipt {
+            get {
+                return ResourceManager.GetString("StockAmountsGridTotalGoodsReceipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRETİMDEN GİRİŞ.
+        /// </summary>
+        public static string StockAmountsGridTotalProduction {
+            get {
+                return ResourceManager.GetString("StockAmountsGridTotalProduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FİRE.
+        /// </summary>
+        public static string StockAmountsGridTotalWastage {
+            get {
+                return ResourceManager.GetString("StockAmountsGridTotalWastage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEPO.
+        /// </summary>
+        public static string StockAmountsGridWarehouseCode {
+            get {
+                return ResourceManager.GetString("StockAmountsGridWarehouseCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depo Toplamları.
+        /// </summary>
+        public static string StockAmountsPopup {
+            get {
+                return ResourceManager.GetString("StockAmountsPopup", resourceCulture);
             }
         }
         

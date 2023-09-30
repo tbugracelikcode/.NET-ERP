@@ -450,6 +450,9 @@
   <data name="ProductContextSalesPrices" xml:space="preserve">
     <value>Sales Prices</value>
   </data>
+  <data name="ProductContextStockAmounts" xml:space="preserve">
+    <value>Stock Amounts</value>
+  </data>
   <data name="ProductContextTechnicalDrawings" xml:space="preserve">
     <value>Technical Drawings</value>
   </data>
@@ -623,6 +626,33 @@
   </data>
   <data name="SawWastageLabel" xml:space="preserve">
     <value>Saw Wastage:</value>
+  </data>
+  <data name="StockAmountsGridAmount" xml:space="preserve">
+    <value>NET TOTAL</value>
+  </data>
+  <data name="StockAmountsGridBranchCode" xml:space="preserve">
+    <value>BRANCH</value>
+  </data>
+  <data name="StockAmountsGridTotalConsumption" xml:space="preserve">
+    <value>CONSUMPTION</value>
+  </data>
+  <data name="StockAmountsGridTotalGoodsIssue" xml:space="preserve">
+    <value>STOCK OUTGOING</value>
+  </data>
+  <data name="StockAmountsGridTotalGoodsReceipt" xml:space="preserve">
+    <value>STOCK RECEIPT</value>
+  </data>
+  <data name="StockAmountsGridTotalProduction" xml:space="preserve">
+    <value>RECEIPT FROM PRODUCTION</value>
+  </data>
+  <data name="StockAmountsGridTotalWastage" xml:space="preserve">
+    <value>WASTAGE</value>
+  </data>
+  <data name="StockAmountsGridWarehouseCode" xml:space="preserve">
+    <value>WAREHOUSE</value>
+  </data>
+  <data name="StockAmountsPopup" xml:space="preserve">
+    <value>Stock Amounts</value>
   </data>
   <data name="SupplyForm" xml:space="preserve">
     <value>SUPPLY TYPE</value>

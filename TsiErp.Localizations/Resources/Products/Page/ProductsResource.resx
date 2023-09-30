@@ -450,6 +450,9 @@
   <data name="ProductContextSalesPrices" xml:space="preserve">
     <value>Satış Fiyatları</value>
   </data>
+  <data name="ProductContextStockAmounts" xml:space="preserve">
+    <value>Depo Toplamları</value>
+  </data>
   <data name="ProductContextTechnicalDrawings" xml:space="preserve">
     <value>Teknik Resimler</value>
   </data>
@@ -623,6 +626,33 @@
   </data>
   <data name="SawWastageLabel" xml:space="preserve">
     <value>Testere Fire:</value>
+  </data>
+  <data name="StockAmountsGridAmount" xml:space="preserve">
+    <value>NET TOPLAM</value>
+  </data>
+  <data name="StockAmountsGridBranchCode" xml:space="preserve">
+    <value>ŞUBE</value>
+  </data>
+  <data name="StockAmountsGridTotalConsumption" xml:space="preserve">
+    <value>SARF</value>
+  </data>
+  <data name="StockAmountsGridTotalGoodsIssue" xml:space="preserve">
+    <value>ÇIKIŞ</value>
+  </data>
+  <data name="StockAmountsGridTotalGoodsReceipt" xml:space="preserve">
+    <value>GİRİŞ</value>
+  </data>
+  <data name="StockAmountsGridTotalProduction" xml:space="preserve">
+    <value>ÜRETİMDEN GİRİŞ</value>
+  </data>
+  <data name="StockAmountsGridTotalWastage" xml:space="preserve">
+    <value>FİRE</value>
+  </data>
+  <data name="StockAmountsGridWarehouseCode" xml:space="preserve">
+    <value>DEPO</value>
+  </data>
+  <data name="StockAmountsPopup" xml:space="preserve">
+    <value>Depo Toplamları</value>
   </data>
   <data name="SupplyForm" xml:space="preserve">
     <value>TEMİN ŞEKLİ</value>

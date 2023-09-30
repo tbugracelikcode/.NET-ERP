@@ -20,6 +20,7 @@
 @inject IRoutesAppService RoutesAppService
 @inject IProductsOperationsAppService ProductsOperationsAppService
 @inject IContractProductionTrackingsAppService ContractProductionTrackingsAppService
+@inject IGrandTotalStockMovementsAppService GrandTotalStockMovementsAppService
 @inject IFileUploadService FileUploadService
 @inject IFicheNumbersAppService FicheNumbersAppService
 
@@ -420,6 +421,65 @@ else
         </BodyTemplate>
         <FooterContentTemplate>
             <SfButton CssClass="TSICancelButton" OnClick="HideTechnicalDrawingPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["UIPreviousMenu"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+     <DxPopup @bind-Visible="StockAmountsPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["StockAmountsPopup"]"
+             Width="47%"
+             Height="46%"
+             MinWidth="800px"
+             MinHeight="500px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="92%" />
+                    <DxGridLayoutColumn Width="4%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                     <SfGrid @ref=_StockAmountsGrid ID="StockAmountsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StockAmountsList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                               <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                               <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                               <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                               <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                               <GridColumns>
+                                   <GridColumn Field=@nameof(ListGrandTotalStockMovementsDto.BranchCode) HeaderText="@L["StockAmountsGridBranchCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                            <GridColumn Field=@nameof(ListGrandTotalStockMovementsDto.WarehouseCode) HeaderText="@L["StockAmountsGridWarehouseCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                   @if(isHM == true || isYM == true){
+                            <GridColumn Field=@nameof(ListGrandTotalStockMovementsDto.TotalConsumption) Type="ColumnType.Number" HeaderText="@L["StockAmountsGridTotalConsumption"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                            <GridColumn Field=@nameof(ListGrandTotalStockMovementsDto.TotalWastage) Type="ColumnType.Number" HeaderText="@L["StockAmountsGridTotalWastage"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                   }
+
+                            <GridColumn Field=@nameof(ListGrandTotalStockMovementsDto.TotalGoodsReceipt) Type="ColumnType.Number" HeaderText="@L["StockAmountsGridTotalGoodsReceipt"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                            <GridColumn Field=@nameof(ListGrandTotalStockMovementsDto.TotalGoodsIssue) Type="ColumnType.Number" HeaderText="@L["StockAmountsGridTotalGoodsIssue"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                            <GridColumn Field=@nameof(ListGrandTotalStockMovementsDto.Amount) Type="ColumnType.Number" HeaderText="@L["StockAmountsGridAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                            @if (isMM)
+                            {
+                                <GridColumn Field=@nameof(ListGrandTotalStockMovementsDto.TotalProduction) Type="ColumnType.Number" HeaderText="@L["StockAmountsGridTotalProduction"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                        }
+
+                               </GridColumns>
+                     </SfGrid>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideStockAmountsPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
