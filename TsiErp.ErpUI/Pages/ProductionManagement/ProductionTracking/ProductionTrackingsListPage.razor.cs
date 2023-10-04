@@ -650,5 +650,41 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         #endregion
 
 
+        //protected async override Task OnSubmit()
+        //{
+        //    var workOrder = (await WorkOrdersAppService.GetAsync(DataSource.WorkOrderID)).Data;
+
+        //    if (workOrder != null)
+        //    {
+        //        if (workOrder.LineNr > 1)
+        //        {
+        //            var previousWorkOrderId = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.ProductionOrderID == workOrder.ProductionOrderID && t.LineNr == workOrder.LineNr - 1).Select(t => t.Id).FirstOrDefault();
+
+        //            var previousWorkOrder = (await WorkOrdersAppService.GetAsync(previousWorkOrderId)).Data;
+
+        //            var previousOperationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(previousWorkOrder.ProductionOrderID.GetValueOrDefault(), previousWorkOrder.ProductsOperationID.GetValueOrDefault())).Data;
+
+        //            if (previousOperationStockMovement.Id != Guid.Empty)
+        //            {
+        //                if (previousOperationStockMovement.TotalAmount > 0)
+        //                {
+        //                    if (DataSource.ProducedQuantity > previousOperationStockMovement.TotalAmount)
+        //                    {
+        //                        await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["UIWarningOprStockControlMessage"]);
+        //                        return;
+        //                    }
+        //                }
+        //            }
+        //        }
+
+        //        if (DataSource.ProducedQuantity > DataSource.PlannedQuantity)
+        //        {
+        //            await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["UIWarningQuantityControlMessage"]);
+        //            return;
+        //        }
+
+        //        await base.OnSubmit();
+        //    }
+        //}
     }
 }

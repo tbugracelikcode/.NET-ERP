@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -149,6 +148,35 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                 if (workOrder != null)
                 {
+                    #region Previous Operation Stock Movement Update
+
+                    if (workOrder.LineNr > 1)
+                    {
+                        var previousWorkOrderId = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.ProductionOrderID == workOrder.ProductionOrderID && t.LineNr == workOrder.LineNr - 1).Select(t => t.Id).FirstOrDefault();
+
+                        var previousWorkOrder = (await WorkOrdersAppService.GetAsync(previousWorkOrderId)).Data;
+
+                        var previousOperationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(previousWorkOrder.ProductionOrderID.GetValueOrDefault(), previousWorkOrder.ProductsOperationID.GetValueOrDefault())).Data;
+
+
+                        if (previousOperationStockMovement.Id != Guid.Empty)
+                        {
+                            var updateOperationStockMovement = new UpdateOperationStockMovementsDto
+                            {
+                                Id = previousOperationStockMovement.Id,
+                                OperationID = previousWorkOrder.ProductsOperationID.GetValueOrDefault(),
+                                ProductionorderID = previousWorkOrder.ProductionOrderID.GetValueOrDefault(),
+                                TotalAmount = previousOperationStockMovement.TotalAmount - input.ProducedQuantity
+                            };
+
+                            var operationStockMovementQuery = queryFactory.Query().From(Tables.OperationStockMovements).Update(updateOperationStockMovement).Where(new { Id = previousOperationStockMovement.Id }, false, false, "").UseIsDelete(false);
+
+                            query.Sql = query.Sql + QueryConstants.QueryConstant + operationStockMovementQuery.Sql + " where " + operationStockMovementQuery.WhereSentence; ;
+                        }
+                    }
+
+                    #endregion
+
                     #region Operation Stock Movement
                     var operationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(workOrder.ProductionOrderID.GetValueOrDefault(), workOrder.ProductsOperationID.GetValueOrDefault())).Data;
 
@@ -179,7 +207,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                         var operationStockMovementQuery = queryFactory.Query().From(Tables.OperationStockMovements).Update(updateOperationStockMovement).Where(new { Id = operationStockMovement.Id }, false, false, "").UseIsDelete(false);
 
-                        query.Sql = query.Sql + QueryConstants.QueryConstant + operationStockMovementQuery.Sql;
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + operationStockMovementQuery.Sql + " where " + operationStockMovementQuery.WhereSentence; ;
                     }
                     #endregion
 
@@ -224,8 +252,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                     #endregion
                 }
-
-
 
                 #endregion
 
@@ -286,6 +312,35 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                         #endregion
 
+                        #region Previous Operation Stock Movement Update
+
+                        if (workOrder.LineNr > 1)
+                        {
+                            var previousWorkOrderId = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.ProductionOrderID == workOrder.ProductionOrderID && t.LineNr == workOrder.LineNr - 1).Select(t => t.Id).FirstOrDefault();
+
+                            var previousWorkOrder = (await WorkOrdersAppService.GetAsync(previousWorkOrderId)).Data;
+
+                            var previousOperationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(previousWorkOrder.ProductionOrderID.GetValueOrDefault(), previousWorkOrder.ProductsOperationID.GetValueOrDefault())).Data;
+
+
+                            if (previousOperationStockMovement.Id != Guid.Empty)
+                            {
+                                var updateOperationStockMovement = new UpdateOperationStockMovementsDto
+                                {
+                                    Id = previousOperationStockMovement.Id,
+                                    OperationID = previousWorkOrder.ProductsOperationID.GetValueOrDefault(),
+                                    ProductionorderID = previousWorkOrder.ProductionOrderID.GetValueOrDefault(),
+                                    TotalAmount = previousOperationStockMovement.TotalAmount + productionTrackings.ProducedQuantity
+                                };
+
+                                var operationStockMovementQuery = queryFactory.Query().From(Tables.OperationStockMovements).Update(updateOperationStockMovement).Where(new { Id = previousOperationStockMovement.Id }, false, false, "").UseIsDelete(false);
+
+                                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + operationStockMovementQuery.Sql + " where " + operationStockMovementQuery.WhereSentence; ;
+                            }
+                        }
+
+                        #endregion
+
                         #region Work Order
 
                         var updatedWorkOrder = new UpdateWorkOrdersDto
@@ -326,7 +381,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                         deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + workOrderUpdateQuery.Sql + " where " + workOrderUpdateQuery.WhereSentence;
 
                         #endregion
-
                     }
 
                     #endregion
@@ -700,6 +754,65 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                 if (workOrder != null)
                 {
+                    #region Previous Operation Stock Movement Update
+
+                    if (workOrder.LineNr > 1)
+                    {
+
+                        if (input.ProducedQuantity < entity.ProducedQuantity)
+                        {
+                            var previousWorkOrderId = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.ProductionOrderID == workOrder.ProductionOrderID && t.LineNr == workOrder.LineNr - 1).Select(t => t.Id).FirstOrDefault();
+
+                            var previousWorkOrder = (await WorkOrdersAppService.GetAsync(previousWorkOrderId)).Data;
+
+                            var previousOperationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(previousWorkOrder.ProductionOrderID.GetValueOrDefault(), previousWorkOrder.ProductsOperationID.GetValueOrDefault())).Data;
+
+
+                            if (previousOperationStockMovement.Id != Guid.Empty)
+                            {
+                                var updateOperationStockMovement = new UpdateOperationStockMovementsDto
+                                {
+                                    Id = previousOperationStockMovement.Id,
+                                    OperationID = previousWorkOrder.ProductsOperationID.GetValueOrDefault(),
+                                    ProductionorderID = previousWorkOrder.ProductionOrderID.GetValueOrDefault(),
+                                    TotalAmount = previousOperationStockMovement.TotalAmount + (entity.ProducedQuantity - input.ProducedQuantity)
+                                };
+
+                                var operationStockMovementQuery = queryFactory.Query().From(Tables.OperationStockMovements).Update(updateOperationStockMovement).Where(new { Id = previousOperationStockMovement.Id }, false, false, "").UseIsDelete(false);
+
+                                query.Sql = query.Sql + QueryConstants.QueryConstant + operationStockMovementQuery.Sql + " where " + operationStockMovementQuery.WhereSentence; ;
+                            }
+                        }
+
+                        if(input.ProducedQuantity > entity.ProducedQuantity)
+                        {
+                            var previousWorkOrderId = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.ProductionOrderID == workOrder.ProductionOrderID && t.LineNr == workOrder.LineNr - 1).Select(t => t.Id).FirstOrDefault();
+
+                            var previousWorkOrder = (await WorkOrdersAppService.GetAsync(previousWorkOrderId)).Data;
+
+                            var previousOperationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(previousWorkOrder.ProductionOrderID.GetValueOrDefault(), previousWorkOrder.ProductsOperationID.GetValueOrDefault())).Data;
+
+
+                            if (previousOperationStockMovement.Id != Guid.Empty)
+                            {
+                                var updateOperationStockMovement = new UpdateOperationStockMovementsDto
+                                {
+                                    Id = previousOperationStockMovement.Id,
+                                    OperationID = previousWorkOrder.ProductsOperationID.GetValueOrDefault(),
+                                    ProductionorderID = previousWorkOrder.ProductionOrderID.GetValueOrDefault(),
+                                    TotalAmount = previousOperationStockMovement.TotalAmount - (input.ProducedQuantity - entity.ProducedQuantity)
+                                };
+
+                                var operationStockMovementQuery = queryFactory.Query().From(Tables.OperationStockMovements).Update(updateOperationStockMovement).Where(new { Id = previousOperationStockMovement.Id }, false, false, "").UseIsDelete(false);
+
+                                query.Sql = query.Sql + QueryConstants.QueryConstant + operationStockMovementQuery.Sql + " where " + operationStockMovementQuery.WhereSentence; ;
+                            }
+                        }
+
+                    }
+
+                    #endregion
+
                     #region Operation Stock Movement
                     var operationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(workOrder.ProductionOrderID.GetValueOrDefault(), workOrder.ProductsOperationID.GetValueOrDefault())).Data;
 

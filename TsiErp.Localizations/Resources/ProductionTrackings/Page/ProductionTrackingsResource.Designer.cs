@@ -782,6 +782,15 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bir önceki operasyonda üretilen miktar kadar giriş yapabilirsiniz..
+        /// </summary>
+        public static string UIWarningOprStockControlMessage {
+            get {
+                return ResourceManager.GetString("UIWarningOprStockControlMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen önce başlangıç tarihini seçiniz..
         /// </summary>
         public static string UIWarningPopupMessageBase {
@@ -796,6 +805,15 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         public static string UIWarningPreviousWorkOrderMessage {
             get {
                 return ResourceManager.GetString("UIWarningPreviousWorkOrderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretilen adet planlanan adetten büyük olamaz..
+        /// </summary>
+        public static string UIWarningQuantityControlMessage {
+            get {
+                return ResourceManager.GetString("UIWarningQuantityControlMessage", resourceCulture);
             }
         }
         
