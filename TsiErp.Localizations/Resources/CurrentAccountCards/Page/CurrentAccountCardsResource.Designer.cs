@@ -359,6 +359,24 @@ namespace TsiErp.Localizations.Resources.CurrentAccountCards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to YAZILIM FİRMA BİLGİSİ.
+        /// </summary>
+        public static string IsSoftwareCompanyInformation {
+            get {
+                return ResourceManager.GetString("IsSoftwareCompanyInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yazılım Firma Bilgisi:.
+        /// </summary>
+        public static string IsSoftwareCompanyInformationLabel {
+            get {
+                return ResourceManager.GetString("IsSoftwareCompanyInformationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {

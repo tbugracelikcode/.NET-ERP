@@ -296,6 +296,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>QualityControlParametersResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Report8Ds\Page\Report8DsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Report8DsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Routes\Page\RoutesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -737,6 +742,10 @@
     <EmbeddedResource Update="Resources\QualityControlParameter\Page\QualityControlParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>QualityControlParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Report8Ds\Page\Report8DsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Report8DsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Routes\Page\RoutesResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -180,6 +180,12 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard
         /// </summary>
         public bool IsActive { get; set; }
 
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Yazılım Firma Bilgisi
+        /// </summary>
+        public bool IsSoftwareCompanyInformation { get; set; }
+
 
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
         /// <summary>

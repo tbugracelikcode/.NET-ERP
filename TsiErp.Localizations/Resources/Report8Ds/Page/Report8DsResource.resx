@@ -117,68 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Address1Label" xml:space="preserve">
-    <value>Adres 1:</value>
+  <data name="8DContextAddforCustomer" xml:space="preserve">
+    <value>Müşteri İçin 8D Raporu Ekle</value>
   </data>
-  <data name="Address2Label" xml:space="preserve">
-    <value>Adres 2:</value>
+  <data name="8DContextAddforSupplier" xml:space="preserve">
+    <value>Tedarikçi İçin 8D Raporu Ekle</value>
   </data>
-  <data name="CityLabel" xml:space="preserve">
-    <value>İl:</value>
+  <data name="8DContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="8DContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="8DContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
-  <data name="CoatingCustomerLabel" xml:space="preserve">
-    <value>Kaplama Müşterisi:</value>
-  </data>
-  <data name="Code" xml:space="preserve">
-    <value>CARİ KOD</value>
-  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
-  </data>
-  <data name="CodeLabel" xml:space="preserve">
-    <value>Cari Kod:</value>
-  </data>
-  <data name="ContractDailyWorkingCapacityLabel" xml:space="preserve">
-    <value>Günlük Çalışma Kapasitesi:</value>
-  </data>
-  <data name="ContractSupplierLabel" xml:space="preserve">
-    <value>Fason Tedarikçi:</value>
-  </data>
-  <data name="CountryLabel" xml:space="preserve">
-    <value>Ülke:</value>
-  </data>
-  <data name="CurrencyLabel" xml:space="preserve">
-    <value>Para Birimi:</value>
-  </data>
-  <data name="CurrencyPopupGridCode" xml:space="preserve">
-    <value>PARA BİRİMİ KODU</value>
-  </data>
-  <data name="CurrencyPopupGridName" xml:space="preserve">
-    <value>PARA BİRİMİ ADI</value>
-  </data>
-  <data name="CurrencyPopupTitle" xml:space="preserve">
-    <value>Para Birimleri</value>
-  </data>
-  <data name="CurrentAccountCardContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="CurrentAccountCardContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="CurrentAccountCardContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="CurrentAccountCardContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
-  <data name="CustomerCode" xml:space="preserve">
-    <value>MÜŞTERİ KODU</value>
-  </data>
-  <data name="CustomerCodeLabel" xml:space="preserve">
-    <value>Müşteri Kodu:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -192,35 +150,17 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
-  <data name="DistrictLabel" xml:space="preserve">
-    <value>İlçe:</value>
-  </data>
   <data name="EditModalTitle" xml:space="preserve">
-    <value>Cari Hesap Kartları</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>E-POSTA</value>
-  </data>
-  <data name="EmailLabel" xml:space="preserve">
-    <value>E-Posta:</value>
+    <value>8D Raporları</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
-  <data name="FaxLabel" xml:space="preserve">
-    <value>Fax:</value>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>8DRaporlari</value>
   </data>
-  <data name="IDnumberLabel" xml:space="preserve">
-    <value>TC Kimlik Numarası:</value>
-  </data>
-  <data name="IsActiveLabel" xml:space="preserve">
-    <value>Aktiflik:</value>
-  </data>
-  <data name="IsSoftwareCompanyInformation" xml:space="preserve">
-    <value>YAZILIM FİRMA BİLGİSİ</value>
-  </data>
-  <data name="IsSoftwareCompanyInformationLabel" xml:space="preserve">
-    <value>Yazılım Firma Bilgisi:</value>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>8D Raporları</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -234,133 +174,28 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>CARİ ÜNVAN</value>
-  </data>
-  <data name="NameLabel" xml:space="preserve">
-    <value>Cari Ünvan:</value>
-  </data>
-  <data name="NumberOfStationsLabel" xml:space="preserve">
-    <value>İş İstasyonu Sayısı:</value>
-  </data>
-  <data name="PlusPercentageLabel" xml:space="preserve">
-    <value>Artı Yüzde Oran:</value>
-  </data>
-  <data name="PostCodeLabel" xml:space="preserve">
-    <value>Posta Kodu:</value>
-  </data>
-  <data name="PrivateCode1Label" xml:space="preserve">
-    <value>Özel Kod 1:</value>
-  </data>
-  <data name="PrivateCode2Label" xml:space="preserve">
-    <value>Özel Kod 2:</value>
-  </data>
-  <data name="PrivateCode3Label" xml:space="preserve">
-    <value>Özel Kod 3:</value>
-  </data>
-  <data name="PrivateCode4Label" xml:space="preserve">
-    <value>Özel Kod 4:</value>
-  </data>
-  <data name="PrivateCode5Label" xml:space="preserve">
-    <value>Özel Kod 5:</value>
-  </data>
-  <data name="Responsible" xml:space="preserve">
-    <value>İLGİLİ</value>
-  </data>
-  <data name="ResponsibleLabel" xml:space="preserve">
-    <value>Sorumlu:</value>
-  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
-  <data name="SoleProprietorshipLabel" xml:space="preserve">
-    <value>Şahıs Şirketi:</value>
-  </data>
-  <data name="SupplierLabel" xml:space="preserve">
-    <value>Tedarikçi:</value>
-  </data>
-  <data name="SupplierNoLabel" xml:space="preserve">
-    <value>Tedarikçi Numarası:</value>
-  </data>
-  <data name="Tab1Name" xml:space="preserve">
-    <value>Genel Bilgiler</value>
-  </data>
-  <data name="Tab2Name" xml:space="preserve">
-    <value>Adres Bilgileri</value>
-  </data>
-  <data name="Tab3Name" xml:space="preserve">
-    <value>Ticari Bilgiler</value>
-  </data>
-  <data name="Tab4Name" xml:space="preserve">
-    <value>Fason Tedarikçi Bilgileri</value>
-  </data>
-  <data name="TaxAdministrationLabel" xml:space="preserve">
-    <value>Vergi Dairesi:</value>
-  </data>
-  <data name="TaxNumber" xml:space="preserve">
-    <value>VERGİ NUMARASI</value>
-  </data>
-  <data name="TaxNumberLabel" xml:space="preserve">
-    <value>Vergi Numarası:</value>
-  </data>
-  <data name="Tel1" xml:space="preserve">
-    <value>TELEFON (1)</value>
-  </data>
-  <data name="Tel1Label" xml:space="preserve">
-    <value>Tel 1:</value>
-  </data>
-  <data name="Tel2Label" xml:space="preserve">
-    <value>Tel 2:</value>
-  </data>
-  <data name="TypeLabel" xml:space="preserve">
-    <value>Tür:</value>
-  </data>
-  <data name="UICurrentMenu" xml:space="preserve">
-    <value>Cari Hesap Kartları</value>
-  </data>
-  <data name="UIExportFileName" xml:space="preserve">
-    <value>CariHesaplar</value>
-  </data>
-  <data name="UIExportTitle" xml:space="preserve">
-    <value>Cari Hesap Kartları</value>
-  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Finans Yönetimi &gt; Ana Kayıtlar</value>
+    <value>Kalite Kontrol</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Lütfen cari kodu yazın.</value>
+    <value>Lütfen 8D raporu kodunu yazın.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Cari kod, 17 karakterden fazla olamaz.</value>
+    <value>8D rapor kodu 17 karakterden fazla olamaz.</value>
   </data>
-  <data name="ValidatorCurrencyID" xml:space="preserve">
-    <value>Lütfen para birimi seçin.</value>
+  <data name="ValidatorCustomerID" xml:space="preserve">
+    <value>Lütfen müşteri seçin.</value>
   </data>
-  <data name="ValidatorIDnumberEmpty" xml:space="preserve">
-    <value>Lütfen T.C. kimlik numarasını yazın.</value>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Lütfen ürün seçin.</value>
   </data>
-  <data name="ValidatorNameEmpty" xml:space="preserve">
-    <value>Lütfen cari ünvanı yazın.</value>
-  </data>
-  <data name="ValidatorNameMaxLenght" xml:space="preserve">
-    <value>Cari ünvan, 200 karakterden fazla olamaz.</value>
-  </data>
-  <data name="ValidatorTaxAdminEmpty" xml:space="preserve">
-    <value>Lütfen vergi dairesini yazın.</value>
-  </data>
-  <data name="ValidatorTaxAdminMaxLenght" xml:space="preserve">
-    <value>Vergi dairesi, 75 karakterden fazla olamaz.</value>
-  </data>
-  <data name="ValidatorTaxNoEmpty" xml:space="preserve">
-    <value>Lütfen vergi numarasını yazın.</value>
-  </data>
-  <data name="ValidatorTaxNoMaxLenght" xml:space="preserve">
-    <value>Vergi numarası, 10 karakterden fazla olamaz.</value>
-  </data>
-  <data name="WebLabel" xml:space="preserve">
-    <value>Web:</value>
+  <data name="ValidatorSupplierID" xml:space="preserve">
+    <value>Lütfen tedarikçi seçin.</value>
   </data>
 </root>

@@ -73,6 +73,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                     PlusPercentage = input.PlusPercentage,
                     PostCode = input.PostCode,
                     PrivateCode1 = input.PrivateCode1,
+                     IsSoftwareCompanyInformation = input.IsSoftwareCompanyInformation,
                     PrivateCode2 = input.PrivateCode2,
                     PrivateCode3 = input.PrivateCode3,
                     PrivateCode4 = input.PrivateCode4,
@@ -178,7 +179,8 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                             ca.Name,
                             ca.IsActive,
                             ca.NumberOfStations,
-                            ca.ContractDailyWorkingCapacity
+                            ca.ContractDailyWorkingCapacity,
+                             ca.IsSoftwareCompanyInformation
                         })
                             .Join<Currencies>
                             (
@@ -246,7 +248,8 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                        ca.PlusPercentage,
                        ca.Name,
                        ca.NumberOfStations,
-                       ca.ContractDailyWorkingCapacity
+                       ca.ContractDailyWorkingCapacity,
+                       ca.IsSoftwareCompanyInformation
                    })
                        .Join<Currencies>
                        (
@@ -305,6 +308,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                     Email = input.Email,
                     Fax = input.Fax,
                     IDnumber = input.IDnumber,
+                    IsSoftwareCompanyInformation = input.IsSoftwareCompanyInformation,
                     PrivateCode3 = input.PrivateCode3,
                     PrivateCode4 = input.PrivateCode4,
                     PrivateCode5 = input.PrivateCode5,
@@ -376,6 +380,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                     IDnumber = entity.IDnumber,
                     PrivateCode3 = entity.PrivateCode3,
                     PrivateCode4 = entity.PrivateCode4,
+                    IsSoftwareCompanyInformation = entity.IsSoftwareCompanyInformation,
                     PrivateCode5 = entity.PrivateCode5,
                     Responsible = entity.Responsible,
                     SaleContract = entity.SaleContract,
