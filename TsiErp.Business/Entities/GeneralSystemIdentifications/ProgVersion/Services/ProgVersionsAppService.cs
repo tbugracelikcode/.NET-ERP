@@ -38,24 +38,20 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
 
         public async Task<IDataResult<SelectProgVersionsDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            id = LoginedUserService.VersionTableId;
+
+            var query = queryFactory.Query().From(Tables.ProgVersions).Select("*").Where(
+            new
             {
-                id = LoginedUserService.VersionTableId;
+                Id = id
+            }, false, false, "").UseIsDelete(false);
 
-                var query = queryFactory.Query().From(Tables.ProgVersions).Select("*").Where(
-                new
-                {
-                    Id = id
-                }, false, false, "").UseIsDelete(false);
-
-                var version = queryFactory.Get<SelectProgVersionsDto>(query);
+            var version = queryFactory.Get<SelectProgVersionsDto>(query);
 
 
-                LogsAppService.InsertLogToDatabase(version, version, LoginedUserService.UserId, Tables.ProgVersions, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(version, version, LoginedUserService.UserId, Tables.ProgVersions, LogType.Get, id);
 
-                return new SuccessDataResult<SelectProgVersionsDto>(version);
-
-            }
+            return new SuccessDataResult<SelectProgVersionsDto>(version);
         }
 
         public Task<IDataResult<IList<ListProgVersionsDto>>> GetListAsync(ListProgVersionsParameterDto input)
@@ -65,30 +61,27 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
 
         public async Task<IDataResult<SelectProgVersionsDto>> UpdateAsync(UpdateProgVersionsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            input.Id = LoginedUserService.VersionTableId;
+
+            var entityQuery = queryFactory.Query().From(Tables.ProgVersions).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            var entity = queryFactory.Get<ProgVersions>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.ProgVersions).Update(new UpdateProgVersionsDto
             {
-                input.Id = LoginedUserService.VersionTableId;
 
-                var entityQuery = queryFactory.Query().From(Tables.ProgVersions).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
-                var entity = queryFactory.Get<ProgVersions>(entityQuery);
+                Id = input.Id,
+                MinDbVersion = input.MinDbVersion,
+                BuildVersion = input.BuildVersion,
+                MajDbVersion = input.MajDbVersion,
+                IsUpdating = input.IsUpdating
 
-                var query = queryFactory.Query().From(Tables.ProgVersions).Update(new UpdateProgVersionsDto
-                {
+            }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
 
-                    Id = input.Id,
-                    MinDbVersion = input.MinDbVersion,
-                    BuildVersion = input.BuildVersion,
-                    MajDbVersion = input.MajDbVersion,
-                    IsUpdating = input.IsUpdating
+            var version = queryFactory.Update<SelectProgVersionsDto>(query, "Id", true);
 
-                }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            LogsAppService.InsertLogToDatabase(entity, version, LoginedUserService.UserId, Tables.ProgVersions, LogType.Update, entity.Id);
 
-                var version = queryFactory.Update<SelectProgVersionsDto>(query, "Id", true);
-
-                LogsAppService.InsertLogToDatabase(entity, version, LoginedUserService.UserId, Tables.ProgVersions, LogType.Update, entity.Id);
-
-                return new SuccessDataResult<SelectProgVersionsDto>(version);
-            }
+            return new SuccessDataResult<SelectProgVersionsDto>(version);
         }
 
         public Task<IDataResult<SelectProgVersionsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
@@ -98,54 +91,50 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
 
         public async Task<bool> CheckVersion(string progVersion)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            Guid id = LoginedUserService.VersionTableId;
+
+            var query = queryFactory.Query().From(Tables.ProgVersions).Select("*").Where(
+            new
             {
-                Guid id = LoginedUserService.VersionTableId;
+                Id = id
+            }, false, false, "").UseIsDelete(false);
 
-                var query = queryFactory.Query().From(Tables.ProgVersions).Select("*").Where(
-                new
+            var version = queryFactory.Get<SelectProgVersionsDto>(query);
+
+            string dbVersion = version.MajDbVersion + "." + version.MinDbVersion + "." + version.BuildVersion;
+
+            if (dbVersion != progVersion)
+            {
+                var updatedVersionIsRuning = new UpdateProgVersionsDto
                 {
-                    Id = id
-                }, false, false, "").UseIsDelete(false);
+                    Id = id,
+                    BuildVersion = version.BuildVersion,
+                    IsUpdating = true,
+                    MajDbVersion = version.MajDbVersion,
+                    MinDbVersion = version.MinDbVersion
+                };
 
-                var version = queryFactory.Get<SelectProgVersionsDto>(query);
+                await UpdateAsync(updatedVersionIsRuning);
 
-                string dbVersion = version.MajDbVersion + "." + version.MinDbVersion + "." + version.BuildVersion;
+                await UpdateDatabase(progVersion);
 
-                if (dbVersion != progVersion)
+                var updatedVersion = new UpdateProgVersionsDto
                 {
-                    var updatedVersionIsRuning = new UpdateProgVersionsDto
-                    {
-                        Id = id,
-                        BuildVersion = version.BuildVersion,
-                        IsUpdating = true,
-                        MajDbVersion = version.MajDbVersion,
-                        MinDbVersion = version.MinDbVersion
-                    };
+                    Id = id,
+                    BuildVersion = progVersion.Split('.')[2],
+                    IsUpdating = false,
+                    MajDbVersion = progVersion.Split(".")[0],
+                    MinDbVersion = progVersion.Split(".")[1]
+                };
 
-                    await UpdateAsync(updatedVersionIsRuning);
+                await UpdateAsync(updatedVersion);
 
-                    await UpdateDatabase(progVersion);
+                return updatedVersion.BuildVersion == progVersion.Split('.')[2] ? true : false;
 
-                    var updatedVersion = new UpdateProgVersionsDto
-                    {
-                        Id = id,
-                        BuildVersion = progVersion.Split('.')[2],
-                        IsUpdating = false,
-                        MajDbVersion = progVersion.Split(".")[0],
-                        MinDbVersion = progVersion.Split(".")[1]
-                    };
-
-                    await UpdateAsync(updatedVersion);
-
-                    return updatedVersion.BuildVersion == progVersion.Split('.')[2] ? true : false;
-
-
-                }
-
-                return true;
 
             }
+
+            return true;
         }
 
         public async Task<bool> UpdateDatabase(string versionToBeUpdated)

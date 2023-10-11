@@ -24,61 +24,50 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.QualityControlPa
 
         public async Task<IDataResult<SelectQualityControlParametersDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.QualityControlParameters).Select("*").Where(
-                 new
-                 {
-                     Id = id
-                 }, false, false, "");
+            var query = queryFactory.Query().From(Tables.QualityControlParameters).Select("*").Where(
+             new
+             {
+                 Id = id
+             }, false, false, "");
 
-                var QualityControlParameter = queryFactory.Get<SelectQualityControlParametersDto>(query);
+            var QualityControlParameter = queryFactory.Get<SelectQualityControlParametersDto>(query);
 
-                LogsAppService.InsertLogToDatabase(QualityControlParameter, QualityControlParameter, LoginedUserService.UserId, Tables.QualityControlParameters, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(QualityControlParameter, QualityControlParameter, LoginedUserService.UserId, Tables.QualityControlParameters, LogType.Get, id);
 
-                return new SuccessDataResult<SelectQualityControlParametersDto>(QualityControlParameter);
-
-            }
+            return new SuccessDataResult<SelectQualityControlParametersDto>(QualityControlParameter);
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListQualityControlParametersDto>>> GetListAsync(ListQualityControlParametersParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            var query = queryFactory.Query().From(Tables.QualityControlParameters).Select("*").Where(null, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.QualityControlParameters).Select("*").Where(null, false, false, "");
+            var QualityControlParameters = queryFactory.GetList<ListQualityControlParametersDto>(query).ToList();
 
-                var QualityControlParameters = queryFactory.GetList<ListQualityControlParametersDto>(query).ToList();
-
-                return new SuccessDataResult<IList<ListQualityControlParametersDto>>(QualityControlParameters);
-            }
+            return new SuccessDataResult<IList<ListQualityControlParametersDto>>(QualityControlParameters);
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectQualityControlParametersDto>> UpdateAsync(UpdateQualityControlParametersDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.QualityControlParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entity = queryFactory.Get<QualityControlParameters>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.QualityControlParameters).Update(new UpdateQualityControlParametersDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.QualityControlParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
-                var entity = queryFactory.Get<QualityControlParameters>(entityQuery);
+                FutureDateParameter = input.FutureDateParameter,
+                Id = input.Id
+            }).Where(new { Id = input.Id }, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.QualityControlParameters).Update(new UpdateQualityControlParametersDto
-                {
-                    FutureDateParameter = input.FutureDateParameter,
-                    Id = input.Id
-                }).Where(new { Id = input.Id }, false, false, "");
-
-                var QualityControlParameters = queryFactory.Update<SelectQualityControlParametersDto>(query, "Id", true);
+            var QualityControlParameters = queryFactory.Update<SelectQualityControlParametersDto>(query, "Id", true);
 
 
-                LogsAppService.InsertLogToDatabase(entity, QualityControlParameters, LoginedUserService.UserId, Tables.QualityControlParameters, LogType.Update, entity.Id);
+            LogsAppService.InsertLogToDatabase(entity, QualityControlParameters, LoginedUserService.UserId, Tables.QualityControlParameters, LogType.Update, entity.Id);
 
 
-                return new SuccessDataResult<SelectQualityControlParametersDto>(QualityControlParameters);
-            }
+            return new SuccessDataResult<SelectQualityControlParametersDto>(QualityControlParameters);
         }
 
         #region Unused Implemented Methods

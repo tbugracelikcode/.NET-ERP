@@ -24,61 +24,53 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MaintenanceManag
 
         public async Task<IDataResult<SelectMaintenanceManagementParametersDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Select("*").Where(
-                 new
-                 {
-                     Id = id
-                 }, false, false, "");
+            var query = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Select("*").Where(
+             new
+             {
+                 Id = id
+             }, false, false, "");
 
-                var MaintenanceManagementParameter = queryFactory.Get<SelectMaintenanceManagementParametersDto>(query);
+            var MaintenanceManagementParameter = queryFactory.Get<SelectMaintenanceManagementParametersDto>(query);
 
-                LogsAppService.InsertLogToDatabase(MaintenanceManagementParameter, MaintenanceManagementParameter, LoginedUserService.UserId, Tables.MaintenanceManagementParameters, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(MaintenanceManagementParameter, MaintenanceManagementParameter, LoginedUserService.UserId, Tables.MaintenanceManagementParameters, LogType.Get, id);
 
-                return new SuccessDataResult<SelectMaintenanceManagementParametersDto>(MaintenanceManagementParameter);
+            return new SuccessDataResult<SelectMaintenanceManagementParametersDto>(MaintenanceManagementParameter);
 
-            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMaintenanceManagementParametersDto>>> GetListAsync(ListMaintenanceManagementParametersParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            var query = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Select("*").Where(null, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Select("*").Where(null, false, false, "");
+            var MaintenanceManagementParameters = queryFactory.GetList<ListMaintenanceManagementParametersDto>(query).ToList();
 
-                var MaintenanceManagementParameters = queryFactory.GetList<ListMaintenanceManagementParametersDto>(query).ToList();
+            return new SuccessDataResult<IList<ListMaintenanceManagementParametersDto>>(MaintenanceManagementParameters);
 
-                return new SuccessDataResult<IList<ListMaintenanceManagementParametersDto>>(MaintenanceManagementParameters);
-            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMaintenanceManagementParametersDto>> UpdateAsync(UpdateMaintenanceManagementParametersDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entity = queryFactory.Get<MaintenanceManagementParameters>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Update(new UpdateMaintenanceManagementParametersDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
-                var entity = queryFactory.Get<MaintenanceManagementParameters>(entityQuery);
+                FutureDateParameter = input.FutureDateParameter,
+                Id = input.Id
+            }).Where(new { Id = input.Id }, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Update(new UpdateMaintenanceManagementParametersDto
-                {
-                    FutureDateParameter = input.FutureDateParameter,
-                    Id = input.Id
-                }).Where(new { Id = input.Id }, false, false, "");
-
-                var MaintenanceManagementParameters = queryFactory.Update<SelectMaintenanceManagementParametersDto>(query, "Id", true);
+            var MaintenanceManagementParameters = queryFactory.Update<SelectMaintenanceManagementParametersDto>(query, "Id", true);
 
 
-                LogsAppService.InsertLogToDatabase(entity, MaintenanceManagementParameters, LoginedUserService.UserId, Tables.MaintenanceManagementParameters, LogType.Update, entity.Id);
+            LogsAppService.InsertLogToDatabase(entity, MaintenanceManagementParameters, LoginedUserService.UserId, Tables.MaintenanceManagementParameters, LogType.Update, entity.Id);
 
 
-                return new SuccessDataResult<SelectMaintenanceManagementParametersDto>(MaintenanceManagementParameters);
-            }
+            return new SuccessDataResult<SelectMaintenanceManagementParametersDto>(MaintenanceManagementParameters);
+
         }
 
         #region Unused Implemented Methods

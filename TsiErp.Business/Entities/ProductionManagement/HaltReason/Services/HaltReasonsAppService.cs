@@ -32,192 +32,168 @@ namespace TsiErp.Business.Entities.HaltReason.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectHaltReasonsDto>> CreateAsync(CreateHaltReasonsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var listQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Code = input.Code }, false, false, "");
+
+            var list = queryFactory.ControlList<HaltReasons>(listQuery).ToList();
+
+            #region Code Control 
+
+            if (list.Count > 0)
             {
-                var listQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Code = input.Code }, false, false, "");
-
-                var list = queryFactory.ControlList<HaltReasons>(listQuery).ToList();
-
-                #region Code Control 
-
-                if (list.Count > 0)
-                {
-                    connection.Close();
-                    connection.Dispose();
-                    throw new DuplicateCodeException(L["CodeControlManager"]);
-                }
-
-                #endregion
-
-                Guid addedEntityId = GuidGenerator.CreateGuid();
-
-                var query = queryFactory.Query().From(Tables.HaltReasons).Insert(new CreateHaltReasonsDto
-                {
-                    Code = input.Code,
-                    Name = input.Name,
-                    IsMachine = input.IsMachine,
-                    IsManagement = input.IsManagement,
-                    IsOperator = input.IsOperator,
-                    IsPlanned = input.IsPlanned,
-                    Id = addedEntityId,
-                    CreationTime = DateTime.Now,
-                    CreatorId = LoginedUserService.UserId,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = Guid.Empty,
-                    DeletionTime = null,
-                    LastModificationTime = null,
-                    LastModifierId = Guid.Empty,
-                    IsDeleted = false
-                });
-
-
-                var haltReasons = queryFactory.Insert<SelectHaltReasonsDto>(query, "Id", true);
-
-                await FicheNumbersAppService.UpdateFicheNumberAsync("HaltReasonsChildMenu", input.Code);
-
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.HaltReasons, LogType.Insert, addedEntityId);
-
-                return new SuccessDataResult<SelectHaltReasonsDto>(haltReasons);
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
+
+            #endregion
+
+            Guid addedEntityId = GuidGenerator.CreateGuid();
+
+            var query = queryFactory.Query().From(Tables.HaltReasons).Insert(new CreateHaltReasonsDto
+            {
+                Code = input.Code,
+                Name = input.Name,
+                IsMachine = input.IsMachine,
+                IsManagement = input.IsManagement,
+                IsOperator = input.IsOperator,
+                IsPlanned = input.IsPlanned,
+                Id = addedEntityId,
+                CreationTime = DateTime.Now,
+                CreatorId = LoginedUserService.UserId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = Guid.Empty,
+                DeletionTime = null,
+                LastModificationTime = null,
+                LastModifierId = Guid.Empty,
+                IsDeleted = false
+            });
+
+
+            var haltReasons = queryFactory.Insert<SelectHaltReasonsDto>(query, "Id", true);
+
+            await FicheNumbersAppService.UpdateFicheNumberAsync("HaltReasonsChildMenu", input.Code);
+
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.HaltReasons, LogType.Insert, addedEntityId);
+
+            return new SuccessDataResult<SelectHaltReasonsDto>(haltReasons);
+
 
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.HaltReasons).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.HaltReasons).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-                var haltReasons = queryFactory.Update<SelectHaltReasonsDto>(query, "Id", true);
+            var haltReasons = queryFactory.Update<SelectHaltReasonsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.HaltReasons, LogType.Delete, id);
+            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.HaltReasons, LogType.Delete, id);
 
-                return new SuccessDataResult<SelectHaltReasonsDto>(haltReasons);
-            }
+            return new SuccessDataResult<SelectHaltReasonsDto>(haltReasons);
 
         }
 
         public async Task<IDataResult<SelectHaltReasonsDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var query = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(
+            new
             {
-
-                var query = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(
-                new
-                {
-                    Id = id
-                }, false, false, "");
-                var haltReason = queryFactory.Get<SelectHaltReasonsDto>(query);
+                Id = id
+            }, false, false, "");
+            var haltReason = queryFactory.Get<SelectHaltReasonsDto>(query);
 
 
-                LogsAppService.InsertLogToDatabase(haltReason, haltReason, LoginedUserService.UserId, Tables.HaltReasons, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(haltReason, haltReason, LoginedUserService.UserId, Tables.HaltReasons, LogType.Get, id);
 
-                return new SuccessDataResult<SelectHaltReasonsDto>(haltReason);
-
-            }
+            return new SuccessDataResult<SelectHaltReasonsDto>(haltReason);
 
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListHaltReasonsDto>>> GetListAsync(ListHaltReasonsParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(null, false, false, "");
-                var haltReasons = queryFactory.GetList<ListHaltReasonsDto>(query).ToList();
-                return new SuccessDataResult<IList<ListHaltReasonsDto>>(haltReasons);
-            }
-
+            var query = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(null, false, false, "");
+            var haltReasons = queryFactory.GetList<ListHaltReasonsDto>(query).ToList();
+            return new SuccessDataResult<IList<ListHaltReasonsDto>>(haltReasons);
         }
 
         [ValidationAspect(typeof(UpdateHaltReasonsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectHaltReasonsDto>> UpdateAsync(UpdateHaltReasonsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entity = queryFactory.Get<HaltReasons>(entityQuery);
+
+            #region Update Control
+
+            var listQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var list = queryFactory.GetList<HaltReasons>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.Code != input.Code)
             {
-                var entityQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Id = input.Id }, false, false, "");
-                var entity = queryFactory.Get<HaltReasons>(entityQuery);
-
-                #region Update Control
-
-                var listQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Code = input.Code }, false, false, "");
-                var list = queryFactory.GetList<HaltReasons>(listQuery).ToList();
-
-                if (list.Count > 0 && entity.Code != input.Code)
-                {
-                    connection.Close();
-                    connection.Dispose();
-                    throw new DuplicateCodeException(L["UpdateControlManager"]);
-                }
-
-                #endregion
-
-                var query = queryFactory.Query().From(Tables.HaltReasons).Update(new UpdateHaltReasonsDto
-                {
-                    Code = input.Code,
-                    Name = input.Name,
-                    IsPlanned = input.IsPlanned,
-                    IsOperator = input.IsOperator,
-                    IsManagement = input.IsManagement,
-                    IsMachine = input.IsMachine,
-                    Id = input.Id,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = input.Id }, false, false, "");
-
-                var haltReasons = queryFactory.Update<SelectHaltReasonsDto>(query, "Id", true);
-
-                LogsAppService.InsertLogToDatabase(entity, haltReasons, LoginedUserService.UserId, Tables.HaltReasons, LogType.Update, entity.Id);
-
-                return new SuccessDataResult<SelectHaltReasonsDto>(haltReasons);
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
+
+            #endregion
+
+            var query = queryFactory.Query().From(Tables.HaltReasons).Update(new UpdateHaltReasonsDto
+            {
+                Code = input.Code,
+                Name = input.Name,
+                IsPlanned = input.IsPlanned,
+                IsOperator = input.IsOperator,
+                IsManagement = input.IsManagement,
+                IsMachine = input.IsMachine,
+                Id = input.Id,
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.Value,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = DateTime.Now,
+                LastModifierId = LoginedUserService.UserId
+            }).Where(new { Id = input.Id }, false, false, "");
+
+            var haltReasons = queryFactory.Update<SelectHaltReasonsDto>(query, "Id", true);
+
+            LogsAppService.InsertLogToDatabase(entity, haltReasons, LoginedUserService.UserId, Tables.HaltReasons, LogType.Update, entity.Id);
+
+            return new SuccessDataResult<SelectHaltReasonsDto>(haltReasons);
+
 
         }
 
         public async Task<IDataResult<SelectHaltReasonsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Id = id }, false, false, "");
+
+            var entity = queryFactory.Get<HaltReasons>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.HaltReasons).Update(new UpdateHaltReasonsDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Id = id }, false, false, "");
+                Code = entity.Code,
+                Name = entity.Name,
+                IsMachine = entity.IsMachine,
+                IsManagement = entity.IsManagement,
+                IsOperator = entity.IsOperator,
+                IsPlanned = entity.IsPlanned,
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.Value,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                Id = id,
+                DataOpenStatus = lockRow,
+                DataOpenStatusUserId = userId
 
-                var entity = queryFactory.Get<HaltReasons>(entityQuery);
+            }).Where(new { Id = id }, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.HaltReasons).Update(new UpdateHaltReasonsDto
-                {
-                    Code = entity.Code,
-                    Name = entity.Name,
-                    IsMachine = entity.IsMachine,
-                    IsManagement = entity.IsManagement,
-                    IsOperator = entity.IsOperator,
-                    IsPlanned = entity.IsPlanned,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
-                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-                    Id = id,
-                    DataOpenStatus = lockRow,
-                    DataOpenStatusUserId = userId
+            var haltReasons = queryFactory.Update<SelectHaltReasonsDto>(query, "Id", true);
 
-                }).Where(new { Id = id }, false, false, "");
-
-                var haltReasons = queryFactory.Update<SelectHaltReasonsDto>(query, "Id", true);
-
-                return new SuccessDataResult<SelectHaltReasonsDto>(haltReasons);
-
-            }
+            return new SuccessDataResult<SelectHaltReasonsDto>(haltReasons);
 
         }
     }

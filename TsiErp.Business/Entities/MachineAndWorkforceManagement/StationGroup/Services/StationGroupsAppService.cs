@@ -34,102 +34,82 @@ namespace TsiErp.Business.Entities.StationGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationGroupsDto>> CreateAsync(CreateStationGroupsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var listQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Code = input.Code }, false, false, "");
+
+            var list = queryFactory.ControlList<StationGroups>(listQuery).ToList();
+
+            #region Code Control 
+
+            if (list.Count > 0)
             {
-                var listQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Code = input.Code }, false, false, "");
-
-                var list = queryFactory.ControlList<StationGroups>(listQuery).ToList();
-
-                #region Code Control 
-
-                if (list.Count > 0)
-                {
-                    connection.Close();
-                    connection.Dispose();
-                    throw new DuplicateCodeException(L["CodeControlManager"]);
-                }
-
-                #endregion
-
-                Guid addedEntityId = GuidGenerator.CreateGuid();
-
-                var query = queryFactory.Query().From(Tables.StationGroups).Insert(new CreateStationGroupsDto
-                {
-                    Code = input.Code,
-                    TotalEmployees = input.TotalEmployees,
-                    CreationTime = DateTime.Now,
-                    CreatorId = LoginedUserService.UserId,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = Guid.Empty,
-                    DeletionTime = null,
-                    Id = addedEntityId,
-                    IsActive = true,
-                    IsDeleted = false,
-                    LastModificationTime = null,
-                    LastModifierId = Guid.Empty,
-                    Name = input.Name
-                });
-
-                var stationGroups = queryFactory.Insert<SelectStationGroupsDto>(query, "Id", true);
-
-                await FicheNumbersAppService.UpdateFicheNumberAsync("StationGroupChildMenu", input.Code);
-
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StationGroups, LogType.Insert, addedEntityId);
-
-                return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
+
+            #endregion
+
+            Guid addedEntityId = GuidGenerator.CreateGuid();
+
+            var query = queryFactory.Query().From(Tables.StationGroups).Insert(new CreateStationGroupsDto
+            {
+                Code = input.Code,
+                TotalEmployees = input.TotalEmployees,
+                CreationTime = DateTime.Now,
+                CreatorId = LoginedUserService.UserId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = Guid.Empty,
+                DeletionTime = null,
+                Id = addedEntityId,
+                IsActive = true,
+                IsDeleted = false,
+                LastModificationTime = null,
+                LastModifierId = Guid.Empty,
+                Name = input.Name
+            });
+
+            var stationGroups = queryFactory.Insert<SelectStationGroupsDto>(query, "Id", true);
+
+            await FicheNumbersAppService.UpdateFicheNumberAsync("StationGroupChildMenu", input.Code);
+
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StationGroups, LogType.Insert, addedEntityId);
+
+            return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
 
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            var query = queryFactory.Query().From(Tables.StationGroups).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
-                var query = queryFactory.Query().From(Tables.StationGroups).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            var stationGroups = queryFactory.Update<SelectStationGroupsDto>(query, "Id", true);
 
-                var stationGroups = queryFactory.Update<SelectStationGroupsDto>(query, "Id", true);
+            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StationGroups, LogType.Delete, id);
 
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StationGroups, LogType.Delete, id);
-
-                return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
-            }
-
+            return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
         }
 
         public async Task<IDataResult<SelectStationGroupsDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var query = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(
+            new
             {
-
-                var query = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(
-                new
-                {
-                    Id = id
-                }, true, true, "");
-                var stationGroup = queryFactory.Get<SelectStationGroupsDto>(query);
+                Id = id
+            }, true, true, "");
+            var stationGroup = queryFactory.Get<SelectStationGroupsDto>(query);
 
 
-                LogsAppService.InsertLogToDatabase(stationGroup, stationGroup, LoginedUserService.UserId, Tables.StationGroups, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(stationGroup, stationGroup, LoginedUserService.UserId, Tables.StationGroups, LogType.Get, id);
 
-                return new SuccessDataResult<SelectStationGroupsDto>(stationGroup);
-
-            }
-
+            return new SuccessDataResult<SelectStationGroupsDto>(stationGroup);
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStationGroupsDto>>> GetListAsync(ListStationGroupsParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(null, true, true, "");
-                var stationGroups = queryFactory.GetList<ListStationGroupsDto>(query).ToList();
-                return new SuccessDataResult<IList<ListStationGroupsDto>>(stationGroups);
-            }
-
+            var query = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(null, true, true, "");
+            var stationGroups = queryFactory.GetList<ListStationGroupsDto>(query).ToList();
+            return new SuccessDataResult<IList<ListStationGroupsDto>>(stationGroups);
         }
 
 
@@ -137,84 +117,73 @@ namespace TsiErp.Business.Entities.StationGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationGroupsDto>> UpdateAsync(UpdateStationGroupsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entity = queryFactory.Get<StationGroups>(entityQuery);
+
+            #region Update Control
+
+            var listQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var list = queryFactory.GetList<StationGroups>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.Code != input.Code)
             {
-                var entityQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Id = input.Id }, true, true, "");
-                var entity = queryFactory.Get<StationGroups>(entityQuery);
-
-                #region Update Control
-
-                var listQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Code = input.Code }, false, false, "");
-                var list = queryFactory.GetList<StationGroups>(listQuery).ToList();
-
-                if (list.Count > 0 && entity.Code != input.Code)
-                {
-                    connection.Close();
-                    connection.Dispose();
-                    throw new DuplicateCodeException(L["UpdateControlManager"]);
-                }
-
-                #endregion
-
-                var query = queryFactory.Query().From(Tables.StationGroups).Update(new UpdateStationGroupsDto
-                {
-                    Code = input.Code,
-                    TotalEmployees = input.TotalEmployees,
-                    Name = input.Name,
-                    Id = input.Id,
-                    IsActive = input.IsActive,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = input.Id }, true, true, "");
-
-                var stationGroups = queryFactory.Update<SelectStationGroupsDto>(query, "Id", true);
-
-                LogsAppService.InsertLogToDatabase(entity, stationGroups, LoginedUserService.UserId, Tables.StationGroups, LogType.Update, entity.Id);
-
-                return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
 
+            #endregion
+
+            var query = queryFactory.Query().From(Tables.StationGroups).Update(new UpdateStationGroupsDto
+            {
+                Code = input.Code,
+                TotalEmployees = input.TotalEmployees,
+                Name = input.Name,
+                Id = input.Id,
+                IsActive = input.IsActive,
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.Value,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = DateTime.Now,
+                LastModifierId = LoginedUserService.UserId
+            }).Where(new { Id = input.Id }, true, true, "");
+
+            var stationGroups = queryFactory.Update<SelectStationGroupsDto>(query, "Id", true);
+
+            LogsAppService.InsertLogToDatabase(entity, stationGroups, LoginedUserService.UserId, Tables.StationGroups, LogType.Update, entity.Id);
+
+            return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
         }
 
         public async Task<IDataResult<SelectStationGroupsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Id = id }, true, true, "");
+
+            var entity = queryFactory.Get<StationGroups>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.StationGroups).Update(new UpdateStationGroupsDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Id = id }, true, true, "");
+                Code = entity.Code,
+                TotalEmployees = entity.TotalEmployees,
+                Name = entity.Name,
+                IsActive = entity.IsActive,
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.Value,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                Id = id,
+                DataOpenStatus = lockRow,
+                DataOpenStatusUserId = userId
 
-                var entity = queryFactory.Get<StationGroups>(entityQuery);
+            }).Where(new { Id = id }, true, true, "");
 
-                var query = queryFactory.Query().From(Tables.StationGroups).Update(new UpdateStationGroupsDto
-                {
-                    Code = entity.Code,
-                    TotalEmployees = entity.TotalEmployees,
-                    Name = entity.Name,
-                    IsActive = entity.IsActive,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
-                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-                    Id = id,
-                    DataOpenStatus = lockRow,
-                    DataOpenStatusUserId = userId
-
-                }).Where(new { Id = id }, true, true, "");
-
-                var stationGroups = queryFactory.Update<SelectStationGroupsDto>(query, "Id", true);
-                return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
-
-            }
-
+            var stationGroups = queryFactory.Update<SelectStationGroupsDto>(query, "Id", true);
+            return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
         }
     }
 }
