@@ -35,8 +35,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> CreateAsync(CreateBranchesDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            
                 var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false, "");
 
                 var list = queryFactory.ControlList<Branches>(listQuery).ToList();
@@ -45,8 +44,6 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 if (list.Count > 0)
                 {
-                    connection.Close();
-                    connection.Dispose();
                     throw new DuplicateCodeException(L["CodeControlManager"]);
                 }
 
@@ -80,14 +77,12 @@ namespace TsiErp.Business.Entities.Branch.Services
 
 
                 return new SuccessDataResult<SelectBranchesDto>(branches);
-            }
+            
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Delete Control
 
                 var periodQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { BranchID = id }, true, true, "");
@@ -95,8 +90,6 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 if (periods != null && periods.Id != Guid.Empty)
                 {
-                    connection.Close();
-                    connection.Dispose();
                     throw new Exception(L["DeleteControlManager"]);
                 }
 
@@ -105,8 +98,6 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 if (salesPropositions != null && salesPropositions.Id != Guid.Empty)
                 {
-                    connection.Close();
-                    connection.Dispose();
                     throw new Exception(L["DeleteControlManager"]);
                 }
 
@@ -119,13 +110,11 @@ namespace TsiErp.Business.Entities.Branch.Services
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Branches, LogType.Delete, id);
 
                 return new SuccessDataResult<SelectBranchesDto>(branches);
-            }
+            
         }
 
         public async Task<IDataResult<SelectBranchesDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
 
                 var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(
                 new
@@ -139,26 +128,21 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 return new SuccessDataResult<SelectBranchesDto>(branch);
 
-            }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync(ListBranchesParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, true, "");
                 var branches = queryFactory.GetList<ListBranchesDto>(query).ToList();
                 return new SuccessDataResult<IList<ListBranchesDto>>(branches);
-            }
+           
         }
 
         [ValidationAspect(typeof(UpdateBranchesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> UpdateAsync(UpdateBranchesDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = input.Id }, true, true, "");
                 var entity = queryFactory.Get<Branches>(entityQuery);
 
@@ -169,8 +153,6 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 if (list.Count > 0 && entity.Code != input.Code)
                 {
-                    connection.Close();
-                    connection.Dispose();
                     throw new DuplicateCodeException(L["UpdateControlManager"]);
                 }
 
@@ -199,7 +181,7 @@ namespace TsiErp.Business.Entities.Branch.Services
                 LogsAppService.InsertLogToDatabase(entity, branches, LoginedUserService.UserId, Tables.Branches, LogType.Update, entity.Id);
 
                 return new SuccessDataResult<SelectBranchesDto>(branches);
-            }
+
         }
 
         public async Task<IDataResult<SelectBranchesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)

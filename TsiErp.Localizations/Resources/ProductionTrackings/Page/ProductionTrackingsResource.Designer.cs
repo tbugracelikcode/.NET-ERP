@@ -908,6 +908,15 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen İş Emri seçin..
+        /// </summary>
+        public static string ValidatorWordOrderID {
+            get {
+                return ResourceManager.GetString("ValidatorWordOrderID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İŞ EMRİ KODU.
         /// </summary>
         public static string WordOrderModalGridCode {

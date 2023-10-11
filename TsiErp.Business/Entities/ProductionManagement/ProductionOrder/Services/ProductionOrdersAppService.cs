@@ -315,13 +315,6 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         }
 
 
-
-
-
-
-
-
-
         [ValidationAspect(typeof(CreateProductionOrdersValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrdersDto>> CreateAsync(CreateProductionOrdersDto input)
@@ -412,12 +405,13 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         }
 
+
         public async Task<IDataResult<SelectProductionOrdersDto>> GetAsync(Guid id)
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.ProductionOrders).Select("*")
+                        .Query().From(Tables.ProductionOrders).Select<ProductionOrders>(null)
                             .Join<SalesOrders>
                             (
                                 so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id , CustomerOrderNo  = so.CustomerOrderNr},
@@ -444,6 +438,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                                 p => new { LinkedProductCode = p.Code, LinkedProductName = p.Name, LinkedProductID = p.Id },
                                 nameof(ProductionOrders.LinkedProductID),
                                 nameof(Products.Id),
+                                "LinkedProduct",
                                 JoinType.Left
                             )
                              .Join<UnitSets>

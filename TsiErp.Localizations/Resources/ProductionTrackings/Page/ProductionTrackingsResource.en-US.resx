@@ -399,6 +399,9 @@
   <data name="ValidatorStationID" xml:space="preserve">
     <value>Please select a station.</value>
   </data>
+  <data name="ValidatorWordOrderID" xml:space="preserve">
+    <value>Please select a work order.</value>
+  </data>
   <data name="WordOrderModalGridCode" xml:space="preserve">
     <value>WORK ORDER CODE</value>
   </data>

@@ -399,6 +399,9 @@
   <data name="ValidatorStationID" xml:space="preserve">
     <value>Lütfen iş istasyonu seçin.</value>
   </data>
+  <data name="ValidatorWordOrderID" xml:space="preserve">
+    <value>Lütfen İş Emri seçin.</value>
+  </data>
   <data name="WordOrderModalGridCode" xml:space="preserve">
     <value>İŞ EMRİ KODU</value>
   </data>

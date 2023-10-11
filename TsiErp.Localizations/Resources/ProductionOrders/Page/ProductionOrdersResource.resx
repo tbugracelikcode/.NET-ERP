@@ -192,6 +192,9 @@
   <data name="ProductionOrderContextWorkOrders" xml:space="preserve">
     <value>İş Emirleri</value>
   </data>
+  <data name="ProductionOrderState" xml:space="preserve">
+    <value>ÜRETİM EMRİ DURUMU</value>
+  </data>
   <data name="StartDate" xml:space="preserve">
     <value>BAŞLANGIÇ TARİHİ</value>
   </data>

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.IO;
 using System.Security.Cryptography;
@@ -52,19 +53,24 @@ namespace TSI.QueryBuilder.BaseClasses
                 IsDeletedField = configuration.GetSection(SoftDeleteSectionName)["IsDeletedField"].ToString();
                 ConnectionString = configuration.GetSection("ConnectionStrings")["AppConnectionString"].ToString();
             }
+
+
         }
 
         public IDbConnection ConnectToDatabase()
         {
-            Connection = new SqlConnection();
-            Connection.ConnectionString = ConnectionString;
+            if (Connection == null)
+                Connection = new SqlConnection();
+
+
             if (Connection.State == ConnectionState.Closed)
             {
+                Connection.ConnectionString = ConnectionString;
                 Connection.Open();
                 return Connection;
             }
 
-            return null;
+            return Connection;
         }
 
         public bool DisconnectToDatabase()
@@ -88,6 +94,9 @@ namespace TSI.QueryBuilder.BaseClasses
         {
             try
             {
+                ConnectToDatabase();
+
+
                 var command = Connection.CreateCommand();
 
                 command.CommandTimeout = CommandTimeOut;
@@ -136,15 +145,27 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
+
                     return (T)query.SqlResult;
                 }
                 else
                 {
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
+
                     return default(T);
                 }
             }
             catch (Exception exp)
             {
+                Connection.Close();
+                Connection.Dispose();
+                GC.Collect();
+
                 var error = ErrorException.ThrowException(exp);
                 return default(T);
             }
@@ -154,6 +175,9 @@ namespace TSI.QueryBuilder.BaseClasses
         {
             try
             {
+                ConnectToDatabase();
+
+
                 var command = Connection.CreateCommand();
 
                 command.CommandTimeout = CommandTimeOut;
@@ -171,7 +195,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                         if (!string.IsNullOrEmpty(query.TablesJoinKeywords))
                         {
-                            query.Sql = "select " + query.Columns + " from " + query.TableName + " as " + query.TableName + " " + query.TablesJoinKeywords;                            
+                            query.Sql = "select " + query.Columns + " from " + query.TableName + " as " + query.TableName + " " + query.TablesJoinKeywords;
                         }
 
                         if (string.IsNullOrEmpty(query.WhereSentence))
@@ -203,15 +227,27 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
+
                     return query.SqlResult as IEnumerable<T>;
                 }
                 else
                 {
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
+
                     return null;
                 }
             }
             catch (Exception exp)
             {
+                Connection.Close();
+                Connection.Dispose();
+                GC.Collect();
+
                 var error = ErrorException.ThrowException(exp);
                 return null;
             }
@@ -221,6 +257,8 @@ namespace TSI.QueryBuilder.BaseClasses
         {
             try
             {
+                ConnectToDatabase();
+
                 var command = Connection.CreateCommand();
 
                 command.CommandTimeout = CommandTimeOut;
@@ -240,11 +278,19 @@ namespace TSI.QueryBuilder.BaseClasses
                 }
                 else
                 {
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
+
                     return null;
                 }
             }
             catch (Exception exp)
             {
+                Connection.Close();
+                Connection.Dispose();
+                GC.Collect();
+
                 var error = ErrorException.ThrowException(exp);
                 return null;
             }
@@ -254,6 +300,8 @@ namespace TSI.QueryBuilder.BaseClasses
         {
             try
             {
+                ConnectToDatabase();
+
                 var command = Connection.CreateCommand();
 
                 command.CommandTimeout = CommandTimeOut;
@@ -285,16 +333,29 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     query.SqlResult = command.ExecuteReader().DataReaderMapToArray<T>();
 
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
+
+
                     return query.SqlResult as IEnumerable<T>;
                 }
                 else
                 {
+
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
 
                     return null;
                 }
             }
             catch (Exception exp)
             {
+                Connection.Close();
+                Connection.Dispose();
+                GC.Collect();
+
                 var error = ErrorException.ThrowException(exp);
                 return null;
             }
@@ -302,6 +363,9 @@ namespace TSI.QueryBuilder.BaseClasses
 
         public T Insert<T>(Query query, string returnIdCaption, bool useTransaction = true)
         {
+
+            ConnectToDatabase();
+
             IDbTransaction transaction = Connection.BeginTransaction();
 
             T returnValue = (T)Activator.CreateInstance(typeof(T));
@@ -337,10 +401,18 @@ namespace TSI.QueryBuilder.BaseClasses
 
                         query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
                         returnValue = (T)query.SqlResult;
+
+                        Connection.Close();
+                        Connection.Dispose();
+                        GC.Collect();
                     }
                     else
                     {
                         transaction.Rollback();
+
+                        Connection.Close();
+                        Connection.Dispose();
+                        GC.Collect();
                         return default(T);
                     }
                 }
@@ -394,6 +466,10 @@ namespace TSI.QueryBuilder.BaseClasses
                             query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
                             returnValue = (T)query.SqlResult;
+
+                            Connection.Close();
+                            Connection.Dispose();
+                            GC.Collect();
                         }
                     }
                 }
@@ -402,7 +478,12 @@ namespace TSI.QueryBuilder.BaseClasses
             }
             catch (Exception exp)
             {
+
                 transaction.Rollback();
+
+                Connection.Close();
+                Connection.Dispose();
+                GC.Collect();
                 var error = ErrorException.ThrowException(exp);
                 return default(T);
             }
@@ -410,6 +491,8 @@ namespace TSI.QueryBuilder.BaseClasses
 
         public T Update<T>(Query query, string returnIdCaption, bool useTransaction = true)
         {
+            ConnectToDatabase();
+
             IDbTransaction transaction = Connection.BeginTransaction();
 
             T returnValue = (T)Activator.CreateInstance(typeof(T));
@@ -447,10 +530,18 @@ namespace TSI.QueryBuilder.BaseClasses
 
                         query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
                         returnValue = (T)query.SqlResult;
+
+                        Connection.Close();
+                        Connection.Dispose();
+                        GC.Collect();
                     }
                     else
                     {
                         transaction.Rollback();
+
+                        Connection.Close();
+                        Connection.Dispose();
+                        GC.Collect();
                         return default(T);
                     }
                 }
@@ -514,6 +605,10 @@ namespace TSI.QueryBuilder.BaseClasses
                             query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
                             returnValue = (T)query.SqlResult;
+
+                            Connection.Close();
+                            Connection.Dispose();
+                            GC.Collect();
                         }
                     }
                 }
@@ -523,6 +618,10 @@ namespace TSI.QueryBuilder.BaseClasses
             catch (Exception exp)
             {
                 transaction.Rollback();
+
+                Connection.Close();
+                Connection.Dispose();
+                GC.Collect();
                 var error = ErrorException.ThrowException(exp);
                 return default(T);
             }
@@ -532,6 +631,8 @@ namespace TSI.QueryBuilder.BaseClasses
         {
             try
             {
+                ConnectToDatabase();
+
                 var command = Connection.CreateCommand();
 
                 command.CommandTimeout = CommandTimeOut;
@@ -542,15 +643,25 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     query.SqlResult = command.ExecuteReader();
 
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
+
                     return true;
                 }
                 else
                 {
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
                     return false;
                 }
             }
             catch (Exception exp)
             {
+                Connection.Close();
+                Connection.Dispose();
+                GC.Collect();
                 var error = ErrorException.ThrowException(exp);
                 return false;
             }
@@ -558,6 +669,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
         public bool Delete(Query query, bool useTransaction = true)
         {
+            ConnectToDatabase();
             IDbTransaction transaction = Connection.BeginTransaction();
             try
             {
@@ -573,17 +685,26 @@ namespace TSI.QueryBuilder.BaseClasses
                     query.SqlResult = command.ExecuteReader();
                     transaction.Commit();
 
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
                     return true;
                 }
                 else
                 {
                     transaction.Rollback();
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
                     return false;
                 }
             }
             catch (Exception exp)
             {
                 transaction.Rollback();
+                Connection.Close();
+                Connection.Dispose();
+                GC.Collect();
                 var error = ErrorException.ThrowException(exp);
                 return false;
             }
