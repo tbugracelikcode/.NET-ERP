@@ -232,6 +232,15 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hayır.
+        /// </summary>
+        public static string NoD2 {
+            get {
+                return ResourceManager.GetString("NoD2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -300,6 +309,15 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         public static string ValidatorSupplierID {
             get {
                 return ResourceManager.GetString("ValidatorSupplierID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evet.
+        /// </summary>
+        public static string YesD2 {
+            get {
+                return ResourceManager.GetString("YesD2", resourceCulture);
             }
         }
     }

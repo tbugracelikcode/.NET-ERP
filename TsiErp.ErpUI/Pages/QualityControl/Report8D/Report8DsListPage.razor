@@ -1,0 +1,1835 @@
+﻿@page "/report-8d"
+@layout MainLayout
+
+
+
+
+@inherits BaseListPage<SelectReport8DsDto, ListReport8DsDto, CreateReport8DsDto, UpdateReport8DsDto, ListReport8DsParameterDto>
+
+@inject IStringLocalizer<Report8DsResource> L
+@inject IReport8DsAppService Report8DsService
+@inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
+@inject IProductsAppService ProductsAppService
+@inject ITechnicalDrawingsAppService TechnicalDrawingsAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
+
+ if (!base.IsLoaded)
+    {
+<CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+    }
+    else
+    {
+<DevGridLayout ColumnCount="1" RowCount="3">
+    <GridLayoutItems>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIListPageTitleCard">
+                    <CardContent>
+                        <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIGridCards">
+
+                    <CardContent>
+                        <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ShowColumnMenu="true" ColumnMenuItems=@MenuItems DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                AllowSorting="true" Height="100%" ContextMenuItems="@GridContextMenu" Width="100%" class="GridZebra" Toolbar=@GridToolbarItems>
+                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                            <GridEvents ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListReport8DsDto"></GridEvents>
+                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                            <GridColumns>
+                                <GridColumn Field=@nameof(ListReport8DsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListReport8DsDto.CustomerName) HeaderText="@L["CustomerName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListReport8DsDto.SupplierName) HeaderText="@L["SupplierName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListReport8DsDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListReport8DsDto.ClaimOpeningDate) Format="dd.MM.yyyy" Type="ColumnType.Date" HeaderText="@L["Equipment"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                            </GridColumns>
+                        </SfGrid>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+
+            </Template>
+        </DxGridLayoutItem>
+    </GridLayoutItems>
+</DevGridLayout>
+
+<DxPopup @bind-Visible="base.EditPageVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["EditModalTitle"]"
+         Width="87%"
+         Height="74%"
+         MinWidth="1500px"
+         MinHeight="800px"
+         HeaderCssClass="HeaderTitleCss"
+         Showing="CrudModalShowing"
+         Closing="CrudModalClosing">
+    <BodyTemplate>
+
+        <DxGridLayout CssClass="TSIGridLayout">
+
+            <Rows>
+                <DxGridLayoutRow Height="96%" />
+            </Rows>
+
+            <Columns>
+                <DxGridLayoutColumn Width="1%" />
+                <DxGridLayoutColumn Width="98%" />
+                <DxGridLayoutColumn Width="1%" />
+            </Columns>
+
+            <Items>
+
+
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <SfTab>
+                            <TabItems>
+
+
+                                <TabItem>
+                                    <ChildContent>
+                                        <TabHeader Text="@L["Tab1Name"]"></TabHeader>
+                                    </ChildContent>
+                                    <ContentTemplate>
+
+                                        <DxGridLayout CssClass="TSIGridLayout">
+                                            <Rows>
+                                                <DxGridLayoutRow Height="16%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                            </Rows>
+                                            <Columns>
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="17.6%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="17.6%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="17.6%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="17.6%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="17.6%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                            </Columns>
+                                            <Items>
+
+                                                <DxGridLayoutItem Row="0" Column="1" RowSpan="3">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["TopicTitleLabel"] </strong></label><br />
+                                                        <SfTextBox Multiline=true CssClass="TSI8DMemoBox60" @bind-Value="DataSource.TopicTitle"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="0" Column="3">
+                                                    <Template>
+                                                        <br />
+                                                        <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="0" Column="5">
+                                                    <Template>
+                                                        <br />
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="0" Column="7">
+                                                    <Template>
+                                                        <br />
+                                                        <label class="TSIModalLabel"><strong>@L["Report8DRevisionLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="0" Column="9">
+                                                    <Template>
+                                                        <br />
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.Report8DRevision"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="3">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["SupplierLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="5">
+                                                    <Template>
+                                                        <SfTextBox @ref="@SuppliersNameButtonEdit" Created="@SuppliersNameOnCreateIcon" @bind-Value="DataSource.SupplierName" ShowClearButton=true ValueChange="SuppliersOnValueChange"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="7">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["DateInterimReportD3Label"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="9">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.DateInterimReportD3"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="3">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["CustomerLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="5">
+                                                    <Template>
+                                                        <SfTextBox @ref="@CustomersNameButtonEdit" Created="@CustomersNameOnCreateIcon" @bind-Value="DataSource.CustomerName" ShowClearButton=true ValueChange="CustomersOnValueChange"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="7">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["DateInterimReportD5Label"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="9">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.DateInterimReportD5"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="3">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["DateInterimReportD5Label"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="5">
+                                                    <Template>
+                                                        <SfDatePicker Enabled=false @bind-Value="DataSource.ClaimOpeningDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="7">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["DateFinalReleaseLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="9">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.DateFinalRelease"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="1">
+                                                    <Template>
+
+                                                        <label class="TSIModalLabel"><strong>@L["ProductNameLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="3">
+                                                    <Template>
+                                                        <SfTextBox @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="DataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="7">
+                                                    <Template>
+
+                                                        <label class="TSIModalLabel"><strong>@L["SupplierNameLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="9">
+                                                    <Template>
+                                                        <SfTextBox Enabled=false CssClass="TSI8DTxtBox" @bind-Value="DataSource.SupplierName"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="1">
+                                                    <Template>
+
+                                                        <label class="TSIModalLabel"><strong>@L["TechnicalDrawingNoLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="3">
+                                                    <Template>
+                                                        <SfTextBox @ref="@TechnicalDrawingButtonEdit" Created="@TechnicalDrawingOnCreateIcon" @bind-Value="DataSource.TechnicalDrawingNo" ShowClearButton=true ValueChange="TechnicalDrawingOnValueChange"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="7">
+                                                    <Template>
+
+                                                        <label class="TSIModalLabel"><strong>@L["SupplierNoLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="9">
+                                                    <Template>
+                                                        <SfTextBox Enabled=false CssClass="TSI8DTxtBox" @bind-Value="DataSource.SupplierNo"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="1">
+                                                    <Template>
+
+                                                        <label class="TSIModalLabel"><strong>@L["DrawingIndexLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.DrawingIndex"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="7">
+                                                    <Template>
+
+                                                        <label class="TSIModalLabel"><strong>@L["ProductionPlantLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="9">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.ProductionPlant"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="7" Column="1">
+                                                    <Template>
+
+                                                        <label class="TSIModalLabel"><strong>@L["ClaimingPlantsLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="7" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.ClaimingPlants"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="7" Column="7">
+                                                    <Template>
+
+                                                        <label class="TSIModalLabel"><strong>@L["PartNumberLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="7" Column="9">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PartNumber"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+
+
+
+                                            </Items>
+                                        </DxGridLayout>
+
+                                    </ContentTemplate>
+                                </TabItem>
+
+                                <TabItem>
+                                    <ChildContent>
+                                        <TabHeader Text="@L["Tab2Name"]"></TabHeader>
+                                    </ChildContent>
+                                    <ContentTemplate>
+
+                                        <DxGridLayout CssClass="TSIGridLayout">
+                                            <Rows>
+                                                <DxGridLayoutRow Height="16%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                            </Rows>
+                                            <Columns>
+                                                <DxGridLayoutColumn Width="4%" />
+                                                <DxGridLayoutColumn Width="20%" />
+                                                <DxGridLayoutColumn Width="4%" />
+                                                <DxGridLayoutColumn Width="20%" />
+                                                <DxGridLayoutColumn Width="4%" />
+                                                <DxGridLayoutColumn Width="20%" />
+                                                <DxGridLayoutColumn Width="4%" />
+                                                <DxGridLayoutColumn Width="20%" />
+                                                <DxGridLayoutColumn Width="4%" />
+                                            </Columns>
+                                            <Items>
+
+                                                <DxGridLayoutItem Row="0" Column="1">
+                                                    <Template>
+                                                        <br />
+                                                        <center>   <label class="TSIModalLabel"><strong>@L["SponsorLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="0" Column="3">
+                                                    <Template>
+                                                        <br />
+                                                        <center> <label class="TSIModalLabel"><strong>@L["SponsorFunctionDepartmentLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="0" Column="5">
+                                                    <Template>
+                                                        <br />
+                                                       <center>  <label class="TSIModalLabel"><strong>@L["SponsorPhoneLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="0" Column="7">
+                                                    <Template>
+                                                        <br />
+                                                       <center>  <label class="TSIModalLabel"><strong>@L["SponsorEMailLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.Sponsor"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.SponsorFunctionDepartment"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.SponsorPhone"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="7">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.SponsorEMail"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="1">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["TeamLeaderLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="3">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["TeamLeaderFunctionDepartmentLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="5">
+                                                    <Template>
+                                                      <center>  <label class="TSIModalLabel"><strong>@L["TeamLeaderPhoneLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="7">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["TeamLeaderEMailLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamLeader"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamLeaderFunctionDepartment"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamLeaderPhone"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="7">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamLeaderEMail"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="1">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["TeamMemberLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="3">
+                                                    <Template>
+                                                        <center><label class="TSIModalLabel"><strong>@L["TeamMemberFunctionDepartmentLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="5">
+                                                    <Template>
+                                                        <center><label class="TSIModalLabel"><strong>@L["TeamMemberPhoneLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="7">
+                                                    <Template>
+                                                        <center><label class="TSIModalLabel"><strong>@L["TeamMemberEMailLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamMember1"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamMember1FunctionDepartment"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamMember1Phone"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="7">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamMember1EMail"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamMember2"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamMember2FunctionDepartment"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamMember2Phone"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="7">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamMember2EMail"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="7" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamMember3"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="7" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamMember3FunctionDepartment"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="7" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamMember3Phone"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="7" Column="7">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamMember3EMail"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+
+                                            </Items>
+                                        </DxGridLayout>
+
+                                    </ContentTemplate>
+                                </TabItem>
+
+
+                                <TabItem>
+                                    <ChildContent>
+                                        <TabHeader Text="@L["Tab3Name"]"></TabHeader>
+                                    </ChildContent>
+                                    <ContentTemplate>
+
+                                        <DxGridLayout CssClass="TSIGridLayout">
+                                            <Rows>
+                                                <DxGridLayoutRow Height="16%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                            </Rows>
+                                            <Columns>
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="17.6%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="17.6%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="17.6%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="17.6%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="17.6%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                            </Columns>
+                                            <Items>
+
+
+                                                <DxGridLayoutItem Row="1" Column="1">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["DeviationsSymptomsLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="3" ColumnSpan="7">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.DeviationsSymptoms"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="1">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["DeviationsProblemsLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="3" ColumnSpan="7">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.DeviationsProblems"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="1">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["DeliveredQuantityLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="3">
+                                                    <Template>
+                                                        <SfNumericTextBox CssClass="TSI8DTxtBox" TValue="decimal" Min="0" @bind-Value="DataSource.DeliveredQuantity"></SfNumericTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="7">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["ClaimedQuantityLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="9">
+                                                    <Template>
+                                                        <SfNumericTextBox CssClass="TSI8DTxtBox" TValue="decimal" Min="0" @bind-Value="DataSource.ClaimedQuantity"></SfNumericTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="1">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["OtherAffectedPlantsLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="3" ColumnSpan="7">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.OtherAffectedPlants"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="1">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["DeliveredQuantityLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="3">
+                                                    <Template>
+                                                        <SfComboBox CssClass="TSI8DTxtBox" TValue="string" TItem="D2ComplaintComboBox" DataSource="@_d2ComplaintComboBox">
+                                                            <ComboBoxEvents TItem="D2ComplaintComboBox" TValue="string" ValueChange="@D2ComplaintComboBoxValueChangeHandler"></ComboBoxEvents>
+                                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                        </SfComboBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+
+
+                                            </Items>
+                                        </DxGridLayout>
+
+                                    </ContentTemplate>
+                                </TabItem>
+
+                                  <TabItem>
+                                    <ChildContent>
+                                        <TabHeader Text="@L["Tab4Name"]"></TabHeader>
+                                    </ChildContent>
+                                    <ContentTemplate>
+
+                                        <DxGridLayout CssClass="TSIGridLayout">
+                                            <Rows>
+                                                <DxGridLayoutRow Height="16%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                            </Rows>
+                                            <Columns>
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="7.63%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="7.63%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="7.63%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="7.63%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="7.63%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="7.63%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="7.63%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="7.63%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="7.63%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="7.63%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="7.63%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                            </Columns>
+                                            <Items>
+
+
+                                                <DxGridLayoutItem Row="0" Column="1" ColumnSpan="21">
+                                                    <Template>
+                                                        <br/>
+                                                        <label class="TSIModalLabel"><strong>@L["D3DescriptionLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="1">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["D3SortingLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="1" Column="5" ColumnSpan="5">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["AtSupplierLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="11" ColumnSpan="5">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["InTransitLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="17" ColumnSpan="5">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["AtCustomerLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="1" ColumnSpan="3">
+                                                    <Template>
+                                                       <label class="TSIModalLabel"><strong>@L["ResultofPartLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="2" Column="5">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["BlockedLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="7">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["CheckedLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="9">
+                                                    <Template>
+                                                      <center>  <label class="TSIModalLabel"><strong>@L["DefectLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="11">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["BlockedLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="13">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["CheckedLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="15">
+                                                    <Template>
+                                                      <center>  <label class="TSIModalLabel"><strong>@L["DefectLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="2" Column="17">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["BlockedLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="19">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["CheckedLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="21">
+                                                    <Template>
+                                                      <center>  <label class="TSIModalLabel"><strong>@L["DefectLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                  <DxGridLayoutItem Row="3" Column="1">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["ContainmentActionDateLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="3">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.ContainmentActionDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                  <DxGridLayoutItem Row="3" Column="5">
+                                                    <Template>
+                                                        <SfNumericTextBox CssClass="TSI8DTxtBox" TValue="int" Min="0" @bind-Value="DataSource.AtSupplierBlocked"></SfNumericTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="7">
+                                                    <Template>
+                                                        <SfNumericTextBox CssClass="TSI8DTxtBox" TValue="int" Min="0" @bind-Value="DataSource.AtSupplierChecked"></SfNumericTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="9">
+                                                    <Template>
+                                                        <SfNumericTextBox CssClass="TSI8DTxtBox" TValue="int" Min="0" @bind-Value="DataSource.AtSupplierDefect"></SfNumericTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="11">
+                                                    <Template>
+                                                        <SfNumericTextBox CssClass="TSI8DTxtBox" TValue="int" Min="0" @bind-Value="DataSource.InTransitBlocked"></SfNumericTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="13">
+                                                    <Template>
+                                                        <SfNumericTextBox CssClass="TSI8DTxtBox" TValue="int" Min="0" @bind-Value="DataSource.InTransitChecked"></SfNumericTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="15">
+                                                    <Template>
+                                                        <SfNumericTextBox CssClass="TSI8DTxtBox" TValue="int" Min="0" @bind-Value="DataSource.InTransitDefect"></SfNumericTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="17">
+                                                    <Template>
+                                                        <SfNumericTextBox CssClass="TSI8DTxtBox" TValue="int" Min="0" @bind-Value="DataSource.AtCustomerBlocked"></SfNumericTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="19">
+                                                    <Template>
+                                                        <SfNumericTextBox CssClass="TSI8DTxtBox" TValue="int" Min="0" @bind-Value="DataSource.AtCustomerChecked"></SfNumericTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="21">
+                                                    <Template>
+                                                        <SfNumericTextBox CssClass="TSI8DTxtBox" TValue="int" Min="0" @bind-Value="DataSource.AtCustomerDefect"></SfNumericTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="4" Column="1">
+                                                    <Template>
+                                                        <center><label class="TSIModalLabel"><strong>@L["D3NoLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="3" ColumnSpan="7">
+                                                    <Template>
+                                                        <center><label class="TSIModalLabel"><strong>@L["D3ContaintmentActionLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="11">
+                                                    <Template>
+                                                        <center><label class="TSIModalLabel"><strong>@L["D3ImplementationDateLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="4" Column="13" ColumnSpan="3">
+                                                    <Template>
+                                                        <center><label class="TSIModalLabel"><strong>@L["D3ResponsibleLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                  <DxGridLayoutItem Row="4" Column="17" ColumnSpan="5">
+                                                    <Template>
+                                                        <center><label class="TSIModalLabel"><strong>@L["D3PotentailRiskLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="5" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Ca1"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="3" ColumnSpan="7">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA1ContainmentAction"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="11">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA1ImplementationDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="5" Column="13" ColumnSpan="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA1Responsible"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                  <DxGridLayoutItem Row="5" Column="17" ColumnSpan="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA1PotentialRisk"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="6" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Ca2"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="3" ColumnSpan="7">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA2ContainmentAction"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="11">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA2ImplementationDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="6" Column="13" ColumnSpan="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA2Responsible"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                  <DxGridLayoutItem Row="6" Column="17" ColumnSpan="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA2PotentialRisk"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="7" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Ca3"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="7" Column="3" ColumnSpan="7">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA3ContainmentAction"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="7" Column="11">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA3ImplementationDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="7" Column="13" ColumnSpan="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA3Responsible"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                  <DxGridLayoutItem Row="7" Column="17" ColumnSpan="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA3PotentialRisk"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                              
+
+                                            </Items>
+                                        </DxGridLayout>
+
+                                    </ContentTemplate>
+                                </TabItem>
+
+                                <TabItem>
+                                    <ChildContent>
+                                        <TabHeader Text="@L["Tab5Name"]"></TabHeader>
+                                    </ChildContent>
+                                    <ContentTemplate>
+
+                                        <DxGridLayout CssClass="TSIGridLayout">
+                                            <Rows>
+                                                <DxGridLayoutRow Height="16%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                            </Rows>
+                                            <Columns>
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="6%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="15%" />
+                                                <DxGridLayoutColumn Width="45%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="10%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="17%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                            </Columns>
+                                            <Items>
+
+                                                 <DxGridLayoutItem Row="0" Column="1" ColumnSpan="8">
+                                                    <Template>
+                                                        <br/>
+                                                        <label class="TSIModalLabel"><strong>@L["D4DescriptionLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="3">
+                                                    <Template>
+                                                        <SfComboBox CssClass="TSI8DTxtBox" TValue="string" Placeholder=@L["D4FailureOccurancePlaceHolder"] TItem="D4FailureOccuranceComboBox" DataSource="@_d4FailureOccuranceComboBox">
+                                                            <ComboBoxEvents TItem="D4FailureOccuranceComboBox" TValue="string" ValueChange="@D4FailureOccuranceComboBoxValueChangeHandler"></ComboBoxEvents>
+                                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                        </SfComboBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="3">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["D4OccuranceLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="2" Column="6">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D4ShareLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="8">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D4AnalysisMethodLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Ro1"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="3" ColumnSpan="2">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.RO1OccuranceReason"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="6">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.RO1Share"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="8">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.RO1AnalysisMethod"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="4" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Ro2"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="4" Column="3" ColumnSpan="2">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.RO2OccuranceReason"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="6">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.RO2Share"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="4" Column="8">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.RO2AnalysisMethod"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="5" Column="3">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["D4NonDetectionLabel"] </strong></label>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="5" Column="6">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D4ShareLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="8">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D4AnalysisMethodLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Rn1"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="6" Column="3" ColumnSpan="2">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.RN1NonDetectionReason"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="6">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.RN1Share"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="6" Column="8">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.RN1AnalysisMethod"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="7" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Rn2"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="7" Column="3" ColumnSpan="2">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.RN2NonDetectionReason"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="7" Column="6">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.RN2Share"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="7" Column="8">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.RN2AnalysisMethod"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+
+                                            </Items>
+                                        </DxGridLayout>
+
+                                    </ContentTemplate>
+                                </TabItem>
+
+                                 <TabItem>
+                                    <ChildContent>
+                                        <TabHeader Text="@L["Tab6Name"]"></TabHeader>
+                                    </ChildContent>
+                                    <ContentTemplate>
+
+                                        <DxGridLayout CssClass="TSIGridLayout">
+                                            <Rows>
+                                                <DxGridLayoutRow Height="16%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                            </Rows>
+                                            <Columns>
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="6%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="10%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="30%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="10%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="20%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="15%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                            </Columns>
+                                            <Items>
+
+                                                <DxGridLayoutItem Row="1" Column="1">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D5NoLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="3">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D5RootCauseLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="1" Column="5">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D5PotentialCorrectiveActionLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="1" Column="7">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D5ImplementedLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="1" Column="9">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D5ResponsibleLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="1" Column="11">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D5PlannedDateLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Pa1"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA1RootCause"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA1PotentialCorrectiveAction"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="2" Column="7">
+                                                    <Template>
+                                                        
+                                                        <SfComboBox CssClass="TSI8DTxtBox" TValue="string" TItem="D5PA1ImplementedComboBox" DataSource="@_D5PA1ImplementedComboBox">
+                                                            <ComboBoxEvents TItem="D5PA1ImplementedComboBox" TValue="string" ValueChange="@D5PA1ImplementedComboBoxValueChangeHandler"></ComboBoxEvents>
+                                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                        </SfComboBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="2" Column="9">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA1Responsible"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="2" Column="11">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA1PlannedImplementationDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Pa2"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA2RootCause"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA2PotentialCorrectiveAction"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="7">
+                                                    <Template>
+                                                        
+                                                        <SfComboBox CssClass="TSI8DTxtBox" TValue="string" TItem="D5PA2ImplementedComboBox" DataSource="@_D5PA2ImplementedComboBox">
+                                                            <ComboBoxEvents TItem="D5PA2ImplementedComboBox" TValue="string" ValueChange="@D5PA2ImplementedComboBoxValueChangeHandler"></ComboBoxEvents>
+                                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                        </SfComboBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="9">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA2Responsible"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="11">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA2PlannedImplementationDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="4" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Pa3"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA3RootCause"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA3PotentialCorrectiveAction"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="4" Column="7">
+                                                    <Template>
+                                                        
+                                                        <SfComboBox CssClass="TSI8DTxtBox" TValue="string" TItem="D5PA3ImplementedComboBox" DataSource="@_D5PA3ImplementedComboBox">
+                                                            <ComboBoxEvents TItem="D5PA3ImplementedComboBox" TValue="string" ValueChange="@D5PA3ImplementedComboBoxValueChangeHandler"></ComboBoxEvents>
+                                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                        </SfComboBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="4" Column="9">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA3Responsible"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="4" Column="11">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA3PlannedImplementationDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Pa4"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA4RootCause"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA4PotentialCorrectiveAction"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="5" Column="7">
+                                                    <Template>
+                                                        
+                                                        <SfComboBox CssClass="TSI8DTxtBox" TValue="string" TItem="D5PA4ImplementedComboBox" DataSource="@_D5PA4ImplementedComboBox">
+                                                            <ComboBoxEvents TItem="D5PA4ImplementedComboBox" TValue="string" ValueChange="@D5PA4ImplementedComboBoxValueChangeHandler"></ComboBoxEvents>
+                                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                        </SfComboBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="5" Column="9">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA4Responsible"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="5" Column="11">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA4PlannedImplementationDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="6" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Pa5"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA5RootCause"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA5PotentialCorrectiveAction"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="6" Column="7">
+                                                    <Template>
+                                                        
+                                                        <SfComboBox CssClass="TSI8DTxtBox" TValue="string" TItem="D5PA5ImplementedComboBox" DataSource="@_D5PA5ImplementedComboBox">
+                                                            <ComboBoxEvents TItem="D5PA5ImplementedComboBox" TValue="string" ValueChange="@D5PA5ImplementedComboBoxValueChangeHandler"></ComboBoxEvents>
+                                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                        </SfComboBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="6" Column="9">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA5Responsible"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="6" Column="11">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA5PlannedImplementationDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+                                              
+
+
+
+
+                                            </Items>
+                                        </DxGridLayout>
+
+                                    </ContentTemplate>
+                                </TabItem>
+
+                                 <TabItem>
+                                    <ChildContent>
+                                        <TabHeader Text="@L["Tab7Name"]"></TabHeader>
+                                    </ChildContent>
+                                    <ContentTemplate>
+
+                                        <DxGridLayout CssClass="TSIGridLayout">
+                                            <Rows>
+                                                <DxGridLayoutRow Height="16%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                                <DxGridLayoutRow Height="12%" />
+                                            </Rows>
+                                            <Columns>
+                                                <DxGridLayoutColumn Width="2%" />
+                                                <DxGridLayoutColumn Width="5%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="10%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="30%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="10%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="10%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="10%" />
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="15%" />
+                                                <DxGridLayoutColumn Width="2%" />
+                                            </Columns>
+                                            <Items>
+
+                                                <DxGridLayoutItem Row="1" Column="1">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D6NoLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="1" Column="3">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D6RootCauseLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="1" Column="5">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D6CorrectiveActionLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="1" Column="7">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D6ImplementionDateLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="1" Column="9">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D6EffectiveFromLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="1" Column="11">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D6ValidatedOnLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="1" Column="13">
+                                                    <Template>
+                                                       <center> <label class="TSIModalLabel"><strong>@L["D6ProofAttachedLabel"] </strong></label></center>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Ia1"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA1RootCause"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA1CorrectiveAction"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="2" Column="7">
+                                                    <Template>
+                                                        
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA1ImplementationDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="2" Column="9">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA1EffectiveFromDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="2" Column="11">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA1ValidatedDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="2" Column="13">
+                                                    <Template> 
+                                                        <SfComboBox CssClass="TSI8DTxtBox" TValue="string" TItem="D6IA1ProofAttachedComboBox" DataSource="@_D6IA1ProofAttachedComboBox">
+                                                            <ComboBoxEvents TItem="D6IA1ProofAttachedComboBox" TValue="string" ValueChange="@D6IA1ProofAttachedComboBoxValueChangeHandler"></ComboBoxEvents>
+                                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                        </SfComboBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Ia2"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA2RootCause"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA2CorrectiveAction"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="7">
+                                                    <Template>
+                                                        
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA2ImplementationDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="9">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA2EffectiveFromDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="3" Column="11">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA2ValidatedDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="3" Column="13">
+                                                    <Template> 
+                                                        <SfComboBox CssClass="TSI8DTxtBox" TValue="string" TItem="D6IA2ProofAttachedComboBox" DataSource="@_D6IA2ProofAttachedComboBox">
+                                                            <ComboBoxEvents TItem="D6IA2ProofAttachedComboBox" TValue="string" ValueChange="@D6IA2ProofAttachedComboBoxValueChangeHandler"></ComboBoxEvents>
+                                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                        </SfComboBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="4" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Ia3"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA3RootCause"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA3CorrectiveAction"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="4" Column="7">
+                                                    <Template>
+                                                        
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA3ImplementationDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="4" Column="9">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA3EffectiveFromDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="4" Column="11">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA3ValidatedDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="4" Column="13">
+                                                    <Template> 
+                                                        <SfComboBox CssClass="TSI8DTxtBox" TValue="string" TItem="D6IA3ProofAttachedComboBox" DataSource="@_D6IA3ProofAttachedComboBox">
+                                                            <ComboBoxEvents TItem="D6IA3ProofAttachedComboBox" TValue="string" ValueChange="@D6IA3ProofAttachedComboBoxValueChangeHandler"></ComboBoxEvents>
+                                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                        </SfComboBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="5" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Ia4"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA4RootCause"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA4CorrectiveAction"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="5" Column="7">
+                                                    <Template>
+                                                        
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA4ImplementationDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="5" Column="9">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA4EffectiveFromDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="5" Column="11">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA4ValidatedDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="5" Column="13">
+                                                    <Template> 
+                                                        <SfComboBox CssClass="TSI8DTxtBox" TValue="string" TItem="D6IA4ProofAttachedComboBox" DataSource="@_D6IA4ProofAttachedComboBox">
+                                                            <ComboBoxEvents TItem="D6IA4ProofAttachedComboBox" TValue="string" ValueChange="@D6IA4ProofAttachedComboBoxValueChangeHandler"></ComboBoxEvents>
+                                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                        </SfComboBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="6" Column="1">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" Enabled=false @bind-Value="Ia5"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="3">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA5RootCause"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="5">
+                                                    <Template>
+                                                        <SfTextBox CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA5CorrectiveAction"></SfTextBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="6" Column="7">
+                                                    <Template>
+                                                        
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA5ImplementationDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="6" Column="9">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA5EffectiveFromDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                 <DxGridLayoutItem Row="6" Column="11">
+                                                    <Template>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA5ValidatedDate"></SfDatePicker>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                <DxGridLayoutItem Row="6" Column="13">
+                                                    <Template> 
+                                                        <SfComboBox CssClass="TSI8DTxtBox" TValue="string" TItem="D6IA5ProofAttachedComboBox" DataSource="@_D6IA5ProofAttachedComboBox">
+                                                            <ComboBoxEvents TItem="D6IA5ProofAttachedComboBox" TValue="string" ValueChange="@D6IA5ProofAttachedComboBoxValueChangeHandler"></ComboBoxEvents>
+                                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                        </SfComboBox>
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                                
+
+
+                                            </Items>
+                                        </DxGridLayout>
+
+                                    </ContentTemplate>
+                                </TabItem>
+
+
+                            </TabItems>
+                        </SfTab>
+                    </Template>
+                </DxGridLayoutItem>
+
+
+
+            </Items>
+
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+    </FooterContentTemplate>
+</DxPopup>
+
+    }
