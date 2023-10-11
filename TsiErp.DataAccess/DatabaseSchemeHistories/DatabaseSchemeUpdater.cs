@@ -90,6 +90,7 @@ using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanLine;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.ContractOperationPicture;
+using TsiErp.Entities.Entities.QualityControl.Report8D;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPC;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPCLine;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPC;
@@ -4014,6 +4015,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 OperationStockMovementsTable.Create();
+            }
+            #endregion
+
+            #region Report8Ds Table Created
+            Table Report8DsTable = model.CreateTable(Tables.Report8Ds);
+
+            if (Report8DsTable != null)
+            {
+                var properties = (typeof(Report8Ds)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(Report8DsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(Report8DsTable, "PK_" + Report8DsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        Report8DsTable.Indexes.Add(pkIndex);
+                    }
+
+                    Report8DsTable.Columns.Add(column);
+                }
+
+                Report8DsTable.Create();
             }
             #endregion
 

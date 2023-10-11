@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractProductionTracking.Dtos;
@@ -65,7 +66,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                        .Cast<ProductSupplyFormEnum>()
                        .Select(x => new SelectProductsDto
                        {
-                           SupplyForm = x ,
+                           SupplyForm = x,
                            SupplyFormName = type.GetMember(x.ToString())
                        .First()
                        .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
@@ -103,6 +104,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         public List<SelectContractProductionTrackingsDto> ContractProductionTrackingsList = new List<SelectContractProductionTrackingsDto>();
 
+        public List<ListGrandTotalStockMovementsDto> StockAmountsList = new List<ListGrandTotalStockMovementsDto>();
+
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -117,6 +120,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         private SfGrid<ListRoutesDto> _RouteGrid;
         private SfGrid<SelectRouteLinesDto> _RouteLineGrid;
         private SfGrid<SelectContractProductionTrackingsDto> _ContractProductionTrackingGrid;
+        private SfGrid<ListGrandTotalStockMovementsDto> _StockAmountsGrid;
 
         #region Değişkenler
 
@@ -140,6 +144,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         public bool ContractProductionTrackingsPopup = false;
         public bool TechnicalDrawingIsChange = false;
         public bool ProductReferanceNumberIsChange = false;
+
+        public bool StockAmountsPopup = false;
+        public bool isHM = false;
+        public bool isYM = false;
+        public bool isMM = false;
+        public bool isTM = false;
 
         List<string> Drawers = new List<string>();
 
@@ -166,8 +176,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         string PDFFileName;
 
         #endregion
-
-
 
         protected override async Task OnSubmit()
         {
@@ -233,6 +241,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextBOMs"], Id = "billsofmaterials" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextRoutes"], Id = "routes" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextContProdTrackings"], Id = "contractproductiontrackings" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextStockAmounts"], Id = "stockamounts" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextDelete"], Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextRefresh"], Id = "refresh" });
             }
@@ -1036,6 +1045,19 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         #endregion
 
+        #region Depo Toplamları Modalı İşlemleri
+
+        public void HideStockAmountsPopup()
+        {
+            isHM = false;
+            isMM = false;
+            isTM = false;
+            isYM = false;
+            StockAmountsPopup = false;
+        }
+
+        #endregion
+
         public override async void OnContextMenuClick(ContextMenuClickEventArgs<ListProductsDto> args)
         {
             switch (args.Item.Id)
@@ -1093,7 +1115,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                     break;
 
-
                 case "purchaseprices":
 
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
@@ -1132,7 +1153,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                     break;
 
-
                 case "billsofmaterials":
 
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
@@ -1142,6 +1162,32 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                     await InvokeAsync(StateHasChanged);
 
+
+                    break;
+
+                case "stockamounts":
+
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    isHM = false;
+                    isYM = false;
+                    isMM = false;
+                    isTM = false;
+
+                    StockAmountsList = (await GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Data.Where(t => t.ProductID == DataSource.Id).ToList();
+
+                    switch (DataSource.ProductType)
+                    {
+                        case ProductTypeEnum.TM: isTM = true; break;
+                        case ProductTypeEnum.MM: isMM = true; break;
+                        case ProductTypeEnum.HM: isHM = true; break;
+                        case ProductTypeEnum.YM: isYM = true; break;
+
+                    }
+
+                    StockAmountsPopup = true;
+
+                    await InvokeAsync(StateHasChanged);
 
                     break;
 
@@ -1168,7 +1214,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
 
                     break;
-
 
                 case "delete":
 
@@ -1257,12 +1302,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ProductsChildMenu")
             };
 
-            foreach(var item in supplyforms)
+            foreach (var item in supplyforms)
             {
                 item.SupplyFormName = L[item.SupplyFormName];
             }
 
-            foreach(var item in types)
+            foreach (var item in types)
             {
                 item.ProductTypeName = L[item.ProductTypeName];
             }
