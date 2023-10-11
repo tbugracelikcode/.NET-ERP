@@ -13,7 +13,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// <summary>
         /// İş Emri ID
         /// </summary>
-        public Guid WorkOrderID { get; set; }
+        public Guid? WorkOrderID { get; set; }
         /// <summary>
         /// Cari Hesap ID
         /// </summary>

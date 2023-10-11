@@ -41,6 +41,8 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.FicheNo) HeaderText="@L["FicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.ProductionOrderState) HeaderText="@L["ProductionOrderState"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.StartDate) Format="dd.MM.yyyy" HeaderText="@L["StartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.EndDate) Format="dd.MM.yyyy" HeaderText="@L["EndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.PlannedQuantity) HeaderText="@L["PlannedQuantity"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>

@@ -24,22 +24,19 @@ namespace TsiErp.Business.Entities.Menu.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMenusDto>> CreateAsync(CreateMenusDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            Guid addedEntityId = GuidGenerator.CreateGuid();
+
+            var query = queryFactory.Query().From(Tables.Menus).Insert(new CreateMenusDto
             {
-                Guid addedEntityId = GuidGenerator.CreateGuid();
-
-                var query = queryFactory.Query().From(Tables.Menus).Insert(new CreateMenusDto
-                {
-                    Id = addedEntityId,
-                    MenuName = input.MenuName,
-                    ParentMenuId = input.ParentMenuId
-                });
+                Id = addedEntityId,
+                MenuName = input.MenuName,
+                ParentMenuId = input.ParentMenuId
+            });
 
 
-                var menus = queryFactory.Insert<SelectMenusDto>(query, "Id", true);
+            var menus = queryFactory.Insert<SelectMenusDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectMenusDto>(menus);
-            }
+            return new SuccessDataResult<SelectMenusDto>(menus);
 
         }
 
@@ -47,35 +44,26 @@ namespace TsiErp.Business.Entities.Menu.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            var query = queryFactory.Query().From(Tables.Menus).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.Menus).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var menus = queryFactory.Update<SelectMenusDto>(query, "Id", true);
 
-                var menus = queryFactory.Update<SelectMenusDto>(query, "Id", true);
-
-                return new SuccessDataResult<SelectMenusDto>(menus);
-            }
+            return new SuccessDataResult<SelectMenusDto>(menus);
 
         }
 
 
         public async Task<IDataResult<SelectMenusDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(
+            new
             {
+                Id = id
+            }, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(
-                new
-                {
-                    Id = id
-                }, false, false, "");
+            var menus = queryFactory.Get<SelectMenusDto>(query);
 
-                var menus = queryFactory.Get<SelectMenusDto>(query);
-
-                return new SuccessDataResult<SelectMenusDto>(menus);
-
-            }
+            return new SuccessDataResult<SelectMenusDto>(menus);
 
         }
 
@@ -83,12 +71,9 @@ namespace TsiErp.Business.Entities.Menu.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMenusDto>>> GetListAsync(ListMenusParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(null, false, false, "").UseIsDelete(false);
-                var menus = queryFactory.GetList<ListMenusDto>(query).ToList();
-                return new SuccessDataResult<IList<ListMenusDto>>(menus);
-            }
+            var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(null, false, false, "").UseIsDelete(false);
+            var menus = queryFactory.GetList<ListMenusDto>(query).ToList();
+            return new SuccessDataResult<IList<ListMenusDto>>(menus);
 
         }
 
@@ -96,22 +81,19 @@ namespace TsiErp.Business.Entities.Menu.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMenusDto>> UpdateAsync(UpdateMenusDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.Menus).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entity = queryFactory.Get<Menus>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.Menus).Update(new UpdateMenusDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.Menus).Select("*").Where(new { Id = input.Id }, false, false, "");
-                var entity = queryFactory.Get<Menus>(entityQuery);
+                Id = input.Id,
+                ParentMenuId = input.ParentMenuId,
+                MenuName = input.MenuName
+            }).Where(new { Id = input.Id }, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.Menus).Update(new UpdateMenusDto
-                {
-                    Id = input.Id,
-                    ParentMenuId = input.ParentMenuId,
-                    MenuName = input.MenuName
-                }).Where(new { Id = input.Id }, false, false, "");
+            var menus = queryFactory.Update<SelectMenusDto>(query, "Id", true);
 
-                var menus = queryFactory.Update<SelectMenusDto>(query, "Id", true);
-
-                return new SuccessDataResult<SelectMenusDto>(menus);
-            }
+            return new SuccessDataResult<SelectMenusDto>(menus);
         }
 
         public async Task<IDataResult<SelectMenusDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)

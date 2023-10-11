@@ -192,6 +192,9 @@
   <data name="ProductionOrderContextWorkOrders" xml:space="preserve">
     <value>Work Orders</value>
   </data>
+  <data name="ProductionOrderState" xml:space="preserve">
+    <value>PRODUCTION ORDER STATE</value>
+  </data>
   <data name="StartDate" xml:space="preserve">
     <value>START DATE</value>
   </data>

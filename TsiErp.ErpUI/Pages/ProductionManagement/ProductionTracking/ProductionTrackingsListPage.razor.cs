@@ -40,6 +40,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
         List<SelectProductsOperationLinesDto> OperationLineList = new List<SelectProductsOperationLinesDto>();
 
+
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = ProductionTrackingsAppService;
@@ -650,5 +651,101 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         #endregion
 
 
+        protected async override Task OnSubmit()
+        {
+
+            if (DataSource.Code.Length > 17)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["ValidatorCodeMaxLength"]);
+                return;
+            }
+
+            if (DataSource.WorkOrderID == Guid.Empty)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["ValidatorWordOrderID"]);
+                return;
+            }
+
+            if (DataSource.StationID == Guid.Empty)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["ValidatorStationID"]);
+                return;
+            }
+
+            if (DataSource.EmployeeID == Guid.Empty)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["ValidatorEmployeeID"]);
+                return;
+            }
+
+            if (DataSource.CurrentAccountCardID == Guid.Empty)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["ValidatorCurrentCardID"]);
+                return;
+            }
+
+            if (DataSource.ShiftID == Guid.Empty)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["ValidatorShiftID"]);
+                return;
+            }
+
+            if (DataSource.ProducedQuantity == 0)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["ValidatorProducedQuantity"]);
+                return;
+            }
+
+            SelectProductionTrackingsDto entity = null;
+
+            decimal controlProducedAmount = 0;
+
+            if (DataSource.Id != Guid.Empty)
+            {
+                entity = (await ProductionTrackingsAppService.GetAsync(DataSource.Id)).Data;
+
+                controlProducedAmount = Math.Abs(entity.ProducedQuantity - DataSource.ProducedQuantity);
+            }
+
+            controlProducedAmount = controlProducedAmount > 0 ? controlProducedAmount : DataSource.ProducedQuantity;
+
+            var workOrder = (await WorkOrdersAppService.GetAsync(DataSource.WorkOrderID)).Data;
+
+            if (workOrder != null)
+            {
+                if (workOrder.LineNr > 1)
+                {
+                    var previousWorkOrderId = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.ProductionOrderID == workOrder.ProductionOrderID && t.LineNr == workOrder.LineNr - 1).Select(t => t.Id).FirstOrDefault();
+
+                    var previousWorkOrder = (await WorkOrdersAppService.GetAsync(previousWorkOrderId)).Data;
+
+                    var previousOperationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(previousWorkOrder.ProductionOrderID.GetValueOrDefault(), previousWorkOrder.ProductsOperationID.GetValueOrDefault())).Data;
+
+                    if (previousOperationStockMovement.Id != Guid.Empty)
+                    {
+                        if (previousOperationStockMovement.TotalAmount > 0)
+                        {
+                            if (DataSource.ProducedQuantity > 0)
+                            {
+                                if (previousOperationStockMovement.TotalAmount < controlProducedAmount)
+                                {
+                                    await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["UIWarningOprStockControlMessage"]);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (DataSource.ProducedQuantity > DataSource.PlannedQuantity)
+                {
+                    await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["UIWarningQuantityControlMessage"]);
+                    return;
+                }
+
+                await base.OnSubmit();
+            }
+
+        }
     }
 }

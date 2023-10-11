@@ -33,181 +33,163 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectByDateStockMovementsDto>> CreateAsync(CreateByDateStockMovementsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
             {
+                Amount = input.Amount,
+                Date_ = input.Date_,
+                ProductID = input.ProductID,
+                TotalConsumption = input.TotalConsumption,
+                TotalGoodsIssue = input.TotalGoodsIssue,
+                TotalGoodsReceipt = input.TotalGoodsReceipt,
+                TotalProduction = input.TotalProduction,
+                TotalPurchaseOrder = input.TotalPurchaseOrder,
+                TotalPurchaseRequest = input.TotalPurchaseRequest,
+                TotalSalesOrder = input.TotalSalesOrder,
+                TotalSalesProposition = input.TotalSalesProposition,
+                TotalWastage = input.TotalWastage,
+                WarehouseID = input.WarehouseID,
+                BranchID = input.BranchID,
+                CreationTime = DateTime.Now,
+                CreatorId = LoginedUserService.UserId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = Guid.Empty,
+                DeletionTime = null,
+                Id = GuidGenerator.CreateGuid(),
+                IsDeleted = false,
+                LastModificationTime = null,
+                LastModifierId = Guid.Empty,
+            });
 
-                var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
-                {
-                    Amount = input.Amount,
-                    Date_ = input.Date_,
-                    ProductID = input.ProductID,
-                    TotalConsumption = input.TotalConsumption,
-                    TotalGoodsIssue = input.TotalGoodsIssue,
-                    TotalGoodsReceipt = input.TotalGoodsReceipt,
-                    TotalProduction = input.TotalProduction,
-                    TotalPurchaseOrder = input.TotalPurchaseOrder,
-                    TotalPurchaseRequest = input.TotalPurchaseRequest,
-                    TotalSalesOrder = input.TotalSalesOrder,
-                    TotalSalesProposition = input.TotalSalesProposition,
-                    TotalWastage = input.TotalWastage,
-                    WarehouseID = input.WarehouseID,
-                    BranchID = input.BranchID,
-                    CreationTime = DateTime.Now,
-                    CreatorId = LoginedUserService.UserId,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = Guid.Empty,
-                    DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
-                    IsDeleted = false,
-                    LastModificationTime = null,
-                    LastModifierId = Guid.Empty,
-                });
+            var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
 
-                var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Insert, byDateStockMovements.Id);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Insert, byDateStockMovements.Id);
-
-                return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovements);
-            }
+            return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovements);
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.ByDateStockMovements).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-                var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
+            var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Delete, id);
+            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Delete, id);
 
-                return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovements);
-            }
+            return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovements);
         }
 
         public async Task<IDataResult<SelectByDateStockMovementsDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory
-                        .Query().From(Tables.ByDateStockMovements).Select<ByDateStockMovements>(bd => new {bd.WarehouseID,bd.TotalWastage,bd.TotalSalesProposition,bd.TotalSalesOrder,bd.TotalPurchaseRequest,bd.TotalPurchaseOrder,bd.TotalProduction,bd.TotalGoodsReceipt,bd.TotalGoodsIssue,bd.TotalConsumption,bd.ProductID,bd.Id,bd.Date_,bd.DataOpenStatusUserId,bd.DataOpenStatus,bd.BranchID,bd.Amount })
-                            .Join<Products>
-                            (
-                                p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
-                                nameof(ByDateStockMovements.ProductID),
-                                nameof(Products.Id),
-                                JoinType.Left
-                            )
-                             .Join<Branches>
-                            (
-                                b => new { BranchID = b.Id, BranchCode = b.Code },
-                                nameof(ByDateStockMovements.BranchID),
-                                nameof(Branches.Id),
-                                JoinType.Left
-                            )
-                             .Join<Warehouses>
-                            (
-                                w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
-                                nameof(ByDateStockMovements.WarehouseID),
-                                nameof(Warehouses.Id),
-                                JoinType.Left
-                            )
-                            .Where(new { Id = id }, false, false, Tables.ByDateStockMovements);
+            var query = queryFactory
+                    .Query().From(Tables.ByDateStockMovements).Select<ByDateStockMovements>(bd => new { bd.WarehouseID, bd.TotalWastage, bd.TotalSalesProposition, bd.TotalSalesOrder, bd.TotalPurchaseRequest, bd.TotalPurchaseOrder, bd.TotalProduction, bd.TotalGoodsReceipt, bd.TotalGoodsIssue, bd.TotalConsumption, bd.ProductID, bd.Id, bd.Date_, bd.DataOpenStatusUserId, bd.DataOpenStatus, bd.BranchID, bd.Amount })
+                        .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(ByDateStockMovements.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                         .Join<Branches>
+                        (
+                            b => new { BranchID = b.Id, BranchCode = b.Code },
+                            nameof(ByDateStockMovements.BranchID),
+                            nameof(Branches.Id),
+                            JoinType.Left
+                        )
+                         .Join<Warehouses>
+                        (
+                            w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                            nameof(ByDateStockMovements.WarehouseID),
+                            nameof(Warehouses.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { Id = id }, false, false, Tables.ByDateStockMovements);
 
-                var byDateStockMovement = queryFactory.Get<SelectByDateStockMovementsDto>(query);
+            var byDateStockMovement = queryFactory.Get<SelectByDateStockMovementsDto>(query);
 
-                LogsAppService.InsertLogToDatabase(byDateStockMovement, byDateStockMovement, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(byDateStockMovement, byDateStockMovement, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Get, id);
 
-                return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovement);
-
-            }
+            return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovement);
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListByDateStockMovementsDto>>> GetListAsync(ListByDateStockMovementsParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            var query = queryFactory
+               .Query()
+               .From(Tables.ByDateStockMovements).Select<ByDateStockMovements>(bd => new { bd.WarehouseID, bd.TotalWastage, bd.TotalSalesProposition, bd.TotalSalesOrder, bd.TotalPurchaseRequest, bd.TotalPurchaseOrder, bd.TotalProduction, bd.TotalGoodsReceipt, bd.TotalGoodsIssue, bd.TotalConsumption, bd.ProductID, bd.Id, bd.Date_, bd.DataOpenStatusUserId, bd.DataOpenStatus, bd.BranchID, bd.Amount })
+                        .Join<Products>
+                        (
+                            p => new { ProductCode = p.Code, ProductName = p.Name },
+                            nameof(ByDateStockMovements.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                         .Join<Branches>
+                        (
+                            b => new { BranchCode = b.Code },
+                            nameof(ByDateStockMovements.BranchID),
+                            nameof(Branches.Id),
+                            JoinType.Left
+                        )
+                         .Join<Warehouses>
+                        (
+                            w => new { WarehouseCode = w.Code },
+                            nameof(ByDateStockMovements.WarehouseID),
+                            nameof(Warehouses.Id),
+                            JoinType.Left
+                        ).Where(null, false, false, Tables.ByDateStockMovements);
 
-                var query = queryFactory
-                   .Query()
-                   .From(Tables.ByDateStockMovements).Select<ByDateStockMovements>(bd => new { bd.WarehouseID, bd.TotalWastage, bd.TotalSalesProposition, bd.TotalSalesOrder, bd.TotalPurchaseRequest, bd.TotalPurchaseOrder, bd.TotalProduction, bd.TotalGoodsReceipt, bd.TotalGoodsIssue, bd.TotalConsumption, bd.ProductID, bd.Id, bd.Date_, bd.DataOpenStatusUserId, bd.DataOpenStatus, bd.BranchID, bd.Amount })
-                            .Join<Products>
-                            (
-                                p => new {  ProductCode = p.Code, ProductName = p.Name },
-                                nameof(ByDateStockMovements.ProductID),
-                                nameof(Products.Id),
-                                JoinType.Left
-                            )
-                             .Join<Branches>
-                            (
-                                b => new { BranchCode = b.Code },
-                                nameof(ByDateStockMovements.BranchID),
-                                nameof(Branches.Id),
-                                JoinType.Left
-                            )
-                             .Join<Warehouses>
-                            (
-                                w => new { WarehouseCode = w.Code },
-                                nameof(ByDateStockMovements.WarehouseID),
-                                nameof(Warehouses.Id),
-                                JoinType.Left
-                            ).Where(null, false, false, Tables.ByDateStockMovements);
+            var byDateStockMovements = queryFactory.GetList<ListByDateStockMovementsDto>(query).ToList();
 
-                var byDateStockMovements = queryFactory.GetList<ListByDateStockMovementsDto>(query).ToList();
-
-                return new SuccessDataResult<IList<ListByDateStockMovementsDto>>(byDateStockMovements);
-            }
+            return new SuccessDataResult<IList<ListByDateStockMovementsDto>>(byDateStockMovements);
         }
 
         [ValidationAspect(typeof(UpdateByDateStockMovementsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectByDateStockMovementsDto>> UpdateAsync(UpdateByDateStockMovementsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entity = queryFactory.Get<ByDateStockMovements>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { Id = input.Id }, false, false, "");
-                var entity = queryFactory.Get<ByDateStockMovements>(entityQuery);
+                Amount = input.Amount,
+                Date_ = input.Date_,
+                ProductID = input.ProductID,
+                TotalConsumption = input.TotalConsumption,
+                TotalGoodsIssue = input.TotalGoodsIssue,
+                TotalGoodsReceipt = input.TotalGoodsReceipt,
+                TotalProduction = input.TotalProduction,
+                TotalPurchaseOrder = input.TotalPurchaseOrder,
+                TotalPurchaseRequest = input.TotalPurchaseRequest,
+                TotalSalesOrder = input.TotalSalesOrder,
+                TotalSalesProposition = input.TotalSalesProposition,
+                TotalWastage = input.TotalWastage,
+                WarehouseID = input.WarehouseID,
+                BranchID = input.BranchID,
+                Id = input.Id,
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.Value,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = DateTime.Now,
+                LastModifierId = LoginedUserService.UserId
+            }).Where(new { Id = input.Id }, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                {
-                    Amount = input.Amount,
-                    Date_ = input.Date_,
-                    ProductID = input.ProductID,
-                    TotalConsumption = input.TotalConsumption,
-                    TotalGoodsIssue = input.TotalGoodsIssue,
-                    TotalGoodsReceipt = input.TotalGoodsReceipt,
-                    TotalProduction = input.TotalProduction,
-                    TotalPurchaseOrder = input.TotalPurchaseOrder,
-                    TotalPurchaseRequest = input.TotalPurchaseRequest,
-                    TotalSalesOrder = input.TotalSalesOrder,
-                    TotalSalesProposition = input.TotalSalesProposition,
-                    TotalWastage = input.TotalWastage,
-                    WarehouseID = input.WarehouseID,
-                    BranchID = input.BranchID,
-                    Id = input.Id,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = input.Id }, false, false, "");
-
-                var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
+            var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
 
 
-                LogsAppService.InsertLogToDatabase(entity, byDateStockMovements, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Update, entity.Id);
+            LogsAppService.InsertLogToDatabase(entity, byDateStockMovements, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Update, entity.Id);
 
 
-                return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovements);
-            }
+            return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovements);
         }
 
         public Task<IDataResult<SelectByDateStockMovementsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)

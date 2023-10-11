@@ -33,75 +33,66 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
 
         public async Task<IDataResult<SelectSalesManagementParametersDto>> CreateAsync(CreateSalesManagementParametersDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var query = queryFactory.Query().From(Tables.SalesManagementParameters).Insert(new CreateSalesManagementParametersDto
             {
-                var query = queryFactory.Query().From(Tables.SalesManagementParameters).Insert(new CreateSalesManagementParametersDto
-                {
-                    Id = GuidGenerator.CreateGuid(),
-                    OrderFutureDateParameter = input.OrderFutureDateParameter,
-                    PropositionFutureDateParameter = input.PropositionFutureDateParameter
-                }).UseIsDelete(false); ;
+                Id = GuidGenerator.CreateGuid(),
+                OrderFutureDateParameter = input.OrderFutureDateParameter,
+                PropositionFutureDateParameter = input.PropositionFutureDateParameter
+            }).UseIsDelete(false); ;
 
 
-                var SalesManagementParameter = queryFactory.Insert<SelectSalesManagementParametersDto>(query, "Id", true);
+            var SalesManagementParameter = queryFactory.Insert<SelectSalesManagementParametersDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesManagementParameters, LogType.Insert, SalesManagementParameter.Id);
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesManagementParameters, LogType.Insert, SalesManagementParameter.Id);
 
-                return new SuccessDataResult<SelectSalesManagementParametersDto>(SalesManagementParameter);
-            }
+            return new SuccessDataResult<SelectSalesManagementParametersDto>(SalesManagementParameter);
         }
 
         public async Task<IDataResult<SelectSalesManagementParametersDto>> GetSalesManagementParametersAsync()
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            SelectSalesManagementParametersDto result = new SelectSalesManagementParametersDto();
+
+            var controlQuery = queryFactory.Query().From(Tables.SalesManagementParameters).Select("*").UseIsDelete(false);
+
+            SelectSalesManagementParametersDto SalesManagementParameter = queryFactory.Get<SelectSalesManagementParametersDto>(controlQuery);
+
+            if (SalesManagementParameter != null)
             {
-                SelectSalesManagementParametersDto result = new SelectSalesManagementParametersDto();
+                var query = queryFactory.Query().From(Tables.SalesManagementParameters).Select("*").Where(
+                 new
+                 {
+                     Id = SalesManagementParameter.Id
+                 }, false, false, "").UseIsDelete(false);
 
-                var controlQuery = queryFactory.Query().From(Tables.SalesManagementParameters).Select("*").UseIsDelete(false);
-
-                SelectSalesManagementParametersDto SalesManagementParameter = queryFactory.Get<SelectSalesManagementParametersDto>(controlQuery);
-
-                if (SalesManagementParameter != null)
-                {
-                    var query = queryFactory.Query().From(Tables.SalesManagementParameters).Select("*").Where(
-                     new
-                     {
-                         Id = SalesManagementParameter.Id
-                     }, false, false, "").UseIsDelete(false);
-
-                    result = queryFactory.Get<SelectSalesManagementParametersDto>(query);
-                }
-
-                LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.SalesManagementParameters, LogType.Get, result.Id);
-
-                return new SuccessDataResult<SelectSalesManagementParametersDto>(result);
+                result = queryFactory.Get<SelectSalesManagementParametersDto>(query);
             }
+
+            LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.SalesManagementParameters, LogType.Get, result.Id);
+
+            return new SuccessDataResult<SelectSalesManagementParametersDto>(result);
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectSalesManagementParametersDto>> UpdateAsync(UpdateSalesManagementParametersDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.SalesManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+
+            var entity = queryFactory.Get<SalesManagementParameters>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.SalesManagementParameters).Update(new UpdateSalesManagementParametersDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.SalesManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
-
-                var entity = queryFactory.Get<SalesManagementParameters>(entityQuery);
-
-                var query = queryFactory.Query().From(Tables.SalesManagementParameters).Update(new UpdateSalesManagementParametersDto
-                {
-                    OrderFutureDateParameter = input.OrderFutureDateParameter,
-                    PropositionFutureDateParameter = input.PropositionFutureDateParameter,
-                    Id = input.Id
-                }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+                OrderFutureDateParameter = input.OrderFutureDateParameter,
+                PropositionFutureDateParameter = input.PropositionFutureDateParameter,
+                Id = input.Id
+            }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
 
 
-                var SalesManagementParameters = queryFactory.Update<SelectSalesManagementParametersDto>(query, "Id", true);
+            var SalesManagementParameters = queryFactory.Update<SelectSalesManagementParametersDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, SalesManagementParameters, LoginedUserService.UserId, Tables.SalesManagementParameters, LogType.Update, entity.Id);
+            LogsAppService.InsertLogToDatabase(entity, SalesManagementParameters, LoginedUserService.UserId, Tables.SalesManagementParameters, LogType.Update, entity.Id);
 
-                return new SuccessDataResult<SelectSalesManagementParametersDto>(SalesManagementParameters);
-            }
+            return new SuccessDataResult<SelectSalesManagementParametersDto>(SalesManagementParameters);
         }
 
         #region Unused Implemented Methods
@@ -120,15 +111,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListSalesManagementParametersDto>>> GetListAsync(ListSalesManagementParametersParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            var query = queryFactory.Query().From(Tables.SalesManagementParameters).Select("*").UseIsDelete(false);
 
-                var query = queryFactory.Query().From(Tables.SalesManagementParameters).Select("*").UseIsDelete(false);
+            var SalesManagementParameters = queryFactory.GetList<ListSalesManagementParametersDto>(query).ToList();
 
-                var SalesManagementParameters = queryFactory.GetList<ListSalesManagementParametersDto>(query).ToList();
-
-                return new SuccessDataResult<IList<ListSalesManagementParametersDto>>(SalesManagementParameters);
-            }
+            return new SuccessDataResult<IList<ListSalesManagementParametersDto>>(SalesManagementParameters);
         }
 
         #endregion

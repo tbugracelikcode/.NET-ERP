@@ -40,8 +40,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBillsofMaterialsDto>> CreateAsync(CreateBillsofMaterialsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var listQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Code = input.Code }, false, false, "");
                 var list = queryFactory.ControlList<BillsofMaterials>(listQuery).ToList();
 
@@ -49,8 +47,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
                 if (list.Count > 0)
                 {
-                    connection.Close();
-                    connection.Dispose();
                     throw new DuplicateCodeException(L["CodeControlManager"]);
                 }
 
@@ -114,15 +110,12 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(billOfMaterial);
-            }
+            
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
                 var query = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id }, true, true, "");
 
                 var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
@@ -146,13 +139,11 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.BillsofMaterialLines, LogType.Delete, id);
                     return new SuccessDataResult<SelectBillsofMaterialLinesDto>(billOfMaterialLines);
                 }
-            }
+            
         }
 
         public async Task<IDataResult<SelectBillsofMaterialsDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var query = queryFactory
                        .Query()
                        .From(Tables.BillsofMaterials)
@@ -210,13 +201,11 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, id);
 
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
-            }
+            
         }
 
         public async Task<IDataResult<SelectBillsofMaterialsDto>> GetbyCurrentAccountIDAsync(Guid currentAccountID, Guid finishedProductId)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var query = queryFactory
                        .Query()
                        .From(Tables.BillsofMaterials)
@@ -274,13 +263,11 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, billsOfMaterials.Id);
 
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
-            }
+            
         }
 
         public async Task<IDataResult<SelectBillsofMaterialsDto>> GetbyProductIDAsync(Guid finishedProductId)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var query = queryFactory
                        .Query()
                        .From(Tables.BillsofMaterials)
@@ -338,14 +325,12 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, billsOfMaterials.Id);
 
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
-            }
+            
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBillsofMaterialsDto>>> GetListAsync(ListBillsofMaterialsParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var query = queryFactory
                        .Query()
                        .From(Tables.BillsofMaterials)
@@ -368,15 +353,13 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
                 var billsOfMaterials = queryFactory.GetList<ListBillsofMaterialsDto>(query).ToList();
                 return new SuccessDataResult<IList<ListBillsofMaterialsDto>>(billsOfMaterials);
-            }
+            
         }
 
         [ValidationAspect(typeof(UpdateBillsofMaterialsValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBillsofMaterialsDto>> UpdateAsync(UpdateBillsofMaterialsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var entityQuery = queryFactory
                        .Query()
                        .From(Tables.BillsofMaterials)
@@ -456,8 +439,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
                 if (list.Count > 0 && entity.Code != input.Code)
                 {
-                    connection.Close();
-                    connection.Dispose();
                     throw new DuplicateCodeException(L["UpdateControlManager"]);
                 }
                 #endregion
@@ -552,13 +533,11 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Update, billOfMaterial.Id);
 
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(billOfMaterial);
-            }
+            
         }
 
         public async Task<IDataResult<SelectBillsofMaterialsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var entityQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id }, true, true, "");
 
                 var entity = queryFactory.Get<BillsofMaterials>(entityQuery);
@@ -586,7 +565,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 var billsofMaterialsDto = queryFactory.Update<SelectBillsofMaterialsDto>(query, "Id", true);
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(billsofMaterialsDto);
 
-            }
+            
         }
     }
 }

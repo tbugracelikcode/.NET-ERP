@@ -35,6 +35,10 @@ namespace TsiErp.Business.Entities.ProductionTracking.Validations
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("ValidatorShiftID");
 
+            RuleFor(x => x.WorkOrderID)
+                .Must(x => x.HasValue && x.Value != Guid.Empty)
+               .WithMessage("ValidatorWordOrderID");
+
             RuleFor(x => x.ProducedQuantity)
                 .GreaterThan(0).WithMessage("ValidatorProducedQuantity");
         }

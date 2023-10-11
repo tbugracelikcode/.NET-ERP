@@ -286,6 +286,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ÜRETİM EMRİ DURUMU.
+        /// </summary>
+        public static string ProductionOrderState {
+            get {
+                return ResourceManager.GetString("ProductionOrderState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BAŞLANGIÇ TARİHİ.
         /// </summary>
         public static string StartDate {

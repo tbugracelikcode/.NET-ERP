@@ -29,63 +29,54 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.S
 
         public async Task<IDataResult<SelectUserPermissionsDto>> CreateAsync(CreateUserPermissionsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            foreach (var item in input.SelectUserPermissionsList)
             {
-                foreach (var item in input.SelectUserPermissionsList)
+                var query = queryFactory.Query().From(Tables.UserPermissions).Insert(new CreateUserPermissionsDto
                 {
-                    var query = queryFactory.Query().From(Tables.UserPermissions).Insert(new CreateUserPermissionsDto
-                    {
-                        Id = GuidGenerator.CreateGuid(),
-                        IsUserPermitted = item.IsUserPermitted,
-                        MenuId = item.MenuId,
-                        UserId = item.UserId
-                    }).UseIsDelete(false);
+                    Id = GuidGenerator.CreateGuid(),
+                    IsUserPermitted = item.IsUserPermitted,
+                    MenuId = item.MenuId,
+                    UserId = item.UserId
+                }).UseIsDelete(false);
 
-                    var insertedPermissin = queryFactory.Insert<SelectUserPermissionsDto>(query, "Id", true);
-                }
-
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UserPermissions, LogType.Insert, Guid.Empty);
-
-                return new SuccessDataResult<SelectUserPermissionsDto>();
+                var insertedPermissin = queryFactory.Insert<SelectUserPermissionsDto>(query, "Id", true);
             }
+
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UserPermissions, LogType.Insert, Guid.Empty);
+
+            return new SuccessDataResult<SelectUserPermissionsDto>();
         }
 
         public async Task<IDataResult<IList<SelectUserPermissionsDto>>> GetListAsyncByUserId(Guid userId)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.UserPermissions).Select<UserPermissions>(null)
-                    .Join<Users>(u => new { UserName = u.UserName }, nameof(UserPermissions.UserId), nameof(Users.Id), JoinType.Left)
-                    .Join<Menus>(u => new { MenuName = u.MenuName }, nameof(UserPermissions.MenuId), nameof(Menus.Id), JoinType.Left)
-                    .Where("UserId", "=", userId, "").UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.UserPermissions).Select<UserPermissions>(null)
+                .Join<Users>(u => new { UserName = u.UserName }, nameof(UserPermissions.UserId), nameof(Users.Id), JoinType.Left)
+                .Join<Menus>(u => new { MenuName = u.MenuName }, nameof(UserPermissions.MenuId), nameof(Menus.Id), JoinType.Left)
+                .Where("UserId", "=", userId, "").UseIsDelete(false);
 
-                var permissions = queryFactory.GetList<SelectUserPermissionsDto>(query).ToList();
+            var permissions = queryFactory.GetList<SelectUserPermissionsDto>(query).ToList();
 
-                return new SuccessDataResult<IList<SelectUserPermissionsDto>>(permissions);
-            }
+            return new SuccessDataResult<IList<SelectUserPermissionsDto>>(permissions);
         }
 
         public async Task<IDataResult<SelectUserPermissionsDto>> UpdateAsync(UpdateUserPermissionsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            foreach (var item in input.SelectUserPermissionsList)
             {
-                foreach (var item in input.SelectUserPermissionsList)
+                var query = queryFactory.Query().From(Tables.UserPermissions).Update(new UpdateUserPermissionsDto
                 {
-                    var query = queryFactory.Query().From(Tables.UserPermissions).Update(new UpdateUserPermissionsDto
-                    {
-                        Id = item.Id,
-                        IsUserPermitted = item.IsUserPermitted,
-                        MenuId = item.MenuId,
-                        UserId = item.UserId
-                    }).UseIsDelete(false);
+                    Id = item.Id,
+                    IsUserPermitted = item.IsUserPermitted,
+                    MenuId = item.MenuId,
+                    UserId = item.UserId
+                }).UseIsDelete(false);
 
-                    var updatedPermissin = queryFactory.Update<SelectUserPermissionsDto>(query, "Id", true);
-                }
-
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UserPermissions, LogType.Update, Guid.Empty);
-
-                return new SuccessDataResult<SelectUserPermissionsDto>();
+                var updatedPermissin = queryFactory.Update<SelectUserPermissionsDto>(query, "Id", true);
             }
+
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UserPermissions, LogType.Update, Guid.Empty);
+
+            return new SuccessDataResult<SelectUserPermissionsDto>();
         }
 
 

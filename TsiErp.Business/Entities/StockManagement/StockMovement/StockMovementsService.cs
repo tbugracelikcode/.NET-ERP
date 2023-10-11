@@ -48,23 +48,228 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool InsertPurchaseRequests(CreatePurchaseRequestsDto createdEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            foreach (var line in createdEntity.SelectPurchaseRequestLines)
+            {
+                #region By Date Stock Movement
+
+                var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = createdEntity.BranchID, WarehouseID = createdEntity.WarehouseID, ProductID = line.ProductID, Date_ = createdEntity.Date_ }, false, false, "");
+
+                var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
+
+                if (entityByDate.Id == Guid.Empty)
+                {
+                    var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
+                    {
+                        Amount = 0,
+                        Date_ = createdEntity.Date_,
+                        ProductID = line.ProductID,
+                        TotalConsumption = 0,
+                        TotalGoodsIssue = 0,
+                        TotalGoodsReceipt = 0,
+                        TotalWarehouseInput = 0,
+                        TotalWarehouseOutput = 0,
+                        TotalProduction = 0,
+                        TotalPurchaseOrder = 0,
+                        TotalPurchaseRequest = line.Quantity,
+                        TotalSalesOrder = 0,
+                        TotalSalesProposition = 0,
+                        TotalWastage = 0,
+                        WarehouseID = createdEntity.WarehouseID,
+                        BranchID = createdEntity.BranchID,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                    });
+
+                    var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
+                }
+
+                else
+                {
+                    var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                    {
+                        Amount = entityByDate.Amount,
+                        Date_ = entityByDate.Date_,
+                        ProductID = line.ProductID,
+                        TotalConsumption = entityByDate.TotalConsumption,
+                        TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                        TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                        TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                        TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                        TotalProduction = entityByDate.TotalProduction,
+                        TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
+                        TotalPurchaseRequest = entityByDate.TotalPurchaseRequest + line.Quantity,
+                        TotalSalesOrder = entityByDate.TotalSalesOrder,
+                        TotalSalesProposition = entityByDate.TotalSalesProposition,
+                        TotalWastage = entityByDate.TotalWastage,
+                        WarehouseID = entityByDate.WarehouseID,
+                        BranchID = entityByDate.BranchID,
+                        Id = entityByDate.Id,
+                        CreationTime = entityByDate.CreationTime.Value,
+                        CreatorId = entityByDate.CreatorId.Value,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = entityByDate.DeleterId.Value,
+                        DeletionTime = entityByDate.DeletionTime.Value,
+                        IsDeleted = entityByDate.IsDeleted,
+                        LastModificationTime = DateTime.Now,
+                        LastModifierId = LoginedUserService.UserId
+                    }).Where(new { Id = entityByDate.Id }, false, false, "");
+
+                    var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
+                }
+
+                #endregion
+
+                #region Grand Total Stock Movement
+
+
+                var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = createdEntity.BranchID, WarehouseID = createdEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
+
+                var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
+
+                if (entityGrandTotal.Id == Guid.Empty)
+                {
+                    var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
+                    {
+                        Amount = 0,
+                        ProductID = line.ProductID,
+                        TotalConsumption = 0,
+                        TotalGoodsIssue = 0,
+                        TotalGoodsReceipt = 0,
+                        TotalWarehouseInput = 0,
+                        TotalWarehouseOutput = 0,
+                        TotalProduction = 0,
+                        TotalPurchaseOrder = 0,
+                        TotalPurchaseRequest = line.Quantity,
+                        TotalSalesOrder = 0,
+                        TotalReserved = 0,
+                        TotalSalesProposition = 0,
+                        TotalWastage = 0,
+                        WarehouseID = createdEntity.WarehouseID,
+                        BranchID = createdEntity.BranchID,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                    });
+
+                    var grandTotalStockMovements = queryFactory.Insert<SelectGrandTotalStockMovementsDto>(query, "Id", true);
+                }
+
+                else
+                {
+                    var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
+                    {
+                        Amount = entityGrandTotal.Amount,
+                        ProductID = line.ProductID,
+                        TotalConsumption = entityGrandTotal.TotalConsumption,
+                        TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                        TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                        TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                        TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                        TotalProduction = entityGrandTotal.TotalProduction,
+                        TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
+                        TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest + line.Quantity,
+                        TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
+                        TotalReserved = entityGrandTotal.TotalReserved,
+                        TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
+                        TotalWastage = entityGrandTotal.TotalWastage,
+                        WarehouseID = createdEntity.WarehouseID,
+                        Id = entityGrandTotal.Id,
+                        CreationTime = entityGrandTotal.CreationTime.Value,
+                        CreatorId = entityGrandTotal.CreatorId.Value,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = entityGrandTotal.DeleterId.Value,
+                        DeletionTime = entityGrandTotal.DeletionTime.Value,
+                        IsDeleted = entityGrandTotal.IsDeleted,
+                        LastModificationTime = DateTime.Now,
+                        BranchID = createdEntity.BranchID,
+                        LastModifierId = LoginedUserService.UserId
+                    }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
+
+                    var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
+                }
+
+                #endregion
+
+
+            }
+
+            return true;
+        }
+
+        public static bool UpdatePurchaseRequests(SelectPurchaseRequestsDto previousEntity, UpdatePurchaseRequestsDto currentEntity)
+        {
+            foreach (var line in currentEntity.SelectPurchaseRequestLines)
             {
 
-                foreach (var line in createdEntity.SelectPurchaseRequestLines)
+                #region By Date Stock Movement
+
+                var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = currentEntity.BranchID, WarehouseID = currentEntity.WarehouseID, ProductID = line.ProductID, Date_ = currentEntity.Date_ }, false, false, "");
+
+                var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
+
+                if (entityByDate.Id == Guid.Empty)
                 {
-                    #region By Date Stock Movement
-
-                    var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = createdEntity.BranchID, WarehouseID = createdEntity.WarehouseID, ProductID = line.ProductID, Date_ = createdEntity.Date_ }, false, false, "");
-
-                    var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
-
-                    if (entityByDate.Id == Guid.Empty)
+                    foreach (var previousline in previousEntity.SelectPurchaseRequestLines)
                     {
+                        var entityQueryByDateDecreasing = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = previousEntity.BranchID, WarehouseID = previousEntity.WarehouseID, ProductID = previousline.ProductID, Date_ = previousEntity.Date_ }, false, false, "");
+
+                        var entityByDateDecreasing = queryFactory.Get<ByDateStockMovements>(entityQueryByDateDecreasing);
+
+                        var decreasingAmount = line.Quantity;
+
+                        var queryDecreasing = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                        {
+                            Amount = entityByDateDecreasing.Amount,
+                            Date_ = entityByDateDecreasing.Date_,
+                            ProductID = previousline.ProductID,
+                            TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
+                            TotalConsumption = entityByDateDecreasing.TotalConsumption,
+                            TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
+                            TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
+                            TotalProduction = entityByDateDecreasing.TotalProduction,
+                            TotalPurchaseOrder = entityByDateDecreasing.TotalPurchaseOrder,
+                            TotalPurchaseRequest = entityByDateDecreasing.TotalPurchaseRequest - decreasingAmount,
+                            TotalSalesOrder = entityByDateDecreasing.TotalSalesOrder,
+                            TotalSalesProposition = entityByDateDecreasing.TotalSalesProposition,
+                            TotalWastage = entityByDateDecreasing.TotalWastage,
+                            WarehouseID = entityByDateDecreasing.WarehouseID,
+                            BranchID = entityByDateDecreasing.BranchID,
+                            Id = entityByDateDecreasing.Id,
+                            CreationTime = entityByDateDecreasing.CreationTime.Value,
+                            CreatorId = entityByDateDecreasing.CreatorId.Value,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
+                            DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
+                            IsDeleted = entityByDateDecreasing.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            LastModifierId = LoginedUserService.UserId
+                        }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
+
+                        var byDateStockMovementsDecreasing = queryFactory.Update<SelectByDateStockMovementsDto>(queryDecreasing, "Id", true);
+
                         var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
                         {
                             Amount = 0,
-                            Date_ = createdEntity.Date_,
+                            Date_ = currentEntity.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
@@ -77,8 +282,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalSalesOrder = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = currentEntity.WarehouseID,
+                            BranchID = currentEntity.BranchID,
                             CreationTime = DateTime.Now,
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -94,21 +299,29 @@ namespace TsiErp.Business.Entities.StockMovement
                         var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
 
-                    else
+                }
+
+                else
+                {
+                    decimal previousQuantity = previousEntity.SelectPurchaseRequestLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
+
+                    if (line.Quantity > previousQuantity)
                     {
+                        decimal addedPR = line.Quantity - previousQuantity;
+
                         var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
                         {
                             Amount = entityByDate.Amount,
                             Date_ = entityByDate.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
-                            TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                             TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                            TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
                             TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
-                            TotalPurchaseRequest = entityByDate.TotalPurchaseRequest + line.Quantity,
+                            TotalPurchaseRequest = entityByDate.TotalPurchaseRequest + addedPR,
                             TotalSalesOrder = entityByDate.TotalSalesOrder,
                             TotalSalesProposition = entityByDate.TotalSalesProposition,
                             TotalWastage = entityByDate.TotalWastage,
@@ -119,8 +332,45 @@ namespace TsiErp.Business.Entities.StockMovement
                             CreatorId = entityByDate.CreatorId.Value,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
-                            DeleterId = entityByDate.DeleterId.Value,
-                            DeletionTime = entityByDate.DeletionTime.Value,
+                            DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
+                            DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
+                            IsDeleted = entityByDate.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            LastModifierId = LoginedUserService.UserId
+                        }).Where(new { Id = entityByDate.Id }, false, false, "");
+
+                        var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
+
+                    }
+                    else if (line.Quantity < previousQuantity)
+                    {
+                        decimal decreasedPR = previousQuantity - line.Quantity;
+
+                        var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                        {
+                            Amount = entityByDate.Amount,
+                            Date_ = entityByDate.Date_,
+                            ProductID = line.ProductID,
+                            TotalConsumption = entityByDate.TotalConsumption,
+                            TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                            TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                            TotalProduction = entityByDate.TotalProduction,
+                            TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
+                            TotalPurchaseRequest = entityByDate.TotalPurchaseRequest - decreasedPR,
+                            TotalSalesOrder = entityByDate.TotalSalesOrder,
+                            TotalSalesProposition = entityByDate.TotalSalesProposition,
+                            TotalWastage = entityByDate.TotalWastage,
+                            WarehouseID = entityByDate.WarehouseID,
+                            BranchID = entityByDate.BranchID,
+                            Id = entityByDate.Id,
+                            CreationTime = entityByDate.CreationTime.Value,
+                            CreatorId = entityByDate.CreatorId.Value,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
+                            DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
                             LastModificationTime = DateTime.Now,
                             LastModifierId = LoginedUserService.UserId
@@ -129,17 +379,58 @@ namespace TsiErp.Business.Entities.StockMovement
                         var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
 
-                    #endregion
+                }
 
-                    #region Grand Total Stock Movement
+                #endregion
 
+                #region Grand Total Stock Movement
 
-                    var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = createdEntity.BranchID, WarehouseID = createdEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
+                var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = currentEntity.BranchID, WarehouseID = currentEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
 
-                    var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
+                var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
 
-                    if (entityGrandTotal.Id == Guid.Empty)
+                if (entityGrandTotal.Id == Guid.Empty)
+                {
+                    foreach (var previousLine in previousEntity.SelectPurchaseRequestLines)
                     {
+                        var entityQueryGrandTotalDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = previousEntity.BranchID, WarehouseID = previousEntity.WarehouseID, ProductID = previousLine.ProductID }, false, false, "");
+
+                        var entityGrandTotalDecreasing = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotalDecreasing);
+
+                        var decreasingAmount = line.Quantity;
+
+                        var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
+                        {
+                            Amount = entityGrandTotalDecreasing.Amount,
+                            ProductID = previousLine.ProductID,
+                            TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
+                            TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
+                            TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
+                            TotalProduction = entityGrandTotalDecreasing.TotalProduction,
+                            TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
+                            TotalPurchaseOrder = entityGrandTotalDecreasing.TotalPurchaseOrder,
+                            TotalPurchaseRequest = entityGrandTotalDecreasing.TotalPurchaseRequest - decreasingAmount,
+                            TotalSalesOrder = entityGrandTotalDecreasing.TotalSalesOrder,
+                            TotalReserved = entityGrandTotalDecreasing.TotalReserved,
+                            TotalSalesProposition = entityGrandTotalDecreasing.TotalSalesProposition,
+                            TotalWastage = entityGrandTotalDecreasing.TotalWastage,
+                            WarehouseID = previousEntity.WarehouseID,
+                            Id = entityGrandTotalDecreasing.Id,
+                            CreationTime = entityGrandTotalDecreasing.CreationTime.Value,
+                            CreatorId = entityGrandTotalDecreasing.CreatorId.Value,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
+                            DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
+                            IsDeleted = entityGrandTotalDecreasing.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            BranchID = previousEntity.BranchID,
+                            LastModifierId = LoginedUserService.UserId
+                        }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
+
+                        var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasing, "Id", true);
+
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                         {
                             Amount = 0,
@@ -147,8 +438,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
-                            TotalWarehouseInput = 0,
                             TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = 0,
                             TotalPurchaseRequest = line.Quantity,
@@ -156,8 +447,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = currentEntity.WarehouseID,
+                            BranchID = currentEntity.BranchID,
                             CreationTime = DateTime.Now,
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -172,9 +463,16 @@ namespace TsiErp.Business.Entities.StockMovement
 
                         var grandTotalStockMovements = queryFactory.Insert<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                     }
+                }
 
-                    else
+                else
+                {
+                    decimal previousQuantity = previousEntity.SelectPurchaseRequestLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
+
+                    if (line.Quantity > previousQuantity)
                     {
+                        decimal addedPR = line.Quantity - previousQuantity;
+
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount,
@@ -182,375 +480,67 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
-                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
-                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseOutput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalProduction = entityGrandTotal.TotalProduction,
                             TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
-                            TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest + line.Quantity,
+                            TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest + addedPR,
                             TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
                             TotalReserved = entityGrandTotal.TotalReserved,
                             TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
                             TotalWastage = entityGrandTotal.TotalWastage,
-                            WarehouseID = createdEntity.WarehouseID,
+                            WarehouseID = entityGrandTotal.WarehouseID,
                             Id = entityGrandTotal.Id,
                             CreationTime = entityGrandTotal.CreationTime.Value,
                             CreatorId = entityGrandTotal.CreatorId.Value,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
-                            DeleterId = entityGrandTotal.DeleterId.Value,
-                            DeletionTime = entityGrandTotal.DeletionTime.Value,
+                            DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
+                            DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
                             LastModificationTime = DateTime.Now,
-                            BranchID = createdEntity.BranchID,
+                            BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
                         var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
-                    }
-
-                    #endregion
-                }
-
-            }
-
-            return true;
-        }
-
-        public static bool UpdatePurchaseRequests(SelectPurchaseRequestsDto previousEntity, UpdatePurchaseRequestsDto currentEntity)
-        {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
-                foreach (var line in currentEntity.SelectPurchaseRequestLines)
-                {
-
-                    #region By Date Stock Movement
-
-                    var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = currentEntity.BranchID, WarehouseID = currentEntity.WarehouseID, ProductID = line.ProductID, Date_ = currentEntity.Date_ }, false, false, "");
-
-                    var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
-
-                    if (entityByDate.Id == Guid.Empty)
-                    {
-                        foreach (var previousline in previousEntity.SelectPurchaseRequestLines)
-                        {
-                            var entityQueryByDateDecreasing = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = previousEntity.BranchID, WarehouseID = previousEntity.WarehouseID, ProductID = previousline.ProductID, Date_ = previousEntity.Date_ }, false, false, "");
-
-                            var entityByDateDecreasing = queryFactory.Get<ByDateStockMovements>(entityQueryByDateDecreasing);
-
-                            var decreasingAmount = line.Quantity;
-
-                            var queryDecreasing = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                            {
-                                Amount = entityByDateDecreasing.Amount,
-                                Date_ = entityByDateDecreasing.Date_,
-                                ProductID = previousline.ProductID,
-                                TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
-                                TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
-                                TotalConsumption = entityByDateDecreasing.TotalConsumption,
-                                TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
-                                TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
-                                TotalProduction = entityByDateDecreasing.TotalProduction,
-                                TotalPurchaseOrder = entityByDateDecreasing.TotalPurchaseOrder,
-                                TotalPurchaseRequest = entityByDateDecreasing.TotalPurchaseRequest - decreasingAmount,
-                                TotalSalesOrder = entityByDateDecreasing.TotalSalesOrder,
-                                TotalSalesProposition = entityByDateDecreasing.TotalSalesProposition,
-                                TotalWastage = entityByDateDecreasing.TotalWastage,
-                                WarehouseID = entityByDateDecreasing.WarehouseID,
-                                BranchID = entityByDateDecreasing.BranchID,
-                                Id = entityByDateDecreasing.Id,
-                                CreationTime = entityByDateDecreasing.CreationTime.Value,
-                                CreatorId = entityByDateDecreasing.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityByDateDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
-
-                            var byDateStockMovementsDecreasing = queryFactory.Update<SelectByDateStockMovementsDto>(queryDecreasing, "Id", true);
-
-                            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
-                            {
-                                Amount = 0,
-                                Date_ = currentEntity.Date_,
-                                ProductID = line.ProductID,
-                                TotalConsumption = 0,
-                                TotalGoodsIssue = 0,
-                                TotalGoodsReceipt = 0,
-                                TotalWarehouseInput = 0,
-                                TotalWarehouseOutput = 0,
-                                TotalProduction = 0,
-                                TotalPurchaseOrder = 0,
-                                TotalPurchaseRequest = line.Quantity,
-                                TotalSalesOrder = 0,
-                                TotalSalesProposition = 0,
-                                TotalWastage = 0,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
-                                CreatorId = LoginedUserService.UserId,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = Guid.Empty,
-                                DeletionTime = null,
-                                Id = GuidGenerator.CreateGuid(),
-                                IsDeleted = false,
-                                LastModificationTime = null,
-                                LastModifierId = Guid.Empty,
-                            });
-
-                            var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
-                        }
 
                     }
-
-                    else
+                    else if (line.Quantity < previousQuantity)
                     {
-                        decimal previousQuantity = previousEntity.SelectPurchaseRequestLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
+                        decimal decreasedPR = previousQuantity - line.Quantity;
 
-                        if (line.Quantity > previousQuantity)
+                        var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
-                            decimal addedPR = line.Quantity - previousQuantity;
+                            Amount = entityGrandTotal.Amount,
+                            ProductID = line.ProductID,
+                            TotalConsumption = entityGrandTotal.TotalConsumption,
+                            TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseOutput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
+                            TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                            TotalProduction = entityGrandTotal.TotalProduction,
+                            TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
+                            TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest - decreasedPR,
+                            TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
+                            TotalReserved = entityGrandTotal.TotalReserved,
+                            TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
+                            TotalWastage = entityGrandTotal.TotalWastage,
+                            WarehouseID = entityGrandTotal.WarehouseID,
+                            Id = entityGrandTotal.Id,
+                            CreationTime = entityGrandTotal.CreationTime.Value,
+                            CreatorId = entityGrandTotal.CreatorId.Value,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
+                            DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
+                            IsDeleted = entityGrandTotal.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            BranchID = entityGrandTotal.BranchID,
+                            LastModifierId = LoginedUserService.UserId
+                        }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
-                            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                            {
-                                Amount = entityByDate.Amount,
-                                Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
-                                TotalConsumption = entityByDate.TotalConsumption,
-                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
-                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
-                                TotalGoodsIssue = entityByDate.TotalGoodsIssue,
-                                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
-                                TotalProduction = entityByDate.TotalProduction,
-                                TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
-                                TotalPurchaseRequest = entityByDate.TotalPurchaseRequest + addedPR,
-                                TotalSalesOrder = entityByDate.TotalSalesOrder,
-                                TotalSalesProposition = entityByDate.TotalSalesProposition,
-                                TotalWastage = entityByDate.TotalWastage,
-                                WarehouseID = entityByDate.WarehouseID,
-                                BranchID = entityByDate.BranchID,
-                                Id = entityByDate.Id,
-                                CreationTime = entityByDate.CreationTime.Value,
-                                CreatorId = entityByDate.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityByDate.Id }, false, false, "");
-
-                            var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
-
-                        }
-                        else if (line.Quantity < previousQuantity)
-                        {
-                            decimal decreasedPR = previousQuantity - line.Quantity;
-
-                            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                            {
-                                Amount = entityByDate.Amount,
-                                Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
-                                TotalConsumption = entityByDate.TotalConsumption,
-                                TotalGoodsIssue = entityByDate.TotalGoodsIssue,
-                                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
-                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
-                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
-                                TotalProduction = entityByDate.TotalProduction,
-                                TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
-                                TotalPurchaseRequest = entityByDate.TotalPurchaseRequest - decreasedPR,
-                                TotalSalesOrder = entityByDate.TotalSalesOrder,
-                                TotalSalesProposition = entityByDate.TotalSalesProposition,
-                                TotalWastage = entityByDate.TotalWastage,
-                                WarehouseID = entityByDate.WarehouseID,
-                                BranchID = entityByDate.BranchID,
-                                Id = entityByDate.Id,
-                                CreationTime = entityByDate.CreationTime.Value,
-                                CreatorId = entityByDate.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityByDate.Id }, false, false, "");
-
-                            var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
-                        }
-
-                    }
-
-                    #endregion
-
-                    #region Grand Total Stock Movement
-
-                    var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = currentEntity.BranchID, WarehouseID = currentEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
-
-                    var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
-
-                    if (entityGrandTotal.Id == Guid.Empty)
-                    {
-                        foreach (var previousLine in previousEntity.SelectPurchaseRequestLines)
-                        {
-                            var entityQueryGrandTotalDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = previousEntity.BranchID, WarehouseID = previousEntity.WarehouseID, ProductID = previousLine.ProductID }, false, false, "");
-
-                            var entityGrandTotalDecreasing = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotalDecreasing);
-
-                            var decreasingAmount = line.Quantity;
-
-                            var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
-                            {
-                                Amount = entityGrandTotalDecreasing.Amount,
-                                ProductID = previousLine.ProductID,
-                                TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
-                                TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
-                                TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
-                                TotalProduction = entityGrandTotalDecreasing.TotalProduction,
-                                TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
-                                TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
-                                TotalPurchaseOrder = entityGrandTotalDecreasing.TotalPurchaseOrder,
-                                TotalPurchaseRequest = entityGrandTotalDecreasing.TotalPurchaseRequest - decreasingAmount,
-                                TotalSalesOrder = entityGrandTotalDecreasing.TotalSalesOrder,
-                                TotalReserved = entityGrandTotalDecreasing.TotalReserved,
-                                TotalSalesProposition = entityGrandTotalDecreasing.TotalSalesProposition,
-                                TotalWastage = entityGrandTotalDecreasing.TotalWastage,
-                                WarehouseID = previousEntity.WarehouseID,
-                                Id = entityGrandTotalDecreasing.Id,
-                                CreationTime = entityGrandTotalDecreasing.CreationTime.Value,
-                                CreatorId = entityGrandTotalDecreasing.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                BranchID = previousEntity.BranchID,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
-
-                            var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasing, "Id", true);
-
-                            var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
-                            {
-                                Amount = 0,
-                                ProductID = line.ProductID,
-                                TotalConsumption = 0,
-                                TotalGoodsIssue = 0,
-                                TotalGoodsReceipt = 0,
-                                TotalWarehouseOutput = 0,
-                                TotalWarehouseInput = 0,
-                                TotalProduction = 0,
-                                TotalPurchaseOrder = 0,
-                                TotalPurchaseRequest = line.Quantity,
-                                TotalSalesOrder = 0,
-                                TotalReserved = 0,
-                                TotalSalesProposition = 0,
-                                TotalWastage = 0,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
-                                CreatorId = LoginedUserService.UserId,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = Guid.Empty,
-                                DeletionTime = null,
-                                Id = GuidGenerator.CreateGuid(),
-                                IsDeleted = false,
-                                LastModificationTime = null,
-                                LastModifierId = Guid.Empty,
-                            });
-
-                            var grandTotalStockMovements = queryFactory.Insert<SelectGrandTotalStockMovementsDto>(query, "Id", true);
-                        }
-                    }
-
-                    else
-                    {
-                        decimal previousQuantity = previousEntity.SelectPurchaseRequestLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
-
-                        if (line.Quantity > previousQuantity)
-                        {
-                            decimal addedPR = line.Quantity - previousQuantity;
-
-                            var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
-                            {
-                                Amount = entityGrandTotal.Amount,
-                                ProductID = line.ProductID,
-                                TotalConsumption = entityGrandTotal.TotalConsumption,
-                                TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
-                                TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
-                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseOutput,
-                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
-                                TotalProduction = entityGrandTotal.TotalProduction,
-                                TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
-                                TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest + addedPR,
-                                TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
-                                TotalReserved = entityGrandTotal.TotalReserved,
-                                TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
-                                TotalWastage = entityGrandTotal.TotalWastage,
-                                WarehouseID = entityGrandTotal.WarehouseID,
-                                Id = entityGrandTotal.Id,
-                                CreationTime = entityGrandTotal.CreationTime.Value,
-                                CreatorId = entityGrandTotal.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                BranchID = entityGrandTotal.BranchID,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
-
-                            var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
-
-                        }
-                        else if (line.Quantity < previousQuantity)
-                        {
-                            decimal decreasedPR = previousQuantity - line.Quantity;
-
-                            var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
-                            {
-                                Amount = entityGrandTotal.Amount,
-                                ProductID = line.ProductID,
-                                TotalConsumption = entityGrandTotal.TotalConsumption,
-                                TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
-                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseOutput,
-                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
-                                TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
-                                TotalProduction = entityGrandTotal.TotalProduction,
-                                TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
-                                TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest - decreasedPR,
-                                TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
-                                TotalReserved = entityGrandTotal.TotalReserved,
-                                TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
-                                TotalWastage = entityGrandTotal.TotalWastage,
-                                WarehouseID = entityGrandTotal.WarehouseID,
-                                Id = entityGrandTotal.Id,
-                                CreationTime = entityGrandTotal.CreationTime.Value,
-                                CreatorId = entityGrandTotal.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                BranchID = entityGrandTotal.BranchID,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
-
-                            var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
-                        }
-
-
-
+                        var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                     }
 
                     #endregion
@@ -563,270 +553,264 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool DeletePurchaseRequestLines(SelectPurchaseRequestLinesDto deletedLine)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            #region Getting Purchase Request
+
+            var query = queryFactory
+                 .Query()
+                 .From(Tables.PurchaseRequests)
+                 .Select<PurchaseRequests>(pr => new { pr.WarehouseID, pr.ValidityDate_, pr.TotalVatExcludedAmount, pr.TotalVatAmount, pr.TotalDiscountAmount, pr.Time_, pr.SpecialCode, pr.RevisionTime, pr.RevisionDate, pr.PurchaseRequestState, pr.PropositionRevisionNo, pr.ProductionOrderID, pr.PaymentPlanID, pr.NetAmount, pr.LinkedPurchaseRequestID, pr.Id, pr.GrossAmount, pr.FicheNo, pr.ExchangeRate, pr.Description_, pr.Date_, pr.DataOpenStatusUserId, pr.DataOpenStatus, pr.CurrentAccountCardID, pr.CurrencyID, pr.BranchID })
+                 .Join<PaymentPlans>
+                  (
+                      pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
+                      nameof(PurchaseRequests.PaymentPlanID),
+                      nameof(PaymentPlans.Id),
+                      JoinType.Left
+                  )
+                  .Join<Branches>
+                  (
+                      b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                      nameof(PurchaseRequests.BranchID),
+                      nameof(Branches.Id),
+                      JoinType.Left
+                  )
+                  .Join<Warehouses>
+                  (
+                      w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                      nameof(PurchaseRequests.WarehouseID),
+                      nameof(Warehouses.Id),
+                      JoinType.Left
+                  )
+                  .Join<Currencies>
+                  (
+                      c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                      nameof(PurchaseRequests.CurrencyID),
+                      nameof(Currencies.Id),
+                      JoinType.Left
+                  )
+                  .Join<CurrentAccountCards>
+                  (
+                      ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                      nameof(PurchaseRequests.CurrentAccountCardID),
+                      nameof(CurrentAccountCards.Id),
+                      JoinType.Left
+                  )
+
+                  .Where(new { Id = deletedLine.PurchaseRequestID }, false, false, Tables.PurchaseRequests);
+
+            var purchaseRequests = queryFactory.Get<SelectPurchaseRequestsDto>(query);
+
+            #endregion
+
+            #region By Date Stock Movement
+
+            var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = purchaseRequests.BranchID, WarehouseID = purchaseRequests.WarehouseID, ProductID = deletedLine.ProductID, Date_ = purchaseRequests.Date_ }, false, false, "");
+
+            var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
+
+            var queryDecreasingDate = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
             {
-                #region Getting Purchase Request
+                Amount = entityByDate.Amount,
+                Date_ = entityByDate.Date_,
+                ProductID = entityByDate.ProductID,
+                TotalConsumption = entityByDate.TotalConsumption,
+                TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                TotalProduction = entityByDate.TotalProduction,
+                TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
+                TotalPurchaseRequest = entityByDate.TotalPurchaseRequest - deletedLine.Quantity,
+                TotalSalesOrder = entityByDate.TotalSalesOrder,
+                TotalSalesProposition = entityByDate.TotalSalesProposition,
+                TotalWastage = entityByDate.TotalWastage,
+                WarehouseID = entityByDate.WarehouseID,
+                BranchID = entityByDate.BranchID,
+                Id = entityByDate.Id,
+                CreationTime = entityByDate.CreationTime.Value,
+                CreatorId = entityByDate.CreatorId.Value,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
+                DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entityByDate.IsDeleted,
+                LastModificationTime = DateTime.Now,
+                LastModifierId = LoginedUserService.UserId
+            }).Where(new { Id = entityByDate.Id }, false, false, "");
 
-                var query = queryFactory
-                     .Query()
-                     .From(Tables.PurchaseRequests)
-                     .Select<PurchaseRequests>(pr => new { pr.WarehouseID, pr.ValidityDate_, pr.TotalVatExcludedAmount, pr.TotalVatAmount, pr.TotalDiscountAmount, pr.Time_, pr.SpecialCode, pr.RevisionTime, pr.RevisionDate, pr.PurchaseRequestState, pr.PropositionRevisionNo, pr.ProductionOrderID, pr.PaymentPlanID, pr.NetAmount, pr.LinkedPurchaseRequestID, pr.Id, pr.GrossAmount, pr.FicheNo, pr.ExchangeRate, pr.Description_, pr.Date_, pr.DataOpenStatusUserId, pr.DataOpenStatus, pr.CurrentAccountCardID, pr.CurrencyID, pr.BranchID })
-                     .Join<PaymentPlans>
-                      (
-                          pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
-                          nameof(PurchaseRequests.PaymentPlanID),
-                          nameof(PaymentPlans.Id),
-                          JoinType.Left
-                      )
-                      .Join<Branches>
-                      (
-                          b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
-                          nameof(PurchaseRequests.BranchID),
-                          nameof(Branches.Id),
-                          JoinType.Left
-                      )
-                      .Join<Warehouses>
-                      (
-                          w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
-                          nameof(PurchaseRequests.WarehouseID),
-                          nameof(Warehouses.Id),
-                          JoinType.Left
-                      )
-                      .Join<Currencies>
-                      (
-                          c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
-                          nameof(PurchaseRequests.CurrencyID),
-                          nameof(Currencies.Id),
-                          JoinType.Left
-                      )
-                      .Join<CurrentAccountCards>
-                      (
-                          ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
-                          nameof(PurchaseRequests.CurrentAccountCardID),
-                          nameof(CurrentAccountCards.Id),
-                          JoinType.Left
-                      )
+            var byDateStockMovementsDecreasing = queryFactory.Update<SelectByDateStockMovementsDto>(queryDecreasingDate, "Id", true);
 
-                      .Where(new { Id = deletedLine.PurchaseRequestID }, false, false, Tables.PurchaseRequests);
+            #endregion
 
-                var purchaseRequests = queryFactory.Get<SelectPurchaseRequestsDto>(query);
+            #region Grand Total Stock Movement
 
-                #endregion
+            var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = purchaseRequests.BranchID, WarehouseID = purchaseRequests.WarehouseID, ProductID = deletedLine.ProductID }, false, false, "");
 
-                #region By Date Stock Movement
+            var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
 
-                var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = purchaseRequests.BranchID, WarehouseID = purchaseRequests.WarehouseID, ProductID = deletedLine.ProductID, Date_ = purchaseRequests.Date_ }, false, false, "");
+            var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
+            {
+                Amount = entityGrandTotal.Amount,
+                ProductID = deletedLine.ProductID,
+                TotalConsumption = entityGrandTotal.TotalConsumption,
+                TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
+                TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                TotalProduction = entityGrandTotal.TotalProduction,
+                TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
+                TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest - deletedLine.Quantity,
+                TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
+                TotalReserved = entityGrandTotal.TotalReserved,
+                TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
+                TotalWastage = entityGrandTotal.TotalWastage,
+                WarehouseID = entityGrandTotal.WarehouseID,
+                Id = entityGrandTotal.Id,
+                CreationTime = entityGrandTotal.CreationTime.Value,
+                CreatorId = entityGrandTotal.CreatorId.Value,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
+                DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entityGrandTotal.IsDeleted,
+                LastModificationTime = DateTime.Now,
+                BranchID = entityGrandTotal.BranchID,
+                LastModifierId = LoginedUserService.UserId
+            }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
-                var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
+            var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasingGrand, "Id", true);
 
-                var queryDecreasingDate = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                {
-                    Amount = entityByDate.Amount,
-                    Date_ = entityByDate.Date_,
-                    ProductID = entityByDate.ProductID,
-                    TotalConsumption = entityByDate.TotalConsumption,
-                    TotalGoodsIssue = entityByDate.TotalGoodsIssue,
-                    TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
-                    TotalWarehouseInput = entityByDate.TotalWarehouseInput,
-                    TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
-                    TotalProduction = entityByDate.TotalProduction,
-                    TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
-                    TotalPurchaseRequest = entityByDate.TotalPurchaseRequest - deletedLine.Quantity,
-                    TotalSalesOrder = entityByDate.TotalSalesOrder,
-                    TotalSalesProposition = entityByDate.TotalSalesProposition,
-                    TotalWastage = entityByDate.TotalWastage,
-                    WarehouseID = entityByDate.WarehouseID,
-                    BranchID = entityByDate.BranchID,
-                    Id = entityByDate.Id,
-                    CreationTime = entityByDate.CreationTime.Value,
-                    CreatorId = entityByDate.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entityByDate.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = entityByDate.Id }, false, false, "");
+            #endregion
 
-                var byDateStockMovementsDecreasing = queryFactory.Update<SelectByDateStockMovementsDto>(queryDecreasingDate, "Id", true);
-
-                #endregion
-
-                #region Grand Total Stock Movement
-
-                var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = purchaseRequests.BranchID, WarehouseID = purchaseRequests.WarehouseID, ProductID = deletedLine.ProductID }, false, false, "");
-
-                var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
-
-                var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
-                {
-                    Amount = entityGrandTotal.Amount,
-                    ProductID = deletedLine.ProductID,
-                    TotalConsumption = entityGrandTotal.TotalConsumption,
-                    TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
-                    TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
-                    TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
-                    TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
-                    TotalProduction = entityGrandTotal.TotalProduction,
-                    TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
-                    TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest - deletedLine.Quantity,
-                    TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
-                    TotalReserved = entityGrandTotal.TotalReserved,
-                    TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
-                    TotalWastage = entityGrandTotal.TotalWastage,
-                    WarehouseID = entityGrandTotal.WarehouseID,
-                    Id = entityGrandTotal.Id,
-                    CreationTime = entityGrandTotal.CreationTime.Value,
-                    CreatorId = entityGrandTotal.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entityGrandTotal.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    BranchID = entityGrandTotal.BranchID,
-                    LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
-
-                var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasingGrand, "Id", true);
-
-                #endregion
-            }
             return true;
         }
 
         public static bool DeletePurchaseRequests(SelectPurchaseRequestsDto deletedEntity)
         {
+            #region Getting Lines
 
-            using (var connection = queryFactory.ConnectToDatabase())
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.PurchaseRequestLines)
+                   .Select<PurchaseRequestLines>(prl => new { prl.VATrate, prl.VATamount, prl.UnitSetID, prl.UnitPrice, prl.Quantity, prl.PurchaseRequestLineState, prl.PurchaseRequestID, prl.ProductionOrderID, prl.ProductID, prl.PaymentPlanID, prl.OrderConversionDate, prl.LineTotalAmount, prl.LineNr, prl.LineDescription, prl.LineAmount, prl.Id, prl.ExchangeRate, prl.DiscountRate, prl.DiscountAmount, prl.DataOpenStatusUserId, prl.DataOpenStatus })
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(PurchaseRequestLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(PurchaseRequestLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        ppl => new { PaymentPlanID = ppl.Id, PaymentPlanName = ppl.Name },
+                        nameof(PurchaseRequestLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { PurchaseRequestID = deletedEntity.Id }, false, false, Tables.PurchaseRequestLines);
+
+
+            var purchaseRequestLine = queryFactory.GetList<SelectPurchaseRequestLinesDto>(queryLines).ToList();
+
+            deletedEntity.SelectPurchaseRequestLines = purchaseRequestLine;
+
+            #endregion
+
+            foreach (var line in deletedEntity.SelectPurchaseRequestLines)
             {
-                #region Getting Lines
 
-                var queryLines = queryFactory
-                       .Query()
-                       .From(Tables.PurchaseRequestLines)
-                       .Select<PurchaseRequestLines>(prl => new { prl.VATrate, prl.VATamount, prl.UnitSetID, prl.UnitPrice, prl.Quantity, prl.PurchaseRequestLineState, prl.PurchaseRequestID, prl.ProductionOrderID, prl.ProductID, prl.PaymentPlanID, prl.OrderConversionDate, prl.LineTotalAmount, prl.LineNr, prl.LineDescription, prl.LineAmount, prl.Id, prl.ExchangeRate, prl.DiscountRate, prl.DiscountAmount, prl.DataOpenStatusUserId, prl.DataOpenStatus })
-                       .Join<Products>
-                        (
-                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
-                            nameof(PurchaseRequestLines.ProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                       .Join<UnitSets>
-                        (
-                            u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
-                            nameof(PurchaseRequestLines.UnitSetID),
-                            nameof(UnitSets.Id),
-                            JoinType.Left
-                        )
-                         .Join<PaymentPlans>
-                        (
-                            ppl => new { PaymentPlanID = ppl.Id, PaymentPlanName = ppl.Name },
-                            nameof(PurchaseRequestLines.PaymentPlanID),
-                            nameof(PaymentPlans.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { PurchaseRequestID = deletedEntity.Id }, false, false, Tables.PurchaseRequestLines);
+                #region By Date Stock Movement
 
+                var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = deletedEntity.BranchID, WarehouseID = deletedEntity.WarehouseID, ProductID = line.ProductID, Date_ = deletedEntity.Date_ }, false, false, "");
 
-                var purchaseRequestLine = queryFactory.GetList<SelectPurchaseRequestLinesDto>(queryLines).ToList();
+                var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
 
-                deletedEntity.SelectPurchaseRequestLines = purchaseRequestLine;
+                if (entityByDate.Id != Guid.Empty)
+                {
+                    var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                    {
+                        Amount = entityByDate.Amount,
+                        Date_ = entityByDate.Date_,
+                        ProductID = line.ProductID,
+                        TotalConsumption = entityByDate.TotalConsumption,
+                        TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                        TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                        TotalProduction = entityByDate.TotalProduction,
+                        TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                        TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                        TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
+                        TotalPurchaseRequest = entityByDate.TotalPurchaseRequest - line.Quantity,
+                        TotalSalesOrder = entityByDate.TotalSalesOrder,
+                        TotalSalesProposition = entityByDate.TotalSalesProposition,
+                        TotalWastage = entityByDate.TotalWastage,
+                        WarehouseID = entityByDate.WarehouseID,
+                        BranchID = entityByDate.BranchID,
+                        Id = entityByDate.Id,
+                        CreationTime = entityByDate.CreationTime.Value,
+                        CreatorId = entityByDate.CreatorId.Value,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
+                        DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
+                        IsDeleted = entityByDate.IsDeleted,
+                        LastModificationTime = DateTime.Now,
+                        LastModifierId = LoginedUserService.UserId
+                    }).Where(new { Id = entityByDate.Id }, false, false, "");
+
+                    var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
+                }
 
                 #endregion
 
-                foreach (var line in deletedEntity.SelectPurchaseRequestLines)
+                #region Grand Total Stock Movement
+
+                var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = deletedEntity.BranchID, WarehouseID = deletedEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
+
+                var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
+
+                if (entityGrandTotal.Id != Guid.Empty)
                 {
-
-                    #region By Date Stock Movement
-
-                    var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = deletedEntity.BranchID, WarehouseID = deletedEntity.WarehouseID, ProductID = line.ProductID, Date_ = deletedEntity.Date_ }, false, false, "");
-
-                    var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
-
-                    if (entityByDate.Id != Guid.Empty)
+                    var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                     {
-                        var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                        {
-                            Amount = entityByDate.Amount,
-                            Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
-                            TotalConsumption = entityByDate.TotalConsumption,
-                            TotalGoodsIssue = entityByDate.TotalGoodsIssue,
-                            TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
-                            TotalProduction = entityByDate.TotalProduction,
-                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
-                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
-                            TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
-                            TotalPurchaseRequest = entityByDate.TotalPurchaseRequest - line.Quantity,
-                            TotalSalesOrder = entityByDate.TotalSalesOrder,
-                            TotalSalesProposition = entityByDate.TotalSalesProposition,
-                            TotalWastage = entityByDate.TotalWastage,
-                            WarehouseID = entityByDate.WarehouseID,
-                            BranchID = entityByDate.BranchID,
-                            Id = entityByDate.Id,
-                            CreationTime = entityByDate.CreationTime.Value,
-                            CreatorId = entityByDate.CreatorId.Value,
-                            DataOpenStatus = false,
-                            DataOpenStatusUserId = Guid.Empty,
-                            DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
-                            DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
-                            IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
-                            LastModifierId = LoginedUserService.UserId
-                        }).Where(new { Id = entityByDate.Id }, false, false, "");
+                        Amount = entityGrandTotal.Amount,
+                        ProductID = line.ProductID,
+                        TotalConsumption = entityGrandTotal.TotalConsumption,
+                        TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                        TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                        TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                        TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
+                        TotalProduction = entityGrandTotal.TotalProduction,
+                        TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
+                        TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest - line.Quantity,
+                        TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
+                        TotalReserved = entityGrandTotal.TotalReserved,
+                        TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
+                        TotalWastage = entityGrandTotal.TotalWastage,
+                        WarehouseID = entityGrandTotal.WarehouseID,
+                        Id = entityGrandTotal.Id,
+                        CreationTime = entityGrandTotal.CreationTime.Value,
+                        CreatorId = entityGrandTotal.CreatorId.Value,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
+                        DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
+                        IsDeleted = entityGrandTotal.IsDeleted,
+                        LastModificationTime = DateTime.Now,
+                        BranchID = entityGrandTotal.BranchID,
+                        LastModifierId = LoginedUserService.UserId
+                    }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
-                        var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
-                    }
-
-                    #endregion
-
-                    #region Grand Total Stock Movement
-
-                    var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = deletedEntity.BranchID, WarehouseID = deletedEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
-
-                    var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
-
-                    if (entityGrandTotal.Id != Guid.Empty)
-                    {
-                        var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
-                        {
-                            Amount = entityGrandTotal.Amount,
-                            ProductID = line.ProductID,
-                            TotalConsumption = entityGrandTotal.TotalConsumption,
-                            TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
-                            TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
-                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
-                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
-                            TotalProduction = entityGrandTotal.TotalProduction,
-                            TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
-                            TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest - line.Quantity,
-                            TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
-                            TotalReserved = entityGrandTotal.TotalReserved,
-                            TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
-                            TotalWastage = entityGrandTotal.TotalWastage,
-                            WarehouseID = entityGrandTotal.WarehouseID,
-                            Id = entityGrandTotal.Id,
-                            CreationTime = entityGrandTotal.CreationTime.Value,
-                            CreatorId = entityGrandTotal.CreatorId.Value,
-                            DataOpenStatus = false,
-                            DataOpenStatusUserId = Guid.Empty,
-                            DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
-                            DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
-                            IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
-                            BranchID = entityGrandTotal.BranchID,
-                            LastModifierId = LoginedUserService.UserId
-                        }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
-
-                        var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
-                    }
-
-                    #endregion
-
+                    var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                 }
+
+                #endregion
+
             }
 
             return true;
@@ -838,37 +822,239 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool InsertPurchaseOrders(CreatePurchaseOrdersDto createdEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            foreach (var line in createdEntity.SelectPurchaseOrderLinesDto)
+            {
+                #region By Date Stock Movement
+
+                var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = createdEntity.BranchID, WarehouseID = createdEntity.WarehouseID, ProductID = line.ProductID, Date_ = createdEntity.Date_ }, false, false, "");
+
+                var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
+
+                if (entityByDate.Id == Guid.Empty)
+                {
+                    var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
+                    {
+                        Amount = 0,
+                        Date_ = createdEntity.Date_,
+                        ProductID = line.ProductID,
+                        TotalConsumption = 0,
+                        TotalGoodsIssue = 0,
+                        TotalWarehouseInput = 0,
+                        TotalWarehouseOutput = 0,
+                        TotalGoodsReceipt = 0,
+                        TotalProduction = 0,
+                        TotalPurchaseOrder = line.Quantity,
+                        TotalPurchaseRequest = 0,
+                        TotalSalesOrder = 0,
+                        TotalSalesProposition = 0,
+                        TotalWastage = 0,
+                        WarehouseID = createdEntity.WarehouseID,
+                        BranchID = createdEntity.BranchID,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                    });
+
+                    var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
+                }
+                else
+                {
+                    var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                    {
+                        Amount = entityByDate.Amount,
+                        Date_ = entityByDate.Date_,
+                        ProductID = line.ProductID,
+                        TotalConsumption = entityByDate.TotalConsumption,
+                        TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                        TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                        TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                        TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                        TotalProduction = entityByDate.TotalProduction,
+                        TotalPurchaseOrder = entityByDate.TotalPurchaseOrder + line.Quantity,
+                        TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
+                        TotalSalesOrder = entityByDate.TotalSalesOrder,
+                        TotalSalesProposition = entityByDate.TotalSalesProposition,
+                        TotalWastage = entityByDate.TotalWastage,
+                        WarehouseID = entityByDate.WarehouseID,
+                        BranchID = entityByDate.BranchID,
+                        Id = entityByDate.Id,
+                        CreationTime = entityByDate.CreationTime.Value,
+                        CreatorId = entityByDate.CreatorId.Value,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
+                        DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
+                        IsDeleted = entityByDate.IsDeleted,
+                        LastModificationTime = DateTime.Now,
+                        LastModifierId = LoginedUserService.UserId
+                    }).Where(new { Id = entityByDate.Id }, false, false, "");
+
+                    var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
+                }
+
+                #endregion
+
+                #region Grand Total Stock Movement
+
+                var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = createdEntity.BranchID, WarehouseID = createdEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
+
+                var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
+
+                if (entityGrandTotal.Id == Guid.Empty)
+                {
+                    var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
+                    {
+                        Amount = 0,
+                        ProductID = line.ProductID,
+                        TotalConsumption = 0,
+                        TotalGoodsIssue = 0,
+                        TotalGoodsReceipt = 0,
+                        TotalWarehouseInput = 0,
+                        TotalWarehouseOutput = 0,
+                        TotalProduction = 0,
+                        TotalPurchaseOrder = line.Quantity,
+                        TotalPurchaseRequest = 0,
+                        TotalSalesOrder = 0,
+                        TotalReserved = 0,
+                        TotalSalesProposition = 0,
+                        TotalWastage = 0,
+                        WarehouseID = createdEntity.WarehouseID,
+                        BranchID = createdEntity.BranchID,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                    });
+
+                    var grandTotalStockMovements = queryFactory.Insert<SelectGrandTotalStockMovementsDto>(query, "Id", true);
+                }
+
+                else
+                {
+                    var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
+                    {
+                        Amount = entityGrandTotal.Amount,
+                        ProductID = line.ProductID,
+                        TotalConsumption = entityGrandTotal.TotalConsumption,
+                        TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                        TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
+                        TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                        TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                        TotalProduction = entityGrandTotal.TotalProduction,
+                        TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder + line.Quantity,
+                        TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
+                        TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
+                        TotalReserved = entityGrandTotal.TotalReserved,
+                        TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
+                        TotalWastage = entityGrandTotal.TotalWastage,
+                        WarehouseID = createdEntity.WarehouseID,
+                        Id = entityGrandTotal.Id,
+                        CreationTime = entityGrandTotal.CreationTime.Value,
+                        CreatorId = entityGrandTotal.CreatorId.Value,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
+                        DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
+                        IsDeleted = entityGrandTotal.IsDeleted,
+                        LastModificationTime = DateTime.Now,
+                        BranchID = createdEntity.BranchID,
+                        LastModifierId = LoginedUserService.UserId
+                    }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
+
+                    var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
+                }
+
+                #endregion
+
+            }
+
+            return true;
+        }
+
+        public static bool UpdatePurchaseOrders(SelectPurchaseOrdersDto previousEntity, UpdatePurchaseOrdersDto currentEntity)
+        {
+            foreach (var line in currentEntity.SelectPurchaseOrderLinesDto)
             {
 
-                foreach (var line in createdEntity.SelectPurchaseOrderLinesDto)
+                #region By Date Stock Movement
+
+                var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = currentEntity.BranchID, WarehouseID = currentEntity.WarehouseID, ProductID = line.ProductID, Date_ = currentEntity.Date_ }, false, false, "");
+
+                var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
+
+                if (entityByDate.Id == Guid.Empty)
                 {
-                    #region By Date Stock Movement
-
-                    var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = createdEntity.BranchID, WarehouseID = createdEntity.WarehouseID, ProductID = line.ProductID, Date_ = createdEntity.Date_ }, false, false, "");
-
-                    var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
-
-                    if (entityByDate.Id == Guid.Empty)
+                    foreach (var previousline in previousEntity.SelectPurchaseOrderLinesDto)
                     {
+                        var entityQueryByDateDecreasing = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = previousEntity.BranchID, WarehouseID = previousEntity.WarehouseID, ProductID = previousline.ProductID, Date_ = previousEntity.Date_ }, false, false, "");
+
+                        var entityByDateDecreasing = queryFactory.Get<ByDateStockMovements>(entityQueryByDateDecreasing);
+
+                        var decreasingAmount = line.Quantity;
+
+                        var queryDecreasing = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                        {
+                            Amount = entityByDateDecreasing.Amount,
+                            Date_ = entityByDateDecreasing.Date_,
+                            ProductID = previousline.ProductID,
+                            TotalConsumption = entityByDateDecreasing.TotalConsumption,
+                            TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
+                            TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
+                            TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
+                            TotalProduction = entityByDateDecreasing.TotalProduction,
+                            TotalPurchaseOrder = entityByDateDecreasing.TotalPurchaseOrder - decreasingAmount,
+                            TotalPurchaseRequest = entityByDateDecreasing.TotalPurchaseRequest,
+                            TotalSalesOrder = entityByDateDecreasing.TotalSalesOrder,
+                            TotalSalesProposition = entityByDateDecreasing.TotalSalesProposition,
+                            TotalWastage = entityByDateDecreasing.TotalWastage,
+                            WarehouseID = entityByDateDecreasing.WarehouseID,
+                            BranchID = entityByDateDecreasing.BranchID,
+                            Id = entityByDateDecreasing.Id,
+                            CreationTime = entityByDateDecreasing.CreationTime.Value,
+                            CreatorId = entityByDateDecreasing.CreatorId.Value,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
+                            DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
+                            IsDeleted = entityByDateDecreasing.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            LastModifierId = LoginedUserService.UserId
+                        }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
+
+                        var byDateStockMovementsDecreasing = queryFactory.Update<SelectByDateStockMovementsDto>(queryDecreasing, "Id", true);
+
                         var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
                         {
                             Amount = 0,
-                            Date_ = createdEntity.Date_,
+                            Date_ = currentEntity.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
-                            TotalWarehouseInput = 0,
-                            TotalWarehouseOutput = 0,
                             TotalGoodsReceipt = 0,
+                            TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = line.Quantity,
                             TotalPurchaseRequest = 0,
                             TotalSalesOrder = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = currentEntity.WarehouseID,
+                            BranchID = currentEntity.BranchID,
                             CreationTime = DateTime.Now,
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -883,8 +1069,16 @@ namespace TsiErp.Business.Entities.StockMovement
 
                         var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
-                    else
+
+                }
+                else
+                {
+                    decimal previousQuantity = previousEntity.SelectPurchaseOrderLinesDto.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
+
+                    if (line.Quantity > previousQuantity)
                     {
+                        decimal addedPR = line.Quantity - previousQuantity;
+
                         var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
                         {
                             Amount = entityByDate.Amount,
@@ -896,7 +1090,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
-                            TotalPurchaseOrder = entityByDate.TotalPurchaseOrder + line.Quantity,
+                            TotalPurchaseOrder = entityByDate.TotalPurchaseOrder + addedPR,
                             TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
                             TotalSalesOrder = entityByDate.TotalSalesOrder,
                             TotalSalesProposition = entityByDate.TotalSalesProposition,
@@ -918,16 +1112,95 @@ namespace TsiErp.Business.Entities.StockMovement
                         var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
 
-                    #endregion
-
-                    #region Grand Total Stock Movement
-
-                    var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = createdEntity.BranchID, WarehouseID = createdEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
-
-                    var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
-
-                    if (entityGrandTotal.Id == Guid.Empty)
+                    else if (line.Quantity < previousQuantity)
                     {
+                        decimal decreasedPR = previousQuantity - line.Quantity;
+
+                        var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                        {
+                            Amount = entityByDate.Amount,
+                            Date_ = entityByDate.Date_,
+                            ProductID = line.ProductID,
+                            TotalConsumption = entityByDate.TotalConsumption,
+                            TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                            TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                            TotalProduction = entityByDate.TotalProduction,
+                            TotalPurchaseOrder = entityByDate.TotalPurchaseOrder - decreasedPR,
+                            TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
+                            TotalSalesOrder = entityByDate.TotalSalesOrder,
+                            TotalSalesProposition = entityByDate.TotalSalesProposition,
+                            TotalWastage = entityByDate.TotalWastage,
+                            WarehouseID = entityByDate.WarehouseID,
+                            BranchID = entityByDate.BranchID,
+                            Id = entityByDate.Id,
+                            CreationTime = entityByDate.CreationTime.Value,
+                            CreatorId = entityByDate.CreatorId.Value,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
+                            DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
+                            IsDeleted = entityByDate.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            LastModifierId = LoginedUserService.UserId
+                        }).Where(new { Id = entityByDate.Id }, false, false, "");
+
+                        var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
+                    }
+
+                }
+
+                #endregion
+
+                #region Grand Total Stock Movement
+
+                var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = currentEntity.BranchID, WarehouseID = currentEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
+
+                var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
+
+                if (entityGrandTotal.Id == Guid.Empty)
+                {
+                    foreach (var previousLine in previousEntity.SelectPurchaseOrderLinesDto)
+                    {
+                        var entityQueryGrandTotalDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = previousEntity.BranchID, WarehouseID = previousEntity.WarehouseID, ProductID = previousLine.ProductID }, false, false, "");
+
+                        var entityGrandTotalDecreasing = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotalDecreasing);
+
+                        var decreasingAmount = line.Quantity;
+
+                        var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
+                        {
+                            Amount = entityGrandTotalDecreasing.Amount,
+                            ProductID = previousLine.ProductID,
+                            TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
+                            TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
+                            TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
+                            TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
+                            TotalProduction = entityGrandTotalDecreasing.TotalProduction,
+                            TotalPurchaseOrder = entityGrandTotalDecreasing.TotalPurchaseOrder - decreasingAmount,
+                            TotalPurchaseRequest = entityGrandTotalDecreasing.TotalPurchaseRequest,
+                            TotalSalesOrder = entityGrandTotalDecreasing.TotalSalesOrder,
+                            TotalReserved = entityGrandTotalDecreasing.TotalReserved,
+                            TotalSalesProposition = entityGrandTotalDecreasing.TotalSalesProposition,
+                            TotalWastage = entityGrandTotalDecreasing.TotalWastage,
+                            WarehouseID = previousEntity.WarehouseID,
+                            Id = entityGrandTotalDecreasing.Id,
+                            CreationTime = entityGrandTotalDecreasing.CreationTime.Value,
+                            CreatorId = entityGrandTotalDecreasing.CreatorId.Value,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
+                            DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
+                            IsDeleted = entityGrandTotalDecreasing.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            BranchID = previousEntity.BranchID,
+                            LastModifierId = LoginedUserService.UserId
+                        }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
+
+                        var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasing, "Id", true);
+
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                         {
                             Amount = 0,
@@ -935,8 +1208,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
-                            TotalWarehouseInput = 0,
                             TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = line.Quantity,
                             TotalPurchaseRequest = 0,
@@ -944,8 +1217,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = currentEntity.WarehouseID,
+                            BranchID = currentEntity.BranchID,
                             CreationTime = DateTime.Now,
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -960,26 +1233,33 @@ namespace TsiErp.Business.Entities.StockMovement
 
                         var grandTotalStockMovements = queryFactory.Insert<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                     }
+                }
 
-                    else
+                else
+                {
+                    decimal previousQuantity = previousEntity.SelectPurchaseOrderLinesDto.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
+
+                    if (line.Quantity > previousQuantity)
                     {
+                        decimal addedPR = line.Quantity - previousQuantity;
+
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount,
                             ProductID = line.ProductID,
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
-                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
-                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalProduction = entityGrandTotal.TotalProduction,
-                            TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder + line.Quantity,
+                            TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder + addedPR,
                             TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
                             TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
                             TotalReserved = entityGrandTotal.TotalReserved,
                             TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
                             TotalWastage = entityGrandTotal.TotalWastage,
-                            WarehouseID = createdEntity.WarehouseID,
+                            WarehouseID = entityGrandTotal.WarehouseID,
                             Id = entityGrandTotal.Id,
                             CreationTime = entityGrandTotal.CreationTime.Value,
                             CreatorId = entityGrandTotal.CreatorId.Value,
@@ -989,598 +1269,18 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
                             LastModificationTime = DateTime.Now,
-                            BranchID = createdEntity.BranchID,
+                            BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
                         var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
-                    }
-
-                    #endregion
-                }
-
-            }
-
-            return true;
-        }
-
-        public static bool UpdatePurchaseOrders(SelectPurchaseOrdersDto previousEntity, UpdatePurchaseOrdersDto currentEntity)
-        {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
-                foreach (var line in currentEntity.SelectPurchaseOrderLinesDto)
-                {
-
-                    #region By Date Stock Movement
-
-                    var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = currentEntity.BranchID, WarehouseID = currentEntity.WarehouseID, ProductID = line.ProductID, Date_ = currentEntity.Date_ }, false, false, "");
-
-                    var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
-
-                    if (entityByDate.Id == Guid.Empty)
-                    {
-                        foreach (var previousline in previousEntity.SelectPurchaseOrderLinesDto)
-                        {
-                            var entityQueryByDateDecreasing = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = previousEntity.BranchID, WarehouseID = previousEntity.WarehouseID, ProductID = previousline.ProductID, Date_ = previousEntity.Date_ }, false, false, "");
-
-                            var entityByDateDecreasing = queryFactory.Get<ByDateStockMovements>(entityQueryByDateDecreasing);
-
-                            var decreasingAmount = line.Quantity;
-
-                            var queryDecreasing = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                            {
-                                Amount = entityByDateDecreasing.Amount,
-                                Date_ = entityByDateDecreasing.Date_,
-                                ProductID = previousline.ProductID,
-                                TotalConsumption = entityByDateDecreasing.TotalConsumption,
-                                TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
-                                TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
-                                TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
-                                TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
-                                TotalProduction = entityByDateDecreasing.TotalProduction,
-                                TotalPurchaseOrder = entityByDateDecreasing.TotalPurchaseOrder - decreasingAmount,
-                                TotalPurchaseRequest = entityByDateDecreasing.TotalPurchaseRequest,
-                                TotalSalesOrder = entityByDateDecreasing.TotalSalesOrder,
-                                TotalSalesProposition = entityByDateDecreasing.TotalSalesProposition,
-                                TotalWastage = entityByDateDecreasing.TotalWastage,
-                                WarehouseID = entityByDateDecreasing.WarehouseID,
-                                BranchID = entityByDateDecreasing.BranchID,
-                                Id = entityByDateDecreasing.Id,
-                                CreationTime = entityByDateDecreasing.CreationTime.Value,
-                                CreatorId = entityByDateDecreasing.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityByDateDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
-
-                            var byDateStockMovementsDecreasing = queryFactory.Update<SelectByDateStockMovementsDto>(queryDecreasing, "Id", true);
-
-                            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
-                            {
-                                Amount = 0,
-                                Date_ = currentEntity.Date_,
-                                ProductID = line.ProductID,
-                                TotalConsumption = 0,
-                                TotalGoodsIssue = 0,
-                                TotalGoodsReceipt = 0,
-                                TotalWarehouseOutput = 0,
-                                TotalWarehouseInput = 0,
-                                TotalProduction = 0,
-                                TotalPurchaseOrder = line.Quantity,
-                                TotalPurchaseRequest = 0,
-                                TotalSalesOrder = 0,
-                                TotalSalesProposition = 0,
-                                TotalWastage = 0,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
-                                CreatorId = LoginedUserService.UserId,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = Guid.Empty,
-                                DeletionTime = null,
-                                Id = GuidGenerator.CreateGuid(),
-                                IsDeleted = false,
-                                LastModificationTime = null,
-                                LastModifierId = Guid.Empty,
-                            });
-
-                            var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
-                        }
-
-                    }
-                    else
-                    {
-                        decimal previousQuantity = previousEntity.SelectPurchaseOrderLinesDto.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
-
-                        if (line.Quantity > previousQuantity)
-                        {
-                            decimal addedPR = line.Quantity - previousQuantity;
-
-                            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                            {
-                                Amount = entityByDate.Amount,
-                                Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
-                                TotalConsumption = entityByDate.TotalConsumption,
-                                TotalGoodsIssue = entityByDate.TotalGoodsIssue,
-                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
-                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
-                                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
-                                TotalProduction = entityByDate.TotalProduction,
-                                TotalPurchaseOrder = entityByDate.TotalPurchaseOrder + addedPR,
-                                TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
-                                TotalSalesOrder = entityByDate.TotalSalesOrder,
-                                TotalSalesProposition = entityByDate.TotalSalesProposition,
-                                TotalWastage = entityByDate.TotalWastage,
-                                WarehouseID = entityByDate.WarehouseID,
-                                BranchID = entityByDate.BranchID,
-                                Id = entityByDate.Id,
-                                CreationTime = entityByDate.CreationTime.Value,
-                                CreatorId = entityByDate.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityByDate.Id }, false, false, "");
-
-                            var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
-                        }
-
-                        else if (line.Quantity < previousQuantity)
-                        {
-                            decimal decreasedPR = previousQuantity - line.Quantity;
-
-                            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                            {
-                                Amount = entityByDate.Amount,
-                                Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
-                                TotalConsumption = entityByDate.TotalConsumption,
-                                TotalGoodsIssue = entityByDate.TotalGoodsIssue,
-                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
-                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
-                                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
-                                TotalProduction = entityByDate.TotalProduction,
-                                TotalPurchaseOrder = entityByDate.TotalPurchaseOrder - decreasedPR,
-                                TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
-                                TotalSalesOrder = entityByDate.TotalSalesOrder,
-                                TotalSalesProposition = entityByDate.TotalSalesProposition,
-                                TotalWastage = entityByDate.TotalWastage,
-                                WarehouseID = entityByDate.WarehouseID,
-                                BranchID = entityByDate.BranchID,
-                                Id = entityByDate.Id,
-                                CreationTime = entityByDate.CreationTime.Value,
-                                CreatorId = entityByDate.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityByDate.Id }, false, false, "");
-
-                            var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
-                        }
 
                     }
 
-                    #endregion
-
-                    #region Grand Total Stock Movement
-
-                    var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = currentEntity.BranchID, WarehouseID = currentEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
-
-                    var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
-
-                    if (entityGrandTotal.Id == Guid.Empty)
+                    else if (line.Quantity < previousQuantity)
                     {
-                        foreach (var previousLine in previousEntity.SelectPurchaseOrderLinesDto)
-                        {
-                            var entityQueryGrandTotalDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = previousEntity.BranchID, WarehouseID = previousEntity.WarehouseID, ProductID = previousLine.ProductID }, false, false, "");
+                        decimal decreasedPR = previousQuantity - line.Quantity;
 
-                            var entityGrandTotalDecreasing = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotalDecreasing);
-
-                            var decreasingAmount = line.Quantity;
-
-                            var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
-                            {
-                                Amount = entityGrandTotalDecreasing.Amount,
-                                ProductID = previousLine.ProductID,
-                                TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
-                                TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
-                                TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
-                                TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
-                                TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
-                                TotalProduction = entityGrandTotalDecreasing.TotalProduction,
-                                TotalPurchaseOrder = entityGrandTotalDecreasing.TotalPurchaseOrder - decreasingAmount,
-                                TotalPurchaseRequest = entityGrandTotalDecreasing.TotalPurchaseRequest,
-                                TotalSalesOrder = entityGrandTotalDecreasing.TotalSalesOrder,
-                                TotalReserved = entityGrandTotalDecreasing.TotalReserved,
-                                TotalSalesProposition = entityGrandTotalDecreasing.TotalSalesProposition,
-                                TotalWastage = entityGrandTotalDecreasing.TotalWastage,
-                                WarehouseID = previousEntity.WarehouseID,
-                                Id = entityGrandTotalDecreasing.Id,
-                                CreationTime = entityGrandTotalDecreasing.CreationTime.Value,
-                                CreatorId = entityGrandTotalDecreasing.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                BranchID = previousEntity.BranchID,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
-
-                            var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasing, "Id", true);
-
-                            var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
-                            {
-                                Amount = 0,
-                                ProductID = line.ProductID,
-                                TotalConsumption = 0,
-                                TotalGoodsIssue = 0,
-                                TotalGoodsReceipt = 0,
-                                TotalWarehouseOutput = 0,
-                                TotalWarehouseInput = 0,
-                                TotalProduction = 0,
-                                TotalPurchaseOrder = line.Quantity,
-                                TotalPurchaseRequest = 0,
-                                TotalSalesOrder = 0,
-                                TotalReserved = 0,
-                                TotalSalesProposition = 0,
-                                TotalWastage = 0,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
-                                CreatorId = LoginedUserService.UserId,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = Guid.Empty,
-                                DeletionTime = null,
-                                Id = GuidGenerator.CreateGuid(),
-                                IsDeleted = false,
-                                LastModificationTime = null,
-                                LastModifierId = Guid.Empty,
-                            });
-
-                            var grandTotalStockMovements = queryFactory.Insert<SelectGrandTotalStockMovementsDto>(query, "Id", true);
-                        }
-                    }
-
-                    else
-                    {
-                        decimal previousQuantity = previousEntity.SelectPurchaseOrderLinesDto.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
-
-                        if (line.Quantity > previousQuantity)
-                        {
-                            decimal addedPR = line.Quantity - previousQuantity;
-
-                            var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
-                            {
-                                Amount = entityGrandTotal.Amount,
-                                ProductID = line.ProductID,
-                                TotalConsumption = entityGrandTotal.TotalConsumption,
-                                TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
-                                TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
-                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
-                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
-                                TotalProduction = entityGrandTotal.TotalProduction,
-                                TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder + addedPR,
-                                TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
-                                TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
-                                TotalReserved = entityGrandTotal.TotalReserved,
-                                TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
-                                TotalWastage = entityGrandTotal.TotalWastage,
-                                WarehouseID = entityGrandTotal.WarehouseID,
-                                Id = entityGrandTotal.Id,
-                                CreationTime = entityGrandTotal.CreationTime.Value,
-                                CreatorId = entityGrandTotal.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                BranchID = entityGrandTotal.BranchID,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
-
-                            var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
-
-                        }
-
-                        else if (line.Quantity < previousQuantity)
-                        {
-                            decimal decreasedPR = previousQuantity - line.Quantity;
-
-                            var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
-                            {
-                                Amount = entityGrandTotal.Amount,
-                                ProductID = line.ProductID,
-                                TotalConsumption = entityGrandTotal.TotalConsumption,
-                                TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
-                                TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
-                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
-                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
-                                TotalProduction = entityGrandTotal.TotalProduction,
-                                TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder - decreasedPR,
-                                TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
-                                TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
-                                TotalReserved = entityGrandTotal.TotalReserved,
-                                TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
-                                TotalWastage = entityGrandTotal.TotalWastage,
-                                WarehouseID = entityGrandTotal.WarehouseID,
-                                Id = entityGrandTotal.Id,
-                                CreationTime = entityGrandTotal.CreationTime.Value,
-                                CreatorId = entityGrandTotal.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                BranchID = entityGrandTotal.BranchID,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
-
-                            var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
-                        }
-                    }
-
-                    #endregion
-                }
-
-            }
-
-            return true;
-        }
-
-        public static bool DeletePurchaseOrderLines(SelectPurchaseOrderLinesDto deletedLine)
-        {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                #region Getting Purchase Order
-
-                var query = queryFactory
-                      .Query()
-                      .From(Tables.PurchaseOrders)
-                      .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate, po.WarehouseID, po.TotalVatExcludedAmount, po.TotalVatAmount, po.TotalDiscountAmount, po.Time_, po.SpecialCode, po.ShippingAdressID, po.PurchaseOrderState, po.ProductionOrderID, po.PaymentPlanID, po.NetAmount, po.LinkedPurchaseRequestID, po.Id, po.GrossAmount, po.FicheNo, po.ExchangeRate, po.Description_, po.Date_, po.DataOpenStatusUserId, po.DataOpenStatus, po.CurrentAccountCardID, po.CurrencyID, po.BranchID })
-                      .Join<PaymentPlans>
-                       (
-                           pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
-                           nameof(PurchaseOrders.PaymentPlanID),
-                           nameof(PaymentPlans.Id),
-                           JoinType.Left
-                       )
-                       .Join<Branches>
-                       (
-                           b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
-                           nameof(PurchaseOrders.BranchID),
-                           nameof(Branches.Id),
-                           JoinType.Left
-                       )
-                        .Join<Warehouses>
-                       (
-                           w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
-                           nameof(PurchaseOrders.WarehouseID),
-                           nameof(Warehouses.Id),
-                           JoinType.Left
-                       )
-                        .Join<Currencies>
-                       (
-                           c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
-                           nameof(PurchaseOrders.CurrencyID),
-                           nameof(Currencies.Id),
-                           JoinType.Left
-                       )
-                        .Join<CurrentAccountCards>
-                       (
-                           ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
-                           nameof(PurchaseOrders.CurrentAccountCardID),
-                           nameof(CurrentAccountCards.Id),
-                           JoinType.Left)
-
-                            .Join<ShippingAdresses>
-                       (
-                           sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
-                           nameof(PurchaseOrders.ShippingAdressID),
-                           nameof(ShippingAdresses.Id),
-                           JoinType.Left
-                       )
-                       .Where(new { Id = deletedLine.PurchaseOrderID }, false, false, Tables.PurchaseOrders);
-
-                var purchaseOrders = queryFactory.Get<SelectPurchaseOrdersDto>(query);
-
-                #endregion
-
-                #region By Date Stock Movement
-
-                var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = purchaseOrders.BranchID, WarehouseID = purchaseOrders.WarehouseID, ProductID = deletedLine.ProductID, Date_ = purchaseOrders.Date_ }, false, false, "");
-
-                var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
-
-                var queryDecreasingDate = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                {
-                    Amount = entityByDate.Amount,
-                    Date_ = entityByDate.Date_,
-                    ProductID = entityByDate.ProductID,
-                    TotalConsumption = entityByDate.TotalConsumption,
-                    TotalGoodsIssue = entityByDate.TotalGoodsIssue,
-                    TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
-                    TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
-                    TotalWarehouseInput = entityByDate.TotalWarehouseInput,
-                    TotalProduction = entityByDate.TotalProduction,
-                    TotalPurchaseOrder = entityByDate.TotalPurchaseOrder - deletedLine.Quantity,
-                    TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
-                    TotalSalesOrder = entityByDate.TotalSalesOrder,
-                    TotalSalesProposition = entityByDate.TotalSalesProposition,
-                    TotalWastage = entityByDate.TotalWastage,
-                    WarehouseID = entityByDate.WarehouseID,
-                    BranchID = entityByDate.BranchID,
-                    Id = entityByDate.Id,
-                    CreationTime = entityByDate.CreationTime.Value,
-                    CreatorId = entityByDate.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entityByDate.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = entityByDate.Id }, false, false, "");
-
-                var byDateStockMovementsDecreasing = queryFactory.Update<SelectByDateStockMovementsDto>(queryDecreasingDate, "Id", true);
-
-                #endregion
-
-                #region Grand Total Stock Movement
-
-                var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = purchaseOrders.BranchID, WarehouseID = purchaseOrders.WarehouseID, ProductID = deletedLine.ProductID }, false, false, "");
-
-                var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
-
-                var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
-                {
-                    Amount = entityGrandTotal.Amount,
-                    ProductID = deletedLine.ProductID,
-                    TotalConsumption = entityGrandTotal.TotalConsumption,
-                    TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
-                    TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
-                    TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
-                    TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
-                    TotalProduction = entityGrandTotal.TotalProduction,
-                    TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder - deletedLine.Quantity,
-                    TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
-                    TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
-                    TotalReserved = entityGrandTotal.TotalReserved,
-                    TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
-                    TotalWastage = entityGrandTotal.TotalWastage,
-                    WarehouseID = entityGrandTotal.WarehouseID,
-                    Id = entityGrandTotal.Id,
-                    CreationTime = entityGrandTotal.CreationTime.Value,
-                    CreatorId = entityGrandTotal.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entityGrandTotal.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    BranchID = entityGrandTotal.BranchID,
-                    LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
-
-                var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasingGrand, "Id", true);
-
-                #endregion
-            }
-            return true;
-        }
-
-        public static bool DeletePurchaseOrders(SelectPurchaseOrdersDto deletedEntity)
-        {
-
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                #region Getting Lines
-
-                var queryLines = queryFactory
-                        .Query()
-                        .From(Tables.PurchaseOrderLines)
-                        .Select<PurchaseOrderLines>(pol => new { pol.WorkOrderCreationDate, pol.VATrate, pol.VATamount, pol.UnitSetID, pol.UnitPrice, pol.Quantity, pol.PurchaseOrderLineStateEnum, pol.PurchaseOrderID, pol.ProductionOrderID, pol.ProductID, pol.PaymentPlanID, pol.LinkedPurchaseRequestID, pol.LineTotalAmount, pol.LikedPurchaseRequestLineID, pol.Id, pol.ExchangeRate, pol.DiscountRate, pol.DiscountAmount, pol.DataOpenStatusUserId, pol.DataOpenStatus })
-                        .Join<Products>
-                         (
-                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
-                             nameof(PurchaseOrderLines.ProductID),
-                             nameof(Products.Id),
-                             JoinType.Left
-                         )
-                        .Join<UnitSets>
-                         (
-                             u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
-                             nameof(PurchaseOrderLines.UnitSetID),
-                             nameof(UnitSets.Id),
-                             JoinType.Left
-                         )
-                          .Join<PaymentPlans>
-                         (
-                             pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
-                             nameof(PurchaseOrderLines.PaymentPlanID),
-                             nameof(PaymentPlans.Id),
-                             JoinType.Left
-                         )
-                         .Where(new { PurchaseOrderID = deletedEntity.Id }, false, false, Tables.PurchaseOrderLines);
-
-                var purchaseOrderLine = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
-
-                deletedEntity.SelectPurchaseOrderLinesDto = purchaseOrderLine;
-
-                #endregion
-
-                foreach (var line in deletedEntity.SelectPurchaseOrderLinesDto)
-                {
-
-                    #region By Date Stock Movement
-
-                    var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = deletedEntity.BranchID, WarehouseID = deletedEntity.WarehouseID, ProductID = line.ProductID, Date_ = deletedEntity.Date_ }, false, false, "");
-
-                    var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
-
-                    if (entityByDate.Id != Guid.Empty)
-                    {
-                        var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                        {
-                            Amount = entityByDate.Amount,
-                            Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
-                            TotalConsumption = entityByDate.TotalConsumption,
-                            TotalGoodsIssue = entityByDate.TotalGoodsIssue,
-                            TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
-                            TotalProduction = entityByDate.TotalProduction,
-                            TotalPurchaseOrder = entityByDate.TotalPurchaseOrder - line.Quantity,
-                            TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
-                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
-                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
-                            TotalSalesOrder = entityByDate.TotalSalesOrder,
-                            TotalSalesProposition = entityByDate.TotalSalesProposition,
-                            TotalWastage = entityByDate.TotalWastage,
-                            WarehouseID = entityByDate.WarehouseID,
-                            BranchID = entityByDate.BranchID,
-                            Id = entityByDate.Id,
-                            CreationTime = entityByDate.CreationTime.Value,
-                            CreatorId = entityByDate.CreatorId.Value,
-                            DataOpenStatus = false,
-                            DataOpenStatusUserId = Guid.Empty,
-                            DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
-                            DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
-                            IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
-                            LastModifierId = LoginedUserService.UserId
-                        }).Where(new { Id = entityByDate.Id }, false, false, "");
-
-                        var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
-                    }
-
-                    #endregion
-
-                    #region Grand Total Stock Movement
-
-                    var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = deletedEntity.BranchID, WarehouseID = deletedEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
-
-                    var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
-
-                    if (entityGrandTotal.Id != Guid.Empty)
-                    {
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount,
@@ -1588,10 +1288,10 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
-                            TotalProduction = entityGrandTotal.TotalProduction,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
-                            TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder - line.Quantity,
+                            TotalProduction = entityGrandTotal.TotalProduction,
+                            TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder - decreasedPR,
                             TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
                             TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
                             TotalReserved = entityGrandTotal.TotalReserved,
@@ -1613,10 +1313,280 @@ namespace TsiErp.Business.Entities.StockMovement
 
                         var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                     }
-
-                    #endregion
-
                 }
+
+                #endregion
+
+            }
+
+            return true;
+        }
+
+        public static bool DeletePurchaseOrderLines(SelectPurchaseOrderLinesDto deletedLine)
+        {
+            #region Getting Purchase Order
+
+            var query = queryFactory
+                  .Query()
+                  .From(Tables.PurchaseOrders)
+                  .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate, po.WarehouseID, po.TotalVatExcludedAmount, po.TotalVatAmount, po.TotalDiscountAmount, po.Time_, po.SpecialCode, po.ShippingAdressID, po.PurchaseOrderState, po.ProductionOrderID, po.PaymentPlanID, po.NetAmount, po.LinkedPurchaseRequestID, po.Id, po.GrossAmount, po.FicheNo, po.ExchangeRate, po.Description_, po.Date_, po.DataOpenStatusUserId, po.DataOpenStatus, po.CurrentAccountCardID, po.CurrencyID, po.BranchID })
+                  .Join<PaymentPlans>
+                   (
+                       pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
+                       nameof(PurchaseOrders.PaymentPlanID),
+                       nameof(PaymentPlans.Id),
+                       JoinType.Left
+                   )
+                   .Join<Branches>
+                   (
+                       b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                       nameof(PurchaseOrders.BranchID),
+                       nameof(Branches.Id),
+                       JoinType.Left
+                   )
+                    .Join<Warehouses>
+                   (
+                       w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                       nameof(PurchaseOrders.WarehouseID),
+                       nameof(Warehouses.Id),
+                       JoinType.Left
+                   )
+                    .Join<Currencies>
+                   (
+                       c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                       nameof(PurchaseOrders.CurrencyID),
+                       nameof(Currencies.Id),
+                       JoinType.Left
+                   )
+                    .Join<CurrentAccountCards>
+                   (
+                       ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                       nameof(PurchaseOrders.CurrentAccountCardID),
+                       nameof(CurrentAccountCards.Id),
+                       JoinType.Left)
+
+                        .Join<ShippingAdresses>
+                   (
+                       sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
+                       nameof(PurchaseOrders.ShippingAdressID),
+                       nameof(ShippingAdresses.Id),
+                       JoinType.Left
+                   )
+                   .Where(new { Id = deletedLine.PurchaseOrderID }, false, false, Tables.PurchaseOrders);
+
+            var purchaseOrders = queryFactory.Get<SelectPurchaseOrdersDto>(query);
+
+            #endregion
+
+            #region By Date Stock Movement
+
+            var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = purchaseOrders.BranchID, WarehouseID = purchaseOrders.WarehouseID, ProductID = deletedLine.ProductID, Date_ = purchaseOrders.Date_ }, false, false, "");
+
+            var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
+
+            var queryDecreasingDate = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+            {
+                Amount = entityByDate.Amount,
+                Date_ = entityByDate.Date_,
+                ProductID = entityByDate.ProductID,
+                TotalConsumption = entityByDate.TotalConsumption,
+                TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                TotalProduction = entityByDate.TotalProduction,
+                TotalPurchaseOrder = entityByDate.TotalPurchaseOrder - deletedLine.Quantity,
+                TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
+                TotalSalesOrder = entityByDate.TotalSalesOrder,
+                TotalSalesProposition = entityByDate.TotalSalesProposition,
+                TotalWastage = entityByDate.TotalWastage,
+                WarehouseID = entityByDate.WarehouseID,
+                BranchID = entityByDate.BranchID,
+                Id = entityByDate.Id,
+                CreationTime = entityByDate.CreationTime.Value,
+                CreatorId = entityByDate.CreatorId.Value,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
+                DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entityByDate.IsDeleted,
+                LastModificationTime = DateTime.Now,
+                LastModifierId = LoginedUserService.UserId
+            }).Where(new { Id = entityByDate.Id }, false, false, "");
+
+            var byDateStockMovementsDecreasing = queryFactory.Update<SelectByDateStockMovementsDto>(queryDecreasingDate, "Id", true);
+
+            #endregion
+
+            #region Grand Total Stock Movement
+
+            var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = purchaseOrders.BranchID, WarehouseID = purchaseOrders.WarehouseID, ProductID = deletedLine.ProductID }, false, false, "");
+
+            var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
+
+            var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
+            {
+                Amount = entityGrandTotal.Amount,
+                ProductID = deletedLine.ProductID,
+                TotalConsumption = entityGrandTotal.TotalConsumption,
+                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
+                TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                TotalProduction = entityGrandTotal.TotalProduction,
+                TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder - deletedLine.Quantity,
+                TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
+                TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
+                TotalReserved = entityGrandTotal.TotalReserved,
+                TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
+                TotalWastage = entityGrandTotal.TotalWastage,
+                WarehouseID = entityGrandTotal.WarehouseID,
+                Id = entityGrandTotal.Id,
+                CreationTime = entityGrandTotal.CreationTime.Value,
+                CreatorId = entityGrandTotal.CreatorId.Value,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
+                DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entityGrandTotal.IsDeleted,
+                LastModificationTime = DateTime.Now,
+                BranchID = entityGrandTotal.BranchID,
+                LastModifierId = LoginedUserService.UserId
+            }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
+
+            var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasingGrand, "Id", true);
+
+            #endregion
+
+            return true;
+        }
+
+        public static bool DeletePurchaseOrders(SelectPurchaseOrdersDto deletedEntity)
+        {
+            #region Getting Lines
+
+            var queryLines = queryFactory
+                    .Query()
+                    .From(Tables.PurchaseOrderLines)
+                    .Select<PurchaseOrderLines>(pol => new { pol.WorkOrderCreationDate, pol.VATrate, pol.VATamount, pol.UnitSetID, pol.UnitPrice, pol.Quantity, pol.PurchaseOrderLineStateEnum, pol.PurchaseOrderID, pol.ProductionOrderID, pol.ProductID, pol.PaymentPlanID, pol.LinkedPurchaseRequestID, pol.LineTotalAmount, pol.LikedPurchaseRequestLineID, pol.Id, pol.ExchangeRate, pol.DiscountRate, pol.DiscountAmount, pol.DataOpenStatusUserId, pol.DataOpenStatus })
+                    .Join<Products>
+                     (
+                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                         nameof(PurchaseOrderLines.ProductID),
+                         nameof(Products.Id),
+                         JoinType.Left
+                     )
+                    .Join<UnitSets>
+                     (
+                         u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                         nameof(PurchaseOrderLines.UnitSetID),
+                         nameof(UnitSets.Id),
+                         JoinType.Left
+                     )
+                      .Join<PaymentPlans>
+                     (
+                         pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                         nameof(PurchaseOrderLines.PaymentPlanID),
+                         nameof(PaymentPlans.Id),
+                         JoinType.Left
+                     )
+                     .Where(new { PurchaseOrderID = deletedEntity.Id }, false, false, Tables.PurchaseOrderLines);
+
+            var purchaseOrderLine = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
+
+            deletedEntity.SelectPurchaseOrderLinesDto = purchaseOrderLine;
+
+            #endregion
+
+            foreach (var line in deletedEntity.SelectPurchaseOrderLinesDto)
+            {
+
+                #region By Date Stock Movement
+
+                var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = deletedEntity.BranchID, WarehouseID = deletedEntity.WarehouseID, ProductID = line.ProductID, Date_ = deletedEntity.Date_ }, false, false, "");
+
+                var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
+
+                if (entityByDate.Id != Guid.Empty)
+                {
+                    var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                    {
+                        Amount = entityByDate.Amount,
+                        Date_ = entityByDate.Date_,
+                        ProductID = line.ProductID,
+                        TotalConsumption = entityByDate.TotalConsumption,
+                        TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                        TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                        TotalProduction = entityByDate.TotalProduction,
+                        TotalPurchaseOrder = entityByDate.TotalPurchaseOrder - line.Quantity,
+                        TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
+                        TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                        TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                        TotalSalesOrder = entityByDate.TotalSalesOrder,
+                        TotalSalesProposition = entityByDate.TotalSalesProposition,
+                        TotalWastage = entityByDate.TotalWastage,
+                        WarehouseID = entityByDate.WarehouseID,
+                        BranchID = entityByDate.BranchID,
+                        Id = entityByDate.Id,
+                        CreationTime = entityByDate.CreationTime.Value,
+                        CreatorId = entityByDate.CreatorId.Value,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
+                        DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
+                        IsDeleted = entityByDate.IsDeleted,
+                        LastModificationTime = DateTime.Now,
+                        LastModifierId = LoginedUserService.UserId
+                    }).Where(new { Id = entityByDate.Id }, false, false, "");
+
+                    var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
+                }
+
+                #endregion
+
+                #region Grand Total Stock Movement
+
+                var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = deletedEntity.BranchID, WarehouseID = deletedEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
+
+                var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
+
+                if (entityGrandTotal.Id != Guid.Empty)
+                {
+                    var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
+                    {
+                        Amount = entityGrandTotal.Amount,
+                        ProductID = line.ProductID,
+                        TotalConsumption = entityGrandTotal.TotalConsumption,
+                        TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                        TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                        TotalProduction = entityGrandTotal.TotalProduction,
+                        TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                        TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
+                        TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder - line.Quantity,
+                        TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
+                        TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
+                        TotalReserved = entityGrandTotal.TotalReserved,
+                        TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
+                        TotalWastage = entityGrandTotal.TotalWastage,
+                        WarehouseID = entityGrandTotal.WarehouseID,
+                        Id = entityGrandTotal.Id,
+                        CreationTime = entityGrandTotal.CreationTime.Value,
+                        CreatorId = entityGrandTotal.CreatorId.Value,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
+                        DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
+                        IsDeleted = entityGrandTotal.IsDeleted,
+                        LastModificationTime = DateTime.Now,
+                        BranchID = entityGrandTotal.BranchID,
+                        LastModifierId = LoginedUserService.UserId
+                    }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
+
+                    var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
+                }
+
+                #endregion
+
             }
 
             return true;
@@ -1628,37 +1598,241 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool InsertSalesPropositions(CreateSalesPropositionsDto createdEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            foreach (var line in createdEntity.SelectSalesPropositionLines)
+            {
+                #region By Date Stock Movement
+
+                var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = createdEntity.BranchID, WarehouseID = createdEntity.WarehouseID, ProductID = line.ProductID, Date_ = createdEntity.Date_ }, false, false, "");
+
+                var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
+
+                if (entityByDate.Id == Guid.Empty)
+                {
+                    var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
+                    {
+                        Amount = 0,
+                        Date_ = createdEntity.Date_,
+                        ProductID = line.ProductID,
+                        TotalConsumption = 0,
+                        TotalGoodsIssue = 0,
+                        TotalGoodsReceipt = 0,
+                        TotalWarehouseOutput = 0,
+                        TotalWarehouseInput = 0,
+                        TotalProduction = 0,
+                        TotalPurchaseOrder = 0,
+                        TotalPurchaseRequest = 0,
+                        TotalSalesOrder = 0,
+                        TotalSalesProposition = line.Quantity,
+                        TotalWastage = 0,
+                        WarehouseID = createdEntity.WarehouseID,
+                        BranchID = createdEntity.BranchID,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                    });
+
+                    var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
+                }
+
+                else
+                {
+                    var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                    {
+                        Amount = entityByDate.Amount,
+                        Date_ = entityByDate.Date_,
+                        ProductID = line.ProductID,
+                        TotalConsumption = entityByDate.TotalConsumption,
+                        TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                        TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                        TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                        TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                        TotalProduction = entityByDate.TotalProduction,
+                        TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
+                        TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
+                        TotalSalesOrder = entityByDate.TotalSalesOrder,
+                        TotalSalesProposition = entityByDate.TotalSalesProposition + line.Quantity,
+                        TotalWastage = entityByDate.TotalWastage,
+                        WarehouseID = entityByDate.WarehouseID,
+                        BranchID = entityByDate.BranchID,
+                        Id = entityByDate.Id,
+                        CreationTime = entityByDate.CreationTime.Value,
+                        CreatorId = entityByDate.CreatorId.Value,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
+                        DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
+                        IsDeleted = entityByDate.IsDeleted,
+                        LastModificationTime = DateTime.Now,
+                        LastModifierId = LoginedUserService.UserId
+                    }).Where(new { Id = entityByDate.Id }, false, false, "");
+
+                    var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
+                }
+
+                #endregion
+
+                #region Grand Total Stock Movement
+
+
+                var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = createdEntity.BranchID, WarehouseID = createdEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
+
+                var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
+
+                if (entityGrandTotal.Id == Guid.Empty)
+                {
+                    var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
+                    {
+                        Amount = 0,
+                        ProductID = line.ProductID,
+                        TotalConsumption = 0,
+                        TotalGoodsIssue = 0,
+                        TotalGoodsReceipt = 0,
+                        TotalProduction = 0,
+                        TotalWarehouseOutput = 0,
+                        TotalWarehouseInput = 0,
+                        TotalPurchaseOrder = 0,
+                        TotalPurchaseRequest = 0,
+                        TotalSalesOrder = 0,
+                        TotalReserved = 0,
+                        TotalSalesProposition = line.Quantity,
+                        TotalWastage = 0,
+                        WarehouseID = createdEntity.WarehouseID,
+                        BranchID = createdEntity.BranchID,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                    });
+
+                    var grandTotalStockMovements = queryFactory.Insert<SelectGrandTotalStockMovementsDto>(query, "Id", true);
+                }
+
+                else
+                {
+                    var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
+                    {
+                        Amount = entityGrandTotal.Amount,
+                        ProductID = line.ProductID,
+                        TotalConsumption = entityGrandTotal.TotalConsumption,
+                        TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                        TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
+                        TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                        TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                        TotalProduction = entityGrandTotal.TotalProduction,
+                        TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
+                        TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
+                        TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
+                        TotalReserved = entityGrandTotal.TotalReserved,
+                        TotalSalesProposition = entityGrandTotal.TotalSalesProposition + line.Quantity,
+                        TotalWastage = entityGrandTotal.TotalWastage,
+                        WarehouseID = createdEntity.WarehouseID,
+                        Id = entityGrandTotal.Id,
+                        CreationTime = entityGrandTotal.CreationTime.Value,
+                        CreatorId = entityGrandTotal.CreatorId.Value,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
+                        DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
+                        IsDeleted = entityGrandTotal.IsDeleted,
+                        LastModificationTime = DateTime.Now,
+                        BranchID = createdEntity.BranchID,
+                        LastModifierId = LoginedUserService.UserId
+                    }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
+
+                    var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
+                }
+
+                #endregion
+
+            }
+
+            return true;
+        }
+
+        public static bool UpdateSalesPropositions(SelectSalesPropositionsDto previousEntity, UpdateSalesPropositionsDto currentEntity)
+        {
+            foreach (var line in currentEntity.SelectSalesPropositionLines)
             {
 
-                foreach (var line in createdEntity.SelectSalesPropositionLines)
+                #region By Date Stock Movement
+
+                var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = currentEntity.BranchID, WarehouseID = currentEntity.WarehouseID, ProductID = line.ProductID, Date_ = currentEntity.Date_ }, false, false, "");
+
+                var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
+
+                if (entityByDate.Id == Guid.Empty)
                 {
-                    #region By Date Stock Movement
-
-                    var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = createdEntity.BranchID, WarehouseID = createdEntity.WarehouseID, ProductID = line.ProductID, Date_ = createdEntity.Date_ }, false, false, "");
-
-                    var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
-
-                    if (entityByDate.Id == Guid.Empty)
+                    foreach (var previousline in previousEntity.SelectSalesPropositionLines)
                     {
+                        var entityQueryByDateDecreasing = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = previousEntity.BranchID, WarehouseID = previousEntity.WarehouseID, ProductID = previousline.ProductID, Date_ = previousEntity.Date_ }, false, false, "");
+
+                        var entityByDateDecreasing = queryFactory.Get<ByDateStockMovements>(entityQueryByDateDecreasing);
+
+                        var decreasingAmount = line.Quantity;
+
+                        var queryDecreasing = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                        {
+                            Amount = entityByDateDecreasing.Amount,
+                            Date_ = entityByDateDecreasing.Date_,
+                            ProductID = previousline.ProductID,
+                            TotalConsumption = entityByDateDecreasing.TotalConsumption,
+                            TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
+                            TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
+                            TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
+                            TotalProduction = entityByDateDecreasing.TotalProduction,
+                            TotalPurchaseOrder = entityByDateDecreasing.TotalPurchaseOrder,
+                            TotalPurchaseRequest = entityByDateDecreasing.TotalPurchaseRequest,
+                            TotalSalesOrder = entityByDateDecreasing.TotalSalesOrder,
+                            TotalSalesProposition = entityByDateDecreasing.TotalSalesProposition - decreasingAmount,
+                            TotalWastage = entityByDateDecreasing.TotalWastage,
+                            WarehouseID = entityByDateDecreasing.WarehouseID,
+                            BranchID = entityByDateDecreasing.BranchID,
+                            Id = entityByDateDecreasing.Id,
+                            CreationTime = entityByDateDecreasing.CreationTime.Value,
+                            CreatorId = entityByDateDecreasing.CreatorId.Value,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
+                            DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
+                            IsDeleted = entityByDateDecreasing.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            LastModifierId = LoginedUserService.UserId
+                        }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
+
+                        var byDateStockMovementsDecreasing = queryFactory.Update<SelectByDateStockMovementsDto>(queryDecreasing, "Id", true);
+
                         var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
                         {
                             Amount = 0,
-                            Date_ = createdEntity.Date_,
+                            Date_ = currentEntity.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = 0,
+                            TotalWarehouseInput = 0,
+                            TotalWarehouseOutput = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
-                            TotalWarehouseOutput = 0,
-                            TotalWarehouseInput = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = 0,
                             TotalPurchaseRequest = 0,
                             TotalSalesOrder = 0,
                             TotalSalesProposition = line.Quantity,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = currentEntity.WarehouseID,
+                            BranchID = currentEntity.BranchID,
                             CreationTime = DateTime.Now,
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -1674,23 +1848,68 @@ namespace TsiErp.Business.Entities.StockMovement
                         var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
 
-                    else
+                }
+
+                else
+                {
+                    decimal previousQuantity = previousEntity.SelectSalesPropositionLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
+
+                    if (line.Quantity > previousQuantity)
                     {
+                        decimal addedPR = line.Quantity - previousQuantity;
+
                         var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
                         {
                             Amount = entityByDate.Amount,
                             Date_ = entityByDate.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
-                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
                             TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
                             TotalSalesOrder = entityByDate.TotalSalesOrder,
-                            TotalSalesProposition = entityByDate.TotalSalesProposition + line.Quantity,
+                            TotalSalesProposition = entityByDate.TotalSalesProposition + addedPR,
+                            TotalWastage = entityByDate.TotalWastage,
+                            WarehouseID = entityByDate.WarehouseID,
+                            BranchID = entityByDate.BranchID,
+                            Id = entityByDate.Id,
+                            CreationTime = entityByDate.CreationTime.Value,
+                            CreatorId = entityByDate.CreatorId.Value,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
+                            DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
+                            IsDeleted = entityByDate.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            LastModifierId = LoginedUserService.UserId
+                        }).Where(new { Id = entityByDate.Id }, false, false, "");
+
+                        var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
+
+                    }
+                    else if (line.Quantity < previousQuantity)
+                    {
+                        decimal decreasedPR = previousQuantity - line.Quantity;
+
+                        var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                        {
+                            Amount = entityByDate.Amount,
+                            Date_ = entityByDate.Date_,
+                            ProductID = line.ProductID,
+                            TotalConsumption = entityByDate.TotalConsumption,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                            TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                            TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                            TotalProduction = entityByDate.TotalProduction,
+                            TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
+                            TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
+                            TotalSalesOrder = entityByDate.TotalSalesOrder,
+                            TotalSalesProposition = entityByDate.TotalSalesProposition - decreasedPR,
                             TotalWastage = entityByDate.TotalWastage,
                             WarehouseID = entityByDate.WarehouseID,
                             BranchID = entityByDate.BranchID,
@@ -1709,35 +1928,76 @@ namespace TsiErp.Business.Entities.StockMovement
                         var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
 
-                    #endregion
+                }
 
-                    #region Grand Total Stock Movement
+                #endregion
 
+                #region Grand Total Stock Movement
 
-                    var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = createdEntity.BranchID, WarehouseID = createdEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
+                var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = currentEntity.BranchID, WarehouseID = currentEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
 
-                    var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
+                var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
 
-                    if (entityGrandTotal.Id == Guid.Empty)
+                if (entityGrandTotal.Id == Guid.Empty)
+                {
+                    foreach (var previousLine in previousEntity.SelectSalesPropositionLines)
                     {
+                        var entityQueryGrandTotalDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = previousEntity.BranchID, WarehouseID = previousEntity.WarehouseID, ProductID = previousLine.ProductID }, false, false, "");
+
+                        var entityGrandTotalDecreasing = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotalDecreasing);
+
+                        var decreasingAmount = line.Quantity;
+
+                        var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
+                        {
+                            Amount = entityGrandTotalDecreasing.Amount,
+                            ProductID = previousLine.ProductID,
+                            TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
+                            TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
+                            TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
+                            TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
+                            TotalProduction = entityGrandTotalDecreasing.TotalProduction,
+                            TotalPurchaseOrder = entityGrandTotalDecreasing.TotalPurchaseOrder,
+                            TotalPurchaseRequest = entityGrandTotalDecreasing.TotalPurchaseRequest,
+                            TotalSalesOrder = entityGrandTotalDecreasing.TotalSalesOrder,
+                            TotalReserved = entityGrandTotalDecreasing.TotalReserved,
+                            TotalSalesProposition = entityGrandTotalDecreasing.TotalSalesProposition - decreasingAmount,
+                            TotalWastage = entityGrandTotalDecreasing.TotalWastage,
+                            WarehouseID = previousEntity.WarehouseID,
+                            Id = entityGrandTotalDecreasing.Id,
+                            CreationTime = entityGrandTotalDecreasing.CreationTime.Value,
+                            CreatorId = entityGrandTotalDecreasing.CreatorId.Value,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
+                            DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
+                            IsDeleted = entityGrandTotalDecreasing.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            BranchID = previousEntity.BranchID,
+                            LastModifierId = LoginedUserService.UserId
+                        }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
+
+                        var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasing, "Id", true);
+
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                         {
                             Amount = 0,
                             ProductID = line.ProductID,
                             TotalConsumption = 0,
+                            TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
                             TotalProduction = 0,
-                            TotalWarehouseOutput = 0,
-                            TotalWarehouseInput = 0,
                             TotalPurchaseOrder = 0,
                             TotalPurchaseRequest = 0,
                             TotalSalesOrder = 0,
                             TotalReserved = 0,
                             TotalSalesProposition = line.Quantity,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = currentEntity.WarehouseID,
+                            BranchID = currentEntity.BranchID,
                             CreationTime = DateTime.Now,
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -1752,9 +2012,16 @@ namespace TsiErp.Business.Entities.StockMovement
 
                         var grandTotalStockMovements = queryFactory.Insert<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                     }
+                }
 
-                    else
+                else
+                {
+                    decimal previousQuantity = previousEntity.SelectSalesPropositionLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
+
+                    if (line.Quantity > previousQuantity)
                     {
+                        decimal addedPR = line.Quantity - previousQuantity;
+
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount,
@@ -1769,9 +2036,9 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
                             TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
                             TotalReserved = entityGrandTotal.TotalReserved,
-                            TotalSalesProposition = entityGrandTotal.TotalSalesProposition + line.Quantity,
+                            TotalSalesProposition = entityGrandTotal.TotalSalesProposition + addedPR,
                             TotalWastage = entityGrandTotal.TotalWastage,
-                            WarehouseID = createdEntity.WarehouseID,
+                            WarehouseID = entityGrandTotal.WarehouseID,
                             Id = entityGrandTotal.Id,
                             CreationTime = entityGrandTotal.CreationTime.Value,
                             CreatorId = entityGrandTotal.CreatorId.Value,
@@ -1781,356 +2048,48 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
                             LastModificationTime = DateTime.Now,
-                            BranchID = createdEntity.BranchID,
+                            BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
                         var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
-                    }
-
-                    #endregion
-                }
-
-            }
-
-            return true;
-        }
-
-        public static bool UpdateSalesPropositions(SelectSalesPropositionsDto previousEntity, UpdateSalesPropositionsDto currentEntity)
-        {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
-                foreach (var line in currentEntity.SelectSalesPropositionLines)
-                {
-
-                    #region By Date Stock Movement
-
-                    var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = currentEntity.BranchID, WarehouseID = currentEntity.WarehouseID, ProductID = line.ProductID, Date_ = currentEntity.Date_ }, false, false, "");
-
-                    var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
-
-                    if (entityByDate.Id == Guid.Empty)
-                    {
-                        foreach (var previousline in previousEntity.SelectSalesPropositionLines)
-                        {
-                            var entityQueryByDateDecreasing = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = previousEntity.BranchID, WarehouseID = previousEntity.WarehouseID, ProductID = previousline.ProductID, Date_ = previousEntity.Date_ }, false, false, "");
-
-                            var entityByDateDecreasing = queryFactory.Get<ByDateStockMovements>(entityQueryByDateDecreasing);
-
-                            var decreasingAmount = line.Quantity;
-
-                            var queryDecreasing = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                            {
-                                Amount = entityByDateDecreasing.Amount,
-                                Date_ = entityByDateDecreasing.Date_,
-                                ProductID = previousline.ProductID,
-                                TotalConsumption = entityByDateDecreasing.TotalConsumption,
-                                TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
-                                TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
-                                TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
-                                TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
-                                TotalProduction = entityByDateDecreasing.TotalProduction,
-                                TotalPurchaseOrder = entityByDateDecreasing.TotalPurchaseOrder,
-                                TotalPurchaseRequest = entityByDateDecreasing.TotalPurchaseRequest,
-                                TotalSalesOrder = entityByDateDecreasing.TotalSalesOrder,
-                                TotalSalesProposition = entityByDateDecreasing.TotalSalesProposition - decreasingAmount,
-                                TotalWastage = entityByDateDecreasing.TotalWastage,
-                                WarehouseID = entityByDateDecreasing.WarehouseID,
-                                BranchID = entityByDateDecreasing.BranchID,
-                                Id = entityByDateDecreasing.Id,
-                                CreationTime = entityByDateDecreasing.CreationTime.Value,
-                                CreatorId = entityByDateDecreasing.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityByDateDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
-
-                            var byDateStockMovementsDecreasing = queryFactory.Update<SelectByDateStockMovementsDto>(queryDecreasing, "Id", true);
-
-                            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
-                            {
-                                Amount = 0,
-                                Date_ = currentEntity.Date_,
-                                ProductID = line.ProductID,
-                                TotalConsumption = 0,
-                                TotalWarehouseInput = 0,
-                                TotalWarehouseOutput = 0,
-                                TotalGoodsIssue = 0,
-                                TotalGoodsReceipt = 0,
-                                TotalProduction = 0,
-                                TotalPurchaseOrder = 0,
-                                TotalPurchaseRequest = 0,
-                                TotalSalesOrder = 0,
-                                TotalSalesProposition = line.Quantity,
-                                TotalWastage = 0,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
-                                CreatorId = LoginedUserService.UserId,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = Guid.Empty,
-                                DeletionTime = null,
-                                Id = GuidGenerator.CreateGuid(),
-                                IsDeleted = false,
-                                LastModificationTime = null,
-                                LastModifierId = Guid.Empty,
-                            });
-
-                            var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
-                        }
 
                     }
-
-                    else
+                    else if (line.Quantity < previousQuantity)
                     {
-                        decimal previousQuantity = previousEntity.SelectSalesPropositionLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
+                        decimal decreasedPR = previousQuantity - line.Quantity;
 
-                        if (line.Quantity > previousQuantity)
+                        var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
-                            decimal addedPR = line.Quantity - previousQuantity;
+                            Amount = entityGrandTotal.Amount,
+                            ProductID = line.ProductID,
+                            TotalConsumption = entityGrandTotal.TotalConsumption,
+                            TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
+                            TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                            TotalProduction = entityGrandTotal.TotalProduction,
+                            TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
+                            TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
+                            TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
+                            TotalReserved = entityGrandTotal.TotalReserved,
+                            TotalSalesProposition = entityGrandTotal.TotalSalesProposition - decreasedPR,
+                            TotalWastage = entityGrandTotal.TotalWastage,
+                            WarehouseID = entityGrandTotal.WarehouseID,
+                            Id = entityGrandTotal.Id,
+                            CreationTime = entityGrandTotal.CreationTime.Value,
+                            CreatorId = entityGrandTotal.CreatorId.Value,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
+                            DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
+                            IsDeleted = entityGrandTotal.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            BranchID = entityGrandTotal.BranchID,
+                            LastModifierId = LoginedUserService.UserId
+                        }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
-                            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                            {
-                                Amount = entityByDate.Amount,
-                                Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
-                                TotalConsumption = entityByDate.TotalConsumption,
-                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
-                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
-                                TotalGoodsIssue = entityByDate.TotalGoodsIssue,
-                                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
-                                TotalProduction = entityByDate.TotalProduction,
-                                TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
-                                TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
-                                TotalSalesOrder = entityByDate.TotalSalesOrder,
-                                TotalSalesProposition = entityByDate.TotalSalesProposition + addedPR,
-                                TotalWastage = entityByDate.TotalWastage,
-                                WarehouseID = entityByDate.WarehouseID,
-                                BranchID = entityByDate.BranchID,
-                                Id = entityByDate.Id,
-                                CreationTime = entityByDate.CreationTime.Value,
-                                CreatorId = entityByDate.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityByDate.Id }, false, false, "");
-
-                            var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
-
-                        }
-                        else if (line.Quantity < previousQuantity)
-                        {
-                            decimal decreasedPR = previousQuantity - line.Quantity;
-
-                            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                            {
-                                Amount = entityByDate.Amount,
-                                Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
-                                TotalConsumption = entityByDate.TotalConsumption,
-                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
-                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
-                                TotalGoodsIssue = entityByDate.TotalGoodsIssue,
-                                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
-                                TotalProduction = entityByDate.TotalProduction,
-                                TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
-                                TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
-                                TotalSalesOrder = entityByDate.TotalSalesOrder,
-                                TotalSalesProposition = entityByDate.TotalSalesProposition - decreasedPR,
-                                TotalWastage = entityByDate.TotalWastage,
-                                WarehouseID = entityByDate.WarehouseID,
-                                BranchID = entityByDate.BranchID,
-                                Id = entityByDate.Id,
-                                CreationTime = entityByDate.CreationTime.Value,
-                                CreatorId = entityByDate.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityByDate.Id }, false, false, "");
-
-                            var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
-                        }
-
-                    }
-
-                    #endregion
-
-                    #region Grand Total Stock Movement
-
-                    var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = currentEntity.BranchID, WarehouseID = currentEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
-
-                    var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
-
-                    if (entityGrandTotal.Id == Guid.Empty)
-                    {
-                        foreach (var previousLine in previousEntity.SelectSalesPropositionLines)
-                        {
-                            var entityQueryGrandTotalDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = previousEntity.BranchID, WarehouseID = previousEntity.WarehouseID, ProductID = previousLine.ProductID }, false, false, "");
-
-                            var entityGrandTotalDecreasing = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotalDecreasing);
-
-                            var decreasingAmount = line.Quantity;
-
-                            var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
-                            {
-                                Amount = entityGrandTotalDecreasing.Amount,
-                                ProductID = previousLine.ProductID,
-                                TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
-                                TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
-                                TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
-                                TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
-                                TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
-                                TotalProduction = entityGrandTotalDecreasing.TotalProduction,
-                                TotalPurchaseOrder = entityGrandTotalDecreasing.TotalPurchaseOrder,
-                                TotalPurchaseRequest = entityGrandTotalDecreasing.TotalPurchaseRequest,
-                                TotalSalesOrder = entityGrandTotalDecreasing.TotalSalesOrder,
-                                TotalReserved = entityGrandTotalDecreasing.TotalReserved,
-                                TotalSalesProposition = entityGrandTotalDecreasing.TotalSalesProposition - decreasingAmount,
-                                TotalWastage = entityGrandTotalDecreasing.TotalWastage,
-                                WarehouseID = previousEntity.WarehouseID,
-                                Id = entityGrandTotalDecreasing.Id,
-                                CreationTime = entityGrandTotalDecreasing.CreationTime.Value,
-                                CreatorId = entityGrandTotalDecreasing.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                BranchID = previousEntity.BranchID,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
-
-                            var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasing, "Id", true);
-
-                            var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
-                            {
-                                Amount = 0,
-                                ProductID = line.ProductID,
-                                TotalConsumption = 0,
-                                TotalWarehouseOutput = 0,
-                                TotalWarehouseInput = 0,
-                                TotalGoodsIssue = 0,
-                                TotalGoodsReceipt = 0,
-                                TotalProduction = 0,
-                                TotalPurchaseOrder = 0,
-                                TotalPurchaseRequest = 0,
-                                TotalSalesOrder = 0,
-                                TotalReserved = 0,
-                                TotalSalesProposition = line.Quantity,
-                                TotalWastage = 0,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
-                                CreatorId = LoginedUserService.UserId,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = Guid.Empty,
-                                DeletionTime = null,
-                                Id = GuidGenerator.CreateGuid(),
-                                IsDeleted = false,
-                                LastModificationTime = null,
-                                LastModifierId = Guid.Empty,
-                            });
-
-                            var grandTotalStockMovements = queryFactory.Insert<SelectGrandTotalStockMovementsDto>(query, "Id", true);
-                        }
-                    }
-
-                    else
-                    {
-                        decimal previousQuantity = previousEntity.SelectSalesPropositionLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
-
-                        if (line.Quantity > previousQuantity)
-                        {
-                            decimal addedPR = line.Quantity - previousQuantity;
-
-                            var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
-                            {
-                                Amount = entityGrandTotal.Amount,
-                                ProductID = line.ProductID,
-                                TotalConsumption = entityGrandTotal.TotalConsumption,
-                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
-                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
-                                TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
-                                TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
-                                TotalProduction = entityGrandTotal.TotalProduction,
-                                TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
-                                TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
-                                TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
-                                TotalReserved = entityGrandTotal.TotalReserved,
-                                TotalSalesProposition = entityGrandTotal.TotalSalesProposition + addedPR,
-                                TotalWastage = entityGrandTotal.TotalWastage,
-                                WarehouseID = entityGrandTotal.WarehouseID,
-                                Id = entityGrandTotal.Id,
-                                CreationTime = entityGrandTotal.CreationTime.Value,
-                                CreatorId = entityGrandTotal.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                BranchID = entityGrandTotal.BranchID,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
-
-                            var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
-
-                        }
-                        else if (line.Quantity < previousQuantity)
-                        {
-                            decimal decreasedPR = previousQuantity - line.Quantity;
-
-                            var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
-                            {
-                                Amount = entityGrandTotal.Amount,
-                                ProductID = line.ProductID,
-                                TotalConsumption = entityGrandTotal.TotalConsumption,
-                                TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
-                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
-                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
-                                TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
-                                TotalProduction = entityGrandTotal.TotalProduction,
-                                TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
-                                TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
-                                TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
-                                TotalReserved = entityGrandTotal.TotalReserved,
-                                TotalSalesProposition = entityGrandTotal.TotalSalesProposition - decreasedPR,
-                                TotalWastage = entityGrandTotal.TotalWastage,
-                                WarehouseID = entityGrandTotal.WarehouseID,
-                                Id = entityGrandTotal.Id,
-                                CreationTime = entityGrandTotal.CreationTime.Value,
-                                CreatorId = entityGrandTotal.CreatorId.Value,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
-                                DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
-                                IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                BranchID = entityGrandTotal.BranchID,
-                                LastModifierId = LoginedUserService.UserId
-                            }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
-
-                            var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
-                        }
-
-
-
+                        var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                     }
 
                     #endregion
@@ -2143,275 +2102,269 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool DeleteSalesPropositionLines(SelectSalesPropositionLinesDto deletedLine)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            #region Getting Sales Proposition
+
+            var query = queryFactory
+                  .Query()
+                  .From(Tables.SalesPropositions)
+                  .Select<SalesPropositions>(sp => new { sp.WarehouseID, sp.ValidityDate_, sp.TotalVatExcludedAmount, sp.TotalVatAmount, sp.TotalDiscountAmount, sp.Time_, sp.SpecialCode, sp.ShippingAdressID, sp.RevisionTime, sp.RevisionDate, sp.SalesPropositionState, sp.PropositionRevisionNo, sp.PaymentPlanID, sp.NetAmount, sp.LinkedSalesPropositionID, sp.Id, sp.GrossAmount, sp.FicheNo, sp.ExchangeRate, sp.Description_, sp.Date_, sp.DataOpenStatusUserId, sp.DataOpenStatus, sp.CurrentAccountCardID, sp.CurrencyID, sp.BranchID })
+                  .Join<PaymentPlans>
+                   (
+                       pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
+                       nameof(SalesPropositions.PaymentPlanID),
+                       nameof(PaymentPlans.Id),
+                       JoinType.Left
+                   )
+                   .Join<Branches>
+                   (
+                       b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                       nameof(SalesPropositions.BranchID),
+                       nameof(Branches.Id),
+                       JoinType.Left
+                   )
+                   .Join<Warehouses>
+                   (
+                       w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                       nameof(SalesPropositions.WarehouseID),
+                       nameof(Warehouses.Id),
+                       JoinType.Left
+                   )
+                   .Join<Currencies>
+                   (
+                       c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                       nameof(SalesPropositions.CurrencyID),
+                       nameof(Currencies.Id),
+                       JoinType.Left
+                   )
+                   .Join<CurrentAccountCards>
+                   (
+                       ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                       nameof(SalesPropositions.CurrentAccountCardID),
+                       nameof(CurrentAccountCards.Id),
+                       JoinType.Left
+                   )
+                   .Join<ShippingAdresses>
+                   (
+                       sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code },
+                       nameof(SalesPropositions.ShippingAdressID),
+                       nameof(ShippingAdresses.Id),
+                       JoinType.Left
+                   )
+                   .Where(new { Id = deletedLine.SalesPropositionID }, false, false, Tables.SalesPropositions);
+
+            var salesPropositions = queryFactory.Get<SelectSalesPropositionsDto>(query);
+
+            #endregion
+
+            #region By Date Stock Movement
+
+            var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = salesPropositions.BranchID, WarehouseID = salesPropositions.WarehouseID, ProductID = deletedLine.ProductID, Date_ = salesPropositions.Date_ }, false, false, "");
+
+            var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
+
+            var queryDecreasingDate = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
             {
-                #region Getting Sales Proposition
+                Amount = entityByDate.Amount,
+                Date_ = entityByDate.Date_,
+                ProductID = entityByDate.ProductID,
+                TotalConsumption = entityByDate.TotalConsumption,
+                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                TotalProduction = entityByDate.TotalProduction,
+                TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
+                TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
+                TotalSalesOrder = entityByDate.TotalSalesOrder,
+                TotalSalesProposition = entityByDate.TotalSalesProposition - deletedLine.Quantity,
+                TotalWastage = entityByDate.TotalWastage,
+                WarehouseID = entityByDate.WarehouseID,
+                BranchID = entityByDate.BranchID,
+                Id = entityByDate.Id,
+                CreationTime = entityByDate.CreationTime.Value,
+                CreatorId = entityByDate.CreatorId.Value,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
+                DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entityByDate.IsDeleted,
+                LastModificationTime = DateTime.Now,
+                LastModifierId = LoginedUserService.UserId
+            }).Where(new { Id = entityByDate.Id }, false, false, "");
 
-                var query = queryFactory
-                      .Query()
-                      .From(Tables.SalesPropositions)
-                      .Select<SalesPropositions>(sp => new { sp.WarehouseID, sp.ValidityDate_, sp.TotalVatExcludedAmount, sp.TotalVatAmount, sp.TotalDiscountAmount, sp.Time_, sp.SpecialCode, sp.ShippingAdressID, sp.RevisionTime, sp.RevisionDate, sp.SalesPropositionState, sp.PropositionRevisionNo, sp.PaymentPlanID, sp.NetAmount, sp.LinkedSalesPropositionID, sp.Id, sp.GrossAmount, sp.FicheNo, sp.ExchangeRate, sp.Description_, sp.Date_, sp.DataOpenStatusUserId, sp.DataOpenStatus, sp.CurrentAccountCardID, sp.CurrencyID, sp.BranchID })
-                      .Join<PaymentPlans>
-                       (
-                           pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
-                           nameof(SalesPropositions.PaymentPlanID),
-                           nameof(PaymentPlans.Id),
-                           JoinType.Left
-                       )
-                       .Join<Branches>
-                       (
-                           b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
-                           nameof(SalesPropositions.BranchID),
-                           nameof(Branches.Id),
-                           JoinType.Left
-                       )
-                       .Join<Warehouses>
-                       (
-                           w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
-                           nameof(SalesPropositions.WarehouseID),
-                           nameof(Warehouses.Id),
-                           JoinType.Left
-                       )
-                       .Join<Currencies>
-                       (
-                           c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
-                           nameof(SalesPropositions.CurrencyID),
-                           nameof(Currencies.Id),
-                           JoinType.Left
-                       )
-                       .Join<CurrentAccountCards>
-                       (
-                           ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
-                           nameof(SalesPropositions.CurrentAccountCardID),
-                           nameof(CurrentAccountCards.Id),
-                           JoinType.Left
-                       )
-                       .Join<ShippingAdresses>
-                       (
-                           sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code },
-                           nameof(SalesPropositions.ShippingAdressID),
-                           nameof(ShippingAdresses.Id),
-                           JoinType.Left
-                       )
-                       .Where(new { Id = deletedLine.SalesPropositionID }, false, false, Tables.SalesPropositions);
+            var byDateStockMovementsDecreasing = queryFactory.Update<SelectByDateStockMovementsDto>(queryDecreasingDate, "Id", true);
 
-                var salesPropositions = queryFactory.Get<SelectSalesPropositionsDto>(query);
+            #endregion
 
-                #endregion
+            #region Grand Total Stock Movement
 
-                #region By Date Stock Movement
+            var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = salesPropositions.BranchID, WarehouseID = salesPropositions.WarehouseID, ProductID = deletedLine.ProductID }, false, false, "");
 
-                var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = salesPropositions.BranchID, WarehouseID = salesPropositions.WarehouseID, ProductID = deletedLine.ProductID, Date_ = salesPropositions.Date_ }, false, false, "");
+            var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
 
-                var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
+            var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
+            {
+                Amount = entityGrandTotal.Amount,
+                ProductID = deletedLine.ProductID,
+                TotalConsumption = entityGrandTotal.TotalConsumption,
+                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
+                TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                TotalProduction = entityGrandTotal.TotalProduction,
+                TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
+                TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
+                TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
+                TotalReserved = entityGrandTotal.TotalReserved,
+                TotalSalesProposition = entityGrandTotal.TotalSalesProposition - deletedLine.Quantity,
+                TotalWastage = entityGrandTotal.TotalWastage,
+                WarehouseID = entityGrandTotal.WarehouseID,
+                Id = entityGrandTotal.Id,
+                CreationTime = entityGrandTotal.CreationTime.Value,
+                CreatorId = entityGrandTotal.CreatorId.Value,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
+                DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entityGrandTotal.IsDeleted,
+                LastModificationTime = DateTime.Now,
+                BranchID = entityGrandTotal.BranchID,
+                LastModifierId = LoginedUserService.UserId
+            }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
-                var queryDecreasingDate = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                {
-                    Amount = entityByDate.Amount,
-                    Date_ = entityByDate.Date_,
-                    ProductID = entityByDate.ProductID,
-                    TotalConsumption = entityByDate.TotalConsumption,
-                    TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
-                    TotalWarehouseInput = entityByDate.TotalWarehouseInput,
-                    TotalGoodsIssue = entityByDate.TotalGoodsIssue,
-                    TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
-                    TotalProduction = entityByDate.TotalProduction,
-                    TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
-                    TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
-                    TotalSalesOrder = entityByDate.TotalSalesOrder,
-                    TotalSalesProposition = entityByDate.TotalSalesProposition - deletedLine.Quantity,
-                    TotalWastage = entityByDate.TotalWastage,
-                    WarehouseID = entityByDate.WarehouseID,
-                    BranchID = entityByDate.BranchID,
-                    Id = entityByDate.Id,
-                    CreationTime = entityByDate.CreationTime.Value,
-                    CreatorId = entityByDate.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entityByDate.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = entityByDate.Id }, false, false, "");
+            var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasingGrand, "Id", true);
 
-                var byDateStockMovementsDecreasing = queryFactory.Update<SelectByDateStockMovementsDto>(queryDecreasingDate, "Id", true);
+            #endregion
 
-                #endregion
-
-                #region Grand Total Stock Movement
-
-                var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = salesPropositions.BranchID, WarehouseID = salesPropositions.WarehouseID, ProductID = deletedLine.ProductID }, false, false, "");
-
-                var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
-
-                var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
-                {
-                    Amount = entityGrandTotal.Amount,
-                    ProductID = deletedLine.ProductID,
-                    TotalConsumption = entityGrandTotal.TotalConsumption,
-                    TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
-                    TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
-                    TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
-                    TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
-                    TotalProduction = entityGrandTotal.TotalProduction,
-                    TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
-                    TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
-                    TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
-                    TotalReserved = entityGrandTotal.TotalReserved,
-                    TotalSalesProposition = entityGrandTotal.TotalSalesProposition - deletedLine.Quantity,
-                    TotalWastage = entityGrandTotal.TotalWastage,
-                    WarehouseID = entityGrandTotal.WarehouseID,
-                    Id = entityGrandTotal.Id,
-                    CreationTime = entityGrandTotal.CreationTime.Value,
-                    CreatorId = entityGrandTotal.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entityGrandTotal.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    BranchID = entityGrandTotal.BranchID,
-                    LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
-
-                var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasingGrand, "Id", true);
-
-                #endregion
-            }
             return true;
         }
 
         public static bool DeleteSalesPropositions(SelectSalesPropositionsDto deletedEntity)
         {
+            #region Getting Lines
 
-            using (var connection = queryFactory.ConnectToDatabase())
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.SalesPropositionLines)
+                   .Select<SalesPropositionLines>(spl => new { spl.VATrate, spl.VATamount, spl.UnitSetID, spl.UnitPrice, spl.Quantity, spl.SalesPropositionLineState, spl.SalesPropositionID, spl.ProductID, spl.PaymentPlanID, spl.OrderConversionDate, spl.LineTotalAmount, spl.LineNr, spl.LineDescription, spl.LineAmount, spl.Id, spl.ExchangeRate, spl.DiscountRate, spl.DiscountAmount, spl.DataOpenStatusUserId, spl.DataOpenStatus })
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(SalesPropositionLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(SalesPropositionLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        ppl => new { PaymentPlanID = ppl.Id, PaymentPlanName = ppl.Name },
+                        nameof(SalesPropositionLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { SalesPropositionID = deletedEntity.Id }, false, false, Tables.SalesPropositionLines);
+
+            var salesPropositionLine = queryFactory.GetList<SelectSalesPropositionLinesDto>(queryLines).ToList();
+
+            deletedEntity.SelectSalesPropositionLines = salesPropositionLine;
+
+            #endregion
+
+            foreach (var line in deletedEntity.SelectSalesPropositionLines)
             {
-                #region Getting Lines
 
-                var queryLines = queryFactory
-                       .Query()
-                       .From(Tables.SalesPropositionLines)
-                       .Select<SalesPropositionLines>(spl => new { spl.VATrate, spl.VATamount, spl.UnitSetID, spl.UnitPrice, spl.Quantity, spl.SalesPropositionLineState, spl.SalesPropositionID, spl.ProductID, spl.PaymentPlanID, spl.OrderConversionDate, spl.LineTotalAmount, spl.LineNr, spl.LineDescription, spl.LineAmount, spl.Id, spl.ExchangeRate, spl.DiscountRate, spl.DiscountAmount, spl.DataOpenStatusUserId, spl.DataOpenStatus })
-                       .Join<Products>
-                        (
-                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
-                            nameof(SalesPropositionLines.ProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                       .Join<UnitSets>
-                        (
-                            u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
-                            nameof(SalesPropositionLines.UnitSetID),
-                            nameof(UnitSets.Id),
-                            JoinType.Left
-                        )
-                         .Join<PaymentPlans>
-                        (
-                            ppl => new { PaymentPlanID = ppl.Id, PaymentPlanName = ppl.Name },
-                            nameof(SalesPropositionLines.PaymentPlanID),
-                            nameof(PaymentPlans.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { SalesPropositionID = deletedEntity.Id }, false, false, Tables.SalesPropositionLines);
+                #region By Date Stock Movement
 
-                var salesPropositionLine = queryFactory.GetList<SelectSalesPropositionLinesDto>(queryLines).ToList();
+                var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = deletedEntity.BranchID, WarehouseID = deletedEntity.WarehouseID, ProductID = line.ProductID, Date_ = deletedEntity.Date_ }, false, false, "");
 
-                deletedEntity.SelectSalesPropositionLines = salesPropositionLine;
+                var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
+
+                if (entityByDate.Id != Guid.Empty)
+                {
+                    var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                    {
+                        Amount = entityByDate.Amount,
+                        Date_ = entityByDate.Date_,
+                        ProductID = line.ProductID,
+                        TotalConsumption = entityByDate.TotalConsumption,
+                        TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                        TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                        TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                        TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                        TotalProduction = entityByDate.TotalProduction,
+                        TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
+                        TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
+                        TotalSalesOrder = entityByDate.TotalSalesOrder,
+                        TotalSalesProposition = entityByDate.TotalSalesProposition - line.Quantity,
+                        TotalWastage = entityByDate.TotalWastage,
+                        WarehouseID = entityByDate.WarehouseID,
+                        BranchID = entityByDate.BranchID,
+                        Id = entityByDate.Id,
+                        CreationTime = entityByDate.CreationTime.Value,
+                        CreatorId = entityByDate.CreatorId.Value,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
+                        DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
+                        IsDeleted = entityByDate.IsDeleted,
+                        LastModificationTime = DateTime.Now,
+                        LastModifierId = LoginedUserService.UserId
+                    }).Where(new { Id = entityByDate.Id }, false, false, "");
+
+                    var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
+                }
 
                 #endregion
 
-                foreach (var line in deletedEntity.SelectSalesPropositionLines)
+                #region Grand Total Stock Movement
+
+                var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = deletedEntity.BranchID, WarehouseID = deletedEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
+
+                var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
+
+                if (entityGrandTotal.Id != Guid.Empty)
                 {
-
-                    #region By Date Stock Movement
-
-                    var entityQueryByDate = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = deletedEntity.BranchID, WarehouseID = deletedEntity.WarehouseID, ProductID = line.ProductID, Date_ = deletedEntity.Date_ }, false, false, "");
-
-                    var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
-
-                    if (entityByDate.Id != Guid.Empty)
+                    var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                     {
-                        var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                        {
-                            Amount = entityByDate.Amount,
-                            Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
-                            TotalConsumption = entityByDate.TotalConsumption,
-                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
-                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
-                            TotalGoodsIssue = entityByDate.TotalGoodsIssue,
-                            TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
-                            TotalProduction = entityByDate.TotalProduction,
-                            TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
-                            TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
-                            TotalSalesOrder = entityByDate.TotalSalesOrder,
-                            TotalSalesProposition = entityByDate.TotalSalesProposition - line.Quantity,
-                            TotalWastage = entityByDate.TotalWastage,
-                            WarehouseID = entityByDate.WarehouseID,
-                            BranchID = entityByDate.BranchID,
-                            Id = entityByDate.Id,
-                            CreationTime = entityByDate.CreationTime.Value,
-                            CreatorId = entityByDate.CreatorId.Value,
-                            DataOpenStatus = false,
-                            DataOpenStatusUserId = Guid.Empty,
-                            DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
-                            DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
-                            IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
-                            LastModifierId = LoginedUserService.UserId
-                        }).Where(new { Id = entityByDate.Id }, false, false, "");
+                        Amount = entityGrandTotal.Amount,
+                        ProductID = line.ProductID,
+                        TotalConsumption = entityGrandTotal.TotalConsumption,
+                        TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                        TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
+                        TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                        TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                        TotalProduction = entityGrandTotal.TotalProduction,
+                        TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
+                        TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
+                        TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
+                        TotalReserved = entityGrandTotal.TotalReserved,
+                        TotalSalesProposition = entityGrandTotal.TotalSalesProposition - line.Quantity,
+                        TotalWastage = entityGrandTotal.TotalWastage,
+                        WarehouseID = entityGrandTotal.WarehouseID,
+                        Id = entityGrandTotal.Id,
+                        CreationTime = entityGrandTotal.CreationTime.Value,
+                        CreatorId = entityGrandTotal.CreatorId.Value,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
+                        DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
+                        IsDeleted = entityGrandTotal.IsDeleted,
+                        LastModificationTime = DateTime.Now,
+                        BranchID = entityGrandTotal.BranchID,
+                        LastModifierId = LoginedUserService.UserId
+                    }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
-                        var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
-                    }
-
-                    #endregion
-
-                    #region Grand Total Stock Movement
-
-                    var entityQueryGrandTotal = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { BranchID = deletedEntity.BranchID, WarehouseID = deletedEntity.WarehouseID, ProductID = line.ProductID }, false, false, "");
-
-                    var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
-
-                    if (entityGrandTotal.Id != Guid.Empty)
-                    {
-                        var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
-                        {
-                            Amount = entityGrandTotal.Amount,
-                            ProductID = line.ProductID,
-                            TotalConsumption = entityGrandTotal.TotalConsumption,
-                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
-                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
-                            TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
-                            TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
-                            TotalProduction = entityGrandTotal.TotalProduction,
-                            TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
-                            TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
-                            TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
-                            TotalReserved = entityGrandTotal.TotalReserved,
-                            TotalSalesProposition = entityGrandTotal.TotalSalesProposition - line.Quantity,
-                            TotalWastage = entityGrandTotal.TotalWastage,
-                            WarehouseID = entityGrandTotal.WarehouseID,
-                            Id = entityGrandTotal.Id,
-                            CreationTime = entityGrandTotal.CreationTime.Value,
-                            CreatorId = entityGrandTotal.CreatorId.Value,
-                            DataOpenStatus = false,
-                            DataOpenStatusUserId = Guid.Empty,
-                            DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
-                            DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
-                            IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
-                            BranchID = entityGrandTotal.BranchID,
-                            LastModifierId = LoginedUserService.UserId
-                        }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
-
-                        var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
-                    }
-
-                    #endregion
-
+                    var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                 }
+
+                #endregion
+
             }
 
             return true;
@@ -2423,9 +2376,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool InsertSalesOrders(CreateSalesOrderDto createdEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
                 foreach (var line in createdEntity.SelectSalesOrderLines)
                 {
                     #region By Date Stock Movement
@@ -2583,8 +2533,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     }
 
                     #endregion
-                }
-
+               
             }
 
             return true;
@@ -2592,9 +2541,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool UpdateSalesOrders(SelectSalesOrderDto previousEntity, UpdateSalesOrderDto currentEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
                 foreach (var line in currentEntity.SelectSalesOrderLines)
                 {
 
@@ -2924,10 +2870,6 @@ namespace TsiErp.Business.Entities.StockMovement
                             var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                         }
 
-
-
-                    }
-
                     #endregion
                 }
 
@@ -2938,8 +2880,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool DeleteSalesOrderLines(SelectSalesOrderLinesDto deletedLine)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Getting Sales Order
 
                 var query = queryFactory
@@ -3073,15 +3013,12 @@ namespace TsiErp.Business.Entities.StockMovement
                 var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasingGrand, "Id", true);
 
                 #endregion
-            }
+            
             return true;
         }
 
         public static bool DeleteSalesOrders(SelectSalesOrderDto deletedEntity)
         {
-
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Getting Lines
 
                 var queryLines = queryFactory
@@ -3214,7 +3151,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
                     #endregion
 
-                }
             }
 
             return true;
@@ -3226,9 +3162,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool InsertTotalConsumptions(CreateStockFichesDto createdEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
                 foreach (var line in createdEntity.SelectStockFicheLines)
                 {
                     #region By Date Stock Movement
@@ -3387,8 +3320,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     }
 
                     #endregion
-                }
-
+               
             }
 
             return true;
@@ -3396,9 +3328,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool UpdateTotalConsumptions(SelectStockFichesDto previousEntity, UpdateStockFichesDto currentEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
                 foreach (var line in currentEntity.SelectStockFicheLines)
                 {
 
@@ -3727,10 +3656,6 @@ namespace TsiErp.Business.Entities.StockMovement
                             var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                         }
 
-
-
-                    }
-
                     #endregion
                 }
 
@@ -3741,8 +3666,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool DeleteTotalConsumptionLines(SelectStockFicheLinesDto deletedLine)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Getting Total Consumption
 
                 var query = queryFactory
@@ -3848,15 +3771,12 @@ namespace TsiErp.Business.Entities.StockMovement
                 var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasingGrand, "Id", true);
 
                 #endregion
-            }
+            
             return true;
         }
 
         public static bool DeleteTotalConsumptions(SelectStockFichesDto deletedEntity)
         {
-
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Getting Lines
 
                 var queryLines = queryFactory
@@ -3975,7 +3895,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                     #endregion
 
-                }
+                
             }
 
             return true;
@@ -3987,8 +3907,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool InsertTotalWastages(CreateStockFichesDto createdEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
 
                 foreach (var line in createdEntity.SelectStockFicheLines)
                 {
@@ -4148,7 +4066,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     }
 
                     #endregion
-                }
+                
 
             }
 
@@ -4157,9 +4075,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool UpdateTotalWastages(SelectStockFichesDto previousEntity, UpdateStockFichesDto currentEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
                 foreach (var line in currentEntity.SelectStockFicheLines)
                 {
 
@@ -4488,10 +4403,6 @@ namespace TsiErp.Business.Entities.StockMovement
                             var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                         }
 
-
-
-                    }
-
                     #endregion
                 }
 
@@ -4502,8 +4413,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool DeleteTotalWastageLines(SelectStockFicheLinesDto deletedLine)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Getting Total Wastage
 
                 var query = queryFactory
@@ -4609,15 +4518,12 @@ namespace TsiErp.Business.Entities.StockMovement
                 var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasingGrand, "Id", true);
 
                 #endregion
-            }
+            
             return true;
         }
 
         public static bool DeleteTotalWastages(SelectStockFichesDto deletedEntity)
         {
-
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Getting Lines
 
                 var queryLines = queryFactory
@@ -4736,7 +4642,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
                     #endregion
 
-                }
             }
 
             return true;
@@ -4748,9 +4653,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool InsertTotalProductions(CreateStockFichesDto createdEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
                 foreach (var line in createdEntity.SelectStockFicheLines)
                 {
                     #region By Date Stock Movement
@@ -4909,7 +4811,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     }
 
                     #endregion
-                }
+                
 
             }
 
@@ -4918,9 +4820,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool UpdateTotalProductions(SelectStockFichesDto previousEntity, UpdateStockFichesDto currentEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
                 foreach (var line in currentEntity.SelectStockFicheLines)
                 {
 
@@ -5251,10 +5150,6 @@ namespace TsiErp.Business.Entities.StockMovement
                             var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                         }
 
-
-
-                    }
-
                     #endregion
                 }
 
@@ -5265,8 +5160,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool DeleteTotalProductionLines(SelectStockFicheLinesDto deletedLine)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Getting Total Production
 
                 var query = queryFactory
@@ -5372,15 +5265,12 @@ namespace TsiErp.Business.Entities.StockMovement
                 var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasingGrand, "Id", true);
 
                 #endregion
-            }
+            
             return true;
         }
 
         public static bool DeleteTotalProductions(SelectStockFichesDto deletedEntity)
         {
-
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Getting Lines
 
                 var queryLines = queryFactory
@@ -5498,8 +5388,6 @@ namespace TsiErp.Business.Entities.StockMovement
                     }
 
                     #endregion
-
-                }
             }
 
             return true;
@@ -5511,9 +5399,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool InsertTotalGoods(CreateStockFichesDto createdEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
                 foreach (var line in createdEntity.SelectStockFicheLines)
                 {
                     #region By Date Stock Movement
@@ -5672,7 +5557,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     }
 
                     #endregion
-                }
+                
 
             }
 
@@ -5681,9 +5566,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool UpdateTotalGoods(SelectStockFichesDto previousEntity, UpdateStockFichesDto currentEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
                 foreach (var line in currentEntity.SelectStockFicheLines)
                 {
 
@@ -6017,7 +5899,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     }
 
                     #endregion
-                }
+                
 
             }
 
@@ -6026,8 +5908,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool DeleteTotalGoodLines(SelectStockFicheLinesDto deletedLine)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Getting Total Good
 
                 var query = queryFactory
@@ -6133,15 +6013,12 @@ namespace TsiErp.Business.Entities.StockMovement
                 var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasingGrand, "Id", true);
 
                 #endregion
-            }
+            
             return true;
         }
 
         public static bool DeleteTotalGoods(SelectStockFichesDto deletedEntity)
         {
-
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Getting Lines
 
                 var queryLines = queryFactory
@@ -6259,8 +6136,6 @@ namespace TsiErp.Business.Entities.StockMovement
                     }
 
                     #endregion
-
-                }
             }
 
             return true;
@@ -6272,9 +6147,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool InsertTotalGoodIssues(CreateStockFichesDto createdEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
                 foreach (var line in createdEntity.SelectStockFicheLines)
                 {
                     #region By Date Stock Movement
@@ -6424,7 +6296,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     }
 
                     #endregion
-                }
+                
 
             }
 
@@ -6433,9 +6305,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool UpdateTotalGoodIssues(SelectStockFichesDto previousEntity, UpdateStockFichesDto currentEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
                 foreach (var line in currentEntity.SelectStockFicheLines)
                 {
 
@@ -6766,10 +6635,6 @@ namespace TsiErp.Business.Entities.StockMovement
                             var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                         }
 
-
-
-                    }
-
                     #endregion
                 }
 
@@ -6780,8 +6645,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool DeleteTotalGoodIssueLines(SelectStockFicheLinesDto deletedLine)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Getting Total Good Issue
 
                 var query = queryFactory
@@ -6887,15 +6750,12 @@ namespace TsiErp.Business.Entities.StockMovement
                 var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasingGrand, "Id", true);
 
                 #endregion
-            }
+            
             return true;
         }
 
         public static bool DeleteTotalGoodIssues(SelectStockFichesDto deletedEntity)
         {
-
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Getting Lines
 
                 var queryLines = queryFactory
@@ -7013,8 +6873,6 @@ namespace TsiErp.Business.Entities.StockMovement
                     }
 
                     #endregion
-
-                }
             }
 
             return true;
@@ -7026,9 +6884,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool InsertTotalWarehouseShippings(CreateStockFichesDto createdEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
                 foreach (var line in createdEntity.SelectStockFicheLines)
                 {
                     #region By Date Stock Movement
@@ -7344,7 +7199,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     }
 
                     #endregion
-                }
+                
 
             }
 
@@ -7353,9 +7208,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool UpdateTotalWarehouseShippings(SelectStockFichesDto previousEntity, UpdateStockFichesDto currentEntity)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
                 foreach (var line in currentEntity.SelectStockFicheLines)
                 {
 
@@ -7367,7 +7219,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                     if (entityByDate.Id == Guid.Empty)
                     {
-                        if(currentEntity.InputOutputCode == 1)
+                        if (currentEntity.InputOutputCode == 1)
                         {
                             foreach (var previousline in previousEntity.SelectStockFicheLines)
                             {
@@ -7392,7 +7244,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     TotalPurchaseRequest = entityByDateDecreasing.TotalPurchaseRequest,
                                     TotalSalesOrder = entityByDateDecreasing.TotalSalesOrder,
                                     TotalSalesProposition = entityByDateDecreasing.TotalSalesProposition,
-                                    TotalWastage = entityByDateDecreasing.TotalWastage ,
+                                    TotalWastage = entityByDateDecreasing.TotalWastage,
                                     WarehouseID = entityByDateDecreasing.WarehouseID,
                                     BranchID = entityByDateDecreasing.BranchID,
                                     Id = entityByDateDecreasing.Id,
@@ -7459,7 +7311,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     Date_ = entityByDateDecreasing.Date_,
                                     ProductID = previousline.ProductID,
                                     TotalConsumption = entityByDateDecreasing.TotalConsumption,
-                                    TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput ,
+                                    TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
                                     TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput - decreasingAmount,
                                     TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
                                     TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
@@ -7487,7 +7339,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                                 var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
                                 {
-                                    Amount = line.Quantity ,
+                                    Amount = line.Quantity,
                                     Date_ = currentEntity.Date_,
                                     ProductID = line.ProductID,
                                     TotalConsumption = 0,
@@ -7526,7 +7378,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     {
                         decimal previousQuantity = previousEntity.SelectStockFicheLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
 
-                        if(currentEntity.InputOutputCode == 1)
+                        if (currentEntity.InputOutputCode == 1)
                         {
                             if (line.Quantity > previousQuantity)
                             {
@@ -7547,7 +7399,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
                                     TotalSalesOrder = entityByDate.TotalSalesOrder,
                                     TotalSalesProposition = entityByDate.TotalSalesProposition,
-                                    TotalWastage = entityByDate.TotalWastage ,
+                                    TotalWastage = entityByDate.TotalWastage,
                                     WarehouseID = entityByDate.WarehouseID,
                                     BranchID = entityByDate.BranchID,
                                     Id = entityByDate.Id,
@@ -7585,7 +7437,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
                                     TotalSalesOrder = entityByDate.TotalSalesOrder,
                                     TotalSalesProposition = entityByDate.TotalSalesProposition,
-                                    TotalWastage = entityByDate.TotalWastage ,
+                                    TotalWastage = entityByDate.TotalWastage,
                                     WarehouseID = entityByDate.WarehouseID,
                                     BranchID = entityByDate.BranchID,
                                     Id = entityByDate.Id,
@@ -7616,7 +7468,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     Date_ = entityByDate.Date_,
                                     ProductID = line.ProductID,
                                     TotalConsumption = entityByDate.TotalConsumption,
-                                    TotalWarehouseOutput = entityByDate.TotalWarehouseOutput ,
+                                    TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                     TotalWarehouseInput = entityByDate.TotalWarehouseInput + addedPR,
                                     TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                     TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
@@ -7696,7 +7548,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                     if (entityGrandTotal.Id == Guid.Empty)
                     {
-                        if(currentEntity.InputOutputCode == 1)
+                        if (currentEntity.InputOutputCode == 1)
                         {
                             foreach (var previousLine in previousEntity.SelectStockFicheLines)
                             {
@@ -7721,7 +7573,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     TotalSalesOrder = entityGrandTotalDecreasing.TotalSalesOrder,
                                     TotalReserved = entityGrandTotalDecreasing.TotalReserved,
                                     TotalSalesProposition = entityGrandTotalDecreasing.TotalSalesProposition,
-                                    TotalWastage = entityGrandTotalDecreasing.TotalWastage ,
+                                    TotalWastage = entityGrandTotalDecreasing.TotalWastage,
                                     WarehouseID = previousEntity.WarehouseID,
                                     Id = entityGrandTotalDecreasing.Id,
                                     CreationTime = entityGrandTotalDecreasing.CreationTime.Value,
@@ -7788,7 +7640,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     ProductID = previousLine.ProductID,
                                     TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
                                     TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput - decreasingAmount,
-                                    TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput ,
+                                    TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
                                     TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
                                     TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
                                     TotalProduction = entityGrandTotalDecreasing.TotalProduction,
@@ -7816,7 +7668,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                                 var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                                 {
-                                    Amount = line.Quantity ,
+                                    Amount = line.Quantity,
                                     ProductID = line.ProductID,
                                     TotalConsumption = 0,
                                     TotalGoodsIssue = 0,
@@ -7854,7 +7706,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     {
                         decimal previousQuantity = previousEntity.SelectStockFicheLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
 
-                        if(currentEntity.InputOutputCode == 1)
+                        if (currentEntity.InputOutputCode == 1)
                         {
                             if (line.Quantity > previousQuantity)
                             {
@@ -7875,7 +7727,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
                                     TotalReserved = entityGrandTotal.TotalReserved,
                                     TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
-                                    TotalWastage = entityGrandTotal.TotalWastage ,
+                                    TotalWastage = entityGrandTotal.TotalWastage,
                                     WarehouseID = entityGrandTotal.WarehouseID,
                                     Id = entityGrandTotal.Id,
                                     CreationTime = entityGrandTotal.CreationTime.Value,
@@ -7913,7 +7765,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
                                     TotalReserved = entityGrandTotal.TotalReserved,
                                     TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
-                                    TotalWastage = entityGrandTotal.TotalWastage ,
+                                    TotalWastage = entityGrandTotal.TotalWastage,
                                     WarehouseID = entityGrandTotal.WarehouseID,
                                     Id = entityGrandTotal.Id,
                                     CreationTime = entityGrandTotal.CreationTime.Value,
@@ -7944,7 +7796,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     ProductID = line.ProductID,
                                     TotalConsumption = entityGrandTotal.TotalConsumption,
                                     TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput + addedPR,
-                                    TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput ,
+                                    TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                     TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                     TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                     TotalProduction = entityGrandTotal.TotalProduction,
@@ -8010,12 +7862,6 @@ namespace TsiErp.Business.Entities.StockMovement
                             }
                         }
 
-
-
-
-
-                    }
-
                     #endregion
                 }
 
@@ -8026,8 +7872,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool DeleteTotalWarehouseShippingLines(SelectStockFicheLinesDto deletedLine)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Getting Total Warehouse Shipping
 
                 var query = queryFactory
@@ -8060,7 +7904,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                 var entityByDate = queryFactory.Get<ByDateStockMovements>(entityQueryByDate);
 
-                if(stockFiches.InputOutputCode == 1)
+                if (stockFiches.InputOutputCode == 1)
                 {
                     var queryDecreasingDate = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
                     {
@@ -8070,7 +7914,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalConsumption = entityByDate.TotalConsumption,
                         TotalWarehouseOutput = entityByDate.TotalWarehouseOutput - deletedLine.Quantity,
                         TotalWarehouseInput = entityByDate.TotalWarehouseInput,
-                        TotalGoodsIssue = entityByDate.TotalGoodsIssue ,
+                        TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                         TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                         TotalProduction = entityByDate.TotalProduction,
                         TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
@@ -8103,7 +7947,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         Date_ = entityByDate.Date_,
                         ProductID = entityByDate.ProductID,
                         TotalConsumption = entityByDate.TotalConsumption,
-                        TotalWarehouseOutput = entityByDate.TotalWarehouseOutput ,
+                        TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                         TotalWarehouseInput = entityByDate.TotalWarehouseInput - deletedLine.Quantity,
                         TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                         TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
@@ -8138,7 +7982,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                 var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
 
-                if(stockFiches.InputOutputCode == 1)
+                if (stockFiches.InputOutputCode == 1)
                 {
                     var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                     {
@@ -8147,7 +7991,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalConsumption = entityGrandTotal.TotalConsumption,
                         TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                         TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput - deletedLine.Quantity,
-                        TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue ,
+                        TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                         TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                         TotalProduction = entityGrandTotal.TotalProduction,
                         TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
@@ -8181,7 +8025,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         ProductID = deletedLine.ProductID,
                         TotalConsumption = entityGrandTotal.TotalConsumption,
                         TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput - deletedLine.Quantity,
-                        TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput ,
+                        TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                         TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                         TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                         TotalProduction = entityGrandTotal.TotalProduction,
@@ -8206,10 +8050,6 @@ namespace TsiErp.Business.Entities.StockMovement
                     }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
                     var grandTotalStockMovementsDecreasing = queryFactory.Update<SelectGrandTotalStockMovementsDto>(queryDecreasingGrand, "Id", true);
-                }
-
-
-
                 #endregion
             }
             return true;
@@ -8217,9 +8057,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
         public static bool DeleteTotalWarehouseShippings(SelectStockFichesDto deletedEntity)
         {
-
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 #region Getting Lines
 
                 var queryLines = queryFactory
@@ -8260,7 +8097,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                     if (entityByDate.Id != Guid.Empty)
                     {
-                        if(deletedEntity.InputOutputCode == 1)
+                        if (deletedEntity.InputOutputCode == 1)
                         {
                             var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
                             {
@@ -8303,7 +8140,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDate.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption,
-                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput ,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput - line.Quantity,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
@@ -8342,7 +8179,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                     if (entityGrandTotal.Id != Guid.Empty)
                     {
-                        if(deletedEntity.InputOutputCode == 1)
+                        if (deletedEntity.InputOutputCode == 1)
                         {
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
@@ -8351,7 +8188,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput - line.Quantity,
-                                TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue ,
+                                TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
@@ -8385,7 +8222,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput - line.Quantity,
-                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput ,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction,
@@ -8415,8 +8252,6 @@ namespace TsiErp.Business.Entities.StockMovement
                     }
 
                     #endregion
-
-                }
             }
 
             return true;

@@ -36,21 +36,19 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
 
         public async Task<IDataResult<SelectFicheNumbersDto>> CreateAsync(CreateFicheNumbersDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var query = queryFactory.Query().From(Tables.FicheNumbers).Insert(new CreateFicheNumbersDto
             {
-                var query = queryFactory.Query().From(Tables.FicheNumbers).Insert(new CreateFicheNumbersDto
-                {
-                    Id = GuidGenerator.CreateGuid(),
-                    FicheNo = input.FicheNo,
-                    FixedCharacter = input.FixedCharacter,
-                    Length_ = input.Length_,
-                    Menu_ = input.Menu_
-                }).UseIsDelete(false);
+                Id = GuidGenerator.CreateGuid(),
+                FicheNo = input.FicheNo,
+                FixedCharacter = input.FixedCharacter,
+                Length_ = input.Length_,
+                Menu_ = input.Menu_
+            }).UseIsDelete(false);
 
-                var ficheNumbers = queryFactory.Insert<SelectFicheNumbersDto>(query, "Id", true);
+            var ficheNumbers = queryFactory.Insert<SelectFicheNumbersDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectFicheNumbersDto>(ficheNumbers);
-            }
+            return new SuccessDataResult<SelectFicheNumbersDto>(ficheNumbers);
+
         }
 
         public Task<IResult> DeleteAsync(Guid id)
@@ -60,56 +58,45 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
 
         public async Task<IDataResult<SelectFicheNumbersDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var query = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new
             {
+                Id = id
+            }, false, false, "").UseIsDelete(false);
 
-                var query = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new
-                {
-                    Id = id
-                }, false, false, "").UseIsDelete(false);
+            var ficheNumbers = queryFactory.Get<SelectFicheNumbersDto>(query);
 
-                var ficheNumbers = queryFactory.Get<SelectFicheNumbersDto>(query);
+            return new SuccessDataResult<SelectFicheNumbersDto>(ficheNumbers);
 
-                return new SuccessDataResult<SelectFicheNumbersDto>(ficheNumbers);
-
-            }
         }
 
         public async Task<IDataResult<IList<ListFicheNumbersDto>>> GetListAsync(ListFicheNumbersParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            var query = queryFactory.Query().From(Tables.FicheNumbers).Select("*").UseIsDelete(false);
 
-                var query = queryFactory.Query().From(Tables.FicheNumbers).Select("*").UseIsDelete(false);
+            var ficheNumbers = queryFactory.GetList<ListFicheNumbersDto>(query).ToList();
 
-                var ficheNumbers = queryFactory.GetList<ListFicheNumbersDto>(query).ToList();
-
-                return new SuccessDataResult<IList<ListFicheNumbersDto>>(ficheNumbers);
-            }
+            return new SuccessDataResult<IList<ListFicheNumbersDto>>(ficheNumbers);
         }
 
         public async Task<IDataResult<SelectFicheNumbersDto>> UpdateAsync(UpdateFicheNumbersDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+
+            var entity = queryFactory.Get<FicheNumbers>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.FicheNumbers).Update(new UpdateFicheNumbersDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+                Id = input.Id,
+                Menu_ = entity.Menu_,
+                Length_ = input.Length_,
+                FixedCharacter = input.FixedCharacter,
+                FicheNo = entity.FicheNo + 1
+            }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
 
-                var entity = queryFactory.Get<FicheNumbers>(entityQuery);
-
-                var query = queryFactory.Query().From(Tables.FicheNumbers).Update(new UpdateFicheNumbersDto
-                {
-                    Id = input.Id,
-                    Menu_ = entity.Menu_,
-                    Length_ = input.Length_,
-                    FixedCharacter = input.FixedCharacter,
-                    FicheNo = entity.FicheNo + 1
-                }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
-
-                var ficheNumbers = queryFactory.Update<SelectFicheNumbersDto>(query, "Id", true);
+            var ficheNumbers = queryFactory.Update<SelectFicheNumbersDto>(query, "Id", true);
 
 
-                return new SuccessDataResult<SelectFicheNumbersDto>(ficheNumbers);
-            }
+            return new SuccessDataResult<SelectFicheNumbersDto>(ficheNumbers);
         }
 
         public Task<IDataResult<SelectFicheNumbersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
@@ -119,83 +106,79 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
 
         public string GetFicheNumberAsync(string menu)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var query = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new
             {
-                var query = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new
+                Menu_ = menu
+            }, false, false, "").UseIsDelete(false);
+
+            var ficheNumbers = queryFactory.Get<SelectFicheNumbersDto>(query);
+
+            string ficheNo = string.Empty;
+
+
+
+            if (ficheNumbers != null)
+            {
+                ficheNo = ficheNumbers.FixedCharacter;
+
+                for (int i = 0; i < ficheNumbers.Length_ - ficheNumbers.FicheNo.ToString().Length; i++)
                 {
-                    Menu_ = menu
-                }, false, false, "").UseIsDelete(false);
-
-                var ficheNumbers = queryFactory.Get<SelectFicheNumbersDto>(query);
-
-                string ficheNo = string.Empty;
-
-
-
-                if (ficheNumbers != null)
-                {
-                    ficheNo = ficheNumbers.FixedCharacter;
-
-                    for (int i = 0; i < ficheNumbers.Length_ - ficheNumbers.FicheNo.ToString().Length; i++)
-                    {
-                        ficheNo = ficheNo + "0";
-                    }
-
-                    ficheNo = ficheNo + ficheNumbers.FicheNo;
+                    ficheNo = ficheNo + "0";
                 }
 
-                return ficheNo;
+                ficheNo = ficheNo + ficheNumbers.FicheNo;
             }
+
+            return ficheNo;
+
         }
 
         public Task UpdateFicheNumberAsync(string menu, string progFicheNumber)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            #region Get From FicheNumber Table
+            var query = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new
             {
-                #region Get From FicheNumber Table
-                var query = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new
+                Menu_ = menu
+            }, false, false, "").UseIsDelete(false);
+
+            var ficheNumbers = queryFactory.Get<SelectFicheNumbersDto>(query);
+
+            string ficheNo = string.Empty;
+
+            if (ficheNumbers != null)
+            {
+                ficheNo = ficheNumbers.FixedCharacter;
+
+                for (int i = 0; i < ficheNumbers.Length_ - ficheNumbers.FicheNo.ToString().Length; i++)
                 {
-                    Menu_ = menu
-                }, false, false, "").UseIsDelete(false);
-
-                var ficheNumbers = queryFactory.Get<SelectFicheNumbersDto>(query);
-
-                string ficheNo = string.Empty;
-
-                if (ficheNumbers != null)
-                {
-                    ficheNo = ficheNumbers.FixedCharacter;
-
-                    for (int i = 0; i < ficheNumbers.Length_ - ficheNumbers.FicheNo.ToString().Length; i++)
-                    {
-                        ficheNo = ficheNo + "0";
-                    }
-
-                    ficheNo = ficheNo + ficheNumbers.FicheNo;
-                }
-                #endregion
-
-                var entityQuery = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new { Menu_ = menu }, false, false, "").UseIsDelete(false);
-
-                var entity = queryFactory.Get<FicheNumbers>(entityQuery);
-
-
-                if (ficheNo == progFicheNumber)
-                {
-                    var updateQuery = queryFactory.Query().From(Tables.FicheNumbers).Update(new UpdateFicheNumbersDto
-                    {
-                        Id = entity.Id,
-                        Menu_ = entity.Menu_,
-                        Length_ = entity.Length_,
-                        FixedCharacter = entity.FixedCharacter,
-                        FicheNo = entity.FicheNo + 1
-                    }).Where(new { Menu_ = menu }, false, false, "").UseIsDelete(false);
-
-                    var updatedFicheNumber = queryFactory.Update<SelectFicheNumbersDto>(updateQuery, "Id", true);
+                    ficheNo = ficheNo + "0";
                 }
 
-                return Task.CompletedTask;
+                ficheNo = ficheNo + ficheNumbers.FicheNo;
             }
+            #endregion
+
+            var entityQuery = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new { Menu_ = menu }, false, false, "").UseIsDelete(false);
+
+            var entity = queryFactory.Get<FicheNumbers>(entityQuery);
+
+
+            if (ficheNo == progFicheNumber)
+            {
+                var updateQuery = queryFactory.Query().From(Tables.FicheNumbers).Update(new UpdateFicheNumbersDto
+                {
+                    Id = entity.Id,
+                    Menu_ = entity.Menu_,
+                    Length_ = entity.Length_,
+                    FixedCharacter = entity.FixedCharacter,
+                    FicheNo = entity.FicheNo + 1
+                }).Where(new { Menu_ = menu }, false, false, "").UseIsDelete(false);
+
+                var updatedFicheNumber = queryFactory.Update<SelectFicheNumbersDto>(updateQuery, "Id", true);
+            }
+
+            return Task.CompletedTask;
+
         }
     }
 }
