@@ -44,76 +44,434 @@ namespace TsiErp.Business.Entities.StockFiche.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockFichesDto>> CreateAsync(CreateStockFichesDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var listQuery = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+            var list = queryFactory.ControlList<StockFiches>(listQuery).ToList();
+
+            #region Code Control 
+
+            if (list.Count > 0)
             {
-                var listQuery = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
-                var list = queryFactory.ControlList<StockFiches>(listQuery).ToList();
+                throw new DuplicateCodeException(L["CodeControlManager"]);
+            }
 
-                #region Code Control 
+            #endregion
 
-                if (list.Count > 0)
+            Guid addedEntityId = GuidGenerator.CreateGuid();
+
+            if (input.FicheType != 25)
+            {
+                switch (input.FicheType)
                 {
-                    connection.Close();
-                    connection.Dispose();
-                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                    case 12: input.InputOutputCode = 1; break;
+                    case 11: input.InputOutputCode = 1; break;
+                    case 13: input.InputOutputCode = 0; break;
+                    case 50: input.InputOutputCode = 0; break;
+                    case 51: input.InputOutputCode = 1; break;
+                }
+            }
+
+
+            var query = queryFactory.Query().From(Tables.StockFiches).Insert(new CreateStockFichesDto
+            {
+                FicheNo = input.FicheNo,
+                InputOutputCode = input.InputOutputCode,
+                CreationTime = DateTime.Now,
+                CreatorId = LoginedUserService.UserId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                PurchaseOrderID = Guid.Empty,
+                DeleterId = Guid.Empty,
+                DeletionTime = null,
+                Id = addedEntityId,
+                IsDeleted = false,
+                LastModificationTime = null,
+                LastModifierId = Guid.Empty,
+                CurrencyID = input.CurrencyID,
+                BranchID = input.BranchID,
+                Date_ = input.Date_,
+                Description_ = input.Description_,
+                ExchangeRate = input.ExchangeRate,
+                FicheType = input.FicheType,
+                NetAmount = input.NetAmount,
+                ProductionOrderID = Guid.Empty,
+                SpecialCode = input.SpecialCode,
+                Time_ = input.Time_,
+                WarehouseID = input.WarehouseID
+            });
+
+            foreach (var item in input.SelectStockFicheLines)
+            {
+                var queryLine = queryFactory.Query().From(Tables.StockFicheLines).Insert(new CreateStockFicheLinesDto
+                {
+                    StockFicheID = addedEntityId,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    PurchaseOrderID = Guid.Empty,
+                    PurchaseOrderLineID = Guid.Empty,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    LineNr = item.LineNr,
+                    ProductID = item.ProductID.GetValueOrDefault(),
+                    Quantity = item.Quantity,
+                    UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                    FicheType = (int)item.FicheType,
+                    LineAmount = item.LineAmount,
+                    LineDescription = item.LineDescription,
+                    UnitPrice = item.UnitPrice
+                });
+
+                query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+            }
+
+            var stockFiche = queryFactory.Insert<SelectStockFichesDto>(query, "Id", true);
+
+            #region Stock Movement Service
+
+            switch (input.FicheType)
+            {
+                case 11: StockMovementsService.InsertTotalWastages(input); ; break;
+                case 12: StockMovementsService.InsertTotalConsumptions(input); ; break;
+                case 13: StockMovementsService.InsertTotalProductions(input); ; break;
+                case 50: StockMovementsService.InsertTotalGoods(input); ; break;
+                case 51: StockMovementsService.InsertTotalGoodIssues(input); ; break;
+                case 25: StockMovementsService.InsertTotalWarehouseShippings(input); break;
+            }
+
+            #endregion
+
+
+
+            await FicheNumbersAppService.UpdateFicheNumberAsync("StockFichesChildMenu", input.FicheNo);
+
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Insert, addedEntityId);
+
+            return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
+
+        }
+
+        [CacheRemoveAspect("Get")]
+        public async Task<IResult> DeleteAsync(Guid id)
+        {
+            var query = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { Id = id }, false, false, "");
+
+            var StockFiches = queryFactory.Get<SelectStockFichesDto>(query);
+
+            if (StockFiches.Id != Guid.Empty && StockFiches != null)
+            {
+                #region Stock Movement Service
+
+                switch (StockFiches.FicheType)
+                {
+                    case StockFicheTypeEnum.FireFisi: StockMovementsService.DeleteTotalWastages(StockFiches); ; break;
+                    case StockFicheTypeEnum.SarfFisi: StockMovementsService.DeleteTotalConsumptions(StockFiches); ; break;
+                    case StockFicheTypeEnum.UretimdenGirisFisi: StockMovementsService.DeleteTotalProductions(StockFiches); ; break;
+                    case StockFicheTypeEnum.StokGirisFisi: StockMovementsService.DeleteTotalGoods(StockFiches); ; break;
+                    case StockFicheTypeEnum.StokCikisFisi: StockMovementsService.DeleteTotalGoodIssues(StockFiches); ; break;
+                    case StockFicheTypeEnum.DepoSevkFisi: StockMovementsService.DeleteTotalWarehouseShippings(StockFiches); break;
                 }
 
                 #endregion
 
-                Guid addedEntityId = GuidGenerator.CreateGuid();
+                var deleteQuery = queryFactory.Query().From(Tables.StockFiches).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-                if (input.FicheType != 25)
+                var lineDeleteQuery = queryFactory.Query().From(Tables.StockFicheLines).Delete(LoginedUserService.UserId).Where(new { StockFicheID = id }, false, false, "");
+
+                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                var stockFiche = queryFactory.Update<SelectStockFichesDto>(deleteQuery, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StockFiches, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
+            }
+            else
+            {
+                var queryLineGet = queryFactory.Query().From(Tables.StockFicheLines).Select("*").Where(new { Id = id }, false, false, "");
+
+                var stockFichesLineGet = queryFactory.Get<SelectStockFicheLinesDto>(queryLineGet);
+
+                var queryDeleteEntity = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { Id = stockFichesLineGet.StockFicheID }, false, false, "");
+
+                var StockFichesDeleteEntity = queryFactory.Get<SelectStockFichesDto>(queryDeleteEntity);
+
+                #region Stock Movement Service
+
+                switch (StockFichesDeleteEntity.FicheType)
                 {
-                    switch (input.FicheType)
-                    {
-                        case 12: input.InputOutputCode = 1; break;
-                        case 11: input.InputOutputCode = 1; break;
-                        case 13: input.InputOutputCode = 0; break;
-                        case 50: input.InputOutputCode = 0; break;
-                        case 51: input.InputOutputCode = 1; break;
-                    }
+                    case StockFicheTypeEnum.FireFisi: StockMovementsService.DeleteTotalWastageLines(stockFichesLineGet); ; break;
+                    case StockFicheTypeEnum.SarfFisi: StockMovementsService.DeleteTotalConsumptionLines(stockFichesLineGet); ; break;
+                    case StockFicheTypeEnum.UretimdenGirisFisi: StockMovementsService.DeleteTotalProductionLines(stockFichesLineGet); ; break;
+                    case StockFicheTypeEnum.StokGirisFisi: StockMovementsService.DeleteTotalGoodLines(stockFichesLineGet); ; break;
+                    case StockFicheTypeEnum.StokCikisFisi: StockMovementsService.DeleteTotalGoodIssueLines(stockFichesLineGet); ; break;
+                    case StockFicheTypeEnum.DepoSevkFisi: StockMovementsService.DeleteTotalWarehouseShippingLines(stockFichesLineGet); break;
                 }
 
+                #endregion
 
-                var query = queryFactory.Query().From(Tables.StockFiches).Insert(new CreateStockFichesDto
+                var queryLine = queryFactory.Query().From(Tables.StockFicheLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var stockFicheLines = queryFactory.Update<SelectStockFicheLinesDto>(queryLine, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StockFicheLines, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectStockFicheLinesDto>(stockFicheLines);
+            }
+
+        }
+
+        public async Task<IDataResult<SelectStockFichesDto>> GetAsync(Guid id)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.StockFiches)
+                   .Select<StockFiches>(null)
+                   .Join<Branches>
+                    (
+                        b => new { BranchCode = b.Code, BranchID = b.Id },
+                        nameof(StockFiches.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFiches.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        JoinType.Left
+                    )
+                   .Join<Warehouses>
+                    (
+                        w => new { WarehouseCode = w.Code, WarehouseID = w.Id },
+                        nameof(StockFiches.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Id = id }, false, false, Tables.StockFiches);
+
+            var stockFiches = queryFactory.Get<SelectStockFichesDto>(query);
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.StockFicheLines)
+                   .Select<StockFicheLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductCode = p.Code, ProductName = p.Name },
+                        nameof(StockFicheLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        "PurchaseOrderLine",
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrderLines>
+                    (
+                        b => new { PurchaseOrderLineID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderLineID),
+                        nameof(PurchaseOrderLines.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(StockFicheLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { StockFicheID = id }, false, false, Tables.StockFicheLines);
+
+            var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(queryLines).ToList();
+
+            stockFiches.SelectStockFicheLines = stockFicheLine;
+
+            LogsAppService.InsertLogToDatabase(stockFiches, stockFiches, LoginedUserService.UserId, Tables.StockFiches, LogType.Get, id);
+
+            return new SuccessDataResult<SelectStockFichesDto>(stockFiches);
+
+        }
+
+        [CacheAspect(duration: 60)]
+        public async Task<IDataResult<IList<ListStockFichesDto>>> GetListAsync(ListStockFichesParameterDto input)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.StockFiches)
+                   .Select<StockFiches>(null)
+                    .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFiches.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        JoinType.Left
+                    )
+                   .Join<Branches>
+                    (
+                        b => new { BranchCode = b.Code },
+                        nameof(StockFiches.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                   .Join<Warehouses>
+                    (
+                        w => new { WarehouseCode = w.Code },
+                        nameof(StockFiches.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Where(null, false, false, Tables.StockFiches);
+
+            var stockFichesDto = queryFactory.GetList<ListStockFichesDto>(query).ToList();
+            return new SuccessDataResult<IList<ListStockFichesDto>>(stockFichesDto);
+
+        }
+
+        [ValidationAspect(typeof(UpdateStockFichesValidatorDto), Priority = 1)]
+        [CacheRemoveAspect("Get")]
+        public async Task<IDataResult<SelectStockFichesDto>> UpdateAsync(UpdateStockFichesDto input)
+        {
+            var entityQuery = queryFactory
+                   .Query()
+                   .From(Tables.StockFiches)
+                   .Select<StockFiches>(null)
+                    .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFiches.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        JoinType.Left
+                    )
+                   .Join<Branches>
+                    (
+                        b => new { BranchCode = b.Code, BranchID = b.Id },
+                        nameof(StockFiches.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                   .Join<Warehouses>
+                    (
+                        w => new { WarehouseCode = w.Code, WarehouseID = w.Id },
+                        nameof(StockFiches.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Id = input.Id }, false, false, Tables.StockFiches);
+
+            var entity = queryFactory.Get<SelectStockFichesDto>(entityQuery);
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.StockFicheLines)
+                   .Select<StockFicheLines>(null)
+                     .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        "PurchaseOrderLine",
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrderLines>
+                    (
+                        b => new { PurchaseOrderLineID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderLineID),
+                        nameof(PurchaseOrderLines.Id),
+                        JoinType.Left
+                    )
+                   .Join<Products>
+                    (
+                        p => new { ProductCode = p.Code, ProductName = p.Name },
+                        nameof(StockFicheLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(StockFicheLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { StockFicheID = input.Id }, false, false, Tables.StockFicheLines);
+
+            var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(queryLines).ToList();
+
+            entity.SelectStockFicheLines = stockFicheLine;
+
+            #region Update Control
+            var listQuery = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { FicheNo = input.FicheNo, FicheType = input.FicheType }, false, false, "");
+
+            var list = queryFactory.GetList<StockFiches>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.FicheNo != input.FicheNo)
+            {
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
+            }
+            #endregion
+
+            if (input.FicheType != 25)
+            {
+                switch (input.FicheType)
                 {
-                    FicheNo = input.FicheNo,
-                    InputOutputCode = input.InputOutputCode,
-                    CreationTime = DateTime.Now,
-                    CreatorId = LoginedUserService.UserId,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    PurchaseOrderID = Guid.Empty,
-                    DeleterId = Guid.Empty,
-                    DeletionTime = null,
-                    Id = addedEntityId,
-                    IsDeleted = false,
-                    LastModificationTime = null,
-                    LastModifierId = Guid.Empty,
-                    CurrencyID = input.CurrencyID,
-                    BranchID = input.BranchID,
-                    Date_ = input.Date_,
-                    Description_ = input.Description_,
-                    ExchangeRate = input.ExchangeRate,
-                    FicheType = input.FicheType,
-                    NetAmount = input.NetAmount,
-                    ProductionOrderID = Guid.Empty,
-                    SpecialCode = input.SpecialCode,
-                    Time_ = input.Time_,
-                    WarehouseID = input.WarehouseID
-                });
+                    case 12: input.InputOutputCode = 1; break;
+                    case 11: input.InputOutputCode = 1; break;
+                    case 13: input.InputOutputCode = 0; break;
+                    case 50: input.InputOutputCode = 0; break;
+                    case 51: input.InputOutputCode = 1; break;
+                }
+            }
 
-                foreach (var item in input.SelectStockFicheLines)
+
+            var query = queryFactory.Query().From(Tables.StockFiches).Update(new UpdateStockFichesDto
+            {
+                CreationTime = entity.CreationTime,
+                CreatorId = entity.CreatorId,
+                InputOutputCode = input.InputOutputCode,
+                PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                Id = input.Id,
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = DateTime.Now,
+                LastModifierId = LoginedUserService.UserId,
+                BranchID = input.BranchID,
+                CurrencyID = input.CurrencyID,
+                Date_ = input.Date_,
+                Description_ = input.Description_,
+                ExchangeRate = input.ExchangeRate,
+                FicheNo = input.FicheNo,
+                FicheType = input.FicheType,
+                ProductionOrderID = input.ProductionOrderID,
+                SpecialCode = input.SpecialCode,
+                Time_ = input.Time_,
+                WarehouseID = input.WarehouseID
+
+            }).Where(new { Id = input.Id }, false, false, "");
+
+            foreach (var item in input.SelectStockFicheLines)
+            {
+                if (item.Id == Guid.Empty)
                 {
                     var queryLine = queryFactory.Query().From(Tables.StockFicheLines).Insert(new CreateStockFicheLinesDto
                     {
-                        StockFicheID = addedEntityId,
                         CreationTime = DateTime.Now,
                         CreatorId = LoginedUserService.UserId,
-                        PurchaseOrderID = Guid.Empty,
-                        PurchaseOrderLineID = Guid.Empty,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
+                        PurchaseOrderID = item.PurchaseOrderID.GetValueOrDefault(),
+                        PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
                         DeleterId = Guid.Empty,
                         DeletionTime = null,
                         Id = GuidGenerator.CreateGuid(),
@@ -127,372 +485,35 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         FicheType = (int)item.FicheType,
                         LineAmount = item.LineAmount,
                         LineDescription = item.LineDescription,
+                        StockFicheID = input.Id,
                         UnitPrice = item.UnitPrice
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
                 }
-
-                var stockFiche = queryFactory.Insert<SelectStockFichesDto>(query, "Id", true);
-
-                #region Stock Movement Service
-
-                switch (input.FicheType)
-                {
-                    case 11: StockMovementsService.InsertTotalWastages(input); ; break;
-                    case 12: StockMovementsService.InsertTotalConsumptions(input); ; break;
-                    case 13: StockMovementsService.InsertTotalProductions(input); ; break;
-                    case 50: StockMovementsService.InsertTotalGoods(input); ; break;
-                    case 51: StockMovementsService.InsertTotalGoodIssues(input); ; break;
-                    case 25: StockMovementsService.InsertTotalWarehouseShippings(input); break;
-                }
-
-                #endregion
-
-
-
-                await FicheNumbersAppService.UpdateFicheNumberAsync("StockFichesChildMenu", input.FicheNo);
-
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Insert, addedEntityId);
-
-                return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
-            }
-        }
-
-        [CacheRemoveAspect("Get")]
-        public async Task<IResult> DeleteAsync(Guid id)
-        {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-
-                var query = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { Id = id }, false, false, "");
-
-                var StockFiches = queryFactory.Get<SelectStockFichesDto>(query);
-
-                if (StockFiches.Id != Guid.Empty && StockFiches != null)
-                {
-                    #region Stock Movement Service
-
-                    switch (StockFiches.FicheType)
-                    {
-                        case StockFicheTypeEnum.FireFisi: StockMovementsService.DeleteTotalWastages(StockFiches); ; break;
-                        case StockFicheTypeEnum.SarfFisi: StockMovementsService.DeleteTotalConsumptions(StockFiches); ; break;
-                        case StockFicheTypeEnum.UretimdenGirisFisi: StockMovementsService.DeleteTotalProductions(StockFiches); ; break;
-                        case StockFicheTypeEnum.StokGirisFisi: StockMovementsService.DeleteTotalGoods(StockFiches); ; break;
-                        case StockFicheTypeEnum.StokCikisFisi: StockMovementsService.DeleteTotalGoodIssues(StockFiches); ; break;
-                        case StockFicheTypeEnum.DepoSevkFisi: StockMovementsService.DeleteTotalWarehouseShippings(StockFiches); break;
-                    }
-
-                    #endregion
-
-                    var deleteQuery = queryFactory.Query().From(Tables.StockFiches).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
-
-                    var lineDeleteQuery = queryFactory.Query().From(Tables.StockFicheLines).Delete(LoginedUserService.UserId).Where(new { StockFicheID = id }, false, false, "");
-
-                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
-
-                    var stockFiche = queryFactory.Update<SelectStockFichesDto>(deleteQuery, "Id", true);
-
-                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StockFiches, LogType.Delete, id);
-
-                    return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
-                }
                 else
                 {
-                    var queryLineGet = queryFactory.Query().From(Tables.StockFicheLines).Select("*").Where(new { Id = id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.StockFicheLines).Select("*").Where(new { Id = item.Id }, false, false, "");
 
-                    var stockFichesLineGet = queryFactory.Get<SelectStockFicheLinesDto>(queryLineGet);
+                    var line = queryFactory.Get<SelectStockFicheLinesDto>(lineGetQuery);
 
-                    var queryDeleteEntity = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { Id = stockFichesLineGet.StockFicheID }, false, false, "");
-
-                    var StockFichesDeleteEntity = queryFactory.Get<SelectStockFichesDto>(queryDeleteEntity);
-
-                    #region Stock Movement Service
-
-                    switch (StockFichesDeleteEntity.FicheType)
+                    if (line != null)
                     {
-                        case StockFicheTypeEnum.FireFisi: StockMovementsService.DeleteTotalWastageLines(stockFichesLineGet); ; break;
-                        case StockFicheTypeEnum.SarfFisi: StockMovementsService.DeleteTotalConsumptionLines(stockFichesLineGet); ; break;
-                        case StockFicheTypeEnum.UretimdenGirisFisi: StockMovementsService.DeleteTotalProductionLines(stockFichesLineGet); ; break;
-                        case StockFicheTypeEnum.StokGirisFisi: StockMovementsService.DeleteTotalGoodLines(stockFichesLineGet); ; break;
-                        case StockFicheTypeEnum.StokCikisFisi: StockMovementsService.DeleteTotalGoodIssueLines(stockFichesLineGet); ; break;
-                        case StockFicheTypeEnum.DepoSevkFisi: StockMovementsService.DeleteTotalWarehouseShippingLines(stockFichesLineGet); break;
-                    }
-
-                    #endregion
-
-                    var queryLine = queryFactory.Query().From(Tables.StockFicheLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
-
-                    var stockFicheLines = queryFactory.Update<SelectStockFicheLinesDto>(queryLine, "Id", true);
-
-                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StockFicheLines, LogType.Delete, id);
-
-                    return new SuccessDataResult<SelectStockFicheLinesDto>(stockFicheLines);
-                }
-            }
-        }
-
-        public async Task<IDataResult<SelectStockFichesDto>> GetAsync(Guid id)
-        {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory
-                       .Query()
-                       .From(Tables.StockFiches)
-                       .Select<StockFiches>(null)
-                       .Join<Branches>
-                        (
-                            b => new { BranchCode = b.Code, BranchID = b.Id },
-                            nameof(StockFiches.BranchID),
-                            nameof(Branches.Id),
-                            JoinType.Left
-                        )
-                        .Join<PurchaseOrders>
-                        (
-                            b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
-                            nameof(StockFiches.PurchaseOrderID),
-                            nameof(PurchaseOrders.Id),
-                            JoinType.Left
-                        )
-                       .Join<Warehouses>
-                        (
-                            w => new { WarehouseCode = w.Code, WarehouseID = w.Id },
-                            nameof(StockFiches.WarehouseID),
-                            nameof(Warehouses.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { Id = id }, false, false, Tables.StockFiches);
-
-                var stockFiches = queryFactory.Get<SelectStockFichesDto>(query);
-
-                var queryLines = queryFactory
-                       .Query()
-                       .From(Tables.StockFicheLines)
-                       .Select<StockFicheLines>(null)
-                       .Join<Products>
-                        (
-                            p => new { ProductCode = p.Code, ProductName = p.Name },
-                            nameof(StockFicheLines.ProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                         .Join<PurchaseOrders>
-                        (
-                            b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
-                            nameof(StockFicheLines.PurchaseOrderID),
-                            nameof(PurchaseOrders.Id),
-                            "PurchaseOrderLine",
-                            JoinType.Left
-                        )
-                         .Join<PurchaseOrderLines>
-                        (
-                            b => new { PurchaseOrderLineID = b.Id },
-                            nameof(StockFicheLines.PurchaseOrderLineID),
-                            nameof(PurchaseOrderLines.Id),
-                            JoinType.Left
-                        )
-                       .Join<UnitSets>
-                        (
-                            u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
-                            nameof(StockFicheLines.UnitSetID),
-                            nameof(UnitSets.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { StockFicheID = id }, false, false, Tables.StockFicheLines);
-
-                var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(queryLines).ToList();
-
-                stockFiches.SelectStockFicheLines = stockFicheLine;
-
-                LogsAppService.InsertLogToDatabase(stockFiches, stockFiches, LoginedUserService.UserId, Tables.StockFiches, LogType.Get, id);
-
-                return new SuccessDataResult<SelectStockFichesDto>(stockFiches);
-            }
-        }
-
-        [CacheAspect(duration: 60)]
-        public async Task<IDataResult<IList<ListStockFichesDto>>> GetListAsync(ListStockFichesParameterDto input)
-        {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory
-                       .Query()
-                       .From(Tables.StockFiches)
-                       .Select<StockFiches>(null)
-                        .Join<PurchaseOrders>
-                        (
-                            b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
-                            nameof(StockFiches.PurchaseOrderID),
-                            nameof(PurchaseOrders.Id),
-                            JoinType.Left
-                        )
-                       .Join<Branches>
-                        (
-                            b => new { BranchCode = b.Code },
-                            nameof(StockFiches.BranchID),
-                            nameof(Branches.Id),
-                            JoinType.Left
-                        )
-                       .Join<Warehouses>
-                        (
-                            w => new { WarehouseCode = w.Code },
-                            nameof(StockFiches.WarehouseID),
-                            nameof(Warehouses.Id),
-                            JoinType.Left
-                        )
-                        .Where(null, false, false, Tables.StockFiches);
-
-                var stockFichesDto = queryFactory.GetList<ListStockFichesDto>(query).ToList();
-                return new SuccessDataResult<IList<ListStockFichesDto>>(stockFichesDto);
-            }
-        }
-
-        [ValidationAspect(typeof(UpdateStockFichesValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
-        public async Task<IDataResult<SelectStockFichesDto>> UpdateAsync(UpdateStockFichesDto input)
-        {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var entityQuery = queryFactory
-                       .Query()
-                       .From(Tables.StockFiches)
-                       .Select<StockFiches>(null)
-                        .Join<PurchaseOrders>
-                        (
-                            b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
-                            nameof(StockFiches.PurchaseOrderID),
-                            nameof(PurchaseOrders.Id),
-                            JoinType.Left
-                        )
-                       .Join<Branches>
-                        (
-                            b => new { BranchCode = b.Code, BranchID = b.Id },
-                            nameof(StockFiches.BranchID),
-                            nameof(Branches.Id),
-                            JoinType.Left
-                        )
-                       .Join<Warehouses>
-                        (
-                            w => new { WarehouseCode = w.Code, WarehouseID = w.Id },
-                            nameof(StockFiches.WarehouseID),
-                            nameof(Warehouses.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { Id = input.Id }, false, false, Tables.StockFiches);
-
-                var entity = queryFactory.Get<SelectStockFichesDto>(entityQuery);
-
-                var queryLines = queryFactory
-                       .Query()
-                       .From(Tables.StockFicheLines)
-                       .Select<StockFicheLines>(null)
-                         .Join<PurchaseOrders>
-                        (
-                            b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
-                            nameof(StockFicheLines.PurchaseOrderID),
-                            nameof(PurchaseOrders.Id),
-                            "PurchaseOrderLine",
-                            JoinType.Left
-                        )
-                         .Join<PurchaseOrderLines>
-                        (
-                            b => new { PurchaseOrderLineID = b.Id },
-                            nameof(StockFicheLines.PurchaseOrderLineID),
-                            nameof(PurchaseOrderLines.Id),
-                            JoinType.Left
-                        )
-                       .Join<Products>
-                        (
-                            p => new { ProductCode = p.Code, ProductName = p.Name },
-                            nameof(StockFicheLines.ProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                       .Join<UnitSets>
-                        (
-                            u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
-                            nameof(StockFicheLines.UnitSetID),
-                            nameof(UnitSets.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { StockFicheID = input.Id }, false, false, Tables.StockFicheLines);
-
-                var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(queryLines).ToList();
-
-                entity.SelectStockFicheLines = stockFicheLine;
-
-                #region Update Control
-                var listQuery = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { FicheNo = input.FicheNo, FicheType = input.FicheType }, false, false, "");
-
-                var list = queryFactory.GetList<StockFiches>(listQuery).ToList();
-
-                if (list.Count > 0 && entity.FicheNo != input.FicheNo)
-                {
-                    connection.Close();
-                    connection.Dispose();
-                    throw new DuplicateCodeException(L["UpdateControlManager"]);
-                }
-                #endregion
-
-                if (input.FicheType != 25)
-                {
-                    switch (input.FicheType)
-                    {
-                        case 12: input.InputOutputCode = 1; break;
-                        case 11: input.InputOutputCode = 1; break;
-                        case 13: input.InputOutputCode = 0; break;
-                        case 50: input.InputOutputCode = 0; break;
-                        case 51: input.InputOutputCode = 1; break;
-                    }
-                }
-
-
-                var query = queryFactory.Query().From(Tables.StockFiches).Update(new UpdateStockFichesDto
-                {
-                    CreationTime = entity.CreationTime,
-                    CreatorId = entity.CreatorId,
-                    InputOutputCode = input.InputOutputCode,
-                    PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    Id = input.Id,
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId,
-                    BranchID = input.BranchID,
-                    CurrencyID = input.CurrencyID,
-                    Date_ = input.Date_,
-                    Description_ = input.Description_,
-                    ExchangeRate = input.ExchangeRate,
-                    FicheNo = input.FicheNo,
-                    FicheType = input.FicheType,
-                    ProductionOrderID = input.ProductionOrderID,
-                    SpecialCode = input.SpecialCode,
-                    Time_ = input.Time_,
-                    WarehouseID = input.WarehouseID
-
-                }).Where(new { Id = input.Id }, false, false, "");
-
-                foreach (var item in input.SelectStockFicheLines)
-                {
-                    if (item.Id == Guid.Empty)
-                    {
-                        var queryLine = queryFactory.Query().From(Tables.StockFicheLines).Insert(new CreateStockFicheLinesDto
+                        var queryLine = queryFactory.Query().From(Tables.StockFicheLines).Update(new UpdateStockFicheLinesDto
                         {
-                            CreationTime = DateTime.Now,
-                            CreatorId = LoginedUserService.UserId,
-                            DataOpenStatus = false,
-                            DataOpenStatusUserId = Guid.Empty,
+                            StockFicheID = input.Id,
+                            CreationTime = line.CreationTime,
                             PurchaseOrderID = item.PurchaseOrderID.GetValueOrDefault(),
                             PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
-                            DeleterId = Guid.Empty,
-                            DeletionTime = null,
-                            Id = GuidGenerator.CreateGuid(),
-                            IsDeleted = false,
-                            LastModificationTime = null,
-                            LastModifierId = Guid.Empty,
+                            CreatorId = line.CreatorId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = line.DeleterId.GetValueOrDefault(),
+                            DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                            Id = item.Id,
+                            IsDeleted = item.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
                             Quantity = item.Quantity,
@@ -500,110 +521,72 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             FicheType = (int)item.FicheType,
                             LineAmount = item.LineAmount,
                             LineDescription = item.LineDescription,
-                            StockFicheID = input.Id,
                             UnitPrice = item.UnitPrice
-                        });
+                        }).Where(new { Id = line.Id }, false, false, "");
 
-                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
-                    }
-                    else
-                    {
-                        var lineGetQuery = queryFactory.Query().From(Tables.StockFicheLines).Select("*").Where(new { Id = item.Id }, false, false, "");
-
-                        var line = queryFactory.Get<SelectStockFicheLinesDto>(lineGetQuery);
-
-                        if (line != null)
-                        {
-                            var queryLine = queryFactory.Query().From(Tables.StockFicheLines).Update(new UpdateStockFicheLinesDto
-                            {
-                                StockFicheID = input.Id,
-                                CreationTime = line.CreationTime,
-                                PurchaseOrderID = item.PurchaseOrderID.GetValueOrDefault(),
-                                PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
-                                CreatorId = line.CreatorId,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = line.DeleterId.GetValueOrDefault(),
-                                DeletionTime = line.DeletionTime.GetValueOrDefault(),
-                                Id = item.Id,
-                                IsDeleted = item.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                LastModifierId = LoginedUserService.UserId,
-                                LineNr = item.LineNr,
-                                ProductID = item.ProductID.GetValueOrDefault(),
-                                Quantity = item.Quantity,
-                                UnitSetID = item.UnitSetID.GetValueOrDefault(),
-                                FicheType = (int)item.FicheType,
-                                LineAmount = item.LineAmount,
-                                LineDescription = item.LineDescription,
-                                UnitPrice = item.UnitPrice
-                            }).Where(new { Id = line.Id }, false, false, "");
-
-                            query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
-                        }
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
                 }
-
-                var stockFiche = queryFactory.Update<SelectStockFichesDto>(query, "Id", true);
-
-                #region Stock Movement Service
-
-                switch (input.FicheType)
-                {
-                    case 11: StockMovementsService.UpdateTotalWastages(entity, input); break;
-                    case 12: StockMovementsService.UpdateTotalConsumptions(entity, input); break;
-                    case 13: StockMovementsService.UpdateTotalProductions(entity, input); break;
-                    case 50: StockMovementsService.UpdateTotalGoods(entity, input); break;
-                    case 51: StockMovementsService.UpdateTotalGoodIssues(entity, input); break;
-                    case 25: StockMovementsService.UpdateTotalWarehouseShippings(entity, input); break;
-                }
-
-                #endregion
-
-                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Update, entity.Id);
-
-                return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
             }
+
+            var stockFiche = queryFactory.Update<SelectStockFichesDto>(query, "Id", true);
+
+            #region Stock Movement Service
+
+            switch (input.FicheType)
+            {
+                case 11: StockMovementsService.UpdateTotalWastages(entity, input); break;
+                case 12: StockMovementsService.UpdateTotalConsumptions(entity, input); break;
+                case 13: StockMovementsService.UpdateTotalProductions(entity, input); break;
+                case 50: StockMovementsService.UpdateTotalGoods(entity, input); break;
+                case 51: StockMovementsService.UpdateTotalGoodIssues(entity, input); break;
+                case 25: StockMovementsService.UpdateTotalWarehouseShippings(entity, input); break;
+            }
+
+            #endregion
+
+            LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Update, entity.Id);
+
+            return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
+
         }
 
         public async Task<IDataResult<SelectStockFichesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { Id = id }, false, false, "");
+
+            var entity = queryFactory.Get<StockFiches>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.StockFiches).Update(new UpdateStockFichesDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { Id = id }, false, false, "");
+                FicheNo = entity.FicheNo,
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.Value,
+                DataOpenStatus = lockRow,
+                DataOpenStatusUserId = userId,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                Id = entity.Id,
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                BranchID = entity.BranchID,
+                CurrencyID = entity.CurrencyID,
+                Date_ = entity.Date_,
+                Description_ = entity.Description_,
+                InputOutputCode = entity.InputOutputCode,
+                ExchangeRate = entity.ExchangeRate,
+                FicheType = (int)entity.FicheType,
+                ProductionOrderID = entity.ProductionOrderID,
+                SpecialCode = entity.SpecialCode,
+                Time_ = entity.Time_,
+                WarehouseID = entity.WarehouseID
 
-                var entity = queryFactory.Get<StockFiches>(entityQuery);
+            }).Where(new { Id = id }, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.StockFiches).Update(new UpdateStockFichesDto
-                {
-                    FicheNo = entity.FicheNo,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DataOpenStatus = lockRow,
-                    DataOpenStatusUserId = userId,
-                    DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    Id = entity.Id,
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
-                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-                    BranchID = entity.BranchID,
-                    CurrencyID = entity.CurrencyID,
-                    Date_ = entity.Date_,
-                    Description_ = entity.Description_,
-                    InputOutputCode = entity.InputOutputCode,
-                    ExchangeRate = entity.ExchangeRate,
-                    FicheType = (int)entity.FicheType,
-                    ProductionOrderID = entity.ProductionOrderID,
-                    SpecialCode = entity.SpecialCode,
-                    Time_ = entity.Time_,
-                    WarehouseID = entity.WarehouseID
+            var stockFichesDto = queryFactory.Update<SelectStockFichesDto>(query, "Id", true);
+            return new SuccessDataResult<SelectStockFichesDto>(stockFichesDto);
 
-                }).Where(new { Id = id }, false, false, "");
-
-                var stockFichesDto = queryFactory.Update<SelectStockFichesDto>(query, "Id", true);
-                return new SuccessDataResult<SelectStockFichesDto>(stockFichesDto);
-            }
         }
     }
 }

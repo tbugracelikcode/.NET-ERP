@@ -33,42 +33,36 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
 
         public async Task<IDataResult<SelectOperationStockMovementsDto>> CreateAsync(CreateOperationStockMovementsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.OperationStockMovements).Insert(input).UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.OperationStockMovements).Insert(input).UseIsDelete(false);
 
-                var insertedEntity = queryFactory.Insert<SelectOperationStockMovementsDto>(query, "Id", true);
+            var insertedEntity = queryFactory.Insert<SelectOperationStockMovementsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationStockMovements, LogType.Insert, input.Id);
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationStockMovements, LogType.Insert, input.Id);
 
-                return new SuccessDataResult<SelectOperationStockMovementsDto>(insertedEntity);
-            }
+            return new SuccessDataResult<SelectOperationStockMovementsDto>(insertedEntity);
+
         }
 
         public async Task<IDataResult<SelectOperationStockMovementsDto>> UpdateAsync(UpdateOperationStockMovementsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.OperationStockMovements).Insert(input).UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.OperationStockMovements).Insert(input).UseIsDelete(false);
 
-                var updatedEntity = queryFactory.Insert<SelectOperationStockMovementsDto>(query, "Id", true);
+            var updatedEntity = queryFactory.Insert<SelectOperationStockMovementsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationStockMovements, LogType.Update, input.Id);
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationStockMovements, LogType.Update, input.Id);
 
-                return new SuccessDataResult<SelectOperationStockMovementsDto>(updatedEntity);
-            }
+            return new SuccessDataResult<SelectOperationStockMovementsDto>(updatedEntity);
+
         }
 
         public async Task<IDataResult<SelectOperationStockMovementsDto>> GetByProductionOrderIdAsync(Guid productionOrderId, Guid productOperationId)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.OperationStockMovements).Select("*").Where(new { ProductionorderID = productionOrderId, OperationID= productOperationId }, false, false, "").UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.OperationStockMovements).Select("*").Where(new { ProductionorderID = productionOrderId, OperationID = productOperationId }, false, false, "").UseIsDelete(false);
 
-                var entity = queryFactory.Get<SelectOperationStockMovementsDto>(query);
+            var entity = queryFactory.Get<SelectOperationStockMovementsDto>(query);
 
-                return new SuccessDataResult<SelectOperationStockMovementsDto>(entity);
-            }
+            return new SuccessDataResult<SelectOperationStockMovementsDto>(entity);
+
         }
 
 
@@ -76,12 +70,10 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
 
         public async Task<IDataResult<IList<ListOperationStockMovementsDto>>> GetListAsync(ListOperationStockMovementsParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.OperationStockMovements).Select("*").Where(null, false, false, "");
-                var entity = queryFactory.GetList<ListOperationStockMovementsDto>(query).ToList();
-                return new SuccessDataResult<IList<ListOperationStockMovementsDto>>(entity);
-            }
+            var query = queryFactory.Query().From(Tables.OperationStockMovements).Select("*").Where(null, false, false, "");
+            var entity = queryFactory.GetList<ListOperationStockMovementsDto>(query).ToList();
+            return new SuccessDataResult<IList<ListOperationStockMovementsDto>>(entity);
+
         }
 
         public Task<IResult> DeleteAsync(Guid id)

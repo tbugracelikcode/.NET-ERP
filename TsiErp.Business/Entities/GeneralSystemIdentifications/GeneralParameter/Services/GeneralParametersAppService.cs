@@ -24,60 +24,52 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.GeneralParameter
 
         public async Task<IDataResult<SelectGeneralParametersDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.GeneralParameters).Select("*").Where(
-                 new
-                 {
-                     Id = id
-                 }, false, false, "");
+            var query = queryFactory.Query().From(Tables.GeneralParameters).Select("*").Where(
+             new
+             {
+                 Id = id
+             }, false, false, "");
 
-                var GeneralParameter = queryFactory.Get<SelectGeneralParametersDto>(query);
+            var GeneralParameter = queryFactory.Get<SelectGeneralParametersDto>(query);
 
-                LogsAppService.InsertLogToDatabase(GeneralParameter, GeneralParameter, LoginedUserService.UserId, Tables.GeneralParameters, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(GeneralParameter, GeneralParameter, LoginedUserService.UserId, Tables.GeneralParameters, LogType.Get, id);
 
-                return new SuccessDataResult<SelectGeneralParametersDto>(GeneralParameter);
+            return new SuccessDataResult<SelectGeneralParametersDto>(GeneralParameter);
 
-            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListGeneralParametersDto>>> GetListAsync(ListGeneralParametersParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            var query = queryFactory.Query().From(Tables.GeneralParameters).Select("*").Where(null, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.GeneralParameters).Select("*").Where(null, false, false, "");
+            var GeneralParameters = queryFactory.GetList<ListGeneralParametersDto>(query).ToList();
 
-                var GeneralParameters = queryFactory.GetList<ListGeneralParametersDto>(query).ToList();
+            return new SuccessDataResult<IList<ListGeneralParametersDto>>(GeneralParameters);
 
-                return new SuccessDataResult<IList<ListGeneralParametersDto>>(GeneralParameters);
-            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectGeneralParametersDto>> UpdateAsync(UpdateGeneralParametersDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.GeneralParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entity = queryFactory.Get<GeneralParameters>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.GeneralParameters).Update(new UpdateGeneralParametersDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.GeneralParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
-                var entity = queryFactory.Get<GeneralParameters>(entityQuery);
+                Id = input.Id
+            }).Where(new { Id = input.Id }, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.GeneralParameters).Update(new UpdateGeneralParametersDto
-                {
-                    Id = input.Id
-                }).Where(new { Id = input.Id }, false, false, "");
-
-                var GeneralParameters = queryFactory.Update<SelectGeneralParametersDto>(query, "Id", true);
+            var GeneralParameters = queryFactory.Update<SelectGeneralParametersDto>(query, "Id", true);
 
 
-                LogsAppService.InsertLogToDatabase(entity, GeneralParameters, LoginedUserService.UserId, Tables.GeneralParameters, LogType.Update, entity.Id);
+            LogsAppService.InsertLogToDatabase(entity, GeneralParameters, LoginedUserService.UserId, Tables.GeneralParameters, LogType.Update, entity.Id);
 
 
-                return new SuccessDataResult<SelectGeneralParametersDto>(GeneralParameters);
-            }
+            return new SuccessDataResult<SelectGeneralParametersDto>(GeneralParameters);
+
         }
 
         #region Unused Implemented Methods

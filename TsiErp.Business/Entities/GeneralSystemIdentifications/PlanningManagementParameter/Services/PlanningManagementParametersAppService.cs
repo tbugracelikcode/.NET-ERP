@@ -24,61 +24,50 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
 
         public async Task<IDataResult<SelectPlanningManagementParametersDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(
-                 new
-                 {
-                     Id = id
-                 }, false, false, "");
+            var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(
+             new
+             {
+                 Id = id
+             }, false, false, "");
 
-                var PlanningManagementParameter = queryFactory.Get<SelectPlanningManagementParametersDto>(query);
+            var PlanningManagementParameter = queryFactory.Get<SelectPlanningManagementParametersDto>(query);
 
-                LogsAppService.InsertLogToDatabase(PlanningManagementParameter, PlanningManagementParameter, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(PlanningManagementParameter, PlanningManagementParameter, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Get, id);
 
-                return new SuccessDataResult<SelectPlanningManagementParametersDto>(PlanningManagementParameter);
-
-            }
+            return new SuccessDataResult<SelectPlanningManagementParametersDto>(PlanningManagementParameter);
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPlanningManagementParametersDto>>> GetListAsync(ListPlanningManagementParametersParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(null, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(null, false, false, "");
+            var PlanningManagementParameters = queryFactory.GetList<ListPlanningManagementParametersDto>(query).ToList();
 
-                var PlanningManagementParameters = queryFactory.GetList<ListPlanningManagementParametersDto>(query).ToList();
-
-                return new SuccessDataResult<IList<ListPlanningManagementParametersDto>>(PlanningManagementParameters);
-            }
+            return new SuccessDataResult<IList<ListPlanningManagementParametersDto>>(PlanningManagementParameters);
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPlanningManagementParametersDto>> UpdateAsync(UpdatePlanningManagementParametersDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entity = queryFactory.Get<PlanningManagementParameters>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Update(new UpdatePlanningManagementParametersDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
-                var entity = queryFactory.Get<PlanningManagementParameters>(entityQuery);
+                FutureDateParameter = input.FutureDateParameter,
+                Id = input.Id
+            }).Where(new { Id = input.Id }, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Update(new UpdatePlanningManagementParametersDto
-                {
-                    FutureDateParameter = input.FutureDateParameter,
-                    Id = input.Id
-                }).Where(new { Id = input.Id }, false, false, "");
-
-                var PlanningManagementParameters = queryFactory.Update<SelectPlanningManagementParametersDto>(query, "Id", true);
+            var PlanningManagementParameters = queryFactory.Update<SelectPlanningManagementParametersDto>(query, "Id", true);
 
 
-                LogsAppService.InsertLogToDatabase(entity, PlanningManagementParameters, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Update, entity.Id);
+            LogsAppService.InsertLogToDatabase(entity, PlanningManagementParameters, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Update, entity.Id);
 
 
-                return new SuccessDataResult<SelectPlanningManagementParametersDto>(PlanningManagementParameters);
-            }
+            return new SuccessDataResult<SelectPlanningManagementParametersDto>(PlanningManagementParameters);
         }
 
         #region Unused Implemented Methods

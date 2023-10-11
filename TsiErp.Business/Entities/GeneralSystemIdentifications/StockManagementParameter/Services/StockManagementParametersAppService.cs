@@ -33,73 +33,64 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
 
         public async Task<IDataResult<SelectStockManagementParametersDto>> CreateAsync(CreateStockManagementParametersDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var query = queryFactory.Query().From(Tables.StockManagementParameters).Insert(new CreateStockManagementParametersDto
             {
-                var query = queryFactory.Query().From(Tables.StockManagementParameters).Insert(new CreateStockManagementParametersDto
-                {
-                    Id = GuidGenerator.CreateGuid(),
-                     FutureDateParameter = input.FutureDateParameter
-                }).UseIsDelete(false); ;
+                Id = GuidGenerator.CreateGuid(),
+                FutureDateParameter = input.FutureDateParameter
+            }).UseIsDelete(false); ;
 
 
-                var stockManagementParameter = queryFactory.Insert<SelectStockManagementParametersDto>(query, "Id", true);
+            var stockManagementParameter = queryFactory.Insert<SelectStockManagementParametersDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Insert, stockManagementParameter.Id);
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Insert, stockManagementParameter.Id);
 
-                return new SuccessDataResult<SelectStockManagementParametersDto>(stockManagementParameter);
-            }
+            return new SuccessDataResult<SelectStockManagementParametersDto>(stockManagementParameter);
         }
 
         public async Task<IDataResult<SelectStockManagementParametersDto>> GetStockManagementParametersAsync()
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            SelectStockManagementParametersDto result = new SelectStockManagementParametersDto();
+
+            var controlQuery = queryFactory.Query().From(Tables.StockManagementParameters).Select("*").UseIsDelete(false);
+
+            SelectStockManagementParametersDto StockManagementParameter = queryFactory.Get<SelectStockManagementParametersDto>(controlQuery);
+
+            if (StockManagementParameter != null)
             {
-                SelectStockManagementParametersDto result = new SelectStockManagementParametersDto();
+                var query = queryFactory.Query().From(Tables.StockManagementParameters).Select("*").Where(
+                 new
+                 {
+                     Id = StockManagementParameter.Id
+                 }, false, false, "").UseIsDelete(false);
 
-                var controlQuery = queryFactory.Query().From(Tables.StockManagementParameters).Select("*").UseIsDelete(false);
-
-                SelectStockManagementParametersDto StockManagementParameter = queryFactory.Get<SelectStockManagementParametersDto>(controlQuery);
-
-                if (StockManagementParameter != null)
-                {
-                    var query = queryFactory.Query().From(Tables.StockManagementParameters).Select("*").Where(
-                     new
-                     {
-                         Id = StockManagementParameter.Id
-                     }, false, false, "").UseIsDelete(false);
-
-                    result = queryFactory.Get<SelectStockManagementParametersDto>(query);
-                }
-
-                LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Get, result.Id);
-
-                return new SuccessDataResult<SelectStockManagementParametersDto>(result);
+                result = queryFactory.Get<SelectStockManagementParametersDto>(query);
             }
+
+            LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Get, result.Id);
+
+            return new SuccessDataResult<SelectStockManagementParametersDto>(result);
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockManagementParametersDto>> UpdateAsync(UpdateStockManagementParametersDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.StockManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+
+            var entity = queryFactory.Get<StockManagementParameters>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.StockManagementParameters).Update(new UpdateStockManagementParametersDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.StockManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
-
-                var entity = queryFactory.Get<StockManagementParameters>(entityQuery);
-
-                var query = queryFactory.Query().From(Tables.StockManagementParameters).Update(new UpdateStockManagementParametersDto
-                {
-                    FutureDateParameter = input.FutureDateParameter,
-                    Id = input.Id
-                }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+                FutureDateParameter = input.FutureDateParameter,
+                Id = input.Id
+            }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
 
 
-                var StockManagementParameters = queryFactory.Update<SelectStockManagementParametersDto>(query, "Id", true);
+            var StockManagementParameters = queryFactory.Update<SelectStockManagementParametersDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, StockManagementParameters, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Update, entity.Id);
+            LogsAppService.InsertLogToDatabase(entity, StockManagementParameters, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Update, entity.Id);
 
-                return new SuccessDataResult<SelectStockManagementParametersDto>(StockManagementParameters);
-            }
+            return new SuccessDataResult<SelectStockManagementParametersDto>(StockManagementParameters);
         }
 
         #region Unused Implemented Methods
@@ -118,15 +109,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStockManagementParametersDto>>> GetListAsync(ListStockManagementParametersParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            var query = queryFactory.Query().From(Tables.StockManagementParameters).Select("*").UseIsDelete(false);
 
-                var query = queryFactory.Query().From(Tables.StockManagementParameters).Select("*").UseIsDelete(false);
+            var StockManagementParameters = queryFactory.GetList<ListStockManagementParametersDto>(query).ToList();
 
-                var StockManagementParameters = queryFactory.GetList<ListStockManagementParametersDto>(query).ToList();
-
-                return new SuccessDataResult<IList<ListStockManagementParametersDto>>(StockManagementParameters);
-            }
+            return new SuccessDataResult<IList<ListStockManagementParametersDto>>(StockManagementParameters);
         }
 
         #endregion

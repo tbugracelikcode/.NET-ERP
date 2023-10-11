@@ -36,24 +36,21 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> CreateAsync(CreateCurrentAccountCardsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+
+            var listQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Code = input.Code }, false, false, "");
+
+            var list = queryFactory.ControlList<CurrentAccountCards>(listQuery).ToList();
+
+            #region Code Control 
+
+            if (list.Count > 0)
             {
-                var listQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Code = input.Code }, false, false, "");
+                throw new DuplicateCodeException(L["CodeControlManager"]);
+            }
 
-                var list = queryFactory.ControlList<CurrentAccountCards>(listQuery).ToList();
+            #endregion
 
-                #region Code Control 
-
-                if (list.Count > 0)
-                {
-                    connection.Close();
-                    connection.Dispose();
-                    throw new DuplicateCodeException(L["CodeControlManager"]);
-                }
-
-                #endregion
-
-                Guid addedEntityId = GuidGenerator.CreateGuid();
+            Guid addedEntityId = GuidGenerator.CreateGuid();
 
                 var query = queryFactory.Query().From(Tables.CurrentAccountCards).Insert(new CreateCurrentAccountCardsDto
                 {
@@ -106,14 +103,14 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                     NumberOfStations = input.NumberOfStations
                 });
 
-                var currentAccountCards = queryFactory.Insert<SelectCurrentAccountCardsDto>(query, "Id", true);
+            var currentAccountCards = queryFactory.Insert<SelectCurrentAccountCardsDto>(query, "Id", true);
 
-                await FicheNumbersAppService.UpdateFicheNumberAsync("CurrentAccountsChildMenu", input.Code);
+            await FicheNumbersAppService.UpdateFicheNumberAsync("CurrentAccountsChildMenu", input.Code);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Insert, addedEntityId);
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Insert, addedEntityId);
 
-                return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
-            }
+            return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
+
 
         }
 
@@ -121,16 +118,15 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.CurrentAccountCards).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
-                var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
+            var query = queryFactory.Query().From(Tables.CurrentAccountCards).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Delete, id);
+            var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
-            }
+            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Delete, id);
+
+            return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
+
         }
 
 
@@ -191,13 +187,13 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                             )
                             .Where(new { Id = id }, true, true, Tables.CurrentAccountCards);
 
-                var currentAccountCard = queryFactory.Get<SelectCurrentAccountCardsDto>(query);
+            var currentAccountCard = queryFactory.Get<SelectCurrentAccountCardsDto>(query);
 
-                LogsAppService.InsertLogToDatabase(currentAccountCard, currentAccountCard, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(currentAccountCard, currentAccountCard, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Get, id);
 
-                return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCard);
+            return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCard);
 
-            }
+
         }
 
 
@@ -259,10 +255,10 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                            JoinType.Left
                        ).Where(null, true, true, Tables.CurrentAccountCards);
 
-                var currentAccountCards = queryFactory.GetList<ListCurrentAccountCardsDto>(query).ToList();
+            var currentAccountCards = queryFactory.GetList<ListCurrentAccountCardsDto>(query).ToList();
 
-                return new SuccessDataResult<IList<ListCurrentAccountCardsDto>>(currentAccountCards);
-            }
+            return new SuccessDataResult<IList<ListCurrentAccountCardsDto>>(currentAccountCards);
+
         }
 
 
@@ -270,24 +266,21 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> UpdateAsync(UpdateCurrentAccountCardsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+
+            var entityQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entity = queryFactory.Get<CurrentAccountCards>(entityQuery);
+
+            #region Update Control
+
+            var listQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var list = queryFactory.GetList<CurrentAccountCards>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.Code != input.Code)
             {
-                var entityQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Id = input.Id }, true, true, "");
-                var entity = queryFactory.Get<CurrentAccountCards>(entityQuery);
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
+            }
 
-                #region Update Control
-
-                var listQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Code = input.Code }, false, false, "");
-                var list = queryFactory.GetList<CurrentAccountCards>(listQuery).ToList();
-
-                if (list.Count > 0 && entity.Code != input.Code)
-                {
-                    connection.Close();
-                    connection.Dispose();
-                    throw new DuplicateCodeException(L["UpdateControlManager"]);
-                }
-
-                #endregion
+            #endregion
 
                 var query = queryFactory.Query().From(Tables.CurrentAccountCards).Update(new UpdateCurrentAccountCardsDto
                 {
@@ -340,22 +333,21 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                     NumberOfStations = input.NumberOfStations
                 }).Where(new { Id = input.Id }, true, true, "");
 
-                var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
+            var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
 
 
-                LogsAppService.InsertLogToDatabase(entity, currentAccountCards, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Update, entity.Id);
+            LogsAppService.InsertLogToDatabase(entity, currentAccountCards, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Update, entity.Id);
 
 
-                return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
-            }
+            return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
+
         }
 
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var entityQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Id = id }, true, true, "");
-                var entity = queryFactory.Get<CurrentAccountCards>(entityQuery);
+
+            var entityQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Id = id }, true, true, "");
+            var entity = queryFactory.Get<CurrentAccountCards>(entityQuery);
 
                 var query = queryFactory.Query().From(Tables.CurrentAccountCards).Update(new UpdateCurrentAccountCardsDto
                 {
@@ -408,11 +400,11 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                     ContractDailyWorkingCapacity = entity.ContractDailyWorkingCapacity
                 }).Where(new { Id = id }, true, true, "");
 
-                var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
+            var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
+            return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
 
-            }
+
         }
     }
 }

@@ -24,61 +24,50 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
 
         public async Task<IDataResult<SelectProductionManagementParametersDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.ProductionManagementParameters).Select("*").Where(
-                 new
-                 {
-                     Id = id
-                 }, false, false, "");
+            var query = queryFactory.Query().From(Tables.ProductionManagementParameters).Select("*").Where(
+             new
+             {
+                 Id = id
+             }, false, false, "");
 
-                var ProductionManagementParameter = queryFactory.Get<SelectProductionManagementParametersDto>(query);
+            var ProductionManagementParameter = queryFactory.Get<SelectProductionManagementParametersDto>(query);
 
-                LogsAppService.InsertLogToDatabase(ProductionManagementParameter, ProductionManagementParameter, LoginedUserService.UserId, Tables.ProductionManagementParameters, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(ProductionManagementParameter, ProductionManagementParameter, LoginedUserService.UserId, Tables.ProductionManagementParameters, LogType.Get, id);
 
-                return new SuccessDataResult<SelectProductionManagementParametersDto>(ProductionManagementParameter);
-
-            }
+            return new SuccessDataResult<SelectProductionManagementParametersDto>(ProductionManagementParameter);
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductionManagementParametersDto>>> GetListAsync(ListProductionManagementParametersParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            var query = queryFactory.Query().From(Tables.ProductionManagementParameters).Select("*").Where(null, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.ProductionManagementParameters).Select("*").Where(null, false, false, "");
+            var ProductionManagementParameters = queryFactory.GetList<ListProductionManagementParametersDto>(query).ToList();
 
-                var ProductionManagementParameters = queryFactory.GetList<ListProductionManagementParametersDto>(query).ToList();
-
-                return new SuccessDataResult<IList<ListProductionManagementParametersDto>>(ProductionManagementParameters);
-            }
+            return new SuccessDataResult<IList<ListProductionManagementParametersDto>>(ProductionManagementParameters);
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionManagementParametersDto>> UpdateAsync(UpdateProductionManagementParametersDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.ProductionManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entity = queryFactory.Get<ProductionManagementParameters>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.ProductionManagementParameters).Update(new UpdateProductionManagementParametersDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.ProductionManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
-                var entity = queryFactory.Get<ProductionManagementParameters>(entityQuery);
+                FutureDateParameter = input.FutureDateParameter,
+                Id = input.Id
+            }).Where(new { Id = input.Id }, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.ProductionManagementParameters).Update(new UpdateProductionManagementParametersDto
-                {
-                    FutureDateParameter = input.FutureDateParameter,
-                    Id = input.Id
-                }).Where(new { Id = input.Id }, false, false, "");
-
-                var ProductionManagementParameters = queryFactory.Update<SelectProductionManagementParametersDto>(query, "Id", true);
+            var ProductionManagementParameters = queryFactory.Update<SelectProductionManagementParametersDto>(query, "Id", true);
 
 
-                LogsAppService.InsertLogToDatabase(entity, ProductionManagementParameters, LoginedUserService.UserId, Tables.ProductionManagementParameters, LogType.Update, entity.Id);
+            LogsAppService.InsertLogToDatabase(entity, ProductionManagementParameters, LoginedUserService.UserId, Tables.ProductionManagementParameters, LogType.Update, entity.Id);
 
 
-                return new SuccessDataResult<SelectProductionManagementParametersDto>(ProductionManagementParameters);
-            }
+            return new SuccessDataResult<SelectProductionManagementParametersDto>(ProductionManagementParameters);
         }
 
         #region Unused Implemented Methods

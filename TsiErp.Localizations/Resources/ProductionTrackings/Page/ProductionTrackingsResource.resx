@@ -357,11 +357,17 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Üretim Yönetimi &gt; Üretim Takip Kayıtları</value>
   </data>
+  <data name="UIWarningOprStockControlMessage" xml:space="preserve">
+    <value>Bir önceki operasyonda üretilen miktar kadar giriş yapabilirsiniz.</value>
+  </data>
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
     <value>Lütfen önce başlangıç tarihini seçiniz.</value>
   </data>
   <data name="UIWarningPreviousWorkOrderMessage" xml:space="preserve">
     <value>Bir önceki iş emrinde miktar girişi bulunmuyor. Bu iş emrine üretilen adet girilemez.</value>
+  </data>
+  <data name="UIWarningQuantityControlMessage" xml:space="preserve">
+    <value>Üretilen adet planlanan adetten büyük olamaz.</value>
   </data>
   <data name="UIWarningWorkOrderMessage" xml:space="preserve">
     <value>İş emri seçilmeden iş istasyonu seçimi yapılamaz.</value>
@@ -392,6 +398,9 @@
   </data>
   <data name="ValidatorStationID" xml:space="preserve">
     <value>Lütfen iş istasyonu seçin.</value>
+  </data>
+  <data name="ValidatorWordOrderID" xml:space="preserve">
+    <value>Lütfen İş Emri seçin.</value>
   </data>
   <data name="WordOrderModalGridCode" xml:space="preserve">
     <value>İŞ EMRİ KODU</value>

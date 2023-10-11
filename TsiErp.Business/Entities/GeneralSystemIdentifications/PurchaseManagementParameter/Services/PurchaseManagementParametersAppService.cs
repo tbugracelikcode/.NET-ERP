@@ -33,75 +33,66 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
 
         public async Task<IDataResult<SelectPurchaseManagementParametersDto>> CreateAsync(CreatePurchaseManagementParametersDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var query = queryFactory.Query().From(Tables.PurchaseManagementParameters).Insert(new CreatePurchaseManagementParametersDto
             {
-                var query = queryFactory.Query().From(Tables.PurchaseManagementParameters).Insert(new CreatePurchaseManagementParametersDto
-                {
-                    Id = GuidGenerator.CreateGuid(),
-                    OrderFutureDateParameter = input.OrderFutureDateParameter,
-                    RequestFutureDateParameter = input.RequestFutureDateParameter
-                }).UseIsDelete(false); ;
+                Id = GuidGenerator.CreateGuid(),
+                OrderFutureDateParameter = input.OrderFutureDateParameter,
+                RequestFutureDateParameter = input.RequestFutureDateParameter
+            }).UseIsDelete(false); ;
 
 
-                var PurchaseManagementParameter = queryFactory.Insert<SelectPurchaseManagementParametersDto>(query, "Id", true);
+            var PurchaseManagementParameter = queryFactory.Insert<SelectPurchaseManagementParametersDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Insert, PurchaseManagementParameter.Id);
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Insert, PurchaseManagementParameter.Id);
 
-                return new SuccessDataResult<SelectPurchaseManagementParametersDto>(PurchaseManagementParameter);
-            }
+            return new SuccessDataResult<SelectPurchaseManagementParametersDto>(PurchaseManagementParameter);
         }
 
         public async Task<IDataResult<SelectPurchaseManagementParametersDto>> GetPurchaseManagementParametersAsync()
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            SelectPurchaseManagementParametersDto result = new SelectPurchaseManagementParametersDto();
+
+            var controlQuery = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select("*").UseIsDelete(false);
+
+            SelectPurchaseManagementParametersDto PurchaseManagementParameter = queryFactory.Get<SelectPurchaseManagementParametersDto>(controlQuery);
+
+            if (PurchaseManagementParameter != null)
             {
-                SelectPurchaseManagementParametersDto result = new SelectPurchaseManagementParametersDto();
+                var query = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select("*").Where(
+                 new
+                 {
+                     Id = PurchaseManagementParameter.Id
+                 }, false, false, "").UseIsDelete(false);
 
-                var controlQuery = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select("*").UseIsDelete(false);
-
-                SelectPurchaseManagementParametersDto PurchaseManagementParameter = queryFactory.Get<SelectPurchaseManagementParametersDto>(controlQuery);
-
-                if (PurchaseManagementParameter != null)
-                {
-                    var query = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select("*").Where(
-                     new
-                     {
-                         Id = PurchaseManagementParameter.Id
-                     }, false, false, "").UseIsDelete(false);
-
-                    result = queryFactory.Get<SelectPurchaseManagementParametersDto>(query);
-                }
-
-                LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Get, result.Id);
-
-                return new SuccessDataResult<SelectPurchaseManagementParametersDto>(result);
+                result = queryFactory.Get<SelectPurchaseManagementParametersDto>(query);
             }
+
+            LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Get, result.Id);
+
+            return new SuccessDataResult<SelectPurchaseManagementParametersDto>(result);
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseManagementParametersDto>> UpdateAsync(UpdatePurchaseManagementParametersDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+
+            var entity = queryFactory.Get<PurchaseManagementParameters>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.PurchaseManagementParameters).Update(new UpdatePurchaseManagementParametersDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
-
-                var entity = queryFactory.Get<PurchaseManagementParameters>(entityQuery);
-
-                var query = queryFactory.Query().From(Tables.PurchaseManagementParameters).Update(new UpdatePurchaseManagementParametersDto
-                {
-                    OrderFutureDateParameter = input.OrderFutureDateParameter,
-                    RequestFutureDateParameter = input.RequestFutureDateParameter,
-                    Id = input.Id
-                }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+                OrderFutureDateParameter = input.OrderFutureDateParameter,
+                RequestFutureDateParameter = input.RequestFutureDateParameter,
+                Id = input.Id
+            }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
 
 
-                var PurchaseManagementParameters = queryFactory.Update<SelectPurchaseManagementParametersDto>(query, "Id", true);
+            var PurchaseManagementParameters = queryFactory.Update<SelectPurchaseManagementParametersDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, PurchaseManagementParameters, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Update, entity.Id);
+            LogsAppService.InsertLogToDatabase(entity, PurchaseManagementParameters, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Update, entity.Id);
 
-                return new SuccessDataResult<SelectPurchaseManagementParametersDto>(PurchaseManagementParameters);
-            }
+            return new SuccessDataResult<SelectPurchaseManagementParametersDto>(PurchaseManagementParameters);
         }
 
         #region Unused Implemented Methods
@@ -120,15 +111,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPurchaseManagementParametersDto>>> GetListAsync(ListPurchaseManagementParametersParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            var query = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select("*").UseIsDelete(false);
 
-                var query = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select("*").UseIsDelete(false);
+            var PurchaseManagementParameters = queryFactory.GetList<ListPurchaseManagementParametersDto>(query).ToList();
 
-                var PurchaseManagementParameters = queryFactory.GetList<ListPurchaseManagementParametersDto>(query).ToList();
-
-                return new SuccessDataResult<IList<ListPurchaseManagementParametersDto>>(PurchaseManagementParameters);
-            }
+            return new SuccessDataResult<IList<ListPurchaseManagementParametersDto>>(PurchaseManagementParameters);
         }
 
         #endregion

@@ -38,137 +38,127 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseUnsuitabilityReportsDto>> CreateAsync(CreatePurchaseUnsuitabilityReportsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var listQuery = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+
+            var list = queryFactory.ControlList<PurchaseUnsuitabilityReports>(listQuery).ToList();
+
+            #region Code Control 
+
+            if (list.Count > 0)
             {
-                var listQuery = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
-
-                var list = queryFactory.ControlList<PurchaseUnsuitabilityReports>(listQuery).ToList();
-
-                #region Code Control 
-
-                if (list.Count > 0)
-                {
-                    connection.Close();
-                    connection.Dispose();
-                    throw new DuplicateCodeException(L["CodeControlManager"]);
-                }
-
-                #endregion
-
-                Guid addedEntityId = GuidGenerator.CreateGuid();
-
-                var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Insert(new CreatePurchaseUnsuitabilityReportsDto
-                {
-                    FicheNo = input.FicheNo,
-                    CreationTime = DateTime.Now,
-                    CreatorId = LoginedUserService.UserId,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = Guid.Empty,
-                    Date_ = input.Date_,
-                    DeletionTime = null,
-                    Id = addedEntityId,
-                    IsDeleted = false,
-                    LastModificationTime = null,
-                    LastModifierId = Guid.Empty,
-                    Action_ = input.Action_,
-                    CurrentAccountCardID = input.CurrentAccountCardID,
-                    Description_ = input.Description_,
-                    IsUnsuitabilityWorkOrder = input.IsUnsuitabilityWorkOrder,
-                    OrderID = input.OrderID,
-                    PartyNo = input.PartyNo,
-                    ProductID = input.ProductID,
-                    UnsuitableAmount = input.UnsuitableAmount,
-                    UnsuitabilityItemsID = input.UnsuitabilityItemsID
-                });
-
-
-                var purchaseUnsuitabilityReport = queryFactory.Insert<SelectPurchaseUnsuitabilityReportsDto>(query, "Id", true);
-
-                await FicheNumbersAppService.UpdateFicheNumberAsync("PurchUnsRecordsChildMenu", input.FicheNo);
-
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseUnsuitabilityReports, LogType.Insert, addedEntityId);
-
-                return new SuccessDataResult<SelectPurchaseUnsuitabilityReportsDto>(purchaseUnsuitabilityReport);
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
+
+            #endregion
+
+            Guid addedEntityId = GuidGenerator.CreateGuid();
+
+            var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Insert(new CreatePurchaseUnsuitabilityReportsDto
+            {
+                FicheNo = input.FicheNo,
+                CreationTime = DateTime.Now,
+                CreatorId = LoginedUserService.UserId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = Guid.Empty,
+                Date_ = input.Date_,
+                DeletionTime = null,
+                Id = addedEntityId,
+                IsDeleted = false,
+                LastModificationTime = null,
+                LastModifierId = Guid.Empty,
+                Action_ = input.Action_,
+                CurrentAccountCardID = input.CurrentAccountCardID,
+                Description_ = input.Description_,
+                IsUnsuitabilityWorkOrder = input.IsUnsuitabilityWorkOrder,
+                OrderID = input.OrderID,
+                PartyNo = input.PartyNo,
+                ProductID = input.ProductID,
+                UnsuitableAmount = input.UnsuitableAmount,
+                UnsuitabilityItemsID = input.UnsuitabilityItemsID
+            });
+
+
+            var purchaseUnsuitabilityReport = queryFactory.Insert<SelectPurchaseUnsuitabilityReportsDto>(query, "Id", true);
+
+            await FicheNumbersAppService.UpdateFicheNumberAsync("PurchUnsRecordsChildMenu", input.FicheNo);
+
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseUnsuitabilityReports, LogType.Insert, addedEntityId);
+
+            return new SuccessDataResult<SelectPurchaseUnsuitabilityReportsDto>(purchaseUnsuitabilityReport);
+
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-                var purchaseUnsuitabilityReport = queryFactory.Update<SelectPurchaseUnsuitabilityReportsDto>(query, "Id", true);
+            var purchaseUnsuitabilityReport = queryFactory.Update<SelectPurchaseUnsuitabilityReportsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseUnsuitabilityReports, LogType.Delete, id);
+            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseUnsuitabilityReports, LogType.Delete, id);
 
-                return new SuccessDataResult<SelectPurchaseUnsuitabilityReportsDto>(purchaseUnsuitabilityReport);
-            }
+            return new SuccessDataResult<SelectPurchaseUnsuitabilityReportsDto>(purchaseUnsuitabilityReport);
+
         }
 
         public async Task<IDataResult<SelectPurchaseUnsuitabilityReportsDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select<PurchaseUnsuitabilityReports>(null)
-                    .Join<PurchaseOrders>
-                    (
-                       d => new { OrderFicheNo = d.FicheNo }, nameof(PurchaseUnsuitabilityReports.OrderID), nameof(PurchaseOrders.Id), JoinType.Left
-                    )
-                    .Join<Products>
-                    (
-                       d => new { ProductCode = d.Code, ProductName = d.Name }, nameof(PurchaseUnsuitabilityReports.ProductID), nameof(Products.Id), JoinType.Left
-                    )
-                    .Join<CurrentAccountCards>
-                    (
-                       d => new { CurrentAccountCardCode = d.Code, CurrentAccountCardName = d.Name }, nameof(PurchaseUnsuitabilityReports.CurrentAccountCardID), nameof(CurrentAccountCards.Id), JoinType.Left
-                    )
-                    .Join<UnsuitabilityItems>
-                    (
-                       d => new { UnsuitabilityItemsName = d.Name }, nameof(PurchaseUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
-                    )
-                    .Where(null, false, false, Tables.PurchaseUnsuitabilityReports);
+            var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select<PurchaseUnsuitabilityReports>(null)
+                .Join<PurchaseOrders>
+                (
+                   d => new { OrderFicheNo = d.FicheNo }, nameof(PurchaseUnsuitabilityReports.OrderID), nameof(PurchaseOrders.Id), JoinType.Left
+                )
+                .Join<Products>
+                (
+                   d => new { ProductCode = d.Code, ProductName = d.Name }, nameof(PurchaseUnsuitabilityReports.ProductID), nameof(Products.Id), JoinType.Left
+                )
+                .Join<CurrentAccountCards>
+                (
+                   d => new { CurrentAccountCardCode = d.Code, CurrentAccountCardName = d.Name }, nameof(PurchaseUnsuitabilityReports.CurrentAccountCardID), nameof(CurrentAccountCards.Id), JoinType.Left
+                )
+                .Join<UnsuitabilityItems>
+                (
+                   d => new { UnsuitabilityItemsName = d.Name }, nameof(PurchaseUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
+                )
+                .Where(null, false, false, Tables.PurchaseUnsuitabilityReports);
 
-                var purchaseUnsuitabilityReport = queryFactory.Get<SelectPurchaseUnsuitabilityReportsDto>(query);
+            var purchaseUnsuitabilityReport = queryFactory.Get<SelectPurchaseUnsuitabilityReportsDto>(query);
 
-                LogsAppService.InsertLogToDatabase(purchaseUnsuitabilityReport, purchaseUnsuitabilityReport, LoginedUserService.UserId, Tables.PurchaseUnsuitabilityReports, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(purchaseUnsuitabilityReport, purchaseUnsuitabilityReport, LoginedUserService.UserId, Tables.PurchaseUnsuitabilityReports, LogType.Get, id);
 
-                return new SuccessDataResult<SelectPurchaseUnsuitabilityReportsDto>(purchaseUnsuitabilityReport);
+            return new SuccessDataResult<SelectPurchaseUnsuitabilityReportsDto>(purchaseUnsuitabilityReport);
 
-            }
+
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPurchaseUnsuitabilityReportsDto>>> GetListAsync(ListPurchaseUnsuitabilityReportsParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select<PurchaseUnsuitabilityReports>(r => new { r.Id, r.FicheNo, r.PartyNo, r.Date_, r.Description_, r.UnsuitableAmount, r.Action_ })
-                    .Join<PurchaseOrders>
-                    (
-                       d => new { OrderFicheNo = d.FicheNo }, nameof(PurchaseUnsuitabilityReports.OrderID), nameof(PurchaseOrders.Id), JoinType.Left
-                    )
-                    .Join<Products>
-                    (
-                       d => new { ProductCode = d.Code, ProductName = d.Name }, nameof(PurchaseUnsuitabilityReports.ProductID), nameof(Products.Id), JoinType.Left
-                    )
-                    .Join<CurrentAccountCards>
-                    (
-                       d => new { CurrentAccountCardCode = d.Code, CurrentAccountCardName = d.Name }, nameof(PurchaseUnsuitabilityReports.CurrentAccountCardID), nameof(CurrentAccountCards.Id), JoinType.Left
-                    )
-                    .Join<UnsuitabilityItems>
-                    (
-                       d => new { UnsuitabilityItemsName = d.Name }, nameof(PurchaseUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
-                    )
-                    .Where(null, false, false, Tables.PurchaseUnsuitabilityReports);
+            var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select<PurchaseUnsuitabilityReports>(r => new { r.Id, r.FicheNo, r.PartyNo, r.Date_, r.Description_, r.UnsuitableAmount, r.Action_ })
+                .Join<PurchaseOrders>
+                (
+                   d => new { OrderFicheNo = d.FicheNo }, nameof(PurchaseUnsuitabilityReports.OrderID), nameof(PurchaseOrders.Id), JoinType.Left
+                )
+                .Join<Products>
+                (
+                   d => new { ProductCode = d.Code, ProductName = d.Name }, nameof(PurchaseUnsuitabilityReports.ProductID), nameof(Products.Id), JoinType.Left
+                )
+                .Join<CurrentAccountCards>
+                (
+                   d => new { CurrentAccountCardCode = d.Code, CurrentAccountCardName = d.Name }, nameof(PurchaseUnsuitabilityReports.CurrentAccountCardID), nameof(CurrentAccountCards.Id), JoinType.Left
+                )
+                .Join<UnsuitabilityItems>
+                (
+                   d => new { UnsuitabilityItemsName = d.Name }, nameof(PurchaseUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
+                )
+                .Where(null, false, false, Tables.PurchaseUnsuitabilityReports);
 
-                var purchaseUnsuitabilityReports = queryFactory.GetList<ListPurchaseUnsuitabilityReportsDto>(query).ToList();
+            var purchaseUnsuitabilityReports = queryFactory.GetList<ListPurchaseUnsuitabilityReportsDto>(query).ToList();
 
-                return new SuccessDataResult<IList<ListPurchaseUnsuitabilityReportsDto>>(purchaseUnsuitabilityReports);
+            return new SuccessDataResult<IList<ListPurchaseUnsuitabilityReportsDto>>(purchaseUnsuitabilityReports);
 
-            }
+
         }
 
 
@@ -176,97 +166,91 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseUnsuitabilityReportsDto>> UpdateAsync(UpdatePurchaseUnsuitabilityReportsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entity = queryFactory.Get<PurchaseUnsuitabilityReports>(entityQuery);
+
+            #region Update Control
+
+            var listQuery = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+            var list = queryFactory.GetList<PurchaseUnsuitabilityReports>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.FicheNo != input.FicheNo)
             {
-                var entityQuery = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select("*").Where(new { Id = input.Id }, false, false, "");
-                var entity = queryFactory.Get<PurchaseUnsuitabilityReports>(entityQuery);
-
-                #region Update Control
-
-                var listQuery = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
-                var list = queryFactory.GetList<PurchaseUnsuitabilityReports>(listQuery).ToList();
-
-                if (list.Count > 0 && entity.FicheNo != input.FicheNo)
-                {
-                    connection.Close();
-                    connection.Dispose();
-                    throw new DuplicateCodeException(L["UpdateControlManager"]);
-                }
-
-                #endregion
-
-                var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Update(new UpdatePurchaseUnsuitabilityReportsDto
-                {
-                    Id = input.Id,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId,
-                    Action_ = input.Action_,
-                    FicheNo = input.FicheNo,
-                    CurrentAccountCardID = input.CurrentAccountCardID,
-                    Date_ = input.Date_,
-                    Description_ = input.Description_,
-                    IsUnsuitabilityWorkOrder = input.IsUnsuitabilityWorkOrder,
-                    OrderID = input.OrderID,
-                    PartyNo = input.PartyNo,
-                    ProductID = input.ProductID,
-                    UnsuitableAmount = input.UnsuitableAmount,
-                    UnsuitabilityItemsID = input.UnsuitabilityItemsID
-                }).Where(new { Id = input.Id }, false, false, "");
-
-                var purchaseUnsuitabilityReport = queryFactory.Update<SelectPurchaseUnsuitabilityReportsDto>(query, "Id", true);
-
-
-                LogsAppService.InsertLogToDatabase(entity, purchaseUnsuitabilityReport, LoginedUserService.UserId, Tables.PurchaseUnsuitabilityReports, LogType.Update, entity.Id);
-
-
-                return new SuccessDataResult<SelectPurchaseUnsuitabilityReportsDto>(purchaseUnsuitabilityReport);
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
+
+            #endregion
+
+            var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Update(new UpdatePurchaseUnsuitabilityReportsDto
+            {
+                Id = input.Id,
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.Value,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = DateTime.Now,
+                LastModifierId = LoginedUserService.UserId,
+                Action_ = input.Action_,
+                FicheNo = input.FicheNo,
+                CurrentAccountCardID = input.CurrentAccountCardID,
+                Date_ = input.Date_,
+                Description_ = input.Description_,
+                IsUnsuitabilityWorkOrder = input.IsUnsuitabilityWorkOrder,
+                OrderID = input.OrderID,
+                PartyNo = input.PartyNo,
+                ProductID = input.ProductID,
+                UnsuitableAmount = input.UnsuitableAmount,
+                UnsuitabilityItemsID = input.UnsuitabilityItemsID
+            }).Where(new { Id = input.Id }, false, false, "");
+
+            var purchaseUnsuitabilityReport = queryFactory.Update<SelectPurchaseUnsuitabilityReportsDto>(query, "Id", true);
+
+
+            LogsAppService.InsertLogToDatabase(entity, purchaseUnsuitabilityReport, LoginedUserService.UserId, Tables.PurchaseUnsuitabilityReports, LogType.Update, entity.Id);
+
+
+            return new SuccessDataResult<SelectPurchaseUnsuitabilityReportsDto>(purchaseUnsuitabilityReport);
+
         }
 
         public async Task<IDataResult<SelectPurchaseUnsuitabilityReportsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select("*").Where(new { Id = id }, false, false, "");
+            var entity = queryFactory.Get<PurchaseUnsuitabilityReports>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Update(new UpdatePurchaseUnsuitabilityReportsDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select("*").Where(new { Id = id }, false, false, "");
-                var entity = queryFactory.Get<PurchaseUnsuitabilityReports>(entityQuery);
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.Value,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                Id = id,
+                DataOpenStatus = lockRow,
+                DataOpenStatusUserId = userId,
+                Action_ = entity.Action_,
+                UnsuitableAmount = entity.UnsuitableAmount,
+                ProductID = entity.ProductID,
+                PartyNo = entity.PartyNo,
+                OrderID = entity.OrderID,
+                IsUnsuitabilityWorkOrder = entity.IsUnsuitabilityWorkOrder,
+                FicheNo = entity.FicheNo,
+                Description_ = entity.Description_,
+                Date_ = entity.Date_,
+                CurrentAccountCardID = entity.CurrentAccountCardID,
+                UnsuitabilityItemsID = entity.UnsuitabilityItemsID
+            }).Where(new { Id = id }, false, false, "");
 
-                var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Update(new UpdatePurchaseUnsuitabilityReportsDto
-                {
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
-                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-                    Id = id,
-                    DataOpenStatus = lockRow,
-                    DataOpenStatusUserId = userId,
-                    Action_ = entity.Action_,
-                    UnsuitableAmount = entity.UnsuitableAmount,
-                    ProductID = entity.ProductID,
-                    PartyNo = entity.PartyNo,
-                    OrderID = entity.OrderID,
-                    IsUnsuitabilityWorkOrder = entity.IsUnsuitabilityWorkOrder,
-                    FicheNo = entity.FicheNo,
-                    Description_ = entity.Description_,
-                    Date_ = entity.Date_,
-                    CurrentAccountCardID = entity.CurrentAccountCardID,
-                    UnsuitabilityItemsID = entity.UnsuitabilityItemsID
-                }).Where(new { Id = id }, false, false, "");
+            var purchaseUnsuitabilityReport = queryFactory.Update<SelectPurchaseUnsuitabilityReportsDto>(query, "Id", true);
 
-                var purchaseUnsuitabilityReport = queryFactory.Update<SelectPurchaseUnsuitabilityReportsDto>(query, "Id", true);
+            return new SuccessDataResult<SelectPurchaseUnsuitabilityReportsDto>(purchaseUnsuitabilityReport);
 
-                return new SuccessDataResult<SelectPurchaseUnsuitabilityReportsDto>(purchaseUnsuitabilityReport);
 
-            }
         }
     }
 }

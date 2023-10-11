@@ -357,11 +357,17 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Production Management &gt; Production Tracking Records</value>
   </data>
+  <data name="UIWarningOprStockControlMessage" xml:space="preserve">
+    <value>You can enter as much as the produced quantity in the previous operation.</value>
+  </data>
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
     <value>Please select the start date first.</value>
   </data>
   <data name="UIWarningPreviousWorkOrderMessage" xml:space="preserve">
     <value>A produced quantity entry doesn't exist in previous work order.</value>
+  </data>
+  <data name="UIWarningQuantityControlMessage" xml:space="preserve">
+    <value>The quantity produced cannot be greater than the planned quantity.</value>
   </data>
   <data name="UIWarningWorkOrderMessage" xml:space="preserve">
     <value>Station selection cannot be made without selecting a work order.</value>
@@ -392,6 +398,9 @@
   </data>
   <data name="ValidatorStationID" xml:space="preserve">
     <value>Please select a station.</value>
+  </data>
+  <data name="ValidatorWordOrderID" xml:space="preserve">
+    <value>Please select a work order.</value>
   </data>
   <data name="WordOrderModalGridCode" xml:space="preserve">
     <value>WORK ORDER CODE</value>

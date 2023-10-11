@@ -35,102 +35,89 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductGroupsDto>> CreateAsync(CreateProductGroupsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var listQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Code = input.Code }, false, false, "");
+
+            var list = queryFactory.ControlList<ProductGroups>(listQuery).ToList();
+
+            #region Code Control 
+
+            if (list.Count > 0)
             {
-                var listQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Code = input.Code }, false, false, "");
-
-                var list = queryFactory.ControlList<ProductGroups>(listQuery).ToList();
-
-                #region Code Control 
-
-                if (list.Count > 0)
-                {
-                    connection.Close();
-                    connection.Dispose();
-                    throw new DuplicateCodeException(L["CodeControlManager"]);
-                }
-
-                #endregion
-
-                Guid addedEntityId = GuidGenerator.CreateGuid();
-
-                var query = queryFactory.Query().From(Tables.ProductGroups).Insert(new CreateProductGroupsDto
-                {
-                    Code = input.Code,
-                    Name = input.Name,
-                    IsActive = true,
-                    Id = addedEntityId,
-                    CreationTime = DateTime.Now,
-                    CreatorId = LoginedUserService.UserId,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = Guid.Empty,
-                    DeletionTime = null,
-                    LastModificationTime = null,
-                    LastModifierId = Guid.Empty,
-                    IsDeleted = false
-                });
-
-
-                var productGroups = queryFactory.Insert<SelectProductGroupsDto>(query, "Id", true);
-
-                await FicheNumbersAppService.UpdateFicheNumberAsync("ProductGroupsChildMenu", input.Code);
-
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductGroups, LogType.Insert,addedEntityId);
-
-
-                return new SuccessDataResult<SelectProductGroupsDto>(productGroups);
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
+
+            #endregion
+
+            Guid addedEntityId = GuidGenerator.CreateGuid();
+
+            var query = queryFactory.Query().From(Tables.ProductGroups).Insert(new CreateProductGroupsDto
+            {
+                Code = input.Code,
+                Name = input.Name,
+                IsActive = true,
+                Id = addedEntityId,
+                CreationTime = DateTime.Now,
+                CreatorId = LoginedUserService.UserId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = Guid.Empty,
+                DeletionTime = null,
+                LastModificationTime = null,
+                LastModifierId = Guid.Empty,
+                IsDeleted = false
+            });
+
+
+            var productGroups = queryFactory.Insert<SelectProductGroupsDto>(query, "Id", true);
+
+            await FicheNumbersAppService.UpdateFicheNumberAsync("ProductGroupsChildMenu", input.Code);
+
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductGroups, LogType.Insert, addedEntityId);
+
+
+            return new SuccessDataResult<SelectProductGroupsDto>(productGroups);
+
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            var query = queryFactory.Query().From(Tables.ProductGroups).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
-                var query = queryFactory.Query().From(Tables.ProductGroups).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            var productGroups = queryFactory.Update<SelectProductGroupsDto>(query, "Id", true);
 
-                var productGroups = queryFactory.Update<SelectProductGroupsDto>(query, "Id", true);
+            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductGroups, LogType.Delete, id);
 
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductGroups, LogType.Delete, id);
+            return new SuccessDataResult<SelectProductGroupsDto>(productGroups);
 
-                return new SuccessDataResult<SelectProductGroupsDto>(productGroups);
-            }
         }
 
 
         public async Task<IDataResult<SelectProductGroupsDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var query = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(
+            new
             {
-
-                var query = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(
-                new
-                {
-                    Id = id
-                }, true, true, "");
-                var productGroup = queryFactory.Get<SelectProductGroupsDto>(query);
+                Id = id
+            }, true, true, "");
+            var productGroup = queryFactory.Get<SelectProductGroupsDto>(query);
 
 
-                LogsAppService.InsertLogToDatabase(productGroup, productGroup, LoginedUserService.UserId, Tables.ProductGroups, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(productGroup, productGroup, LoginedUserService.UserId, Tables.ProductGroups, LogType.Get, id);
 
-                return new SuccessDataResult<SelectProductGroupsDto>(productGroup);
+            return new SuccessDataResult<SelectProductGroupsDto>(productGroup);
 
-            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductGroupsDto>>> GetListAsync(ListProductGroupsParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(null, true, true, "");
-                var productGroups = queryFactory.GetList<ListProductGroupsDto>(query).ToList();
-                return new SuccessDataResult<IList<ListProductGroupsDto>>(productGroups);
-            }
+            var query = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(null, true, true, "");
+            var productGroups = queryFactory.GetList<ListProductGroupsDto>(query).ToList();
+            return new SuccessDataResult<IList<ListProductGroupsDto>>(productGroups);
+
         }
 
 
@@ -138,80 +125,74 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductGroupsDto>> UpdateAsync(UpdateProductGroupsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entity = queryFactory.Get<ProductGroups>(entityQuery);
+
+            #region Update Control
+
+            var listQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var list = queryFactory.GetList<ProductGroups>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.Code != input.Code)
             {
-                var entityQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Id = input.Id }, true, true, "");
-                var entity = queryFactory.Get<ProductGroups>(entityQuery);
-
-                #region Update Control
-
-                var listQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Code = input.Code }, false, false, "");
-                var list = queryFactory.GetList<ProductGroups>(listQuery).ToList();
-
-                if (list.Count > 0 && entity.Code != input.Code)
-                {
-                    connection.Close();
-                    connection.Dispose();
-                    throw new DuplicateCodeException(L["UpdateControlManager"]);
-                }
-
-                #endregion
-
-                var query = queryFactory.Query().From(Tables.ProductGroups).Update(new UpdateProductGroupsDto
-                {
-                    Code = input.Code,
-                    Name = input.Name,
-                    Id = input.Id,
-                    IsActive = input.IsActive,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = input.Id }, true, true, "");
-
-                var productGroups = queryFactory.Update<SelectProductGroupsDto>(query, "Id", true);
-
-                LogsAppService.InsertLogToDatabase(entity, productGroups, LoginedUserService.UserId, Tables.ProductGroups, LogType.Update, entity.Id);
-
-                return new SuccessDataResult<SelectProductGroupsDto>(productGroups);
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
+
+            #endregion
+
+            var query = queryFactory.Query().From(Tables.ProductGroups).Update(new UpdateProductGroupsDto
+            {
+                Code = input.Code,
+                Name = input.Name,
+                Id = input.Id,
+                IsActive = input.IsActive,
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.Value,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = DateTime.Now,
+                LastModifierId = LoginedUserService.UserId
+            }).Where(new { Id = input.Id }, true, true, "");
+
+            var productGroups = queryFactory.Update<SelectProductGroupsDto>(query, "Id", true);
+
+            LogsAppService.InsertLogToDatabase(entity, productGroups, LoginedUserService.UserId, Tables.ProductGroups, LogType.Update, entity.Id);
+
+            return new SuccessDataResult<SelectProductGroupsDto>(productGroups);
+
         }
 
         public async Task<IDataResult<SelectProductGroupsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
+            var entityQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Id = id }, true, true, "");
+
+            var entity = queryFactory.Get<ProductGroups>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.ProductGroups).Update(new UpdateProductGroupsDto
             {
-                var entityQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Id = id }, true, true, "");
+                Code = entity.Code,
+                Name = entity.Name,
+                IsActive = entity.IsActive,
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.Value,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                Id = id,
+                DataOpenStatus = lockRow,
+                DataOpenStatusUserId = userId
 
-                var entity = queryFactory.Get<ProductGroups>(entityQuery);
+            }).Where(new { Id = id }, true, true, "");
 
-                var query = queryFactory.Query().From(Tables.ProductGroups).Update(new UpdateProductGroupsDto
-                {
-                    Code = entity.Code,
-                    Name = entity.Name,
-                    IsActive = entity.IsActive,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
-                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-                    Id = id,
-                    DataOpenStatus = lockRow,
-                    DataOpenStatusUserId = userId
+            var productGroups = queryFactory.Update<SelectProductGroupsDto>(query, "Id", true);
+            return new SuccessDataResult<SelectProductGroupsDto>(productGroups);
 
-                }).Where(new { Id = id }, true, true, "");
 
-                var productGroups = queryFactory.Update<SelectProductGroupsDto>(query, "Id", true);
-                return new SuccessDataResult<SelectProductGroupsDto>(productGroups);
-
-            }
         }
     }
 }
