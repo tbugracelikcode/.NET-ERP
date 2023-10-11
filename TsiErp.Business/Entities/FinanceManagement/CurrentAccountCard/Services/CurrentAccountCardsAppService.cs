@@ -132,8 +132,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+            
                 var query = queryFactory
                         .Query().From(Tables.CurrentAccountCards).Select<CurrentAccountCards>(ca => new
                         {
@@ -200,8 +199,6 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCurrentAccountCardsDto>>> GetListAsync(ListCurrentAccountCardsParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var query = queryFactory
                    .Query()
                    .From(Tables.CurrentAccountCards)
