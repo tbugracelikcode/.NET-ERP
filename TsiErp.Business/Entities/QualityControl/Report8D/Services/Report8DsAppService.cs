@@ -40,8 +40,6 @@ namespace TsiErp.Business.Entities.Report8D.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectReport8DsDto>> CreateAsync(CreateReport8DsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var listQuery = queryFactory.Query().From(Tables.Report8Ds).Select("*").Where(new { Code = input.Code }, false, false, "");
 
                 var list = queryFactory.ControlList<Report8Ds>(listQuery).ToList();
@@ -274,7 +272,6 @@ namespace TsiErp.Business.Entities.Report8D.Services
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Report8Ds, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectReport8DsDto>(Report8Ds);
-            }
         }
 
 
@@ -296,8 +293,6 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
         public async Task<IDataResult<SelectReport8DsDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var query = queryFactory
                         .Query().From(Tables.Report8Ds).Select<Report8Ds>(null)
                             .Join<CurrentAccountCards>
@@ -336,15 +331,12 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
                 return new SuccessDataResult<SelectReport8DsDto>(Report8D);
 
-            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListReport8DsDto>>> GetListAsync(ListReport8DsParameterDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var query = queryFactory
                         .Query()
                         .From(Tables.Report8Ds)
@@ -381,7 +373,6 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
                 var Report8D = queryFactory.GetList<ListReport8DsDto>(query).ToList();
                 return new SuccessDataResult<IList<ListReport8DsDto>>(Report8D);
-            }
         }
 
 
@@ -389,8 +380,6 @@ namespace TsiErp.Business.Entities.Report8D.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectReport8DsDto>> UpdateAsync(UpdateReport8DsDto input)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var entityQuery = queryFactory.Query().From(Tables.Report8Ds).Select("*").Where(new { Id = input.Id }, false, false, "");
                 var entity = queryFactory.Get<Report8Ds>(entityQuery);
 
@@ -622,13 +611,10 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
 
                 return new SuccessDataResult<SelectReport8DsDto>(Report8Ds);
-            }
         }
 
         public async Task<IDataResult<SelectReport8DsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
                 var entityQuery = queryFactory.Query().From(Tables.Report8Ds).Select("*").Where(new { Id = id }, false, false, "");
                 var entity = queryFactory.Get<Report8Ds>(entityQuery);
 
@@ -844,7 +830,6 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
                 return new SuccessDataResult<SelectReport8DsDto>(Report8Ds);
 
-            }
         }
     }
 }
