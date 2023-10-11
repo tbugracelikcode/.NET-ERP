@@ -82,6 +82,11 @@ namespace TsiErp.Entities.Entities.QualityControl.Report8D
         public string ProductionPlant { get; set; }
         [SqlColumnType(MaxLength = 250, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
+        /// Parça Numarası
+        /// </summary>
+        public string PartNumber { get; set; }
+        [SqlColumnType(MaxLength = 250, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
         /// Yükümlü
         /// </summary>
         public string Sponsor { get; set; }

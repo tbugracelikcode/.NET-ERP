@@ -17,6 +17,10 @@ namespace TsiErp.Entities.Entities.QualityControl.Report8D.Dtos
         /// </summary>
         public string SupplierName { get; set; }
         /// <summary>
+        /// Parça Numarası
+        /// </summary>
+        public string PartNumber { get; set; }
+        /// <summary>
         /// Tedarikçi Kodu
         /// </summary>
         public string SupplierCode { get; set; }

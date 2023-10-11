@@ -21,6 +21,10 @@ namespace TsiErp.Entities.Entities.QualityControl.Report8D.Dtos
         /// </summary>
         public string TopicTitle { get; set; }
         /// <summary>
+        /// Parça Numarası
+        /// </summary>
+        public string PartNumber { get; set; }
+        /// <summary>
         /// Talep Açılış Tarihi
         /// </summary>
         public DateTime ClaimOpeningDate { get; set; }
