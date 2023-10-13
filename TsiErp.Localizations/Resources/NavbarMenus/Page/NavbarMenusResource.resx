@@ -486,6 +486,9 @@
   <data name="QualityPlansMenu" xml:space="preserve">
     <value>Kalite Planları</value>
   </data>
+  <data name="Report8DChildMenu" xml:space="preserve">
+    <value>8D Raporları</value>
+  </data>
   <data name="ReportsMenu" xml:space="preserve">
     <value>Raporlar</value>
   </data>
