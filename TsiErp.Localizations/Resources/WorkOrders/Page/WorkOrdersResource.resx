@@ -138,6 +138,21 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="EnumBaslamadi" xml:space="preserve">
+    <value>Başlamadı</value>
+  </data>
+  <data name="EnumDevamEdiyor" xml:space="preserve">
+    <value>Devam Ediyor</value>
+  </data>
+  <data name="EnumDurduruldu" xml:space="preserve">
+    <value>Durduruldu</value>
+  </data>
+  <data name="EnumIptal" xml:space="preserve">
+    <value>İptal</value>
+  </data>
+  <data name="EnumTamamlandi" xml:space="preserve">
+    <value>Tamamlandı</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>

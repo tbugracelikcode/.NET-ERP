@@ -570,8 +570,46 @@ else
                                         <GridColumns>
                                             <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="@L["WordOrderModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="@L["WordOrderModalGridWorkOrderNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderState) HeaderText="@L["WorkOrderState"]" TextAlign="TextAlign.Center" Width="120">
+
+                                        <Template Context="workOrderContext">
+                                            @{
+                                                        WorkOrderStateEnum stateEnumform = (workOrderContext as ListWorkOrdersDto).WorkOrderState;
+                                                string stateForm = "";
+
+                                                if (stateEnumform == WorkOrderStateEnum.Baslamadi)
+                                                {
+                                                    stateForm = L["WorkOrderEnumBaslamadi"];
+                                                }
+                                                else if(stateEnumform == WorkOrderStateEnum.Durduruldu)
+                                                {
+                                                    stateForm = L["WorkOrderEnumDurduruldu"];
+                                                }
+                                                else if(stateEnumform == WorkOrderStateEnum.Iptal)
+                                                {
+                                                    stateForm = L["WorkOrderEnumIptal"];
+                                                }
+                                                else if(stateEnumform == WorkOrderStateEnum.DevamEdiyor)
+                                                {
+                                                    stateForm = L["WorkOrderEnumDevamEdiyor"];
+                                                }
+                                                else if(stateEnumform == WorkOrderStateEnum.Tamamlandi)
+                                                {
+                                                    stateForm = L["WorkOrderEnumTamamlandi"];
+                                                }
+                                        }
+                                        @stateForm
+                                    </Template>
+
+                                    </GridColumn>
+
                                             <GridColumn Field=@nameof(ListWorkOrdersDto.ProductCode) HeaderText="@L["WordOrderModalGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListWorkOrdersDto.ProductName) HeaderText="@L["WordOrderModalGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.PlannedQuantity) HeaderText="@L["WorkOrderPlannedQuantity"]" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="120" Format="N0"></GridColumn>
+
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.ProducedQuantity) HeaderText="@L["WorkOrderProducedQuantity"]" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="120" Format="N0"></GridColumn>
                                         </GridColumns>
 
                                     </SfGrid>
