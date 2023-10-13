@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="8DContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
   <data name="8DContextAddforCustomer" xml:space="preserve">
     <value>Müşteri İçin 8D Raporu Ekle</value>
   </data>
@@ -132,11 +135,275 @@
   <data name="8DContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="AtCustomerLabel" xml:space="preserve">
+    <value>Müşteri Deposunda</value>
+  </data>
+  <data name="AtSupplierLabel" xml:space="preserve">
+    <value>Tedarikçide</value>
+  </data>
+  <data name="BlockedLabel" xml:space="preserve">
+    <value>Bloke</value>
+  </data>
+  <data name="CheckedLabel" xml:space="preserve">
+    <value>Kontrol Edilen</value>
+  </data>
+  <data name="ClaimedQuantityLabel" xml:space="preserve">
+    <value>Şikayet Edilen Miktar:</value>
+  </data>
+  <data name="ClaimingPlantsLabel" xml:space="preserve">
+    <value>Sorun Yaşanan Tesis(ler):</value>
+  </data>
+  <data name="ClaimOpeningDate" xml:space="preserve">
+    <value>TALEP AÇILIŞ TARİHİ</value>
+  </data>
+  <data name="ClaimOpeningDateLabel" xml:space="preserve">
+    <value>Talep Açılış Tarihi:</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="ClosureDateLabel" xml:space="preserve">
+    <value>Tarih</value>
+  </data>
+  <data name="ClosureFunctionDepartmentLabel" xml:space="preserve">
+    <value>Görev &amp; Departman</value>
+  </data>
+  <data name="ClosureNameLabel" xml:space="preserve">
+    <value>İsim / İmza</value>
+  </data>
+  <data name="ClosureTitle" xml:space="preserve">
+    <value>Müşteriden 8D Kapatma</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>TALEP NUMARASI</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Talep Numarası:</value>
+  </data>
+  <data name="ComplaintLabel" xml:space="preserve">
+    <value>Şikayet haklı mı?</value>
+  </data>
+  <data name="ContainmentActionDateLabel" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
+  <data name="CurrentAccountCardCode" xml:space="preserve">
+    <value>CARİ HESAP KODU</value>
+  </data>
+  <data name="CurrentAccountCardName" xml:space="preserve">
+    <value>CARİ HESAP ÜNVANI</value>
+  </data>
+  <data name="CurrentAccountModalTitle" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
+  <data name="CustomerLabel" xml:space="preserve">
+    <value>Müşteri:</value>
+  </data>
+  <data name="CustomerName" xml:space="preserve">
+    <value>MÜŞTERİ</value>
+  </data>
+  <data name="D1Title" xml:space="preserve">
+    <value>D1 Sorun Çözen Ekip</value>
+  </data>
+  <data name="D2Title" xml:space="preserve">
+    <value>D2 Sorun Tanımı</value>
+  </data>
+  <data name="D3ContaintmentActionLabel" xml:space="preserve">
+    <value>Kapsam Belirleme Eylemi</value>
+  </data>
+  <data name="D3DescriptionLabel" xml:space="preserve">
+    <value>Parçalar için gerekli sınırlama eylemleri vb. a) tedarikçideki üretimde, b) depoda, c) sevkiyat deposunda, d) Müşteriye giderken, e) Müşteride</value>
+  </data>
+  <data name="D3ImplementationDateLabel" xml:space="preserve">
+    <value>Uygulama Tarihi</value>
+  </data>
+  <data name="D3NoLabel" xml:space="preserve">
+    <value>No.</value>
+  </data>
+  <data name="D3PotentailRiskLabel" xml:space="preserve">
+    <value>Potansiyel Risk</value>
+  </data>
+  <data name="D3ResponsibleLabel" xml:space="preserve">
+    <value>Sorumlu</value>
+  </data>
+  <data name="D3SortingLabel" xml:space="preserve">
+    <value>Sıralama:</value>
+  </data>
+  <data name="D3Title" xml:space="preserve">
+    <value>D3 Kapsam Belirleme Eylem(ler)i</value>
+  </data>
+  <data name="D4AnalysisMethodLabel" xml:space="preserve">
+    <value>Analiz Yöntemi</value>
+  </data>
+  <data name="D4DescriptionLabel" xml:space="preserve">
+    <value>"5 Neden" analiz yöntemi kullanılacak ve 8D raporuna eklenecektir (seçenek olarak "Ishikawa")</value>
+  </data>
+  <data name="D4FailureOccurancePlaceHolder" xml:space="preserve">
+    <value>Hata sıklığı seçin.</value>
+  </data>
+  <data name="D4NonDetectionLabel" xml:space="preserve">
+    <value>Tespit Edilememe Sebebi (Hata neden tespit edilemedi?)</value>
+  </data>
+  <data name="D4OccuranceLabel" xml:space="preserve">
+    <value>Meydana Gelme (Hata neden meydana geldi?)</value>
+  </data>
+  <data name="D4ShareLabel" xml:space="preserve">
+    <value>Paylaşım</value>
+  </data>
+  <data name="D4Title" xml:space="preserve">
+    <value>D4 Kök Sebep Analizi</value>
+  </data>
+  <data name="D5ImplementedLabel" xml:space="preserve">
+    <value>Uygulanacak</value>
+  </data>
+  <data name="D5NoLabel" xml:space="preserve">
+    <value>No.</value>
+  </data>
+  <data name="D5PlannedDateLabel" xml:space="preserve">
+    <value>Planlanan Uygulama Tarihi</value>
+  </data>
+  <data name="D5PotentialCorrectiveActionLabel" xml:space="preserve">
+    <value>Potansiyel Düzeltici Faaliyet</value>
+  </data>
+  <data name="D5ResponsibleLabel" xml:space="preserve">
+    <value>Sorumlu</value>
+  </data>
+  <data name="D5RootCauseLabel" xml:space="preserve">
+    <value>Kök Sebep</value>
+  </data>
+  <data name="D5Title" xml:space="preserve">
+    <value>D5 Düzeltici Faaliyetlerin Seçimi ve Doğrulanması</value>
+  </data>
+  <data name="D6ContaintmentActionLabel" xml:space="preserve">
+    <value>Sınırlama Eylemi</value>
+  </data>
+  <data name="D6CorrectiveActionLabel" xml:space="preserve">
+    <value>Düzeltici Faaliyet</value>
+  </data>
+  <data name="D6DateIotSerialLabel" xml:space="preserve">
+    <value>** tarih, parti, seri veya teslimat fiş numarası</value>
+  </data>
+  <data name="D6EffectiveFromLabel" xml:space="preserve">
+    <value>** İtibaren Geçerli</value>
+  </data>
+  <data name="D6ImplementionDateLabel" xml:space="preserve">
+    <value>Uygulama Tarihi</value>
+  </data>
+  <data name="D6NoLabel" xml:space="preserve">
+    <value>No.</value>
+  </data>
+  <data name="D6ProofAttachedLabel" xml:space="preserve">
+    <value>Kanıt Eklendi</value>
+  </data>
+  <data name="D6RemovalActionTitleLabel" xml:space="preserve">
+    <value>Kapsam/Karantina Eylemlerinin Kaldırılması</value>
+  </data>
+  <data name="D6RemovalDateLabel" xml:space="preserve">
+    <value>Kaldırılma Tarihi</value>
+  </data>
+  <data name="D6ResponsibleLabel" xml:space="preserve">
+    <value>Sorumlu</value>
+  </data>
+  <data name="D6RootCauseLabel" xml:space="preserve">
+    <value>Kök Sebep</value>
+  </data>
+  <data name="D6Title" xml:space="preserve">
+    <value>D6 Düzeltici Faaliyetlerin Gerçekleştirilmesi ve Doğrulanması</value>
+  </data>
+  <data name="D6ValidatedOnLabel" xml:space="preserve">
+    <value>Doğrulama Tarihi</value>
+  </data>
+  <data name="D7ActionLabel" xml:space="preserve">
+    <value>Eylem</value>
+  </data>
+  <data name="D7CompletionDateLabel" xml:space="preserve">
+    <value>Tamamlama Tarihi</value>
+  </data>
+  <data name="D7ControlPlanLabel" xml:space="preserve">
+    <value>Kontrol Planı Revizyonu - Güncellemesi</value>
+  </data>
+  <data name="D7DescriptionLabel" xml:space="preserve">
+    <value>Aşağıdaki her eylem için belgelenmiş bir kanıt eklenmelidir</value>
+  </data>
+  <data name="D7DFMEALabel" xml:space="preserve">
+    <value>FMEA Dizayn Revizyonu - Güncellemesi</value>
+  </data>
+  <data name="D7DocumentNumberLabel" xml:space="preserve">
+    <value>Belge Numarası</value>
+  </data>
+  <data name="D7LessonsLearnedDateLabel" xml:space="preserve">
+    <value>Tarih</value>
+  </data>
+  <data name="D7LessonsLearnedFuctionDepartmentLabel" xml:space="preserve">
+    <value>Görev &amp; Departman</value>
+  </data>
+  <data name="D7LessonsLearnedProofAttachedLabel" xml:space="preserve">
+    <value>Kanıt Eklendi</value>
+  </data>
+  <data name="D7LessonsLearnedRecordedLabel" xml:space="preserve">
+    <value>Öğrenilen Dersler Kaydedildi</value>
+  </data>
+  <data name="D7LessonsLearnedRelevantLabel" xml:space="preserve">
+    <value>Bağlantılı</value>
+  </data>
+  <data name="D7LessonsLearnedResponsibleLabel" xml:space="preserve">
+    <value>Sorumlu</value>
+  </data>
+  <data name="D7LessonsLearnedTitle" xml:space="preserve">
+    <value>Öğrenilen Dersler</value>
+  </data>
+  <data name="D7PFMEALabel" xml:space="preserve">
+    <value>FMEA Proses Revizyonu - Güncellemesi</value>
+  </data>
+  <data name="D7ProofAttachedLabel" xml:space="preserve">
+    <value>Kanıt Eklendi</value>
+  </data>
+  <data name="D7RelevantLabel" xml:space="preserve">
+    <value>Bağlantılı</value>
+  </data>
+  <data name="D7ResponsibleLabel" xml:space="preserve">
+    <value>Sorumlu</value>
+  </data>
+  <data name="D7Revision1Label" xml:space="preserve">
+    <value>Revizyon - Güncelleme</value>
+  </data>
+  <data name="D7Revision2Label" xml:space="preserve">
+    <value>Revizyon - Güncelleme</value>
+  </data>
+  <data name="D7Revision3Label" xml:space="preserve">
+    <value>Revizyon - Güncelleme</value>
+  </data>
+  <data name="D7Title" xml:space="preserve">
+    <value>D7 Tekrarlamanın Önlenmesi</value>
+  </data>
+  <data name="D7VersionLabel" xml:space="preserve">
+    <value>Versiyon</value>
+  </data>
+  <data name="D8DateLabel" xml:space="preserve">
+    <value>Tarih</value>
+  </data>
+  <data name="D8SponsorLabel" xml:space="preserve">
+    <value>İsim / Yükümlü İmzası</value>
+  </data>
+  <data name="D8TeamLeaderLabel" xml:space="preserve">
+    <value>İsim / Ekip Lideri İmzası</value>
+  </data>
+  <data name="D8Title" xml:space="preserve">
+    <value>D8 Sonuç ve Ekibin Başarısının Teyit Edilmesi</value>
+  </data>
+  <data name="DateFinalReleaseLabel" xml:space="preserve">
+    <value>Son Yayınlanma Tarihi:</value>
+  </data>
+  <data name="DateInterimReportD3Label" xml:space="preserve">
+    <value>D3 Tarih Ara Raporu:</value>
+  </data>
+  <data name="DateInterimReportD5Label" xml:space="preserve">
+    <value>D5 Tarih Ara Raporu:</value>
+  </data>
+  <data name="DefectLabel" xml:space="preserve">
+    <value>Hatalı</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -150,6 +417,24 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="DeliveredQuantityLabel" xml:space="preserve">
+    <value>Teslim Edilen Miktar:</value>
+  </data>
+  <data name="DesicionTitle" xml:space="preserve">
+    <value>Müşteri Kararı</value>
+  </data>
+  <data name="DeviationsProblemsLabel" xml:space="preserve">
+    <value>Hata(lar) - Sorun(lar):</value>
+  </data>
+  <data name="DeviationsSymptomsLabel" xml:space="preserve">
+    <value>Hata(lar) - Belirti(ler):</value>
+  </data>
+  <data name="DrawingIndexLabel" xml:space="preserve">
+    <value>Çizim İndeksi:</value>
+  </data>
+  <data name="DrawingNog" xml:space="preserve">
+    <value>ÇİZİM NO</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>8D Raporları</value>
   </data>
@@ -161,6 +446,15 @@
   </data>
   <data name="ExportTitle" xml:space="preserve">
     <value>8D Raporları</value>
+  </data>
+  <data name="FirstD4" xml:space="preserve">
+    <value>İlk Defa Yapılan Bir Hata</value>
+  </data>
+  <data name="IfNoLabel" xml:space="preserve">
+    <value>Edilmediyse, güncelleme gereken tarih</value>
+  </data>
+  <data name="InTransitLabel" xml:space="preserve">
+    <value>Nakliyede</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -177,11 +471,158 @@
   <data name="NoD2" xml:space="preserve">
     <value>Hayır</value>
   </data>
+  <data name="NoD5" xml:space="preserve">
+    <value>Hayır</value>
+  </data>
+  <data name="NoD6" xml:space="preserve">
+    <value>Hayır</value>
+  </data>
+  <data name="NoD7" xml:space="preserve">
+    <value>Hayır</value>
+  </data>
+  <data name="NoD8" xml:space="preserve">
+    <value>Hayır</value>
+  </data>
+  <data name="OtherAffectedPlantsLabel" xml:space="preserve">
+    <value>Etkilenen Diğer Müşteri Tesisleri:</value>
+  </data>
+  <data name="PartNumberLabel" xml:space="preserve">
+    <value>Parça Numarası:</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>ÜRÜN KODU</value>
+  </data>
+  <data name="ProductionPlantLabel" xml:space="preserve">
+    <value>Üretim Tesisi:</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="ProductNameLabel" xml:space="preserve">
+    <value>Parça Tanımı:</value>
+  </data>
+  <data name="ProductPopupGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductPopupGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="RepetitiveD4" xml:space="preserve">
+    <value>Tekrarlayan Hata</value>
+  </data>
+  <data name="Report8DRevisionLabel" xml:space="preserve">
+    <value>8D Raporu Revizyon:</value>
+  </data>
+  <data name="ReportAcceptedLabel" xml:space="preserve">
+    <value>8D Raporu Kabul Edildi</value>
+  </data>
+  <data name="ResultofPartLabel" xml:space="preserve">
+    <value>Parça Kontrol Sonucu (adet):</value>
+  </data>
+  <data name="RevisionNo" xml:space="preserve">
+    <value>REVİZYON NO</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="SponsorEMailLabel" xml:space="preserve">
+    <value>E-Posta</value>
+  </data>
+  <data name="SponsorFunctionDepartmentLabel" xml:space="preserve">
+    <value>Görev &amp; Departman</value>
+  </data>
+  <data name="SponsorLabel" xml:space="preserve">
+    <value>Yükümlü</value>
+  </data>
+  <data name="SponsorPhoneLabel" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="SupplierLabel" xml:space="preserve">
+    <value>Tedarikçi:</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>TEDARİKÇİ</value>
+  </data>
+  <data name="SupplierNameLabel" xml:space="preserve">
+    <value>Tedarikçi Ünvanı:</value>
+  </data>
+  <data name="SupplierNoLabel" xml:space="preserve">
+    <value>Tedarikçi Numarası:</value>
+  </data>
+  <data name="Tab10Name" xml:space="preserve">
+    <value>Müşteri Kararı</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Detaylar</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>D1 Sorun Çözen Ekip</value>
+  </data>
+  <data name="Tab3Name" xml:space="preserve">
+    <value>D2 Sorun Tanımı</value>
+  </data>
+  <data name="Tab4Name" xml:space="preserve">
+    <value>D3 Kapsam Belirleme Eylem(ler)i</value>
+  </data>
+  <data name="Tab5Name" xml:space="preserve">
+    <value>D4 Kök Sebep Analizi</value>
+  </data>
+  <data name="Tab6Name" xml:space="preserve">
+    <value>D5 Düzeltici Faaliyetlerin Seçimi ve Doğrulanması</value>
+  </data>
+  <data name="Tab7Name" xml:space="preserve">
+    <value>D6 Düzeltici Faaliyetlerin Gerçekleştirilmesi ve Doğrulanması</value>
+  </data>
+  <data name="Tab8Name" xml:space="preserve">
+    <value>D7 Tekrarlamanın Önlenmesi</value>
+  </data>
+  <data name="Tab9Name" xml:space="preserve">
+    <value>D8 Sonuç ve Ekibin Başarısının Teyit Edilmesi</value>
+  </data>
+  <data name="TeamLeaderEMailLabel" xml:space="preserve">
+    <value>E-Posta</value>
+  </data>
+  <data name="TeamLeaderFunctionDepartmentLabel" xml:space="preserve">
+    <value>Görev &amp; Departman</value>
+  </data>
+  <data name="TeamLeaderLabel" xml:space="preserve">
+    <value>Ekip Lideri</value>
+  </data>
+  <data name="TeamLeaderPhoneLabel" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="TeamMemberEMailLabel" xml:space="preserve">
+    <value>E-Posta</value>
+  </data>
+  <data name="TeamMemberFunctionDepartmentLabel" xml:space="preserve">
+    <value>Görev &amp; Departman</value>
+  </data>
+  <data name="TeamMemberLabel" xml:space="preserve">
+    <value>Ekip Üyeleri</value>
+  </data>
+  <data name="TeamMemberPhoneLabel" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="TechDrawModalTitle" xml:space="preserve">
+    <value>Teknik Resimler</value>
+  </data>
+  <data name="TechnicalDrawingNoLabel" xml:space="preserve">
+    <value>Çizim Numarası:</value>
+  </data>
+  <data name="TopicTitleLabel" xml:space="preserve">
+    <value>Konu Başlığı:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>8D Raporları</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol</value>
+  </data>
+  <data name="UIWarningProductMessage" xml:space="preserve">
+    <value>Ürün seçmeden teknik resim seçilemez.</value>
+  </data>
+  <data name="UIWarningProductTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
@@ -201,7 +642,22 @@
   <data name="ValidatorSupplierID" xml:space="preserve">
     <value>Lütfen tedarikçi seçin.</value>
   </data>
+  <data name="ValidatorTechnicalDrawingID" xml:space="preserve">
+    <value>Lütfen teknik resim seçin.</value>
+  </data>
   <data name="YesD2" xml:space="preserve">
+    <value>Evet</value>
+  </data>
+  <data name="YesD5" xml:space="preserve">
+    <value>Evet</value>
+  </data>
+  <data name="YesD6" xml:space="preserve">
+    <value>Evet</value>
+  </data>
+  <data name="YesD7" xml:space="preserve">
+    <value>Evet</value>
+  </data>
+  <data name="YesD8" xml:space="preserve">
     <value>Evet</value>
   </data>
 </root>

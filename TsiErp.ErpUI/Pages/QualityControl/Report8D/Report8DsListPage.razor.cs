@@ -54,10 +54,144 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 Code = FicheNumbersAppService.GetFicheNumberAsync("Report8DChildMenu")
             };
 
+            #region Combobox Localization İşlemleri
+
             foreach (var item in _d2ComplaintComboBox)
             {
                 item.Text = L[item.Text];
             }
+
+            foreach (var item in _d4FailureOccuranceComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D5PA1ImplementedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D5PA2ImplementedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D5PA3ImplementedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D5PA4ImplementedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D5PA5ImplementedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D6IA1ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D6IA2ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D6IA3ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D6IA4ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D6IA5ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IDFMEAProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IDFMEARelevantComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IPFMEAProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IPFMEARelevantComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IControlPlanProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IControlPlanRelevantComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IRevision1ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IRevision1RelevantComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IRevision2ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IRevision2RelevantComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IRevision3ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IRevision3RelevantComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7ILessonLearnedProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7ILessonLearnedRelevantComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _ReportAcceptedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            #endregion
 
             EditPageVisible = true;
 
@@ -66,8 +200,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforSupplier"], Id = "newsupplier" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforCustomer"], Id = "newcustomer" });
+            //GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforSupplier"], Id = "newsupplier" });
+            //GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforCustomer"], Id = "newcustomer" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAdd"], Id = "new" });
             GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextChange"], Id = "changed" });
             GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextDelete"], Id = "delete" });
             GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextRefresh"], Id = "refresh" });
@@ -688,6 +823,477 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
                 case "No":
                     DataSource.IA5ProofAttached = L["NoD6"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        #endregion
+
+        #region D7
+
+        #region DFMEA Revision
+
+        public class D7IDFMEAProofAttachedComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<D7IDFMEAProofAttachedComboBox> _D7IDFMEAProofAttachedComboBox = new List<D7IDFMEAProofAttachedComboBox>
+        {
+            new D7IDFMEAProofAttachedComboBox(){ID = "Yes", Text="YesD7"},
+            new D7IDFMEAProofAttachedComboBox(){ID = "No", Text="NoD7"}
+        };
+
+        private void D7IDFMEAProofAttachedComboBoxValueChangeHandler(ChangeEventArgs<string, D7IDFMEAProofAttachedComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.DFMEARevisionProofAttached = L["YesD7"].Value;
+                    break;
+
+                case "No":
+                    DataSource.DFMEARevisionProofAttached = L["NoD7"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        public class D7IDFMEARelevantComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<D7IDFMEARelevantComboBox> _D7IDFMEARelevantComboBox = new List<D7IDFMEARelevantComboBox>
+        {
+            new D7IDFMEARelevantComboBox(){ID = "Yes", Text="YesD7"},
+            new D7IDFMEARelevantComboBox(){ID = "No", Text="NoD7"}
+        };
+
+        private void D7IDFMEARelevantComboBoxValueChangeHandler(ChangeEventArgs<string, D7IDFMEARelevantComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.DFMEARevisionRelevant = L["YesD7"].Value;
+                    break;
+
+                case "No":
+                    DataSource.DFMEARevisionRelevant = L["NoD7"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        #endregion
+
+        #region PFMEA Revision
+
+        public class D7IPFMEAProofAttachedComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<D7IPFMEAProofAttachedComboBox> _D7IPFMEAProofAttachedComboBox = new List<D7IPFMEAProofAttachedComboBox>
+        {
+            new D7IPFMEAProofAttachedComboBox(){ID = "Yes", Text="YesD7"},
+            new D7IPFMEAProofAttachedComboBox(){ID = "No", Text="NoD7"}
+        };
+
+        private void D7IPFMEAProofAttachedComboBoxValueChangeHandler(ChangeEventArgs<string, D7IPFMEAProofAttachedComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.PFMEARevisionProofAttached = L["YesD7"].Value;
+                    break;
+
+                case "No":
+                    DataSource.PFMEARevisionProofAttached = L["NoD7"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        public class D7IPFMEARelevantComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<D7IPFMEARelevantComboBox> _D7IPFMEARelevantComboBox = new List<D7IPFMEARelevantComboBox>
+        {
+            new D7IPFMEARelevantComboBox(){ID = "Yes", Text="YesD7"},
+            new D7IPFMEARelevantComboBox(){ID = "No", Text="NoD7"}
+        };
+
+        private void D7IPFMEARelevantComboBoxValueChangeHandler(ChangeEventArgs<string, D7IPFMEARelevantComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.PFMEARevisionRelevant = L["YesD7"].Value;
+                    break;
+
+                case "No":
+                    DataSource.PFMEARevisionRelevant = L["NoD7"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        #endregion
+
+        #region ControlPlan Revision
+
+        public class D7IControlPlanProofAttachedComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<D7IControlPlanProofAttachedComboBox> _D7IControlPlanProofAttachedComboBox = new List<D7IControlPlanProofAttachedComboBox>
+        {
+            new D7IControlPlanProofAttachedComboBox(){ID = "Yes", Text="YesD7"},
+            new D7IControlPlanProofAttachedComboBox(){ID = "No", Text="NoD7"}
+        };
+
+        private void D7IControlPlanProofAttachedComboBoxValueChangeHandler(ChangeEventArgs<string, D7IControlPlanProofAttachedComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.ControlPlanRevisionProofAttached = L["YesD7"].Value;
+                    break;
+
+                case "No":
+                    DataSource.ControlPlanRevisionProofAttached = L["NoD7"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        public class D7IControlPlanRelevantComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<D7IControlPlanRelevantComboBox> _D7IControlPlanRelevantComboBox = new List<D7IControlPlanRelevantComboBox>
+        {
+            new D7IControlPlanRelevantComboBox(){ID = "Yes", Text="YesD7"},
+            new D7IControlPlanRelevantComboBox(){ID = "No", Text="NoD7"}
+        };
+
+        private void D7IControlPlanRelevantComboBoxValueChangeHandler(ChangeEventArgs<string, D7IControlPlanRelevantComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.ControlPlanRevisionRelevant = L["YesD7"].Value;
+                    break;
+
+                case "No":
+                    DataSource.ControlPlanRevisionRelevant = L["NoD7"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        #endregion
+
+        #region Revision1 Revision
+
+        public class D7IRevision1ProofAttachedComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<D7IRevision1ProofAttachedComboBox> _D7IRevision1ProofAttachedComboBox = new List<D7IRevision1ProofAttachedComboBox>
+        {
+            new D7IRevision1ProofAttachedComboBox(){ID = "Yes", Text="YesD7"},
+            new D7IRevision1ProofAttachedComboBox(){ID = "No", Text="NoD7"}
+        };
+
+        private void D7IRevision1ProofAttachedComboBoxValueChangeHandler(ChangeEventArgs<string, D7IRevision1ProofAttachedComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.Revision1ProofAttached = L["YesD7"].Value;
+                    break;
+
+                case "No":
+                    DataSource.Revision1ProofAttached = L["NoD7"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        public class D7IRevision1RelevantComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<D7IRevision1RelevantComboBox> _D7IRevision1RelevantComboBox = new List<D7IRevision1RelevantComboBox>
+        {
+            new D7IRevision1RelevantComboBox(){ID = "Yes", Text="YesD7"},
+            new D7IRevision1RelevantComboBox(){ID = "No", Text="NoD7"}
+        };
+
+        private void D7IRevision1RelevantComboBoxValueChangeHandler(ChangeEventArgs<string, D7IRevision1RelevantComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.Revision1Relevant = L["YesD7"].Value;
+                    break;
+
+                case "No":
+                    DataSource.Revision1Relevant = L["NoD7"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        #endregion
+
+        #region Revision2 Revision
+
+        public class D7IRevision2ProofAttachedComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<D7IRevision2ProofAttachedComboBox> _D7IRevision2ProofAttachedComboBox = new List<D7IRevision2ProofAttachedComboBox>
+        {
+            new D7IRevision2ProofAttachedComboBox(){ID = "Yes", Text="YesD7"},
+            new D7IRevision2ProofAttachedComboBox(){ID = "No", Text="NoD7"}
+        };
+
+        private void D7IRevision2ProofAttachedComboBoxValueChangeHandler(ChangeEventArgs<string, D7IRevision2ProofAttachedComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.Revision2ProofAttached = L["YesD7"].Value;
+                    break;
+
+                case "No":
+                    DataSource.Revision2ProofAttached = L["NoD7"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        public class D7IRevision2RelevantComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<D7IRevision2RelevantComboBox> _D7IRevision2RelevantComboBox = new List<D7IRevision2RelevantComboBox>
+        {
+            new D7IRevision2RelevantComboBox(){ID = "Yes", Text="YesD7"},
+            new D7IRevision2RelevantComboBox(){ID = "No", Text="NoD7"}
+        };
+
+        private void D7IRevision2RelevantComboBoxValueChangeHandler(ChangeEventArgs<string, D7IRevision2RelevantComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.Revision2Relevant = L["YesD7"].Value;
+                    break;
+
+                case "No":
+                    DataSource.Revision2Relevant = L["NoD7"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        #endregion
+
+        #region Revision3 Revision
+
+        public class D7IRevision3ProofAttachedComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<D7IRevision3ProofAttachedComboBox> _D7IRevision3ProofAttachedComboBox = new List<D7IRevision3ProofAttachedComboBox>
+        {
+            new D7IRevision3ProofAttachedComboBox(){ID = "Yes", Text="YesD7"},
+            new D7IRevision3ProofAttachedComboBox(){ID = "No", Text="NoD7"}
+        };
+
+        private void D7IRevision3ProofAttachedComboBoxValueChangeHandler(ChangeEventArgs<string, D7IRevision3ProofAttachedComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.Revision3ProofAttached = L["YesD7"].Value;
+                    break;
+
+                case "No":
+                    DataSource.Revision3ProofAttached = L["NoD7"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        public class D7IRevision3RelevantComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<D7IRevision3RelevantComboBox> _D7IRevision3RelevantComboBox = new List<D7IRevision3RelevantComboBox>
+        {
+            new D7IRevision3RelevantComboBox(){ID = "Yes", Text="YesD7"},
+            new D7IRevision3RelevantComboBox(){ID = "No", Text="NoD7"}
+        };
+
+        private void D7IRevision3RelevantComboBoxValueChangeHandler(ChangeEventArgs<string, D7IRevision3RelevantComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.Revision3Relevant = L["YesD7"].Value;
+                    break;
+
+                case "No":
+                    DataSource.Revision3Relevant = L["NoD7"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        #endregion
+
+        #region LessonLearned Revision
+
+        public class D7ILessonLearnedProofAttachedComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<D7ILessonLearnedProofAttachedComboBox> _D7ILessonLearnedProofAttachedComboBox = new List<D7ILessonLearnedProofAttachedComboBox>
+        {
+            new D7ILessonLearnedProofAttachedComboBox(){ID = "Yes", Text="YesD7"},
+            new D7ILessonLearnedProofAttachedComboBox(){ID = "No", Text="NoD7"}
+        };
+
+        private void D7ILessonLearnedProofAttachedComboBoxValueChangeHandler(ChangeEventArgs<string, D7ILessonLearnedProofAttachedComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.LessonsLearnedProofAttached = L["YesD7"].Value;
+                    break;
+
+                case "No":
+                    DataSource.LessonsLearnedProofAttached = L["NoD7"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        public class D7ILessonLearnedRelevantComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<D7ILessonLearnedRelevantComboBox> _D7ILessonLearnedRelevantComboBox = new List<D7ILessonLearnedRelevantComboBox>
+        {
+            new D7ILessonLearnedRelevantComboBox(){ID = "Yes", Text="YesD7"},
+            new D7ILessonLearnedRelevantComboBox(){ID = "No", Text="NoD7"}
+        };
+
+        private void D7ILessonLearnedRelevantComboBoxValueChangeHandler(ChangeEventArgs<string, D7ILessonLearnedRelevantComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.LessonsLearnedRelevant = L["YesD7"].Value;
+                    break;
+
+                case "No":
+                    DataSource.LessonsLearnedRelevant = L["NoD7"].Value;
+                    break;
+
+
+                default: break;
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Desicion
+
+        public class ReportAcceptedComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<ReportAcceptedComboBox> _ReportAcceptedComboBox = new List<ReportAcceptedComboBox>
+        {
+            new ReportAcceptedComboBox(){ID = "Yes", Text="YesD8"},
+            new ReportAcceptedComboBox(){ID = "No", Text="NoD8"}
+        };
+
+        private void ReportAcceptedComboBoxValueChangeHandler(ChangeEventArgs<string, ReportAcceptedComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Yes":
+                    DataSource.Report8DAccepted = L["YesD8"].Value;
+                    break;
+
+                case "No":
+                    DataSource.Report8DAccepted = L["NoD8"].Value;
                     break;
 
 

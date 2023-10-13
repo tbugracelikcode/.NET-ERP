@@ -21,7 +21,7 @@ namespace TsiErp.Business.Entities.Report8D.Validations
             RuleFor(x => x.CustomerID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorCustomerID");
             RuleFor(x => x.SupplierID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorSupplierID");
             RuleFor(x => x.ProductID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductID");
-            //RuleFor(x => x.TechnicalDrawingID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorTechnicalDrawingID");
+            RuleFor(x => x.TechnicalDrawingID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorTechnicalDrawingID");
 
         }
     }

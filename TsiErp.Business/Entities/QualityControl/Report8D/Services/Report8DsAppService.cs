@@ -48,8 +48,6 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
                 if (list.Count > 0)
                 {
-                    connection.Close();
-                    connection.Dispose();
                     throw new DuplicateCodeException(L["CodeControlManager"]);
                 }
 
@@ -252,7 +250,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
                     TeamMember3Phone = input.TeamMember3Phone,
                     TopicTitle = input.TopicTitle,
                     UpdateRequiredUntilDate = input.UpdateRequiredUntilDate,
-
+                     
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
@@ -267,7 +265,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
                 var Report8Ds = queryFactory.Insert<SelectReport8DsDto>(query, "Id", true);
 
-                await FicheNumbersAppService.UpdateFicheNumberAsync("CalRecordsChildMenu", input.Code);
+                await FicheNumbersAppService.UpdateFicheNumberAsync("Report8DChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Report8Ds, LogType.Insert, addedEntityId);
 
@@ -300,6 +298,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
                                 e => new { SupplierID = e.Id, SupplierName = e.Name, SupplierCode = e.Code, SupplierNo = e.SupplierNo },
                                 nameof(Report8Ds.SupplierID),
                                 nameof(CurrentAccountCards.Id),
+                                "Supplier",
                                 JoinType.Left
                             )
                               .Join<CurrentAccountCards>
@@ -346,6 +345,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
                                 e => new { SupplierID = e.Id, SupplierName = e.Name, SupplierCode = e.Code, SupplierNo = e.SupplierNo },
                                 nameof(Report8Ds.SupplierID),
                                 nameof(CurrentAccountCards.Id),
+                                "Supplier",
                                 JoinType.Left
                             )
                               .Join<CurrentAccountCards>
@@ -390,8 +390,6 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
                 if (list.Count > 0 && entity.Code != input.Code)
                 {
-                    connection.Close();
-                    connection.Dispose();
                     throw new DuplicateCodeException(L["UpdateControlManager"]);
                 }
 
