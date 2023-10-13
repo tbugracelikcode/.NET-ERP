@@ -423,4 +423,25 @@
   <data name="WorkOrderCodeLabel" xml:space="preserve">
     <value>İş Emri Kodu:</value>
   </data>
+  <data name="WorkOrderEnumBaslamadi" xml:space="preserve">
+    <value>Başlamadı</value>
+  </data>
+  <data name="WorkOrderEnumDevamEdiyor" xml:space="preserve">
+    <value>Devam Ediyor</value>
+  </data>
+  <data name="WorkOrderEnumDurduruldu" xml:space="preserve">
+    <value>Durduruldu</value>
+  </data>
+  <data name="WorkOrderEnumIptal" xml:space="preserve">
+    <value>İptal</value>
+  </data>
+  <data name="WorkOrderEnumTamamlandi" xml:space="preserve">
+    <value>Tamamlandı</value>
+  </data>
+  <data name="WorkOrderPlannedQuantity" xml:space="preserve">
+    <value>PLANLANAN MİKTAR</value>
+  </data>
+  <data name="WorkOrderProducedQuantity" xml:space="preserve">
+    <value>ÜRETİLEN MİKTAR</value>
+  </data>
 </root>

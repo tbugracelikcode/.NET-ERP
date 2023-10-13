@@ -230,11 +230,11 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     {
                         workOrder.WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
+                        workOrder.OccuredFinishDate = new DateTime(input.OperationEndDate.Year, input.OperationEndDate.Month, input.OperationEndDate.Day, input.OperationEndTime.Value.Hours, input.OperationEndTime.Value.Minutes, input.OperationEndTime.Value.Seconds);
+
                         workOrderList.Where(t => t.Id == workOrder.Id).FirstOrDefault().WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
                         int productionOrderStateCount = workOrderList.Where(t => t.WorkOrderState != WorkOrderStateEnum.Tamamlandi).Count();
-
-
 
                         if (productionOrder.Id != Guid.Empty)
                         {
@@ -283,7 +283,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     else if (workOrder.PlannedQuantity > (productionTrackings.Sum(t => t.ProducedQuantity) + input.ProducedQuantity))
                     {
 
-                        workOrder.WorkOrderState = WorkOrderStateEnum.DevamEdiyor;
+                        workOrder.WorkOrderState = WorkOrderStateEnum.DevamEdiyor; 
 
                         if (productionOrder.Id != Guid.Empty)
                         {
@@ -335,6 +335,10 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     if (workOrder.PlannedQuantity == input.ProducedQuantity)
                     {
                         workOrder.WorkOrderState = WorkOrderStateEnum.Tamamlandi;
+
+                        workOrder.OccuredStartDate = new DateTime(input.OperationStartDate.Year, input.OperationStartDate.Month, input.OperationStartDate.Day, input.OperationStartTime.Value.Hours, input.OperationStartTime.Value.Minutes, input.OperationStartTime.Value.Seconds);
+
+                        workOrder.OccuredFinishDate = new DateTime(input.OperationEndDate.Year, input.OperationEndDate.Month, input.OperationEndDate.Day, input.OperationEndTime.Value.Hours, input.OperationEndTime.Value.Minutes, input.OperationEndTime.Value.Seconds);
 
                         workOrderList.Where(t => t.Id == workOrder.Id).FirstOrDefault().WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
@@ -388,6 +392,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     {
 
                         workOrder.WorkOrderState = WorkOrderStateEnum.DevamEdiyor;
+
+                        workOrder.OccuredStartDate = new DateTime(input.OperationStartDate.Year, input.OperationStartDate.Month, input.OperationStartDate.Day, input.OperationStartTime.Value.Hours, input.OperationStartTime.Value.Minutes, input.OperationStartTime.Value.Seconds);
 
                         if (productionOrder.Id != Guid.Empty)
                         {
@@ -589,8 +595,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = workOrder.LineNr,
                             LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),
-                            OccuredFinishDate = workOrder.OccuredFinishDate,
-                            OccuredStartDate = workOrder.OccuredStartDate,
+                            OccuredFinishDate = null,
+                            OccuredStartDate = null,
                             OperationTime = workOrder.OperationTime,
                             ProductID = workOrder.ProductID.GetValueOrDefault(),
                             ProductionOrderID = workOrder.ProductionOrderID.GetValueOrDefault(),
@@ -651,7 +657,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                     }
 
-
                     if (workOrder.LineNr > 1 && workOrder.LineNr <= workOrderList.Max(t => t.LineNr))
                     {
                         var productionTrackingList = (await GetListAsync(new ListProductionTrackingsParameterDto())).Data.Where(t => t.WorkOrderID == productionTrackings.WorkOrderID && t.Id != productionTrackings.Id).ToList();
@@ -676,8 +681,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 LastModifierId = LoginedUserService.UserId,
                                 LineNr = workOrder.LineNr,
                                 LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),
-                                OccuredFinishDate = workOrder.OccuredFinishDate,
-                                OccuredStartDate = workOrder.OccuredStartDate,
+                                OccuredFinishDate = null,
+                                OccuredStartDate = productionTrackingList[0].OperationStartDate,
                                 OperationTime = workOrder.OperationTime,
                                 ProductID = workOrder.ProductID.GetValueOrDefault(),
                                 ProductionOrderID = workOrder.ProductionOrderID.GetValueOrDefault(),
@@ -756,8 +761,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 LastModifierId = LoginedUserService.UserId,
                                 LineNr = workOrder.LineNr,
                                 LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),
-                                OccuredFinishDate = workOrder.OccuredFinishDate,
-                                OccuredStartDate = workOrder.OccuredStartDate,
+                                OccuredFinishDate = null,
+                                OccuredStartDate = null,
                                 OperationTime = workOrder.OperationTime,
                                 ProductID = workOrder.ProductID.GetValueOrDefault(),
                                 ProductionOrderID = workOrder.ProductionOrderID.GetValueOrDefault(),
@@ -1292,6 +1297,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     {
                         workOrder.WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
+                        workOrder.OccuredFinishDate = new DateTime(input.OperationEndDate.Year, input.OperationEndDate.Month, input.OperationEndDate.Day, input.OperationEndTime.Value.Hours, input.OperationEndTime.Value.Minutes, input.OperationEndTime.Value.Seconds);
+
                         workOrderList.Where(t => t.Id == workOrder.Id).FirstOrDefault().WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
                         int productionOrderStateCount = workOrderList.Where(t => t.WorkOrderState != WorkOrderStateEnum.Tamamlandi).Count();
@@ -1398,6 +1405,10 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     {
                         workOrder.WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
+                        workOrder.OccuredStartDate = new DateTime(input.OperationStartDate.Year, input.OperationStartDate.Month, input.OperationStartDate.Day, input.OperationStartTime.Value.Hours, input.OperationStartTime.Value.Minutes, input.OperationStartTime.Value.Seconds);
+
+                        workOrder.OccuredFinishDate = new DateTime(input.OperationEndDate.Year, input.OperationEndDate.Month, input.OperationEndDate.Day, input.OperationEndTime.Value.Hours, input.OperationEndTime.Value.Minutes, input.OperationEndTime.Value.Seconds);
+
                         workOrderList.Where(t => t.Id == workOrder.Id).FirstOrDefault().WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
                         int productionOrderStateCount = workOrderList.Where(t => t.WorkOrderState != WorkOrderStateEnum.Tamamlandi).Count();
@@ -1450,6 +1461,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     {
 
                         workOrder.WorkOrderState = WorkOrderStateEnum.DevamEdiyor;
+
+                        workOrder.OccuredStartDate = new DateTime(input.OperationStartDate.Year, input.OperationStartDate.Month, input.OperationStartDate.Day, input.OperationStartTime.Value.Hours, input.OperationStartTime.Value.Minutes, input.OperationStartTime.Value.Seconds);
 
                         if (productionOrder.Id != Guid.Empty)
                         {

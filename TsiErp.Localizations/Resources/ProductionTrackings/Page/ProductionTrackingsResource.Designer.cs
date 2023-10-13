@@ -978,5 +978,68 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
                 return ResourceManager.GetString("WorkOrderCodeLabel", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başlamadı.
+        /// </summary>
+        public static string WorkOrderEnumBaslamadi {
+            get {
+                return ResourceManager.GetString("WorkOrderEnumBaslamadi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devam Ediyor.
+        /// </summary>
+        public static string WorkOrderEnumDevamEdiyor {
+            get {
+                return ResourceManager.GetString("WorkOrderEnumDevamEdiyor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durduruldu.
+        /// </summary>
+        public static string WorkOrderEnumDurduruldu {
+            get {
+                return ResourceManager.GetString("WorkOrderEnumDurduruldu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İptal.
+        /// </summary>
+        public static string WorkOrderEnumIptal {
+            get {
+                return ResourceManager.GetString("WorkOrderEnumIptal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tamamlandı.
+        /// </summary>
+        public static string WorkOrderEnumTamamlandi {
+            get {
+                return ResourceManager.GetString("WorkOrderEnumTamamlandi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PLANLANAN MİKTAR.
+        /// </summary>
+        public static string WorkOrderPlannedQuantity {
+            get {
+                return ResourceManager.GetString("WorkOrderPlannedQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRETİLEN MİKTAR.
+        /// </summary>
+        public static string WorkOrderProducedQuantity {
+            get {
+                return ResourceManager.GetString("WorkOrderProducedQuantity", resourceCulture);
+            }
+        }
     }
 }
