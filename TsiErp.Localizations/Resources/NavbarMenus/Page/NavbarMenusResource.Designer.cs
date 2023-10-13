@@ -1168,6 +1168,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 8D Raporları.
+        /// </summary>
+        public static string Report8DChildMenu {
+            get {
+                return ResourceManager.GetString("Report8DChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Raporlar.
         /// </summary>
         public static string ReportsMenu {

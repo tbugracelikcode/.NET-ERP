@@ -61,6 +61,15 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string _8DContextAdd {
+            get {
+                return ResourceManager.GetString("8DContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri İçin 8D Raporu Ekle.
         /// </summary>
         public static string _8DContextAddforCustomer {
@@ -106,6 +115,78 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Deposunda.
+        /// </summary>
+        public static string AtCustomerLabel {
+            get {
+                return ResourceManager.GetString("AtCustomerLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tedarikçide.
+        /// </summary>
+        public static string AtSupplierLabel {
+            get {
+                return ResourceManager.GetString("AtSupplierLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bloke.
+        /// </summary>
+        public static string BlockedLabel {
+            get {
+                return ResourceManager.GetString("BlockedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontrol Edilen.
+        /// </summary>
+        public static string CheckedLabel {
+            get {
+                return ResourceManager.GetString("CheckedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şikayet Edilen Miktar:.
+        /// </summary>
+        public static string ClaimedQuantityLabel {
+            get {
+                return ResourceManager.GetString("ClaimedQuantityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorun Yaşanan Tesis(ler):.
+        /// </summary>
+        public static string ClaimingPlantsLabel {
+            get {
+                return ResourceManager.GetString("ClaimingPlantsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TALEP AÇILIŞ TARİHİ.
+        /// </summary>
+        public static string ClaimOpeningDate {
+            get {
+                return ResourceManager.GetString("ClaimOpeningDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Talep Açılış Tarihi:.
+        /// </summary>
+        public static string ClaimOpeningDateLabel {
+            get {
+                return ResourceManager.GetString("ClaimOpeningDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -115,11 +196,731 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tarih.
+        /// </summary>
+        public static string ClosureDateLabel {
+            get {
+                return ResourceManager.GetString("ClosureDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev &amp; Departman.
+        /// </summary>
+        public static string ClosureFunctionDepartmentLabel {
+            get {
+                return ResourceManager.GetString("ClosureFunctionDepartmentLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İsim / İmza.
+        /// </summary>
+        public static string ClosureNameLabel {
+            get {
+                return ResourceManager.GetString("ClosureNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteriden 8D Kapatma.
+        /// </summary>
+        public static string ClosureTitle {
+            get {
+                return ResourceManager.GetString("ClosureTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TALEP NUMARASI.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
         /// </summary>
         public static string CodeControlManager {
             get {
                 return ResourceManager.GetString("CodeControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Talep Numarası:.
+        /// </summary>
+        public static string CodeLabel {
+            get {
+                return ResourceManager.GetString("CodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şikayet haklı mı?.
+        /// </summary>
+        public static string ComplaintLabel {
+            get {
+                return ResourceManager.GetString("ComplaintLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarih:.
+        /// </summary>
+        public static string ContainmentActionDateLabel {
+            get {
+                return ResourceManager.GetString("ContainmentActionDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ HESAP KODU.
+        /// </summary>
+        public static string CurrentAccountCardCode {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ HESAP ÜNVANI.
+        /// </summary>
+        public static string CurrentAccountCardName {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cari Hesap Kartları.
+        /// </summary>
+        public static string CurrentAccountModalTitle {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteri:.
+        /// </summary>
+        public static string CustomerLabel {
+            get {
+                return ResourceManager.GetString("CustomerLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ.
+        /// </summary>
+        public static string CustomerName {
+            get {
+                return ResourceManager.GetString("CustomerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D1 Sorun Çözen Ekip.
+        /// </summary>
+        public static string D1Title {
+            get {
+                return ResourceManager.GetString("D1Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D2 Sorun Tanımı.
+        /// </summary>
+        public static string D2Title {
+            get {
+                return ResourceManager.GetString("D2Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kapsam Belirleme Eylemi.
+        /// </summary>
+        public static string D3ContaintmentActionLabel {
+            get {
+                return ResourceManager.GetString("D3ContaintmentActionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parçalar için gerekli sınırlama eylemleri vb. a) tedarikçideki üretimde, b) depoda, c) sevkiyat deposunda, d) Müşteriye giderken, e) Müşteride.
+        /// </summary>
+        public static string D3DescriptionLabel {
+            get {
+                return ResourceManager.GetString("D3DescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygulama Tarihi.
+        /// </summary>
+        public static string D3ImplementationDateLabel {
+            get {
+                return ResourceManager.GetString("D3ImplementationDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No..
+        /// </summary>
+        public static string D3NoLabel {
+            get {
+                return ResourceManager.GetString("D3NoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Potansiyel Risk.
+        /// </summary>
+        public static string D3PotentailRiskLabel {
+            get {
+                return ResourceManager.GetString("D3PotentailRiskLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorumlu.
+        /// </summary>
+        public static string D3ResponsibleLabel {
+            get {
+                return ResourceManager.GetString("D3ResponsibleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sıralama:.
+        /// </summary>
+        public static string D3SortingLabel {
+            get {
+                return ResourceManager.GetString("D3SortingLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D3 Kapsam Belirleme Eylem(ler)i.
+        /// </summary>
+        public static string D3Title {
+            get {
+                return ResourceManager.GetString("D3Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analiz Yöntemi.
+        /// </summary>
+        public static string D4AnalysisMethodLabel {
+            get {
+                return ResourceManager.GetString("D4AnalysisMethodLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;5 Neden&quot; analiz yöntemi kullanılacak ve 8D raporuna eklenecektir (seçenek olarak &quot;Ishikawa&quot;).
+        /// </summary>
+        public static string D4DescriptionLabel {
+            get {
+                return ResourceManager.GetString("D4DescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hata sıklığı seçin..
+        /// </summary>
+        public static string D4FailureOccurancePlaceHolder {
+            get {
+                return ResourceManager.GetString("D4FailureOccurancePlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tespit Edilememe Sebebi (Hata neden tespit edilemedi?).
+        /// </summary>
+        public static string D4NonDetectionLabel {
+            get {
+                return ResourceManager.GetString("D4NonDetectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meydana Gelme (Hata neden meydana geldi?).
+        /// </summary>
+        public static string D4OccuranceLabel {
+            get {
+                return ResourceManager.GetString("D4OccuranceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paylaşım.
+        /// </summary>
+        public static string D4ShareLabel {
+            get {
+                return ResourceManager.GetString("D4ShareLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D4 Kök Sebep Analizi.
+        /// </summary>
+        public static string D4Title {
+            get {
+                return ResourceManager.GetString("D4Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygulanacak.
+        /// </summary>
+        public static string D5ImplementedLabel {
+            get {
+                return ResourceManager.GetString("D5ImplementedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No..
+        /// </summary>
+        public static string D5NoLabel {
+            get {
+                return ResourceManager.GetString("D5NoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Planlanan Uygulama Tarihi.
+        /// </summary>
+        public static string D5PlannedDateLabel {
+            get {
+                return ResourceManager.GetString("D5PlannedDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Potansiyel Düzeltici Faaliyet.
+        /// </summary>
+        public static string D5PotentialCorrectiveActionLabel {
+            get {
+                return ResourceManager.GetString("D5PotentialCorrectiveActionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorumlu.
+        /// </summary>
+        public static string D5ResponsibleLabel {
+            get {
+                return ResourceManager.GetString("D5ResponsibleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kök Sebep.
+        /// </summary>
+        public static string D5RootCauseLabel {
+            get {
+                return ResourceManager.GetString("D5RootCauseLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D5 Düzeltici Faaliyetlerin Seçimi ve Doğrulanması.
+        /// </summary>
+        public static string D5Title {
+            get {
+                return ResourceManager.GetString("D5Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sınırlama Eylemi.
+        /// </summary>
+        public static string D6ContaintmentActionLabel {
+            get {
+                return ResourceManager.GetString("D6ContaintmentActionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düzeltici Faaliyet.
+        /// </summary>
+        public static string D6CorrectiveActionLabel {
+            get {
+                return ResourceManager.GetString("D6CorrectiveActionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ** tarih, parti, seri veya teslimat fiş numarası.
+        /// </summary>
+        public static string D6DateIotSerialLabel {
+            get {
+                return ResourceManager.GetString("D6DateIotSerialLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ** İtibaren Geçerli.
+        /// </summary>
+        public static string D6EffectiveFromLabel {
+            get {
+                return ResourceManager.GetString("D6EffectiveFromLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygulama Tarihi.
+        /// </summary>
+        public static string D6ImplementionDateLabel {
+            get {
+                return ResourceManager.GetString("D6ImplementionDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No..
+        /// </summary>
+        public static string D6NoLabel {
+            get {
+                return ResourceManager.GetString("D6NoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kanıt Eklendi.
+        /// </summary>
+        public static string D6ProofAttachedLabel {
+            get {
+                return ResourceManager.GetString("D6ProofAttachedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kapsam/Karantina Eylemlerinin Kaldırılması.
+        /// </summary>
+        public static string D6RemovalActionTitleLabel {
+            get {
+                return ResourceManager.GetString("D6RemovalActionTitleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaldırılma Tarihi.
+        /// </summary>
+        public static string D6RemovalDateLabel {
+            get {
+                return ResourceManager.GetString("D6RemovalDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorumlu.
+        /// </summary>
+        public static string D6ResponsibleLabel {
+            get {
+                return ResourceManager.GetString("D6ResponsibleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kök Sebep.
+        /// </summary>
+        public static string D6RootCauseLabel {
+            get {
+                return ResourceManager.GetString("D6RootCauseLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D6 Düzeltici Faaliyetlerin Gerçekleştirilmesi ve Doğrulanması.
+        /// </summary>
+        public static string D6Title {
+            get {
+                return ResourceManager.GetString("D6Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Doğrulama Tarihi.
+        /// </summary>
+        public static string D6ValidatedOnLabel {
+            get {
+                return ResourceManager.GetString("D6ValidatedOnLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eylem.
+        /// </summary>
+        public static string D7ActionLabel {
+            get {
+                return ResourceManager.GetString("D7ActionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tamamlama Tarihi.
+        /// </summary>
+        public static string D7CompletionDateLabel {
+            get {
+                return ResourceManager.GetString("D7CompletionDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontrol Planı Revizyonu - Güncellemesi.
+        /// </summary>
+        public static string D7ControlPlanLabel {
+            get {
+                return ResourceManager.GetString("D7ControlPlanLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aşağıdaki her eylem için belgelenmiş bir kanıt eklenmelidir.
+        /// </summary>
+        public static string D7DescriptionLabel {
+            get {
+                return ResourceManager.GetString("D7DescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FMEA Dizayn Revizyonu - Güncellemesi.
+        /// </summary>
+        public static string D7DFMEALabel {
+            get {
+                return ResourceManager.GetString("D7DFMEALabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Belge Numarası.
+        /// </summary>
+        public static string D7DocumentNumberLabel {
+            get {
+                return ResourceManager.GetString("D7DocumentNumberLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarih.
+        /// </summary>
+        public static string D7LessonsLearnedDateLabel {
+            get {
+                return ResourceManager.GetString("D7LessonsLearnedDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev &amp; Departman.
+        /// </summary>
+        public static string D7LessonsLearnedFuctionDepartmentLabel {
+            get {
+                return ResourceManager.GetString("D7LessonsLearnedFuctionDepartmentLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kanıt Eklendi.
+        /// </summary>
+        public static string D7LessonsLearnedProofAttachedLabel {
+            get {
+                return ResourceManager.GetString("D7LessonsLearnedProofAttachedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Öğrenilen Dersler Kaydedildi.
+        /// </summary>
+        public static string D7LessonsLearnedRecordedLabel {
+            get {
+                return ResourceManager.GetString("D7LessonsLearnedRecordedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bağlantılı.
+        /// </summary>
+        public static string D7LessonsLearnedRelevantLabel {
+            get {
+                return ResourceManager.GetString("D7LessonsLearnedRelevantLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorumlu.
+        /// </summary>
+        public static string D7LessonsLearnedResponsibleLabel {
+            get {
+                return ResourceManager.GetString("D7LessonsLearnedResponsibleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Öğrenilen Dersler.
+        /// </summary>
+        public static string D7LessonsLearnedTitle {
+            get {
+                return ResourceManager.GetString("D7LessonsLearnedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FMEA Proses Revizyonu - Güncellemesi.
+        /// </summary>
+        public static string D7PFMEALabel {
+            get {
+                return ResourceManager.GetString("D7PFMEALabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kanıt Eklendi.
+        /// </summary>
+        public static string D7ProofAttachedLabel {
+            get {
+                return ResourceManager.GetString("D7ProofAttachedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bağlantılı.
+        /// </summary>
+        public static string D7RelevantLabel {
+            get {
+                return ResourceManager.GetString("D7RelevantLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorumlu.
+        /// </summary>
+        public static string D7ResponsibleLabel {
+            get {
+                return ResourceManager.GetString("D7ResponsibleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Revizyon - Güncelleme.
+        /// </summary>
+        public static string D7Revision1Label {
+            get {
+                return ResourceManager.GetString("D7Revision1Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Revizyon - Güncelleme.
+        /// </summary>
+        public static string D7Revision2Label {
+            get {
+                return ResourceManager.GetString("D7Revision2Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Revizyon - Güncelleme.
+        /// </summary>
+        public static string D7Revision3Label {
+            get {
+                return ResourceManager.GetString("D7Revision3Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D7 Tekrarlamanın Önlenmesi.
+        /// </summary>
+        public static string D7Title {
+            get {
+                return ResourceManager.GetString("D7Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Versiyon.
+        /// </summary>
+        public static string D7VersionLabel {
+            get {
+                return ResourceManager.GetString("D7VersionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarih.
+        /// </summary>
+        public static string D8DateLabel {
+            get {
+                return ResourceManager.GetString("D8DateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İsim / Yükümlü İmzası.
+        /// </summary>
+        public static string D8SponsorLabel {
+            get {
+                return ResourceManager.GetString("D8SponsorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İsim / Ekip Lideri İmzası.
+        /// </summary>
+        public static string D8TeamLeaderLabel {
+            get {
+                return ResourceManager.GetString("D8TeamLeaderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D8 Sonuç ve Ekibin Başarısının Teyit Edilmesi.
+        /// </summary>
+        public static string D8Title {
+            get {
+                return ResourceManager.GetString("D8Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Son Yayınlanma Tarihi:.
+        /// </summary>
+        public static string DateFinalReleaseLabel {
+            get {
+                return ResourceManager.GetString("DateFinalReleaseLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D3 Tarih Ara Raporu:.
+        /// </summary>
+        public static string DateInterimReportD3Label {
+            get {
+                return ResourceManager.GetString("DateInterimReportD3Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D5 Tarih Ara Raporu:.
+        /// </summary>
+        public static string DateInterimReportD5Label {
+            get {
+                return ResourceManager.GetString("DateInterimReportD5Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hatalı.
+        /// </summary>
+        public static string DefectLabel {
+            get {
+                return ResourceManager.GetString("DefectLabel", resourceCulture);
             }
         }
         
@@ -160,6 +961,60 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Teslim Edilen Miktar:.
+        /// </summary>
+        public static string DeliveredQuantityLabel {
+            get {
+                return ResourceManager.GetString("DeliveredQuantityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteri Kararı.
+        /// </summary>
+        public static string DesicionTitle {
+            get {
+                return ResourceManager.GetString("DesicionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hata(lar) - Sorun(lar):.
+        /// </summary>
+        public static string DeviationsProblemsLabel {
+            get {
+                return ResourceManager.GetString("DeviationsProblemsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hata(lar) - Belirti(ler):.
+        /// </summary>
+        public static string DeviationsSymptomsLabel {
+            get {
+                return ResourceManager.GetString("DeviationsSymptomsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çizim İndeksi:.
+        /// </summary>
+        public static string DrawingIndexLabel {
+            get {
+                return ResourceManager.GetString("DrawingIndexLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÇİZİM NO.
+        /// </summary>
+        public static string DrawingNog {
+            get {
+                return ResourceManager.GetString("DrawingNog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 8D Raporları.
         /// </summary>
         public static string EditModalTitle {
@@ -192,6 +1047,33 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         public static string ExportTitle {
             get {
                 return ResourceManager.GetString("ExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İlk Defa Yapılan Bir Hata.
+        /// </summary>
+        public static string FirstD4 {
+            get {
+                return ResourceManager.GetString("FirstD4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edilmediyse, güncelleme gereken tarih.
+        /// </summary>
+        public static string IfNoLabel {
+            get {
+                return ResourceManager.GetString("IfNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nakliyede.
+        /// </summary>
+        public static string InTransitLabel {
+            get {
+                return ResourceManager.GetString("InTransitLabel", resourceCulture);
             }
         }
         
@@ -232,6 +1114,168 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hayır.
+        /// </summary>
+        public static string NoD2 {
+            get {
+                return ResourceManager.GetString("NoD2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hayır.
+        /// </summary>
+        public static string NoD5 {
+            get {
+                return ResourceManager.GetString("NoD5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hayır.
+        /// </summary>
+        public static string NoD6 {
+            get {
+                return ResourceManager.GetString("NoD6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hayır.
+        /// </summary>
+        public static string NoD7 {
+            get {
+                return ResourceManager.GetString("NoD7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hayır.
+        /// </summary>
+        public static string NoD8 {
+            get {
+                return ResourceManager.GetString("NoD8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Etkilenen Diğer Müşteri Tesisleri:.
+        /// </summary>
+        public static string OtherAffectedPlantsLabel {
+            get {
+                return ResourceManager.GetString("OtherAffectedPlantsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parça Numarası:.
+        /// </summary>
+        public static string PartNumberLabel {
+            get {
+                return ResourceManager.GetString("PartNumberLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRÜN KODU.
+        /// </summary>
+        public static string ProductCode {
+            get {
+                return ResourceManager.GetString("ProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Tesisi:.
+        /// </summary>
+        public static string ProductionPlantLabel {
+            get {
+                return ResourceManager.GetString("ProductionPlantLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Kartları.
+        /// </summary>
+        public static string ProductModalTitle {
+            get {
+                return ResourceManager.GetString("ProductModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parça Tanımı:.
+        /// </summary>
+        public static string ProductNameLabel {
+            get {
+                return ResourceManager.GetString("ProductNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string ProductPopupGridCode {
+            get {
+                return ResourceManager.GetString("ProductPopupGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK AÇIKLAMASI.
+        /// </summary>
+        public static string ProductPopupGridName {
+            get {
+                return ResourceManager.GetString("ProductPopupGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tekrarlayan Hata.
+        /// </summary>
+        public static string RepetitiveD4 {
+            get {
+                return ResourceManager.GetString("RepetitiveD4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8D Raporu Revizyon:.
+        /// </summary>
+        public static string Report8DRevisionLabel {
+            get {
+                return ResourceManager.GetString("Report8DRevisionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8D Raporu Kabul Edildi.
+        /// </summary>
+        public static string ReportAcceptedLabel {
+            get {
+                return ResourceManager.GetString("ReportAcceptedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parça Kontrol Sonucu (adet):.
+        /// </summary>
+        public static string ResultofPartLabel {
+            get {
+                return ResourceManager.GetString("ResultofPartLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to REVİZYON NO.
+        /// </summary>
+        public static string RevisionNo {
+            get {
+                return ResourceManager.GetString("RevisionNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -241,11 +1285,299 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-Posta.
+        /// </summary>
+        public static string SponsorEMailLabel {
+            get {
+                return ResourceManager.GetString("SponsorEMailLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev &amp; Departman.
+        /// </summary>
+        public static string SponsorFunctionDepartmentLabel {
+            get {
+                return ResourceManager.GetString("SponsorFunctionDepartmentLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yükümlü.
+        /// </summary>
+        public static string SponsorLabel {
+            get {
+                return ResourceManager.GetString("SponsorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Telefon.
+        /// </summary>
+        public static string SponsorPhoneLabel {
+            get {
+                return ResourceManager.GetString("SponsorPhoneLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tedarikçi:.
+        /// </summary>
+        public static string SupplierLabel {
+            get {
+                return ResourceManager.GetString("SupplierLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TEDARİKÇİ.
+        /// </summary>
+        public static string SupplierName {
+            get {
+                return ResourceManager.GetString("SupplierName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tedarikçi Ünvanı:.
+        /// </summary>
+        public static string SupplierNameLabel {
+            get {
+                return ResourceManager.GetString("SupplierNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tedarikçi Numarası:.
+        /// </summary>
+        public static string SupplierNoLabel {
+            get {
+                return ResourceManager.GetString("SupplierNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteri Kararı.
+        /// </summary>
+        public static string Tab10Name {
+            get {
+                return ResourceManager.GetString("Tab10Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detaylar.
+        /// </summary>
+        public static string Tab1Name {
+            get {
+                return ResourceManager.GetString("Tab1Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D1 Sorun Çözen Ekip.
+        /// </summary>
+        public static string Tab2Name {
+            get {
+                return ResourceManager.GetString("Tab2Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D2 Sorun Tanımı.
+        /// </summary>
+        public static string Tab3Name {
+            get {
+                return ResourceManager.GetString("Tab3Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D3 Kapsam Belirleme Eylem(ler)i.
+        /// </summary>
+        public static string Tab4Name {
+            get {
+                return ResourceManager.GetString("Tab4Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D4 Kök Sebep Analizi.
+        /// </summary>
+        public static string Tab5Name {
+            get {
+                return ResourceManager.GetString("Tab5Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D5 Düzeltici Faaliyetlerin Seçimi ve Doğrulanması.
+        /// </summary>
+        public static string Tab6Name {
+            get {
+                return ResourceManager.GetString("Tab6Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D6 Düzeltici Faaliyetlerin Gerçekleştirilmesi ve Doğrulanması.
+        /// </summary>
+        public static string Tab7Name {
+            get {
+                return ResourceManager.GetString("Tab7Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D7 Tekrarlamanın Önlenmesi.
+        /// </summary>
+        public static string Tab8Name {
+            get {
+                return ResourceManager.GetString("Tab8Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to D8 Sonuç ve Ekibin Başarısının Teyit Edilmesi.
+        /// </summary>
+        public static string Tab9Name {
+            get {
+                return ResourceManager.GetString("Tab9Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-Posta.
+        /// </summary>
+        public static string TeamLeaderEMailLabel {
+            get {
+                return ResourceManager.GetString("TeamLeaderEMailLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev &amp; Departman.
+        /// </summary>
+        public static string TeamLeaderFunctionDepartmentLabel {
+            get {
+                return ResourceManager.GetString("TeamLeaderFunctionDepartmentLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekip Lideri.
+        /// </summary>
+        public static string TeamLeaderLabel {
+            get {
+                return ResourceManager.GetString("TeamLeaderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Telefon.
+        /// </summary>
+        public static string TeamLeaderPhoneLabel {
+            get {
+                return ResourceManager.GetString("TeamLeaderPhoneLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-Posta.
+        /// </summary>
+        public static string TeamMemberEMailLabel {
+            get {
+                return ResourceManager.GetString("TeamMemberEMailLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev &amp; Departman.
+        /// </summary>
+        public static string TeamMemberFunctionDepartmentLabel {
+            get {
+                return ResourceManager.GetString("TeamMemberFunctionDepartmentLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekip Üyeleri.
+        /// </summary>
+        public static string TeamMemberLabel {
+            get {
+                return ResourceManager.GetString("TeamMemberLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Telefon.
+        /// </summary>
+        public static string TeamMemberPhoneLabel {
+            get {
+                return ResourceManager.GetString("TeamMemberPhoneLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teknik Resimler.
+        /// </summary>
+        public static string TechDrawModalTitle {
+            get {
+                return ResourceManager.GetString("TechDrawModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çizim Numarası:.
+        /// </summary>
+        public static string TechnicalDrawingNoLabel {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Konu Başlığı:.
+        /// </summary>
+        public static string TopicTitleLabel {
+            get {
+                return ResourceManager.GetString("TopicTitleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8D Raporları.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kalite Kontrol.
         /// </summary>
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün seçmeden teknik resim seçilemez..
+        /// </summary>
+        public static string UIWarningProductMessage {
+            get {
+                return ResourceManager.GetString("UIWarningProductMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningProductTitle {
+            get {
+                return ResourceManager.GetString("UIWarningProductTitle", resourceCulture);
             }
         }
         
@@ -300,6 +1632,60 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         public static string ValidatorSupplierID {
             get {
                 return ResourceManager.GetString("ValidatorSupplierID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen teknik resim seçin..
+        /// </summary>
+        public static string ValidatorTechnicalDrawingID {
+            get {
+                return ResourceManager.GetString("ValidatorTechnicalDrawingID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evet.
+        /// </summary>
+        public static string YesD2 {
+            get {
+                return ResourceManager.GetString("YesD2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evet.
+        /// </summary>
+        public static string YesD5 {
+            get {
+                return ResourceManager.GetString("YesD5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evet.
+        /// </summary>
+        public static string YesD6 {
+            get {
+                return ResourceManager.GetString("YesD6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evet.
+        /// </summary>
+        public static string YesD7 {
+            get {
+                return ResourceManager.GetString("YesD7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evet.
+        /// </summary>
+        public static string YesD8 {
+            get {
+                return ResourceManager.GetString("YesD8", resourceCulture);
             }
         }
     }
