@@ -4,6 +4,7 @@ using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.QualityControl.CalibrationRecord.Dtos;
 using TsiErp.Entities.Entities.QualityControl.EquipmentRecord.Dtos;
@@ -38,6 +39,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
         string Ia3 = "IA3";
         string Ia4 = "IA4";
         string Ia5 = "IA5";
+        bool isCustomer = false;
+        bool isSupplier = false;
 
         #endregion
         protected override async void OnInitialized()
@@ -51,7 +54,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
             DataSource = new SelectReport8DsDto()
             {
                 ClaimOpeningDate = DateTime.Now,
-                Code = FicheNumbersAppService.GetFicheNumberAsync("Report8DChildMenu")
+                Code = FicheNumbersAppService.GetFicheNumberAsync("Report8DChildMenu"),
+                State_ = L["WaitingState"]
             };
 
             #region Combobox Localization İşlemleri
@@ -200,12 +204,86 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            //GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforSupplier"], Id = "newsupplier" });
-            //GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforCustomer"], Id = "newcustomer" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforSupplier"], Id = "newsupplier" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforCustomer"], Id = "newcustomer" });
             GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextState"], Id = "state" });
             GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextDelete"], Id = "delete" });
             GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextRefresh"], Id = "refresh" });
+        }
+
+        public override async void OnContextMenuClick(ContextMenuClickEventArgs<ListReport8DsDto> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "newsupplier":
+                    await BeforeInsertAsync();
+                    var customer = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => t.IsSoftwareCompanyInformation == true).FirstOrDefault();
+                    DataSource.CustomerID = customer.Id;
+                    DataSource.CustomerName = customer.Name;
+                    DataSource.CustomerCode = customer.Code;
+                    isCustomer = false;
+                    isSupplier = true;
+                    break;
+
+                case "newcustomer":
+                    await BeforeInsertAsync();
+                    var supplier = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => t.IsSoftwareCompanyInformation == true).FirstOrDefault();
+                    DataSource.SupplierID = supplier.Id;
+                    DataSource.SupplierCode = supplier.Code;
+                    DataSource.SupplierName = supplier.Name;
+                    DataSource.SupplierNo = supplier.SupplierNo;
+                    isCustomer = true;
+                    isSupplier = false;
+                    break;
+
+                case "state":
+                    SelectReport8DsDto result;
+
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    DataSource.State_ = L["CompletedState"];
+                    var updateInput = ObjectMapper.Map<SelectReport8DsDto, UpdateReport8DsDto>(DataSource);
+                    result = (await UpdateAsync(updateInput)).Data;
+
+                    if (result == null)
+                    {
+                        return;
+                    }
+                    await GetListDataSourceAsync();
+                    await _grid.Refresh();
+                    break;
+
+                case "changed":
+                    IsChanged = true;
+                    SelectFirstDataRow = false;
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    ShowEditPage();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "delete":
+
+                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+
+
+                    if (res == true)
+                    {
+                        SelectFirstDataRow = false;
+                        await DeleteAsync(args.RowInfo.RowData.Id);
+                        await GetListDataSourceAsync();
+                        await InvokeAsync(StateHasChanged);
+                    }
+
+                    break;
+
+                case "refresh":
+                    await GetListDataSourceAsync();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         #region Kod ButtonEdit
@@ -430,7 +508,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
         public async void TechnicalDrawingButtonClickEvent()
         {
-            if(DataSource.ProductID == null ||DataSource.ProductID == Guid.Empty)
+            if (DataSource.ProductID == null || DataSource.ProductID == Guid.Empty)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningProductTitle"], L["UIWarningProductMessage"]);
             }
@@ -438,7 +516,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
             {
 
                 SelectTechnicalDrawingPopupVisible = true;
-                TechnicalDrawingList = (await TechnicalDrawingsAppService.GetListAsync(new ListTechnicalDrawingsParameterDto())).Data.Where(t=>t.ProductID == DataSource.ProductID).ToList();
+                TechnicalDrawingList = (await TechnicalDrawingsAppService.GetListAsync(new ListTechnicalDrawingsParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID).ToList();
             }
             await InvokeAsync(StateHasChanged);
         }

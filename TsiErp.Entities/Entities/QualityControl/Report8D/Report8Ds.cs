@@ -15,6 +15,11 @@ namespace TsiErp.Entities.Entities.QualityControl.Report8D
         /// 8D Kodu
         /// </summary>
         public string Code { get; set; }
+        [SqlColumnType(MaxLength = 250, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Durum
+        /// </summary>
+        public string State_ { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Tedarikçi ID

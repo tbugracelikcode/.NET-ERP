@@ -52,6 +52,7 @@
                                 <GridColumn Field=@nameof(ListReport8DsDto.SupplierName) HeaderText="@L["SupplierName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 <GridColumn Field=@nameof(ListReport8DsDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 <GridColumn Field=@nameof(ListReport8DsDto.ClaimOpeningDate) Format="dd.MM.yyyy" Type="ColumnType.Date" HeaderText="@L["ClaimOpeningDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListReport8DsDto.State_) HeaderText="@L["State_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                             </GridColumns>
                         </SfGrid>
                     </CardContent>
@@ -175,7 +176,7 @@
 
                                                 <DxGridLayoutItem Row="1" Column="5">
                                                     <Template>
-                                                        <SfTextBox @ref="@SuppliersNameButtonEdit" Created="@SuppliersNameOnCreateIcon" @bind-Value="DataSource.SupplierName" ShowClearButton=true ValueChange="SuppliersOnValueChange"></SfTextBox>
+                                                        <SfTextBox Enabled="@isSupplier" @ref="@SuppliersNameButtonEdit" Created="@SuppliersNameOnCreateIcon" @bind-Value="DataSource.SupplierName" ShowClearButton=true ValueChange="SuppliersOnValueChange"></SfTextBox>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -199,7 +200,7 @@
 
                                                 <DxGridLayoutItem Row="2" Column="5">
                                                     <Template>
-                                                        <SfTextBox @ref="@CustomersNameButtonEdit" Created="@CustomersNameOnCreateIcon" @bind-Value="DataSource.CustomerName" ShowClearButton=true ValueChange="CustomersOnValueChange"></SfTextBox>
+                                                        <SfTextBox Enabled="@isCustomer" @ref="@CustomersNameButtonEdit" Created="@CustomersNameOnCreateIcon" @bind-Value="DataSource.CustomerName" ShowClearButton=true ValueChange="CustomersOnValueChange"></SfTextBox>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
