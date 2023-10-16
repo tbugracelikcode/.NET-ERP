@@ -30,16 +30,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder
         /// Üretim Emri Durumu
         /// </summary>
         public ProductionOrderStateEnum ProductionOrderState { get; set; }
-        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
-        /// <summary>
-        /// Başlangıç Tarihi
-        /// </summary>
-        public DateTime? StartDate { get; set; }
-        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
-        /// <summary>
-        /// Bitiş Tarihi
-        /// </summary>
-        public DateTime? EndDate { get; set; }
+
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Planlanan Miktar

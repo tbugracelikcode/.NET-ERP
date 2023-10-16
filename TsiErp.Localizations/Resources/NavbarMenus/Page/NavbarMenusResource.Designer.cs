@@ -358,6 +358,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Final Kontrol Planları.
+        /// </summary>
+        public static string FinalControlPlans {
+            get {
+                return ResourceManager.GetString("FinalControlPlans", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Final Kontrol Kayıtları.
         /// </summary>
         public static string FinalControlRecordsChildMenu {

@@ -2,7 +2,7 @@
 @layout MainLayout
 
 
-@inject IStringLocalizer<ProductionOrdersResource> L 
+@inject IStringLocalizer<ProductionOrdersResource> L
 @inherits BaseListPage<SelectProductionOrdersDto, ListProductionOrdersDto, CreateProductionOrdersDto, UpdateProductionOrdersDto, ListProductionOrdersParameterDto>
 
 
@@ -35,18 +35,48 @@ else
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                 <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListProductionOrdersDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                
+
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.FicheNo) HeaderText="@L["FicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListProductionOrdersDto.ProductionOrderState) HeaderText="@L["ProductionOrderState"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionOrdersDto.StartDate) Format="dd.MM.yyyy" HeaderText="@L["StartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionOrdersDto.EndDate) Format="dd.MM.yyyy" HeaderText="@L["EndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionOrdersDto.PlannedQuantity) HeaderText="@L["PlannedQuantity"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionOrdersDto.ProducedQuantity) HeaderText="@L["ProducedQuantity"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.ProductionOrderState) HeaderText="@L["ProductionOrderState"]" TextAlign="TextAlign.Center" Width="120">
+
+                                        <Template>
+                                            @{
+                                                ProductionOrderStateEnum stateEnumform = (context as ListProductionOrdersDto).ProductionOrderState;
+                                                string stateForm = "";
+
+                                                if (stateEnumform == ProductionOrderStateEnum.Baslamadi)
+                                                {
+                                                    stateForm = L["EnumBaslamadi"];
+                                                }
+                                                else if (stateEnumform == ProductionOrderStateEnum.Durduruldu)
+                                                {
+                                                    stateForm = L["EnumDurduruldu"];
+                                                }
+                                                else if (stateEnumform == ProductionOrderStateEnum.Iptal)
+                                                {
+                                                    stateForm = L["EnumIptal"];
+                                                }
+                                                else if (stateEnumform == ProductionOrderStateEnum.DevamEdiyor)
+                                                {
+                                                    stateForm = L["EnumDevamEdiyor"];
+                                                }
+                                                else if (stateEnumform == ProductionOrderStateEnum.Tamamlandi)
+                                                {
+                                                    stateForm = L["EnumTamamlandi"];
+                                                }
+                                            }
+                                            @stateForm
+                                        </Template>
+
+                                    </GridColumn>
+                                    
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.PlannedQuantity) HeaderText="@L["PlannedQuantity"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120" Format="N0"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.ProducedQuantity) HeaderText="@L["ProducedQuantity"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120" Format="N0"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.CustomerCode) HeaderText="@L["CustomerCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.OrderFicheNo) HeaderText="@L["OrderFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.FinishedProductCode) HeaderText="@L["FinishedProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
