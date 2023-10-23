@@ -528,8 +528,8 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
 
             var query = queryFactory.Query().From(Tables.OperationalQualityPlans).Update(new UpdateOperationalQualityPlansDto
             {
-                CreationTime = entity.CreationTime.Value,
-                CreatorId = entity.CreatorId.Value,
+                CreationTime = entity.CreationTime.GetValueOrDefault(),
+                CreatorId = entity.CreatorId.GetValueOrDefault(),
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -541,7 +541,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                 Description_ = entity.Description_,
                 DocumentNumber = entity.DocumentNumber,
                 ProductID = entity.ProductID,
-                ProductsOperationID = entity.ProductsOperationID,
+                ProductsOperationID = entity.ProductsOperationID
 
             }).Where(new { Id = id }, false, false, "");
 

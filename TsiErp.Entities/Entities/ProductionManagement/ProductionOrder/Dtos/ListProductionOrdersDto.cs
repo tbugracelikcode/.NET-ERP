@@ -52,6 +52,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
 
 
         /// <summary>
+        /// Mamül ID
+        /// </summary>
+        public Guid? FinishedProductID { get; set; }
+
+        /// <summary>
         /// Mamül Kodu
         /// </summary>
         public string FinishedProductCode { get; set; }

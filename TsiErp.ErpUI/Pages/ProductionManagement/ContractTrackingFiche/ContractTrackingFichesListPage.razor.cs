@@ -42,6 +42,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectContractTrackingFicheLinesDto> GridLineList = new List<SelectContractTrackingFicheLinesDto>();
+        List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
         private bool LineCrudPopup = false;
 
@@ -266,85 +267,14 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
 
         #endregion
 
-        #region Cari Hesap ButtonEdit
-
-        SfTextBox CurrentAccountCardsCodeButtonEdit;
-        SfTextBox CurrentAccountCardsCustomerCodeButtonEdit;
-        SfTextBox CurrentAccountCardsNameButtonEdit;
-        bool SelectCurrentAccountCardsPopupVisible = false;
-        List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
-
-        public async Task CurrentAccountCardsCodeOnCreateIcon()
-        {
-            var CurrentAccountCardsCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsCodeButtonClickEvent);
-            await CurrentAccountCardsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsCodeButtonClick } });
-        }
-
-        public async void CurrentAccountCardsCodeButtonClickEvent()
-        {
-            SelectCurrentAccountCardsPopupVisible = true;
-            await GetCurrentAccountCardsList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public async Task CurrentAccountCardsCustomerCodeOnCreateIcon()
-        {
-            var CurrentAccountCardsCustomerCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsCustomerCodeButtonClickEvent);
-            await CurrentAccountCardsCustomerCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsCustomerCodeButtonClick } });
-        }
-
-        public async void CurrentAccountCardsCustomerCodeButtonClickEvent()
-        {
-            SelectCurrentAccountCardsPopupVisible = true;
-            await GetCurrentAccountCardsList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public async Task CurrentAccountCardsNameOnCreateIcon()
-        {
-            var CurrentAccountCardsNameButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsNameButtonClickEvent);
-            await CurrentAccountCardsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsNameButtonClick } });
-        }
-
-        public async void CurrentAccountCardsNameButtonClickEvent()
-        {
-            SelectCurrentAccountCardsPopupVisible = true;
-            await GetCurrentAccountCardsList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public void CurrentAccountCardsOnValueChange(ChangedEventArgs args)
-        {
-            if (args.Value == null)
-            {
-                DataSource.CurrentAccountCardID = Guid.Empty;
-                DataSource.CurrentAccountCardCode = string.Empty;
-                DataSource.CurrentAccountCardName = string.Empty;
-                DataSource.CustomerCode = string.Empty;
-            }
-        }
-
-        public async void CurrentAccountCardsDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
-        {
-            var selectedUnitSet = args.RowData;
-
-            if (selectedUnitSet != null)
-            {
-                DataSource.CurrentAccountCardID = selectedUnitSet.Id;
-                DataSource.CurrentAccountCardCode = selectedUnitSet.Code;
-                DataSource.CurrentAccountCardName = selectedUnitSet.Name;
-                DataSource.CustomerCode = selectedUnitSet.CustomerCode;
-                SelectCurrentAccountCardsPopupVisible = false;
-                await InvokeAsync(StateHasChanged);
-            }
-        }
-        #endregion
-
+        
         #region Üretim Emri ButtonEdit
 
         SfTextBox ProductionOrdersButtonEdit;
         bool SelectProductionOrdersPopupVisible = false;
         List<ListProductionOrdersDto> ProductionOrdersList = new List<ListProductionOrdersDto>();
+
+        public Guid FinishedProductID  { get; set; }
 
         public async Task ProductionOrdersOnCreateIcon()
         {
@@ -384,6 +314,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                 DataSource.CustomerCode = selectedProductionOrder.CustomerCode;
                 DataSource.CurrentAccountCardCode = selectedProductionOrder.CurrentAccountCode;
                 DataSource.CurrentAccountCardName = selectedProductionOrder.CurrentAccountName;
+                FinishedProductID = selectedProductionOrder.FinishedProductID.GetValueOrDefault();
                 SelectProductionOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -461,12 +392,12 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
 
                 }
 
+                await _LineGrid.Refresh();
                 SelectContractQualityPlansPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
         }
         #endregion
-
 
         #region GetList Metotları
 
@@ -474,20 +405,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
         {
             ProductionOrdersList = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.ToList();
         }
-        private async Task GetCurrentAccountCardsList()
-        {
-            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => !string.IsNullOrEmpty(t.CustomerCode)).ToList();
-        }
 
         private async Task GetContractQualityPlansList()
         {
-            ContractQualityPlansList = (await ContractQualityPlansAppService.GetListAsync(new ListContractQualityPlansParameterDto())).Data.Where(t => t.CurrrentAccountCardID == DataSource.CurrentAccountCardID).ToList();
+            ContractQualityPlansList = (await ContractQualityPlansAppService.GetListAsync(new ListContractQualityPlansParameterDto())).Data.Where(t => t.ProductID == FinishedProductID).ToList();
         }
 
-
-
         #endregion
-
 
         #region Kod ButtonEdit
 

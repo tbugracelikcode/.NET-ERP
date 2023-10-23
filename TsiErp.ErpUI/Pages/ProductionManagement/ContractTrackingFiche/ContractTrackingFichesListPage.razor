@@ -78,7 +78,7 @@ else
          Width="53%"
          Height="87%"
          MinWidth="1000px"
-         MinHeight="980px"
+         MinHeight="800px"
          HeaderCssClass="HeaderTitleCss"
          Showing="CrudModalShowing"
          Closing="CrudModalClosing">
@@ -87,7 +87,7 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="12%" />
                     <DxGridLayoutRow Height="9%" />
                     <DxGridLayoutRow Height="9%" />
                     <DxGridLayoutRow Height="9%" />
@@ -139,15 +139,6 @@ else
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["CurrentAccountCardNameLabel"] </strong></label><br />
-                     @*        <SfTextBox @ref="@CurrentAccountCardsNameButtonEdit" Created="@CurrentAccountCardsNameOnCreateIcon" @bind-Value="DataSource.CurrentAccountCardName" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox> *@
-                                <SfTextBox CssClass="TSITxtBox" Enabled=false @bind-Value="DataSource.CurrentAccountCardName" ></SfTextBox>
-
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="2" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["CurrentAccountCardCustomerCodeLabel"] </strong></label><br />
                             @* <SfTextBox @ref="@CurrentAccountCardsCustomerCodeButtonEdit" Created="@CurrentAccountCardsCustomerCodeOnCreateIcon" @bind-Value="DataSource.CustomerCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox> *@
@@ -224,61 +215,7 @@ else
 
 }
 
-                
-@if (SelectCurrentAccountCardsPopupVisible)
-{
-    <DxPopup @bind-Visible="SelectCurrentAccountCardsPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["CurrentAccountModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
-        <BodyTemplate>
-
-            <DevGridLayout ColumnCount="1" RowCount="1">
-                <GridLayoutItems>
-                    <DxGridLayoutItem Row="1" Column="1">
-                        <Template>
-                            <SfCard class="TSIGridCards">
-
-                                <CardContent>
-                                    <SfGrid ID="CurrentAccountCardsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CurrentAccountCardsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
-                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-
-                                        <GridEvents OnRecordDoubleClick="@CurrentAccountCardsDoubleClickHandler" TValue="ListCurrentAccountCardsDto"></GridEvents>
-                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                        <GridPageSettings PageSizes="true"></GridPageSettings>
-                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                        <GridColumns>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Code) HeaderText="@L["CurrentAccountModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Name) HeaderText="@L["CurrentAccountModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.CustomerCode) HeaderText="@L["CurrentAccountModalGridCustomerCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                          
-                                        </GridColumns>
-
-                                    </SfGrid>
-                                </CardContent>
-                                <CardFooter>
-                                </CardFooter>
-                            </SfCard>
-                        </Template>
-                    </DxGridLayoutItem>
-                </GridLayoutItems>
-            </DevGridLayout>
-
-        </BodyTemplate>
-        <FooterContentTemplate>
-        </FooterContentTemplate>
-    </DxPopup>
-}
-
-                                        
+                                  
 @if (SelectProductionOrdersPopupVisible)
 {
     <DxPopup @bind-Visible="SelectProductionOrdersPopupVisible"
@@ -310,9 +247,48 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
+
                                             <GridColumn Field=@nameof(ListProductionOrdersDto.FicheNo) HeaderText="@L["ProductionOrderNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                            <GridColumn Field=@nameof(ListProductionOrdersDto.ProductionOrderState) HeaderText="@L["ProductionOrderState"]" TextAlign="TextAlign.Center" Width="120">
+
+                                        <Template Context="productionOrderContext">
+                                            @{
+                                                        ProductionOrderStateEnum stateEnumform = (productionOrderContext as ListProductionOrdersDto).ProductionOrderState;
+                                                string stateForm = "";
+
+                                                if (stateEnumform == ProductionOrderStateEnum.Baslamadi)
+                                                {
+                                                    stateForm = L["EnumBaslamadi"];
+                                                }
+                                                else if (stateEnumform == ProductionOrderStateEnum.Durduruldu)
+                                                {
+                                                    stateForm = L["EnumDurduruldu"];
+                                                }
+                                                else if (stateEnumform == ProductionOrderStateEnum.Iptal)
+                                                {
+                                                    stateForm = L["EnumIptal"];
+                                                }
+                                                else if (stateEnumform == ProductionOrderStateEnum.DevamEdiyor)
+                                                {
+                                                    stateForm = L["EnumDevamEdiyor"];
+                                                }
+                                                else if (stateEnumform == ProductionOrderStateEnum.Tamamlandi)
+                                                {
+                                                    stateForm = L["EnumTamamlandi"];
+                                                }
+                                            }
+                                            @stateForm
+                                        </Template>
+
+                                    </GridColumn>
+
                                             <GridColumn Field=@nameof(ListProductionOrdersDto.FinishedProductCode) HeaderText="@L["FinishedProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                           
+                                            <GridColumn Field=@nameof(ListProductionOrdersDto.PlannedQuantity) HeaderText="@L["PlannedQuantity"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120" Format="N0"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.ProducedQuantity) HeaderText="@L["ProducedQuantity"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120" Format="N0"></GridColumn>
+
                                         </GridColumns>
 
                                     </SfGrid>
@@ -331,7 +307,7 @@ else
     </DxPopup>
 }
 
- @if (SelectContractQualityPlansPopupVisible)
+@if (SelectContractQualityPlansPopupVisible)
 {
     <DxPopup @bind-Visible="SelectContractQualityPlansPopupVisible"
          ShowFooter="true"
@@ -362,8 +338,10 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListContractQualityPlansDto.DocumentNumber) HeaderText="@L["CurrentAccountModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListContractQualityPlansDto.Description_) HeaderText="@L["CurrentAccountModalGridName"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
+
+                                            <GridColumn Field=@nameof(ListContractQualityPlansDto.CurrrentAccountCardCode) HeaderText="@L["CurrentAccountModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                            <GridColumn Field=@nameof(ListContractQualityPlansDto.CurrrentAccountCardName) HeaderText="@L["CurrentAccountModalGridName"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
                                           
                                         </GridColumns>
 

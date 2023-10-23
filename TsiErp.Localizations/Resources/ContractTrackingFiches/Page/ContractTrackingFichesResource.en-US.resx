@@ -136,19 +136,22 @@
     <value>JOB DEFINITION</value>
   </data>
   <data name="ContractQualityPlanDocumentNumberLabel" xml:space="preserve">
-    <value>Job Definition:</value>
+    <value>Quality Plan:</value>
+  </data>
+  <data name="ContractQualityPlanModalTitle" xml:space="preserve">
+    <value>Contract Quality Plans</value>
   </data>
   <data name="ContractTrackingFicheContextAdd" xml:space="preserve">
-    <value>Ekle</value>
+    <value>Add</value>
   </data>
   <data name="ContractTrackingFicheContextChange" xml:space="preserve">
-    <value>Değiştir</value>
+    <value>Change</value>
   </data>
   <data name="ContractTrackingFicheContextDelete" xml:space="preserve">
-    <value>Sil</value>
+    <value>Delete</value>
   </data>
   <data name="ContractTrackingFicheContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
+    <value>Refresh</value>
   </data>
   <data name="ContractTrackingFicheLineContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -203,6 +206,21 @@
   </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Contract Tracking Fishes</value>
+  </data>
+  <data name="EnumBaslamadi" xml:space="preserve">
+    <value>Not Start</value>
+  </data>
+  <data name="EnumDevamEdiyor" xml:space="preserve">
+    <value>Continues</value>
+  </data>
+  <data name="EnumDurduruldu" xml:space="preserve">
+    <value>Stopped</value>
+  </data>
+  <data name="EnumIptal" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="EnumTamamlandi" xml:space="preserve">
+    <value>Completed</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -261,11 +279,23 @@
   <data name="OccuredAmount_Label" xml:space="preserve">
     <value>Occured Amount:</value>
   </data>
+  <data name="PlannedQuantity" xml:space="preserve">
+    <value>PLANNED QUANTITY</value>
+  </data>
+  <data name="ProducedQuantity" xml:space="preserve">
+    <value>PRODUCED QUANTITY</value>
+  </data>
+  <data name="ProductionOrderModalTitle" xml:space="preserve">
+    <value>Production Orders</value>
+  </data>
   <data name="ProductionOrderNr" xml:space="preserve">
-    <value>PRODUCTION ORDER</value>
+    <value>PRODUCTION ORDER NR.</value>
   </data>
   <data name="ProductionOrderNrLabel" xml:space="preserve">
     <value>Production Order:</value>
+  </data>
+  <data name="ProductionOrderState" xml:space="preserve">
+    <value>PRODUCTION ORDER STATE</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
