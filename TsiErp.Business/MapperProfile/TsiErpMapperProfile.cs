@@ -165,6 +165,8 @@ using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport;
+using TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.Report8D;
 using TsiErp.Entities.Entities.QualityControl.Report8D.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
@@ -222,6 +224,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectUnitSetsDto, CreateUnitSetsDto>();
             CreateMap<UpdateUnitSetsDto, UnitSets>();
             CreateMap<SelectUnitSetsDto, UpdateUnitSetsDto>();
+
+            CreateMap<CustomerComplaintReports, SelectCustomerComplaintReportsDto>();
+            CreateMap<CustomerComplaintReports, ListCustomerComplaintReportsDto>();
+            CreateMap<CreateCustomerComplaintReportsDto, CustomerComplaintReports>();
+            CreateMap<SelectCustomerComplaintReportsDto, CreateCustomerComplaintReportsDto>();
+            CreateMap<UpdateCustomerComplaintReportsDto, CustomerComplaintReports>();
+            CreateMap<SelectCustomerComplaintReportsDto, UpdateCustomerComplaintReportsDto>();
 
             CreateMap<Report8Ds, SelectReport8DsDto>();
             CreateMap<Report8Ds, ListReport8DsDto>();

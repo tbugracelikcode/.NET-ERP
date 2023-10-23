@@ -96,6 +96,7 @@ using TsiErp.Entities.Entities.QualityControl.OperationalSPCLine;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPC;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPCLine;
 using TsiErp.Entities.Entities.QualityControl.PFMEA;
+using TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport;
 using TsiErp.Entities.Entities.SalesManagement.Forecast;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
@@ -4052,6 +4053,42 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 Report8DsTable.Create();
             }
             #endregion
+
+            #region CustomerComplaintReports Table Created
+            Table CustomerComplaintReportsTable = model.CreateTable(Tables.CustomerComplaintReports);
+
+            if (CustomerComplaintReportsTable != null)
+            {
+                var properties = (typeof(CustomerComplaintReports)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(CustomerComplaintReportsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(CustomerComplaintReportsTable, "PK_" + CustomerComplaintReportsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        CustomerComplaintReportsTable.Indexes.Add(pkIndex);
+                    }
+
+                    CustomerComplaintReportsTable.Columns.Add(column);
+                }
+
+                CustomerComplaintReportsTable.Create();
+            }
+            #endregion
+
 
             return true;
         }

@@ -10,6 +10,11 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation
         /// Fason Kalite Planı ID
         /// </summary>
         public Guid ContractQualityPlanID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Operasyon ID
+        /// </summary>
+        public Guid OperationID { get; set; }
         [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Kod

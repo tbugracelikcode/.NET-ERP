@@ -259,7 +259,7 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Müşteri Şikayet Kayıtları.
+        ///   Looks up a localized string similar to Müşteri Şikayet (Reklamasyon) Kayıtları.
         /// </summary>
         public static string CustCompRecordsChildMenu {
             get {

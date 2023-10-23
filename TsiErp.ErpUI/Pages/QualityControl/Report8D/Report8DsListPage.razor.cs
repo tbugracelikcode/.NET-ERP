@@ -202,6 +202,165 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
             return Task.CompletedTask;
         }
 
+        public override async void ShowEditPage()
+        {
+            #region Combobox Localization İşlemleri
+
+            foreach (var item in _d2ComplaintComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _d4FailureOccuranceComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D5PA1ImplementedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D5PA2ImplementedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D5PA3ImplementedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D5PA4ImplementedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D5PA5ImplementedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D6IA1ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D6IA2ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D6IA3ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D6IA4ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D6IA5ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IDFMEAProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IDFMEARelevantComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IPFMEAProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IPFMEARelevantComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IControlPlanProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IControlPlanRelevantComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IRevision1ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IRevision1RelevantComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IRevision2ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IRevision2RelevantComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IRevision3ProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7IRevision3RelevantComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7ILessonLearnedProofAttachedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _D7ILessonLearnedRelevantComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _ReportAcceptedComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            #endregion
+
+            if (DataSource != null)
+            {
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
+
+                if (dataOpenStatus == true && dataOpenStatus != null)
+                {
+                    EditPageVisible = false;
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    EditPageVisible = true;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+        }
+
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
             GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforSupplier"], Id = "newsupplier" });
