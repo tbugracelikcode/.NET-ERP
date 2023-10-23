@@ -160,8 +160,6 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
-                    Code = item.Code,
-                    Name = item.Name,
                      OperationID = item.OperationID
 
                 });
@@ -559,8 +557,6 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
-                        Code = item.Code,
-                        Name = item.Name,
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryContractOperations.Sql;
@@ -588,8 +584,6 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                             LastModificationTime = DateTime.Now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                            Name = item.Name,
-                            Code = item.Code,
                         }).Where(new { Id = contractOperation.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryContractOperations.Sql + " where " + queryContractOperations.WhereSentence;
