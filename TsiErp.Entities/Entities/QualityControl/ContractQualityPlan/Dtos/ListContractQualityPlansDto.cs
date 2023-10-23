@@ -5,6 +5,11 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractQualityPlan.Dtos
     public class ListContractQualityPlansDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Ürün ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
+
+        /// <summary>
         /// Ürün Kodu
         /// </summary>
         public string ProductCode { get; set; }

@@ -136,19 +136,22 @@
     <value>İŞ TANIMI</value>
   </data>
   <data name="ContractQualityPlanDocumentNumberLabel" xml:space="preserve">
-    <value>İş Tanımı:</value>
+    <value>Kalite Planı:</value>
+  </data>
+  <data name="ContractQualityPlanModalTitle" xml:space="preserve">
+    <value>Fason Kalite Planları</value>
   </data>
   <data name="ContractTrackingFicheContextAdd" xml:space="preserve">
-    <value>Add</value>
+    <value>Ekle</value>
   </data>
   <data name="ContractTrackingFicheContextChange" xml:space="preserve">
-    <value>Change</value>
+    <value>Değiştir</value>
   </data>
   <data name="ContractTrackingFicheContextDelete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Sil</value>
   </data>
   <data name="ContractTrackingFicheContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Güncelle</value>
   </data>
   <data name="ContractTrackingFicheLineContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -203,6 +206,21 @@
   </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Fason Takip Fişleri</value>
+  </data>
+  <data name="EnumBaslamadi" xml:space="preserve">
+    <value>Başlamadı</value>
+  </data>
+  <data name="EnumDevamEdiyor" xml:space="preserve">
+    <value>Devam Ediyor</value>
+  </data>
+  <data name="EnumDurduruldu" xml:space="preserve">
+    <value>Durduruldu</value>
+  </data>
+  <data name="EnumIptal" xml:space="preserve">
+    <value>İptal</value>
+  </data>
+  <data name="EnumTamamlandi" xml:space="preserve">
+    <value>Tamamlandı</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
@@ -261,11 +279,23 @@
   <data name="OccuredAmount_Label" xml:space="preserve">
     <value>Gerçekleşen Adet:</value>
   </data>
+  <data name="PlannedQuantity" xml:space="preserve">
+    <value>PLANLANAN MİKTAR</value>
+  </data>
+  <data name="ProducedQuantity" xml:space="preserve">
+    <value>ÜRETİLEN MİKTAR</value>
+  </data>
+  <data name="ProductionOrderModalTitle" xml:space="preserve">
+    <value>Üretim Emirleri</value>
+  </data>
   <data name="ProductionOrderNr" xml:space="preserve">
-    <value>ÜRETİM EMRİ</value>
+    <value>ÜRETİM EMRİ NO.</value>
   </data>
   <data name="ProductionOrderNrLabel" xml:space="preserve">
     <value>Üretim Emri:</value>
+  </data>
+  <data name="ProductionOrderState" xml:space="preserve">
+    <value>ÜRETİM EMRİ DURUMU</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

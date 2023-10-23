@@ -116,7 +116,7 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to İş Tanımı:.
+        ///   Looks up a localized string similar to Kalite Planı:.
         /// </summary>
         public static string ContractQualityPlanDocumentNumberLabel {
             get {
@@ -125,7 +125,16 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add.
+        ///   Looks up a localized string similar to Fason Kalite Planları.
+        /// </summary>
+        public static string ContractQualityPlanModalTitle {
+            get {
+                return ResourceManager.GetString("ContractQualityPlanModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ContractTrackingFicheContextAdd {
             get {
@@ -134,7 +143,7 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change.
+        ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ContractTrackingFicheContextChange {
             get {
@@ -143,7 +152,7 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete.
+        ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string ContractTrackingFicheContextDelete {
             get {
@@ -152,7 +161,7 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Refresh.
+        ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string ContractTrackingFicheContextRefresh {
             get {
@@ -319,6 +328,51 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         public static string EditModalTitle {
             get {
                 return ResourceManager.GetString("EditModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başlamadı.
+        /// </summary>
+        public static string EnumBaslamadi {
+            get {
+                return ResourceManager.GetString("EnumBaslamadi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devam Ediyor.
+        /// </summary>
+        public static string EnumDevamEdiyor {
+            get {
+                return ResourceManager.GetString("EnumDevamEdiyor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durduruldu.
+        /// </summary>
+        public static string EnumDurduruldu {
+            get {
+                return ResourceManager.GetString("EnumDurduruldu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İptal.
+        /// </summary>
+        public static string EnumIptal {
+            get {
+                return ResourceManager.GetString("EnumIptal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tamamlandı.
+        /// </summary>
+        public static string EnumTamamlandi {
+            get {
+                return ResourceManager.GetString("EnumTamamlandi", resourceCulture);
             }
         }
         
@@ -494,7 +548,34 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ÜRETİM EMRİ.
+        ///   Looks up a localized string similar to PLANLANAN MİKTAR.
+        /// </summary>
+        public static string PlannedQuantity {
+            get {
+                return ResourceManager.GetString("PlannedQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRETİLEN MİKTAR.
+        /// </summary>
+        public static string ProducedQuantity {
+            get {
+                return ResourceManager.GetString("ProducedQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Emirleri.
+        /// </summary>
+        public static string ProductionOrderModalTitle {
+            get {
+                return ResourceManager.GetString("ProductionOrderModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRETİM EMRİ NO..
         /// </summary>
         public static string ProductionOrderNr {
             get {
@@ -508,6 +589,15 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         public static string ProductionOrderNrLabel {
             get {
                 return ResourceManager.GetString("ProductionOrderNrLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRETİM EMRİ DURUMU.
+        /// </summary>
+        public static string ProductionOrderState {
+            get {
+                return ResourceManager.GetString("ProductionOrderState", resourceCulture);
             }
         }
         
