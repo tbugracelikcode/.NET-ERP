@@ -82,19 +82,59 @@ else
 
                                     </GridColumn>
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.AdjustmentAndControlTime) HeaderText="@L["AdjustmentAndControlTime"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120" Format="N0"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.OperationTime) HeaderText="@L["OperationTime"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120" Format="N0"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.OccuredStartDate) HeaderText="@L["OccuredStartDate"]" Type="ColumnType.DateTime" TextAlign="TextAlign.Center" Width="120" Format="d">
+
+                                        <Template>
+                                            @{
+                                                DateTime? OccuredStartDate = (context as ListWorkOrdersDto).OccuredStartDate;
+                                                string startDate="";
+                                                if(OccuredStartDate.GetValueOrDefault().Year!=1900)
+                                                {
+                                                    startDate=OccuredStartDate.GetValueOrDefault().ToShortDateString();
+                                                }
+
+                                            }
+                                            @startDate
+                                        </Template>
+
                                     </GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.OccuredFinishDate) HeaderText="@L["OccuredFinishDate"]" Type="ColumnType.DateTime" TextAlign="TextAlign.Center" Width="120" Format="dd.MM.YYYY"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.OccuredFinishDate) HeaderText="@L["OccuredFinishDate"]" Type="ColumnType.DateTime" TextAlign="TextAlign.Center" Width="120" Format="d">
+
+                                        <Template>
+                                            @{
+                                                DateTime? OccuredFinishDate = (context as ListWorkOrdersDto).OccuredFinishDate;
+                                                string finishDate="";
+                                                if(OccuredFinishDate.GetValueOrDefault().Year!=1900)
+                                                {
+                                                    finishDate=OccuredFinishDate.GetValueOrDefault().ToShortDateString();
+                                                }
+
+                                            }
+                                            @finishDate
+                                        </Template>
+
+                                    </GridColumn>
+
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.PlannedQuantity) HeaderText="@L["PlannedQuantity"]" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="120" Format="N0">></GridColumn>
+
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.ProducedQuantity) HeaderText="@L["ProducedQuantity"]" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="120" Format="N0">></GridColumn>
+
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.ProductionOrderFicheNo) HeaderText="@L["ProductionOrderFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.PropositionFicheNo) HeaderText="@L["PropositionFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.RouteCode) HeaderText="@L["RouteCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.ProductsOperationCode) HeaderText="@L["ProductsOperationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.StationCode) HeaderText="@L["StationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.StationGroupCode) HeaderText="@L["StationGroupCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                             
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>

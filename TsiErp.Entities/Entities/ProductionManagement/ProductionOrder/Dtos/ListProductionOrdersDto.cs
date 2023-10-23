@@ -26,14 +26,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// Üretim Emri Durumu
         /// </summary>
         public ProductionOrderStateEnum ProductionOrderState { get; set; }
-        /// <summary>
-        /// Başlangıç Tarihi
-        /// </summary>
-        public DateTime? StartDate { get; set; }
-        /// <summary>
-        /// Bitiş Tarihi
-        /// </summary>
-        public DateTime? EndDate { get; set; }
 
         /// <summary>
         /// Planlanan Miktar
@@ -58,6 +50,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// </summary>
         public string OrderFicheNo { get; set; }
 
+
+        /// <summary>
+        /// Mamül ID
+        /// </summary>
+        public Guid? FinishedProductID { get; set; }
 
         /// <summary>
         /// Mamül Kodu

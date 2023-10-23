@@ -124,6 +124,51 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Başlamadı.
+        /// </summary>
+        public static string EnumBaslamadi {
+            get {
+                return ResourceManager.GetString("EnumBaslamadi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devam Ediyor.
+        /// </summary>
+        public static string EnumDevamEdiyor {
+            get {
+                return ResourceManager.GetString("EnumDevamEdiyor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durduruldu.
+        /// </summary>
+        public static string EnumDurduruldu {
+            get {
+                return ResourceManager.GetString("EnumDurduruldu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İptal.
+        /// </summary>
+        public static string EnumIptal {
+            get {
+                return ResourceManager.GetString("EnumIptal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tamamlandı.
+        /// </summary>
+        public static string EnumTamamlandi {
+            get {
+                return ResourceManager.GetString("EnumTamamlandi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {

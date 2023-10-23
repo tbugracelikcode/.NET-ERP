@@ -216,6 +216,9 @@
   <data name="ExRatesChildMenu" xml:space="preserve">
     <value>Exchange Rates</value>
   </data>
+  <data name="FinalControlPlans" xml:space="preserve">
+    <value>Final Control Plans</value>
+  </data>
   <data name="FinalControlRecordsChildMenu" xml:space="preserve">
     <value>Final Control Records</value>
   </data>

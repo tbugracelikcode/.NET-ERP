@@ -216,6 +216,9 @@
   <data name="ExRatesChildMenu" xml:space="preserve">
     <value>Döviz Kuru Tablosu</value>
   </data>
+  <data name="FinalControlPlans" xml:space="preserve">
+    <value>Final Kontrol Planları</value>
+  </data>
   <data name="FinalControlRecordsChildMenu" xml:space="preserve">
     <value>Final Kontrol Kayıtları</value>
   </data>

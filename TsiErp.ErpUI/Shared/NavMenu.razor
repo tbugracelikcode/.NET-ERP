@@ -246,13 +246,7 @@
                                 <DxTreeViewNode Text=@L["ControlTypesChildMenu"] NavigateUrl="/control-types" />
                                 <DxTreeViewNode Text=@L["ControlConditionsChildMenu"] NavigateUrl="/control-conditions" />
                                 <DxTreeViewNode Text=@L["UnsItemsChildMenu"] NavigateUrl="/unsuitability-items" />
-                                <DxTreeViewNode Text=@L["QualityPlansMenu"]>
-                                    <Nodes>
-                                        <DxTreeViewNode NavigateUrl="/operational-quality-plans" Text=@L["OperationalQualityPlansChildMenu"] />
-                                        <DxTreeViewNode NavigateUrl="/contract-quality-plans" Text=@L["ContractQualityPlansChildMenu"] />
-                                        <DxTreeViewNode NavigateUrl="/purchase-quality-plans" Text=@L["PurchaseQualityPlansChildMenu"] />
-                                    </Nodes>
-                                </DxTreeViewNode>
+                                
 
                                 @*  <DxTreeViewNode Text=@L["EquipmentManagementMenu"]>
                                 <Nodes> *@
@@ -260,6 +254,15 @@
                                 @*  </Nodes>
                                 </DxTreeViewNode> *@
 
+                            </Nodes>
+                        </DxTreeViewNode>
+
+                        <DxTreeViewNode Text=@L["QualityPlansMenu"]>
+                            <Nodes>
+                                <DxTreeViewNode NavigateUrl="/operational-quality-plans" Text=@L["OperationalQualityPlansChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/contract-quality-plans" Text=@L["ContractQualityPlansChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/purchase-quality-plans" Text=@L["PurchaseQualityPlansChildMenu"] />
+                                <DxTreeViewNode Text=@L["FinalControlPlans"] />
                             </Nodes>
                         </DxTreeViewNode>
 
@@ -300,7 +303,6 @@
                             </Nodes>
                         </DxTreeViewNode>
 
-
                         <DxTreeViewNode Text=@L["QualityControlSPCMenu"]>
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/operational-spc" Text=@L["OperationalSPCChildMenu"] />
@@ -328,7 +330,6 @@
                             </Nodes>
                         </DxTreeViewNode>
 
-                        
                         <DxTreeViewNode NavigateUrl="/report-8d" Text=@L["Report8DChildMenu"] />
                     </Nodes>
                 </DxTreeViewNode>
