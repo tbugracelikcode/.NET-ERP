@@ -135,6 +135,9 @@
   <data name="8DContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="8DContextState" xml:space="preserve">
+    <value>8D Raporunu Tamamla</value>
+  </data>
   <data name="AtCustomerLabel" xml:space="preserve">
     <value>Müşteri Deposunda</value>
   </data>
@@ -185,6 +188,9 @@
   </data>
   <data name="ComplaintLabel" xml:space="preserve">
     <value>Şikayet haklı mı?</value>
+  </data>
+  <data name="CompletedState" xml:space="preserve">
+    <value>Tamamlandı</value>
   </data>
   <data name="ContainmentActionDateLabel" xml:space="preserve">
     <value>Tarih:</value>
@@ -537,6 +543,9 @@
   <data name="SponsorPhoneLabel" xml:space="preserve">
     <value>Telefon</value>
   </data>
+  <data name="State_" xml:space="preserve">
+    <value>DURUM</value>
+  </data>
   <data name="SupplierLabel" xml:space="preserve">
     <value>Tedarikçi:</value>
   </data>
@@ -644,6 +653,9 @@
   </data>
   <data name="ValidatorTechnicalDrawingID" xml:space="preserve">
     <value>Lütfen teknik resim seçin.</value>
+  </data>
+  <data name="WaitingState" xml:space="preserve">
+    <value>Beklemede</value>
   </data>
   <data name="YesD2" xml:space="preserve">
     <value>Evet</value>

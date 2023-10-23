@@ -184,7 +184,7 @@
     <value>Cari Hesap Kartları</value>
   </data>
   <data name="CustCompRecordsChildMenu" xml:space="preserve">
-    <value>Müşteri Şikayet Kayıtları</value>
+    <value>Müşteri Şikayet (Reklamasyon) Kayıtları</value>
   </data>
   <data name="DepartmentsChildMenu" xml:space="preserve">
     <value>Personel Departmanları</value>

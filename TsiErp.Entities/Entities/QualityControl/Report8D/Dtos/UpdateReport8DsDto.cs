@@ -9,6 +9,10 @@ namespace TsiErp.Entities.Entities.QualityControl.Report8D.Dtos
         /// </summary>
         public string Code { get; set; }
         /// <summary>
+        /// Durum
+        /// </summary>
+        public string State_ { get; set; }
+        /// <summary>
         /// Tedarikçi ID
         /// </summary>
         public Guid? SupplierID { get; set; }

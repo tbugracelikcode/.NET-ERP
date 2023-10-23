@@ -52,6 +52,7 @@
                                 <GridColumn Field=@nameof(ListReport8DsDto.SupplierName) HeaderText="@L["SupplierName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 <GridColumn Field=@nameof(ListReport8DsDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 <GridColumn Field=@nameof(ListReport8DsDto.ClaimOpeningDate) Format="dd.MM.yyyy" Type="ColumnType.Date" HeaderText="@L["ClaimOpeningDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListReport8DsDto.State_) HeaderText="@L["State_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                             </GridColumns>
                         </SfGrid>
                     </CardContent>
@@ -175,7 +176,7 @@
 
                                                 <DxGridLayoutItem Row="1" Column="5">
                                                     <Template>
-                                                        <SfTextBox @ref="@SuppliersNameButtonEdit" Created="@SuppliersNameOnCreateIcon" @bind-Value="DataSource.SupplierName" ShowClearButton=true ValueChange="SuppliersOnValueChange"></SfTextBox>
+                                                        <SfTextBox Enabled="@isSupplier" @ref="@SuppliersNameButtonEdit" Created="@SuppliersNameOnCreateIcon" @bind-Value="DataSource.SupplierName" ShowClearButton=true ValueChange="SuppliersOnValueChange"></SfTextBox>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -187,7 +188,7 @@
 
                                                 <DxGridLayoutItem Row="1" Column="9">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.DateInterimReportD3"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.DateInterimReportD3"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -199,7 +200,7 @@
 
                                                 <DxGridLayoutItem Row="2" Column="5">
                                                     <Template>
-                                                        <SfTextBox @ref="@CustomersNameButtonEdit" Created="@CustomersNameOnCreateIcon" @bind-Value="DataSource.CustomerName" ShowClearButton=true ValueChange="CustomersOnValueChange"></SfTextBox>
+                                                        <SfTextBox Enabled="@isCustomer" @ref="@CustomersNameButtonEdit" Created="@CustomersNameOnCreateIcon" @bind-Value="DataSource.CustomerName" ShowClearButton=true ValueChange="CustomersOnValueChange"></SfTextBox>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -211,7 +212,7 @@
 
                                                 <DxGridLayoutItem Row="2" Column="9">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.DateInterimReportD5"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.DateInterimReportD5"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -235,7 +236,7 @@
 
                                                 <DxGridLayoutItem Row="3" Column="9">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.DateFinalRelease"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.DateFinalRelease"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -862,7 +863,7 @@
 
                                                 <DxGridLayoutItem Row="4" Column="3">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.ContainmentActionDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.ContainmentActionDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -964,7 +965,7 @@
 
                                                 <DxGridLayoutItem Row="6" Column="11">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA1ImplementationDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.CA1ImplementationDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -994,7 +995,7 @@
 
                                                 <DxGridLayoutItem Row="7" Column="11">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA2ImplementationDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.CA2ImplementationDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -1024,7 +1025,7 @@
 
                                                 <DxGridLayoutItem Row="8" Column="11">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA3ImplementationDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.CA3ImplementationDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -1354,7 +1355,7 @@
 
                                                 <DxGridLayoutItem Row="2" Column="11">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA1PlannedImplementationDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.PA1PlannedImplementationDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -1394,7 +1395,7 @@
 
                                                 <DxGridLayoutItem Row="3" Column="11">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA2PlannedImplementationDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.PA2PlannedImplementationDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -1434,7 +1435,7 @@
 
                                                 <DxGridLayoutItem Row="4" Column="11">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA3PlannedImplementationDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.PA3PlannedImplementationDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -1474,7 +1475,7 @@
 
                                                 <DxGridLayoutItem Row="5" Column="11">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA4PlannedImplementationDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.PA4PlannedImplementationDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -1514,7 +1515,7 @@
 
                                                 <DxGridLayoutItem Row="6" Column="11">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.PA5PlannedImplementationDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.PA5PlannedImplementationDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -1639,19 +1640,19 @@
                                                 <DxGridLayoutItem Row="2" Column="7">
                                                     <Template>
 
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA1ImplementationDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA1ImplementationDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
                                                 <DxGridLayoutItem Row="2" Column="9">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA1EffectiveFromDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA1EffectiveFromDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
                                                 <DxGridLayoutItem Row="2" Column="11">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA1ValidatedDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA1ValidatedDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -1685,19 +1686,19 @@
                                                 <DxGridLayoutItem Row="3" Column="7">
                                                     <Template>
 
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA2ImplementationDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA2ImplementationDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
                                                 <DxGridLayoutItem Row="3" Column="9">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA2EffectiveFromDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA2EffectiveFromDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
                                                 <DxGridLayoutItem Row="3" Column="11">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA2ValidatedDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA2ValidatedDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -1731,19 +1732,19 @@
                                                 <DxGridLayoutItem Row="4" Column="7">
                                                     <Template>
 
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA3ImplementationDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA3ImplementationDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
                                                 <DxGridLayoutItem Row="4" Column="9">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA3EffectiveFromDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA3EffectiveFromDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
                                                 <DxGridLayoutItem Row="4" Column="11">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA3ValidatedDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA3ValidatedDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -1777,19 +1778,19 @@
                                                 <DxGridLayoutItem Row="5" Column="7">
                                                     <Template>
 
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA4ImplementationDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA4ImplementationDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
                                                 <DxGridLayoutItem Row="5" Column="9">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA4EffectiveFromDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA4EffectiveFromDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
                                                 <DxGridLayoutItem Row="5" Column="11">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA4ValidatedDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA4ValidatedDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -1823,19 +1824,19 @@
                                                 <DxGridLayoutItem Row="6" Column="7">
                                                     <Template>
 
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA5ImplementationDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA5ImplementationDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
                                                 <DxGridLayoutItem Row="6" Column="9">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA5EffectiveFromDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA5EffectiveFromDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
                                                 <DxGridLayoutItem Row="6" Column="11">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.IA5ValidatedDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.IA5ValidatedDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -1901,7 +1902,7 @@
 
                                                 <DxGridLayoutItem Row="10" Column="7">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA1RemovalDateD6"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.CA1RemovalDateD6"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -1926,7 +1927,7 @@
 
                                                 <DxGridLayoutItem Row="11" Column="7">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA2RemovalDateD6"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.CA2RemovalDateD6"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -1951,7 +1952,7 @@
 
                                                 <DxGridLayoutItem Row="12" Column="7">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.CA3RemovalDateD6"></SfDatePicker>
+                                                            <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.CA3RemovalDateD6"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -2103,7 +2104,7 @@
 
                                                 <DxGridLayoutItem Row="3" Column="13">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.DFMEARevisionCompletionDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.DFMEARevisionCompletionDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -2151,7 +2152,7 @@
 
                                                 <DxGridLayoutItem Row="4" Column="13">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.PFMEARevisionCompletionDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.PFMEARevisionCompletionDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -2199,7 +2200,7 @@
 
                                                 <DxGridLayoutItem Row="5" Column="13">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.ControlPlanRevisionCompletionDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.ControlPlanRevisionCompletionDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -2253,7 +2254,7 @@
 
                                                 <DxGridLayoutItem Row="6" Column="13">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.Revision1CompletionDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.Revision1CompletionDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -2307,7 +2308,7 @@
 
                                                 <DxGridLayoutItem Row="7" Column="13">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.Revision2CompletionDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.Revision2CompletionDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -2361,7 +2362,7 @@
 
                                                 <DxGridLayoutItem Row="8" Column="13">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.Revision3CompletionDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.Revision3CompletionDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -2437,7 +2438,7 @@
 
                                                 <DxGridLayoutItem Row="11" Column="13">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.LessonsLearnedDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.LessonsLearnedDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -2531,7 +2532,7 @@
 
                                                   <DxGridLayoutItem Row="2" Column="3">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.TeamLeaderDateD8"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.TeamLeaderDateD8"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem> 
 
@@ -2543,7 +2544,7 @@
 
                                                   <DxGridLayoutItem Row="2" Column="7">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.SponsorDateD8"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.SponsorDateD8"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem> 
 
@@ -2616,7 +2617,7 @@
 
                                                  <DxGridLayoutItem Row="1" Column="7">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.UpdateRequiredUntilDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.UpdateRequiredUntilDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem> 
 
@@ -2658,7 +2659,7 @@
 
                                                  <DxGridLayoutItem Row="4" Column="7" >
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" @bind-Value="DataSource.Customer8DClosureDate"></SfDatePicker>
+                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.Customer8DClosureDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem> 
 

@@ -903,6 +903,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
                 ContractOperationDataSource.Name = selectedProductsOperation.Name;
                 ContractOperationDataSource.Code = selectedProductsOperation.Code;
+                ContractOperationDataSource.OperationID = selectedProductsOperation.Id;
                 ContractOperationDataSource.ContractQualityPlanID = DataSource.Id;
 
                 GridContractOperationList.Add(ContractOperationDataSource);

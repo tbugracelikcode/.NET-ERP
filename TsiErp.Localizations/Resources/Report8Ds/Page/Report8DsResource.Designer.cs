@@ -115,6 +115,15 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 8D Raporunu Tamamla.
+        /// </summary>
+        public static string _8DContextState {
+            get {
+                return ResourceManager.GetString("8DContextState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri Deposunda.
         /// </summary>
         public static string AtCustomerLabel {
@@ -264,6 +273,15 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         public static string ComplaintLabel {
             get {
                 return ResourceManager.GetString("ComplaintLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tamamlandı.
+        /// </summary>
+        public static string CompletedState {
+            get {
+                return ResourceManager.GetString("CompletedState", resourceCulture);
             }
         }
         
@@ -1321,6 +1339,15 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DURUM.
+        /// </summary>
+        public static string State_ {
+            get {
+                return ResourceManager.GetString("State_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tedarikçi:.
         /// </summary>
         public static string SupplierLabel {
@@ -1641,6 +1668,15 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         public static string ValidatorTechnicalDrawingID {
             get {
                 return ResourceManager.GetString("ValidatorTechnicalDrawingID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beklemede.
+        /// </summary>
+        public static string WaitingState {
+            get {
+                return ResourceManager.GetString("WaitingState", resourceCulture);
             }
         }
         

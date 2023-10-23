@@ -9,6 +9,10 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation.D
         /// </summary>
         public Guid ContractQualityPlanID { get; set; }
         /// <summary>
+        /// Operasyon ID
+        /// </summary>
+        public Guid? OperationID { get; set; }
+        /// <summary>
         /// Kod
         /// </summary>
         public string Code { get; set; }

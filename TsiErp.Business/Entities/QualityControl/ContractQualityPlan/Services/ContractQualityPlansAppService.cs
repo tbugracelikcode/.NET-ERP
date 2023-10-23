@@ -162,6 +162,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                     LineNr = item.LineNr,
                     Code = item.Code,
                     Name = item.Name,
+                     OperationID = item.OperationID
 
                 });
 
@@ -546,6 +547,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                     var queryContractOperations = queryFactory.Query().From(Tables.ContractQualityPlanOperations).Insert(new CreateContractQualityPlanOperationsDto
                     {
                         ContractQualityPlanID = input.Id,
+                        OperationID = item.OperationID,
                         CreationTime = DateTime.Now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
@@ -574,6 +576,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                         var queryContractOperations = queryFactory.Query().From(Tables.ContractQualityPlanOperations).Update(new UpdateContractQualityPlanOperationsDto
                         {
                             ContractQualityPlanID = input.Id,
+                            OperationID = item.OperationID,
                             CreationTime = contractOperation.CreationTime,
                             CreatorId = contractOperation.CreatorId,
                             DataOpenStatus = false,

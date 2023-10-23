@@ -135,6 +135,9 @@
   <data name="8DContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="8DContextState" xml:space="preserve">
+    <value>Complete the 8D Report</value>
+  </data>
   <data name="AtCustomerLabel" xml:space="preserve">
     <value>At Customer</value>
   </data>
@@ -185,6 +188,9 @@
   </data>
   <data name="ComplaintLabel" xml:space="preserve">
     <value>Complaint justified?</value>
+  </data>
+  <data name="CompletedState" xml:space="preserve">
+    <value>Completed</value>
   </data>
   <data name="ContainmentActionDateLabel" xml:space="preserve">
     <value>Date:</value>
@@ -537,6 +543,9 @@
   <data name="SponsorPhoneLabel" xml:space="preserve">
     <value>Phone</value>
   </data>
+  <data name="State_" xml:space="preserve">
+    <value>STATUS</value>
+  </data>
   <data name="SupplierLabel" xml:space="preserve">
     <value>Supplier:</value>
   </data>
@@ -644,6 +653,9 @@
   </data>
   <data name="ValidatorTechnicalDrawingID" xml:space="preserve">
     <value>Please select a technical drawing.</value>
+  </data>
+  <data name="WaitingState" xml:space="preserve">
+    <value>Pending</value>
   </data>
   <data name="YesD2" xml:space="preserve">
     <value>Yes</value>

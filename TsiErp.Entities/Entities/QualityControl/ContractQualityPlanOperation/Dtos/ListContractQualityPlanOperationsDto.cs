@@ -13,6 +13,10 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation.D
         /// </summary>
         public string Name { get; set; }
         /// <summary>
+        /// Operasyon ID
+        /// </summary>
+        public Guid? OperationID { get; set; }
+        /// <summary>
         /// Satır No
         /// </summary>
         public int LineNr { get; set; }

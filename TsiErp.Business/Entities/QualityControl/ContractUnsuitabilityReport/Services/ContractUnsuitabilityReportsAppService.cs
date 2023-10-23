@@ -7,23 +7,19 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ContractUnsuitabilityReport.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
-using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ContractUnsuitabilityReports.Page;
-using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche;
-using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 
 namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
 {

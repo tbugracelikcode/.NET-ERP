@@ -1,0 +1,368 @@
+﻿@page "/customer-complaint-reports"
+@layout MainLayout
+
+
+@inherits BaseListPage<SelectCustomerComplaintReportsDto, ListCustomerComplaintReportsDto, CreateCustomerComplaintReportsDto, UpdateCustomerComplaintReportsDto, ListCustomerComplaintReportsParameterDto>
+
+@inject IStringLocalizer<CustomerComplaintReportsResource> L 
+
+@inject ICustomerComplaintReportsAppService CustomerComplaintReportsAppService
+@inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
+@inject IReport8DsAppService Report8DsAppService
+@inject ITechnicalDrawingsAppService TechnicalDrawingsAppService
+@inject IProductsAppService ProductAppService
+@inject ISalesOrdersAppService SalesOrdersAppService
+@inject IUnsuitabilityItemsAppService UnsuitabilityItemsAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
+
+@{
+    if (!base.IsLoaded)
+    {
+        <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+    }
+    else
+    {
+        <DevGridLayout ColumnCount="1" RowCount="3">
+            <GridLayoutItems>
+                <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                    <Template>
+                        <SfCard class="TSIListPageTitleCard">
+                            <CardContent>
+                                <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                    <Template>
+                        <SfCard class="TSIGridCards">
+                            <CardContent>
+                                <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%"
+                                        class="GridZebra" ContextMenuItems="@GridContextMenu" Toolbar=@GridToolbarItems>
+                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                    <GridEvents ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListCustomerComplaintReportsDto"></GridEvents>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                    <GridPageSettings PageSizes="true"></GridPageSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(ListCustomerComplaintReportsDto.ReportNo) HeaderText="@L["ReportNo"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+
+                                        <GridColumn Field=@nameof(ListCustomerComplaintReportsDto.ReportDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["ReportDate"]"TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+
+                                        <GridColumn Field=@nameof(ListCustomerComplaintReportsDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListCustomerComplaintReportsDto.UnsuitqabilityItemsName) HeaderText="@L["UnsuitqabilityItemsName"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+
+                                        <GridColumn Field=@nameof(ListCustomerComplaintReportsDto.ReportState) HeaderText="@L["ReportState"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+
+
+                                    </GridColumns>
+                                </SfGrid>
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+            </GridLayoutItems>
+        </DevGridLayout>
+
+
+        <DxPopup @bind-Visible="base.EditPageVisible"
+                 ShowFooter="true"
+                 CloseOnEscape="false"
+                 CloseOnOutsideClick="false"
+                 HeaderText="@L["EditModalTitle"]"
+                 Width="62%"
+                 Height="74%"
+                 MinWidth="1060px"
+                 MinHeight="800px"
+                 HeaderCssClass="HeaderTitleCss"
+                 Showing="CrudModalShowing"
+                 Closing="CrudModalClosing">
+            <BodyTemplate>
+
+                <DxGridLayout CssClass="TSIGridLayout">
+                    <Rows>
+                        <DxGridLayoutRow Height="15%" />
+                        <DxGridLayoutRow Height="11%" />
+                        <DxGridLayoutRow Height="11%" />
+                        <DxGridLayoutRow Height="11%" />
+                        <DxGridLayoutRow Height="11%" />
+                        <DxGridLayoutRow Height="11%" />
+                        <DxGridLayoutRow Height="25%" />
+                    </Rows>
+                    <Columns>
+                        <DxGridLayoutColumn Width="4%" />
+                        <DxGridLayoutColumn Width="28%" />
+                        <DxGridLayoutColumn Width="4%" />
+                        <DxGridLayoutColumn Width="28%" />
+                        <DxGridLayoutColumn Width="4%" />
+                        <DxGridLayoutColumn Width="28%" />
+                        <DxGridLayoutColumn Width="4%" />
+                    </Columns>
+                    <Items>
+                        <DxGridLayoutItem Row="0" Column="1">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>@L["ReportNoLabel"] </strong></label>
+                                <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.ReportNo" ShowClearButton=true></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                         <DxGridLayoutItem Row="0" Column="3">
+                            <Template>
+                                <br />
+                                <br />
+                                <center><SfButton CssClass="TSISaveButton" OnClick="AddFile"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["AddFileButton"]</SfButton></center>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="0" Column="5" RowSpan="5">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label>
+                                <SfTextBox Multiline=true @bind-Value="DataSource.Description_" CssClass="TSIMemoBox45"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["ReportDateLabel"] </strong></label>
+                                <SfDatePicker @bind-Value="DataSource.ReportDate"></SfDatePicker>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="1" Column="3">
+                            <Template>
+                                <center>
+                                    <label class="TSIModalLabel"><strong>@L["is8DReportLabel"] </strong></label><br />
+                                    <SfSwitch @bind-Checked="DataSource.is8DReport"></SfSwitch>
+                                </center>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="2" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["SalesOrderFicheNoLabel"] </strong></label><br />
+                                <SfTextBox @ref="@SalesOrdersButtonEdit" Created="@SalesOrdersOnCreateIcon" @bind-Value="DataSource.SalesOrderFicheNo" ShowClearButton=true ValueChange="SalesOrdersOnValueChange"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="2" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["ReportStateLabel"] </strong></label><br /> 
+                                <SfComboBox TValue="string" TItem="ReportStateComboBox" DataSource="@_reportStateComboBox">
+                                    <ComboBoxEvents TItem="ReportStateComboBox" TValue="string" ValueChange="@ReportStateComboBoxValueChangeHandler"></ComboBoxEvents>
+                                    <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                </SfComboBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="3" Column="1">
+                            <Template>
+                                 <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label><br />
+                                <SfTextBox @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="DataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="4" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["ProductionReferanceNumberLabel"] </strong></label><br />
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.ProductionReferanceNumber"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="5" Column="1">
+                            <Template>
+                                 <label class="TSIModalLabel"><strong>@L["UnsuitqabilityItemsNameLabel"] </strong></label><br />
+                                <SfTextBox @ref="@UnsuitabilityItemsButtonEdit" Created="@UnsuitabilityItemsOnCreateIcon" @bind-Value="DataSource.UnsuitqabilityItemsName" ShowClearButton=true ValueChange="UnsuitabilityItemsOnValueChange"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                         <DxGridLayoutItem Row="5" Column="3">
+                            <Template>
+                                 <label class="TSIModalLabel"><strong>@L["DeliveredQuantityLabel"] </strong></label><br />
+                                <SfNumericTextBox Min="0" TValue=decimal CssClass="TSITxtBox" Enabled=false @bind-Value="DataSource.DeliveredQuantity"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="5" Column="5">
+                            <Template>
+                                 <label class="TSIModalLabel"><strong>@L["DefectedQuantityLabel"] </strong></label><br /> 
+                                <SfNumericTextBox Min="0" TValue=decimal CssClass="TSITxtBox" @bind-Value="DataSource.DefectedQuantity"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                         <DxGridLayoutItem Row="6" Column="1" ColumnSpan="5">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["ReportResultLabel"] </strong></label>
+                                <SfTextBox Multiline=true @bind-Value="DataSource.ReportResult" CssClass="TSIMemoBox45"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                       
+
+
+                    </Items>
+                </DxGridLayout>
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            </FooterContentTemplate>
+        </DxPopup>
+
+    }
+}
+
+@if (SelectUnsuitabilityItemsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectUnsuitabilityItemsPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["UnsuitabilityItemModalTitle"]"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="UnsuitabilityItemsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnsuitabilityItemsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@UnsuitabilityItemsDoubleClickHandler" TValue="ListUnsuitabilityItemsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListUnsuitabilityItemsDto.Code) HeaderText="@L["UnsuitabilityItemModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListUnsuitabilityItemsDto.Name) HeaderText="@L["UnsuitabilityItemModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectProductsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectProductsPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["ProductsModalTitle"]"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="ProductsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@ProductsDoubleClickHandler" TValue="ListProductsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["ProductModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["ProductModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectSalesOrdersPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectSalesOrdersPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["SalesOrdersModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="SalesOrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@SalesOrdersList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@SalesOrdersDoubleClickHandler" TValue="ListSalesOrderDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListSalesOrderDto.FicheNo) HeaderText="@L["SalesOrderModalGridFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListSalesOrderDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["SalesOrderModalGridDate_"]"TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                            <GridColumn Field=@nameof(ListSalesOrderDto.CurrentAccountCardName) HeaderText="@L["SalesOrderModalGridCurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}

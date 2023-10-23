@@ -91,6 +91,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CurrentAccountCardsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\CustomerComplaintReports\Page\CustomerComplaintReportsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CustomerComplaintReportsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Departments\Page\DepartmentsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -515,6 +520,10 @@
     <EmbeddedResource Update="Resources\CurrentAccountCards\Page\CurrentAccountCardsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CurrentAccountCardsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CustomerComplaintReports\Page\CustomerComplaintReportsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CustomerComplaintReportsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Departments\Page\DepartmentsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
