@@ -5,7 +5,10 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Entities.BillsofMaterial.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementParameter.Services;
 using TsiErp.Business.Entities.ProductsOperation.Services;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
@@ -17,6 +20,8 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
+using TsiErp.Entities.Entities.StockManagement.WareHouse;
+using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
@@ -39,6 +44,18 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
         private bool LineCrudPopup = false;
 
+        #region Planning Parameters
+
+        int MRPPurchaseTransaction;
+        Guid? BranchIDParameter;
+        Guid? WarehouseIDParameter;
+        Guid? BranchIDButtonEdit;
+        Guid? WarehouseIDButtonEdit;
+        string WarehouseCodeButtonEdit;
+        string BranchCodeButtonEdit;
+
+        #endregion
+
         protected override async void OnInitialized()
         {
             BaseCrudService = MRPsService;
@@ -46,12 +63,22 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
+            var purchaseParameter = (await PurchaseManagementParametersAppService.GetPurchaseManagementParametersAsync()).Data;
+            MRPPurchaseTransaction = (await PlanningManagementParametersAppService.GetPlanningManagementParametersAsync()).Data.MRPPurchaseTransaction;
+            BranchIDParameter = purchaseParameter.BranchID;
+            WarehouseIDParameter = purchaseParameter.WarehouseID;
+
         }
 
         #region MRP Satır Modalı İşlemleri
 
         protected override async Task BeforeInsertAsync()
         {
+            BranchCodeButtonEdit = string.Empty;
+            BranchIDButtonEdit = Guid.Empty;
+            WarehouseCodeButtonEdit = string.Empty;
+            WarehouseIDButtonEdit = Guid.Empty;
+
             DataSource = new SelectMRPsDto()
             {
                 Date_ = DateTime.Today,
@@ -94,6 +121,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 //LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextDelete"], Id = "delete" });
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextDoNotCalculate"], Id = "dontcalculate" });
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextDeleteOrderLines"], Id = "deleteorderlines" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextStockUsage"], Id = "stockusage" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextChange"], Id = "changed" });
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextRefresh"], Id = "refresh" });
             }
         }
@@ -104,6 +133,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             {
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPContextAdd"], Id = "new" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPContextConvertPurchase"], Id = "convertpurchase" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPContextDelete"], Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPContextRefresh"], Id = "refresh" });
             }
@@ -124,6 +154,46 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                     GridLineList = DataSource.SelectMRPLines;
 
                     ShowEditPage();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "convertpurchase":
+
+
+                    DataSource = (await MRPsService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    var mrpLineList = DataSource.SelectMRPLines;
+
+                    if(mrpLineList.Any(t=>t.WarehouseID == null || t.WarehouseID == Guid.Empty || t.BranchID == null || t.BranchID == Guid.Empty))
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningConvertPurchaseTitle"], L["UIWarningConvertPurchaseMessage"]);
+                    }
+                    else
+                    {
+                        if (MRPPurchaseTransaction == 1) //PurchaseOrder
+                        {
+
+                            CreatePurchaseOrdersDto purchaseOrderModel = new CreatePurchaseOrdersDto
+                            {
+                                BranchID = BranchIDParameter,
+                                CurrencyID = Guid.Empty,
+                                CurrentAccountCardID = Guid.Empty,
+                                WarehouseID = WarehouseIDParameter,
+                                MRPID = DataSource.Id,
+
+
+                            };
+
+                            foreach (var mrpline in mrpLineList)
+                            {
+
+                            }
+
+
+                        }
+                    }
+
+                    
+
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -207,11 +277,43 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                     if (res == true)
                     {
-                       var notdeletedList = GridLineList.Where(t=>t.SalesOrderID != selectedSalesOrderId).ToList();
+                        var notdeletedList = GridLineList.Where(t => t.SalesOrderID != selectedSalesOrderId).ToList();
                         GridLineList = notdeletedList;
                         await _LineGrid.Refresh();
 
                     }
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "stockusage":
+                    var selectedline = args.RowInfo.RowData;
+                    var Index = GridLineList.FindIndex(t => t.SalesOrderID == selectedline.SalesOrderID && t.ProductID == selectedline.ProductID);
+                    if (Index >= 0)
+                    {
+                        GridLineList[Index].isStockUsage = !selectedline.isStockUsage;
+
+                        if (GridLineList[Index].isStockUsage)
+                        {
+                            GridLineList[Index].RequirementAmount = GridLineList[Index].Amount - Convert.ToInt32(GridLineList[Index].AmountOfStock);
+                            if (0 > GridLineList[Index].RequirementAmount)
+                            {
+                                GridLineList[Index].RequirementAmount = 0;
+                            }
+                        }
+
+                        else
+                        {
+                            GridLineList[Index].RequirementAmount = GridLineList[Index].Amount;
+                        }
+                    }
+
+                    await _LineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "changed":
+                    LineDataSource = args.RowInfo.RowData;
+                    LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -248,6 +350,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                         salesOrderLineList = (await SalesOrdersAppService.GetAsync(selectedRow.Id)).Data.SelectSalesOrderLines.ToList();
                     }
 
+                    var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
+                    var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
+
 
                     foreach (var orderline in salesOrderLineList)
                     {
@@ -282,6 +387,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                 RequirementAmount = Math.Abs(Convert.ToInt32(amountofProduct) - calculatedAmount),
                                 SalesOrderLineID = orderline.Id,
                                 SalesOrderFicheNo = selectedRow.FicheNo,
+                                BranchID = branch.Id,
+                                WarehouseID = warehouse.Id,
+                                BranchCode = branch.Code,
+                                WarehouseCode = warehouse.Code,
                             };
 
                             GridLineList.Add(mrpLineModel);
@@ -302,6 +411,45 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             SalesOrdersList = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.ToList();
         }
 
+
+        protected async Task OnLineSubmit()
+        {
+
+            if (LineDataSource.Id == Guid.Empty)
+            {
+                if (DataSource.SelectMRPLines.Contains(LineDataSource))
+                {
+                    int selectedLineIndex = DataSource.SelectMRPLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        DataSource.SelectMRPLines[selectedLineIndex] = LineDataSource;
+                    }
+                }
+                else
+                {
+                    DataSource.SelectMRPLines.Add(LineDataSource);
+                }
+            }
+            else
+            {
+                int selectedLineIndex = DataSource.SelectMRPLines.FindIndex(t => t.Id == LineDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    DataSource.SelectMRPLines[selectedLineIndex] = LineDataSource;
+                }
+            }
+
+            GridLineList = DataSource.SelectMRPLines;
+            await _LineGrid.Refresh();
+
+            HideLinesPopup();
+            await InvokeAsync(StateHasChanged);
+
+
+        }
+
         #endregion
 
         #region Kod ButtonEdit
@@ -318,6 +466,210 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
         {
             DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu");
             await InvokeAsync(StateHasChanged);
+        }
+        #endregion
+
+        #region Depo ButtonEdit (Tüm LineList)
+
+        SfTextBox WarehousesButtonEdit;
+        bool SelectWarehousesPopupVisible = false;
+        List<ListWarehousesDto> WarehousesList = new List<ListWarehousesDto>();
+
+        public async Task WarehousesOnCreateIcon()
+        {
+            var WarehousesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, WarehousesButtonClickEvent);
+            await WarehousesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", WarehousesButtonClick } });
+        }
+
+        public async void WarehousesButtonClickEvent()
+        {
+            SelectWarehousesPopupVisible = true;
+            WarehousesList = (await WarehousesAppService.GetListAsync(new ListWarehousesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void WarehousesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                WarehouseIDButtonEdit = Guid.Empty;
+                WarehouseCodeButtonEdit = string.Empty;
+
+
+
+                var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
+
+                foreach (var item in GridLineList)
+                {
+                    item.WarehouseID = warehouse.Id;
+                    item.WarehouseCode = warehouse.Code;
+                }
+                await _LineGrid.Refresh();
+            }
+        }
+
+        public async void WarehousesDoubleClickHandler(RecordDoubleClickEventArgs<ListWarehousesDto> args)
+        {
+            var selectedWarehouse = args.RowData;
+
+            if (selectedWarehouse != null)
+            {
+                WarehouseIDButtonEdit = selectedWarehouse.Id;
+                WarehouseCodeButtonEdit = selectedWarehouse.Code;
+                SelectWarehousesPopupVisible = false;
+
+                foreach (var item in GridLineList)
+                {
+                    item.WarehouseID = WarehouseIDButtonEdit;
+                    item.WarehouseCode = WarehouseCodeButtonEdit;
+                }
+
+                await _LineGrid.Refresh();
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Şube ButtonEdit (Tüm LineList)
+
+        SfTextBox BranchesButtonEdit;
+        bool SelectBranchesPopupVisible = false;
+        List<ListBranchesDto> BranchesList = new List<ListBranchesDto>();
+
+        public async Task BranchesOnCreateIcon()
+        {
+            var BranchesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, BranchesButtonClickEvent);
+            await BranchesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", BranchesButtonClick } });
+        }
+
+        public async void BranchesButtonClickEvent()
+        {
+            SelectBranchesPopupVisible = true;
+            BranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void BranchesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                BranchIDButtonEdit = Guid.Empty;
+                BranchCodeButtonEdit = string.Empty;
+
+                var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
+
+                foreach (var item in GridLineList)
+                {
+                    item.BranchID = branch.Id;
+                    item.BranchCode = branch.Code;
+                }
+                await _LineGrid.Refresh();
+            }
+        }
+
+        public async void BranchesDoubleClickHandler(RecordDoubleClickEventArgs<ListBranchesDto> args)
+        {
+            var selectedBranch = args.RowData;
+
+            if (selectedBranch != null)
+            {
+                BranchIDButtonEdit = selectedBranch.Id;
+                BranchCodeButtonEdit = selectedBranch.Code;
+
+                foreach (var item in GridLineList)
+                {
+                    item.BranchID = BranchIDButtonEdit;
+                    item.BranchCode = BranchCodeButtonEdit;
+                }
+
+                await _LineGrid.Refresh();
+                SelectBranchesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Depo ButtonEdit
+
+        SfTextBox LineWarehousesButtonEdit;
+        bool SelectLineWarehousesPopupVisible = false;
+        List<ListWarehousesDto> LineWarehousesList = new List<ListWarehousesDto>();
+
+        public async Task LineWarehousesOnCreateIcon()
+        {
+            var LineWarehousesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, LineWarehousesButtonClickEvent);
+            await LineWarehousesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", LineWarehousesButtonClick } });
+        }
+
+        public async void LineWarehousesButtonClickEvent()
+        {
+            SelectLineWarehousesPopupVisible = true;
+            LineWarehousesList = (await WarehousesAppService.GetListAsync(new ListWarehousesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void LineWarehousesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                LineDataSource.WarehouseID = Guid.Empty;
+                LineDataSource.WarehouseCode = string.Empty;
+            }
+        }
+
+        public async void LineWarehousesDoubleClickHandler(RecordDoubleClickEventArgs<ListWarehousesDto> args)
+        {
+            var selectedWarehouse = args.RowData;
+
+            if (selectedWarehouse != null)
+            {
+                LineDataSource.WarehouseID = selectedWarehouse.Id;
+                LineDataSource.WarehouseCode = selectedWarehouse.Code;
+                SelectLineWarehousesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Şube ButtonEdit 
+
+        SfTextBox LineBranchesButtonEdit;
+        bool SelectLineBranchesPopupVisible = false;
+        List<ListBranchesDto> LineBranchesList = new List<ListBranchesDto>();
+
+        public async Task LineBranchesOnCreateIcon()
+        {
+            var LineBranchesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, LineBranchesButtonClickEvent);
+            await LineBranchesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", LineBranchesButtonClick } });
+        }
+
+        public async void LineBranchesButtonClickEvent()
+        {
+            SelectLineBranchesPopupVisible = true;
+            LineBranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void LineBranchesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                LineDataSource.BranchID = Guid.Empty;
+                LineDataSource.BranchCode = string.Empty;
+            }
+        }
+
+        public async void LineBranchesDoubleClickHandler(RecordDoubleClickEventArgs<ListBranchesDto> args)
+        {
+            var selectedBranch = args.RowData;
+
+            if (selectedBranch != null)
+            {
+                LineDataSource.BranchID = selectedBranch.Id;
+                LineDataSource.BranchCode = selectedBranch.Code;
+                SelectLineBranchesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
         }
         #endregion
     }

@@ -21,6 +21,14 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos
         /// Data Concurrency Stamp
         /// </summary>
         public bool? DataOpenStatus { get; set; }
+        /// <summary>
+        /// MRP ID
+        /// </summary>
+        public Guid? MRPID { get; set; }
+        /// <summary>
+        /// MRP Kodu
+        /// </summary>
+        public string MRPCode { get; set; }
 
         /// <summary>
         /// Data Concurrency UserID

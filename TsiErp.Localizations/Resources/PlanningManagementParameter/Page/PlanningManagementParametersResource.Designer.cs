@@ -161,6 +161,15 @@ namespace TsiErp.Localizations.Resources.PlanningManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Malzeme İhtiyaç Planlaması&apos;nın (MRP) satın alma sürecinin başlayacağı hareket türünü seçin..
+        /// </summary>
+        public static string MRPPurchaseTransactionLabel {
+            get {
+                return ResourceManager.GetString("MRPPurchaseTransactionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string PlanningManagementParameterContextAdd {
@@ -197,11 +206,47 @@ namespace TsiErp.Localizations.Resources.PlanningManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satınalma Siparişi.
+        /// </summary>
+        public static string PurchaseOrder {
+            get {
+                return ResourceManager.GetString("PurchaseOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satınalma Talep.
+        /// </summary>
+        public static string PurchaseRequest {
+            get {
+                return ResourceManager.GetString("PurchaseRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Planlama Yönetimi Parametreleri.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Sistem Tanımlamaları &gt; Genel Sistem Parametreleri.
+        /// </summary>
+        public static string UIPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
             }
         }
         

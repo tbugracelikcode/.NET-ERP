@@ -23,13 +23,13 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Validations
                .WithMessage("ValidatorDate");
 
 
-            RuleFor(x => x.CurrentAccountCardID)
-                .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("ValidatorCurrentAccountID");
+            //RuleFor(x => x.CurrentAccountCardID)
+            //    .Must(x => x.HasValue && x.Value != Guid.Empty)
+            //   .WithMessage("ValidatorCurrentAccountID");
 
-            RuleFor(x => x.CurrencyID)
-                .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("ValidatorCurrencyID");
+            //RuleFor(x => x.CurrencyID)
+            //    .Must(x => x.HasValue && x.Value != Guid.Empty)
+            //   .WithMessage("ValidatorCurrencyID");
 
             RuleFor(x => x.WarehouseID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
@@ -40,11 +40,11 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Validations
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("ValidatorBranchID");
 
-            RuleFor(x => x.ExchangeRate)
-                .NotNull()
-                .WithMessage("ValidatorExchangeRateEmpty")
-                .GreaterThanOrEqualTo(1)
-                .WithMessage("ValidatorExchangeRateMin");
+            //RuleFor(x => x.ExchangeRate)
+            //    .NotNull()
+            //    .WithMessage("ValidatorExchangeRateEmpty")
+            //    .GreaterThanOrEqualTo(1)
+            //    .WithMessage("ValidatorExchangeRateMin");
         }
     }
 }

@@ -542,7 +542,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
                 DataSource.ProductID = selectedProduct.Id;
                 DataSource.ProductCode = selectedProduct.Code;
                 DataSource.ProductName = selectedProduct.Name;
-                DataSource.DeliveredQuantity = SalesOrdersLineList.Where(t=>t.ProductID == selectedProduct.Id).Sum(t => t.Quantity);
+                DataSource.DeliveredQuantity = SalesOrdersLineList.Where(t => t.ProductID == selectedProduct.Id).Sum(t => t.Quantity);
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -585,25 +585,29 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
 
         private void ReportStateComboBoxValueChangeHandler(ChangeEventArgs<string, ReportStateComboBox> args)
         {
-            switch (args.ItemData.ID)
+            if (args.ItemData != null)
             {
-                case "Pending":
-                    DataSource.ReportState = L["WaitingState"].Value;
-                    break;
 
-                case "UnderReview":
-                    DataSource.ReportState = L["ComboboxUnderReview"].Value;
-                    break;
+                switch (args.ItemData.ID)
+                {
+                    case "Pending":
+                        DataSource.ReportState = L["WaitingState"].Value;
+                        break;
 
-                case "8DReport":
-                    DataSource.ReportState = L["Combobox8DReport"].Value;
-                    break;
+                    case "UnderReview":
+                        DataSource.ReportState = L["ComboboxUnderReview"].Value;
+                        break;
 
-                case "Completed":
-                    DataSource.ReportState = L["ComboboxCompleted"].Value;
-                    break;
+                    case "8DReport":
+                        DataSource.ReportState = L["Combobox8DReport"].Value;
+                        break;
 
-                default: break;
+                    case "Completed":
+                        DataSource.ReportState = L["ComboboxCompleted"].Value;
+                        break;
+
+                    default: break;
+                }
             }
         }
 

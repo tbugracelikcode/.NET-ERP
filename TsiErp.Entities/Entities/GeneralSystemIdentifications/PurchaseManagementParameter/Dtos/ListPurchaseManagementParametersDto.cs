@@ -17,5 +17,21 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManageme
         /// Id
         /// </summary>
         public Guid Id { get; set; }
+        /// <summary>
+        /// Şube ID
+        /// </summary>
+        public Guid? BranchID { get; set; }
+        /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string BranchCode { get; set; }
+        /// <summary>
+        /// Depo ID
+        /// </summary>
+        public Guid? WarehouseID { get; set; }
+        /// <summary>
+        /// Depo Kodu
+        /// </summary>
+        public string WarehouseCode { get; set; }
     }
 }

@@ -15,16 +15,6 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation
         /// Operasyon ID
         /// </summary>
         public Guid OperationID { get; set; }
-        [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// Kod
-        /// </summary>
-        public string Code { get; set; }
-        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// Açıklama
-        /// </summary>
-        public string Name { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
         /// <summary>
         /// Satır No

@@ -225,11 +225,11 @@
   <data name="EnumCancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="EnumInPartialProduction" xml:space="preserve">
-    <value>In Partial Production</value>
+  <data name="EnumCompleted" xml:space="preserve">
+    <value>Completed</value>
   </data>
-  <data name="EnumInProduction" xml:space="preserve">
-    <value>In Production</value>
+  <data name="EnumInPartialCompleted" xml:space="preserve">
+    <value>Partial Completed</value>
   </data>
   <data name="EnumWaiting" xml:space="preserve">
     <value>Waiting</value>

@@ -19,6 +19,14 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos
         /// </summary>
         public DateTime Date_ { get; set; }
         /// <summary>
+        /// MRP ID
+        /// </summary>
+        public Guid? MRPID { get; set; }
+        /// <summary>
+        /// MRP Kodu
+        /// </summary>
+        public string MRPCode { get; set; }
+        /// <summary>
         /// Saat
         /// </summary>
         public string Time_ { get; set; }

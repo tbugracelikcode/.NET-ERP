@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BranchesPopupGridCode" xml:space="preserve">
+    <value>ŞUBE KODU</value>
+  </data>
+  <data name="BranchesPopupGridName" xml:space="preserve">
+    <value>ŞUBE ADI</value>
+  </data>
+  <data name="BranchModalTitle" xml:space="preserve">
+    <value>Şubeler</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -150,6 +159,12 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="MRPBranchParameterLabel" xml:space="preserve">
+    <value>Malzeme İhtiyaç Planlaması (MRP) kaydı satın almaya dönüştürülürken varsayılan şubeyi seçin.</value>
+  </data>
+  <data name="MRPWarehouseParameterLabel" xml:space="preserve">
+    <value>Malzeme İhtiyaç Planlaması (MRP) kaydı satın almaya dönüştürülürken varsayılan depoyu seçin.</value>
+  </data>
   <data name="OrderFutureDateParameterLabel" xml:space="preserve">
     <value>Satın alma sipariş fişlerinde ileri tarihli kayıt yapılsın.</value>
   </data>
@@ -179,5 +194,14 @@
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="WarehouseModalTitle" xml:space="preserve">
+    <value>Depo Kartları</value>
+  </data>
+  <data name="WarehousesPopupGridCode" xml:space="preserve">
+    <value>DEPO KODU</value>
+  </data>
+  <data name="WarehousesPopupGridName" xml:space="preserve">
+    <value>DEPO ADI</value>
   </data>
 </root>

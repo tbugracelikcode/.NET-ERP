@@ -62,6 +62,33 @@ namespace TsiErp.Localizations.Resources.PurchaseManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ŞUBE KODU.
+        /// </summary>
+        public static string BranchesPopupGridCode {
+            get {
+                return ResourceManager.GetString("BranchesPopupGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞUBE ADI.
+        /// </summary>
+        public static string BranchesPopupGridName {
+            get {
+                return ResourceManager.GetString("BranchesPopupGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şubeler.
+        /// </summary>
+        public static string BranchModalTitle {
+            get {
+                return ResourceManager.GetString("BranchModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -161,6 +188,24 @@ namespace TsiErp.Localizations.Resources.PurchaseManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Malzeme İhtiyaç Planlaması (MRP) kaydı satın almaya dönüştürülürken varsayılan şubeyi seçin..
+        /// </summary>
+        public static string MRPBranchParameterLabel {
+            get {
+                return ResourceManager.GetString("MRPBranchParameterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Malzeme İhtiyaç Planlaması (MRP) kaydı satın almaya dönüştürülürken varsayılan depoyu seçin..
+        /// </summary>
+        public static string MRPWarehouseParameterLabel {
+            get {
+                return ResourceManager.GetString("MRPWarehouseParameterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satın alma sipariş fişlerinde ileri tarihli kayıt yapılsın..
         /// </summary>
         public static string OrderFutureDateParameterLabel {
@@ -247,6 +292,33 @@ namespace TsiErp.Localizations.Resources.PurchaseManagementParameter.Page {
         public static string UpdateControlManager {
             get {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depo Kartları.
+        /// </summary>
+        public static string WarehouseModalTitle {
+            get {
+                return ResourceManager.GetString("WarehouseModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEPO KODU.
+        /// </summary>
+        public static string WarehousesPopupGridCode {
+            get {
+                return ResourceManager.GetString("WarehousesPopupGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEPO ADI.
+        /// </summary>
+        public static string WarehousesPopupGridName {
+            get {
+                return ResourceManager.GetString("WarehousesPopupGridName", resourceCulture);
             }
         }
     }

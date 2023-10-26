@@ -20,10 +20,31 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
         /// Satış Siparişi Satış ID
         /// </summary>
         public Guid? SalesOrderLineID { get; set; }
+
+        /// <summary>
+        /// Şube ID
+        /// </summary>
+        public Guid? BranchID { get; set; }
+        /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string BranchCode { get; set; }
+        /// <summary>
+        /// Depo ID
+        /// </summary>
+        public Guid? WarehouseID { get; set; }
+        /// <summary>
+        /// Depo Kodu
+        /// </summary>
+        public string WarehouseCode { get; set; }
         /// <summary>
         /// Hesaplanacak
         /// </summary>
         public bool isCalculated { get; set; }
+        /// <summary>
+        /// Stoktan Kullanılacak
+        /// </summary>
+        public bool isStockUsage { get; set; }
         /// <summary>
         /// Satın Alınacak
         /// </summary>

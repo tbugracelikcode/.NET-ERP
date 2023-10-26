@@ -150,6 +150,9 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="MRPPurchaseTransactionLabel" xml:space="preserve">
+    <value>Select the transaction type from which the Material Requirements Planning (MRP) purchasing process will begin.</value>
+  </data>
   <data name="PlanningManagementParameterContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -162,7 +165,19 @@
   <data name="PlanningManagementParameterContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PurchaseOrder" xml:space="preserve">
+    <value>Purchase Order</value>
+  </data>
+  <data name="PurchaseRequest" xml:space="preserve">
+    <value>Purchase Request</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Planning Management Parameters</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>General System Identifications &gt; General System Parameters</value>
   </data>
 </root>

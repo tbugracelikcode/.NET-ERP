@@ -126,6 +126,11 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest
         /// Üretim Emri ID
         /// </summary>
         public Guid? ProductionOrderID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// MRP ID
+        /// </summary>
+        public Guid MRPID { get; set; }
 
 
 

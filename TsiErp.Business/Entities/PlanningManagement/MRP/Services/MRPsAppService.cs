@@ -12,6 +12,7 @@ using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRP.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRP.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.PlanningManagement.MRP;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
@@ -21,6 +22,7 @@ using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
+using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.MRPs.Page;
 
@@ -92,6 +94,9 @@ namespace TsiErp.Business.Entities.MRP.Services
                     Amount = item.Amount,
                     ProductID = item.ProductID,
                     RequirementAmount = item.RequirementAmount,
+                    BranchID = item.BranchID,
+                    WarehouseID = item.WarehouseID,
+                    isStockUsage = item.isStockUsage,
                     SalesOrderID = item.SalesOrderID,
                     SalesOrderLineID = item.SalesOrderLineID,
                     UnitSetID = item.UnitSetID,
@@ -177,6 +182,20 @@ namespace TsiErp.Business.Entities.MRP.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
+                    .Join<Warehouses>
+                    (
+                        s => new { WarehouseID = s.Id, WarehouseCode = s.Code },
+                        nameof(MRPLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                     .Join<Branches>
+                    (
+                        s => new { BranchID = s.Id, BranchCode = s.Code },
+                        nameof(MRPLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
                    .Join<UnitSets>
                     (
                         sh => new { UnitSetID = sh.Id, UnitSetCode = sh.Code },
@@ -241,6 +260,20 @@ namespace TsiErp.Business.Entities.MRP.Services
                       nameof(Products.Id),
                       JoinType.Left
                   )
+                    .Join<Warehouses>
+                    (
+                        s => new { WarehouseID = s.Id, WarehouseCode = s.Code },
+                        nameof(MRPLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                     .Join<Branches>
+                    (
+                        s => new { BranchID = s.Id, BranchCode = s.Code },
+                        nameof(MRPLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
                  .Join<UnitSets>
                   (
                       sh => new { UnitSetID = sh.Id, UnitSetCode = sh.Code },
@@ -310,6 +343,9 @@ namespace TsiErp.Business.Entities.MRP.Services
                         isCalculated = item.isCalculated,
                         isPurchase = item.isPurchase,
                         Amount = item.Amount,
+                        WarehouseID = item.WarehouseID,
+                        BranchID = item.BranchID,
+                        isStockUsage = item.isStockUsage,
                         ProductID = item.ProductID,
                         RequirementAmount = item.RequirementAmount,
                         SalesOrderID = item.SalesOrderID,
@@ -343,8 +379,11 @@ namespace TsiErp.Business.Entities.MRP.Services
                             State_ = item.State_,
                             LineNr = item.LineNr,
                             Amount = item.Amount,
+                            isStockUsage = item.isStockUsage,
                             isCalculated = item.isCalculated,
                             isPurchase = item.isPurchase,
+                            BranchID = item.BranchID,
+                            WarehouseID = item.WarehouseID,
                             ProductID = item.ProductID,
                             RequirementAmount = item.RequirementAmount,
                             SalesOrderID = item.SalesOrderID,

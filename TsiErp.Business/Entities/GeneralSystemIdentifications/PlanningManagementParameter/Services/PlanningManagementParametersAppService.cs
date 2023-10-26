@@ -6,8 +6,10 @@ using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.FinanceManagementParameter.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PlanningManagementParameter.Page;
 
@@ -22,30 +24,62 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
         {
         }
 
-        public async Task<IDataResult<SelectPlanningManagementParametersDto>> GetAsync(Guid id)
+        public async Task<IDataResult<SelectPlanningManagementParametersDto>> CreateAsync(CreatePlanningManagementParametersDto input)
         {
-            var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(
-             new
-             {
-                 Id = id
-             }, false, false, "");
+            var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Insert(new CreatePlanningManagementParametersDto
+            {
+                Id = GuidGenerator.CreateGuid(),
+                FutureDateParameter = input.FutureDateParameter,
+                MRPPurchaseTransaction = input.MRPPurchaseTransaction
+            }).UseIsDelete(false); 
 
-            var PlanningManagementParameter = queryFactory.Get<SelectPlanningManagementParametersDto>(query);
 
-            LogsAppService.InsertLogToDatabase(PlanningManagementParameter, PlanningManagementParameter, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Get, id);
+            var PlanningManagementParameter = queryFactory.Insert<SelectPlanningManagementParametersDto>(query, "Id", true);
+
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Insert, PlanningManagementParameter.Id);
 
             return new SuccessDataResult<SelectPlanningManagementParametersDto>(PlanningManagementParameter);
+        }
+
+        public async Task<IDataResult<SelectPlanningManagementParametersDto>> GetAsync(Guid id)
+        {
+            throw new NotImplementedException();
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPlanningManagementParametersDto>>> GetListAsync(ListPlanningManagementParametersParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").UseIsDelete(false);
 
             var PlanningManagementParameters = queryFactory.GetList<ListPlanningManagementParametersDto>(query).ToList();
 
             return new SuccessDataResult<IList<ListPlanningManagementParametersDto>>(PlanningManagementParameters);
+        }
+
+        public async Task<IDataResult<SelectPlanningManagementParametersDto>> GetPlanningManagementParametersAsync()
+        {
+            SelectPlanningManagementParametersDto result = new SelectPlanningManagementParametersDto();
+
+            var controlQuery = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").UseIsDelete(false);
+
+            SelectPlanningManagementParametersDto PlanningManagementParameter = queryFactory.Get<SelectPlanningManagementParametersDto>(controlQuery);
+
+            if (PlanningManagementParameter != null)
+            {
+                var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(
+                 new
+                 {
+                     Id = PlanningManagementParameter.Id
+                 }, false, false, "").UseIsDelete(false);
+
+                result = queryFactory.Get<SelectPlanningManagementParametersDto>(query);
+            }
+
+            LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Get, result.Id);
+
+            return new SuccessDataResult<SelectPlanningManagementParametersDto>(result);
+
         }
 
 
@@ -58,8 +92,9 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
             var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Update(new UpdatePlanningManagementParametersDto
             {
                 FutureDateParameter = input.FutureDateParameter,
+                 MRPPurchaseTransaction = input.MRPPurchaseTransaction,
                 Id = input.Id
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
 
             var PlanningManagementParameters = queryFactory.Update<SelectPlanningManagementParametersDto>(query, "Id", true);
 
@@ -72,10 +107,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
 
         #region Unused Implemented Methods
 
-        public Task<IDataResult<SelectPlanningManagementParametersDto>> CreateAsync(CreatePlanningManagementParametersDto input)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public Task<IResult> DeleteAsync(Guid id)
         {

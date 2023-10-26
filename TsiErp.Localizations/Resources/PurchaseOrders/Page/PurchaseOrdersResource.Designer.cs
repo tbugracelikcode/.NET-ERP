@@ -385,20 +385,20 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kısmi Üretime Verildi.
+        ///   Looks up a localized string similar to Tamamlandı.
         /// </summary>
-        public static string EnumInPartialProduction {
+        public static string EnumCompleted {
             get {
-                return ResourceManager.GetString("EnumInPartialProduction", resourceCulture);
+                return ResourceManager.GetString("EnumCompleted", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Üretime Verildi.
+        ///   Looks up a localized string similar to Kısmi Tamamlandı.
         /// </summary>
-        public static string EnumInProduction {
+        public static string EnumInPartialCompleted {
             get {
-                return ResourceManager.GetString("EnumInProduction", resourceCulture);
+                return ResourceManager.GetString("EnumInPartialCompleted", resourceCulture);
             }
         }
         

@@ -1,10 +1,11 @@
-﻿using Tsi.Core.Entities.Auditing;
+﻿using Tsi.Core.Entities;
+using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter
 {
-    public class PlanningManagementParameters 
+    public class PlanningManagementParameters : IEntity
     {
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
         /// <summary>
@@ -16,5 +17,10 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManageme
         /// Id
         /// </summary>
         public Guid Id { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// MRP Satınalma Sürecinin Başlangıç Parametresi
+        /// </summary>
+        public int MRPPurchaseTransaction { get; set; }
     }
 }

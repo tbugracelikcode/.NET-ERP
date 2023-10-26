@@ -17,6 +17,7 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
+using TsiErp.Entities.Entities.PlanningManagement.MRP;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
@@ -84,6 +85,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 GrossAmount = input.GrossAmount,
                 LinkedPurchaseRequestID = Guid.Empty,
                 NetAmount = input.NetAmount,
+                MRPID = input.MRPID,
                 PaymentPlanID = input.PaymentPlanID,
                 ProductionOrderID = Guid.Empty,
                 PurchaseOrderState = input.PurchaseOrderState,
@@ -185,6 +187,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
+                MRPID = input.MRPID,
                 GrossAmount = input.GrossAmount,
                 LinkedPurchaseRequestID = Guid.Empty,
                 NetAmount = input.NetAmount,
@@ -307,7 +310,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PurchaseOrders)
-                   .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate, po.WarehouseID, po.TotalVatExcludedAmount, po.TotalVatAmount, po.TotalDiscountAmount, po.Time_, po.SpecialCode, po.ShippingAdressID, po.PurchaseOrderState, po.ProductionOrderID, po.PaymentPlanID, po.NetAmount, po.LinkedPurchaseRequestID, po.Id, po.GrossAmount, po.FicheNo, po.ExchangeRate, po.Description_, po.Date_, po.DataOpenStatusUserId, po.DataOpenStatus, po.CurrentAccountCardID, po.CurrencyID, po.BranchID })
+                   .Select<PurchaseOrders>(null)
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
@@ -320,6 +323,13 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
                         nameof(PurchaseOrders.BranchID),
                         nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<MRPs>
+                    (
+                        b => new { MRPID = b.Id, MRPCode = b.Code },
+                        nameof(PurchaseOrders.MRPID),
+                        nameof(MRPs.Id),
                         JoinType.Left
                     )
                      .Join<Warehouses>
@@ -397,12 +407,18 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.PurchaseOrders)
-                   .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate, po.WarehouseID, po.TotalVatExcludedAmount, po.TotalVatAmount, po.TotalDiscountAmount, po.Time_, po.SpecialCode, po.ShippingAdressID, po.PurchaseOrderState, po.ProductionOrderID, po.PaymentPlanID, po.NetAmount, po.LinkedPurchaseRequestID, po.Id, po.GrossAmount, po.FicheNo, po.ExchangeRate, po.Description_, po.Date_, po.DataOpenStatusUserId, po.DataOpenStatus, po.CurrentAccountCardID, po.CurrencyID, po.BranchID })
+                   .Select<PurchaseOrders>(null)
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },
                         nameof(PurchaseOrders.PaymentPlanID),
                         nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    ).Join<MRPs>
+                    (
+                        b => new { MRPID = b.Id, MRPCode = b.Code },
+                        nameof(PurchaseOrders.MRPID),
+                        nameof(MRPs.Id),
                         JoinType.Left
                     )
                     .Join<Branches>
@@ -467,6 +483,12 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
                         nameof(PurchaseOrders.BranchID),
                         nameof(Branches.Id),
+                        JoinType.Left
+                    ).Join<MRPs>
+                    (
+                        b => new { MRPID = b.Id, MRPCode = b.Code },
+                        nameof(PurchaseOrders.MRPID),
+                        nameof(MRPs.Id),
                         JoinType.Left
                     )
                      .Join<Warehouses>
@@ -598,6 +620,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 CurrentAccountCardID = input.CurrentAccountCardID,
                 Date_ = input.Date_,
                 Description_ = input.Description_,
+                MRPID = input.MRPID,
                 ExchangeRate = input.ExchangeRate,
                 GrossAmount = input.GrossAmount,
                 LinkedPurchaseRequestID = input.LinkedPurchaseRequestID,
@@ -738,6 +761,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 Description_ = entity.Description_,
                 ExchangeRate = entity.ExchangeRate,
                 GrossAmount = entity.GrossAmount,
+                MRPID = entity.MRPID,
                 LinkedPurchaseRequestID = entity.LinkedPurchaseRequestID,
                 NetAmount = entity.NetAmount,
                 PaymentPlanID = entity.PaymentPlanID,

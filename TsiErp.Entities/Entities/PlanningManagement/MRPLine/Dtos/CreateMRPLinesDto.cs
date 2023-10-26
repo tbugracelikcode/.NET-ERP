@@ -1,4 +1,5 @@
 ﻿using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
 {
@@ -20,6 +21,10 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
         /// Miktar
         /// </summary>
         public int Amount { get; set; }
+        /// <summary>
+        /// Stoktan Kullanılacak
+        /// </summary>
+        public bool isStockUsage { get; set; }
         /// <summary>
         /// Satır No
         /// </summary>
@@ -48,5 +53,13 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
         /// Satın Alınacak
         /// </summary>
         public bool isPurchase { get; set; }
+        /// <summary>
+        /// Şube ID
+        /// </summary>
+        public Guid? BranchID { get; set; }
+        /// <summary>
+        /// Depo ID
+        /// </summary>
+        public Guid? WarehouseID { get; set; }
     }
 }

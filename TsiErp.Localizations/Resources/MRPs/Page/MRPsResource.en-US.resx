@@ -120,6 +120,18 @@
   <data name="AddSelectedOrdersButton" xml:space="preserve">
     <value>Add Selected Orders</value>
   </data>
+  <data name="BranchCodeButtonEditLabel" xml:space="preserve">
+    <value>Branch:</value>
+  </data>
+  <data name="BranchesPopupGridCode" xml:space="preserve">
+    <value>BRANCH CODE</value>
+  </data>
+  <data name="BranchesPopupGridName" xml:space="preserve">
+    <value>BRANCH NAME</value>
+  </data>
+  <data name="BranchModalTitle" xml:space="preserve">
+    <value>Branches</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -172,16 +184,19 @@
     <value>Material Requirement Planning (MRP)</value>
   </data>
   <data name="LineGridAmount" xml:space="preserve">
-    <value>CALCULATED AMOUNT</value>
+    <value>PLANNED REQUIREMENT AMOUNT</value>
   </data>
   <data name="LineGridAmountOfStock" xml:space="preserve">
     <value>AMOUNT OF STOCK</value>
+  </data>
+  <data name="LineGridBranchCode" xml:space="preserve">
+    <value>BRANCH</value>
   </data>
   <data name="LineGridProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
   </data>
   <data name="LineGridRequirementAmount" xml:space="preserve">
-    <value>REQUIREMENT AMOUNT</value>
+    <value>PURCHASE REQUIREMENT AMOUNT</value>
   </data>
   <data name="LineGridSalesOrderFicheNo" xml:space="preserve">
     <value>ORDER FICHE NR</value>
@@ -194,6 +209,12 @@
   </data>
   <data name="LineGridUnitSetCode" xml:space="preserve">
     <value>UNIT SET</value>
+  </data>
+  <data name="LineGridWarehouseCode" xml:space="preserve">
+    <value>WAREHOUSE</value>
+  </data>
+  <data name="LineModalTitle" xml:space="preserve">
+    <value>Material Requirement Planning (MRP) Lines</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -213,11 +234,17 @@
   <data name="MRPContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="MRPContextConvertPurchase" xml:space="preserve">
+    <value>Convert to Purchase</value>
+  </data>
   <data name="MRPContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="MRPContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="MRPLineContextChange" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="MRPLineContextDelete" xml:space="preserve">
     <value>Delete</value>
@@ -230,6 +257,9 @@
   </data>
   <data name="MRPLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="MRPLineContextStockUsage" xml:space="preserve">
+    <value>Use From Stock</value>
   </data>
   <data name="MultiDeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Order lines going to be deleted, do you confirm?</value>
@@ -276,6 +306,12 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Planning &gt; Production Planning</value>
   </data>
+  <data name="UIWarningConvertPurchaseMessage" xml:space="preserve">
+    <value>There are lines in the selected record for which no branch or warehouse is selected.</value>
+  </data>
+  <data name="UIWarningConvertPurchaseTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
@@ -284,5 +320,17 @@
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
     <value>MRP code cannot exceed 17 characters.</value>
+  </data>
+  <data name="WarehouseCodeButtonEditLabel" xml:space="preserve">
+    <value>Warehouse:</value>
+  </data>
+  <data name="WarehouseModalTitle" xml:space="preserve">
+    <value>Warehouses</value>
+  </data>
+  <data name="WarehousesPopupGridCode" xml:space="preserve">
+    <value>WAREHOUSE CODE</value>
+  </data>
+  <data name="WarehousesPopupGridName" xml:space="preserve">
+    <value>WAREHOUSE NAME</value>
   </data>
 </root>
