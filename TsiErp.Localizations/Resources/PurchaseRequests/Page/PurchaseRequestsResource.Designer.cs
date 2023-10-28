@@ -709,6 +709,15 @@ namespace TsiErp.Localizations.Resources.PurchaseRequests.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MRP KODU.
+        /// </summary>
+        public static string MRPCode {
+            get {
+                return ResourceManager.GetString("MRPCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Net Toplam:.
         /// </summary>
         public static string NetAmountLabel {

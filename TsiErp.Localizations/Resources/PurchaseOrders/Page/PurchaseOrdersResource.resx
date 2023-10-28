@@ -135,11 +135,35 @@
   <data name="BranchNameLabel" xml:space="preserve">
     <value>Şube:</value>
   </data>
+  <data name="CancelOrderButton" xml:space="preserve">
+    <value>Seçilen Siparişleri İptal Et</value>
+  </data>
+  <data name="CancelOrderModalTitle" xml:space="preserve">
+    <value>Siparişi İptal Et</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CreateStockFishesGridProductCode" xml:space="preserve">
+    <value>ÜRÜN KODU</value>
+  </data>
+  <data name="CreateStockFishesGridProductName" xml:space="preserve">
+    <value>ÜRÜN AÇIKLAMASI</value>
+  </data>
+  <data name="CreateStockFishesGridPurchaseStateLine" xml:space="preserve">
+    <value>SATIN ALMA DURUMU</value>
+  </data>
+  <data name="CreateStockFishesGridQuantity" xml:space="preserve">
+    <value>MİKTAR</value>
+  </data>
+  <data name="CreateStockFishesGridUnitSetCode" xml:space="preserve">
+    <value>BİRİM SETİ</value>
+  </data>
+  <data name="CreateStockFishesModalTitle" xml:space="preserve">
+    <value>Stok Giriş Fişlerini Oluştur</value>
   </data>
   <data name="CurrencyCode" xml:space="preserve">
     <value>PARA BİRİMİ</value>
@@ -291,6 +315,9 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="MRPCode" xml:space="preserve">
+    <value>MRP KODU</value>
+  </data>
   <data name="NetAmountLabel" xml:space="preserve">
     <value>Net Toplam:</value>
   </data>
@@ -354,8 +381,17 @@
   <data name="PurchaseOrderContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
+  <data name="PurchaseOrderContextApproveOrder" xml:space="preserve">
+    <value>Siparişi Onayla</value>
+  </data>
+  <data name="PurchaseOrderContextCancelOrder" xml:space="preserve">
+    <value>Siparişi İptal Et</value>
+  </data>
   <data name="PurchaseOrderContextChange" xml:space="preserve">
     <value>Değiştir</value>
+  </data>
+  <data name="PurchaseOrderContextCreateStockFiches" xml:space="preserve">
+    <value>Stok Giriş Fişlerini Oluştur</value>
   </data>
   <data name="PurchaseOrderContextDelete" xml:space="preserve">
     <value>Sil</value>
@@ -384,6 +420,15 @@
   <data name="SpecialCodeLabel" xml:space="preserve">
     <value>Özel Kod:</value>
   </data>
+  <data name="StockReceiptFichesContextMultiSelect" xml:space="preserve">
+    <value>Toplu Seç</value>
+  </data>
+  <data name="StockReceiptFichesContextRemoveAll" xml:space="preserve">
+    <value>Toplu Seçimi Kaldır</value>
+  </data>
+  <data name="StockReceiptFichesContextSelect" xml:space="preserve">
+    <value>Seç</value>
+  </data>
   <data name="TotalDiscountAmountLabel" xml:space="preserve">
     <value>İndirim Toplamı:</value>
   </data>
@@ -392,6 +437,9 @@
   </data>
   <data name="TotalVatExcludedAmountLabel" xml:space="preserve">
     <value>Toplam Tutar:</value>
+  </data>
+  <data name="UIConfirmationCancelOrderMessage" xml:space="preserve">
+    <value>Seçtiğiniz sipariş satırları iptal edilecektir.</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>Seçtiğiniz satın alma siparişi kalıcı olarak silinecektir.</value>
@@ -411,6 +459,21 @@
   <data name="UIExportTitle" xml:space="preserve">
     <value>Satın Alma Siparişleri</value>
   </data>
+  <data name="UIInformationApproveOrder" xml:space="preserve">
+    <value>Satın alma siparişi onaylanmıştır.</value>
+  </data>
+  <data name="UIInformationStateMessage" xml:space="preserve">
+    <value>Seçilen satır için stok giriş fişi oluşturulmuştur.</value>
+  </data>
+  <data name="UIInformationStockFichesCreatedMessage" xml:space="preserve">
+    <value>Stok giriş fişleri oluşturulmuştur.</value>
+  </data>
+  <data name="UIInformationStockFichesCreatedTitle" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
+  <data name="UIInformationTitle" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Satın Alma Yönetimi &gt; Hareketler</value>
   </data>
@@ -424,6 +487,12 @@
     <value>Miktar 0 olduğu için satır kaydetme işlemi yapılamamaktadır.</value>
   </data>
   <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningStockFichesMessage" xml:space="preserve">
+    <value>Stok giriş fişi oluşturulabilmesi için, seçilen kaydın onaylanmış olması gerekir.</value>
+  </data>
+  <data name="UIWarningStockFichesTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>
   <data name="UnitPriceLineLabel" xml:space="preserve">
