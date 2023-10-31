@@ -147,6 +147,9 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="CreateStockFichesButton" xml:space="preserve">
+    <value>Stok Fişlerini Oluştur</value>
+  </data>
   <data name="CreateStockFishesGridProductCode" xml:space="preserve">
     <value>ÜRÜN KODU</value>
   </data>

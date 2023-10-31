@@ -417,12 +417,13 @@ else
     <DxPopup @bind-Visible="CreateStockFishesCrudPopup"
          ShowFooter="true"
          CloseOnEscape="false"
+          ShowCloseButton="false"
          CloseOnOutsideClick="false"
          HeaderText="@L["CreateStockFishesModalTitle"]"
          Width="53%"
-         Height="87%"
+         Height="50%"
          MinWidth="1000px"
-         MinHeight="980px"
+         MinHeight="540px"
          HeaderCssClass="HeaderTitleCss"
          Showing="CrudModalShowing"
          Closing="CrudModalClosing">
@@ -443,7 +444,7 @@ else
                 <Items>
                    
 
-                    <DxGridLayoutItem Row="6" Column="1" ColumnSpan="5">
+                    <DxGridLayoutItem Row="6" Column="1" >
                         <Template>
                             <SfGrid @ref=_CreateStockFishesGrid ID="CreateStockFishesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CreateStockFishesList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@CreateStockFishesGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnCreateStockReceiptFishesContextMenuClick" TValue="CreateStockReceiptFishes"></GridEvents>
@@ -454,7 +455,7 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.PurchaseStateLine) HeaderText="@L["CreateStockFishesGridPurchaseStateLine"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="20"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="40"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductCode) HeaderText="@L["CreateStockFishesGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductName) HeaderText="@L["CreateStockFishesGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> 
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["CreateStockFishesGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -476,13 +477,14 @@ else
 
     <DxPopup @bind-Visible="CancelOrderCrudPopup"
          ShowFooter="true"
-         CloseOnEscape="false"
+             CloseOnEscape="false"
+             ShowCloseButton="false"
          CloseOnOutsideClick="false"
          HeaderText="@L["CancelOrderModalTitle"]"
          Width="53%"
-         Height="87%"
+         Height="50%"
          MinWidth="1000px"
-         MinHeight="980px"
+         MinHeight="540px"
          HeaderCssClass="HeaderTitleCss"
          Showing="CrudModalShowing"
          Closing="CrudModalClosing">
@@ -503,9 +505,9 @@ else
                 <Items>
                    
 
-                    <DxGridLayoutItem Row="6" Column="1" ColumnSpan="5">
+                    <DxGridLayoutItem Row="6" Column="1" >
                         <Template>
-                            <SfGrid @ref=_CancelOrderGrid ID="CancelOrderGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CancelOrderList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@CancelOrderGridContextMenu">
+                            <SfGrid @ref=_CancelOrderGrid ID="CancelOrderGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CancelOrderList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@CreateStockFishesGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnCancelOrderContextMenuClick" TValue="CreateStockReceiptFishes"></GridEvents>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
@@ -514,7 +516,7 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.PurchaseStateLine) HeaderText="@L["CreateStockFishesGridPurchaseStateLine"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="20"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="40"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductCode) HeaderText="@L["CreateStockFishesGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductName) HeaderText="@L["CreateStockFishesGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> 
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["CreateStockFishesGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>

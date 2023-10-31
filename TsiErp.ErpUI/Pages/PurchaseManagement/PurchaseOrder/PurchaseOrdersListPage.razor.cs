@@ -17,6 +17,7 @@ using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
@@ -37,7 +38,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> CreateStockFishesGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
-        public List<ContextMenuItemModel> CancelOrderGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectPurchaseOrderLinesDto> GridLineList = new List<SelectPurchaseOrderLinesDto>();
 
@@ -481,10 +481,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     {
                         int selectedIndex = CancelOrderList.IndexOf(CancelOrderDataSource);
 
-                        if (selectedIndex > 0)
-                        {
                             CancelOrderList[selectedIndex].SelectedLine = true;
-                        }
+                       
                         await _CancelOrderGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
@@ -568,6 +566,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     await UpdateAsync(updateInput);
                 }
             }
+
+            HideCancelOrderPopup();
         }
 
         public void HideCancelOrderPopup()
@@ -617,10 +617,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     {
                         int selectedIndex = CreateStockFishesList.IndexOf(CreateStockReceiptFishesDataSource);
 
-                        if (selectedIndex > 0)
-                        {
-                            CreateStockFishesList[selectedIndex].SelectedLine = true;
-                        }
+                         CreateStockFishesList[selectedIndex].SelectedLine = true;
+                       
                         await _CreateStockFishesGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
@@ -747,13 +745,11 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
             await UpdateAsync(updateInput);
 
-            await InvokeAsync(StateHasChanged);
-
             await ModalManager.MessagePopupAsync(L["UIInformationStockFichesCreatedTitle"], L["UIInformationStockFichesCreatedMessage"]);
 
-            CreateStockFishesList.Clear();
+            HideCreateStockFichesPopup();
 
-            CreateStockFishesCrudPopup = false;
+            await InvokeAsync(StateHasChanged);
         }
 
         public void HideCreateStockFichesPopup()
@@ -784,7 +780,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             DataSource = new SelectPurchaseOrdersDto()
             {
                 Date_ = DateTime.Today,
-                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersChildMenu")
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersChildMenu"),
+                PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Beklemede
             };
 
             DataSource.SelectPurchaseOrderLinesDto = new List<SelectPurchaseOrderLinesDto>();
@@ -865,7 +862,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                     if (DataSource.PurchaseOrderState == Entities.Enums.PurchaseOrderStateEnum.Beklemede)
                     {
-                        foreach (var line in GridLineList)
+                        foreach (var line in GridLineList.ToList())
                         {
                             if (line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.Beklemede)
                             {
@@ -1142,6 +1139,57 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             DataSource.TotalVatAmount = GridLineList.Sum(x => x.VATamount);
             DataSource.NetAmount = GridLineList.Sum(x => x.LineTotalAmount);
         }
+
+        protected override async Task OnSubmit()
+        {
+            SelectPurchaseOrdersDto result;
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                foreach(var item in DataSource.SelectPurchaseOrderLinesDto)
+                {
+                    int itemIndex = DataSource.SelectPurchaseOrderLinesDto.IndexOf(item);
+                    DataSource.SelectPurchaseOrderLinesDto[itemIndex].PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Beklemede;
+                }
+
+                var createInput = ObjectMapper.Map<SelectPurchaseOrdersDto, CreatePurchaseOrdersDto>(DataSource);
+
+                result = (await CreateAsync(createInput)).Data;
+
+                if (result != null)
+                    DataSource.Id = result.Id;
+            }
+            else
+            {
+                var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
+
+                result = (await UpdateAsync(updateInput)).Data;
+            }
+
+            if (result == null)
+            {
+
+                return;
+            }
+
+            await GetListDataSourceAsync();
+
+            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+            HideEditPage();
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                DataSource.Id = result.Id;
+            }
+
+            if (savedEntityIndex > -1)
+                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+            else
+                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+        }
+
+
         #endregion
 
         #region GetList Metotları

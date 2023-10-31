@@ -151,6 +151,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok Fişlerini Oluştur.
+        /// </summary>
+        public static string CreateStockFichesButton {
+            get {
+                return ResourceManager.GetString("CreateStockFichesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ÜRÜN KODU.
         /// </summary>
         public static string CreateStockFishesGridProductCode {

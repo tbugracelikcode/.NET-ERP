@@ -147,6 +147,9 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
   </data>
+  <data name="CreateStockFichesButton" xml:space="preserve">
+    <value>Create Stock Fiches</value>
+  </data>
   <data name="CreateStockFishesGridProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
   </data>
