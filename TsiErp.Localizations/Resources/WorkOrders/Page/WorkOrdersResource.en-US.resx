@@ -147,6 +147,9 @@
   <data name="EnumDurduruldu" xml:space="preserve">
     <value>Stopped</value>
   </data>
+  <data name="EnumFasonaGonderildi" xml:space="preserve">
+    <value>Sent to Contractor</value>
+  </data>
   <data name="EnumIptal" xml:space="preserve">
     <value>Cancel</value>
   </data>

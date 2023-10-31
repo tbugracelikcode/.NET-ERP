@@ -47,7 +47,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// <summary>
         /// Operasyon Bitiş Tarihi
         /// </summary>
-        public DateTime OperationEndDate { get; set; }
+        public DateTime? OperationEndDate { get; set; }
         /// <summary>
         /// Bitiş Saati
         /// </summary>
@@ -87,5 +87,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// Sipariş Satırları
         /// </summary>
         public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLinesDto { get; set; }
+
     }
 }

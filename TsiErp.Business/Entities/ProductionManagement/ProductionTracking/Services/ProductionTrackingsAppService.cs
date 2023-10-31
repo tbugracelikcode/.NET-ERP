@@ -84,15 +84,15 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
             if (input.OperationStartTime > input.OperationEndTime)
             {
-                operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) - Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
+                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) - Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
             }
             else if (input.OperationStartTime < input.OperationEndTime)
             {
-                operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) + Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
+                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) + Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
             }
             else if (input.OperationStartTime == input.OperationEndTime)
             {
-                operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime);
+                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime);
             }
 
             #endregion
@@ -230,7 +230,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     {
                         workOrder.WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
-                        workOrder.OccuredFinishDate = new DateTime(input.OperationEndDate.Year, input.OperationEndDate.Month, input.OperationEndDate.Day, input.OperationEndTime.Value.Hours, input.OperationEndTime.Value.Minutes, input.OperationEndTime.Value.Seconds);
+                        workOrder.OccuredFinishDate = new DateTime(input.OperationEndDate.GetValueOrDefault().Year, input.OperationEndDate.GetValueOrDefault().Month, input.OperationEndDate.GetValueOrDefault().Day, input.OperationEndTime.Value.Hours, input.OperationEndTime.Value.Minutes, input.OperationEndTime.Value.Seconds);
 
                         workOrderList.Where(t => t.Id == workOrder.Id).FirstOrDefault().WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
@@ -334,7 +334,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                         workOrder.OccuredStartDate = new DateTime(input.OperationStartDate.Year, input.OperationStartDate.Month, input.OperationStartDate.Day, input.OperationStartTime.Value.Hours, input.OperationStartTime.Value.Minutes, input.OperationStartTime.Value.Seconds);
 
-                        workOrder.OccuredFinishDate = new DateTime(input.OperationEndDate.Year, input.OperationEndDate.Month, input.OperationEndDate.Day, input.OperationEndTime.Value.Hours, input.OperationEndTime.Value.Minutes, input.OperationEndTime.Value.Seconds);
+                        workOrder.OccuredFinishDate = new DateTime(input.OperationEndDate.GetValueOrDefault().Year, input.OperationEndDate.GetValueOrDefault().Month, input.OperationEndDate.GetValueOrDefault().Day, input.OperationEndTime.Value.Hours, input.OperationEndTime.Value.Minutes, input.OperationEndTime.Value.Seconds);
 
                         workOrderList.Where(t => t.Id == workOrder.Id).FirstOrDefault().WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
@@ -989,15 +989,15 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
             if (input.OperationStartTime > input.OperationEndTime)
             {
-                operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) - Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
+                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) - Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
             }
             else if (input.OperationStartTime < input.OperationEndTime)
             {
-                operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) + Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
+                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) + Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
             }
             else if (input.OperationStartTime == input.OperationEndTime)
             {
-                operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime);
+                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime);
             }
 
             #endregion
@@ -1198,7 +1198,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     {
                         workOrder.WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
-                        workOrder.OccuredFinishDate = new DateTime(input.OperationEndDate.Year, input.OperationEndDate.Month, input.OperationEndDate.Day, input.OperationEndTime.Value.Hours, input.OperationEndTime.Value.Minutes, input.OperationEndTime.Value.Seconds);
+                        workOrder.OccuredFinishDate = new DateTime(input.OperationEndDate.GetValueOrDefault().Year, input.OperationEndDate.GetValueOrDefault().Month, input.OperationEndDate.GetValueOrDefault().Day, input.OperationEndTime.Value.Hours, input.OperationEndTime.Value.Minutes, input.OperationEndTime.Value.Seconds);
 
                         workOrderList.Where(t => t.Id == workOrder.Id).FirstOrDefault().WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
@@ -1306,7 +1306,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                         workOrder.OccuredStartDate = new DateTime(input.OperationStartDate.Year, input.OperationStartDate.Month, input.OperationStartDate.Day, input.OperationStartTime.Value.Hours, input.OperationStartTime.Value.Minutes, input.OperationStartTime.Value.Seconds);
 
-                        workOrder.OccuredFinishDate = new DateTime(input.OperationEndDate.Year, input.OperationEndDate.Month, input.OperationEndDate.Day, input.OperationEndTime.Value.Hours, input.OperationEndTime.Value.Minutes, input.OperationEndTime.Value.Seconds);
+                        workOrder.OccuredFinishDate = new DateTime(input.OperationEndDate.GetValueOrDefault().Year, input.OperationEndDate.GetValueOrDefault().Month, input.OperationEndDate.GetValueOrDefault().Day, input.OperationEndTime.Value.Hours, input.OperationEndTime.Value.Minutes, input.OperationEndTime.Value.Seconds);
 
                         workOrderList.Where(t => t.Id == workOrder.Id).FirstOrDefault().WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
@@ -1469,7 +1469,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 EmployeeID = entity.EmployeeID,
                 HaltTime = entity.HaltTime,
                 IsFinished = entity.IsFinished,
-                OperationEndDate = entity.OperationEndDate,
+                OperationEndDate = entity.OperationEndDate.GetValueOrDefault(),
                 OperationEndTime = entity.OperationEndTime,
                 CurrentAccountCardID = entity.CurrentAccountCardID,
                 Description_ = entity.Description_,

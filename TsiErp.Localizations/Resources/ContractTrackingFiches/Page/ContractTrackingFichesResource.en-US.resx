@@ -324,6 +324,9 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
+  <data name="ValidatorAmount" xml:space="preserve">
+    <value>Please enter the amount.</value>
+  </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Please enter the fiche number.</value>
   </data>

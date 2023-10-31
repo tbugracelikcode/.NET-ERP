@@ -147,6 +147,9 @@
   <data name="EnumDurduruldu" xml:space="preserve">
     <value>Durduruldu</value>
   </data>
+  <data name="EnumFasonaGonderildi" xml:space="preserve">
+    <value>Fasona Gönderildi</value>
+  </data>
   <data name="EnumIptal" xml:space="preserve">
     <value>İptal</value>
   </data>

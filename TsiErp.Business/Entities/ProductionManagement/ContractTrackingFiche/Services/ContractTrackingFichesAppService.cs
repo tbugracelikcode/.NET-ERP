@@ -10,6 +10,9 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ProductionManagement.ContractTrackingFiche.Validations;
+using TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.Services;
+using TsiErp.Business.Entities.ProductionTracking.Services;
+using TsiErp.Business.Entities.WorkOrder.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
@@ -17,10 +20,14 @@ using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan;
+using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ContractTrackingFiches.Page;
 
@@ -33,9 +40,17 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public ContractTrackingFichesAppService(IStringLocalizer<ContractTrackingFichesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        private IProductionTrackingsAppService ProductionTrackingsAppService { get; set; }
+
+        private IWorkOrdersAppService WorkOrdersAppService { get; set; }
+        private IOperationStockMovementsAppService OperationStockMovementsAppService { get; set; }
+
+        public ContractTrackingFichesAppService(IStringLocalizer<ContractTrackingFichesResource> l, IFicheNumbersAppService ficheNumbersAppService, IProductionTrackingsAppService productionTrackingsAppService, IWorkOrdersAppService workOrdersAppService, IOperationStockMovementsAppService operationStockMovementsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            ProductionTrackingsAppService = productionTrackingsAppService;
+            WorkOrdersAppService = workOrdersAppService;
+            OperationStockMovementsAppService = operationStockMovementsAppService;
         }
 
         [ValidationAspect(typeof(CreateContractTrackingFichesValidator), Priority = 1)]
@@ -79,8 +94,10 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 LastModifierId = Guid.Empty
             });
 
+
             foreach (var item in input.SelectContractTrackingFicheLines)
             {
+                #region Contract Tracking Fiche Lines
                 var queryLine = queryFactory.Query().From(Tables.ContractTrackingFicheLines).Insert(new CreateContractTrackingFicheLinesDto
                 {
                     StationID = item.StationID,
@@ -102,7 +119,152 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                #endregion
+
+                #region Work Order
+
+                if (input.SelectContractTrackingFicheLines.Count > item.LineNr)
+                {
+                    
+
+                    var workOrder = (await WorkOrdersAppService.GetAsync(item.WorkOrderID.GetValueOrDefault())).Data;
+
+                    if (workOrder != null)
+                    {
+
+                        #region Operation Stock Movement
+                        if (input.SelectContractTrackingFicheLines.Count - 1 == item.LineNr)
+                        {
+                            var operationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(workOrder.ProductionOrderID.GetValueOrDefault(), workOrder.ProductsOperationID.GetValueOrDefault())).Data;
+
+                            if (operationStockMovement.Id == Guid.Empty)
+                            {
+                                var createOperationStockMovement = new CreateOperationStockMovementsDto
+                                {
+                                    Id = GuidGenerator.CreateGuid(),
+                                    OperationID = workOrder.ProductsOperationID.GetValueOrDefault(),
+                                    ProductionorderID = workOrder.ProductionOrderID.GetValueOrDefault(),
+                                    TotalAmount = input.Amount_
+                                };
+
+                                var operationStockMovementQuery = queryFactory.Query().From(Tables.OperationStockMovements).Insert(createOperationStockMovement).UseIsDelete(false);
+
+                                query.Sql = query.Sql + QueryConstants.QueryConstant + operationStockMovementQuery.Sql;
+                            }
+                            else
+                            {
+
+                                var updateOperationStockMovement = new UpdateOperationStockMovementsDto
+                                {
+                                    Id = operationStockMovement.Id,
+                                    OperationID = workOrder.ProductsOperationID.GetValueOrDefault(),
+                                    ProductionorderID = workOrder.ProductionOrderID.GetValueOrDefault(),
+                                    TotalAmount = input.Amount_
+                                };
+
+                                var operationStockMovementQuery = queryFactory.Query().From(Tables.OperationStockMovements).Update(updateOperationStockMovement).Where(new { Id = operationStockMovement.Id }, false, false, "").UseIsDelete(false);
+
+                                query.Sql = query.Sql + QueryConstants.QueryConstant + operationStockMovementQuery.Sql + " where " + operationStockMovementQuery.WhereSentence; ;
+                            }
+
+                        } 
+                        #endregion
+
+
+                        var operationDateTime = new DateTime(input.FicheDate_.Year, input.FicheDate_.Month, input.FicheDate_.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+
+                        var updatedWorkOrder = new UpdateWorkOrdersDto
+                        {
+                            Id = workOrder.Id,
+                            PlannedQuantity = workOrder.PlannedQuantity,
+                            AdjustmentAndControlTime = workOrder.AdjustmentAndControlTime,
+                            CreationTime = workOrder.CreationTime,
+                            CreatorId = workOrder.CreatorId,
+                            CurrentAccountCardID = workOrder.CurrentAccountCardID,
+                            DataOpenStatus = workOrder.DataOpenStatus.GetValueOrDefault(),
+                            DataOpenStatusUserId = workOrder.DataOpenStatusUserId.GetValueOrDefault(),
+                            DeleterId = workOrder.DeleterId.GetValueOrDefault(),
+                            DeletionTime = workOrder.DeletionTime,
+                            IsCancel = workOrder.IsCancel,
+                            IsDeleted = workOrder.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            LastModifierId = LoginedUserService.UserId,
+                            LineNr = workOrder.LineNr,
+                            LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),
+                            OccuredFinishDate = operationDateTime,
+                            OccuredStartDate = operationDateTime,
+                            OperationTime = 0,
+                            ProductID = workOrder.ProductID.GetValueOrDefault(),
+                            ProductionOrderID = workOrder.ProductionOrderID.GetValueOrDefault(),
+                            ProductsOperationID = item.OperationID.GetValueOrDefault(),
+                            PropositionID = workOrder.PropositionID.GetValueOrDefault(),
+                            RouteID = workOrder.RouteID.GetValueOrDefault(),
+                            StationGroupID = workOrder.StationGroupID.GetValueOrDefault(),
+                            StationID = workOrder.StationID.GetValueOrDefault(),
+                            WorkOrderNo = workOrder.WorkOrderNo,
+                            WorkOrderState = (int)WorkOrderStateEnum.Tamamlandi,
+                            ProducedQuantity = input.Amount_
+                        };
+
+                        var workOrderUpdateQuery = queryFactory.Query().From(Tables.WorkOrders).Update(updatedWorkOrder).Where(new { Id = workOrder.Id }, false, false, "").UseIsDelete(false);
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + workOrderUpdateQuery.Sql + " where " + workOrderUpdateQuery.WhereSentence;
+                    }
+                }
+                else
+                {
+                    var workOrder = (await WorkOrdersAppService.GetAsync(item.WorkOrderID.GetValueOrDefault())).Data;
+
+                    if (workOrder != null)
+                    {
+                        var operationDateTime = new DateTime(input.FicheDate_.Year, input.FicheDate_.Month, input.FicheDate_.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+
+                        var updatedWorkOrder = new UpdateWorkOrdersDto
+                        {
+                            Id = workOrder.Id,
+                            PlannedQuantity = workOrder.PlannedQuantity,
+                            AdjustmentAndControlTime = workOrder.AdjustmentAndControlTime,
+                            CreationTime = workOrder.CreationTime,
+                            CreatorId = workOrder.CreatorId,
+                            CurrentAccountCardID = workOrder.CurrentAccountCardID,
+                            DataOpenStatus = workOrder.DataOpenStatus.GetValueOrDefault(),
+                            DataOpenStatusUserId = workOrder.DataOpenStatusUserId.GetValueOrDefault(),
+                            DeleterId = workOrder.DeleterId.GetValueOrDefault(),
+                            DeletionTime = workOrder.DeletionTime,
+                            IsCancel = workOrder.IsCancel,
+                            IsDeleted = workOrder.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            LastModifierId = LoginedUserService.UserId,
+                            LineNr = workOrder.LineNr,
+                            LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),
+                            OccuredFinishDate = null,
+                            OccuredStartDate = operationDateTime,
+                            OperationTime = 0,
+                            ProductID = workOrder.ProductID.GetValueOrDefault(),
+                            ProductionOrderID = workOrder.ProductionOrderID.GetValueOrDefault(),
+                            ProductsOperationID = item.OperationID.GetValueOrDefault(),
+                            PropositionID = workOrder.PropositionID.GetValueOrDefault(),
+                            RouteID = workOrder.RouteID.GetValueOrDefault(),
+                            StationGroupID = workOrder.StationGroupID.GetValueOrDefault(),
+                            StationID = workOrder.StationID.GetValueOrDefault(),
+                            WorkOrderNo = workOrder.WorkOrderNo,
+                            WorkOrderState = (int)WorkOrderStateEnum.FasonaGonderildi,
+                            ProducedQuantity = 0
+                        };
+
+                        var workOrderUpdateQuery = queryFactory.Query().From(Tables.WorkOrders).Update(updatedWorkOrder).Where(new { Id = workOrder.Id }, false, false, "").UseIsDelete(false);
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + workOrderUpdateQuery.Sql + " where " + workOrderUpdateQuery.WhereSentence;
+                    }
+                }
+
+
+
+
+
+                #endregion
             }
+
 
             var ContractTrackingFiche = queryFactory.Insert<SelectContractTrackingFichesDto>(query, "Id", true);
 

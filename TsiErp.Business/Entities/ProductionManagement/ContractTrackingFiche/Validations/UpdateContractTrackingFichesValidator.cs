@@ -19,6 +19,9 @@ namespace TsiErp.Business.Entities.ProductionManagement.ContractTrackingFiche.Va
             RuleFor(x => x.CurrentAccountCardID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorCurrentAccountCardID");
 
             RuleFor(x => x.ContractQualityPlanID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorContractQualityPlanID");
+
+            RuleFor(x => x.Amount_)
+                .GreaterThan(0).WithMessage("ValidatorAmount");
         }
     }
 }

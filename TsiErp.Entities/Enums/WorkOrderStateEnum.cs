@@ -18,6 +18,8 @@ namespace TsiErp.Entities.Enums
         [Display(Name = "Devam Ediyor")]
         DevamEdiyor = 4,
         [Display(Name = "Tamamlandı")]
-        Tamamlandi = 5
+        Tamamlandi = 5,
+        [Display(Name = "Fasona Gönderildi")]
+        FasonaGonderildi = 6
     }
 }
