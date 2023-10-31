@@ -1,0 +1,1124 @@
+﻿
+/* ----------------------------------------------------------------TSI CUSTOM CLASSES----------------------------------------------------------------*/
+
+.TSIGridCards {
+    border: 1px solid #d6d5d5;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
+    height: 800px;
+}
+
+.TSIIndexPageCards {
+    border: 1px solid #d6d5d5;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
+    height: fit-content;
+}
+
+.TSITxtBox {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 30px;
+}
+
+.TSI8DTxtBox {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 30px;
+    background-color: #fbfafa !important;
+}
+
+.TSI8DMemoBox60 {
+    height: 60% !important;
+    background-color: #fbfafa !important;
+}
+
+.TSIToolbarTxtBox {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 300px !important;
+    height: 30px;
+}
+
+.TSISelectAllStationsCalendar {
+    font-size: 16px;
+    font-weight: bolder;
+    margin-left: 70%;
+}
+
+    .TSISelectAllStationsCalendar:hover {
+        font-size: 17px;
+        font-weight: bold;
+        margin-left: 70%;
+        color: #B30303;
+        cursor: pointer;
+    }
+
+.TSIMemoBox100 {
+    height: 100% !important;
+}
+
+.TSIMemoBox70 {
+    height: 70% !important;
+}
+
+.TSIMemoBox60 {
+    height: 60% !important;
+}
+
+.TSIMemoBox57 {
+    height: 57% !important;
+}
+
+.TSIMemoBox45 {
+    height: 45% !important;
+}
+.TSIMemoBox20 {
+    height: 20% !important;
+}
+
+.TSIComboBox {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 30px;
+}
+
+.TSISaveButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #505050 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+    .TSISaveButton:hover {
+        border-color: #565656 !important;
+        background-color: #505050 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
+.TSIExcelButton {
+    border-color: transparent !important;
+    background-color: transparent !important;
+    color: #505050 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width: 70px;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+    .TSIExcelButton:hover {
+        border-color: #A3A3A3 !important;
+        background-color: #C4C4C4 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width: 70px;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
+.TSIExcelIcon {
+    width: 25px !important;
+    height: 25px !important;
+    content: url('../images/excelicon.png') !important;
+}
+
+.TSIPdfButton {
+    border-color: transparent !important;
+    background-color: transparent !important;
+    color: #505050 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width: 70px;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+    .TSIPdfButton:hover {
+        border-color: #A3A3A3 !important;
+        background-color: #C4C4C4 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width: 70px;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
+.TSIPdfIcon {
+    width: 25px !important;
+    height: 25px !important;
+    content: url('../images/pdficon.png') !important;
+}
+
+
+.TSICancelButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #AD0000 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+    .TSICancelButton:hover {
+        border-color: #565656 !important;
+        background-color: #AD0000 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
+.TSIDeleteButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #01147F !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+    .TSIDeleteButton:hover {
+        border-color: #565656 !important;
+        background-color: #01147F !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
+.TSILogOutButton {
+    background-color: #AD0000 !important;
+    text-shadow: 1px 3px 4px black !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+
+.TSIShowColumnsButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #878787 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+    .TSIShowColumnsButton:hover {
+        border-color: #565656 !important;
+        background-color: #878787 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
+.TSISubmitButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #878787 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+    .TSISubmitButton:hover {
+        border-color: #565656 !important;
+        background-color: #878787 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
+.TSIGeneralBTNRed {
+    background-color: #AD0000 !important;
+    text-shadow: 1px 3px 4px black !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+.TSILoginLeftCard {
+    background-image: linear-gradient(135deg, rgb(168 20 20) 20%, #f82121 90%) !important;
+    width: 50%;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    padding: 50px;
+    z-index: 1;
+    position: relative;
+}
+
+.TSIGeneralBTNGray {
+    background-color: #474747 !important;
+    text-shadow: 6px 3px 4px black !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+.TSIListPageTitleCard {
+    font-size: 14px;
+    color: white;
+    background-image: linear-gradient(356deg, rgb(215 214 214) 0%, #f9f8f8 70%) !important;
+    box-shadow: rgb(0 0 0 / 60%) 0px 1px 4px;
+    height: 40px;
+}
+
+.TSIModalLabel {
+    color: black;
+    font-size: 14px;
+}
+
+.TSIModal8DTitleLabel {
+    color: black;
+    font-size: 22px;
+}
+
+.TSIModal8DDescriptionLabel {
+    color: black;
+    font-size: 12px;
+}
+
+.TSIEditFormLabel {
+    color: black;
+    font-size: 16px;
+}
+
+.TSIConfirmModalFooter {
+    text-align: end;
+    padding-right: 20px;
+    border-top: 2px solid #401515;
+    width: 90%;
+    padding-top: 2%;
+}
+
+.TSIModalLocation {
+    margin-top: 15% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.button-edit {
+    background-image: url("../images/buttonedit.svg") !important;
+    width: 10px !important;
+    height: 10px !important;
+}
+
+.TSIWorkSchduleModal {
+    height: fit-content;
+}
+
+.TSIWorkSchduleModalStationsCard {
+    border: 2px solid #c1c1c1;
+    box-shadow: rgb(0 0 0 / 15%) 0px 3px 10px;
+    height: fit-content;
+    width: 100%;
+    margin-left: 5%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    background-image: linear-gradient(337deg, rgb(243 240 240) 0%, #efecec 70%) !important;
+}
+
+.TSIGridLayout {
+    width: 100%;
+    height: 100%;
+}
+.TSI8DGridLayout {
+    width: 100%;
+    height: 550px;
+}
+.TSIScheduleModalLabel {
+    padding-left: 5%;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.TSITemplateOprGridLayout {
+    width: 100%;
+    height: 405px;
+}
+
+.TSIQualityPlansGridLayout {
+    width: 100%;
+    height: 450px;
+}
+
+.TSIContractQualityPlansGridLayout {
+    width: 100%;
+    height: 350px;
+}
+
+.TSIStationCards {
+    height: 60px;
+    border: 1px solid #000000 !important;
+    border-radius: 20px !important;
+    box-shadow: rgb(8 8 8 / 85%) 0px 3px 8px !important;
+}
+
+    .TSIStationCards:hover {
+        border: 3px solid #60bffd !important;
+        cursor: pointer;
+    }
+
+    .TSIStationCards:focus {
+        background-color: #78FF6A !important;
+    }
+
+.TSI_Paper {
+    height: max-content !important;
+    width: 100%;
+    padding: 16px !important;
+    margin-top: 16px !important;
+    z-index: 10;
+    position: relative;
+    border-width: 2px !important;
+    border-style: dashed !important;
+    border-radius: 8px !important;
+    border: 1px solid #0000001e;
+}
+
+.TSI_Chip {
+    color: #ffffffff;
+    background-color: #424242ff;
+    cursor: pointer;
+    height: 32px;
+    font-size: 14px;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    display: inline-flex;
+    max-width: 100%;
+    outline: 0;
+    padding: 0 12px;
+    box-sizing: border-box;
+    transition: background-color 300ms cubic-bezier(.4,0,.2,1) 0ms,box-shadow 300ms cubic-bezier(.4,0,.2,1) 0ms;
+    align-items: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    justify-content: center;
+    text-decoration: none;
+    line-height: normal;
+    margin: 4px;
+}
+
+.TSIErrorBoundryCard {
+    padding-left: 3% !important;
+    min-height: 80px !important;
+    padding-top: 1% !important;
+    color: #ffffff !important;
+    background-image: linear-gradient(172deg, rgb(94 6 6) 0%, #b50e0e 70%) !important;
+    box-shadow: rgb(8 8 8 / 85%) 0px 3px 8px !important;
+    border-color: #550000 !important;
+}
+
+.TSIErrorBoundryButton {
+    color: #fff !important;
+    background-color: #AD0000 !important;
+    text-shadow: 1px 2px 3px black !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    width: auto !important;
+    border-radius: 5px !important;
+    height: 45px !important;
+    border: 2px solid !important;
+    margin-top: -2% !important;
+    position: absolute !important;
+    margin-left: 5% !important;
+}
+
+.TSIErrorBoundryText {
+    font-size: 16px !important;
+}
+
+.TSIWorkStationGroupPopUpCard {
+    border: 1px solid #d6d5d5;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
+    height: fit-content;
+}
+
+.TSILogoContainer {
+    --angle: 0deg;
+    border-width: 15px;
+    border-style: dotted;
+    border-image-source: linear-gradient(var(--angle),#f69999,#e23a3a,#7e0202 12em );
+    border-image-slice: 10;
+    height: 190px;
+    width: 3478px;
+    animation: 5s rotate linear infinite;
+    -webkit-animation: 10s rotate linear infinite;
+}
+
+@keyframes rotate {
+    to {
+        --angle: 360deg;
+    }
+}
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.TSILoginERPCard {
+    width: 263px;
+    height: 85px;
+    border-radius: 15px;
+    float: right;
+}
+
+    .TSILoginERPCard:hover {
+        width: 279px;
+        height: 90px;
+        box-shadow: rgb(45 64 174 / 67%) 3px 6px 15px;
+    }
+
+.TSILoginIoTCard {
+    width: 263px;
+    height: 85px;
+    border-radius: 15px;
+}
+
+    .TSILoginIoTCard:hover {
+        width: 279px;
+        height: 90px;
+        box-shadow: rgb(244 173 59 / 79%) 3px 6px 15px;
+    }
+
+.TSILoginOptimizationCard {
+    width: 263px;
+    height: 85px;
+    border-radius: 15px;
+    float: left;
+}
+
+    .TSILoginOptimizationCard:hover {
+        width: 279px;
+        height: 90px;
+        box-shadow: rgb(59 244 221 / 79%) 3px 6px 15px;
+    }
+
+.TSILoginGreenEnergyCard {
+    width: 263px;
+    height: 85px;
+    border-radius: 15px;
+    float: right;
+    margin-top: -5%;
+}
+
+    .TSILoginGreenEnergyCard:hover {
+        width: 279px;
+        height: 90px;
+        box-shadow: rgb(78 217 93 / 67%) 3px 6px 15px;
+    }
+
+.TSILoginLeanManufacturingCard {
+    width: 263px;
+    height: 85px;
+    border-radius: 15px;
+    float: left;
+    margin-top: -5%;
+}
+
+    .TSILoginLeanManufacturingCard:hover {
+        width: 279px;
+        height: 90px;
+        box-shadow: rgb(210 221 212 / 67%) 3px 6px 15px;
+    }
+
+
+
+
+.calismaVar {
+    background-color: #00ff14;
+}
+
+.bakim {
+    background-color: #ff8d00;
+}
+
+.resmiTatil {
+    background-color: #6c757d;
+}
+
+.calismaYok {
+    background-color: #ff0000;
+}
+
+.tatil {
+    background-color: #b75050ed;
+}
+
+.yarimGun {
+    background-color: #0089ff;
+}
+
+.yuklemeGunu {
+    background-color: #ffeb00;
+}
+
+
+
+/* ----------------------------------------------------------------------OVERRIDE CLASSES----------------------------------------------------------------------*/
+
+
+.GridZebra table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.GridZebra table tbody tr:nth-child(n) {
+    text-align: center;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 0px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+
+.ulstyle {
+    margin: 0px;
+    padding-left: 20px;
+    display: inline-block;
+}
+
+.e-switch-wrapper .e-switch-on,
+.e-css.e-switch-wrapper .e-switch-on {
+    background-color: #AD0000 !important;
+    color: #fff;
+    border-color: #AD0000 !important;
+}
+
+.cancelimage {
+    background-image: url("../images/Cancel.svg");
+}
+
+.saveimage {
+    background-image: url("../images/Save.svg")
+}
+
+.list {
+    float: left;
+    line-height: 20px;
+    font: 10px;
+    min-width: 280px;
+}
+
+.FilterCard {
+    background-color: #f7f7f7;
+    border: 1px solid #d6d5d5;
+    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
+}
+
+.Cards {
+    border: 1px solid #d6d5d5;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
+}
+
+
+
+.e-checkbox-wrapper.e-customcheck:hover .e-frame.e-check {
+    background-color: #9C0D0D;
+    font: 600;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.FilterLabelTitle {
+    color: black;
+    font-size: 18px;
+}
+
+.FilterLabelTitleValue {
+    font-size: 18px;
+}
+
+.HeaderTitleCss {
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    color: white;
+    background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
+    text-shadow: 1px 3px 4px black !important;
+}
+
+.property-panel-section .property-panel-content td {
+    padding: 0 0 15px 0;
+}
+
+.tile_layout.card-control-section .e-error {
+    height: 100px;
+    width: 100%;
+}
+
+    .tile_layout.card-control-section .e-error .e-error-content {
+        color: red;
+        line-height: 100px;
+        text-align: center;
+    }
+
+.tile_layout.card-control-section .e-card .e-card-image {
+    background-size: cover;
+    height: 15%;
+    position: inherit;
+    width: 50%;
+}
+
+.tile_layout.card-control-section .e-card .e-card-header .e-card-header-caption .e-card-header-title {
+    font-size: 18px;
+    font-family: Helvetica, 'Segoe UI';
+    font-weight: bold;
+}
+
+.tile_layout.card-control-section .e-card .e-card-header .e-card-header-caption .e-card-sub-title {
+    padding-top: 5px;
+}
+
+.tile_layout.card-control-section .e-card .e-card-content {
+    padding-top: 0px;
+    height: fit-content;
+}
+
+#source_link {
+    float: right;
+    margin-right: 10px;
+}
+
+.e-tab .e-tab-header .e-toolbar-item .e-tab-text,
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap .e-tab-icon {
+    font-size: 18px !important;
+    font-weight: bold !important;
+}
+
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap,
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap .e-tab-icon {
+    color: black;
+}
+
+body,
+html {
+    background: #ffffff;
+    /* background-image: linear-gradient(360deg, rgb(171 171 171) 0%, #E0DBDB 70%) !important;*/
+}
+
+.PopUpCss {
+    background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
+}
+
+.CardsLogin {
+    background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
+    width: 600px;
+    height: 300px;
+    border: 7px solid #ad0303;
+}
+
+.user_card {
+    height: 600px;
+    width: 600px;
+    margin-top: -15%;
+    margin-bottom: -30%;
+    /*background: #C30000;*/
+    background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    /*box-shadow: 0 7px 18px 0 rgb(255 255 255 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;*/
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+}
+
+.brand_logo_container {
+    position: absolute;
+    height: 100px;
+    width: 200px; /*DİKDÖRTGEN*/
+    top: 0%;
+    right: 53%;
+    border-radius: 0%;
+    background-image: linear-gradient(350deg, rgb(243 238 238) -333%, #ebe5e5 70%) !important;
+    margin-top: 65px;
+    text-align: center;
+}
+
+.brand_logo {
+    height: 160px;
+    width: 448px;
+    border-radius: 0%; /*DİKDÖRTGEN*/
+    border: 2px solid white;
+}
+
+
+
+.form_container {
+    margin-top: 100px;
+}
+
+.login_btn {
+    width: 100%;
+    background: white !important;
+    color: #1E1E1E !important;
+    font-size: 1.2rem !important;
+    font-weight: 500 !important;
+}
+
+    .login_btn:focus {
+        box-shadow: none !important;
+        outline: 0px !important;
+    }
+
+.login_container {
+    padding: 0 2rem;
+}
+
+.input-group-text {
+    background: #1E1E1E !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
+.e-grid .e-headercelldiv {
+    font-size: 12px !important;
+}
+
+.input_user,
+.input_pass:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #c0392b !important;
+    font-size: 14px !important;
+    font-weight: bold;
+}
+
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover .e-tab-text, .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover .e-tab-icon {
+    color: #AD0000 !important;
+}
+
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap {
+    border-radius: 4px;
+    color: #AD0000 !important;
+    border: 1px solid transparent;
+}
+
+.e-pager .e-currentitem, .e-pager .e-currentitem:hover {
+    border-right-color: #f36060 !important;
+    background: #e9ecef !important;
+    color: #c70707 !important;
+    opacity: 1;
+}
+
+.e-pager .e-currentitem {
+    border: 3px solid #f56d6d !important;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+}
+
+.e-pager .e-numericitem {
+    background: #fff;
+    border-right-color: #dee2e6 !important;
+    color: #ff7070 !important;
+}
+
+.e-pager .e-currentitem.e-numericitem.e-focused {
+    background: #e9ecef;
+    box-shadow: 0 0 0 1px #d30000 inset !important;
+}
+
+.e-pager .e-spacing {
+    color: #d30000 !important;
+    opacity: 1;
+}
+
+.e-search-icon::before {
+    content: '\e799' !important;
+    font-family: e-icons !important;
+}
+
+.e-pager div.e-icons.e-pager-default {
+    color: #c10606 !important;
+}
+
+.e-close-icon::before {
+    content: '\e7e7' !important;
+    font-family: e-icons !important;
+}
+
+.e-grid .e-focused:not(.e-menu-item) {
+    box-shadow: 0 0 0 1px #d30000 inset !important;
+}
+
+
+.e-upload .e-file-select-wrap .e-file-drop, .e-bigger.e-small .e-upload .e-file-select-wrap .e-file-drop {
+    font-family: inherit;
+    font-size: 16px !important;
+    margin-left: 12px;
+}
+
+.e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-name, .e-bigger.e-small .e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-name {
+    float: left;
+    font-family: inherit;
+    font-size: 16px !important;
+    max-width: 75%;
+    overflow: hidden;
+    padding-top: 12px;
+    position: relative;
+    text-overflow: ellipsis;
+    top: 0;
+    white-space: nowrap;
+}
+
+.e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-size, .e-bigger.e-small .e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-size {
+    display: block;
+    font-size: 14px !important;
+    padding: 0;
+}
+
+.e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-status, .e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-information, .e-bigger.e-small .e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-status, .e-bigger.e-small .e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-information {
+    display: block;
+    font-family: inherit;
+    font-size: 14px !important;
+    padding-bottom: 12px;
+}
+
+.e-btn.e-flat.e-primary:disabled, .e-css.e-btn.e-flat.e-primary:disabled {
+    background-color: rgb(253 13 13 / 65%) !important;
+    border-color: transparent;
+    box-shadow: none;
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+
+.e-btn.e-flat.e-primary:hover, .e-css.e-btn.e-flat.e-primary:hover {
+    background-color: #d70b0b !important;
+    border-color: #ca0a0a;
+    color: #fff !important;
+}
+
+.e-btn.e-flat.e-primary, .e-css.e-btn.e-flat.e-primary {
+    background-color: transparent;
+    border-color: transparent;
+    color: #fd0d0d !important;
+}
+
+.e-btn.e-primary:hover, .e-css.e-btn.e-primary:hover {
+    background-color: #d70b0b !important;
+    border-color: #ca0a0a !important;
+    box-shadow: none;
+    color: #fff !important;
+}
+
+.e-grid .e-headercelldiv {
+    border: 0 none;
+    display: block;
+    font-size: 14px !important;
+    text-align: center !important;
+    font-weight: bold;
+    height: 18px;
+    line-height: 18px;
+    margin: -7px -7px -7px -8px;
+    overflow: hidden;
+    padding: 0 0.4em;
+    text-transform: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+.e-grid .e-rowcell {
+    border-style: solid;
+    border-width: 1px 0 0;
+    display: table-cell;
+    font-size: 16px !important;
+    text-align: center !important;
+    line-height: 22px;
+    overflow: hidden;
+    padding: 6px 8px;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+}
+
+e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-files .e-file-delete-btn.e-icons:hover, .e-upload .e-upload-files .e-file-reload-btn.e-icons:hover, .e-upload .e-upload-files .e-file-abort-btn.e-icons:hover, .e-upload .e-upload-files .e-file-pause-btn.e-icons:hover, .e-upload .e-upload-files .e-file-play-btn.e-icons:hover {
+    color: #c72d2d !important;
+}
+
+.e-upload .e-upload-files .e-file-remove-btn.e-icons, .e-upload .e-upload-files .e-file-delete-btn.e-icons, .e-upload .e-upload-files .e-file-reload-btn.e-icons, .e-upload .e-upload-files .e-file-abort-btn.e-icons, .e-upload .e-upload-files .e-file-pause-btn.e-icons, .e-upload .e-upload-files .e-file-play-btn.e-icons {
+    color: #d75151 !important;
+}
+
+.e-grid .e-toolbar {
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid #dee2e6;
+    border-radius: 0;
+    text-align: right !important;
+}
+
+.e-toolbar .e-tbar-btn {
+    background: #f8f9fa;
+    box-shadow: none;
+    color: #30c153 !important;
+    border: 1px transparent solid !important;
+    font-weight: 500 !important;
+}
+
+    .e-toolbar .e-tbar-btn.e-btn .e-icons {
+        color: #2fbf12 !important;
+    }
+
+.e-input-group.e-input-focus:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-input-group.e-control-wrapper.e-input-focus:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-float-input.e-input-focus:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-float-input.e-control-wrapper.e-input-focus:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-float-input.e-input-focus:hover:not(.e-input-group):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) input:not([disabled]),
+.e-float-input.e-control-wrapper.e-input-focus:hover:not(.e-input-group):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) input:not([disabled]),
+.e-float-input.e-input-focus:hover:not(.e-input-group):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) textarea:not([disabled]),
+.e-float-input.e-control-wrapper.e-input-focus:hover:not(.e-input-group):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) textarea:not([disabled]) {
+    border-color: #FE8686 !important;
+}
+
+.e-switch-wrapper .e-switch-inner.e-switch-active, .e-css.e-switch-wrapper .e-switch-inner.e-switch-active {
+    background-color: #201b1b !important;
+    border-color: #483737 !important;
+}
+
+.size-medium[b-mwsrhhqq2g] {
+    max-width: 37% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 5% !important;
+}
+
+.e-toolbar .e-tbar-btn {
+    background: #f8f9fa;
+    box-shadow: none;
+    color: #c13030 !important;
+    border: 1px #c13030 solid !important;
+    font-weight: 500 !important;
+}
+
+    .e-toolbar .e-tbar-btn.e-btn .e-icons {
+        color: #bf1212 !important;
+    }
+
+.e-toolbar .e-toolbar-items.e-tbar-pos .e-toolbar-right, .e-toolbar .e-toolbar-items.e-tbar-pos .e-toolbar-left {
+    position: absolute !important;
+    visibility: hidden !important;
+}
+
+.e-checkbox-wrapper .e-label, .e-css.e-checkbox-wrapper .e-label {
+    cursor: pointer;
+    display: inline-block;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px !important;
+    font-weight: bolder !important;
+    line-height: 14px;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    vertical-align: middle;
+    white-space: normal;
+}
+
+.e-checkbox-wrapper, .e-css.e-checkbox-wrapper {
+    -webkit-tap-highlight-color: transparent;
+    float: right !important;
+    padding-right: 5% !important;
+}
+
+    .e-checkbox-wrapper:hover .e-label, .e-css.e-checkbox-wrapper:hover .e-label {
+        color: #c90101 !important;
+    }
+
+
+
+.e-grid .e-rowcell .e-checkbox-wrapper, .e-grid .e-rowcell .e-css.e-checkbox-wrapper {
+    -webkit-user-select: auto !important;
+    height: 20px !important;
+    line-height: 20px !important;
+    position: relative !important;
+    top: -2px !important;
+    -ms-user-select: auto !important;
+    user-select: auto !important;
+    margin-right: 45% !important;
+}
