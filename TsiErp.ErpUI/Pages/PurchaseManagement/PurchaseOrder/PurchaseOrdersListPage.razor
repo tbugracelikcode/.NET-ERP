@@ -18,6 +18,7 @@
 @inject IProductionOrdersAppService ProductionOrdersAppService
 @inject IStockManagementParametersAppService StockManagementParametersAppService
 @inject IFicheNumbersAppService FicheNumbersAppService
+@inject IStockFichesAppService StockFichesAppService
 
 @if (!base.IsLoaded)
 {
@@ -60,6 +61,7 @@ else
                                     <GridColumn Field=@nameof(ListPurchaseOrdersDto.CurrencyCode) HeaderText="@L["CurrencyCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchaseOrdersDto.ProductionOrderFicheNo) HeaderText="@L["ProductionOrderFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchaseOrdersDto.PaymentPlanName) Type="ColumnType.Number" HeaderText="@L["PaymentPlanName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchaseOrdersDto.MRPCode) Type="ColumnType.Number" HeaderText="@L["MRPCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchaseOrdersDto.BranchCode) HeaderText="@L["BranchCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchaseOrdersDto.WarehouseCode) HeaderText="@L["WarehouseCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
@@ -409,6 +411,128 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="CreateStockFishesCrudPopup"
+         ShowFooter="true"
+         CloseOnEscape="false"
+          ShowCloseButton="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["CreateStockFishesModalTitle"]"
+         Width="53%"
+         Height="50%"
+         MinWidth="1000px"
+         MinHeight="540px"
+         HeaderCssClass="HeaderTitleCss"
+         Showing="CrudModalShowing"
+         Closing="CrudModalClosing">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
+                </Columns>
+
+                <Items>
+                   
+
+                    <DxGridLayoutItem Row="6" Column="1" >
+                        <Template>
+                            <SfGrid @ref=_CreateStockFishesGrid ID="CreateStockFishesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CreateStockFishesList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@CreateStockFishesGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnCreateStockReceiptFishesContextMenuClick" TValue="CreateStockReceiptFishes"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.PurchaseStateLine) HeaderText="@L["CreateStockFishesGridPurchaseStateLine"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="40"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductCode) HeaderText="@L["CreateStockFishesGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductName) HeaderText="@L["CreateStockFishesGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> 
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["CreateStockFishesGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.UnitSetCode) HeaderText="@L["CreateStockFishesGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="CreateStockFishesButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["CreateStockFichesButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideCreateStockFichesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="CancelOrderCrudPopup"
+         ShowFooter="true"
+             CloseOnEscape="false"
+             ShowCloseButton="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["CancelOrderModalTitle"]"
+         Width="53%"
+         Height="50%"
+         MinWidth="1000px"
+         MinHeight="540px"
+         HeaderCssClass="HeaderTitleCss"
+         Showing="CrudModalShowing"
+         Closing="CrudModalClosing">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
+                </Columns>
+
+                <Items>
+                   
+
+                    <DxGridLayoutItem Row="6" Column="1" >
+                        <Template>
+                            <SfGrid @ref=_CancelOrderGrid ID="CancelOrderGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CancelOrderList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@CreateStockFishesGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnCancelOrderContextMenuClick" TValue="CreateStockReceiptFishes"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.PurchaseStateLine) HeaderText="@L["CreateStockFishesGridPurchaseStateLine"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="40"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductCode) HeaderText="@L["CreateStockFishesGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductName) HeaderText="@L["CreateStockFishesGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> 
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["CreateStockFishesGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.UnitSetCode) HeaderText="@L["CreateStockFishesGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="CancelOrderButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["CancelOrderButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideCancelOrderPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

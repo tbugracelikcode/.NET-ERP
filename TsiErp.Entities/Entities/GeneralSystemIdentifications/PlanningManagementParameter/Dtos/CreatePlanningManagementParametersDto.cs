@@ -1,8 +1,9 @@
-﻿using Tsi.Core.Entities.Auditing;
+﻿using Tsi.Core.Entities;
+using Tsi.Core.Entities.Auditing;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter.Dtos
 {
-    public class CreatePlanningManagementParametersDto 
+    public class CreatePlanningManagementParametersDto : IEntityDto
     {
         /// <summary>
         /// İleri Zamanlı Tarih Parametresi
@@ -12,5 +13,9 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManageme
         /// Id
         /// </summary>
         public Guid Id { get; set; }
+        /// <summary>
+        /// MRP Satınalma Sürecinin Başlangıç Parametresi
+        /// </summary>
+        public int MRPPurchaseTransaction { get; set; }
     }
 }

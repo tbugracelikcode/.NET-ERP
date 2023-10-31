@@ -17,6 +17,7 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
+using TsiErp.Entities.Entities.PlanningManagement.MRP;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
@@ -75,16 +76,17 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var query = queryFactory.Query().From(Tables.PurchaseOrders).Insert(new CreatePurchaseOrdersDto
             {
                 FicheNo = input.FicheNo,
-                BranchID = input.BranchID,
-                CurrencyID = input.CurrencyID,
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                BranchID = input.BranchID.GetValueOrDefault(),
+                CurrencyID = input.CurrencyID.GetValueOrDefault(),
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
                 GrossAmount = input.GrossAmount,
                 LinkedPurchaseRequestID = Guid.Empty,
                 NetAmount = input.NetAmount,
-                PaymentPlanID = input.PaymentPlanID,
+                MRPID = input.MRPID.GetValueOrDefault(),
+                PaymentPlanID = input.PaymentPlanID.GetValueOrDefault(),
                 ProductionOrderID = Guid.Empty,
                 PurchaseOrderState = input.PurchaseOrderState,
                 ShippingAdressID = Guid.Empty,
@@ -120,7 +122,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     LineDescription = item.LineDescription,
                     LineTotalAmount = item.LineTotalAmount,
                     LinkedPurchaseRequestID = Guid.Empty,
-                    PaymentPlanID = item.PaymentPlanID,
+                    PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
                     ProductionOrderID = Guid.Empty,
                     PurchaseOrderLineStateEnum = (int)item.PurchaseOrderLineStateEnum,
                     UnitPrice = item.UnitPrice,
@@ -138,9 +140,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
-                    ProductID = item.ProductID,
+                    ProductID = item.ProductID.GetValueOrDefault(),
                     Quantity = item.Quantity,
-                    UnitSetID = item.UnitSetID,
+                    UnitSetID = item.UnitSetID.GetValueOrDefault(),
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -179,17 +181,18 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var query = queryFactory.Query().From(Tables.PurchaseOrders).Insert(new CreatePurchaseOrdersDto
             {
                 FicheNo = input.FicheNo,
-                BranchID = input.BranchID,
-                CurrencyID = input.CurrencyID,
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                BranchID = input.BranchID.GetValueOrDefault(),
+                CurrencyID = input.CurrencyID.GetValueOrDefault(),
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
+                MRPID = input.MRPID.GetValueOrDefault(),
                 GrossAmount = input.GrossAmount,
                 LinkedPurchaseRequestID = Guid.Empty,
                 NetAmount = input.NetAmount,
-                PaymentPlanID = input.PaymentPlanID,
-                ProductionOrderID = input.ProductionOrderID,
+                PaymentPlanID = input.PaymentPlanID.GetValueOrDefault(),
+                ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                 PurchaseOrderState = input.PurchaseOrderState,
                 ShippingAdressID = Guid.Empty,
                 SpecialCode = input.SpecialCode,
@@ -197,7 +200,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 TotalDiscountAmount = input.TotalDiscountAmount,
                 TotalVatAmount = input.TotalVatAmount,
                 TotalVatExcludedAmount = input.TotalVatExcludedAmount,
-                WarehouseID = input.WarehouseID,
+                WarehouseID = input.WarehouseID.GetValueOrDefault(),
                 WorkOrderCreationDate = input.WorkOrderCreationDate,
                 CreationTime = DateTime.Now,
                 CreatorId = LoginedUserService.UserId,
@@ -307,7 +310,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PurchaseOrders)
-                   .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate, po.WarehouseID, po.TotalVatExcludedAmount, po.TotalVatAmount, po.TotalDiscountAmount, po.Time_, po.SpecialCode, po.ShippingAdressID, po.PurchaseOrderState, po.ProductionOrderID, po.PaymentPlanID, po.NetAmount, po.LinkedPurchaseRequestID, po.Id, po.GrossAmount, po.FicheNo, po.ExchangeRate, po.Description_, po.Date_, po.DataOpenStatusUserId, po.DataOpenStatus, po.CurrentAccountCardID, po.CurrencyID, po.BranchID })
+                   .Select<PurchaseOrders>(null)
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
@@ -320,6 +323,13 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
                         nameof(PurchaseOrders.BranchID),
                         nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<MRPs>
+                    (
+                        b => new { MRPID = b.Id, MRPCode = b.Code },
+                        nameof(PurchaseOrders.MRPID),
+                        nameof(MRPs.Id),
                         JoinType.Left
                     )
                      .Join<Warehouses>
@@ -397,12 +407,18 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.PurchaseOrders)
-                   .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate, po.WarehouseID, po.TotalVatExcludedAmount, po.TotalVatAmount, po.TotalDiscountAmount, po.Time_, po.SpecialCode, po.ShippingAdressID, po.PurchaseOrderState, po.ProductionOrderID, po.PaymentPlanID, po.NetAmount, po.LinkedPurchaseRequestID, po.Id, po.GrossAmount, po.FicheNo, po.ExchangeRate, po.Description_, po.Date_, po.DataOpenStatusUserId, po.DataOpenStatus, po.CurrentAccountCardID, po.CurrencyID, po.BranchID })
+                   .Select<PurchaseOrders>(null)
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },
                         nameof(PurchaseOrders.PaymentPlanID),
                         nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    ).Join<MRPs>
+                    (
+                        b => new { MRPID = b.Id, MRPCode = b.Code },
+                        nameof(PurchaseOrders.MRPID),
+                        nameof(MRPs.Id),
                         JoinType.Left
                     )
                     .Join<Branches>
@@ -467,6 +483,12 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
                         nameof(PurchaseOrders.BranchID),
                         nameof(Branches.Id),
+                        JoinType.Left
+                    ).Join<MRPs>
+                    (
+                        b => new { MRPID = b.Id, MRPCode = b.Code },
+                        nameof(PurchaseOrders.MRPID),
+                        nameof(MRPs.Id),
                         JoinType.Left
                     )
                      .Join<Warehouses>
@@ -593,19 +615,20 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var query = queryFactory.Query().From(Tables.PurchaseOrders).Update(new UpdatePurchaseOrdersDto
             {
                 FicheNo = input.FicheNo,
-                BranchID = input.BranchID,
-                CurrencyID = input.CurrencyID,
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                BranchID = input.BranchID.GetValueOrDefault(),
+                CurrencyID = input.CurrencyID.GetValueOrDefault(),
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
+                MRPID = input.MRPID,
                 ExchangeRate = input.ExchangeRate,
                 GrossAmount = input.GrossAmount,
-                LinkedPurchaseRequestID = input.LinkedPurchaseRequestID,
+                LinkedPurchaseRequestID = input.LinkedPurchaseRequestID.GetValueOrDefault(),
                 NetAmount = input.NetAmount,
-                PaymentPlanID = input.PaymentPlanID,
-                ProductionOrderID = input.ProductionOrderID,
+                PaymentPlanID = input.PaymentPlanID.GetValueOrDefault(),
+                ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                 PurchaseOrderState = input.PurchaseOrderState,
-                ShippingAdressID = input.ShippingAdressID,
+                ShippingAdressID = input.ShippingAdressID.GetValueOrDefault(),
                 SpecialCode = input.SpecialCode,
                 Time_ = input.Time_,
                 TotalDiscountAmount = input.TotalDiscountAmount,
@@ -635,13 +658,13 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         WorkOrderCreationDate = item.WorkOrderCreationDate,
                         DiscountRate = item.DiscountRate,
                         ExchangeRate = item.ExchangeRate,
-                        LikedPurchaseRequestLineID = item.LikedPurchaseRequestLineID,
+                        LikedPurchaseRequestLineID = item.LikedPurchaseRequestLineID.GetValueOrDefault(),
                         LineAmount = item.LineAmount,
                         LineDescription = item.LineDescription,
                         LineTotalAmount = item.LineTotalAmount,
-                        LinkedPurchaseRequestID = item.LinkedPurchaseRequestID,
+                        LinkedPurchaseRequestID = item.LinkedPurchaseRequestID.GetValueOrDefault(),
                         PaymentPlanID = item.PaymentPlanID,
-                        ProductionOrderID = item.ProductionOrderID,
+                        ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                         PurchaseOrderLineStateEnum = (int)item.PurchaseOrderLineStateEnum,
                         UnitPrice = item.UnitPrice,
                         VATamount = item.VATamount,
@@ -658,9 +681,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
-                        ProductID = item.ProductID,
+                        ProductID = item.ProductID.GetValueOrDefault(),
                         Quantity = item.Quantity,
-                        UnitSetID = item.UnitSetID,
+                        UnitSetID = item.UnitSetID.GetValueOrDefault(),
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -679,13 +702,13 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             WorkOrderCreationDate = item.WorkOrderCreationDate,
                             DiscountRate = item.DiscountRate,
                             ExchangeRate = item.ExchangeRate,
-                            LikedPurchaseRequestLineID = item.LikedPurchaseRequestLineID,
+                            LikedPurchaseRequestLineID = item.LikedPurchaseRequestLineID.GetValueOrDefault(),
                             LineAmount = item.LineAmount,
                             LineDescription = item.LineDescription,
                             LineTotalAmount = item.LineTotalAmount,
-                            LinkedPurchaseRequestID = item.LinkedPurchaseRequestID,
+                            LinkedPurchaseRequestID = item.LinkedPurchaseRequestID.GetValueOrDefault(),
                             PaymentPlanID = item.PaymentPlanID,
-                            ProductionOrderID = item.ProductionOrderID,
+                            ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                             PurchaseOrderLineStateEnum = (int)item.PurchaseOrderLineStateEnum,
                             UnitPrice = item.UnitPrice,
                             VATamount = item.VATamount,
@@ -702,9 +725,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             LastModificationTime = DateTime.Now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                            ProductID = item.ProductID,
+                            ProductID = item.ProductID.GetValueOrDefault(),
                             Quantity = item.Quantity,
-                            UnitSetID = item.UnitSetID,
+                            UnitSetID = item.UnitSetID.GetValueOrDefault(),
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -738,6 +761,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 Description_ = entity.Description_,
                 ExchangeRate = entity.ExchangeRate,
                 GrossAmount = entity.GrossAmount,
+                MRPID = entity.MRPID,
                 LinkedPurchaseRequestID = entity.LinkedPurchaseRequestID,
                 NetAmount = entity.NetAmount,
                 PaymentPlanID = entity.PaymentPlanID,

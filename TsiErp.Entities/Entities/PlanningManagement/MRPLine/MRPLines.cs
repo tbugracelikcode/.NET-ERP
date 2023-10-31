@@ -65,5 +65,20 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine
         /// Satın Alınacak
         /// </summary>
         public bool isPurchase { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Stoktan Kullanılacak
+        /// </summary>
+        public bool isStockUsage { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Şube ID
+        /// </summary>
+        public Guid BranchID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Depo ID
+        /// </summary>
+        public Guid WarehouseID { get; set; }
     }
 }

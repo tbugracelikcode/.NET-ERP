@@ -70,6 +70,42 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Şube:.
+        /// </summary>
+        public static string BranchCodeButtonEditLabel {
+            get {
+                return ResourceManager.GetString("BranchCodeButtonEditLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞUBE KODU.
+        /// </summary>
+        public static string BranchesPopupGridCode {
+            get {
+                return ResourceManager.GetString("BranchesPopupGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞUBE ADI.
+        /// </summary>
+        public static string BranchesPopupGridName {
+            get {
+                return ResourceManager.GetString("BranchesPopupGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şubeler.
+        /// </summary>
+        public static string BranchModalTitle {
+            get {
+                return ResourceManager.GetString("BranchModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -223,7 +259,7 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to HESAPLANAN MİKTAR.
+        ///   Looks up a localized string similar to PLANLANAN İHTİYAÇ MİKTARI.
         /// </summary>
         public static string LineGridAmount {
             get {
@@ -241,6 +277,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ŞUBE.
+        /// </summary>
+        public static string LineGridBranchCode {
+            get {
+                return ResourceManager.GetString("LineGridBranchCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string LineGridProductCode {
@@ -250,7 +295,7 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to İHTİYAÇ MİKTARI.
+        ///   Looks up a localized string similar to SATIN ALMA İHTİYAÇ MİKTARI.
         /// </summary>
         public static string LineGridRequirementAmount {
             get {
@@ -291,6 +336,24 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         public static string LineGridUnitSetCode {
             get {
                 return ResourceManager.GetString("LineGridUnitSetCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEPO.
+        /// </summary>
+        public static string LineGridWarehouseCode {
+            get {
+                return ResourceManager.GetString("LineGridWarehouseCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Malzeme İhtiyaç Planlaması (MRP) Satırları.
+        /// </summary>
+        public static string LineModalTitle {
+            get {
+                return ResourceManager.GetString("LineModalTitle", resourceCulture);
             }
         }
         
@@ -349,6 +412,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Almaya Dönüştür.
+        /// </summary>
+        public static string MRPContextConvertPurchase {
+            get {
+                return ResourceManager.GetString("MRPContextConvertPurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string MRPContextDelete {
@@ -363,6 +435,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         public static string MRPContextRefresh {
             get {
                 return ResourceManager.GetString("MRPContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MRPLineContextChange {
+            get {
+                return ResourceManager.GetString("MRPLineContextChange", resourceCulture);
             }
         }
         
@@ -399,6 +480,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         public static string MRPLineContextRefresh {
             get {
                 return ResourceManager.GetString("MRPLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stoktan Kullan.
+        /// </summary>
+        public static string MRPLineContextStockUsage {
+            get {
+                return ResourceManager.GetString("MRPLineContextStockUsage", resourceCulture);
             }
         }
         
@@ -538,6 +628,24 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçilen kayıtta şube veya depo seçilmemiş satırlar mevcut..
+        /// </summary>
+        public static string UIWarningConvertPurchaseMessage {
+            get {
+                return ResourceManager.GetString("UIWarningConvertPurchaseMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningConvertPurchaseTitle {
+            get {
+                return ResourceManager.GetString("UIWarningConvertPurchaseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
         /// </summary>
         public static string UpdateControlManager {
@@ -561,6 +669,42 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         public static string ValidatorCodeMaxLenght {
             get {
                 return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depo:.
+        /// </summary>
+        public static string WarehouseCodeButtonEditLabel {
+            get {
+                return ResourceManager.GetString("WarehouseCodeButtonEditLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depo Kartları.
+        /// </summary>
+        public static string WarehouseModalTitle {
+            get {
+                return ResourceManager.GetString("WarehouseModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEPO KODU.
+        /// </summary>
+        public static string WarehousesPopupGridCode {
+            get {
+                return ResourceManager.GetString("WarehousesPopupGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEPO ADI.
+        /// </summary>
+        public static string WarehousesPopupGridName {
+            get {
+                return ResourceManager.GetString("WarehousesPopupGridName", resourceCulture);
             }
         }
     }

@@ -333,6 +333,9 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="MRPCode" xml:space="preserve">
+    <value>MRP KODU</value>
+  </data>
   <data name="NetAmountLabel" xml:space="preserve">
     <value>Net Toplam:</value>
   </data>

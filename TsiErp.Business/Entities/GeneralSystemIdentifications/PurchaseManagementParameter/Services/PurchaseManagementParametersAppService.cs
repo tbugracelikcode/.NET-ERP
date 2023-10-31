@@ -37,7 +37,9 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
             {
                 Id = GuidGenerator.CreateGuid(),
                 OrderFutureDateParameter = input.OrderFutureDateParameter,
-                RequestFutureDateParameter = input.RequestFutureDateParameter
+                RequestFutureDateParameter = input.RequestFutureDateParameter,
+                BranchID = input.BranchID,
+                WarehouseID = input.WarehouseID,
             }).UseIsDelete(false); ;
 
 
@@ -84,7 +86,9 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
             {
                 OrderFutureDateParameter = input.OrderFutureDateParameter,
                 RequestFutureDateParameter = input.RequestFutureDateParameter,
-                Id = input.Id
+                Id = input.Id,
+                WarehouseID = input.WarehouseID,
+                BranchID = input.BranchID,
             }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
 
 

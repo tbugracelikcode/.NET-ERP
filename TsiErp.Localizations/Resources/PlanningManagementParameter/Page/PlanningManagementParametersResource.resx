@@ -150,6 +150,9 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="MRPPurchaseTransactionLabel" xml:space="preserve">
+    <value>Malzeme İhtiyaç Planlaması'nın (MRP) satın alma sürecinin başlayacağı hareket türünü seçin.</value>
+  </data>
   <data name="PlanningManagementParameterContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -162,8 +165,20 @@
   <data name="PlanningManagementParameterContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="PurchaseOrder" xml:space="preserve">
+    <value>Satınalma Siparişi</value>
+  </data>
+  <data name="PurchaseRequest" xml:space="preserve">
+    <value>Satınalma Talep</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Planlama Yönetimi Parametreleri</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Genel Sistem Tanımlamaları &gt; Genel Sistem Parametreleri</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

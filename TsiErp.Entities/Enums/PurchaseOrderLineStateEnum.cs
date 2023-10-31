@@ -13,9 +13,11 @@ namespace TsiErp.Entities.Enums
         Beklemede = 1,
         [Display(Name = "EnumApproved")]
         Onaylandı = 2,
-        [Display(Name = "EnumInProduction")]
-        UretimeVerildi = 3,
+        [Display(Name = "EnumCompleted")]
+        Tamamlandi = 3,
         [Display(Name = "EnumCancel")]
-        Iptal = 4
+        Iptal = 4,
+        [Display(Name = "EnumInPartialCompleted")]
+        KismiTamamlandi = 5
     }
 }

@@ -333,6 +333,9 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="MRPCode" xml:space="preserve">
+    <value>MRP CODE</value>
+  </data>
   <data name="NetAmountLabel" xml:space="preserve">
     <value>Net Amount:</value>
   </data>

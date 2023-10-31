@@ -21,5 +21,15 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManageme
         /// Id
         /// </summary>
         public Guid Id { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Şube ID
+        /// </summary>
+        public Guid BranchID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Depo ID
+        /// </summary>
+        public Guid WarehouseID { get; set; }
     }
 }

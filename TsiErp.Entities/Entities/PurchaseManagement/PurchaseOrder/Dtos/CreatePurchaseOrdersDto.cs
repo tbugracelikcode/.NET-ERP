@@ -85,6 +85,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
         /// KDV Tutar
         /// </summary>
         public decimal TotalVatAmount { get; set; }
+        /// <summary>
+        /// MRP ID
+        /// </summary>
+        public Guid? MRPID { get; set; }
 
         /// <summary>
         /// Toplam İndirimli Tutar

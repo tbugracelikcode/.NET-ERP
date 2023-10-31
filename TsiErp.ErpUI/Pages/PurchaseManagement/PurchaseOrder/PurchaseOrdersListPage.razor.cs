@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BoldReports.RDL.DOM;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
@@ -11,8 +13,11 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
@@ -20,18 +25,29 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
     public partial class PurchaseOrdersListPage
     {
         private SfGrid<SelectPurchaseOrderLinesDto> _LineGrid;
+        private SfGrid<CreateStockReceiptFishes> _CreateStockFishesGrid;
+        private SfGrid<CreateStockReceiptFishes> _CancelOrderGrid;
 
         [Inject]
         ModalManager ModalManager { get; set; }
 
         SelectPurchaseOrderLinesDto LineDataSource;
+        CreateStockReceiptFishes CreateStockReceiptFishesDataSource;
+        CreateStockReceiptFishes CancelOrderDataSource;
 
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> CreateStockFishesGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectPurchaseOrderLinesDto> GridLineList = new List<SelectPurchaseOrderLinesDto>();
 
+        List<CreateStockReceiptFishes> CreateStockFishesList = new List<CreateStockReceiptFishes>();
+
+        List<CreateStockReceiptFishes> CancelOrderList = new List<CreateStockReceiptFishes>();
+
         private bool LineCrudPopup = false;
+        private bool CreateStockFishesCrudPopup = false;
+        private bool CancelOrderCrudPopup = false;
 
         #region Stock Parameters
 
@@ -452,6 +468,300 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         }
         #endregion
 
+        #region Sipariş İptal Modalı İşlemleri
+
+        public async void OnCancelOrderContextMenuClick(ContextMenuClickEventArgs<CreateStockReceiptFishes> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "select":
+                    CancelOrderDataSource = args.RowInfo.RowData;
+
+                    if (CancelOrderDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Iptal)
+                    {
+                        int selectedIndex = CancelOrderList.IndexOf(CancelOrderDataSource);
+
+                            CancelOrderList[selectedIndex].SelectedLine = true;
+                       
+                        await _CancelOrderGrid.Refresh();
+                        await InvokeAsync(StateHasChanged);
+                    }
+
+                    break;
+
+                case "multiselect":
+
+                    CancelOrderDataSource = args.RowInfo.RowData;
+                    if (CancelOrderDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Iptal)
+                    {
+                        if (_CancelOrderGrid.SelectedRecords.Count > 0)
+                        {
+                            foreach (var selectedRow in _CancelOrderGrid.SelectedRecords)
+                            {
+                                if (selectedRow.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Iptal)
+                                {
+
+                                    int selectedRowIndex = CancelOrderList.IndexOf(selectedRow);
+                                    CancelOrderList[selectedRowIndex].SelectedLine = true;
+                                }
+                            }
+                        }
+
+
+                        await _CancelOrderGrid.Refresh();
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
+                case "removeall":
+
+                    CancelOrderDataSource = args.RowInfo.RowData;
+                    if (CancelOrderDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Iptal)
+                    {
+                        foreach (var line in CancelOrderList)
+                        {
+                            if (line.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Iptal)
+                            {
+                                int lineIndex = CancelOrderList.IndexOf(line);
+                                CancelOrderList[lineIndex].SelectedLine = false;
+                            }
+                        }
+
+
+
+                        await _CancelOrderGrid.Refresh();
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
+
+            }
+        }
+
+        public async void CancelOrderButtonClicked()
+        {
+            var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationCancelOrderMessage"]);
+
+            if (res == true)
+            {
+                if (DataSource.PurchaseOrderState != Entities.Enums.PurchaseOrderStateEnum.Iptal)
+                {
+                    if (DataSource.PurchaseOrderState == Entities.Enums.PurchaseOrderStateEnum.Tamamlandi || DataSource.PurchaseOrderState == Entities.Enums.PurchaseOrderStateEnum.KismiTamamlandi)
+                    {
+                        var stockFicheID = (await StockFichesAppService.GetListAsync(new ListStockFichesParameterDto())).Data.Where(t => t.PurchaseOrderID == DataSource.Id).Select(t => t.Id).FirstOrDefault();
+
+                        await StockFichesAppService.DeleteAsync(stockFicheID);
+
+
+                    }
+
+                    foreach (var line in DataSource.SelectPurchaseOrderLinesDto)
+                    {
+                        int lineIndex = DataSource.SelectPurchaseOrderLinesDto.IndexOf(line);
+                        DataSource.SelectPurchaseOrderLinesDto[lineIndex].PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Iptal;
+                    }
+
+                    DataSource.PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Iptal;
+                    var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
+                    await UpdateAsync(updateInput);
+                }
+            }
+
+            HideCancelOrderPopup();
+        }
+
+        public void HideCancelOrderPopup()
+        {
+
+            CancelOrderList.Clear();
+            CancelOrderCrudPopup = false;
+
+        }
+
+        #endregion
+
+        #region Stok Giriş Fişi Oluşturma Modalı İşlemleri
+
+        public class CreateStockReceiptFishes
+        {
+            public Entities.Enums.PurchaseOrderLineStateEnum PurchaseStateLine { get; set; }
+            public bool SelectedLine { get; set; }
+            public Guid? ProductID { get; set; }
+            public string ProductCode { get; set; }
+            public string ProductName { get; set; }
+            public decimal Quantity { get; set; }
+            public Guid? UnitSetID { get; set; }
+            public string UnitSetCode { get; set; }
+            public Guid? LineID { get; set; }
+        }
+
+        protected void CreateStockReceiptFishesContextMenuItems()
+        {
+            if (CreateStockFishesGridContextMenu.Count() == 0)
+            {
+                CreateStockFishesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockReceiptFichesContextSelect"], Id = "select" });
+                CreateStockFishesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockReceiptFichesContextMultiSelect"], Id = "multiselect" });
+                CreateStockFishesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockReceiptFichesContextRemoveAll"], Id = "removeall" });
+            }
+        }
+
+
+        public async void OnCreateStockReceiptFishesContextMenuClick(ContextMenuClickEventArgs<CreateStockReceiptFishes> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "select":
+                    CreateStockReceiptFishesDataSource = args.RowInfo.RowData;
+
+                    if (CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
+                    {
+                        int selectedIndex = CreateStockFishesList.IndexOf(CreateStockReceiptFishesDataSource);
+
+                         CreateStockFishesList[selectedIndex].SelectedLine = true;
+                       
+                        await _CreateStockFishesGrid.Refresh();
+                        await InvokeAsync(StateHasChanged);
+                    }
+
+                    break;
+
+                case "multiselect":
+
+                    CreateStockReceiptFishesDataSource = args.RowInfo.RowData;
+                    if (CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
+                    {
+                        if (_CreateStockFishesGrid.SelectedRecords.Count > 0)
+                        {
+                            foreach (var selectedRow in _CreateStockFishesGrid.SelectedRecords)
+                            {
+                                if (selectedRow.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || selectedRow.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
+                                {
+
+                                    int selectedRowIndex = CreateStockFishesList.IndexOf(selectedRow);
+                                    CreateStockFishesList[selectedRowIndex].SelectedLine = true;
+                                }
+                            }
+                        }
+
+
+                        await _CreateStockFishesGrid.Refresh();
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
+                case "removeall":
+
+                    CreateStockReceiptFishesDataSource = args.RowInfo.RowData;
+                    if (CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
+                    {
+                        foreach (var line in CreateStockFishesList)
+                        {
+                            if (line.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || line.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
+                            {
+                                int lineIndex = CreateStockFishesList.IndexOf(line);
+                                CreateStockFishesList[lineIndex].SelectedLine = false;
+                            }
+                        }
+
+
+
+                        await _CreateStockFishesGrid.Refresh();
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
+
+            }
+        }
+
+        public async void CreateStockFishesButtonClicked()
+        {
+            List<SelectStockFicheLinesDto> stockFicheLineList = new List<SelectStockFicheLinesDto>();
+
+            foreach (var item in CreateStockFishesList)
+            {
+                if (item.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || item.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
+                {
+                    if (item.SelectedLine)
+                    {
+                        SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                        {
+                            FicheType = Entities.Enums.StockFicheTypeEnum.StokGirisFisi,
+                            LineAmount = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).Select(t => t.LineTotalAmount).FirstOrDefault(),
+                            LineNr = stockFicheLineList.Count + 1,
+                            LineDescription = string.Empty,
+                            ProductID = item.ProductID,
+                            ProductCode = item.ProductCode,
+                            ProductName = item.ProductName,
+                            PurchaseOrderID = DataSource.Id,
+                            PurchaseOrderFicheNo = DataSource.FicheNo,
+                            PurchaseOrderLineID = item.LineID,
+                            Quantity = item.Quantity,
+                            StockFicheID = Guid.Empty,
+                            UnitPrice = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).Select(t => t.UnitPrice).FirstOrDefault(),
+                            UnitSetCode = item.UnitSetCode,
+                            UnitSetID = item.UnitSetID,
+
+                        };
+                        stockFicheLineList.Add(stockFicheLineModel);
+                        var line = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).FirstOrDefault();
+                        int datasourcelineIndex = DataSource.SelectPurchaseOrderLinesDto.IndexOf(line);
+                        DataSource.SelectPurchaseOrderLinesDto[datasourcelineIndex].PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi;
+                    }
+                }
+            }
+
+            CreateStockFichesDto stockFichesModel = new CreateStockFichesDto
+            {
+                BranchID = DataSource.BranchID.GetValueOrDefault(),
+                CurrencyID = DataSource.CurrencyID.GetValueOrDefault(),
+                Date_ = DateTime.Today,
+                Description_ = string.Empty,
+                ExchangeRate = DataSource.ExchangeRate,
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                FicheType = 50,
+                InputOutputCode = 0,
+                NetAmount = DataSource.NetAmount,
+                ProductionOrderID = DataSource.ProductionOrderID.GetValueOrDefault(),
+                PurchaseOrderID = DataSource.Id,
+                SpecialCode = DataSource.SpecialCode,
+                WarehouseID = DataSource.WarehouseID.GetValueOrDefault(),
+                Time_ = null,
+            };
+
+            stockFichesModel.SelectStockFicheLines = stockFicheLineList;
+
+            await StockFichesAppService.CreateAsync(stockFichesModel);
+
+            if (CreateStockFishesList.Where(t => t.SelectedLine == false).Count() == 0)
+            {
+                DataSource.PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Tamamlandi;
+            }
+            else
+            {
+                DataSource.PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.KismiTamamlandi;
+            }
+
+            var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
+            await UpdateAsync(updateInput);
+
+            await ModalManager.MessagePopupAsync(L["UIInformationStockFichesCreatedTitle"], L["UIInformationStockFichesCreatedMessage"]);
+
+            HideCreateStockFichesPopup();
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void HideCreateStockFichesPopup()
+        {
+
+            CreateStockFishesList.Clear();
+            CreateStockFishesCrudPopup = false;
+
+        }
+
+        #endregion
+
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = PurchaseOrdersAppService;
@@ -459,6 +769,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+            CreateStockReceiptFishesContextMenuItems();
 
             futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
         }
@@ -469,7 +780,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             DataSource = new SelectPurchaseOrdersDto()
             {
                 Date_ = DateTime.Today,
-                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersChildMenu")
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersChildMenu"),
+                PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Beklemede
             };
 
             DataSource.SelectPurchaseOrderLinesDto = new List<SelectPurchaseOrderLinesDto>();
@@ -499,6 +811,9 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextAdd"], Id = "new" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextChange"], Id = "changed" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextApproveOrder"], Id = "approveorder" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextCreateStockFiches"], Id = "createstockfiches" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextCancelOrder"], Id = "cancelorder" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextRefresh"], Id = "refresh" });
             }
         }
@@ -538,6 +853,111 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     GridLineList = DataSource.SelectPurchaseOrderLinesDto;
 
                     ShowEditPage();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "approveorder":
+                    DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    GridLineList = DataSource.SelectPurchaseOrderLinesDto;
+
+                    if (DataSource.PurchaseOrderState == Entities.Enums.PurchaseOrderStateEnum.Beklemede)
+                    {
+                        foreach (var line in GridLineList.ToList())
+                        {
+                            if (line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.Beklemede)
+                            {
+                                int lineIndex = GridLineList.IndexOf(line);
+                                line.PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Onaylandı;
+                                GridLineList[lineIndex] = line;
+                            }
+                        }
+
+                        DataSource.SelectPurchaseOrderLinesDto = GridLineList;
+                        DataSource.PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Onaylandı;
+                        var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
+                        await UpdateAsync(updateInput);
+                        await ModalManager.MessagePopupAsync(L["UIInformationTitle"], L["UIInformationApproveOrder"]);
+
+                    }
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "createstockfiches":
+                    DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    GridLineList = DataSource.SelectPurchaseOrderLinesDto;
+
+                    if (DataSource.PurchaseOrderState != Entities.Enums.PurchaseOrderStateEnum.Onaylandı)
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningStockFichesTitle"], L["UIWarningStockFichesMessage"]);
+                    }
+                    else
+                    {
+                        bool selectedLine = false;
+
+                        foreach (var line in GridLineList)
+                        {
+                            if (line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
+                            {
+                                selectedLine = true;
+                            }
+                            CreateStockReceiptFishes createStockReceiptFichesModel = new CreateStockReceiptFishes
+                            {
+                                PurchaseStateLine = line.PurchaseOrderLineStateEnum,
+                                ProductCode = line.ProductCode,
+                                ProductID = line.ProductID,
+                                ProductName = line.ProductName,
+                                Quantity = line.Quantity,
+                                UnitSetCode = line.UnitSetCode,
+                                UnitSetID = line.UnitSetID,
+                                SelectedLine = selectedLine,
+                                LineID = line.Id,
+                            };
+
+                            CreateStockFishesList.Add(createStockReceiptFichesModel);
+                        }
+
+                        CreateStockFishesCrudPopup = true;
+                    }
+
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "cancelorder":
+                    DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    GridLineList = DataSource.SelectPurchaseOrderLinesDto;
+
+                    if (DataSource.PurchaseOrderState != Entities.Enums.PurchaseOrderStateEnum.Iptal)
+                    {
+                        bool selectedLine = true;
+
+                        foreach (var line in GridLineList)
+                        {
+                            if (line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.Iptal)
+                            {
+                                selectedLine = false;
+                            }
+                            CreateStockReceiptFishes createStockReceiptFichesModel = new CreateStockReceiptFishes
+                            {
+                                PurchaseStateLine = line.PurchaseOrderLineStateEnum,
+                                ProductCode = line.ProductCode,
+                                ProductID = line.ProductID,
+                                ProductName = line.ProductName,
+                                Quantity = line.Quantity,
+                                UnitSetCode = line.UnitSetCode,
+                                UnitSetID = line.UnitSetID,
+                                SelectedLine = selectedLine,
+                                LineID = line.Id,
+                            };
+
+                            CancelOrderList.Add(createStockReceiptFichesModel);
+                        }
+
+                        CancelOrderCrudPopup = true;
+                    }
+
+
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -641,7 +1061,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningPopupTitleBase"], L["UIWarningPopupMessageBase2"]);
             }
-            else if(LineDataSource.Quantity == 0)
+            else if (LineDataSource.Quantity == 0)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningPopupTitleBase"], L["UIWarningPopupMessageBase3"]);
             }
@@ -680,7 +1100,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 HideLinesPopup();
                 await InvokeAsync(StateHasChanged);
             }
-         
+
         }
 
         public override async void LineCalculate()
@@ -719,6 +1139,57 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             DataSource.TotalVatAmount = GridLineList.Sum(x => x.VATamount);
             DataSource.NetAmount = GridLineList.Sum(x => x.LineTotalAmount);
         }
+
+        protected override async Task OnSubmit()
+        {
+            SelectPurchaseOrdersDto result;
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                foreach(var item in DataSource.SelectPurchaseOrderLinesDto)
+                {
+                    int itemIndex = DataSource.SelectPurchaseOrderLinesDto.IndexOf(item);
+                    DataSource.SelectPurchaseOrderLinesDto[itemIndex].PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Beklemede;
+                }
+
+                var createInput = ObjectMapper.Map<SelectPurchaseOrdersDto, CreatePurchaseOrdersDto>(DataSource);
+
+                result = (await CreateAsync(createInput)).Data;
+
+                if (result != null)
+                    DataSource.Id = result.Id;
+            }
+            else
+            {
+                var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
+
+                result = (await UpdateAsync(updateInput)).Data;
+            }
+
+            if (result == null)
+            {
+
+                return;
+            }
+
+            await GetListDataSourceAsync();
+
+            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+            HideEditPage();
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                DataSource.Id = result.Id;
+            }
+
+            if (savedEntityIndex > -1)
+                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+            else
+                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+        }
+
+
         #endregion
 
         #region GetList Metotları

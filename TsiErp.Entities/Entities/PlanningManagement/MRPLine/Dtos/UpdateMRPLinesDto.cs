@@ -25,6 +25,18 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
         /// </summary>
         public bool isPurchase { get; set; }
         /// <summary>
+        /// Şube ID
+        /// </summary>
+        public Guid? BranchID { get; set; }
+        /// <summary>
+        /// Depo ID
+        /// </summary>
+        public Guid? WarehouseID { get; set; }
+        /// <summary>
+        /// Stoktan Kullanılacak
+        /// </summary>
+        public bool isStockUsage { get; set; }
+        /// <summary>
         /// Miktar
         /// </summary>
         public int Amount { get; set; }

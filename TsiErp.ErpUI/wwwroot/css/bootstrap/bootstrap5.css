@@ -45617,7 +45617,7 @@ li.e-separator.e-menu-item.e-excel-separator {
 .e-grid .e-headercelldiv {
     border: 0 none;
     display: block;
-    font-size: 14px;
+    font-size: 16px !important;
     font-weight: 700;
     height: 18px;
     line-height: 18px;
