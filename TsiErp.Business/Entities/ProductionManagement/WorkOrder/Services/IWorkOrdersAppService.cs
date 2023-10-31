@@ -6,6 +6,5 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 {
     public interface IWorkOrdersAppService : ICrudAppService<SelectWorkOrdersDto, ListWorkOrdersDto, CreateWorkOrdersDto, UpdateWorkOrdersDto, ListWorkOrdersParameterDto>
     {
-        Task<IDataResult<SelectWorkOrdersDto>> GetbyProductionOrderIdAsync(Guid? id);
     }
 }

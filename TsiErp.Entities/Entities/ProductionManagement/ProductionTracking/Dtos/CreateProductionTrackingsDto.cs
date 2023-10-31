@@ -15,6 +15,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// </summary>
         public Guid? WorkOrderID { get; set; }
         /// <summary>
+        /// Açıklama
+        /// </summary>
+        public string Description_ { get; set; }
+        /// <summary>
         /// Cari Hesap ID
         /// </summary>
         public Guid? CurrentAccountCardID { get; set; }
@@ -22,10 +26,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// Üretilen Miktar
         /// </summary>
         public decimal ProducedQuantity { get; set; }
-        /// <summary>
-        /// Açıklama
-        /// </summary>
-        public string Description_ { get; set; }
         /// <summary>
         /// Operasyon Süresi
         /// </summary>
@@ -41,7 +41,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// <summary>
         /// Operasyon Bitiş Tarihi
         /// </summary>
-        public DateTime OperationEndDate { get; set; }
+        public DateTime? OperationEndDate { get; set; }
         /// <summary>
         /// Bitiş Saati
         /// </summary>

@@ -151,6 +151,15 @@ namespace TsiErp.Localizations.Resources.WorkOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fasona Gönderildi.
+        /// </summary>
+        public static string EnumFasonaGonderildi {
+            get {
+                return ResourceManager.GetString("EnumFasonaGonderildi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İptal.
         /// </summary>
         public static string EnumIptal {

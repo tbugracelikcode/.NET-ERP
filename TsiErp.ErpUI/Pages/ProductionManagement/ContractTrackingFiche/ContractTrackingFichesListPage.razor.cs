@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using System.Diagnostics;
 using TsiErp.Business.Entities.Branch.Services;
 using TsiErp.Business.Entities.Currency.Services;
 using TsiErp.Business.Entities.PaymentPlan.Services;
@@ -54,7 +55,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
             //CreateLineContextMenuItems();
 
         }
-
 
         #region Fason Takip Fişleri Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()
@@ -267,14 +267,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
 
         #endregion
 
-        
         #region Üretim Emri ButtonEdit
 
         SfTextBox ProductionOrdersButtonEdit;
         bool SelectProductionOrdersPopupVisible = false;
         List<ListProductionOrdersDto> ProductionOrdersList = new List<ListProductionOrdersDto>();
 
-        public Guid FinishedProductID  { get; set; }
+        public Guid FinishedProductID { get; set; }
 
         public async Task ProductionOrdersOnCreateIcon()
         {
@@ -295,7 +294,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
             {
                 DataSource.ProductionOrderID = Guid.Empty;
                 DataSource.ProductionOrderNr = string.Empty;
-                DataSource.CurrentAccountCardID = Guid.Empty;   
+                DataSource.CurrentAccountCardID = Guid.Empty;
                 DataSource.CustomerCode = string.Empty;
                 DataSource.CurrentAccountCardCode = string.Empty;
                 DataSource.CurrentAccountCardName = string.Empty;
@@ -370,10 +369,12 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
 
                 var oprlist = (await ContractQualityPlansAppService.GetAsync(selectedContractQualityPlan.Id)).Data.SelectContractQualityPlanOperations;
 
+                var workOrderList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.ProductionOrderID == DataSource.ProductionOrderID).ToList();
+
                 foreach (var opr in oprlist)
                 {
-                    var operation = (await ProductsOperationsAppService.GetAsync(opr.Id)).Data;
-                    var wordorder = (await WorkOrdersAppService.GetbyProductionOrderIdAsync(DataSource.ProductionOrderID)).Data;
+                    var operation = (await ProductsOperationsAppService.GetAsync(opr.OperationID.GetValueOrDefault())).Data;
+                    var wordorder = workOrderList.Where(t => t.ProductsOperationID == opr.OperationID.GetValueOrDefault()).FirstOrDefault();
 
                     SelectContractTrackingFicheLinesDto operationModel = new SelectContractTrackingFicheLinesDto
                     {
@@ -382,10 +383,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                         OperationName = operation.Name,
                         WorkOrderID = wordorder.Id,
                         WorkOrderNr = wordorder.WorkOrderNo,
-                        StationID = wordorder.StationID,
+                        StationID = wordorder.StationID.GetValueOrDefault(),
                         StationCode = wordorder.StationCode,
                         StationName = wordorder.StationName,
-                        IsSent = false
+                        IsSent = false,
+                        LineNr = GridLineList.Count + 1
                     };
 
                     GridLineList.Add(operationModel);
@@ -429,5 +431,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
     }
 }

@@ -324,6 +324,9 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorAmount" xml:space="preserve">
+    <value>Lütfen adet girin.</value>
+  </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Lütfen fiş numarasını yazın.</value>
   </data>
