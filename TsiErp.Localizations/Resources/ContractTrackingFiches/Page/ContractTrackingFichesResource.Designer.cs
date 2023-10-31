@@ -683,6 +683,15 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen adet girin..
+        /// </summary>
+        public static string ValidatorAmount {
+            get {
+                return ResourceManager.GetString("ValidatorAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen fiş numarasını yazın..
         /// </summary>
         public static string ValidatorCodeEmpty {
