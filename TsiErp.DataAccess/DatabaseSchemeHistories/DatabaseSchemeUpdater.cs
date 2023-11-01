@@ -91,6 +91,8 @@ using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.ContractOperationPicture;
 using TsiErp.Entities.Entities.QualityControl.Report8D;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApproval;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPC;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPCLine;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPC;
@@ -4086,6 +4088,76 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 CustomerComplaintReportsTable.Create();
+            }
+            #endregion
+
+            #region FirstProductApprovals Table Created
+            Table FirstProductApprovalsTable = model.CreateTable(Tables.FirstProductApprovals);
+
+            if (FirstProductApprovalsTable != null)
+            {
+                var properties = (typeof(FirstProductApprovals)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(FirstProductApprovalsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(FirstProductApprovalsTable, "PK_" + FirstProductApprovalsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        FirstProductApprovalsTable.Indexes.Add(pkIndex);
+                    }
+
+                    FirstProductApprovalsTable.Columns.Add(column);
+                }
+
+                FirstProductApprovalsTable.Create();
+            }
+            #endregion
+
+            #region FirstProductApprovalLines Table Created
+            Table FirstProductApprovalLinesTable = model.CreateTable(Tables.FirstProductApprovalLines);
+
+            if (FirstProductApprovalLinesTable != null)
+            {
+                var properties = (typeof(FirstProductApprovalLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(FirstProductApprovalLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(FirstProductApprovalLinesTable, "PK_" + FirstProductApprovalLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        FirstProductApprovalLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    FirstProductApprovalLinesTable.Columns.Add(column);
+                }
+
+                FirstProductApprovalLinesTable.Create();
             }
             #endregion
 

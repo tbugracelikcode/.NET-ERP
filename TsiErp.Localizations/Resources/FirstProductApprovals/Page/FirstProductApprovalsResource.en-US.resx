@@ -117,202 +117,73 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BOMCode" xml:space="preserve">
-    <value>REÇETE KODU</value>
-  </data>
-  <data name="BranchCodeButtonEditLabel" xml:space="preserve">
-    <value>Şube:</value>
-  </data>
-  <data name="BranchesPopupGridCode" xml:space="preserve">
-    <value>ŞUBE KODU</value>
-  </data>
-  <data name="BranchesPopupGridName" xml:space="preserve">
-    <value>ŞUBE ADI</value>
-  </data>
-  <data name="BranchModalTitle" xml:space="preserve">
-    <value>Şubeler</value>
-  </data>
   <data name="CloseButton" xml:space="preserve">
-    <value>Kapat</value>
+    <value>Close</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
-    <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
-  </data>
-  <data name="CreateFicheButton" xml:space="preserve">
-    <value>Fişi Oluştur</value>
-  </data>
-  <data name="CustomerCode" xml:space="preserve">
-    <value>MÜŞTERİ KODU</value>
-  </data>
-  <data name="CustomerCodeLabel" xml:space="preserve">
-    <value>Varyant Kodu:</value>
-  </data>
-  <data name="Date_Label" xml:space="preserve">
-    <value>Fiş Tarihi:</value>
+    <value>There is a record with the same code.</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
-    <value>Silmek istediğinize emin misiniz ?</value>
+    <value>Are you sure you want to delete?</value>
   </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
-    <value>Onay</value>
+    <value>Confirmation</value>
+  </data>
+  <data name="DeleteControlManager" xml:space="preserve">
+    <value>Records with transaction cannot be deleted.</value>
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
-    <value>Kayıt başarıyla silindi.</value>
+    <value>The record deleted successfully.</value>
   </data>
-  <data name="EndDate" xml:space="preserve">
-    <value>BİTİŞ TARİHİ</value>
-  </data>
-  <data name="EnumBaslamadi" xml:space="preserve">
-    <value>Başlamadı</value>
-  </data>
-  <data name="EnumDevamEdiyor" xml:space="preserve">
-    <value>Devam Ediyor</value>
-  </data>
-  <data name="EnumDurduruldu" xml:space="preserve">
-    <value>Durduruldu</value>
-  </data>
-  <data name="EnumIptal" xml:space="preserve">
-    <value>İptal</value>
-  </data>
-  <data name="EnumTamamlandi" xml:space="preserve">
-    <value>Tamamlandı</value>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>First Product Approval</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Hata</value>
+    <value>Error</value>
   </data>
-  <data name="FicheNo" xml:space="preserve">
-    <value>FİŞ NO</value>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>FirstProductApproval</value>
   </data>
-  <data name="FinishedProductCode" xml:space="preserve">
-    <value>MAMÜL KODU</value>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>First Product Approval</value>
   </data>
-  <data name="FinishedProductCodeLabel" xml:space="preserve">
-    <value>Malzeme Kodu:</value>
+  <data name="FirstProductApprovalContextAdd" xml:space="preserve">
+    <value>Add</value>
   </data>
-  <data name="FinishedProductNameLabel" xml:space="preserve">
-    <value>Malzeme Açıklaması:</value>
+  <data name="FirstProductApprovalContextChange" xml:space="preserve">
+    <value>Change</value>
   </data>
-  <data name="LinkedProductCode" xml:space="preserve">
-    <value>BAĞLI ÜRÜN KODU</value>
+  <data name="FirstProductApprovalContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="FirstProductApprovalContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
-    <value>Lütfen Bekleyin..</value>
+    <value>Please wait..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
-    <value>Kayıtlar Yükleniyor..</value>
+    <value>The records are loading..</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
-    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
+    <value>The record you selected is using by {0}.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
-    <value>Bilgi</value>
+    <value>Information</value>
   </data>
-  <data name="OccuredAmountTitle" xml:space="preserve">
-    <value>Gerçekleşen Miktar Girişi</value>
-  </data>
-  <data name="OrderFicheNo" xml:space="preserve">
-    <value>SİPARİŞ FİŞ NO</value>
-  </data>
-  <data name="PlannedQuantity" xml:space="preserve">
-    <value>PLANLANAN MİKTAR</value>
-  </data>
-  <data name="ProducedQuantity" xml:space="preserve">
-    <value>ÜRETİLEN MİKTAR</value>
-  </data>
-  <data name="ProductionDateReferanceLabel" xml:space="preserve">
-    <value>Üretim Tarihi Referansı:</value>
-  </data>
-  <data name="ProductionOrderContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ProductionOrderContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ProductionOrderContextConsumptionReceipt" xml:space="preserve">
-    <value>Sarf Fişi Oluştur</value>
-  </data>
-  <data name="ProductionOrderContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ProductionOrderContextOccuredAmountEntry" xml:space="preserve">
-    <value>Gerçekleşen Miktar Girişi</value>
-  </data>
-  <data name="ProductionOrderContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
-  <data name="ProductionOrderContextWorkOrders" xml:space="preserve">
-    <value>İş Emirleri</value>
-  </data>
-  <data name="ProductionOrderState" xml:space="preserve">
-    <value>ÜRETİM EMRİ DURUMU</value>
-  </data>
-  <data name="QuantityLabel" xml:space="preserve">
-    <value>Miktar:</value>
-  </data>
-  <data name="StartDate" xml:space="preserve">
-    <value>BAŞLANGIÇ TARİHİ</value>
-  </data>
-  <data name="UICurrentMenu" xml:space="preserve">
-    <value>Üretim Emirleri</value>
-  </data>
-  <data name="UIExportFileName" xml:space="preserve">
-    <value>UretimEmirleri</value>
-  </data>
-  <data name="UIExportTitle" xml:space="preserve">
-    <value>Üretim Emirleri</value>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Üretim Yönetimi &gt; Hareketler</value>
-  </data>
-  <data name="UIWarningCreateOccuredAmountFicheMessage" xml:space="preserve">
-    <value>Miktar ve Üretim tarihi Referansı alanlarının doldurulması gerekmektedir.</value>
-  </data>
-  <data name="UIWarningCreateOccuredAmountFicheTitle" xml:space="preserve">
-    <value>Uyarı</value>
-  </data>
-  <data name="UnitSetCode" xml:space="preserve">
-    <value>BİRİM SETİ</value>
+    <value>Quality Control &gt; Transactions</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
-    <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
-  </data>
-  <data name="ValidatorBoMID" xml:space="preserve">
-    <value>Lütfen reçete seçin.</value>
+    <value>There is a record with the same code.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Lütfen fiş numarasını yazın.</value>
+    <value>Please enter the first product approval code.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Fiş numarası, 17 karakterden fazla olamaz.</value>
-  </data>
-  <data name="ValidatorCurrentAccountID" xml:space="preserve">
-    <value>Lütfen cari hesap seçin.</value>
-  </data>
-  <data name="ValidatorFinishedProductID" xml:space="preserve">
-    <value>Lütfen mamül seçin.</value>
-  </data>
-  <data name="ValidatorOrderID" xml:space="preserve">
-    <value>Lütfen siparişi seçin.</value>
-  </data>
-  <data name="ValidatorPropositionID" xml:space="preserve">
-    <value>Lütfen teklif seçin</value>
-  </data>
-  <data name="ValidatorRouteID" xml:space="preserve">
-    <value>Lütfen rota seçin.</value>
-  </data>
-  <data name="ValidatorUnitSetID" xml:space="preserve">
-    <value>Lütfen birim seti seçin.</value>
-  </data>
-  <data name="WarehouseCodeButtonEditLabel" xml:space="preserve">
-    <value>Depo:</value>
-  </data>
-  <data name="WarehouseModalTitle" xml:space="preserve">
-    <value>Depo Kartları</value>
-  </data>
-  <data name="WarehousesPopupGridCode" xml:space="preserve">
-    <value>DEPO KODU</value>
-  </data>
-  <data name="WarehousesPopupGridName" xml:space="preserve">
-    <value>DEPO ADI</value>
+    <value>First product approval code cannot exceed 17 characters.</value>
   </data>
 </root>

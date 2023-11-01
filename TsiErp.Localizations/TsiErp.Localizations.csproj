@@ -131,6 +131,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>FinanceManagementParametersResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\FirstProductApprovals\Page\FirstProductApprovalsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FirstProductApprovalsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Forecasts\Page\ForecastsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -564,6 +569,10 @@
     <EmbeddedResource Update="Resources\FinanceManagementParameter\Page\FinanceManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FinanceManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FirstProductApprovals\Page\FirstProductApprovalsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FirstProductApprovalsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Forecasts\Page\ForecastsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

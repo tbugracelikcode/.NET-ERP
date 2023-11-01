@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
@@ -96,5 +97,15 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// Bağlı Üretim Emri ID
         /// </summary>
         public Guid? LinkedProductionOrderID { get; set; }
+
+        /// <summary>
+        /// Şube ID
+        /// </summary>
+        public Guid? BranchID { get; set; }
+
+        /// <summary>
+        /// Depo ID
+        /// </summary>
+        public Guid? WarehouseID { get; set; }
     }
 }

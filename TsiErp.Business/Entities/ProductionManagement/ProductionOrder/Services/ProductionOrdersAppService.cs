@@ -18,18 +18,22 @@ using TsiErp.Business.Entities.Station.Services;
 using TsiErp.Business.Entities.WorkOrder.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.PlanningManagement.MRP;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.Route;
 using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesManagement.SalesProposition;
 using TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
+using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ProductionOrders.Page;
@@ -338,6 +342,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 OrderID = input.OrderID,
                 OrderLineID = input.OrderLineID,
                 PlannedQuantity = input.PlannedQuantity,
+                 BranchID = input.BranchID,
+                  WarehouseID = input.WarehouseID,
                 ProducedQuantity = input.ProducedQuantity,
                 ProductionOrderState = input.ProductionOrderState,
                 ProductTreeID = input.ProductTreeID,
@@ -457,6 +463,20 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             nameof(SalesPropositionLines.Id),
                             JoinType.Left
                         )
+                         .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code },
+                        nameof(ProductionOrders.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                     .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                        nameof(ProductionOrders.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
                         .Join<CurrentAccountCards>
                         (
                             ca => new
@@ -493,6 +513,20 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             nameof(SalesOrders.Id),
                             JoinType.Left
                         )
+                           .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code },
+                        nameof(ProductionOrders.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                     .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                        nameof(ProductionOrders.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
 
                          .Join<Products>
                         (
@@ -591,6 +625,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 PlannedQuantity = input.PlannedQuantity,
                 ProducedQuantity = input.ProducedQuantity,
                 ProductionOrderState = input.ProductionOrderState,
+                BranchID = input.BranchID,
+                WarehouseID = input.WarehouseID,
                 ProductTreeID = input.ProductTreeID,
                 ProductTreeLineID = input.ProductTreeLineID,
                 PropositionID = input.PropositionID,
@@ -640,6 +676,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 OrderLineID = entity.OrderLineID,
                 PlannedQuantity = entity.PlannedQuantity,
                 ProducedQuantity = entity.ProducedQuantity,
+                BranchID = entity.BranchID,
+                WarehouseID = entity.WarehouseID,
                 ProductionOrderState = (int)entity.ProductionOrderState,
                 ProductTreeID = entity.ProductTreeID,
                 ProductTreeLineID = entity.ProductTreeLineID,

@@ -96,5 +96,11 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche
         /// </summary>
         public decimal NetAmount { get; set; }
 
+        [SqlColumnType(MaxLength =250,Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Üretim Tarihi Referansı
+        /// </summary>
+        public string ProductionDateReferance { get; set; }
+
     }
 }

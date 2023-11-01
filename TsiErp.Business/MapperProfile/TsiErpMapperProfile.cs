@@ -211,6 +211,10 @@ using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApproval;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -1073,6 +1077,22 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateMRPLinesDto, MRPLines>();
             CreateMap<SelectMRPLinesDto, UpdateMRPLinesDto>();
             CreateMap<SelectMRPLinesDto, MRPLines>();
+
+            CreateMap<FirstProductApprovals, SelectFirstProductApprovalsDto>();
+            CreateMap<FirstProductApprovals, ListFirstProductApprovalsDto>();
+            CreateMap<UpdateFirstProductApprovalsDto, FirstProductApprovals>();
+            CreateMap<CreateFirstProductApprovalsDto, FirstProductApprovals>();
+            CreateMap<SelectFirstProductApprovalsDto, CreateFirstProductApprovalsDto>();
+            CreateMap<SelectFirstProductApprovalsDto, UpdateFirstProductApprovalsDto>();
+            CreateMap<FirstProductApprovals, UpdateFirstProductApprovalsDto>();
+
+            CreateMap<FirstProductApprovalLines, SelectFirstProductApprovalLinesDto>();
+            CreateMap<FirstProductApprovalLines, ListFirstProductApprovalLinesDto>();
+            CreateMap<CreateFirstProductApprovalLinesDto, FirstProductApprovalLines>();
+            CreateMap<SelectFirstProductApprovalLinesDto, CreateFirstProductApprovalLinesDto>();
+            CreateMap<UpdateFirstProductApprovalLinesDto, FirstProductApprovalLines>();
+            CreateMap<SelectFirstProductApprovalLinesDto, UpdateFirstProductApprovalLinesDto>();
+            CreateMap<SelectFirstProductApprovalLinesDto, FirstProductApprovalLines>();
         }
     }
 }
