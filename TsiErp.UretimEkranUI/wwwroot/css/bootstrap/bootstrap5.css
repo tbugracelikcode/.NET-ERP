@@ -45215,6 +45215,7 @@ li.e-separator.e-menu-item.e-excel-separator {
         font-size: 16px !important;
         font-weight: bold !important;
         color: #B70000 !important;
+        bottom: 40px !important;
     }
 
     .e-grid .e-row .e-icon-rowdragicon::before {
@@ -45734,7 +45735,7 @@ li.e-separator.e-menu-item.e-excel-separator {
     border-style: solid;
     border-width: 1px 0 0;
     display: table-cell;
-    font-size: 14px;
+    font-size: 20px !important;
     line-height: 22px;
     overflow: hidden;
     padding: 6px 8px;
@@ -45991,7 +45992,8 @@ li.e-separator.e-menu-item.e-excel-separator {
 
 .e-grid .e-gridheader .e-sortfilter .e-fltr-icon .e-headercelldiv {
     margin: -5px 20px -5px -5px;
-    font-size:13px !important;
+    font-size: 20px !important;
+    margin-top: 8px;
 }
 
     .e-grid .e-gridheader .e-sortfilter .e-fltr-icon .e-headercelldiv:hover {
@@ -46130,6 +46132,7 @@ li.e-separator.e-menu-item.e-excel-separator {
 
 .e-grid [class^=e-] {
     box-sizing: border-box;
+    height: 50px;
 }
 
 .e-grid .e-rowdragdropcell {

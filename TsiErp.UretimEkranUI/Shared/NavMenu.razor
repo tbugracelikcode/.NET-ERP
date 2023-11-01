@@ -5,12 +5,19 @@
         <DxTreeView @ref=treeView AllowSelectNodes="true" style="min-height: 90vh;" CssClass=" app-sidebar" NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick">
 
             <Nodes>
+                <br />
+                <br />
+                <DxTreeViewNode Text="Ana Sayfa" NavigateUrl="/" IconCssClass="fa fa-warehouse">
 
-                <DxTreeViewNode  Text="İş Emirleri" NavigateUrl="#"  IconCssClass="fa fa-warehouse">
-                   
                 </DxTreeViewNode>
 
-               
+                <DxTreeViewNode Text="İş Emirleri" NavigateUrl="/work-orders" IconCssClass="fa fa-warehouse">
+
+                </DxTreeViewNode>
+
+                <DxTreeViewNode Text="Çıkış" @onclick="(()=>  System.Environment.Exit(0))" IconCssClass="fa fa-warehouse">
+
+                </DxTreeViewNode>
 
             </Nodes>
 

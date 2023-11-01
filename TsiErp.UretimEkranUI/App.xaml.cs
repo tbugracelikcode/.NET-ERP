@@ -1,4 +1,6 @@
-﻿namespace TsiErp.UretimEkranUI
+﻿using DevExpress.XtraPrinting.Native;
+
+namespace TsiErp.UretimEkranUI
 {
     public partial class App : Application
     {

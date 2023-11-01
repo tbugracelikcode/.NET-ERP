@@ -1,0 +1,76 @@
+﻿
+<DxGridLayout RowSpacing="@RowSpacing"
+              ColumnSpacing="@ColumnSpacing" style="height:auto">
+
+    <Rows>
+        @{
+            for (var i = 0; i < RowCount; i++)
+            {
+                if (RowHeights == null)
+                {
+                    <DxGridLayoutRow Height="@DefaultRowHeights" />
+                }
+                else if (i < RowHeights.Length)
+                {
+                    <DxGridLayoutRow Height="@RowHeights[i]" />
+                }
+                else
+                {
+                    <DxGridLayoutRow Height="@DefaultRowHeights" />
+                }
+            }
+        }
+    </Rows>
+
+    <Columns>
+        @{
+            for (var i = 0; i < ColumnCount; i++)
+            {
+                if (ColumnWidths == null)
+                {
+                    <DxGridLayoutColumn Width="*" />
+                }
+                else if (i < ColumnWidths.Length)
+                {
+                    <DxGridLayoutColumn Width="@ColumnWidths[i]" />
+                }
+                else
+                {
+                    <DxGridLayoutColumn Width="@ColumnWidths[^1]" />
+                }
+            }
+        }
+    </Columns>
+
+    <Items>
+        @GridLayoutItems
+    </Items>
+
+</DxGridLayout>
+
+@code {
+
+    [Parameter] 
+    public string RowSpacing { get; set; } = "6px";
+
+    [Parameter] 
+    public string ColumnSpacing { get; set; } = "6px";
+
+    [Parameter] 
+    public int RowCount { get; set; }
+
+    [Parameter] 
+    public string[] RowHeights { get; set; }
+
+    [Parameter] 
+    public string DefaultRowHeights { get; set; } = "28";
+
+    [Parameter] 
+    public int ColumnCount { get; set; }
+
+    [Parameter] 
+    public string[] ColumnWidths { get; set; }
+
+    [Parameter,EditorRequired] 
+    public RenderFragment GridLayoutItems { get; set; }
+}

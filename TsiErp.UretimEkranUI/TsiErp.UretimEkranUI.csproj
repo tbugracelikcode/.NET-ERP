@@ -23,6 +23,8 @@
         <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
         <ApplicationVersion>1</ApplicationVersion>
 
+		<WindowsPackageType Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">None</WindowsPackageType>
+
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
@@ -57,6 +59,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Remove="Components\Layouts\DevGridLayout.razor" />
+      <Content Remove="Components\Layouts\DevPopupListPageLayout.razor" />
       <Content Remove="wwwroot\login\font\Flaticon.svg" />
       <Content Remove="wwwroot\login\font\Flaticon.woff2" />
       <Content Remove="wwwroot\login\font\_flaticon.scss" />
@@ -91,6 +95,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Include="Components\Layouts\DevGridLayout.razor" />
+      <None Include="Components\Layouts\DevPopupListPageLayout.razor" />
       <None Include="wwwroot\login\font\Flaticon.svg" />
       <None Include="wwwroot\login\font\Flaticon.woff2" />
       <None Include="wwwroot\login\font\_flaticon.scss" />
@@ -139,10 +145,12 @@
 		<PackageReference Include="Syncfusion.Blazor.Spinner" Version="20.3.0.59" />
 		<PackageReference Include="Syncfusion.Blazor.Themes" Version="20.3.0.59" />
 		<PackageReference Include="Syncfusion.Blazor.PdfViewerServer.Windows" Version="20.3.0.59" />
+		<PackageReference Include="Syncfusion.Blazor.Cards" Version="20.3.0.59" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
+      <ProjectReference Include="..\TSI.QueryBuilder\TSI.QueryBuilder.csproj" />
       <ProjectReference Include="..\TsiErp.Business\TsiErp.Business.csproj" />
       <ProjectReference Include="..\TsiErp.Entities\TsiErp.Entities.csproj" />
       <ProjectReference Include="..\TsiErp.Localizations\TsiErp.Localizations.csproj" />

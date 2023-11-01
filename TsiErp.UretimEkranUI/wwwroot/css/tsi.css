@@ -634,6 +634,7 @@
 
 .GridZebra table tbody tr:nth-child(n) {
     text-align: center;
+    height: 60px !important;
 }
 
 table {
