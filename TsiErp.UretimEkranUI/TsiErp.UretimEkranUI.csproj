@@ -42,7 +42,6 @@
 
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
         <!-- Splash Screen -->
         <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -93,6 +92,9 @@
       <Content Remove="wwwroot\login\webfonts\fa-regular-400.woff2" />
       <Content Remove="wwwroot\login\webfonts\fa-solid-900.woff2" />
     </ItemGroup>
+
+
+
 
     <ItemGroup>
       <None Include="Components\Layouts\DevGridLayout.razor" />
@@ -158,6 +160,10 @@
 
     <ItemGroup>
       <Folder Include="Properties\PublishProfiles\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg"/>
     </ItemGroup>
 
 </Project>
