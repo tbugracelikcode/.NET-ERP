@@ -188,6 +188,42 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string FirstProductApprovalLineContextAdd {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string FirstProductApprovalLineContextChange {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string FirstProductApprovalLineContextDelete {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string FirstProductApprovalLineContextRefresh {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
@@ -265,6 +301,15 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         public static string ValidatorCodeMaxLenght {
             get {
                 return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen iş emri seçin..
+        /// </summary>
+        public static string ValidatorWorkOrderID {
+            get {
+                return ResourceManager.GetString("ValidatorWorkOrderID", resourceCulture);
             }
         }
     }

@@ -412,6 +412,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İlk Ürün Onayları.
+        /// </summary>
+        public static string FirstProductApprovalChildMenu {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Forecast Kayıtları.
         /// </summary>
         public static string ForecastsChildMenu {

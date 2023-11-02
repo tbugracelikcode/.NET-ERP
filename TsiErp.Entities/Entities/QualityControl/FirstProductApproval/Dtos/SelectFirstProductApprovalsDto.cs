@@ -63,6 +63,6 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos
         public string OperationQualityPlanDocumentNumber { get; set; }
 
         [NoDatabaseAction]
-        List<SelectFirstProductApprovalLinesDto> SelectFirstProductApprovalLines { get; set; }
+        public List<SelectFirstProductApprovalLinesDto> SelectFirstProductApprovalLines { get; set; }
     }
 }

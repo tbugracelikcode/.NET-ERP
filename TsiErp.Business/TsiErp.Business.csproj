@@ -33,9 +33,4 @@
     <ProjectReference Include="..\TsiErp.Localizations\TsiErp.Localizations.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\QualityControl\FirstProductApproval\Validations\" />
-    <Folder Include="Entities\QualityControl\FirstProductApproval\Services\" />
-  </ItemGroup>
-
 </Project>

@@ -234,6 +234,9 @@
   <data name="FinanceManagementParentMenu" xml:space="preserve">
     <value>Finance Management</value>
   </data>
+  <data name="FirstProductApprovalChildMenu" xml:space="preserve">
+    <value>First Product Approvals</value>
+  </data>
   <data name="ForecastsChildMenu" xml:space="preserve">
     <value>Forecasts</value>
   </data>

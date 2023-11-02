@@ -159,6 +159,18 @@
   <data name="FirstProductApprovalContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="FirstProductApprovalLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="FirstProductApprovalLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="FirstProductApprovalLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="FirstProductApprovalLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
@@ -185,5 +197,8 @@
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
     <value>First product approval code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorWorkOrderID" xml:space="preserve">
+    <value>Please select a work order.</value>
   </data>
 </root>

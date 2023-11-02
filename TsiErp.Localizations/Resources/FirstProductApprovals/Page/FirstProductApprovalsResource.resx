@@ -159,6 +159,18 @@
   <data name="FirstProductApprovalContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="FirstProductApprovalLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="FirstProductApprovalLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="FirstProductApprovalLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="FirstProductApprovalLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
@@ -185,5 +197,8 @@
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
     <value>İlk ürün onay kodu 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorWorkOrderID" xml:space="preserve">
+    <value>Lütfen iş emri seçin.</value>
   </data>
 </root>

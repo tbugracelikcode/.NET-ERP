@@ -42,6 +42,6 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos
         public Guid? OperationQualityPlanID { get; set; }
 
         [NoDatabaseAction]
-        List<SelectFirstProductApprovalLinesDto> SelectFirstProductApprovalLines { get; set; }
+        public List<SelectFirstProductApprovalLinesDto> SelectFirstProductApprovalLines { get; set; }
     }
 }
