@@ -58,8 +58,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Remove="Components\Layouts\DevGridLayout.razor" />
-      <Content Remove="Components\Layouts\DevPopupListPageLayout.razor" />
       <Content Remove="wwwroot\login\font\Flaticon.svg" />
       <Content Remove="wwwroot\login\font\Flaticon.woff2" />
       <Content Remove="wwwroot\login\font\_flaticon.scss" />
@@ -97,8 +95,6 @@
 
 
     <ItemGroup>
-      <None Include="Components\Layouts\DevGridLayout.razor" />
-      <None Include="Components\Layouts\DevPopupListPageLayout.razor" />
       <None Include="wwwroot\login\font\Flaticon.svg" />
       <None Include="wwwroot\login\font\Flaticon.woff2" />
       <None Include="wwwroot\login\font\_flaticon.scss" />
@@ -134,8 +130,8 @@
 
     <ItemGroup>
 		<PackageReference Include="Blazored.Modal" Version="7.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="DevExpress.Blazor" Version="21.1.9" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Syncfusion.Blazor.Grid" Version="20.3.0.59" />
 		<PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="20.3.0.59" />
 		<PackageReference Include="Syncfusion.Blazor.Inputs" Version="20.3.0.59" />
@@ -163,7 +159,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg"/>
+      <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" />
     </ItemGroup>
 
 </Project>

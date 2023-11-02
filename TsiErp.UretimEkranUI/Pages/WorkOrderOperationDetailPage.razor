@@ -1,0 +1,30 @@
+﻿@page "/work-order-detail/{WorkOrderId:guid}"
+
+@inject IWorkOrdersAppService WorkOrdersAppService
+
+<TsiErp.UretimEkranUI.Components.Layouts.DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+    <GridLayoutItems>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIListPageTitleCard">
+                    <CardContent>
+                        <WorkOrderDetailBreadCrumb WorkOrderNo=@DataSource.WorkOrderNo ProductName=@DataSource.ProductName PlannedAmount=@DataSource.PlannedQuantity />
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIGridCards">
+                    <CardContent>
+
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </GridLayoutItems>
+</TsiErp.UretimEkranUI.Components.Layouts.DevGridLayout>

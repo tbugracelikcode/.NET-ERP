@@ -50,27 +50,27 @@
 
 @code {
 
-    [Parameter] 
+    [Parameter]
     public string RowSpacing { get; set; } = "6px";
 
-    [Parameter] 
+    [Parameter]
     public string ColumnSpacing { get; set; } = "6px";
 
-    [Parameter] 
+    [Parameter]
     public int RowCount { get; set; }
 
-    [Parameter] 
+    [Parameter]
     public string[] RowHeights { get; set; }
 
-    [Parameter] 
+    [Parameter]
     public string DefaultRowHeights { get; set; } = "28";
 
-    [Parameter] 
+    [Parameter]
     public int ColumnCount { get; set; }
 
-    [Parameter] 
+    [Parameter]
     public string[] ColumnWidths { get; set; }
 
-    [Parameter,EditorRequired] 
+    [Parameter, EditorRequired]
     public RenderFragment GridLayoutItems { get; set; }
 }

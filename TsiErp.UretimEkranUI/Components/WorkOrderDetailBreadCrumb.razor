@@ -1,0 +1,32 @@
+﻿<table width="1000px">
+    <tr>
+        <td width="1000px">
+            <span style="float:left">
+                <label style="font-size:16px">
+
+                    <label style="font-size:16px;color:#B70000;font-weight:bold;">İş Emri No.:</label>
+                    <span class="breadCrumbCurrentPage">@WorkOrderNo&nbsp;&nbsp;&nbsp;</span>
+
+                    <label style="font-size:16px;color:#B70000;font-weight:bold;">Stok Kodu:</label>
+                    <span class="breadCrumbCurrentPage">@ProductName&nbsp;&nbsp;&nbsp;</span>
+
+                    <label style="font-size:16px;color:#B70000;font-weight:bold;">Planlanan Miktar:</label>
+                    <span class="breadCrumbCurrentPage">@string.Format("{0:0}",PlannedAmount)&nbsp;&nbsp;&nbsp;</span>
+
+                </label>
+            </span>
+        </td>
+
+    </tr>
+</table>
+
+<style>
+    .breadCrumbCurrentPage {
+        color: black;
+        font-weight: bold;
+    }
+
+        .breadCrumbCurrentPage:hover {
+            color: #B70000;
+        }
+</style>

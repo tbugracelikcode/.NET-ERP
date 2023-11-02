@@ -4,6 +4,8 @@
 
 @inject IWorkOrdersAppService WorkOrdersAppService
 
+@inject NavigationManager NavigationManager
+
 
 @if (!base.IsLoaded)
 {
@@ -11,7 +13,7 @@
 }
 else
 {
-    <TsiErp.UretimEkranUI.Components.Layouts.DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
         <GridLayoutItems>
             <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
                 <Template>
@@ -32,7 +34,7 @@ else
 
                                 <GridGroupSettings ShowGroupedColumn="false"></GridGroupSettings>
 
-                                <GridEvents  OnToolbarClick="@ToolbarClickHandler" TValue="ListWorkOrdersDto"></GridEvents>
+                                <GridEvents OnRecordDoubleClick="@WorkOrderDoubleClickHandler" OnToolbarClick="@ToolbarClickHandler" TValue="ListWorkOrdersDto"></GridEvents>
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 
@@ -100,6 +102,6 @@ else
                 </Template>
             </DxGridLayoutItem>
         </GridLayoutItems>
-    </TsiErp.UretimEkranUI.Components.Layouts.DevGridLayout>
+    </DevGridLayout>
 
 }
