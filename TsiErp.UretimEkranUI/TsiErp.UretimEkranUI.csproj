@@ -132,18 +132,19 @@
 		<PackageReference Include="Blazored.Modal" Version="7.0.0" />
 		<PackageReference Include="DevExpress.Blazor" Version="21.1.9" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-		<PackageReference Include="Syncfusion.Blazor.Grid" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Inputs" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Buttons" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Navigations" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.FileManager" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.SplitButtons" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Notifications" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Spinner" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Themes" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.PdfViewerServer.Windows" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Cards" Version="20.3.0.59" />
+        <PackageReference Include="Syncfusion.Blazor.CircularGauge" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Blazor.Grid" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Blazor.Inputs" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Blazor.Buttons" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Blazor.Navigations" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Blazor.FileManager" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Blazor.SplitButtons" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Blazor.Notifications" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Blazor.Spinner" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Blazor.Themes" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Blazor.PdfViewerServer.Windows" Version="23.1.43" />
+		<PackageReference Include="Syncfusion.Blazor.Cards" Version="23.1.43" />
     </ItemGroup>
 
     <ItemGroup>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TsiErp.UretimEkranUI.Components
 {
-    public partial class WorkOrderDetailBreadCrumb
+    public partial class WorkOrderDetailBreadCrumbFirst
     {
         [Parameter, EditorRequired] public string WorkOrderNo { get; set; }
 

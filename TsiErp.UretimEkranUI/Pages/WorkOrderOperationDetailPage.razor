@@ -1,4 +1,7 @@
-﻿@page "/work-order-detail/{WorkOrderId:guid}"
+﻿@layout OperationDetailLayout
+
+@page "/work-order-detail/{WorkOrderId:guid}"
+
 
 @inject IWorkOrdersAppService WorkOrdersAppService
 
@@ -8,7 +11,15 @@
             <Template>
                 <SfCard class="TSIListPageTitleCard">
                     <CardContent>
-                        <WorkOrderDetailBreadCrumb WorkOrderNo=@DataSource.WorkOrderNo ProductName=@DataSource.ProductName PlannedAmount=@DataSource.PlannedQuantity />
+                        <WorkOrderDetailBreadCrumbFirst WorkOrderNo=@DataSource.WorkOrderNo ProductName=@DataSource.ProductName PlannedAmount=@DataSource.PlannedQuantity />
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+
+                <SfCard class="TSIListPageTitleCard">
+                    <CardContent>
+                        <WorkOrderDetailBreadCrumbFirst WorkOrderNo=@DataSource.WorkOrderNo ProductName=@DataSource.ProductName PlannedAmount=@DataSource.PlannedQuantity />
                     </CardContent>
                     <CardFooter>
                     </CardFooter>
@@ -20,6 +31,118 @@
                 <SfCard class="TSIGridCards">
                     <CardContent>
 
+                        <DxGridLayout CssClass="TSIGridLayout">
+
+                            <Rows>
+                                <DxGridLayoutRow Height="60%" />
+                                <DxGridLayoutRow Height="15%" />
+                            </Rows>
+
+                            <Columns>
+                                <DxGridLayoutColumn Width="2%" />
+                                <DxGridLayoutColumn Width="30%" />
+                                <DxGridLayoutColumn Width="2%" />
+                                <DxGridLayoutColumn Width="30%" />
+                                <DxGridLayoutColumn Width="2%" />
+                                <DxGridLayoutColumn Width="30%" />
+                                <DxGridLayoutColumn Width="2%" />
+                            </Columns>
+
+                            <Items>
+                                <DxGridLayoutItem Row="0" Column="1">
+                                    <Template>
+                                        <SfCircularGauge Title="ÜRETİLEN MİKTAR">
+                                            <CircularGaugeAxes>
+                                                <CircularGaugeAxis Minimum="1" Maximum="@((double)DataSource.PlannedQuantity)">
+                                                    <CircularGaugeAxisLineStyle Width="0" />
+                                                    <CircularGaugeAxisLabelStyle>
+                                                        <CircularGaugeAxisLabelFont Size="0px" FontFamily="inherit" />
+                                                    </CircularGaugeAxisLabelStyle>
+                                                    <CircularGaugeAxisMajorTicks Height="0" />
+                                                    <CircularGaugeAxisMinorTicks Height="0" />
+                                                    <CircularGaugeRanges>
+                                                        <CircularGaugeRange Start="1" End="@((double)DataSource.PlannedQuantity)" Radius="90%" StartWidth="30" EndWidth="30" Color="#E0E0E0" />
+                                                    </CircularGaugeRanges>
+                                                    <CircularGaugePointers>
+                                                        <CircularGaugePointer Value="@((double)DataSource.ProducedQuantity)" Type="PointerType.RangeBar" Radius="90%" Color="green" PointerWidth="30">
+                                                            <CircularGaugePointerAnimation Enable="false" />
+                                                            <CircularGaugePointerBorder Width="0" />
+                                                        </CircularGaugePointer>
+                                                    </CircularGaugePointers>
+                                                    <CircularGaugeAnnotations>
+                                                        <CircularGaugeAnnotation Radius="0%" Angle="0" ZIndex="1">
+                                                            <ContentTemplate>
+                                                                <div class="annotationText">@string.Format("{0:0}",DataSource.ProducedQuantity)/@string.Format("{0:0}",DataSource.PlannedQuantity)</div>
+                                                            </ContentTemplate>
+                                                        </CircularGaugeAnnotation>
+                                                    </CircularGaugeAnnotations>
+                                                </CircularGaugeAxis>
+                                            </CircularGaugeAxes>
+                                        </SfCircularGauge>
+                                    </Template>
+                                </DxGridLayoutItem>
+
+                                <DxGridLayoutItem Row="0" Column="3">
+                                    <Template>
+                                        <SfCircularGauge Title="KALİTE">
+                                            <CircularGaugeAxes>
+                                                <CircularGaugeAxis Minimum="0" Maximum="1">
+                                                    <CircularGaugeAxisLineStyle Width="0" />
+                                                    <CircularGaugeAxisLabelStyle>
+                                                        <CircularGaugeAxisLabelFont Size="0px" FontFamily="inherit" />
+                                                    </CircularGaugeAxisLabelStyle>
+                                                    <CircularGaugeAxisMajorTicks Height="0" />
+                                                    <CircularGaugeAxisMinorTicks Height="0" />
+
+                                                    <CircularGaugeRanges>
+                                                        <CircularGaugeRange Start="0" End="1" Radius="90%" StartWidth="30" EndWidth="30" Color="#E0E0E0" />
+                                                    </CircularGaugeRanges>
+
+                                                    <CircularGaugePointers>
+                                                        <CircularGaugePointer Value="@((double)QualityPercent)" Type="PointerType.RangeBar" Radius="90%" Color="green" PointerWidth="30">
+                                                            <CircularGaugePointerAnimation Enable="false" />
+                                                            <CircularGaugePointerBorder Width="0" />
+                                                        </CircularGaugePointer>
+                                                    </CircularGaugePointers>
+
+
+                                                    <CircularGaugeAnnotations>
+                                                        <CircularGaugeAnnotation Radius="0%" Angle="0" ZIndex="1">
+                                                            <ContentTemplate>
+                                                                <div class="annotationText">@string.Format("{0:P0}",QualityPercent)</div>
+                                                            </ContentTemplate>
+                                                        </CircularGaugeAnnotation>
+                                                    </CircularGaugeAnnotations>
+                                                </CircularGaugeAxis>
+                                            </CircularGaugeAxes>
+                                        </SfCircularGauge>
+                                        
+                                    </Template>
+                                </DxGridLayoutItem>
+                                <DxGridLayoutItem Row="1" Column="1">
+                                    <Template>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+
+                                        <SfButton CssClass="TSISaveButton" OnClick="ProducedQuantityAdded"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Üretim</SfButton>
+                                    </Template>
+                                </DxGridLayoutItem>
+
+                                <DxGridLayoutItem Row="1" Column="3">
+                                    <Template>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+
+                                        <SfButton CssClass="TSISaveButton" OnClick="ScrapQuantityAdded"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Hurda</SfButton>
+                                    </Template>
+                                </DxGridLayoutItem>
+
+                            </Items>
+                        </DxGridLayout>
                     </CardContent>
                     <CardFooter>
                     </CardFooter>

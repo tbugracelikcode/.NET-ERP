@@ -73,7 +73,7 @@ namespace TsiErp.UretimEkranUI
 
             builder.Services.AddLocalization();
 
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzA0MDk0QDMyMzAyZTMyMmUzMEVjb29PTkxlM3YvRVZwVTR5U0VCT2toK24vMEJlYmFVeFkwRlYrT1cwMzA9");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NHaF5cWWBCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdgWH5ednRWQ2FZUk1xXUE=");
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
