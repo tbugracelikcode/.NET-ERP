@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.UretimEkranUI.Services;
 using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
 
 namespace TsiErp.UretimEkranUI.Pages
@@ -41,7 +42,8 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 if (res)
                 {
-                    NavigationManager.NavigateTo("/work-order-detail/" + workOrder.Id);
+                    AppService.CurrentWorkOrderId = workOrder.Id;
+                    NavigationManager.NavigateTo("/work-order-detail");
                 }
 
                 await InvokeAsync(StateHasChanged);

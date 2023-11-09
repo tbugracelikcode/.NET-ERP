@@ -1,11 +1,12 @@
 ﻿@layout OperationDetailLayout
 
-@page "/work-order-detail/{WorkOrderId:guid}"
+@page "/work-order-detail"
+@using TsiErp.UretimEkranUI.Services;
 
 
 @inject IWorkOrdersAppService WorkOrdersAppService
 
-<TsiErp.UretimEkranUI.Components.Layouts.DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+<DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
     <GridLayoutItems>
         <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
             <Template>
@@ -49,9 +50,11 @@
                             </Columns>
 
                             <Items>
+
                                 <DxGridLayoutItem Row="0" Column="1">
                                     <Template>
-                                        <SfCircularGauge Title="ÜRETİLEN MİKTAR">
+                                        <SfCircularGauge Title="ÜRETİLEN MİKTAR" CenterY="160" Height="350px">
+                                            <CircularGaugeTitleStyle FontFamily="Segoe UI" FontStyle="normal" FontWeight="bold" Size="16px"></CircularGaugeTitleStyle>
                                             <CircularGaugeAxes>
                                                 <CircularGaugeAxis Minimum="1" Maximum="@((double)DataSource.PlannedQuantity)">
                                                     <CircularGaugeAxisLineStyle Width="0" />
@@ -84,7 +87,8 @@
 
                                 <DxGridLayoutItem Row="0" Column="3">
                                     <Template>
-                                        <SfCircularGauge Title="KALİTE">
+                                        <SfCircularGauge Title="KALİTE" CenterY="160" Height="350px">
+                                            <CircularGaugeTitleStyle FontFamily="Segoe UI" FontStyle="normal" FontWeight="bold" Size="16px"></CircularGaugeTitleStyle>
                                             <CircularGaugeAxes>
                                                 <CircularGaugeAxis Minimum="0" Maximum="1">
                                                     <CircularGaugeAxisLineStyle Width="0" />
@@ -116,9 +120,10 @@
                                                 </CircularGaugeAxis>
                                             </CircularGaugeAxes>
                                         </SfCircularGauge>
-                                        
+
                                     </Template>
                                 </DxGridLayoutItem>
+
                                 <DxGridLayoutItem Row="1" Column="1">
                                     <Template>
                                         <br />
@@ -150,4 +155,57 @@
             </Template>
         </DxGridLayoutItem>
     </GridLayoutItems>
-</TsiErp.UretimEkranUI.Components.Layouts.DevGridLayout>
+</DevGridLayout>
+
+
+@if (AppService.AdjusmentModalVisible)
+{
+    <DxPopup @bind-Visible=AppService.AdjusmentModalVisible
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="Operasyon Ayar Yap"
+             Width="40%"
+             Height="44%"
+             MinWidth="760px"
+             MinHeight="480px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="21%" />
+                    <DxGridLayoutRow Height="0.4%" />
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="0.4%" />
+                    <DxGridLayoutRow Height="25%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="40%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="40%" />
+                    <DxGridLayoutColumn Width="6%" />
+                </Columns>
+
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                           
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+}

@@ -81,5 +81,17 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+        /// <summary>
+        /// Aktiflik
+        /// </summary>
+        public bool IsProductionScreenUser { get; set; }
+        /// <summary>
+        /// EPosta
+        /// </summary>
+        public string ProductionScreenPassword { get; set; }
+        /// <summary>
+        /// Üretim Ekran Ayar Kullanıcısı
+        /// </summary>
+        public bool IsProductionScreenSettingUser { get; set; }
     }
 }

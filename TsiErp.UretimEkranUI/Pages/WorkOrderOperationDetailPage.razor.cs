@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
+using TsiErp.UretimEkranUI.Services;
 
 namespace TsiErp.UretimEkranUI.Pages
 {
     public partial class WorkOrderOperationDetailPage
     {
-        [Parameter] public Guid WorkOrderId { get; set; }
 
         public string ElapsedTime { get; set; } = "0:0:0";
         public string ElapsedTime1 { get; set; } = "0:0:0";
@@ -31,12 +31,12 @@ namespace TsiErp.UretimEkranUI.Pages
         protected override async void OnInitialized()
         {
             await GetWorkOrderDetail();
-            //StartTimer();
+            StartTimer();
         }
 
         private async Task GetWorkOrderDetail()
         {
-            DataSource = (await WorkOrdersAppService.GetAsync(WorkOrderId)).Data;
+            DataSource = (await WorkOrdersAppService.GetAsync(AppService.CurrentWorkOrderId)).Data;
 
             if (DataSource.Id != Guid.Empty)
             {
@@ -51,9 +51,9 @@ namespace TsiErp.UretimEkranUI.Pages
 
             ElapsedTime = currentTime.Subtract(StartTime).Hours + ":" + currentTime.Subtract(StartTime).Minutes + ":" + currentTime.Subtract(StartTime).Seconds;
 
-            ElapsedTime1 = currentTime.Subtract(StartTime).Hours + ":" + currentTime.Subtract(StartTime).Minutes + ":" + currentTime.Subtract(StartTime).Seconds;
+            //ElapsedTime1 = currentTime.Subtract(StartTime).Hours + ":" + currentTime.Subtract(StartTime).Minutes + ":" + currentTime.Subtract(StartTime).Seconds;
 
-            ElapsedTime2 = currentTime.Subtract(StartTime).Hours + ":" + currentTime.Subtract(StartTime).Minutes + ":" + currentTime.Subtract(StartTime).Seconds;
+            //ElapsedTime2 = currentTime.Subtract(StartTime).Hours + ":" + currentTime.Subtract(StartTime).Minutes + ":" + currentTime.Subtract(StartTime).Seconds;
 
             InvokeAsync(StateHasChanged);
         }
@@ -65,14 +65,14 @@ namespace TsiErp.UretimEkranUI.Pages
             _timer.Elapsed += OnTimedEvent;
             _timer.AutoReset = true;
             _timer.Enabled = true;
-            _timer1 = new System.Timers.Timer(1);
-            _timer1.Elapsed += OnTimedEvent;
-            _timer1.AutoReset = true;
-            _timer1.Enabled = true;
-            _timer2 = new System.Timers.Timer(1);
-            _timer2.Elapsed += OnTimedEvent;
-            _timer2.AutoReset = true;
-            _timer2.Enabled = true;
+            //_timer1 = new System.Timers.Timer(1);
+            //_timer1.Elapsed += OnTimedEvent;
+            //_timer1.AutoReset = true;
+            //_timer1.Enabled = true;
+            //_timer2 = new System.Timers.Timer(1);
+            //_timer2.Elapsed += OnTimedEvent;
+            //_timer2.AutoReset = true;
+            //_timer2.Enabled = true;
         }
 
         private async void ProducedQuantityAdded()

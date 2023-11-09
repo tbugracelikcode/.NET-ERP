@@ -7,7 +7,7 @@
 
 
 @inject IEmployeesAppService EmployeesService
-@inject IStringLocalizer<EmployeesResource> L 
+@inject IStringLocalizer<EmployeesResource> L
 @inject IDepartmentsAppService DepartmentsAppService
 @inject IFicheNumbersAppService FicheNumbersAppService
 
@@ -35,12 +35,12 @@
                     <Template>
                         <SfCard class="TSIGridCards">
                             <CardContent>
-                                <SfGrid ID="Grid" @ref="_grid"   AllowPdfExport=true  DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%"
-                                class="GridZebra" ContextMenuItems="@GridContextMenu" Toolbar=@GridToolbarItems>
+                                <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%"
+                                        class="GridZebra" ContextMenuItems="@GridContextMenu" Toolbar=@GridToolbarItems>
                                     <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-                                    
+
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                            <GridEvents   ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListEmployeesDto"></GridEvents>
+                                    <GridEvents ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListEmployeesDto"></GridEvents>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
@@ -51,38 +51,38 @@
                                             <Template>
                                                 @{
                                                     string name = (context as ListEmployeesDto).Name + " " + (context as ListEmployeesDto).Surname;
-                                            }
-                                            @name
-                                        </Template>
+                                                }
+                                                @name
+                                            </Template>
 
-                                    </GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.Email) HeaderText="@L["Email"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.IsActive) HeaderText="@L["IsActive"]" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.Email) HeaderText="@L["Email"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.IsActive) HeaderText="@L["IsActive"]" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                </GridColumns>
-                            </SfGrid>
-                        </CardContent>
-                        <CardFooter>
-                        </CardFooter>
-                    </SfCard>
-                </Template>
-            </DxGridLayoutItem>
-        </GridLayoutItems>
-    </DevGridLayout>
+                                    </GridColumns>
+                                </SfGrid>
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+            </GridLayoutItems>
+        </DevGridLayout>
 
 
         <DxPopup @bind-Visible="base.EditPageVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EditModalTitle"]"
-         Width="40%"
-         Height="69%"
-         MinWidth="680px"
-         MinHeight="750px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
+                 ShowFooter="true"
+                 CloseOnEscape="false"
+                 CloseOnOutsideClick="false"
+                 HeaderText="@L["EditModalTitle"]"
+                 Width="40%"
+                 Height="69%"
+                 MinWidth="680px"
+                 MinHeight="750px"
+                 HeaderCssClass="HeaderTitleCss"
+                 Showing="CrudModalShowing"
+                 Closing="CrudModalClosing">
             <BodyTemplate>
 
                 <DxGridLayout CssClass="TSIGridLayout">
@@ -115,23 +115,23 @@
                         <DxGridLayoutItem Row="1" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" ></SfTextBox>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="1" Column="2">
                             <Template>
                                 <center>
-                                     <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
-                                     <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                                    <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
+                                    <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                                 </center>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="2" Column="1">
-                            <Template>  
+                            <Template>
                                 <label class="TSIModalLabel"><strong>@L["SurnameLabel"] </strong></label>
-                                <SfTextBox  @bind-Value="DataSource.Surname" CssClass="TSITxtBox"></SfTextBox>
+                                <SfTextBox @bind-Value="DataSource.Surname" CssClass="TSITxtBox"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
@@ -173,7 +173,7 @@
                                                             <Template>
                                                                 <br />
                                                                 <label class="TSIModalLabel"><strong>@L["DepartmentLabel"] </strong></label>
-                                                                 <SfTextBox @ref="@DepartmentButtonEdit" Created="@DepartmentOnCreateIcon" @bind-Value="DataSource.Department" ShowClearButton=true ValueChange="DepartmentOnValueChange"></SfTextBox>
+                                                                <SfTextBox @ref="@DepartmentButtonEdit" Created="@DepartmentOnCreateIcon" @bind-Value="DataSource.Department" ShowClearButton=true ValueChange="DepartmentOnValueChange"></SfTextBox>
                                                             </Template>
                                                         </DxGridLayoutItem>
 
@@ -197,43 +197,43 @@
                                                             <Template>
                                                                 <label class="TSIModalLabel"><strong>@L["BloodTypeLabel"] </strong></label><br />
                                                                 <SfDropDownList TItem="SelectEmployeesDto" TValue="BloodTypeEnum" PopupHeight="230px" @bind-Value="@DataSource.BloodType" DataSource="@bloodtypes">
-                                <DropDownListFieldSettings Text="BloodTypeName" Value="BloodType"></DropDownListFieldSettings>
-                            </SfDropDownList>
+                                                                    <DropDownListFieldSettings Text="BloodTypeName" Value="BloodType"></DropDownListFieldSettings>
+                                                                </SfDropDownList>
                                                             </Template>
                                                         </DxGridLayoutItem>
 
                                                         <DxGridLayoutItem Row="1" Column="2">
                                                             <Template>
                                                                 <label class="TSIModalLabel"><strong>@L["CityLabel"] </strong></label><br />
-                                                                <SfTextBox  @bind-Value="DataSource.City" CssClass="TSITxtBox"></SfTextBox>
+                                                                <SfTextBox @bind-Value="DataSource.City" CssClass="TSITxtBox"></SfTextBox>
                                                             </Template>
                                                         </DxGridLayoutItem>
 
                                                         <DxGridLayoutItem Row="1" Column="4">
                                                             <Template>
                                                                 <label class="TSIModalLabel"><strong>@L["DistrictLabel"] </strong></label><br />
-                                                                <SfTextBox  @bind-Value="DataSource.District" CssClass="TSITxtBox"></SfTextBox>
+                                                                <SfTextBox @bind-Value="DataSource.District" CssClass="TSITxtBox"></SfTextBox>
                                                             </Template>
                                                         </DxGridLayoutItem>
 
                                                         <DxGridLayoutItem Row="2" Column="0">
                                                             <Template>
                                                                 <label class="TSIModalLabel"><strong>@L["HomePhoneLabel"] </strong></label><br />
-                                                                     <SfMaskedTextBox CssClass="TSITxtBox" Mask="0(000)-000-0000"  @bind-Value="@DataSource.HomePhone"></SfMaskedTextBox>
+                                                                <SfMaskedTextBox CssClass="TSITxtBox" Mask="0(000)-000-0000" @bind-Value="@DataSource.HomePhone"></SfMaskedTextBox>
                                                             </Template>
                                                         </DxGridLayoutItem>
 
                                                         <DxGridLayoutItem Row="2" Column="2">
                                                             <Template>
                                                                 <label class="TSIModalLabel"><strong>@L["CellPhoneLabel"] </strong></label><br />
-                                                                <SfMaskedTextBox CssClass="TSITxtBox" Mask="0(000)-000-0000"  @bind-Value="@DataSource.CellPhone"></SfMaskedTextBox>
+                                                                <SfMaskedTextBox CssClass="TSITxtBox" Mask="0(000)-000-0000" @bind-Value="@DataSource.CellPhone"></SfMaskedTextBox>
                                                             </Template>
                                                         </DxGridLayoutItem>
 
                                                         <DxGridLayoutItem Row="2" Column="4">
                                                             <Template>
                                                                 <label class="TSIModalLabel"><strong>@L["EmailLabel"] </strong></label><br />
-                                                                <SfTextBox  @bind-Value="DataSource.Email" CssClass="TSITxtBox"></SfTextBox>
+                                                                <SfTextBox @bind-Value="DataSource.Email" CssClass="TSITxtBox"></SfTextBox>
                                                             </Template>
                                                         </DxGridLayoutItem>
 
@@ -241,10 +241,66 @@
                                                             <Template>
 
                                                                 <label class="TSIModalLabel"><strong>@L["AddressLabel"] </strong></label><br />
-                                                                <SfTextBox CssClass="TSIMemoBox100"  @bind-Value="DataSource.Address" Multiline=true></SfTextBox>
+                                                                <SfTextBox CssClass="TSIMemoBox100" @bind-Value="DataSource.Address" Multiline=true></SfTextBox>
                                                             </Template>
                                                         </DxGridLayoutItem>
 
+                                                    </Items>
+                                                </DxGridLayout>
+
+                                            </ContentTemplate>
+                                        </TabItem>
+
+
+                                        <TabItem>
+                                            <ChildContent>
+                                                <TabHeader Text="@L["Tab2Name"]"></TabHeader>
+                                            </ChildContent>
+                                            <ContentTemplate>
+
+                                                <DxGridLayout CssClass="TSIGridLayout">
+                                                    <Rows>
+                                                        <DxGridLayoutRow Height="38%" />
+                                                        <DxGridLayoutRow Height="32%" />
+                                                        <DxGridLayoutRow Height="32%" />
+                                                        <DxGridLayoutRow Height="32%" />
+                                                    </Rows>
+                                                    <Columns>
+                                                        <DxGridLayoutColumn Width="30%" />
+                                                        <DxGridLayoutColumn Width="5%" />
+                                                        <DxGridLayoutColumn Width="30%" />
+                                                        <DxGridLayoutColumn Width="5%" />
+                                                        <DxGridLayoutColumn Width="30%" />
+                                                    </Columns>
+                                                    <Items>
+                                                        <DxGridLayoutItem Row="0" Column="0">
+                                                            <Template>
+                                                                <br />
+                                                                <center>
+                                                                    <label class="TSIModalLabel"><strong>@L["IsProductionScreenUserLabel"] </strong></label><br />
+                                                                    <SfSwitch @bind-Checked="DataSource.IsProductionScreenUser"></SfSwitch>
+                                                                </center>
+                                                            </Template>
+                                                        </DxGridLayoutItem>
+
+                                                        <DxGridLayoutItem Row="0" Column="2">
+                                                            <Template>
+                                                                <br />
+                                                                <label class="TSIModalLabel"><strong>@L["ProductionScreenPasswordLabel"] </strong></label><br />
+                                                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.ProductionScreenPassword"></SfTextBox>
+                                                            </Template>
+                                                        </DxGridLayoutItem>
+
+
+                                                        <DxGridLayoutItem Row="2" Column="0">
+                                                            <Template>
+                                                                <br />
+                                                                <center>
+                                                                    <label class="TSIModalLabel"><strong>@L["IsProductionScreenSettingUser"] </strong></label><br />
+                                                                    <SfSwitch @bind-Checked="DataSource.IsProductionScreenSettingUser"></SfSwitch>
+                                                                </center>
+                                                            </Template>
+                                                        </DxGridLayoutItem>
                                                     </Items>
                                                 </DxGridLayout>
 
@@ -268,56 +324,56 @@
     }
 }
 
- @if (SelectDepartmentPopupVisible)
-    {
-        <DxPopup @bind-Visible="SelectDepartmentPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["DepartmentModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
-            <BodyTemplate>
+@if (SelectDepartmentPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectDepartmentPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["DepartmentModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
 
-                <DevGridLayout ColumnCount="1" RowCount="1">
-                    <GridLayoutItems>
-                       
-                        <DxGridLayoutItem Row="1" Column="1">
-                            <Template>
-                                <SfCard class="TSIWorkStationGroupPopUpCard">
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
 
-                                    <CardContent>
-                                        <SfGrid ID="DepartmentGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@DepartmentList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
-                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIWorkStationGroupPopUpCard">
 
-                                            <GridEvents OnRecordDoubleClick="@DepartmentDoubleClickHandler" TValue="ListDepartmentsDto"></GridEvents>
-                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                            <GridPageSettings PageSizes="true"></GridPageSettings>
-                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
-                                            <GridColumns>
-                                                <GridColumn Field=@nameof(ListDepartmentsDto.Code) HeaderText="@L["DepartmentModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                <GridColumn Field=@nameof(ListDepartmentsDto.Name) HeaderText="@L["DepartmentModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <CardContent>
+                                    <SfGrid ID="DepartmentGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@DepartmentList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                            </GridColumns>
-                                        </SfGrid>
-                                    </CardContent>
-                                    <CardFooter>
-                                    </CardFooter>
-                                </SfCard>
-                            </Template>
-                        </DxGridLayoutItem>
-                    </GridLayoutItems>
-                </DevGridLayout>
+                                        <GridEvents OnRecordDoubleClick="@DepartmentDoubleClickHandler" TValue="ListDepartmentsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListDepartmentsDto.Code) HeaderText="@L["DepartmentModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListDepartmentsDto.Name) HeaderText="@L["DepartmentModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-            </BodyTemplate>
-            <FooterContentTemplate>
-            </FooterContentTemplate>
-        </DxPopup>
-    }
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
 
 

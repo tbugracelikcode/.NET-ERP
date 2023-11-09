@@ -81,5 +81,23 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee
         /// </summary>
         public bool IsActive { get; set; }
 
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Üretim Ekran Kullanıcısı
+        /// </summary>
+        public bool IsProductionScreenUser { get; set; }
+
+        [SqlColumnType(MaxLength = 200, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Üretim Ekran Şifresi
+        /// </summary>
+        public string ProductionScreenPassword { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Üretim Ekran Ayar Kullanıcısı
+        /// </summary>
+        public bool IsProductionScreenSettingUser { get; set; }
+
     }
 }

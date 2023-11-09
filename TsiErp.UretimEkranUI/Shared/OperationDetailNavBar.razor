@@ -1,49 +1,7 @@
-﻿
-<div>
+﻿@using TsiErp.UretimEkranUI.Services;
 
-    <div class="sidebar">
-        <DxTreeView @ref=treeView AllowSelectNodes="true" style="min-height: 90vh;" CssClass=" app-sidebar" NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick">
 
-            <Nodes>
-                <br />
-                <br />
-                <DxTreeViewNode Text="Ayar Yap" NavigateUrl="/" IconCssClass="fa fa-warehouse">
-
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Text="Operasyonu Duraklat" NavigateUrl="#" IconCssClass="fa fa-warehouse">
-
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Text="Hurda Adet Gir" NavigateUrl="#" IconCssClass="fa fa-warehouse">
-
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Text="Teknik Resimler" NavigateUrl="#" IconCssClass="fa fa-warehouse">
-
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Text="Operatör Değiştir" NavigateUrl="#" IconCssClass="fa fa-warehouse">
-
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Text="Vardiya Değiştir" NavigateUrl="#" IconCssClass="fa fa-warehouse">
-
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Text="Operasyonu Bitir" NavigateUrl="#" IconCssClass="fa fa-warehouse">
-
-                </DxTreeViewNode>
-
-                
-
-            </Nodes>
-
-        </DxTreeView>
-    </div>
-
-</div>
-
+@inject NavigationManager NavigationManager;
 
 <style>
     .scroller {
@@ -78,12 +36,50 @@
     }
 </style>
 
+<div>
+
+    <div class="sidebar">
+        <DxTreeView @ref=treeView AllowSelectNodes="true" style="min-height: 90vh;" CssClass=" app-sidebar" NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick">
+
+            <Nodes>
+
+                <DxTreeViewNode Text="Operasyon" IconCssClass="fa fa-warehouse" Expanded=true>
+                    <Nodes>
+                        <DxTreeViewNode @onclick="@OnClick" Text="Ayar Yap" IconCssClass="fa fa-warehouse" />
+                        <DxTreeViewNode Text="Operasyonu Başlat" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
+                        <DxTreeViewNode Text="Operasyonu Duraklat" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
+                        <DxTreeViewNode Text="Hurda Adet Gir" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
+                        <DxTreeViewNode Text="Operasyonu Bitir" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
+                    </Nodes>
+                </DxTreeViewNode>
+
+
+                <DxTreeViewNode Text="Diğer" IconCssClass="fa fa-warehouse" Expanded=true>
+                    <Nodes>
+                        <DxTreeViewNode Text="Teknik Resimler" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
+                        <DxTreeViewNode Text="Operatör Değiştir" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
+                    </Nodes>
+                </DxTreeViewNode>
+
+            </Nodes>
+
+        </DxTreeView>
+    </div>
+
+</div>
+
+
+
+
 @code {
-    private bool collapsevisible = true;
-    private bool StockManagementParentMenuVisible = true;
-    private bool collapseparametersvisible = true;
-    public bool SidebarToggle = true;
-    public bool SidebarToggleFixed = true;
+
 
     DxTreeView treeView;
+
+    async void OnClick()
+    {
+        AppService.AdjusmentModalVisible = true;
+        NavigationManager.NavigateTo("/work-order-detail", false);
+        await InvokeAsync(StateHasChanged);
+    }
 }
