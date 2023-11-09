@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.UretimEkranUI.Models;
 using TsiErp.UretimEkranUI.Services;
 using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
 
@@ -42,7 +43,32 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 if (res)
                 {
-                    AppService.CurrentWorkOrderId = workOrder.Id;
+
+                    OperationDetailDto operationDetail = new OperationDetailDto()
+                    {
+                        EmployeeID = Guid.Empty,
+                        EmployeeName = string.Empty,
+                        OperationAdjustment = new OperationAdjustmentDto(),
+                        PlannedQuantity = workOrder.PlannedQuantity,
+                        ProducedQuantity = workOrder.ProducedQuantity,
+                        ProductCode = workOrder.ProductCode,
+                        ProductID = workOrder.ProductID,
+                        ProductionOrderFicheNo = workOrder.ProductionOrderFicheNo,
+                        ProductionOrderID = workOrder.ProductionOrderID,
+                        ProductName = workOrder.ProductName,
+                        ProductsOperationCode = workOrder.ProductsOperationCode,
+                        ProductsOperationID = workOrder.ProductsOperationID,
+                        ProductsOperationName = workOrder.ProductsOperationName,
+                        StationCode = workOrder.StationCode,
+                        StationID = workOrder.StationID,
+                        StationName = workOrder.StationName,
+                        WorkOrderNo = workOrder.WorkOrderNo,
+                        WorkOrderState = workOrder.WorkOrderState
+
+                    };
+
+                    AppService.CurrentOperation = operationDetail;
+
                     NavigationManager.NavigateTo("/work-order-detail");
                 }
 

@@ -39,13 +39,13 @@
 <div>
 
     <div class="sidebar">
-        <DxTreeView @ref=treeView AllowSelectNodes="true" style="min-height: 90vh;" CssClass=" app-sidebar" NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick">
+        <DxTreeView AllowSelectNodes="true" style="min-height: 90vh;" CssClass=" app-sidebar" NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick">
 
             <Nodes>
 
                 <DxTreeViewNode Text="Operasyon" IconCssClass="fa fa-warehouse" Expanded=true>
                     <Nodes>
-                        <DxTreeViewNode @onclick="@OnClick" Text="Ayar Yap" IconCssClass="fa fa-warehouse" />
+                        <DxTreeViewNode Text="Ayar Yap" NavigateUrl="/operation-adjustment" IconCssClass="fa fa-warehouse" />
                         <DxTreeViewNode Text="Operasyonu Başlat" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
                         <DxTreeViewNode Text="Operasyonu Duraklat" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
                         <DxTreeViewNode Text="Hurda Adet Gir" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
@@ -68,18 +68,3 @@
 
 </div>
 
-
-
-
-@code {
-
-
-    DxTreeView treeView;
-
-    async void OnClick()
-    {
-        AppService.AdjusmentModalVisible = true;
-        NavigationManager.NavigateTo("/work-order-detail", false);
-        await InvokeAsync(StateHasChanged);
-    }
-}

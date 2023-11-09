@@ -1,0 +1,112 @@
+﻿@layout OperationDetailLayout
+
+@page "/operation-adjustment"
+
+
+@inject IEmployeesAppService EmployeesAppService
+
+<div style="height:800px">
+
+    <DxGridLayout CssClass="TSIGridLayout">
+
+        <Rows>
+            <DxGridLayoutRow Height="7%" />
+            <DxGridLayoutRow Height="5%" />
+            <DxGridLayoutRow Height="65%" />
+        </Rows>
+
+        <Columns>
+            <DxGridLayoutColumn Width="0%" />
+            <DxGridLayoutColumn Width="100%" />
+            <DxGridLayoutColumn Width="0%" />
+        </Columns>
+
+        <Items>
+
+            <DxGridLayoutItem Row="0" Column="1">
+                <Template>
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <WorkOrderDetailBreadCrumbFirst WorkOrderNo=@AppService.CurrentOperation.WorkOrderNo ProductName=@AppService.CurrentOperation.ProductName PlannedAmount=@AppService.CurrentOperation.PlannedQuantity />
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <WorkOrderDetailBreadCrumbSecond StationCode=@AppService.CurrentOperation.StationCode OperationName=@AppService.CurrentOperation.ProductsOperationName EmployeeName=@AppService.CurrentOperation.EmployeeName/>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+
+            <DxGridLayoutItem Row="2" Column="1">
+                <Template>
+                    <SfCard class="TSIGridCards">
+                        <CardContent>
+
+                            <DxGridLayout CssClass="TSIGridOperationPageLayout">
+
+                                <Rows>
+                                    <DxGridLayoutRow Height="8%" />
+                                    <DxGridLayoutRow Height="15%" />
+                                    <DxGridLayoutRow Height="25%" />
+                                    <DxGridLayoutRow Height="15%" />
+                                </Rows>
+
+                                <Columns>
+                                    <DxGridLayoutColumn Width="2%" />
+                                    <DxGridLayoutColumn Width="30%" />
+                                    <DxGridLayoutColumn Width="2%" />
+                                    <DxGridLayoutColumn Width="30%" />
+                                    <DxGridLayoutColumn Width="2%" />
+                                    <DxGridLayoutColumn Width="30%" />
+                                    <DxGridLayoutColumn Width="2%" />
+                                </Columns>
+
+                                <Items>
+
+                                    <DxGridLayoutItem Row="0" Column="1" RowSpan="1" ColumnSpan="3">
+                                        <Template>
+                                            <br />
+                                            <label class="TSIOperationPageModalLabel"><strong>Ayar Yapan Kullanıcı </strong></label><br />
+                                            <SfTextBox CssClass="TSILargeButtonEdit" @ref="@EmployeesButtonEdit" Created="@EmployeesOnCreateIcon" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
+
+                                        </Template>
+                                    </DxGridLayoutItem>
+
+                                    <DxGridLayoutItem Row="0" Column="5">
+                                        <Template>
+                                            <br />
+                                            <br />
+                                            <SfButton CssClass="TSIOperationPageButton" Disabled=@StartAdjustmentButtonDisabled><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Ayara Başla</SfButton>
+
+                                        </Template>
+                                    </DxGridLayoutItem>
+
+                                    <DxGridLayoutItem Row="1" Column="1">
+                                        <Template>
+                                        </Template>
+                                    </DxGridLayoutItem>
+
+                                    <DxGridLayoutItem Row="1" Column="3">
+                                        <Template>
+
+                                        </Template>
+                                    </DxGridLayoutItem>
+
+                                </Items>
+                            </DxGridLayout>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+
+        </Items>
+    </DxGridLayout>
+</div>

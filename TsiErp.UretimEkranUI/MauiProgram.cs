@@ -7,6 +7,7 @@ using TsiErp.Business;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.User.Services;
 using TsiErp.Business.Entities.WorkOrder.Services;
+using TsiErp.UretimEkranUI.Services;
 using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
 #if WINDOWS
 using Microsoft.UI;
@@ -84,6 +85,7 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddSyncfusionBlazor();
             builder.Services.AddDevExpressBlazor();
             builder.Services.AddScoped<ModalManager>();
+            builder.Services.AddScoped<AppService>();
             builder.Services.AddScoped<IFicheNumbersAppService, FicheNumbersAppService>();
             builder.Services.AddScoped<IUsersAppService, UsersAppService>();
             builder.Services.AddScoped<IWorkOrdersAppService, WorkOrdersAppService>();

@@ -23,26 +23,14 @@ namespace TsiErp.UretimEkranUI.Pages
 
         DateTime StartTime = DateTime.Now;
 
-        SelectWorkOrdersDto DataSource = new SelectWorkOrdersDto();
 
         public decimal ScrapQuantity { get; set; } = 0;
         public decimal QualityPercent { get; set; } = 0;
 
         protected override async void OnInitialized()
         {
-            await GetWorkOrderDetail();
-            StartTimer();
-        }
-
-        private async Task GetWorkOrderDetail()
-        {
-            DataSource = (await WorkOrdersAppService.GetAsync(AppService.CurrentWorkOrderId)).Data;
-
-            if (DataSource.Id != Guid.Empty)
-            {
                 QualityPercent = 1;
-                DataSource.PlannedQuantity = 50;
-            }
+            StartTimer();
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
@@ -77,20 +65,20 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private async void ProducedQuantityAdded()
         {
-            DataSource.ProducedQuantity = DataSource.ProducedQuantity + 1;
+            AppService.CurrentOperation.ProducedQuantity = AppService.CurrentOperation.ProducedQuantity + 1;
 
-            QualityPercent = 1 - (ScrapQuantity / DataSource.ProducedQuantity);
+            QualityPercent = 1 - (ScrapQuantity / AppService.CurrentOperation.ProducedQuantity);
 
             await InvokeAsync(StateHasChanged);
         }
 
         private async void ScrapQuantityAdded()
         {
-            if (ScrapQuantity <= DataSource.ProducedQuantity)
+            if (ScrapQuantity <= AppService.CurrentOperation.ProducedQuantity)
             {
                 ScrapQuantity = ScrapQuantity + 1;
 
-                QualityPercent = 1 - (ScrapQuantity / DataSource.ProducedQuantity);
+                QualityPercent = 1 - (ScrapQuantity / AppService.CurrentOperation.ProducedQuantity);
 
                 await InvokeAsync(StateHasChanged);
             }

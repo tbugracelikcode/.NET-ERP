@@ -1,10 +1,9 @@
 ﻿@layout OperationDetailLayout
 
 @page "/work-order-detail"
-@using TsiErp.UretimEkranUI.Services;
 
+@inject AppService AppService
 
-@inject IWorkOrdersAppService WorkOrdersAppService
 
 <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
     <GridLayoutItems>
@@ -12,7 +11,7 @@
             <Template>
                 <SfCard class="TSIListPageTitleCard">
                     <CardContent>
-                        <WorkOrderDetailBreadCrumbFirst WorkOrderNo=@DataSource.WorkOrderNo ProductName=@DataSource.ProductName PlannedAmount=@DataSource.PlannedQuantity />
+                        <WorkOrderDetailBreadCrumbFirst WorkOrderNo=@AppService.CurrentOperation.WorkOrderNo ProductName=@AppService.CurrentOperation.ProductName PlannedAmount=@AppService.CurrentOperation.PlannedQuantity />
                     </CardContent>
                     <CardFooter>
                     </CardFooter>
@@ -20,7 +19,7 @@
 
                 <SfCard class="TSIListPageTitleCard">
                     <CardContent>
-                        <WorkOrderDetailBreadCrumbFirst WorkOrderNo=@DataSource.WorkOrderNo ProductName=@DataSource.ProductName PlannedAmount=@DataSource.PlannedQuantity />
+                        <WorkOrderDetailBreadCrumbSecond StationCode=@AppService.CurrentOperation.StationCode OperationName=@AppService.CurrentOperation.ProductsOperationName EmployeeName=@AppService.CurrentOperation.EmployeeName />
                     </CardContent>
                     <CardFooter>
                     </CardFooter>
@@ -56,7 +55,7 @@
                                         <SfCircularGauge Title="ÜRETİLEN MİKTAR" CenterY="160" Height="350px">
                                             <CircularGaugeTitleStyle FontFamily="Segoe UI" FontStyle="normal" FontWeight="bold" Size="16px"></CircularGaugeTitleStyle>
                                             <CircularGaugeAxes>
-                                                <CircularGaugeAxis Minimum="1" Maximum="@((double)DataSource.PlannedQuantity)">
+                                                <CircularGaugeAxis Minimum="1" Maximum="@((double)AppService.CurrentOperation.PlannedQuantity)">
                                                     <CircularGaugeAxisLineStyle Width="0" />
                                                     <CircularGaugeAxisLabelStyle>
                                                         <CircularGaugeAxisLabelFont Size="0px" FontFamily="inherit" />
@@ -64,10 +63,10 @@
                                                     <CircularGaugeAxisMajorTicks Height="0" />
                                                     <CircularGaugeAxisMinorTicks Height="0" />
                                                     <CircularGaugeRanges>
-                                                        <CircularGaugeRange Start="1" End="@((double)DataSource.PlannedQuantity)" Radius="90%" StartWidth="30" EndWidth="30" Color="#E0E0E0" />
+                                                        <CircularGaugeRange Start="1" End="@((double)AppService.CurrentOperation.PlannedQuantity)" Radius="90%" StartWidth="30" EndWidth="30" Color="#E0E0E0" />
                                                     </CircularGaugeRanges>
                                                     <CircularGaugePointers>
-                                                        <CircularGaugePointer Value="@((double)DataSource.ProducedQuantity)" Type="PointerType.RangeBar" Radius="90%" Color="green" PointerWidth="30">
+                                                        <CircularGaugePointer Value="@((double)AppService.CurrentOperation.ProducedQuantity)" Type="PointerType.RangeBar" Radius="90%" Color="green" PointerWidth="30">
                                                             <CircularGaugePointerAnimation Enable="false" />
                                                             <CircularGaugePointerBorder Width="0" />
                                                         </CircularGaugePointer>
@@ -75,7 +74,7 @@
                                                     <CircularGaugeAnnotations>
                                                         <CircularGaugeAnnotation Radius="0%" Angle="0" ZIndex="1">
                                                             <ContentTemplate>
-                                                                <div class="annotationText">@string.Format("{0:0}",DataSource.ProducedQuantity)/@string.Format("{0:0}",DataSource.PlannedQuantity)</div>
+                                                                <div class="annotationText">@string.Format("{0:0}",AppService.CurrentOperation.ProducedQuantity)/@string.Format("{0:0}",AppService.CurrentOperation.PlannedQuantity)</div>
                                                             </ContentTemplate>
                                                         </CircularGaugeAnnotation>
                                                     </CircularGaugeAnnotations>
@@ -156,56 +155,3 @@
         </DxGridLayoutItem>
     </GridLayoutItems>
 </DevGridLayout>
-
-
-@if (AppService.AdjusmentModalVisible)
-{
-    <DxPopup @bind-Visible=AppService.AdjusmentModalVisible
-             ShowFooter="true"
-             CloseOnEscape="false"
-             CloseOnOutsideClick="false"
-             HeaderText="Operasyon Ayar Yap"
-             Width="40%"
-             Height="44%"
-             MinWidth="760px"
-             MinHeight="480px"
-             HeaderCssClass="HeaderTitleCss">
-
-        <BodyTemplate>
-            <DxGridLayout CssClass="TSIGridLayout">
-
-                <Rows>
-                    <DxGridLayoutRow Height="21%" />
-                    <DxGridLayoutRow Height="0.4%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="0.4%" />
-                    <DxGridLayoutRow Height="25%" />
-                </Rows>
-
-                <Columns>
-                    <DxGridLayoutColumn Width="6%" />
-                    <DxGridLayoutColumn Width="40%" />
-                    <DxGridLayoutColumn Width="6%" />
-                    <DxGridLayoutColumn Width="40%" />
-                    <DxGridLayoutColumn Width="6%" />
-                </Columns>
-
-                <Items>
-                    <DxGridLayoutItem Row="0" Column="1">
-                        <Template>
-                           
-                        </Template>
-                    </DxGridLayoutItem>
-
-
-                </Items>
-            </DxGridLayout>
-
-
-        </BodyTemplate>
-        <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
-        </FooterContentTemplate>
-    </DxPopup>
-}
