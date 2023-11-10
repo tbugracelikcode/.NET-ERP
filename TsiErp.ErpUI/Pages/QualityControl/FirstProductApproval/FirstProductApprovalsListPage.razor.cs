@@ -12,6 +12,9 @@ using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
+using Microsoft.SqlServer.Server;
+using System.DirectoryServices.ActiveDirectory;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 {
@@ -23,7 +26,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
         ModalManager ModalManager { get; set; }
 
         SelectFirstProductApprovalLinesDto LineDataSource;
+
         SelectOperationalQualityPlansDto OperationalQualityPlanDataSource;
+
+        SelectOperationPicturesDto OperationPictureDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
@@ -32,6 +38,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
         List<SelectOperationalQualityPlanLinesDto> OperationalQualityPlanLineList = new List<SelectOperationalQualityPlanLinesDto>();
 
         private bool LineCrudPopup = false;
+        private bool ImagePreviewPopup = false;
+        public string previewImagePopupTitle = string.Empty;
+        public string fileExtension = string.Empty;
+        public string fileURL = string.Empty;
+        bool image = false;
+        bool pdf = false;
 
         protected override async void OnInitialized()
         {
@@ -249,9 +261,53 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
         }
 
-        public void ShowOperationPictureButtonClicked()
+        public async void ShowOperationPictureButtonClicked()
         {
+            if(OperationPictureDataSource != null)
+            {
+                if (OperationPictureDataSource.Id == Guid.Empty)
+                {
+                    await ModalManager.MessagePopupAsync(L["UIMessageOprPictureTitle"], L["UIMessageOprPictureMessage"]);
+                }
+                else
+                {
+                    string[] _SplitFileName = OperationPictureDataSource.UploadedFileName.Split('.');
+                    fileExtension = _SplitFileName[1];
 
+                    previewImagePopupTitle = OperationPictureDataSource.UploadedFileName;
+
+                    if (fileExtension == "jpg" || fileExtension == "jpeg" || fileExtension == "png")
+                    {
+                        fileURL = OperationPictureDataSource.DrawingFilePath + OperationPictureDataSource.UploadedFileName;
+                        image = true;
+                        pdf = false;
+                    }
+                    else if (fileExtension == "pdf")
+                    {
+                        //fileURL = OperationPictureDataSource.DrawingDomain + OperationPictureDataSource.DrawingFilePath.Replace(@"\", "/") + OperationPictureDataSource.UploadedFileName;
+                        fileURL = "wwwroot/" + OperationPictureDataSource.DrawingFilePath.Replace(@"\", "/") + OperationPictureDataSource.UploadedFileName;
+                        pdf = true;
+                        image = false;
+                    }
+
+                    ImagePreviewPopup = true;
+                }
+            }
+            else
+            {
+                await ModalManager.MessagePopupAsync(L["UIMessageOprPictureTitle"], L["UIMessageOprPictureNullMessage"]);
+            }
+           
+        }
+
+        public void HidePreviewPopup()
+        {
+            ImagePreviewPopup = false;
+            pdf = false;
+            image = false;
+            previewImagePopupTitle = string.Empty;
+            fileExtension = string.Empty;
+            fileURL = string.Empty;
         }
 
         #endregion
@@ -308,7 +364,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                 DataSource.OperationQualityPlanID = (await OperationalQualityPlansAppService.GetListAsync(new ListOperationalQualityPlansParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID && t.ProductsOperationID == selectedWorkOrder.ProductsOperationID).Select(t => t.Id).FirstOrDefault();
 
                 OperationalQualityPlanDataSource = (await OperationalQualityPlansAppService.GetAsync(DataSource.OperationQualityPlanID.GetValueOrDefault())).Data;
-                OperationalQualityPlanLineList = OperationalQualityPlanDataSource.SelectOperationalQualityPlanLines.Where(t=>t.PeriodicControlMeasure == true).ToList();
+                OperationalQualityPlanLineList = OperationalQualityPlanDataSource.SelectOperationalQualityPlanLines.Where(t => t.PeriodicControlMeasure == true).ToList();
+                OperationPictureDataSource = OperationalQualityPlanDataSource.SelectOperationPictures.LastOrDefault();
 
                 foreach (var qualityplanline in OperationalQualityPlanLineList)
                 {
@@ -323,7 +380,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                         MeasurementValue = string.Empty,
                     };
 
-                    GridLineList.Add(firstProductApprovalLineModel);    
+                    GridLineList.Add(firstProductApprovalLineModel);
 
                 }
                 await _LineGrid.Refresh();
@@ -376,7 +433,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
             }
         }
         #endregion
-
 
         #region Kod ButtonEdit
 

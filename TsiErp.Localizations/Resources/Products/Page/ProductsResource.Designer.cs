@@ -1906,6 +1906,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Birim Ağırlık:.
+        /// </summary>
+        public static string UnitWeightLabel {
+            get {
+                return ResourceManager.GetString("UnitWeightLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
         /// </summary>
         public static string UpdateControlManager {

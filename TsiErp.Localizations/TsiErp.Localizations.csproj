@@ -211,6 +211,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>OperationUnsuitabilityReportsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\PackageFiches\Page\PackageFichesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PackageFichesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\PalletRecords\Page\PalletRecordsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PalletRecordsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\PaymentPlans\Page\PaymentPlansResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -648,6 +658,14 @@
     <EmbeddedResource Update="Resources\OperationUnsuitabilityReports\Page\OperationUnsuitabilityReportsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationUnsuitabilityReportsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PackageFiches\Page\PackageFichesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PackageFichesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PalletRecords\Page\PalletRecordsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PalletRecordsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\PaymentPlans\Page\PaymentPlansResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

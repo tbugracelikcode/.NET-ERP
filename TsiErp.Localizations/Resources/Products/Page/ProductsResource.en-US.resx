@@ -732,6 +732,9 @@
   <data name="UnitSetModalTitle" xml:space="preserve">
     <value>Unit Sets</value>
   </data>
+  <data name="UnitWeightLabel" xml:space="preserve">
+    <value>Unit Weight:</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>

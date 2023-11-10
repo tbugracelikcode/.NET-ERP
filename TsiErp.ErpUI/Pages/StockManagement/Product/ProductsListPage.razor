@@ -354,6 +354,13 @@ else
                                                         </Template>
                                                     </DxGridLayoutItem>
 
+                                                     <DxGridLayoutItem Row="4" Column="2">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["UnitWeightLabel"] </strong></label><br />
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.UnitWeight" ></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
                                                 </Items>
                                             </DxGridLayout>
                                         </ContentTemplate>

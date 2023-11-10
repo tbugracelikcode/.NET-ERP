@@ -120,8 +120,17 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>FIRST PRODUCT APPROVAL CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>First Product Approval Code:</value>
+  </data>
+  <data name="ControlDateLabel" xml:space="preserve">
+    <value>Control Date:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -135,8 +144,29 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="DescriptionLineLabel" xml:space="preserve">
+    <value>Description:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>First Product Approval</value>
+  </data>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>EMPLOYEE NAME</value>
+  </data>
+  <data name="EmployeeNameLabel" xml:space="preserve">
+    <value>Employee:</value>
+  </data>
+  <data name="EmployeePopupGridCode" xml:space="preserve">
+    <value>EMPLOYEE CODE</value>
+  </data>
+  <data name="EmployeePopupGridName" xml:space="preserve">
+    <value>EMPLOYEE NAME</value>
+  </data>
+  <data name="EmployeePopupTitle" xml:space="preserve">
+    <value>Employees</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -171,11 +201,38 @@
   <data name="FirstProductApprovalLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="LineGridBottomTolerance" xml:space="preserve">
+    <value>(-) TOLERANCE</value>
+  </data>
+  <data name="LineGridDescription_" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
+  <data name="LineGridIdealMeasure" xml:space="preserve">
+    <value>IDEAL MEASUREMENT</value>
+  </data>
+  <data name="LineGridIsCriticalMeasurement" xml:space="preserve">
+    <value>CRITICAL MEASUREMENT</value>
+  </data>
+  <data name="LineGridLineNr" xml:space="preserve">
+    <value>LINE NO</value>
+  </data>
+  <data name="LineGridMeasurementValue" xml:space="preserve">
+    <value>MEASUREMENT VALUE</value>
+  </data>
+  <data name="LineGridUpperTolerance" xml:space="preserve">
+    <value>(+) TOLERANCE</value>
+  </data>
+  <data name="LineModalTitle" xml:space="preserve">
+    <value>First Product Approval Lines</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
+  </data>
+  <data name="MeasurementValueLineLabel" xml:space="preserve">
+    <value>Measurement Value:</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
@@ -183,8 +240,38 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="OperationPictureLabel" xml:space="preserve">
+    <value>Operation Picture:</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="ShowButton" xml:space="preserve">
+    <value>Show Operation Picture</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>First Product Approval</value>
+  </data>
+  <data name="UILineDeleteConfirmation" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UILineDeleteContextAttentionTitle" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="UIMessageOprPictureMessage" xml:space="preserve">
+    <value>There is no operation picture of the operation quality plan related to the operation of the selected work order.</value>
+  </data>
+  <data name="UIMessageOprPictureNullMessage" xml:space="preserve">
+    <value>The operation picture cannot be viewed without selecting the work order.</value>
+  </data>
+  <data name="UIMessageOprPictureTitle" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control &gt; Transactions</value>
@@ -200,5 +287,20 @@
   </data>
   <data name="ValidatorWorkOrderID" xml:space="preserve">
     <value>Please select a work order.</value>
+  </data>
+  <data name="WorkOrderNo" xml:space="preserve">
+    <value>WORK ORDER</value>
+  </data>
+  <data name="WorkOrderNoLabel" xml:space="preserve">
+    <value>Work Order:</value>
+  </data>
+  <data name="WorkOrderPopupGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="WorkOrderPopupGridWorkOrderNo" xml:space="preserve">
+    <value>WORK ORDER NO</value>
+  </data>
+  <data name="WorkOrderPopupTitle" xml:space="preserve">
+    <value>Work Orders</value>
   </data>
 </root>

@@ -117,6 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AmountAggregate" xml:space="preserve">
+    <value>Total Amount:</value>
+  </data>
+  <data name="AmountEntryAmount_Label" xml:space="preserve">
+    <value>Amount:</value>
+  </data>
+  <data name="AmountEntryDate_Label" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="AmountEntryLineCrudPopupModalTitle" xml:space="preserve">
+    <value>Incoming Amount Entry Procedures</value>
+  </data>
+  <data name="AmountEntryLineGridAmount_" xml:space="preserve">
+    <value>AMOUNT</value>
+  </data>
+  <data name="AmountEntryLineGridDate_" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="AmountEntryLineGridDescription_" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
+  <data name="AmountEntryLinePopupModalTitle" xml:space="preserve">
+    <value>Incoming Amount Entries</value>
+  </data>
   <data name="Amount_" xml:space="preserve">
     <value>AMOUNT</value>
   </data>
@@ -141,8 +165,23 @@
   <data name="ContractQualityPlanModalTitle" xml:space="preserve">
     <value>Contract Quality Plans</value>
   </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="ContractTrackingFicheContextAdd" xml:space="preserve">
     <value>Add</value>
+  </data>
+  <data name="ContractTrackingFicheContextAmountEntry" xml:space="preserve">
+    <value>Incoming Amount Entry</value>
   </data>
   <data name="ContractTrackingFicheContextChange" xml:space="preserve">
     <value>Change</value>
@@ -273,6 +312,9 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="OccuredAmountAggregate" xml:space="preserve">
+    <value>Total Occured Amount:</value>
+  </data>
   <data name="OccuredAmount_" xml:space="preserve">
     <value>OCCURED AMOUNT</value>
   </data>
@@ -284,6 +326,9 @@
   </data>
   <data name="ProducedQuantity" xml:space="preserve">
     <value>PRODUCED QUANTITY</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
   </data>
   <data name="ProductionOrderModalTitle" xml:space="preserve">
     <value>Production Orders</value>

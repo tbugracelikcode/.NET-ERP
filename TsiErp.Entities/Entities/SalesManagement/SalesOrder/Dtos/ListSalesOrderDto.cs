@@ -57,6 +57,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// </summary>
         public string WarehouseCode { get; set; }
         /// <summary>
+        /// Cari Hesap Kartı ID
+        /// </summary>
+        public Guid? CurrentAccountCardID { get; set; }
+        /// <summary>
         /// Cari Hesap Kartı Kodu
         /// </summary>
         public string CurrentAccountCardCode { get; set; }

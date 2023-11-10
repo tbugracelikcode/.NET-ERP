@@ -431,7 +431,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     )
                      .Join<CurrentAccountCards>
                     (
-                        ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
+                        ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode,CurrentAccountCardID = ca.Id },
                         nameof(SalesOrders.CurrentAccountCardID),
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left)

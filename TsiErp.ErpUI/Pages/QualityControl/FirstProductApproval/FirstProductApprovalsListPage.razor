@@ -241,6 +241,40 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
+    <DxPopup @bind-Visible="ImagePreviewPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             ShowCloseButton=false
+             CloseOnOutsideClick="false"
+             HeaderText="@previewImagePopupTitle"
+             MinWidth="1214px"
+             MinHeight="860px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <SfCard class="TSIGridCards">
+                <CardContent>
+                    @if (image)
+                    {
+                        <img style="width:100%; height:800px; margin-left:0% !important" src="@fileURL" />
+
+                    }
+                    else
+                    {
+                        <SfPdfViewerServer DocumentPath="@fileURL" Height="800px" Width="1210px"></SfPdfViewerServer>
+                    }
+                </CardContent>
+                <CardFooter>
+                </CardFooter>
+            </SfCard>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HidePreviewPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+
+        </FooterContentTemplate>
+    </DxPopup>
+
 }
 
 
@@ -275,10 +309,8 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="@L["WorkOrderPopupGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="@L["WorkOrderPopupGridWorkOrderNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListWorkOrdersDto.ProductCode) HeaderText="@L["WorkOrderPopupGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListWorkOrdersDto.ProductName) HeaderText="@L["WorkOrderPopupGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
 
                                     </SfGrid>

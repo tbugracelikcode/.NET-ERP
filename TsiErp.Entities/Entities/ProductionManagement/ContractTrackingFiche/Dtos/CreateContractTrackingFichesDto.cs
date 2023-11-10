@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TSI.QueryBuilder.MappingAttributes;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine.Dtos;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dtos
@@ -28,6 +29,14 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dt
         /// </summary>
         public Guid? CurrentAccountCardID { get; set; }
         /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
+        /// <summary>
+        /// Kalite Planı Cari Hesap ID
+        /// </summary>
+        public Guid QualityPlanCurrentAccountCardID { get; set; }
+        /// <summary>
         /// İş Tanımı ID
         /// </summary>
         public Guid? ContractQualityPlanID { get; set; }
@@ -46,5 +55,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dt
 
         [NoDatabaseAction]
         public List<SelectContractTrackingFicheLinesDto> SelectContractTrackingFicheLines { get; set; }
+        [NoDatabaseAction]
+        public List<SelectContractTrackingFicheAmountEntryLinesDto> SelectContractTrackingFicheAmountEntryLines { get; set; }
     }
 }

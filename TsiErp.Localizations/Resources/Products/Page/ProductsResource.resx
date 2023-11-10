@@ -732,6 +732,9 @@
   <data name="UnitSetModalTitle" xml:space="preserve">
     <value>Birim Setleri</value>
   </data>
+  <data name="UnitWeightLabel" xml:space="preserve">
+    <value>Birim Ağırlık:</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>

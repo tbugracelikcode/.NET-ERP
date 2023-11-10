@@ -32,9 +32,19 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche
         public Guid CurrentAccountCardID { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
+        /// Kalite Planı Cari Hesap ID
+        /// </summary>
+        public Guid QualityPlanCurrentAccountCardID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
         /// İş Tanımı ID
         /// </summary>
         public Guid ContractQualityPlanID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid ProductID { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
         /// <summary>
         /// Adet

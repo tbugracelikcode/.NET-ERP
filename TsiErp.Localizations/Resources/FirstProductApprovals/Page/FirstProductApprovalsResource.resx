@@ -120,8 +120,17 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>İLK ÜRÜN ONAY KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>İlk Ürün Onay Kodu:</value>
+  </data>
+  <data name="ControlDateLabel" xml:space="preserve">
+    <value>Kontrol Tarihi:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -135,8 +144,29 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="DescriptionLineLabel" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>İlk Ürün Onayları</value>
+  </data>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>ÇALIŞAN ADI</value>
+  </data>
+  <data name="EmployeeNameLabel" xml:space="preserve">
+    <value>Çalışan:</value>
+  </data>
+  <data name="EmployeePopupGridCode" xml:space="preserve">
+    <value>PERSONEL KODU</value>
+  </data>
+  <data name="EmployeePopupGridName" xml:space="preserve">
+    <value>PERSONEL ADI</value>
+  </data>
+  <data name="EmployeePopupTitle" xml:space="preserve">
+    <value>Personeller</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
@@ -171,11 +201,38 @@
   <data name="FirstProductApprovalLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="LineGridBottomTolerance" xml:space="preserve">
+    <value>(-) TOLERANS</value>
+  </data>
+  <data name="LineGridDescription_" xml:space="preserve">
+    <value>AÇIKLAMA</value>
+  </data>
+  <data name="LineGridIdealMeasure" xml:space="preserve">
+    <value>OLMASI GEREKEN ÖLÇÜ</value>
+  </data>
+  <data name="LineGridIsCriticalMeasurement" xml:space="preserve">
+    <value>KRİTİK ÖLÇÜ</value>
+  </data>
+  <data name="LineGridLineNr" xml:space="preserve">
+    <value>SATIR NO</value>
+  </data>
+  <data name="LineGridMeasurementValue" xml:space="preserve">
+    <value>ÖLÇÜM DEĞERİ</value>
+  </data>
+  <data name="LineGridUpperTolerance" xml:space="preserve">
+    <value>(+) TOLERANS</value>
+  </data>
+  <data name="LineModalTitle" xml:space="preserve">
+    <value>İlk Ürün Onay Satırları</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="MeasurementValueLineLabel" xml:space="preserve">
+    <value>Ölçüm Değeri:</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
@@ -183,8 +240,38 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="OperationPictureLabel" xml:space="preserve">
+    <value>Operasyon Resmi:</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>ÜRÜN KODU</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Ürün Kodu:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="ShowButton" xml:space="preserve">
+    <value>Operasyon Resmini Göster</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>İlk Ürün Onayları</value>
+  </data>
+  <data name="UILineDeleteConfirmation" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UILineDeleteContextAttentionTitle" xml:space="preserve">
+    <value>Onay</value>
+  </data>
+  <data name="UIMessageOprPictureMessage" xml:space="preserve">
+    <value>Seçilen iş emrinin operasyonuna bağlı operasyon kalite planının operasyon resmi bulunmamaktadır.</value>
+  </data>
+  <data name="UIMessageOprPictureNullMessage" xml:space="preserve">
+    <value>İş emri seçilmeden operasyon resmi görüntülenemez.</value>
+  </data>
+  <data name="UIMessageOprPictureTitle" xml:space="preserve">
+    <value>Bilgi</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Hareketler</value>
@@ -200,5 +287,20 @@
   </data>
   <data name="ValidatorWorkOrderID" xml:space="preserve">
     <value>Lütfen iş emri seçin.</value>
+  </data>
+  <data name="WorkOrderNo" xml:space="preserve">
+    <value>İŞ EMRİ</value>
+  </data>
+  <data name="WorkOrderNoLabel" xml:space="preserve">
+    <value>İş Emri:</value>
+  </data>
+  <data name="WorkOrderPopupGridProductCode" xml:space="preserve">
+    <value>ÜRÜN KODU</value>
+  </data>
+  <data name="WorkOrderPopupGridWorkOrderNo" xml:space="preserve">
+    <value>İŞ EMRİ NO</value>
+  </data>
+  <data name="WorkOrderPopupTitle" xml:space="preserve">
+    <value>İş Emirleri</value>
   </data>
 </root>

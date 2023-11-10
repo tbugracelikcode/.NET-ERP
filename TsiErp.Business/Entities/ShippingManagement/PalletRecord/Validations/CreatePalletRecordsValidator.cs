@@ -1,0 +1,24 @@
+﻿using FluentValidation;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
+
+namespace TsiErp.Business.Entities.ShippingManagement.PalletRecord.Validations
+{
+    public class CreatePalletRecordsValidator : AbstractValidator<CreatePalletRecordsDto>
+    {
+        public CreatePalletRecordsValidator()
+        {
+            RuleFor(x => x.Code)
+               .NotEmpty()
+               .WithMessage("ValidatorCodeEmpty")
+               .MaximumLength(17)
+               .WithMessage("ValidatorCodeMaxLenght");
+
+            RuleFor(x => x.Name)
+              .NotEmpty()
+              .WithMessage("ValidatorNameEmpty")
+              .MaximumLength(17)
+              .WithMessage("ValidatorNameMaxLenght");
+
+        }
+    }
+}

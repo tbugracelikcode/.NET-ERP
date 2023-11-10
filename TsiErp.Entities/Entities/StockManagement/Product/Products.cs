@@ -130,6 +130,11 @@ namespace TsiErp.Entities.Entities.StockManagement.Product
         /// Kaplama Ağırlığı
         /// </summary>
         public decimal CoatingWeight { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Birim Ağırlığı
+        /// </summary>
+        public decimal UnitWeight { get; set; }
 
     }
 }
