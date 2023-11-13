@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BigPackage" xml:space="preserve">
-    <value>Big</value>
+    <value>Big Package</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
@@ -286,7 +286,7 @@
     <value>Save</value>
   </data>
   <data name="SmallPackage" xml:space="preserve">
-    <value>Small</value>
+    <value>Small Package</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Package Fiches</value>

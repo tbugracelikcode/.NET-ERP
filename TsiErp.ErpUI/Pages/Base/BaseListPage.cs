@@ -1,4 +1,5 @@
 ﻿using Autofac.Features.OwnedInstances;
+using BoldReports.RDL.DOM;
 using DevExpress.Blazor;
 using FluentValidation;
 using Microsoft.AspNetCore.Components;

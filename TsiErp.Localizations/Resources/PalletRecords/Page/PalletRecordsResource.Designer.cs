@@ -79,11 +79,83 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PALET KODU.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
         /// </summary>
         public static string CodeControlManager {
             get {
                 return ResourceManager.GetString("CodeControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet Kodu:.
+        /// </summary>
+        public static string CodeLabel {
+            get {
+                return ResourceManager.GetString("CodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ KOD.
+        /// </summary>
+        public static string CurrentAccountCardCode {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ ÜNVAN.
+        /// </summary>
+        public static string CurrentAccountCardCustomerCode {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardCustomerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ ÜNVAN.
+        /// </summary>
+        public static string CurrentAccountCardName {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cari Hesap:.
+        /// </summary>
+        public static string CurrentAccountCardNameLabel {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cari Hesap Kartları.
+        /// </summary>
+        public static string CurrentAccountModalTitle {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Varyant Kodu:.
+        /// </summary>
+        public static string CustomerCodeLabel {
+            get {
+                return ResourceManager.GetString("CustomerCodeLabel", resourceCulture);
             }
         }
         
@@ -160,6 +232,123 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Boy:.
+        /// </summary>
+        public static string Height_Label {
+            get {
+                return ResourceManager.GetString("Height_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uzunluk:.
+        /// </summary>
+        public static string Lenght_Label {
+            get {
+                return ResourceManager.GetString("Lenght_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VARYANT KODU.
+        /// </summary>
+        public static string LineGridCustomerCode {
+            get {
+                return ResourceManager.GetString("LineGridCustomerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAKET SAYISI.
+        /// </summary>
+        public static string LineGridNumberofPackage {
+            get {
+                return ResourceManager.GetString("LineGridNumberofPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAKET İÇERİK.
+        /// </summary>
+        public static string LineGridPackageContent {
+            get {
+                return ResourceManager.GetString("LineGridPackageContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAKET CİNSİ.
+        /// </summary>
+        public static string LineGridPackageType {
+            get {
+                return ResourceManager.GetString("LineGridPackageType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string LineGridProductCode {
+            get {
+                return ResourceManager.GetString("LineGridProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK AÇIKLAMASI.
+        /// </summary>
+        public static string LineGridProductName {
+            get {
+                return ResourceManager.GetString("LineGridProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM ADET.
+        /// </summary>
+        public static string LineGridTotalAmount {
+            get {
+                return ResourceManager.GetString("LineGridTotalAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM BRÜT KG..
+        /// </summary>
+        public static string LineGridTotalGrossKG {
+            get {
+                return ResourceManager.GetString("LineGridTotalGrossKG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM NET KG..
+        /// </summary>
+        public static string LineGridTotalNetKG {
+            get {
+                return ResourceManager.GetString("LineGridTotalNetKG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet Kayıt Satırları.
+        /// </summary>
+        public static string LineModalTitle {
+            get {
+                return ResourceManager.GetString("LineModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KOLİ.
+        /// </summary>
+        public static string LinePackageType {
+            get {
+                return ResourceManager.GetString("LinePackageType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
@@ -178,6 +367,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maksimum Koli Adedi:.
+        /// </summary>
+        public static string MaxPackageNumberLabel {
+            get {
+                return ResourceManager.GetString("MaxPackageNumberLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçtiğiniz kayıt {0} tarafından kullanılmaktadır..
         /// </summary>
         public static string MessagePopupInformationDescriptionBase {
@@ -192,6 +390,159 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PALET ADI.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet Adı:.
+        /// </summary>
+        public static string NameLabel {
+            get {
+                return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paket Sayısı:.
+        /// </summary>
+        public static string NumberofPackageLabel {
+            get {
+                return ResourceManager.GetString("NumberofPackageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paket İçerik:.
+        /// </summary>
+        public static string PackageContentLabel {
+            get {
+                return ResourceManager.GetString("PackageContentLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paket Fişleri.
+        /// </summary>
+        public static string PackageFicheModalTitle {
+            get {
+                return ResourceManager.GetString("PackageFicheModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAKET FİŞ KODU.
+        /// </summary>
+        public static string PackageFichesGridCode {
+            get {
+                return ResourceManager.GetString("PackageFichesGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VARYANT KODU.
+        /// </summary>
+        public static string PackageFichesGridCustomerCode {
+            get {
+                return ResourceManager.GetString("PackageFichesGridCustomerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAKET SAYISI.
+        /// </summary>
+        public static string PackageFichesGridNumberofPackage {
+            get {
+                return ResourceManager.GetString("PackageFichesGridNumberofPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PAKET İÇERİK.
+        /// </summary>
+        public static string PackageFichesGridPackageContent {
+            get {
+                return ResourceManager.GetString("PackageFichesGridPackageContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string PackageFichesGridProductCode {
+            get {
+                return ResourceManager.GetString("PackageFichesGridProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SATIŞ SİPARİŞ FİŞ NO.
+        /// </summary>
+        public static string PackageFichesGridSalesOrderFicheNo {
+            get {
+                return ResourceManager.GetString("PackageFichesGridSalesOrderFicheNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  .
+        /// </summary>
+        public static string PackageFichesGridSelectedLine {
+            get {
+                return ResourceManager.GetString("PackageFichesGridSelectedLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çeki Listesi:.
+        /// </summary>
+        public static string PackageListLabel {
+            get {
+                return ResourceManager.GetString("PackageListLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KOLİ TÜRÜ.
+        /// </summary>
+        public static string PackageType {
+            get {
+                return ResourceManager.GetString("PackageType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Koli Türü:.
+        /// </summary>
+        public static string PackageTypeLabel {
+            get {
+                return ResourceManager.GetString("PackageTypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PALET KOLİ ADET.
+        /// </summary>
+        public static string PalletPackageNumber {
+            get {
+                return ResourceManager.GetString("PalletPackageNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet Koli Adedi:.
+        /// </summary>
+        public static string PalletPackageNumberLabel {
+            get {
+                return ResourceManager.GetString("PalletPackageNumberLabel", resourceCulture);
             }
         }
         
@@ -286,6 +637,51 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Planlanan Yükleme Tarihi:.
+        /// </summary>
+        public static string PlannedLoadingTimeLabel {
+            get {
+                return ResourceManager.GetString("PlannedLoadingTimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Kodu:.
+        /// </summary>
+        public static string ProductCodeLineLabel {
+            get {
+                return ResourceManager.GetString("ProductCodeLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string ProductModalGridCode {
+            get {
+                return ResourceManager.GetString("ProductModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK AÇIKLAMASI.
+        /// </summary>
+        public static string ProductModalGridName {
+            get {
+                return ResourceManager.GetString("ProductModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Kartları.
+        /// </summary>
+        public static string ProductsModalTitle {
+            get {
+                return ResourceManager.GetString("ProductsModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -295,11 +691,65 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçilen Paket Sayısı:.
+        /// </summary>
+        public static string SelectedNumberofPackageLabel {
+            get {
+                return ResourceManager.GetString("SelectedNumberofPackageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Küçük Koli.
         /// </summary>
         public static string SmallPackage {
             get {
                 return ResourceManager.GetString("SmallPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam Adet:.
+        /// </summary>
+        public static string TotalAmountLabel {
+            get {
+                return ResourceManager.GetString("TotalAmountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam Brüt KG:.
+        /// </summary>
+        public static string TotalGrossKGLabel {
+            get {
+                return ResourceManager.GetString("TotalGrossKGLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam Net KG:.
+        /// </summary>
+        public static string TotalNetKGLabel {
+            get {
+                return ResourceManager.GetString("TotalNetKGLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paket Fişlerini Aktar.
+        /// </summary>
+        public static string TransferPackageFicheButton {
+            get {
+                return ResourceManager.GetString("TransferPackageFicheButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet Kayıtları.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
             }
         }
         
@@ -340,7 +790,7 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cari hesap seçmeden paket fişi aktarılamaz..
+        ///   Looks up a localized string similar to Cari hesap ve koli türü seçmeden paket fişi aktarılamaz..
         /// </summary>
         public static string UIWarninCurrentAccountMessage {
             get {
@@ -354,6 +804,42 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         public static string UIWarninCurrentAccountTitle {
             get {
                 return ResourceManager.GetString("UIWarninCurrentAccountTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçilen paket miktarı, maksimum paket sayısını aşmıştır..
+        /// </summary>
+        public static string UIWarningNumberofPackagesMessage {
+            get {
+                return ResourceManager.GetString("UIWarningNumberofPackagesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningNumberofPackagesTitle {
+            get {
+                return ResourceManager.GetString("UIWarningNumberofPackagesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paket fişi aktarmak için en az bir seçim yapılmalıdır..
+        /// </summary>
+        public static string UIWarningSelectedPackageFicheMessage {
+            get {
+                return ResourceManager.GetString("UIWarningSelectedPackageFicheMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningSelectedPackageFicheTitle {
+            get {
+                return ResourceManager.GetString("UIWarningSelectedPackageFicheTitle", resourceCulture);
             }
         }
         
@@ -399,6 +885,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         public static string ValidatorNameMaxLenght {
             get {
                 return ResourceManager.GetString("ValidatorNameMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to En:.
+        /// </summary>
+        public static string Width_Label {
+            get {
+                return ResourceManager.GetString("Width_Label", resourceCulture);
             }
         }
     }

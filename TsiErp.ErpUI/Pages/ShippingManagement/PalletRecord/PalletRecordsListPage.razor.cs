@@ -5,6 +5,8 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Entities.PalletRecord.Services;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
@@ -15,6 +17,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
     public partial class PalletRecordsListPage
     {
         private SfGrid<SelectPalletRecordLinesDto> _LineGrid;
+        private SfGrid<PackageFicheSelectionGrid> _PackageFichesGrid;
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -24,8 +27,27 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectPalletRecordLinesDto> GridLineList = new List<SelectPalletRecordLinesDto>();
+        List<ListPackageFichesDto> PackageFichesList = new List<ListPackageFichesDto>();
+        List<PackageFicheSelectionGrid> PackageFichesSelectionList = new List<PackageFicheSelectionGrid>();
+        List<SelectPackageFicheLinesDto> PackageFicheLinesList = new List<SelectPackageFicheLinesDto>();
+
+        public class PackageFicheSelectionGrid
+        {
+            public Guid Id { get; set; }
+            public string Code { get; set; }
+            public string SalesOrderFicheNo { get; set; }
+            public string ProductCode { get; set; }
+            public Guid? ProductID { get; set; }
+            public string CustomerCode { get; set; }
+            public int PackageContent { get; set; }
+            public int NumberofPackage { get; set; }
+            public bool SelectedLine { get; set; }
+
+        }
 
         private bool LineCrudPopup = false;
+        public bool SelectPackageFichesModal = false;
+        public int selectedNumberofPackages = 0;
 
         protected override async void OnInitialized()
         {
@@ -42,7 +64,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         {
             DataSource = new SelectPalletRecordsDto()
             {
-                Code = FicheNumbersAppService.GetFicheNumberAsync("PalletRecordsChildMenu")
+                Code = FicheNumbersAppService.GetFicheNumberAsync("PalletRecordsChildMenu"),
+                MaxPackageNumber = 0
             };
 
             DataSource.SelectPalletRecordLines = new List<SelectPalletRecordLinesDto>();
@@ -145,19 +168,32 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             switch (args.Item.Id)
             {
                 case "addpackagefiche":
-
-                    if (DataSource.CurrentAccountCardID == null || DataSource.CurrentAccountCardID == Guid.Empty)
+                    if (DataSource.CurrentAccountCardID == null || DataSource.CurrentAccountCardID == Guid.Empty || string.IsNullOrEmpty(DataSource.PackageType))
                     {
                         await ModalManager.WarningPopupAsync(L["UIWarninCurrentAccountTitle"], L["UIWarninCurrentAccountMessage"]);
                     }
 
                     else
                     {
-                        LineDataSource = new SelectPalletRecordLinesDto();
-                        LineCrudPopup = true;
-                        LineDataSource.CurrentAccountCardID = DataSource.CurrentAccountCardID;
-                        LineDataSource.CustomerCode = (await CurrentAccountCardsAppService.GetAsync(DataSource.CurrentAccountCardID.GetValueOrDefault())).Data.CustomerCode;
-                        LineDataSource.LineNr = GridLineList.Count + 1;
+                        PackageFichesList = (await PackageFichesAppService.GetListAsync(new ListPackageFichesParameterDto())).Data.Where(t => t.PackageType == DataSource.PackageType && t.CurrentAccountID == DataSource.CurrentAccountCardID).ToList();
+
+                        foreach (var packageFiche in PackageFichesList)
+                        {
+                            PackageFicheSelectionGrid packageFicheSelectionModel = new PackageFicheSelectionGrid
+                            {
+                                Code = packageFiche.Code,
+                                CustomerCode = packageFiche.CustomerCode,
+                                ProductID = packageFiche.ProductID,
+                                Id = packageFiche.Id,
+                                NumberofPackage = packageFiche.NumberofPackage,
+                                PackageContent = packageFiche.PackageContent,
+                                ProductCode = packageFiche.ProductCode,
+                                SalesOrderFicheNo = packageFiche.SalesOrderFicheNo,
+                                SelectedLine = false
+                            };
+                            PackageFichesSelectionList.Add(packageFicheSelectionModel);
+                        }
+                        SelectPackageFichesModal = true;
                     }
 
                     await InvokeAsync(StateHasChanged);
@@ -244,6 +280,111 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             await InvokeAsync(StateHasChanged);
         }
 
+
+
+        #endregion
+
+        #region Paket Fişleri Modal İşlemleri
+
+        public async void PackageFichesDoubleClickHandler(RecordDoubleClickEventArgs<PackageFicheSelectionGrid> args)
+        {
+            var selectedPackageFiche = args.RowData;
+
+            if (selectedPackageFiche != null)
+            {
+                var packageFiche = (await PackageFichesAppService.GetAsync(selectedPackageFiche.Id)).Data;
+                int selectedIndex = PackageFichesSelectionList.IndexOf(selectedPackageFiche);
+
+                PackageFichesSelectionList[selectedIndex].SelectedLine = true;
+
+                selectedNumberofPackages = selectedNumberofPackages + (packageFiche.SelectPackageFicheLines.Count * selectedPackageFiche.NumberofPackage);
+
+                if(selectedNumberofPackages > DataSource.MaxPackageNumber)
+                {
+                    var res =  await ModalManager.WarningPopupAsync(L["UIWarningNumberofPackagesTitle"], L["UIWarningNumberofPackagesMessage"]);
+
+                    if(res == true)
+                    {
+                        selectedNumberofPackages = selectedNumberofPackages - (packageFiche.SelectPackageFicheLines.Count * selectedPackageFiche.NumberofPackage);
+                        PackageFichesSelectionList[selectedIndex].SelectedLine = false;
+                        await InvokeAsync(StateHasChanged);
+                    }
+                }
+
+                await _PackageFichesGrid.Refresh();
+
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        public async void TransferSelectedPackageFichesClicked()
+        {
+            if(PackageFichesSelectionList.Where(t=>t.SelectedLine == true).Count() > 0)
+            {
+
+                foreach (var selecteditem in PackageFichesSelectionList)
+                {
+                    if (selecteditem.SelectedLine)
+                    {
+                        PackageFicheLinesList = (await PackageFichesAppService.GetAsync(selecteditem.Id)).Data.SelectPackageFicheLines.ToList();
+                        var currentAccountDataSource = (await CurrentAccountCardsAppService.GetAsync(DataSource.CurrentAccountCardID.GetValueOrDefault())).Data;
+                        string customerCode = currentAccountDataSource.CustomerCode;
+
+                        decimal packageKG = 0;
+                        decimal unitKG = (await ProductsAppService.GetAsync(selecteditem.ProductID.GetValueOrDefault())).Data.UnitWeight;
+
+                        if (DataSource.PackageType == L["BigPackage"].Value)
+                        {
+                            packageKG = currentAccountDataSource.BigPackageKG;
+                        }
+                        else if (DataSource.PackageType == L["SmallPackage"].Value)
+                        {
+                            packageKG = currentAccountDataSource.SmallPackageKG;
+                        }
+
+                        decimal onePackageNetKG = selecteditem.PackageContent * unitKG;
+                        decimal onePackageGrossKG = onePackageNetKG + packageKG;
+                        decimal totalNetKG = onePackageNetKG + selecteditem.NumberofPackage;
+                        decimal totalGrossKG = onePackageGrossKG + selecteditem.NumberofPackage;
+
+
+                        foreach (var line in PackageFicheLinesList)
+                        {
+                            SelectPalletRecordLinesDto palletLineModel = new SelectPalletRecordLinesDto
+                            {
+                                ProductID = line.ProductID,
+                                ProductCode = line.ProductCode,
+                                ProductName = line.ProductName,
+                                CustomerCode = customerCode,
+                                PackageType = L["LinePackageType"],
+                                PackageContent = selecteditem.PackageContent,
+                                NumberofPackage = selecteditem.NumberofPackage,
+                                TotalAmount = selecteditem.PackageContent * selecteditem.NumberofPackage,
+                                TotalGrossKG = totalGrossKG,
+                                TotalNetKG = totalNetKG,
+                                LineNr = GridLineList.Count + 1,
+                            };
+
+                            GridLineList.Add(palletLineModel);
+                        }
+                    }
+                }
+
+                HidePackageFichesPopup();
+            }
+            else if(PackageFichesSelectionList.Where(t=>t.SelectedLine == true).Count() == 0)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningSelectedPackageFicheTitle"], L["UIWarningSelectedPackageFicheMessage"]);
+            }
+        }
+
+
+        public void HidePackageFichesPopup()
+        {
+            PackageFichesSelectionList.Clear();
+            PackageFichesList.Clear();
+            SelectPackageFichesModal = false;
+        }
 
 
         #endregion
@@ -390,10 +531,12 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 {
                     case "Big":
                         DataSource.PackageType = L["BigPackage"].Value;
+                        DataSource.MaxPackageNumber = 18;
                         break;
 
                     case "Small":
                         DataSource.PackageType = L["SmallPackage"].Value;
+                        DataSource.MaxPackageNumber = 30;
                         break;
 
 
@@ -473,58 +616,58 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             {
                 switch (args.ItemData.ID)
                 {
-                    case "A-1"  :DataSource.Name="A-1"  ; break;
-                    case "B-2"  :DataSource.Name="B-2"  ; break;
-                    case "C-3"  :DataSource.Name="C-3"  ; break;
-                    case "D-4"  :DataSource.Name="D-4"  ; break;
-                    case "E-5"  :DataSource.Name="E-5"  ; break;
-                    case "F-6"  :DataSource.Name="F-6"  ; break;
-                    case "G-7"  :DataSource.Name="G-7"  ; break;
-                    case "H-8"  :DataSource.Name="H-8"  ; break;
-                    case "I-9"  :DataSource.Name="I-9"  ; break;
-                    case "J-10" :DataSource.Name="J-10" ; break;
-                    case "K-11" :DataSource.Name="K-11" ; break;
-                    case "L-12" :DataSource.Name="L-12" ; break;
-                    case "M-13" :DataSource.Name="M-13" ; break;
-                    case "N-14" :DataSource.Name="N-14" ; break;
-                    case "O-15" :DataSource.Name="O-15" ; break;
-                    case "P-16" :DataSource.Name="P-16" ; break;
-                    case "Q-17" :DataSource.Name="Q-17" ; break;
-                    case "R-18" :DataSource.Name="R-18" ; break;
-                    case "S-19" :DataSource.Name="S-19" ; break;
-                    case "T-20" :DataSource.Name="T-20" ; break;
-                    case "U-21" :DataSource.Name="U-21" ; break;
-                    case "V-22" :DataSource.Name="V-22" ; break;
-                    case "W-23" :DataSource.Name="W-23" ; break;
-                    case "X-24" :DataSource.Name="X-24" ; break;
-                    case "Y-25" :DataSource.Name="Y-25" ; break;
-                    case "Z-26" :DataSource.Name="Z-26" ; break;
-                    case "AA-27":DataSource.Name="AA-27"; break;
-                    case "BB-28":DataSource.Name="BB-28"; break;
-                    case "CC-29":DataSource.Name="CC-29"; break;
-                    case "DD-30":DataSource.Name="DD-30"; break;
-                    case "EE-31":DataSource.Name="EE-31"; break;
-                    case "FF-32":DataSource.Name="FF-32"; break;
-                    case "GG-33":DataSource.Name="GG-33"; break;
-                    case "HH-34":DataSource.Name="HH-34"; break;
-                    case "II-35":DataSource.Name="II-35"; break;
-                    case "JJ-36":DataSource.Name="JJ-36"; break;
-                    case "KK-37":DataSource.Name="KK-37"; break;
-                    case "LL-38":DataSource.Name="LL-38"; break;
-                    case "MM-39":DataSource.Name="MM-39"; break;
-                    case "NN-40":DataSource.Name="NN-40"; break;
-                    case "OO-41":DataSource.Name="OO-41"; break;
-                    case "PP-42":DataSource.Name="PP-42"; break;
-                    case "QQ-43":DataSource.Name="QQ-43"; break;
-                    case "RR-44":DataSource.Name="RR-44"; break;
-                    case "SS-45":DataSource.Name="SS-45"; break;
-                    case "TT-46":DataSource.Name="TT-46"; break;
-                    case "UU-47":DataSource.Name="UU-47"; break;
-                    case "VV-48":DataSource.Name="VV-48"; break;
-                    case "WW-49":DataSource.Name="WW-49"; break;
-                    case "XX-50":DataSource.Name="XX-50"; break;
-                    case "YY-51":DataSource.Name="YY-51"; break;
-                    case "ZZ-52":DataSource.Name= "ZZ-52"; break;
+                    case "A-1": DataSource.Name = "A-1"; break;
+                    case "B-2": DataSource.Name = "B-2"; break;
+                    case "C-3": DataSource.Name = "C-3"; break;
+                    case "D-4": DataSource.Name = "D-4"; break;
+                    case "E-5": DataSource.Name = "E-5"; break;
+                    case "F-6": DataSource.Name = "F-6"; break;
+                    case "G-7": DataSource.Name = "G-7"; break;
+                    case "H-8": DataSource.Name = "H-8"; break;
+                    case "I-9": DataSource.Name = "I-9"; break;
+                    case "J-10": DataSource.Name = "J-10"; break;
+                    case "K-11": DataSource.Name = "K-11"; break;
+                    case "L-12": DataSource.Name = "L-12"; break;
+                    case "M-13": DataSource.Name = "M-13"; break;
+                    case "N-14": DataSource.Name = "N-14"; break;
+                    case "O-15": DataSource.Name = "O-15"; break;
+                    case "P-16": DataSource.Name = "P-16"; break;
+                    case "Q-17": DataSource.Name = "Q-17"; break;
+                    case "R-18": DataSource.Name = "R-18"; break;
+                    case "S-19": DataSource.Name = "S-19"; break;
+                    case "T-20": DataSource.Name = "T-20"; break;
+                    case "U-21": DataSource.Name = "U-21"; break;
+                    case "V-22": DataSource.Name = "V-22"; break;
+                    case "W-23": DataSource.Name = "W-23"; break;
+                    case "X-24": DataSource.Name = "X-24"; break;
+                    case "Y-25": DataSource.Name = "Y-25"; break;
+                    case "Z-26": DataSource.Name = "Z-26"; break;
+                    case "AA-27": DataSource.Name = "AA-27"; break;
+                    case "BB-28": DataSource.Name = "BB-28"; break;
+                    case "CC-29": DataSource.Name = "CC-29"; break;
+                    case "DD-30": DataSource.Name = "DD-30"; break;
+                    case "EE-31": DataSource.Name = "EE-31"; break;
+                    case "FF-32": DataSource.Name = "FF-32"; break;
+                    case "GG-33": DataSource.Name = "GG-33"; break;
+                    case "HH-34": DataSource.Name = "HH-34"; break;
+                    case "II-35": DataSource.Name = "II-35"; break;
+                    case "JJ-36": DataSource.Name = "JJ-36"; break;
+                    case "KK-37": DataSource.Name = "KK-37"; break;
+                    case "LL-38": DataSource.Name = "LL-38"; break;
+                    case "MM-39": DataSource.Name = "MM-39"; break;
+                    case "NN-40": DataSource.Name = "NN-40"; break;
+                    case "OO-41": DataSource.Name = "OO-41"; break;
+                    case "PP-42": DataSource.Name = "PP-42"; break;
+                    case "QQ-43": DataSource.Name = "QQ-43"; break;
+                    case "RR-44": DataSource.Name = "RR-44"; break;
+                    case "SS-45": DataSource.Name = "SS-45"; break;
+                    case "TT-46": DataSource.Name = "TT-46"; break;
+                    case "UU-47": DataSource.Name = "UU-47"; break;
+                    case "VV-48": DataSource.Name = "VV-48"; break;
+                    case "WW-49": DataSource.Name = "WW-49"; break;
+                    case "XX-50": DataSource.Name = "XX-50"; break;
+                    case "YY-51": DataSource.Name = "YY-51"; break;
+                    case "ZZ-52": DataSource.Name = "ZZ-52"; break;
 
 
                     default: break;

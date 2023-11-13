@@ -62,7 +62,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 MaxPackageNumber = input.MaxPackageNumber,
                 Name = input.Name,
                 PackageType = input.PackageType,
-                PackingListID = input.PackingListID,
+                PackingListID = input.PackingListID.GetValueOrDefault(),
                 PalletPackageNumber = input.PalletPackageNumber,
                 PlannedLoadingTime = input.PlannedLoadingTime,
                 Width_ = input.Width_,

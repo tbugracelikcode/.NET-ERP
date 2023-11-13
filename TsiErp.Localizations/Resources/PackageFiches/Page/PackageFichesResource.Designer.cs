@@ -61,7 +61,7 @@ namespace TsiErp.Localizations.Resources.PackageFiches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Büyük.
+        ///   Looks up a localized string similar to Büyük Koli.
         /// </summary>
         public static string BigPackage {
             get {
@@ -565,7 +565,7 @@ namespace TsiErp.Localizations.Resources.PackageFiches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Küçük.
+        ///   Looks up a localized string similar to Küçük Koli.
         /// </summary>
         public static string SmallPackage {
             get {
