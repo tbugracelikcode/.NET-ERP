@@ -225,6 +225,10 @@ using TsiErp.Entities.Entities.ShippingManagement.PalletRecord;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -1152,6 +1156,25 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdatePalletRecordLinesDto, PalletRecordLines>();
             CreateMap<SelectPalletRecordLinesDto, UpdatePalletRecordLinesDto>();
             CreateMap<SelectPalletRecordLinesDto, PalletRecordLines>();
+
+
+
+
+            CreateMap<MaintenanceMRPs, SelectMaintenanceMRPsDto>();
+            CreateMap<MaintenanceMRPs, ListMaintenanceMRPsDto>();
+            CreateMap<UpdateMaintenanceMRPsDto, MaintenanceMRPs>();
+            CreateMap<CreateMaintenanceMRPsDto, MaintenanceMRPs>();
+            CreateMap<SelectMaintenanceMRPsDto, CreateMaintenanceMRPsDto>();
+            CreateMap<SelectMaintenanceMRPsDto, UpdateMaintenanceMRPsDto>();
+            CreateMap<MaintenanceMRPs, UpdateMaintenanceMRPsDto>();
+
+            CreateMap<MaintenanceMRPLines, SelectMaintenanceMRPLinesDto>();
+            CreateMap<MaintenanceMRPLines, ListMaintenanceMRPLinesDto>();
+            CreateMap<CreateMaintenanceMRPLinesDto, MaintenanceMRPLines>();
+            CreateMap<SelectMaintenanceMRPLinesDto, CreateMaintenanceMRPLinesDto>();
+            CreateMap<UpdateMaintenanceMRPLinesDto, MaintenanceMRPLines>();
+            CreateMap<SelectMaintenanceMRPLinesDto, UpdateMaintenanceMRPLinesDto>();
+            CreateMap<SelectMaintenanceMRPLinesDto, MaintenanceMRPLines>();
         }
     }
 }

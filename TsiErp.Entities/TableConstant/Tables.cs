@@ -136,5 +136,7 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string ContractTrackingFicheAmountEntryLines = "ContractTrackingFicheAmountEntryLines";
         public static readonly string PalletRecords = "PalletRecords";
         public static readonly string PalletRecordLines = "PalletRecordLines";
+        public static readonly string MaintenanceMRPs = "MaintenanceMRPs";
+        public static readonly string MaintenanceMRPLines = "MaintenanceMRPLines";
     }
 }

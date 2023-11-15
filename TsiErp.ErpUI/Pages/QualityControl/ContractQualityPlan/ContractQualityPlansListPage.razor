@@ -536,11 +536,11 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["FilestoUpload"] </strong></label><br />
                                 @{
-                                    if (files.Count != 0)
+                                    if (lineFiles.Count != 0)
                                     {
                                         <div class="TSI_Paper">
 
-                                            @foreach (var file in files)
+                                        @foreach (var file in lineFiles)
                                             {
                                                 <div class="TSI_Chip"><span onclick="@(()=>PreviewImage(file))">@file.Name</span>&nbsp;&nbsp;&nbsp; <SfIcon onclick="@(()=>Remove(file))" Name="IconName.Trash"></SfIcon></div>
                                             }

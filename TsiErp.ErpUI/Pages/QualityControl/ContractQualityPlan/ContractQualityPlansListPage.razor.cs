@@ -1,8 +1,11 @@
 ﻿using BlazorInputFile;
+using BoldReports.RDL.DOM;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.JsonPatch.Operations;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
@@ -12,7 +15,9 @@ using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlCondition.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
@@ -45,7 +50,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
         #region File Upload Değişkenleri
 
-        List<IFileListEntry> files = new List<IFileListEntry>();
+        public List<IFileListEntry> lineFiles = new List<IFileListEntry>();
 
         List<System.IO.FileInfo> uploadedfiles = new List<System.IO.FileInfo>();
 
@@ -102,7 +107,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
             {
                 foreach (var file in entryFiles)
                 {
-                    files.Add(file);
+                    lineFiles.Add(entryFiles[0]);
                 }
             }
             else
@@ -113,7 +118,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
         private void Remove(IFileListEntry file)
         {
-            files.Remove(file);
+            lineFiles.Remove(file);
 
             InvokeAsync(() => StateHasChanged());
         }
@@ -125,7 +130,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
             if (extention == ".pdf")
             {
-                PDFrootPath = rootpath + @"\UploadedFiles\ContractOperationPictures\" + DataSource.ProductID + @"\" + OperationPictureDataSource.Id + @"\" + file.Name;
+                PDFrootPath = rootpath + @"\UploadedFiles\ContractOperationPictures\" + DataSource.ProductCode + @"\" + DataSource.CurrrentAccountCardCode + @"\"  + file.Name;
 
                 System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
                 if (pdfFile.Exists)
@@ -136,7 +141,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
             else
             {
-                imageDataUri = rootpath + @"\UploadedFiles\ContractOperationPictures\" + DataSource.ProductID + @"\" + OperationPictureDataSource.Id + @"\" + file.Name;
+                imageDataUri = rootpath + @"\UploadedFiles\ContractOperationPictures\" + DataSource.ProductCode + @"\" + DataSource.CurrrentAccountCardCode + @"\" + file.Name;
 
                 System.IO.FileInfo jpgfile = new System.IO.FileInfo(imageDataUri);
                 if (jpgfile.Exists)
@@ -212,7 +217,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
             if (format == ".jpg" || format == ".jpeg" || format == ".png")
             {
-                imageDataUri = @"\UploadedFiles\ContractOperationPictures\" + DataSource.ProductID + @"\" + OperationPictureDataSource.Id + @"\" + file.Name;
+                imageDataUri = @"\UploadedFiles\ContractOperationPictures\" + DataSource.ProductCode + @"\" + DataSource.CurrrentAccountCardCode + @"\" + file.Name;
 
                 image = true;
 
@@ -224,7 +229,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
             else if (format == ".pdf")
             {
 
-                PDFrootPath = "wwwroot/UploadedFiles/ContractOperationPictures/" + DataSource.ProductID + "/" + OperationPictureDataSource.Id + "/" + file.Name;
+                PDFrootPath = "wwwroot/UploadedFiles/ContractOperationPictures/" + DataSource.ProductCode + "/" + DataSource.CurrrentAccountCardCode + "/" + file.Name;
 
                 PDFFileName = file.Name;
 
@@ -545,7 +550,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
                 case "changed":
                     OperationPictureDataSource = args.RowInfo.RowData;
                     string rootpath = FileUploadService.GetRootPath();
-                    string operationPicturePath = @"\UploadedFiles\ContractOperationPictures\" + DataSource.ProductID.ToString() + @"\" + OperationPictureDataSource.Id + @"\";
+                    string operationPicturePath = @"\UploadedFiles\ContractOperationPictures\" + DataSource.ProductCode + @"\" + DataSource.CurrrentAccountCardCode + @"\";
                     DirectoryInfo operationPicture = new DirectoryInfo(rootpath + operationPicturePath);
                     if (operationPicture.Exists)
                     {
@@ -642,38 +647,99 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
             await _OperationPicturesGrid.Refresh();
 
-            #region File Upload İşlemleri
-
-            string productid = DataSource.ProductID.ToString();
-            string oprpictureid = OperationPictureDataSource.Id.ToString();
-
-            List<string> _result = new List<string>();
-
-            foreach (var file in files)
-            {
-                disable = true;
-
-                string fileName = file.Name;
-                //string rootPath = "UploadedFiles/OperationPictures/" + productid + "-" + operationid + "/" + oprpictureid ;
-                string rootPath = "UploadedFiles/ContractOperationPictures/" + DataSource.ProductCode + "/" + "123123";
-
-
-                //_result.Add(await FileUploadService.UploadOperationPicture(file, rootPath, fileName));
-                await InvokeAsync(() => StateHasChanged());
-
-            }
-
-            #endregion
 
             HideOperationPicturesPopup();
 
             disable = false;
 
-            files.Clear();
-
             uploadedfiles.Clear();
 
             await InvokeAsync(StateHasChanged);
+        }
+
+        protected override async Task OnSubmit()
+        {
+
+            string productcode = DataSource.ProductCode;
+            string currentCode = DataSource.CurrrentAccountCardCode;
+            string rootPath = "UploadedFiles/ContractOperationPictures/" + productcode + "/" + currentCode;
+
+            try
+            {
+                #region File Upload
+
+
+                foreach (var file in lineFiles)
+                {
+                    string fileName = file.Name;
+
+
+                    await FileUploadService.UploadTechnicalDrawing(file, rootPath, fileName);
+                    await InvokeAsync(() => StateHasChanged());
+
+
+                }
+
+                lineFiles.Clear();
+
+                #endregion
+
+                #region Submit İşlemleri
+
+                SelectContractQualityPlansDto result;
+
+                if (DataSource.Id == Guid.Empty)
+                {
+                    var createInput = ObjectMapper.Map<SelectContractQualityPlansDto, CreateContractQualityPlansDto>(DataSource);
+
+                    result = (await CreateAsync(createInput)).Data;
+
+                    if (result != null)
+                        DataSource.Id = result.Id;
+                }
+                else
+                {
+                    var updateInput = ObjectMapper.Map<SelectContractQualityPlansDto, UpdateContractQualityPlansDto>(DataSource);
+
+                    result = (await UpdateAsync(updateInput)).Data;
+                }
+
+                if (result == null)
+                {
+
+                    return;
+                }
+
+                await GetListDataSourceAsync();
+
+                var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+                HideEditPage();
+
+                if (DataSource.Id == Guid.Empty)
+                {
+                    DataSource.Id = result.Id;
+                }
+
+                if (savedEntityIndex > -1)
+                    SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+                else
+                    SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+                #endregion
+
+            }
+            catch (Exception ex)
+            {
+                string webHostEnvironment = FileUploadService.GetRootPath();
+                string deletedRootPath = webHostEnvironment + "/" + rootPath;
+                System.IO.FileInfo pdfFile = new System.IO.FileInfo(rootPath);
+                if (pdfFile.Exists)
+                {
+                    pdfFile.Delete();
+                }
+            }
+
         }
 
         #endregion
