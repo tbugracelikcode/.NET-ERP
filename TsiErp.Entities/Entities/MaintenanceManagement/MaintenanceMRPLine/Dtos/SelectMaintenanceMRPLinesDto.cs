@@ -47,12 +47,16 @@ namespace TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine.Dtos
         /// </summary>
         public int RequirementAmount { get; set; }
         /// <summary>
-        /// Hesaplanacak
+        /// Satın Alma İhtiyaç Miktar
         /// </summary>
-        public bool isCalculated { get; set; }
+        public int PurchaseAmount { get; set; }
         /// <summary>
         /// Stoktan Kullanılacak
         /// </summary>
         public bool isStockUsage { get; set; }
+        /// <summary>
+        /// Stok Miktarı
+        /// </summary>
+        public decimal AmountOfStock { get; set; }
     }
 }

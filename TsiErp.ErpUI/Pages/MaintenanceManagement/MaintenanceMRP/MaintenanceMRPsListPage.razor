@@ -1,0 +1,15 @@
+﻿@page "/maintenance-mrps"
+@layout MainLayout
+
+
+
+
+@inherits BaseListPage<SelectMaintenanceMRPsDto, ListMaintenanceMRPsDto, CreateMaintenanceMRPsDto, UpdateMaintenanceMRPsDto, ListMaintenanceMRPsParameterDto>
+@inject IStringLocalizer<MaintenanceMRPsResource> L
+
+@inject IMaintenanceMRPsAppService MaintenanceMRPsAppService
+@inject IPlannedMaintenancesAppService PlannedMaintenancesAppService
+@inject IMRPsAppService MRPsAppService
+@inject IProductsAppService ProductsAppService
+@inject IUnitSetsAppService UnitSetsAppService
+@inject IFicheNumbersAppService FicheNumbersAppService

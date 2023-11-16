@@ -171,6 +171,51 @@ namespace TsiErp.Localizations.Resources.MaintenanceMRPs.Page {
         /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
+        public static string MaintenanceMRPLinesContextAdd {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPLinesContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MaintenanceMRPLinesContextChange {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPLinesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string MaintenanceMRPLinesContextDelete {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPLinesContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string MaintenanceMRPLinesContextRefresh {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPLinesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stoktan Kullan.
+        /// </summary>
+        public static string MaintenanceMRPLinesContextStockUsage {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPLinesContextStockUsage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
         public static string MaintenanceMRPsContextAdd {
             get {
                 return ResourceManager.GetString("MaintenanceMRPsContextAdd", resourceCulture);

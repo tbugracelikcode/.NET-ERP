@@ -153,6 +153,21 @@
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
   </data>
+  <data name="MaintenanceMRPLinesContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="MaintenanceMRPLinesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="MaintenanceMRPLinesContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MaintenanceMRPLinesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="MaintenanceMRPLinesContextStockUsage" xml:space="preserve">
+    <value>Use From Stock</value>
+  </data>
   <data name="MaintenanceMRPsContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP.Dtos;
 
-namespace TsiErp.Business.Entities.MaintenanceInstruction.Validations
+namespace TsiErp.Business.Entities.MaintenanceMRP.Validations
 {
     public class UpdateMaintenanceMRPsValidatorDto : AbstractValidator<UpdateMaintenanceMRPsDto>
     {

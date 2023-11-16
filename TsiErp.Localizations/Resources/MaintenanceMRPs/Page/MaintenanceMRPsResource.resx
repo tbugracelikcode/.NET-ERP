@@ -153,6 +153,21 @@
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
   </data>
+  <data name="MaintenanceMRPLinesContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="MaintenanceMRPLinesContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="MaintenanceMRPLinesContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="MaintenanceMRPLinesContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="MaintenanceMRPLinesContextStockUsage" xml:space="preserve">
+    <value>Stoktan Kullan</value>
+  </data>
   <data name="MaintenanceMRPsContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
