@@ -1,0 +1,107 @@
+﻿@page "/work-orders"
+
+@inherits BaseListPage<SelectWorkOrdersDto, ListWorkOrdersDto, CreateWorkOrdersDto, UpdateWorkOrdersDto, ListWorkOrdersParameterDto>
+
+@inject IWorkOrdersAppService WorkOrdersAppService
+
+@inject NavigationManager NavigationManager
+
+
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+        <GridLayoutItems>
+            <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <TsiBreadCrumb PreviousMenus="" CurrentMenu="İş Emirleri" />
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+            <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIGridCards">
+                        <CardContent>
+                            <SfGrid ID="Grid" @ref="_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource"   AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="true" AllowPdfExport=true ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" Toolbar=@GridToolbarItems>
+
+                                <GridGroupSettings ShowGroupedColumn="false"></GridGroupSettings>
+
+                                <GridEvents OnRecordDoubleClick="@WorkOrderDoubleClickHandler" OnToolbarClick="@ToolbarClickHandler" TValue="ListWorkOrdersDto"></GridEvents>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="İŞ EMRİ NO." TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderState) HeaderText="DURUM" TextAlign="TextAlign.Center" Width="120">
+
+                                        <Template>
+                                            @{
+                                                WorkOrderStateEnum stateEnumform = (context as ListWorkOrdersDto).WorkOrderState;
+                                                string stateForm = "";
+
+                                                if (stateEnumform == WorkOrderStateEnum.Baslamadi)
+                                                {
+                                                    stateForm = "Başlamadı";
+                                                }
+                                                else if(stateEnumform == WorkOrderStateEnum.Durduruldu)
+                                                {
+                                                    stateForm = "Durduruldu";
+                                                }
+                                                else if(stateEnumform == WorkOrderStateEnum.Iptal)
+                                                {
+                                                    stateForm = "İptal";
+                                                }
+                                                else if(stateEnumform == WorkOrderStateEnum.DevamEdiyor)
+                                                {
+                                                    stateForm = "Devam Ediyor";
+                                                }
+                                                else if(stateEnumform == WorkOrderStateEnum.Tamamlandi)
+                                                {
+                                                    stateForm = "Tamamlandı";
+                                                }
+                                                else if(stateEnumform == WorkOrderStateEnum.FasonaGonderildi)
+                                                {
+                                                    stateForm = "Fasona Gönderildi";
+                                                }
+                                        }
+                                        @stateForm
+                                    </Template>
+
+                                    </GridColumn>
+                                   
+
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.PlannedQuantity) HeaderText="PLANLANAN MİKTAR" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="120" Format="N0"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProducedQuantity) HeaderText="ÜRETİLEN MİKTAR" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="120" Format="N0"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProductionOrderFicheNo) HeaderText="ÜRETİM EMRİ NUMARASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.StationCode) HeaderText="İŞ İSTASYONU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
+
+}

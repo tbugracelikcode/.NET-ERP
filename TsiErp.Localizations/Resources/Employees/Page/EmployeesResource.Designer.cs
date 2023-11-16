@@ -331,6 +331,24 @@ namespace TsiErp.Localizations.Resources.Employees.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Ekranı Ayar Kullanıcısı.
+        /// </summary>
+        public static string IsProductionScreenSettingUser {
+            get {
+                return ResourceManager.GetString("IsProductionScreenSettingUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Ekran Kullanıcısı.
+        /// </summary>
+        public static string IsProductionScreenUserLabel {
+            get {
+                return ResourceManager.GetString("IsProductionScreenUserLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
@@ -385,6 +403,15 @@ namespace TsiErp.Localizations.Resources.Employees.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Ekranı Parolası.
+        /// </summary>
+        public static string ProductionScreenPasswordLabel {
+            get {
+                return ResourceManager.GetString("ProductionScreenPasswordLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -408,6 +435,15 @@ namespace TsiErp.Localizations.Resources.Employees.Page {
         public static string Tab1Name {
             get {
                 return ResourceManager.GetString("Tab1Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Ekranı Kullanıcı Bilgileri.
+        /// </summary>
+        public static string Tab2Name {
+            get {
+                return ResourceManager.GetString("Tab2Name", resourceCulture);
             }
         }
         

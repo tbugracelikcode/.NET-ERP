@@ -231,6 +231,12 @@
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Aktiflik:</value>
   </data>
+  <data name="IsProductionScreenSettingUser" xml:space="preserve">
+    <value>Üretim Ekranı Ayar Kullanıcısı</value>
+  </data>
+  <data name="IsProductionScreenUserLabel" xml:space="preserve">
+    <value>Üretim Ekran Kullanıcısı</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
@@ -249,6 +255,9 @@
   <data name="NameLabel" xml:space="preserve">
     <value>Personel Adı:</value>
   </data>
+  <data name="ProductionScreenPasswordLabel" xml:space="preserve">
+    <value>Üretim Ekranı Parolası</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
@@ -257,6 +266,9 @@
   </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>Genel Bilgiler</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Üretim Ekranı Kullanıcı Bilgileri</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Personel Kayıtları</value>

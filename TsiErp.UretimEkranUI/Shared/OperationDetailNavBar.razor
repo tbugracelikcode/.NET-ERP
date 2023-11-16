@@ -1,0 +1,70 @@
+﻿@using TsiErp.UretimEkranUI.Services;
+
+
+@inject NavigationManager NavigationManager;
+
+<style>
+    .scroller {
+        height: calc(100vh - 160px) !important;
+        overflow-y: auto;
+        width: 287px;
+    }
+
+        .scroller::-webkit-scrollbar, scrollbar-thumb
+        .scroller::-webkit-scrollbar-thumb {
+            width: 8px;
+            height: 110px;
+            border-radius: 4px;
+            position: center;
+        }
+
+        .scroller::-webkit-scrollbar-thumb {
+            box-shadow: inset 0 0 0 10px #313C75;
+            border-radius: 4px;
+        }
+
+        .scroller::-webkit-scrollbar-track {
+            width: 28px;
+        }
+
+    .separator {
+        border: 1px solid #FFFFFF;
+        opacity: 0.14;
+        width: 247px;
+        margin: 1rem;
+        margin-top: 0px;
+    }
+</style>
+
+<div>
+
+    <div class="sidebar">
+        <DxTreeView AllowSelectNodes="true" style="min-height: 90vh;" CssClass=" app-sidebar" NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick">
+
+            <Nodes>
+
+                <DxTreeViewNode Text="Operasyon" IconCssClass="fa fa-warehouse" Expanded=true>
+                    <Nodes>
+                        <DxTreeViewNode Text="Ayar Yap" NavigateUrl="/operation-adjustment" IconCssClass="fa fa-warehouse" />
+                        <DxTreeViewNode Text="Operasyonu Başlat" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
+                        <DxTreeViewNode Text="Operasyonu Duraklat" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
+                        <DxTreeViewNode Text="Hurda Adet Gir" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
+                        <DxTreeViewNode Text="Operasyonu Bitir" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
+                    </Nodes>
+                </DxTreeViewNode>
+
+
+                <DxTreeViewNode Text="Diğer" IconCssClass="fa fa-warehouse" Expanded=true>
+                    <Nodes>
+                        <DxTreeViewNode Text="Teknik Resimler" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
+                        <DxTreeViewNode Text="Operatör Değiştir" NavigateUrl="#" IconCssClass="fa fa-warehouse" />
+                    </Nodes>
+                </DxTreeViewNode>
+
+            </Nodes>
+
+        </DxTreeView>
+    </div>
+
+</div>
+

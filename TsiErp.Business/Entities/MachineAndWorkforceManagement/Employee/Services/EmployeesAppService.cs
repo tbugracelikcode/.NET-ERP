@@ -77,7 +77,10 @@ namespace TsiErp.Business.Entities.Employee.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
-                Name = input.Name
+                Name = input.Name,
+                IsProductionScreenUser = input.IsProductionScreenUser,
+                ProductionScreenPassword = input.ProductionScreenPassword,
+                IsProductionScreenSettingUser = input.IsProductionScreenSettingUser
             });
 
             var employees = queryFactory.Insert<SelectEmployeesDto>(query, "Id", true);
@@ -106,7 +109,7 @@ namespace TsiErp.Business.Entities.Employee.Services
         public async Task<IDataResult<SelectEmployeesDto>> GetAsync(Guid id)
         {
             var query = queryFactory
-                    .Query().From(Tables.Employees).Select<Employees>(e => new { e.Surname, e.Birthday, e.BloodType, e.CellPhone, e.HomePhone, e.City, e.Name, e.Address, e.Code, e.DataOpenStatus, e.DataOpenStatusUserId, e.DepartmentID, e.District, e.Email, e.Id, e.IDnumber, e.IsActive })
+                    .Query().From(Tables.Employees).Select<Employees>(e => new { e.Surname, e.Birthday, e.BloodType, e.CellPhone, e.HomePhone, e.City, e.Name, e.Address, e.Code, e.DataOpenStatus, e.DataOpenStatusUserId, e.DepartmentID, e.District, e.Email, e.Id, e.IDnumber, e.IsActive, e.ProductionScreenPassword,e.IsProductionScreenSettingUser, e.IsProductionScreenUser })
                         .Join<Departments>
                         (
                             d => new { Department = d.Name, DepartmentID = d.Id },
@@ -130,7 +133,7 @@ namespace TsiErp.Business.Entities.Employee.Services
             var query = queryFactory
                .Query()
                .From(Tables.Employees)
-               .Select<Employees>(e => new { e.Surname, e.Birthday, e.BloodType, e.CellPhone, e.HomePhone, e.City, e.Name, e.Address, e.Code, e.DataOpenStatus, e.DataOpenStatusUserId, e.DepartmentID, e.District, e.Email, e.Id, e.IDnumber, e.IsActive })
+               .Select<Employees>(e => new { e.Surname, e.Birthday, e.BloodType, e.CellPhone, e.HomePhone, e.City, e.Name, e.Address, e.Code, e.DataOpenStatus, e.DataOpenStatusUserId, e.DepartmentID, e.District, e.Email, e.Id, e.IDnumber, e.IsActive, e.ProductionScreenPassword, e.IsProductionScreenSettingUser, e.IsProductionScreenUser })
                    .Join<Departments>
                    (
                        d => new { Department = d.Name },
@@ -189,7 +192,10 @@ namespace TsiErp.Business.Entities.Employee.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = DateTime.Now,
-                LastModifierId = LoginedUserService.UserId
+                LastModifierId = LoginedUserService.UserId,
+                IsProductionScreenUser = input.IsProductionScreenUser,
+                ProductionScreenPassword = input.ProductionScreenPassword,
+                IsProductionScreenSettingUser = input.IsProductionScreenSettingUser
             }).Where(new { Id = input.Id }, true, true, "");
 
             var employees = queryFactory.Update<SelectEmployeesDto>(query, "Id", true);
@@ -232,7 +238,9 @@ namespace TsiErp.Business.Entities.Employee.Services
                 Id = id,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
-
+                IsProductionScreenUser = entity.IsProductionScreenUser,
+                ProductionScreenPassword = entity.ProductionScreenPassword,
+                IsProductionScreenSettingUser = entity.IsProductionScreenSettingUser
             }).Where(new { Id = id }, true, true, "");
 
             var employees = queryFactory.Update<SelectEmployeesDto>(query, "Id", true);
