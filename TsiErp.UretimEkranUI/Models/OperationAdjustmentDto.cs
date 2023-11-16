@@ -12,13 +12,11 @@ namespace TsiErp.UretimEkranUI.Models
 
         public string SettingUserName { get; set; }
 
+        public string SettingUserPassword { get; set; }
+
         public DateTime AdjustmentStartDate { get; set; }
 
-        public TimeSpan AdjustmentStartTime { get; set; }
-
         public DateTime AdjustmentEndDate { get; set; }
-
-        public TimeSpan AdjustmentEndTime { get; set; }
 
         public decimal SettingQuantity { get; set; }
 
@@ -30,5 +28,10 @@ namespace TsiErp.UretimEkranUI.Models
         /// 5- Ayar Tamamlandı
         /// </summary>
         public int AdjustmentState { get; set; }
+
+
+        public DateTime QualitControlApprovalStartDate { get; set; }
+
+        public DateTime QualitControlApprovalEndDate { get; set; }
     }
 }

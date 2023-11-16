@@ -35,7 +35,7 @@
 
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <WorkOrderDetailBreadCrumbSecond StationCode=@AppService.CurrentOperation.StationCode OperationName=@AppService.CurrentOperation.ProductsOperationName EmployeeName=@AppService.CurrentOperation.EmployeeName/>
+                            <WorkOrderDetailBreadCrumbSecond StationCode=@AppService.CurrentOperation.StationCode OperationName=@AppService.CurrentOperation.ProductsOperationName EmployeeName=@AppService.CurrentOperation.EmployeeName />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -53,7 +53,8 @@
                                 <Rows>
                                     <DxGridLayoutRow Height="8%" />
                                     <DxGridLayoutRow Height="15%" />
-                                    <DxGridLayoutRow Height="25%" />
+                                    <DxGridLayoutRow Height="15%" />
+                                    <DxGridLayoutRow Height="15%" />
                                     <DxGridLayoutRow Height="15%" />
                                 </Rows>
 
@@ -61,6 +62,7 @@
                                     <DxGridLayoutColumn Width="2%" />
                                     <DxGridLayoutColumn Width="30%" />
                                     <DxGridLayoutColumn Width="2%" />
+                                    <DxGridLayoutColumn Width="5%" />
                                     <DxGridLayoutColumn Width="30%" />
                                     <DxGridLayoutColumn Width="2%" />
                                     <DxGridLayoutColumn Width="30%" />
@@ -69,34 +71,77 @@
 
                                 <Items>
 
-                                    <DxGridLayoutItem Row="0" Column="1" RowSpan="1" ColumnSpan="3">
-                                        <Template>
-                                            <br />
-                                            <label class="TSIOperationPageModalLabel"><strong>Ayar Yapan Kullanıcı </strong></label><br />
-                                            <SfTextBox CssClass="TSILargeButtonEdit" @ref="@EmployeesButtonEdit" Created="@EmployeesOnCreateIcon" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
-
-                                        </Template>
-                                    </DxGridLayoutItem>
-
-                                    <DxGridLayoutItem Row="0" Column="5">
+                                    <DxGridLayoutItem Row="0" Column="1" RowSpan="1" ColumnSpan="2">
                                         <Template>
                                             <br />
                                             <br />
-                                            <SfButton CssClass="TSIOperationPageButton" Disabled=@StartAdjustmentButtonDisabled><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Ayara Başla</SfButton>
+                                            <label class="TSIOperationPageModalLabel"><strong>Ayar Yapan Kullanıcı </strong></label>
 
+                                            <SfTextBox CssClass="TSILargeButtonEdit" @ref="@EmployeesButtonEdit" Created="@EmployeesOnCreateIcon" ShowClearButton=true ValueChange="EmployeesOnValueChange" @bind-Value="AppService.CurrentOperation.OperationAdjustment.SettingUserName" Enabled=@SettingUserComponenetEnabled></SfTextBox>
                                         </Template>
-                                    </DxGridLayoutItem>
-
-                                    <DxGridLayoutItem Row="1" Column="1">
-                                        <Template>
-                                        </Template>
-                                    </DxGridLayoutItem>
-
-                                    <DxGridLayoutItem Row="1" Column="3">
+                                    </DxGridLayoutItem> 
+                                    
+                                    <DxGridLayoutItem Row="0" Column="4" RowSpan="1" ColumnSpan="2">
                                         <Template>
 
+                                            <br />
+                                            <br />
+                                            <label class="TSIOperationPageModalLabel"><strong>Ayar Yapan Kullanıcı Şifresi </strong></label>
+
+                                            <SfTextBox CssClass="TSILargeButtonEdit" @bind-Value="SettingUserWrittenPassword" Type="Syncfusion.Blazor.Inputs.InputType.Password" Enabled=@SettingUserComponenetEnabled></SfTextBox>
+
                                         </Template>
                                     </DxGridLayoutItem>
+
+                                    <DxGridLayoutItem Row="2" Column="1">
+                                        <Template>
+                                            <br />
+                                            <SfButton CssClass="TSIOperationPageButton" OnClick="StartAdjustmentButtonClick" Disabled=@StartAdjustmenButtonDisabled><SfIcon Size="IconSize.Medium" Name="IconName.Settings"></SfIcon>&nbsp;Ayara Başla</SfButton>
+
+                                        </Template>
+                                    </DxGridLayoutItem>
+
+                                    <DxGridLayoutItem Row="2" Column="4"  ColumnSpan="2">
+                                        <Template>
+                                            <br />
+                                            <label class="TSIOperationPageModalLabel"><strong>Ayar Süresi </strong></label>
+
+                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="@AdjustmentStartTime" Readonly=true></SfTextBox>
+
+                                        </Template>
+                                    </DxGridLayoutItem>
+
+                                    <DxGridLayoutItem Row="3" Column="1">
+                                        <Template>
+                                            <br />
+                                            <SfButton CssClass="TSIOperationPageAdjustmentButton" OnClick="SendQualityControlButtonClick" Disabled=@SendQualityControlApprovalButtonDisabled><SfIcon Size="IconSize.Medium" Name="IconName.CircleCheck"></SfIcon>&nbsp;Kalite Kontrol Onaya Gönder</SfButton>
+
+                                        </Template>
+                                    </DxGridLayoutItem>
+
+                                    <DxGridLayoutItem Row="3" Column="4" ColumnSpan="2">
+                                        <Template>
+                                            <br />
+                                            <label class="TSIOperationPageModalLabel"><strong>Kalite Kontrol Onay Süresi </strong></label>
+
+                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="@QualityControlApprovalStartTime" Readonly=true></SfTextBox>
+
+                                        </Template>
+                                    </DxGridLayoutItem>
+
+                                    <DxGridLayoutItem Row="4" Column="1">
+                                        <Template>
+                                            <br />
+                                            <SfButton CssClass="TSIOperationPageButton" OnClick="FinishAdjustmentButtonClick" Disabled=@FinishAdjustmentButtonDisabled><SfIcon Size="IconSize.Medium" Name="IconName.Export"></SfIcon>&nbsp;Ayarı Bitir</SfButton>
+
+                                        </Template>
+                                    </DxGridLayoutItem>
+
+                                    @*<DxGridLayoutItem Row="1" Column="3">
+                                        <Template>
+
+                                        </Template>
+                                    </DxGridLayoutItem> *@
 
                                 </Items>
                             </DxGridLayout>
@@ -109,4 +154,65 @@
 
         </Items>
     </DxGridLayout>
+
+
+    @if (SelectEmployeesPopupVisible)
+    {
+        <DxPopup @bind-Visible="SelectEmployeesPopupVisible"
+                 ShowFooter="true"
+                 CloseOnEscape="false"
+                 CloseOnOutsideClick="false"
+                 HeaderText="Personeller"
+                 Width="64%"
+                 Height="60%"
+                 MinWidth="600px"
+                 MinHeight="600px"
+                 HeaderCssClass="HeaderTitleCss">
+            <BodyTemplate>
+
+                <DxGridLayout CssClass="TSIGridLayout">
+
+                    <Rows>
+                        <DxGridLayoutRow Height="95%" />
+                    </Rows>
+
+                    <Columns>
+                        <DxGridLayoutColumn Width="0%" />
+                        <DxGridLayoutColumn Width="100%" />
+                        <DxGridLayoutColumn Width="0%" />
+                    </Columns>
+
+                    <Items>
+
+                        <DxGridLayoutItem Row="0" Column="1">
+                            <Template>
+                                <SfGrid ID="EmployeesGrid" ShowColumnMenu="true" DataSource="@EmployeesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                    <GridEvents OnRecordDoubleClick="@EmployeesDoubleClickHandler" TValue="ListEmployeesDto"></GridEvents>
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                    <GridPageSettings PageSizes="true"></GridPageSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.Code) HeaderText="PERSONEL KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.Name) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.Surname) HeaderText="PERSONEL SOYADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    </GridColumns>
+
+                                </SfGrid>
+                            </Template>
+                        </DxGridLayoutItem>
+
+
+                    </Items>
+                </DxGridLayout>
+
+            </BodyTemplate>
+            <FooterContentTemplate>
+            </FooterContentTemplate>
+        </DxPopup>
+    }
+
 </div>

@@ -4,6 +4,7 @@ using Microsoft.Maui.LifecycleEvents;
 using Syncfusion.Blazor;
 using System.Reflection;
 using TsiErp.Business;
+using TsiErp.Business.Entities.Employee.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.User.Services;
 using TsiErp.Business.Entities.WorkOrder.Services;
@@ -89,6 +90,7 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<IFicheNumbersAppService, FicheNumbersAppService>();
             builder.Services.AddScoped<IUsersAppService, UsersAppService>();
             builder.Services.AddScoped<IWorkOrdersAppService, WorkOrdersAppService>();
+            builder.Services.AddScoped<IEmployeesAppService, EmployeesAppService>();
 
 
 

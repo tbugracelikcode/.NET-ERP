@@ -14,12 +14,8 @@ namespace TsiErp.UretimEkranUI.Pages
     {
 
         public string ElapsedTime { get; set; } = "0:0:0";
-        public string ElapsedTime1 { get; set; } = "0:0:0";
-        public string ElapsedTime2 { get; set; } = "0:0:0";
 
         System.Timers.Timer _timer = new System.Timers.Timer(1);
-        System.Timers.Timer _timer1 = new System.Timers.Timer(1);
-        System.Timers.Timer _timer2 = new System.Timers.Timer(1);
 
         DateTime StartTime = DateTime.Now;
 
@@ -29,19 +25,15 @@ namespace TsiErp.UretimEkranUI.Pages
 
         protected override async void OnInitialized()
         {
-                QualityPercent = 1;
-            StartTimer();
+            QualityPercent = 1;
+            //StartTimer();
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             DateTime currentTime = e.SignalTime;
-
+            
             ElapsedTime = currentTime.Subtract(StartTime).Hours + ":" + currentTime.Subtract(StartTime).Minutes + ":" + currentTime.Subtract(StartTime).Seconds;
-
-            //ElapsedTime1 = currentTime.Subtract(StartTime).Hours + ":" + currentTime.Subtract(StartTime).Minutes + ":" + currentTime.Subtract(StartTime).Seconds;
-
-            //ElapsedTime2 = currentTime.Subtract(StartTime).Hours + ":" + currentTime.Subtract(StartTime).Minutes + ":" + currentTime.Subtract(StartTime).Seconds;
 
             InvokeAsync(StateHasChanged);
         }
@@ -53,14 +45,6 @@ namespace TsiErp.UretimEkranUI.Pages
             _timer.Elapsed += OnTimedEvent;
             _timer.AutoReset = true;
             _timer.Enabled = true;
-            //_timer1 = new System.Timers.Timer(1);
-            //_timer1.Elapsed += OnTimedEvent;
-            //_timer1.AutoReset = true;
-            //_timer1.Enabled = true;
-            //_timer2 = new System.Timers.Timer(1);
-            //_timer2.Elapsed += OnTimedEvent;
-            //_timer2.AutoReset = true;
-            //_timer2.Enabled = true;
         }
 
         private async void ProducedQuantityAdded()

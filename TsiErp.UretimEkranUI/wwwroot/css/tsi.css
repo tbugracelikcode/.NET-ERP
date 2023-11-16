@@ -52,6 +52,33 @@
         border: 2px solid;
     }
 
+.TSIOperationPageAdjustmentButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #505050 !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 60px;
+    width: 290px;
+    border: 2px solid;
+
+}
+
+    .TSIOperationPageAdjustmentButton:hover {
+        border-color: #565656 !important;
+        background-color: #505050 !important;
+        color: white !important;
+        font-size: 18px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 60px;
+        width: 290px;
+        border: 2px solid;
+    }
+
 .TSITxtBox {
     font-size: 14px;
     font-family: Arial, Helvetica, sans-serif;
