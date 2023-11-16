@@ -117,11 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CalculateButton" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>PLANNING CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Planning Code:</value>
+  </data>
+  <data name="Date_" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Date:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -135,6 +150,9 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Maintenance Material Requirements Planning</value>
   </data>
@@ -146,6 +164,36 @@
   </data>
   <data name="ExportTitle" xml:space="preserve">
     <value>Maintenance Material Requirements Planning</value>
+  </data>
+  <data name="FilterEndDate" xml:space="preserve">
+    <value>CALCULATION END DATE</value>
+  </data>
+  <data name="FilterEndDateLabel" xml:space="preserve">
+    <value>Calculation End Date:</value>
+  </data>
+  <data name="FilterStartDate" xml:space="preserve">
+    <value>CALCULATION START DATE</value>
+  </data>
+  <data name="FilterStartDateLabel" xml:space="preserve">
+    <value>Calculation Start Date:</value>
+  </data>
+  <data name="LineGridAmount" xml:space="preserve">
+    <value>CALCULATED REQUIREMENT AMOUNT</value>
+  </data>
+  <data name="LineGridAmountOfStock" xml:space="preserve">
+    <value>STOCK AMOUNT</value>
+  </data>
+  <data name="LineGridisStockUsage" xml:space="preserve">
+    <value>WILL BE USED FROM STOCK</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="LineGridRequirementAmount" xml:space="preserve">
+    <value>PURCHASE REQUIREMENT AMOUNT</value>
+  </data>
+  <data name="LineGridUnitSetCode" xml:space="preserve">
+    <value>UNIT SET</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -174,6 +222,9 @@
   <data name="MaintenanceMRPsContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="MaintenanceMRPsContextConvertMRP" xml:space="preserve">
+    <value>Convert to MRP</value>
+  </data>
   <data name="MaintenanceMRPsContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -188,6 +239,12 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="TimeLeftforMaintenanceLabel" xml:space="preserve">
+    <value>Time Left for Maintenance:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Maintenance Material Requirements Planning</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Maintenance Management &gt; Transactions</value>

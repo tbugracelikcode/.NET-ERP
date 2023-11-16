@@ -15,6 +15,14 @@ namespace TsiErp.Entities.Entities.MaintenanceManagement.PlannedMaintenance.Dtos
         /// </summary>
         public string RegistrationNo { get; set; }
         /// <summary>
+        /// İstasyon ID
+        /// </summary>
+        public Guid? StationID { get; set; }
+        /// <summary>
+        /// Periyot ID
+        /// </summary>
+        public Guid? PeriodID { get; set; }
+        /// <summary>
         /// İstasyon Kodu
         /// </summary>
         public string StationCode { get; set; }

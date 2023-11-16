@@ -259,6 +259,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bakım Malzeme İhtiyaç Planlaması:.
+        /// </summary>
+        public static string IsMaintenanceMRPLabel {
+            get {
+                return ResourceManager.GetString("IsMaintenanceMRPLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PLANLANAN İHTİYAÇ MİKTARI.
         /// </summary>
         public static string LineGridAmount {
@@ -372,6 +381,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         public static string LoadingText {
             get {
                 return ResourceManager.GetString("LoadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAKIM MALZEME İHTİYAÇ PLANLAMASI.
+        /// </summary>
+        public static string MaintenanceMRPCode {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPCode", resourceCulture);
             }
         }
         

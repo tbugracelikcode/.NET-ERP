@@ -20,6 +20,18 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos
         /// Durum
         /// </summary>
         public string State_ { get; set; }
+        /// <summary>
+        /// Bakım MRP'den mi
+        /// </summary>
+        public bool IsMaintenanceMRP { get; set; }
+        /// <summary>
+        /// Bakım MRP ID
+        /// </summary>
+        public Guid? MaintenanceMRPID { get; set; }
+        /// <summary>
+        /// Bakım MRP Kodu
+        /// </summary>
+        public string MaintenanceMRPCode { get; set; }
 
     }
 }

@@ -30,5 +30,15 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRP
         /// Durum
         /// </summary>
         public string State_ { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Bakım MRP'den mi
+        /// </summary>
+        public bool IsMaintenanceMRP { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Bakım MRP ID
+        /// </summary>
+        public Guid? MaintenanceMRPID { get; set; }
     }
 }

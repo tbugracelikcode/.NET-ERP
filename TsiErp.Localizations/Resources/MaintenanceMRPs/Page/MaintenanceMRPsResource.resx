@@ -117,11 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CalculateButton" xml:space="preserve">
+    <value>Hesapla</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>PLANLAMA KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Planlama Kodu:</value>
+  </data>
+  <data name="Date_" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Tarih:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -135,6 +150,9 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Bakım Malzemesi İhtiyaç Planlaması</value>
   </data>
@@ -146,6 +164,36 @@
   </data>
   <data name="ExportTitle" xml:space="preserve">
     <value>Bakım Malzemesi İhtiyaç Planlaması</value>
+  </data>
+  <data name="FilterEndDate" xml:space="preserve">
+    <value>HESAPLAMA BİTİŞ TARİHİ</value>
+  </data>
+  <data name="FilterEndDateLabel" xml:space="preserve">
+    <value>Hesaplama Bitiş Tarihi:</value>
+  </data>
+  <data name="FilterStartDate" xml:space="preserve">
+    <value>HESAPLAMA BAŞLANGIÇ TARİHİ</value>
+  </data>
+  <data name="FilterStartDateLabel" xml:space="preserve">
+    <value>Hesaplama Başlangıç Tarihi:</value>
+  </data>
+  <data name="LineGridAmount" xml:space="preserve">
+    <value>HESAPLANAN İHTİYAÇ MİKTARI</value>
+  </data>
+  <data name="LineGridAmountOfStock" xml:space="preserve">
+    <value>STOK MİKTARI</value>
+  </data>
+  <data name="LineGridisStockUsage" xml:space="preserve">
+    <value>STOKTAN KULLANILACAK</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="LineGridRequirementAmount" xml:space="preserve">
+    <value>SATIN ALMA İHTİYAÇ MİKTARI</value>
+  </data>
+  <data name="LineGridUnitSetCode" xml:space="preserve">
+    <value>BİRİM SETİ</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -174,6 +222,9 @@
   <data name="MaintenanceMRPsContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>
+  <data name="MaintenanceMRPsContextConvertMRP" xml:space="preserve">
+    <value>MRP'ye Dönüştür</value>
+  </data>
   <data name="MaintenanceMRPsContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
@@ -188,6 +239,12 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="TimeLeftforMaintenanceLabel" xml:space="preserve">
+    <value>Bakıma Kalan Süre:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Bakım Malzemesi İhtiyaç Planlaması</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Bakım Yönetimi &gt; Hareketler</value>
