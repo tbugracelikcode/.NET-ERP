@@ -18,7 +18,9 @@ using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
 using TsiErp.ErpUI.Helpers;
+using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
@@ -45,6 +47,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         #region File Upload Değişkenleri
 
         //List<IFileListEntry> files = new List<IFileListEntry>();
+
+        public List<IFileListEntry> lineFiles = new List<IFileListEntry>();
 
         List<System.IO.FileInfo> uploadedfiles = new List<System.IO.FileInfo>();
 
@@ -98,6 +102,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                 OperationPictureDataSource.DrawingDomain = Navigation.BaseUri;
                 OperationPictureDataSource.DrawingFilePath = "UploadedFiles\\ProductOperationPictures\\" + DataSource.ProductCode + "\\" + DataSource.OperationName + "\\" + "Line-" + OperationPictureDataSource.LineNr + "\\";
 
+                lineFiles.Add(entryFiles[0]);
+
                 byte[] data;
                 using (MemoryStream stream = new MemoryStream())
                 {
@@ -116,7 +122,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         private void Remove(SelectOperationPicturesDto file)
         {
-            OperationPictureDataSource = new SelectOperationPicturesDto();
+            OperationPictureDataSource = new SelectOperationPicturesDto {
+            CreationDate_ = DateTime.Today};
             InvokeAsync(() => StateHasChanged());
         }
 
@@ -463,6 +470,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             HideLinesPopup();
 
             await InvokeAsync(StateHasChanged);
+        }
+
+        public override void HideEditPage()
+        {
+            lineFiles.Clear();
+            base.HideEditPage();
         }
 
         #endregion
@@ -920,91 +933,91 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         #endregion
 
+       
         protected override async Task OnSubmit()
         {
-            SelectOperationalQualityPlansDto result;
+            string productcode = DataSource.ProductCode;
+            string operationname = DataSource.OperationName;
+            string lineNr = OperationPictureDataSource.LineNr.ToString();
+            string rootPath = "UploadedFiles/ProductOperationPictures/" + productcode + "/" + operationname + "/" + "Line-" + lineNr;
 
-            if (DataSource.Id == Guid.Empty)
+            try
             {
-                var createInput = ObjectMapper.Map<SelectOperationalQualityPlansDto, CreateOperationalQualityPlansDto>(DataSource);
+                #region File Upload
 
-                result = (await OperationalQualityPlansAppService.CreateAsync(createInput)).Data;
 
-                if (result != null)
+                foreach (var file in lineFiles)
+                {
+                    string fileName = file.Name;
+                   
+
+                    await FileUploadService.UploadTechnicalDrawing(file, rootPath, fileName);
+                    await InvokeAsync(() => StateHasChanged());
+
+
+                }
+
+                lineFiles.Clear();
+
+                #endregion
+
+                #region Submit İşlemleri
+
+                SelectOperationalQualityPlansDto result;
+
+                if (DataSource.Id == Guid.Empty)
+                {
+                    var createInput = ObjectMapper.Map<SelectOperationalQualityPlansDto, CreateOperationalQualityPlansDto>(DataSource);
+
+                    result = (await CreateAsync(createInput)).Data;
+
+                    if (result != null)
+                        DataSource.Id = result.Id;
+                }
+                else
+                {
+                    var updateInput = ObjectMapper.Map<SelectOperationalQualityPlansDto, UpdateOperationalQualityPlansDto>(DataSource);
+
+                    result = (await UpdateAsync(updateInput)).Data;
+                }
+
+                if (result == null)
+                {
+
+                    return;
+                }
+
+                await GetListDataSourceAsync();
+
+                var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+                HideEditPage();
+
+                if (DataSource.Id == Guid.Empty)
                 {
                     DataSource.Id = result.Id;
-
-                    foreach (var item in DataSource.SelectOperationPictures)
-                    {
-                        string rootPath = Path.Combine(FileUploadService.GetRootPath(), item.DrawingFilePath);
-
-                        if (!Directory.Exists(rootPath))
-                        {
-                            Directory.CreateDirectory(rootPath);
-                        }
-
-                        var path = Path.Combine(rootPath, item.UploadedFileName);
-
-                        File.WriteAllBytes(path, item.FileByteArray);
-
-                        var fileInfo = new System.IO.FileInfo(path);
-
-                        if (fileInfo.Length == item.UploadedFiles.Size)
-                        {
-                            continue;
-                        }
-                    }
                 }
+
+                if (savedEntityIndex > -1)
+                    SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+                else
+                    SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+                #endregion
             }
-            else
+            catch (Exception ex) 
             {
-                var updateInput = ObjectMapper.Map<SelectOperationalQualityPlansDto, UpdateOperationalQualityPlansDto>(DataSource);
 
-                result = (await OperationalQualityPlansAppService.UpdateAsync(updateInput)).Data;
-
-                foreach (var item in DataSource.SelectOperationPictures)
+                string webHostEnvironment =  FileUploadService.GetRootPath();
+                string deletedRootPath = webHostEnvironment + "/" + rootPath;
+                System.IO.FileInfo pdfFile = new System.IO.FileInfo(rootPath);
+                if (pdfFile.Exists)
                 {
-                    if (item.Id == Guid.Empty)
-                    {
-                        string rootPath = Path.Combine(FileUploadService.GetRootPath(), item.DrawingFilePath);
-
-                        if (!Directory.Exists(rootPath))
-                        {
-                            Directory.CreateDirectory(rootPath);
-                        }
-
-                        var path = Path.Combine(rootPath, item.UploadedFileName);
-
-                        File.WriteAllBytes(path, item.FileByteArray);
-
-                        var fileInfo = new System.IO.FileInfo(path);
-
-                        if (fileInfo.Length == item.UploadedFiles.Size)
-                        {
-                            continue;
-                        }
-                    }
+                    pdfFile.Delete();
                 }
             }
 
-            await GetListDataSourceAsync();
-
-            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
-
-            HideEditPage();
-
-            if (DataSource.Id == Guid.Empty)
-            {
-                DataSource.Id = result.Id;
-            }
-
-            if (savedEntityIndex > -1)
-                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
-            else
-                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
         }
-
-
 
         #region Kod ButtonEdit
 

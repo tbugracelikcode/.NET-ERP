@@ -80,6 +80,78 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toplam Adet:.
+        /// </summary>
+        public static string AmountAggregate {
+            get {
+                return ResourceManager.GetString("AmountAggregate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Miktar:.
+        /// </summary>
+        public static string AmountEntryAmount_Label {
+            get {
+                return ResourceManager.GetString("AmountEntryAmount_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarih:.
+        /// </summary>
+        public static string AmountEntryDate_Label {
+            get {
+                return ResourceManager.GetString("AmountEntryDate_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gelen Miktar Giriş İşlemleri.
+        /// </summary>
+        public static string AmountEntryLineCrudPopupModalTitle {
+            get {
+                return ResourceManager.GetString("AmountEntryLineCrudPopupModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MİKTAR.
+        /// </summary>
+        public static string AmountEntryLineGridAmount_ {
+            get {
+                return ResourceManager.GetString("AmountEntryLineGridAmount_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TARİH.
+        /// </summary>
+        public static string AmountEntryLineGridDate_ {
+            get {
+                return ResourceManager.GetString("AmountEntryLineGridDate_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AÇIKLAMA.
+        /// </summary>
+        public static string AmountEntryLineGridDescription_ {
+            get {
+                return ResourceManager.GetString("AmountEntryLineGridDescription_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gelen Miktar Girişleri.
+        /// </summary>
+        public static string AmountEntryLinePopupModalTitle {
+            get {
+                return ResourceManager.GetString("AmountEntryLinePopupModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -136,9 +208,54 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
+        public static string ContractTrackingFicheAmountEntryLineContextAdd {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheAmountEntryLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ContractTrackingFicheAmountEntryLineContextChange {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheAmountEntryLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ContractTrackingFicheAmountEntryLineContextDelete {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheAmountEntryLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ContractTrackingFicheAmountEntryLineContextRefresh {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheAmountEntryLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
         public static string ContractTrackingFicheContextAdd {
             get {
                 return ResourceManager.GetString("ContractTrackingFicheContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gelen Miktar Girişi.
+        /// </summary>
+        public static string ContractTrackingFicheContextAmountEntry {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheContextAmountEntry", resourceCulture);
             }
         }
         
@@ -548,6 +665,15 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toplam Gerçekleşen Adet:.
+        /// </summary>
+        public static string OccuredAmountAggregate {
+            get {
+                return ResourceManager.GetString("OccuredAmountAggregate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PLANLANAN MİKTAR.
         /// </summary>
         public static string PlannedQuantity {
@@ -562,6 +688,15 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         public static string ProducedQuantity {
             get {
                 return ResourceManager.GetString("ProducedQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string ProductCode {
+            get {
+                return ResourceManager.GetString("ProductCode", resourceCulture);
             }
         }
         

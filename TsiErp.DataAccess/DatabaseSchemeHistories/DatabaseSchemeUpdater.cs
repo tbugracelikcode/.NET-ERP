@@ -91,6 +91,8 @@ using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.ContractOperationPicture;
 using TsiErp.Entities.Entities.QualityControl.Report8D;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApproval;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPC;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPCLine;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPC;
@@ -119,6 +121,13 @@ using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber;
 using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFiche;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecord;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -3704,6 +3713,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
             }
             #endregion
 
+            #region ContractTrackingFicheAmountEntryLines Table Created
+            Table ContractTrackingFicheAmountEntryLinesTable = model.CreateTable(Tables.ContractTrackingFicheAmountEntryLines);
+
+            if (ContractTrackingFicheAmountEntryLinesTable != null)
+            {
+                var properties = (typeof(ContractTrackingFicheAmountEntryLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ContractTrackingFicheAmountEntryLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ContractTrackingFicheAmountEntryLinesTable, "PK_" + ContractTrackingFicheAmountEntryLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ContractTrackingFicheAmountEntryLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    ContractTrackingFicheAmountEntryLinesTable.Columns.Add(column);
+                }
+
+                ContractTrackingFicheAmountEntryLinesTable.Create();
+            }
+            #endregion
+
             #region ContractUnsuitabilityReports Table Created
             Table ContractUnsuitabilityReportsTable = model.CreateTable(Tables.ContractUnsuitabilityReports);
 
@@ -4086,6 +4130,286 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 CustomerComplaintReportsTable.Create();
+            }
+            #endregion
+
+            #region FirstProductApprovals Table Created
+            Table FirstProductApprovalsTable = model.CreateTable(Tables.FirstProductApprovals);
+
+            if (FirstProductApprovalsTable != null)
+            {
+                var properties = (typeof(FirstProductApprovals)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(FirstProductApprovalsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(FirstProductApprovalsTable, "PK_" + FirstProductApprovalsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        FirstProductApprovalsTable.Indexes.Add(pkIndex);
+                    }
+
+                    FirstProductApprovalsTable.Columns.Add(column);
+                }
+
+                FirstProductApprovalsTable.Create();
+            }
+            #endregion
+
+            #region FirstProductApprovalLines Table Created
+            Table FirstProductApprovalLinesTable = model.CreateTable(Tables.FirstProductApprovalLines);
+
+            if (FirstProductApprovalLinesTable != null)
+            {
+                var properties = (typeof(FirstProductApprovalLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(FirstProductApprovalLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(FirstProductApprovalLinesTable, "PK_" + FirstProductApprovalLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        FirstProductApprovalLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    FirstProductApprovalLinesTable.Columns.Add(column);
+                }
+
+                FirstProductApprovalLinesTable.Create();
+            }
+            #endregion
+
+            #region PackageFiches Table Created
+            Table PackageFichesTable = model.CreateTable(Tables.PackageFiches);
+
+            if (PackageFichesTable != null)
+            {
+                var properties = (typeof(PackageFiches)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(PackageFichesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PackageFichesTable, "PK_" + PackageFichesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        PackageFichesTable.Indexes.Add(pkIndex);
+                    }
+
+                    PackageFichesTable.Columns.Add(column);
+                }
+
+                PackageFichesTable.Create();
+            }
+            #endregion
+
+            #region PackageFicheLines Table Created
+            Table PackageFicheLinesTable = model.CreateTable(Tables.PackageFicheLines);
+
+            if (PackageFicheLinesTable != null)
+            {
+                var properties = (typeof(PackageFicheLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(PackageFicheLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PackageFicheLinesTable, "PK_" + PackageFicheLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        PackageFicheLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    PackageFicheLinesTable.Columns.Add(column);
+                }
+
+                PackageFicheLinesTable.Create();
+            }
+            #endregion
+
+            #region PalletRecords Table Created
+            Table PalletRecordsTable = model.CreateTable(Tables.PalletRecords);
+
+            if (PalletRecordsTable != null)
+            {
+                var properties = (typeof(PalletRecords)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(PalletRecordsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PalletRecordsTable, "PK_" + PalletRecordsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        PalletRecordsTable.Indexes.Add(pkIndex);
+                    }
+
+                    PalletRecordsTable.Columns.Add(column);
+                }
+
+                PalletRecordsTable.Create();
+            }
+            #endregion
+
+            #region PalletRecordLines Table Created
+            Table PalletRecordLinesTable = model.CreateTable(Tables.PalletRecordLines);
+
+            if (PalletRecordLinesTable != null)
+            {
+                var properties = (typeof(PalletRecordLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(PalletRecordLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PalletRecordLinesTable, "PK_" + PalletRecordLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        PalletRecordLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    PalletRecordLinesTable.Columns.Add(column);
+                }
+
+                PalletRecordLinesTable.Create();
+            }
+            #endregion
+
+            #region MaintenanceMRPs Table Created
+            Table MaintenanceMRPsTable = model.CreateTable(Tables.MaintenanceMRPs);
+
+            if (MaintenanceMRPsTable != null)
+            {
+                var properties = (typeof(MaintenanceMRPs)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(MaintenanceMRPsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(MaintenanceMRPsTable, "PK_" + MaintenanceMRPsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        MaintenanceMRPsTable.Indexes.Add(pkIndex);
+                    }
+
+                    MaintenanceMRPsTable.Columns.Add(column);
+                }
+
+                MaintenanceMRPsTable.Create();
+            }
+            #endregion
+
+            #region MaintenanceMRPLines Table Created
+            Table MaintenanceMRPLinesTable = model.CreateTable(Tables.MaintenanceMRPLines);
+
+            if (MaintenanceMRPLinesTable != null)
+            {
+                var properties = (typeof(MaintenanceMRPLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(MaintenanceMRPLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(MaintenanceMRPLinesTable, "PK_" + MaintenanceMRPLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        MaintenanceMRPLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    MaintenanceMRPLinesTable.Columns.Add(column);
+                }
+
+                MaintenanceMRPLinesTable.Create();
             }
             #endregion
 

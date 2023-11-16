@@ -13,6 +13,10 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
         /// Stok Kodu
         /// </summary>
         public string ProductCode { get; set; }
+        /// <summary>
+        /// Üretim Tarihi Referansı
+        /// </summary>
+        public string ProductionDateReferance { get; set; }
 
         /// <summary>
         /// Stok Adı

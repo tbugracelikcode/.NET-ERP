@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.DocIO.DLS;
 using System.Diagnostics;
+using Tsi.Core.Utilities.Guids;
 using TsiErp.Business.Entities.Branch.Services;
 using TsiErp.Business.Entities.Currency.Services;
 using TsiErp.Business.Entities.PaymentPlan.Services;
@@ -10,6 +12,8 @@ using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Entities.TemplateOperation.Services;
 using TsiErp.Business.Entities.UnitSet.Services;
 using TsiErp.Business.Entities.Warehouse.Services;
+using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
@@ -18,6 +22,8 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabilityItem.Dtos;
@@ -26,6 +32,7 @@ using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
@@ -34,24 +41,33 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
     {
 
         private SfGrid<SelectContractTrackingFicheLinesDto> _LineGrid;
+        private SfGrid<SelectContractTrackingFicheAmountEntryLinesDto> _AmountEntryLineGrid;
 
         [Inject]
         ModalManager ModalManager { get; set; }
 
+
         SelectContractTrackingFicheLinesDto LineDataSource;
+        SelectContractTrackingFicheAmountEntryLinesDto AmountEntryLineDataSource;
+        SelectWorkOrdersDto WorkOrderDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> AmountEntryLineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectContractTrackingFicheLinesDto> GridLineList = new List<SelectContractTrackingFicheLinesDto>();
+        List<SelectContractTrackingFicheAmountEntryLinesDto> GridAmountEntryLineList = new List<SelectContractTrackingFicheAmountEntryLinesDto>();
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
         private bool LineCrudPopup = false;
+        private bool AmountEntryLineCrudPopup = false;
+        private bool AmountEntryLinePopup = false;
 
         protected override async void OnInitialized()
         {
             BaseCrudService = ContractTrackingFichesAppService;
             _L = L;
             CreateMainContextMenuItems();
+            CreateAmountEntryLineContextMenuItems();
             //CreateLineContextMenuItems();
 
         }
@@ -67,7 +83,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
             };
 
             DataSource.SelectContractTrackingFicheLines = new List<SelectContractTrackingFicheLinesDto>();
+            DataSource.SelectContractTrackingFicheAmountEntryLines = new List<SelectContractTrackingFicheAmountEntryLinesDto>();
             GridLineList = DataSource.SelectContractTrackingFicheLines;
+            GridAmountEntryLineList = DataSource.SelectContractTrackingFicheAmountEntryLines;
 
             EditPageVisible = true;
 
@@ -86,6 +104,17 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
             }
         }
 
+        protected void CreateAmountEntryLineContextMenuItems()
+        {
+            if (AmountEntryLineGridContextMenu.Count() == 0)
+            {
+                AmountEntryLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheAmountEntryLineContextAdd"], Id = "new" });
+                AmountEntryLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheAmountEntryLineContextChange"], Id = "changed" });
+                AmountEntryLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheAmountEntryLineContextDelete"], Id = "delete" });
+                AmountEntryLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheAmountEntryLineContextRefresh"], Id = "refresh" });
+            }
+        }
+
         protected void CreateMainContextMenuItems()
         {
             if (LineGridContextMenu.Count() == 0)
@@ -94,6 +123,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheContextChange"], Id = "changed" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheContextDelete"], Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheContextAmountEntry"], Id = "amountentry" });
             }
         }
 
@@ -152,6 +182,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                     await InvokeAsync(StateHasChanged);
                     break;
 
+                case "amountentry":
+                    DataSource = (await ContractTrackingFichesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    GridAmountEntryLineList = DataSource.SelectContractTrackingFicheAmountEntryLines;
+
+                    AmountEntryLinePopup = true;
+                    break;
+
                 default:
                     break;
             }
@@ -193,7 +230,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                         {
                             if (line != null)
                             {
-                                await DeleteAsync(args.RowInfo.RowData.Id);
+                                await ContractTrackingFichesAppService.DeleteLineAsync(args.RowInfo.RowData.Id);
                                 DataSource.SelectContractTrackingFicheLines.Remove(line);
                                 await GetListDataSourceAsync();
                             }
@@ -221,9 +258,83 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
             }
         }
 
+        public async void OnAmountEntryListContextMenuClick(ContextMenuClickEventArgs<SelectContractTrackingFicheAmountEntryLinesDto> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "new":
+                    AmountEntryLineDataSource = new SelectContractTrackingFicheAmountEntryLinesDto
+                    {
+                        Date_ = DateTime.Today
+                    };
+                    AmountEntryLineCrudPopup = true;
+                    AmountEntryLineDataSource.LineNr = GridAmountEntryLineList.Count + 1;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "changed":
+                    AmountEntryLineDataSource = args.RowInfo.RowData;
+                    AmountEntryLineCrudPopup = true;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "delete":
+
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+
+                    if (res == true)
+                    {
+                        var AmountEntryline = args.RowInfo.RowData;
+
+                        if (AmountEntryline.Id == Guid.Empty)
+                        {
+                            DataSource.SelectContractTrackingFicheAmountEntryLines.Remove(args.RowInfo.RowData);
+                        }
+                        else
+                        {
+                            if (AmountEntryline != null)
+                            {
+                                await ContractTrackingFichesAppService.DeleteAmountEntryLine(args.RowInfo.RowData.Id);
+                                DataSource.SelectContractTrackingFicheAmountEntryLines.Remove(AmountEntryline);
+                                await GetListDataSourceAsync();
+                            }
+                            else
+                            {
+                                DataSource.SelectContractTrackingFicheAmountEntryLines.Remove(AmountEntryline);
+                            }
+                        }
+
+                        await _AmountEntryLineGrid.Refresh();
+                        GetTotal();
+                        await InvokeAsync(StateHasChanged);
+                    }
+
+                    break;
+
+                case "refresh":
+                    await GetListDataSourceAsync();
+                    await _AmountEntryLineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         public void HideLinesPopup()
         {
             LineCrudPopup = false;
+        }
+
+        public void HideAmountEntryLinesPopup()
+        {
+            AmountEntryLineCrudPopup = false;
+        }
+
+        public void HideAmountEntryPopup()
+        {
+            AmountEntryLinePopup = false;
         }
 
         protected async Task OnLineSubmit()
@@ -261,6 +372,367 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
 
             HideLinesPopup();
             await InvokeAsync(StateHasChanged);
+
+
+        }
+
+        protected async Task OnAmountEntryLineSubmit()
+        {
+
+            if (AmountEntryLineDataSource.Id == Guid.Empty)
+            {
+                if (DataSource.SelectContractTrackingFicheAmountEntryLines.Contains(AmountEntryLineDataSource))
+                {
+                    int selectedAmountEntryLineIndex = DataSource.SelectContractTrackingFicheAmountEntryLines.FindIndex(t => t.LineNr == AmountEntryLineDataSource.LineNr);
+
+                    if (selectedAmountEntryLineIndex > -1)
+                    {
+                        DataSource.SelectContractTrackingFicheAmountEntryLines[selectedAmountEntryLineIndex] = AmountEntryLineDataSource;
+                    }
+                }
+                else
+                {
+                    DataSource.SelectContractTrackingFicheAmountEntryLines.Add(AmountEntryLineDataSource);
+                }
+            }
+            else
+            {
+                int selectedAmountEntryLineIndex = DataSource.SelectContractTrackingFicheAmountEntryLines.FindIndex(t => t.Id == AmountEntryLineDataSource.Id);
+
+                if (selectedAmountEntryLineIndex > -1)
+                {
+                    DataSource.SelectContractTrackingFicheAmountEntryLines[selectedAmountEntryLineIndex] = AmountEntryLineDataSource;
+                }
+            }
+
+            GridAmountEntryLineList = DataSource.SelectContractTrackingFicheAmountEntryLines;
+            await _AmountEntryLineGrid.Refresh();
+
+            HideAmountEntryLinesPopup();
+            await InvokeAsync(StateHasChanged);
+
+
+        }
+
+        protected override async Task OnSubmit()
+        {
+
+            int listCount = 1;
+
+            if (DataSource.SelectContractTrackingFicheLines.Count != 0)
+            {
+                foreach (var line in DataSource.SelectContractTrackingFicheLines)
+                {
+
+                    if (listCount < DataSource.SelectContractTrackingFicheLines.Count)
+                    {
+                        WorkOrderDataSource = (await WorkOrdersAppService.GetAsync(line.WorkOrderID.GetValueOrDefault())).Data;
+
+                        WorkOrderDataSource.WorkOrderState = Entities.Enums.WorkOrderStateEnum.Tamamlandi;
+                        WorkOrderDataSource.OccuredStartDate = DataSource.FicheDate_;
+                        WorkOrderDataSource.OccuredFinishDate = DataSource.FicheDate_;
+                        WorkOrderDataSource.ProducedQuantity = DataSource.Amount_;
+
+                        UpdateWorkOrdersDto updateWorkOrderModel = new UpdateWorkOrdersDto
+                        {
+                            AdjustmentAndControlTime = WorkOrderDataSource.AdjustmentAndControlTime,
+                            CurrentAccountCardID = WorkOrderDataSource.CurrentAccountCardID,
+                            IsCancel = WorkOrderDataSource.IsCancel,
+                            LineNr = WorkOrderDataSource.LineNr,
+                            LinkedWorkOrderID = WorkOrderDataSource.LinkedWorkOrderID,
+                            OccuredFinishDate = WorkOrderDataSource.OccuredFinishDate,
+                            OccuredStartDate = WorkOrderDataSource.OccuredStartDate,
+                            OperationTime = WorkOrderDataSource.OperationTime,
+                            PlannedQuantity = WorkOrderDataSource.PlannedQuantity,
+                            ProducedQuantity = WorkOrderDataSource.ProducedQuantity,
+                            ProductID = WorkOrderDataSource.ProductID,
+                            ProductionOrderID = WorkOrderDataSource.ProductionOrderID,
+                            ProductsOperationID = WorkOrderDataSource.ProductsOperationID,
+                            PropositionID = WorkOrderDataSource.PropositionID,
+                            RouteID = WorkOrderDataSource.RouteID,
+                            StationGroupID = WorkOrderDataSource.StationGroupID,
+                            StationID = WorkOrderDataSource.StationID,
+                            WorkOrderNo = WorkOrderDataSource.WorkOrderNo,
+                            WorkOrderState = 5,
+                            Id = WorkOrderDataSource.Id,
+                            CreationTime = WorkOrderDataSource.CreationTime,
+                            CreatorId = WorkOrderDataSource.CreatorId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = WorkOrderDataSource.DeleterId.GetValueOrDefault(),
+                            DeletionTime = WorkOrderDataSource.DeletionTime.GetValueOrDefault(),
+                            IsDeleted = WorkOrderDataSource.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            LastModifierId = LoginedUserService.UserId
+                        };
+
+                        await WorkOrdersAppService.UpdateAsync(updateWorkOrderModel);
+
+                        if (listCount + 1 == DataSource.SelectContractTrackingFicheLines.Count)
+                        {
+                            //var stockMovementsList = (await OperationStockMovementsAppService.GetListAsync(new ListOperationStockMovementsParameterDto())).Data.ToList();
+
+                            var operationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(DataSource.ProductionOrderID.GetValueOrDefault(), WorkOrderDataSource.ProductsOperationID.GetValueOrDefault())).Data;
+
+                            //var filterList = stockMovementsList.Where(t => t.ProductionorderID == DataSource.ProductionOrderID && t.OperationID == line.OperationID).ToList();
+
+                            if (operationStockMovement.Id != Guid.Empty)
+                            {
+                                UpdateOperationStockMovementsDto updateStockMovementModel = new UpdateOperationStockMovementsDto
+                                {
+                                    Id = operationStockMovement.Id,
+                                    OperationID = operationStockMovement.OperationID,
+                                    ProductionorderID = operationStockMovement.ProductionorderID,
+                                    TotalAmount = operationStockMovement.TotalAmount + DataSource.Amount_
+                                };
+
+                                await OperationStockMovementsAppService.UpdateAsync(updateStockMovementModel);
+                            }
+                            else
+                            {
+
+                                CreateOperationStockMovementsDto createStockMovementModel = new CreateOperationStockMovementsDto
+                                {
+                                    Id = Guid.Empty,
+                                    OperationID = line.OperationID.GetValueOrDefault(),
+                                    ProductionorderID = DataSource.ProductionOrderID.GetValueOrDefault(),
+                                    TotalAmount = DataSource.Amount_
+                                };
+
+                                await OperationStockMovementsAppService.CreateAsync(createStockMovementModel);
+                            }
+                        }
+                    }
+
+                    else if (listCount == DataSource.SelectContractTrackingFicheLines.Count)
+                    {
+                        WorkOrderDataSource = (await WorkOrdersAppService.GetAsync(line.WorkOrderID.GetValueOrDefault())).Data;
+                        WorkOrderDataSource.WorkOrderState = Entities.Enums.WorkOrderStateEnum.DevamEdiyor;
+                        WorkOrderDataSource.OccuredStartDate = DataSource.FicheDate_;
+
+                        UpdateWorkOrdersDto updateWorkOrderModel = new UpdateWorkOrdersDto
+                        {
+                            AdjustmentAndControlTime = WorkOrderDataSource.AdjustmentAndControlTime,
+                            CurrentAccountCardID = WorkOrderDataSource.CurrentAccountCardID,
+                            IsCancel = WorkOrderDataSource.IsCancel,
+                            LineNr = WorkOrderDataSource.LineNr,
+                            LinkedWorkOrderID = WorkOrderDataSource.LinkedWorkOrderID,
+                            OccuredFinishDate = WorkOrderDataSource.OccuredFinishDate,
+                            OccuredStartDate = WorkOrderDataSource.OccuredStartDate,
+                            OperationTime = WorkOrderDataSource.OperationTime,
+                            PlannedQuantity = WorkOrderDataSource.PlannedQuantity,
+                            ProducedQuantity = WorkOrderDataSource.ProducedQuantity,
+                            ProductID = WorkOrderDataSource.ProductID,
+                            ProductionOrderID = WorkOrderDataSource.ProductionOrderID,
+                            ProductsOperationID = WorkOrderDataSource.ProductsOperationID,
+                            PropositionID = WorkOrderDataSource.PropositionID,
+                            RouteID = WorkOrderDataSource.RouteID,
+                            StationGroupID = WorkOrderDataSource.StationGroupID,
+                            StationID = WorkOrderDataSource.StationID,
+                            WorkOrderNo = WorkOrderDataSource.WorkOrderNo,
+                            WorkOrderState = 4,
+                            Id = WorkOrderDataSource.Id,
+                            CreationTime = WorkOrderDataSource.CreationTime,
+                            CreatorId = WorkOrderDataSource.CreatorId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = WorkOrderDataSource.DeleterId.GetValueOrDefault(),
+                            DeletionTime = WorkOrderDataSource.DeletionTime.GetValueOrDefault(),
+                            IsDeleted = WorkOrderDataSource.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            LastModifierId = LoginedUserService.UserId
+                        };
+
+
+                        await WorkOrdersAppService.UpdateAsync(updateWorkOrderModel);
+                    }
+
+                    listCount++;
+
+                }
+            }
+
+
+
+            #region Fason Takip Fişleri Submit İşlemleri
+
+            SelectContractTrackingFichesDto result;
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                var createInput = ObjectMapper.Map<SelectContractTrackingFichesDto, CreateContractTrackingFichesDto>(DataSource);
+
+                result = (await CreateAsync(createInput)).Data;
+
+                if (result != null)
+                    DataSource.Id = result.Id;
+            }
+            else
+            {
+                var updateInput = ObjectMapper.Map<SelectContractTrackingFichesDto, UpdateContractTrackingFichesDto>(DataSource);
+
+                result = (await UpdateAsync(updateInput)).Data;
+            }
+
+            if (result == null)
+            {
+
+                return;
+            }
+
+            await GetListDataSourceAsync();
+
+            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+            HideEditPage();
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                DataSource.Id = result.Id;
+            }
+
+            if (savedEntityIndex > -1)
+                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+            else
+                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+            #endregion
+
+        }
+
+        protected async Task OnAmountEntrySubmit()
+        {
+            DataSource.OccuredAmount_ = GridAmountEntryLineList.Select(t => t.Amount_).Sum();
+
+            #region İş Emri ve Operasyonlar Ara Stok Etkileşimleri
+
+            int addedAmount = GridAmountEntryLineList.Select(_ => _.Amount_).LastOrDefault();
+
+            if (DataSource.SelectContractTrackingFicheLines.Count > 0)
+            {
+                int listCount = 1;
+
+                foreach (var line in DataSource.SelectContractTrackingFicheLines)
+                {
+                    WorkOrderDataSource = (await WorkOrdersAppService.GetAsync(line.WorkOrderID.GetValueOrDefault())).Data;
+
+                    if (listCount + 1 == DataSource.SelectContractTrackingFicheLines.Count)
+                    {
+                        var operationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(DataSource.ProductionOrderID.GetValueOrDefault(), WorkOrderDataSource.ProductsOperationID.GetValueOrDefault())).Data;
+
+                        UpdateOperationStockMovementsDto updateStockMovementModel = new UpdateOperationStockMovementsDto
+                        {
+                            Id = operationStockMovement.Id,
+                            OperationID = operationStockMovement.OperationID,
+                            ProductionorderID = operationStockMovement.ProductionorderID,
+                            TotalAmount = operationStockMovement.TotalAmount - addedAmount
+                        };
+
+                        await OperationStockMovementsAppService.UpdateAsync(updateStockMovementModel);
+                    }
+
+                    else if (listCount == DataSource.SelectContractTrackingFicheLines.Count)
+                    {
+                        var operationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(DataSource.ProductionOrderID.GetValueOrDefault(), WorkOrderDataSource.ProductsOperationID.GetValueOrDefault())).Data;
+
+                        UpdateOperationStockMovementsDto updateStockMovementModel = new UpdateOperationStockMovementsDto
+                        {
+                            Id = operationStockMovement.Id,
+                            OperationID = operationStockMovement.OperationID,
+                            ProductionorderID = operationStockMovement.ProductionorderID,
+                            TotalAmount = operationStockMovement.TotalAmount + addedAmount
+                        };
+
+                        await OperationStockMovementsAppService.UpdateAsync(updateStockMovementModel);
+
+                        UpdateWorkOrdersDto updateWorkOrderModel = new UpdateWorkOrdersDto
+                        {
+                            AdjustmentAndControlTime = WorkOrderDataSource.AdjustmentAndControlTime,
+                            CurrentAccountCardID = WorkOrderDataSource.CurrentAccountCardID,
+                            IsCancel = WorkOrderDataSource.IsCancel,
+                            LineNr = WorkOrderDataSource.LineNr,
+                            LinkedWorkOrderID = WorkOrderDataSource.LinkedWorkOrderID,
+                            OccuredFinishDate = WorkOrderDataSource.OccuredFinishDate,
+                            OccuredStartDate = WorkOrderDataSource.OccuredStartDate,
+                            OperationTime = WorkOrderDataSource.OperationTime,
+                            PlannedQuantity = WorkOrderDataSource.PlannedQuantity,
+                            ProducedQuantity = WorkOrderDataSource.ProducedQuantity + addedAmount,
+                            ProductID = WorkOrderDataSource.ProductID,
+                            ProductionOrderID = WorkOrderDataSource.ProductionOrderID,
+                            ProductsOperationID = WorkOrderDataSource.ProductsOperationID,
+                            PropositionID = WorkOrderDataSource.PropositionID,
+                            RouteID = WorkOrderDataSource.RouteID,
+                            StationGroupID = WorkOrderDataSource.StationGroupID,
+                            StationID = WorkOrderDataSource.StationID,
+                            WorkOrderNo = WorkOrderDataSource.WorkOrderNo,
+                            WorkOrderState = 4,
+                            Id = WorkOrderDataSource.Id,
+                            CreationTime = WorkOrderDataSource.CreationTime,
+                            CreatorId = WorkOrderDataSource.CreatorId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = WorkOrderDataSource.DeleterId.GetValueOrDefault(),
+                            DeletionTime = WorkOrderDataSource.DeletionTime.GetValueOrDefault(),
+                            IsDeleted = WorkOrderDataSource.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            LastModifierId = LoginedUserService.UserId
+                        };
+
+
+                        await WorkOrdersAppService.UpdateAsync(updateWorkOrderModel);
+                    }
+
+                    listCount++;
+                }
+            }
+
+            #endregion
+
+            #region Fason Takip Fişleri Submit İşlemleri
+
+            SelectContractTrackingFichesDto result;
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                var createInput = ObjectMapper.Map<SelectContractTrackingFichesDto, CreateContractTrackingFichesDto>(DataSource);
+
+                result = (await CreateAsync(createInput)).Data;
+
+                if (result != null)
+                    DataSource.Id = result.Id;
+            }
+            else
+            {
+                var updateInput = ObjectMapper.Map<SelectContractTrackingFichesDto, UpdateContractTrackingFichesDto>(DataSource);
+
+                result = (await UpdateAsync(updateInput)).Data;
+            }
+
+            if (result == null)
+            {
+
+                return;
+            }
+
+            await GetListDataSourceAsync();
+
+            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+            HideAmountEntryPopup();
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                DataSource.Id = result.Id;
+            }
+
+            await InvokeAsync(StateHasChanged);
+
+            if (savedEntityIndex > -1)
+                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+            else
+                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+            #endregion
 
 
         }
@@ -354,6 +826,12 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                 DataSource.ContractQualityPlanID = Guid.Empty;
                 DataSource.ContractQualityPlanDescription = string.Empty;
                 DataSource.ContractQualityPlanDocumentNumber = string.Empty;
+                DataSource.QualityPlanCurrentAccountCardID = Guid.Empty;
+                DataSource.QualityPlanCurrentAccountCardCode = string.Empty;
+                DataSource.QualityPlanCurrentAccountCardName = string.Empty;
+                DataSource.ProductID = Guid.Empty;
+                DataSource.ProductCode = string.Empty;
+                DataSource.ProductName = string.Empty;
             }
         }
 
@@ -366,6 +844,12 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                 DataSource.ContractQualityPlanID = selectedContractQualityPlan.Id;
                 DataSource.ContractQualityPlanDescription = selectedContractQualityPlan.Description_;
                 DataSource.ContractQualityPlanDocumentNumber = selectedContractQualityPlan.DocumentNumber;
+                DataSource.QualityPlanCurrentAccountCardID = selectedContractQualityPlan.CurrrentAccountCardID;
+                DataSource.QualityPlanCurrentAccountCardCode = selectedContractQualityPlan.CurrrentAccountCardCode;
+                DataSource.QualityPlanCurrentAccountCardName = selectedContractQualityPlan.CurrrentAccountCardName;
+                DataSource.ProductID = selectedContractQualityPlan.ProductID;
+                DataSource.ProductCode = selectedContractQualityPlan.ProductCode;
+                DataSource.ProductName = selectedContractQualityPlan.ProductName;
 
                 var oprlist = (await ContractQualityPlansAppService.GetAsync(selectedContractQualityPlan.Id)).Data.SelectContractQualityPlanOperations;
 

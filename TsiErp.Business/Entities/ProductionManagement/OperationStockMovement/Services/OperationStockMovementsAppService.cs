@@ -33,6 +33,11 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
 
         public async Task<IDataResult<SelectOperationStockMovementsDto>> CreateAsync(CreateOperationStockMovementsDto input)
         {
+            if(input.Id == Guid.Empty)
+            {
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+                input.Id = addedEntityId;
+            }
             var query = queryFactory.Query().From(Tables.OperationStockMovements).Insert(input).UseIsDelete(false);
 
             var insertedEntity = queryFactory.Insert<SelectOperationStockMovementsDto>(query, "Id", true);

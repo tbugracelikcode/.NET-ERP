@@ -15,6 +15,10 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
         /// Stok Fiş ID
         /// </summary>
         public Guid StockFicheID { get; set; }
+        /// <summary>
+        /// Üretim Tarihi Referansı
+        /// </summary>
+        public string ProductionDateReferance { get; set; }
 
         /// <summary>
         /// Satır Nr

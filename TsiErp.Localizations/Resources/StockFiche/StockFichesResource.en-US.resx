@@ -255,6 +255,9 @@
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Product Code:</value>
   </data>
+  <data name="ProductionDateReferanceLabel" xml:space="preserve">
+    <value>Production Date Referance:</value>
+  </data>
   <data name="ProductionOrderCodeLabel" xml:space="preserve">
     <value>Production Order Receipt Nr:</value>
   </data>

@@ -20,8 +20,18 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.D
         public string UserName { get; set; }
 
         /// <summary>
+        /// Menu Id
+        /// </summary>
+        public Guid MenuId { get; set; }
+
+        /// <summary>
         /// Menu Adı
         /// </summary>
         public string MenuName { get; set; }
+
+        /// <summary>
+        /// Kullanıcı Yetkisi
+        /// </summary>
+        public bool IsUserPermitted { get; set; }
     }
 }

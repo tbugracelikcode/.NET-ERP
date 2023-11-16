@@ -120,11 +120,35 @@
   <data name="BOMCode" xml:space="preserve">
     <value>BOM CODE</value>
   </data>
+  <data name="BranchCodeButtonEditLabel" xml:space="preserve">
+    <value>Branch:</value>
+  </data>
+  <data name="BranchesPopupGridCode" xml:space="preserve">
+    <value>BRANCH CODE</value>
+  </data>
+  <data name="BranchesPopupGridName" xml:space="preserve">
+    <value>BRANCH NAME</value>
+  </data>
+  <data name="BranchModalTitle" xml:space="preserve">
+    <value>Branches</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
   </data>
+  <data name="CreateFicheButton" xml:space="preserve">
+    <value>Create Fiche</value>
+  </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>CUSTOMER CODE</value>
+  </data>
+  <data name="CustomerCodeLabel" xml:space="preserve">
+    <value>Variant Code:</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Fiche Date:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -162,6 +186,12 @@
   <data name="FinishedProductCode" xml:space="preserve">
     <value>FINISHED PRODUCT CODE</value>
   </data>
+  <data name="FinishedProductCodeLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="FinishedProductNameLabel" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
   <data name="LinkedProductCode" xml:space="preserve">
     <value>LINKED PRODUCT CODE</value>
   </data>
@@ -177,6 +207,9 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="OccuredAmountTitle" xml:space="preserve">
+    <value>Occured Amount Entry</value>
+  </data>
   <data name="OrderFicheNo" xml:space="preserve">
     <value>ORDER FICHE NR</value>
   </data>
@@ -185,6 +218,9 @@
   </data>
   <data name="ProducedQuantity" xml:space="preserve">
     <value>PRODUCED QUANTITY</value>
+  </data>
+  <data name="ProductionDateReferanceLabel" xml:space="preserve">
+    <value>Production Date Referance:</value>
   </data>
   <data name="ProductionOrderContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -210,6 +246,9 @@
   <data name="ProductionOrderState" xml:space="preserve">
     <value>PRODUCTION ORDER STATE</value>
   </data>
+  <data name="QuantityLabel" xml:space="preserve">
+    <value>Quantity:</value>
+  </data>
   <data name="StartDate" xml:space="preserve">
     <value>START DATE</value>
   </data>
@@ -224,6 +263,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Production Management &gt; Transactions</value>
+  </data>
+  <data name="UIWarningCreateOccuredAmountFicheMessage" xml:space="preserve">
+    <value>Quantity and Production Date Reference fields must be filled.</value>
+  </data>
+  <data name="UIWarningCreateOccuredAmountFicheTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UnitSetCode" xml:space="preserve">
     <value>UNIT SET</value>
@@ -257,5 +302,17 @@
   </data>
   <data name="ValidatorUnitSetID" xml:space="preserve">
     <value>Please select an unit set.</value>
+  </data>
+  <data name="WarehouseCodeButtonEditLabel" xml:space="preserve">
+    <value>Warehouse:</value>
+  </data>
+  <data name="WarehouseModalTitle" xml:space="preserve">
+    <value>Warehouses</value>
+  </data>
+  <data name="WarehousesPopupGridCode" xml:space="preserve">
+    <value>WAREHOUSE CODE</value>
+  </data>
+  <data name="WarehousesPopupGridName" xml:space="preserve">
+    <value>WAREHOUSE NAME</value>
   </data>
 </root>

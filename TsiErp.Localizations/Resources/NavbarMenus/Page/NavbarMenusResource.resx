@@ -234,6 +234,9 @@
   <data name="FinanceManagementParentMenu" xml:space="preserve">
     <value>Finans Yönetimi</value>
   </data>
+  <data name="FirstProductApprovalChildMenu" xml:space="preserve">
+    <value>İlk Ürün Onayları</value>
+  </data>
   <data name="ForecastsChildMenu" xml:space="preserve">
     <value>Satış Forecast Kayıtları</value>
   </data>

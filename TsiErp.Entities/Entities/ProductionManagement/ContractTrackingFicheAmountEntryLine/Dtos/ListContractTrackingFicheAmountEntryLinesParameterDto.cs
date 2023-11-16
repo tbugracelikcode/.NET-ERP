@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Tsi.Core.Entities.Auditing;
+
+namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos
+{
+    public class ListContractTrackingFicheAmountEntryLinesParameterDto : FullAuditedEntityDto
+    {
+        /// <summary>
+        /// Fason Takip Fişi ID
+        /// </summary>
+        public Guid ContractTrackingFicheID { get; set; }
+    }
+}

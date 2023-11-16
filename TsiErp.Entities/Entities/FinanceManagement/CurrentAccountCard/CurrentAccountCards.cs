@@ -199,6 +199,16 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard
         /// İş İstasyonu Sayısı
         /// </summary>
         public int NumberOfStations { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Büyük Koli KG
+        /// </summary>
+        public decimal BigPackageKG { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Küçük Koli KG
+        /// </summary>
+        public decimal SmallPackageKG { get; set; }
 
     }
 }

@@ -120,11 +120,35 @@
   <data name="BOMCode" xml:space="preserve">
     <value>REÇETE KODU</value>
   </data>
+  <data name="BranchCodeButtonEditLabel" xml:space="preserve">
+    <value>Şube:</value>
+  </data>
+  <data name="BranchesPopupGridCode" xml:space="preserve">
+    <value>ŞUBE KODU</value>
+  </data>
+  <data name="BranchesPopupGridName" xml:space="preserve">
+    <value>ŞUBE ADI</value>
+  </data>
+  <data name="BranchModalTitle" xml:space="preserve">
+    <value>Şubeler</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="CreateFicheButton" xml:space="preserve">
+    <value>Fişi Oluştur</value>
+  </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>MÜŞTERİ KODU</value>
+  </data>
+  <data name="CustomerCodeLabel" xml:space="preserve">
+    <value>Varyant Kodu:</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Fiş Tarihi:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -162,6 +186,12 @@
   <data name="FinishedProductCode" xml:space="preserve">
     <value>MAMÜL KODU</value>
   </data>
+  <data name="FinishedProductCodeLabel" xml:space="preserve">
+    <value>Malzeme Kodu:</value>
+  </data>
+  <data name="FinishedProductNameLabel" xml:space="preserve">
+    <value>Malzeme Açıklaması:</value>
+  </data>
   <data name="LinkedProductCode" xml:space="preserve">
     <value>BAĞLI ÜRÜN KODU</value>
   </data>
@@ -177,6 +207,9 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="OccuredAmountTitle" xml:space="preserve">
+    <value>Gerçekleşen Miktar Girişi</value>
+  </data>
   <data name="OrderFicheNo" xml:space="preserve">
     <value>SİPARİŞ FİŞ NO</value>
   </data>
@@ -185,6 +218,9 @@
   </data>
   <data name="ProducedQuantity" xml:space="preserve">
     <value>ÜRETİLEN MİKTAR</value>
+  </data>
+  <data name="ProductionDateReferanceLabel" xml:space="preserve">
+    <value>Üretim Tarihi Referansı:</value>
   </data>
   <data name="ProductionOrderContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -210,6 +246,9 @@
   <data name="ProductionOrderState" xml:space="preserve">
     <value>ÜRETİM EMRİ DURUMU</value>
   </data>
+  <data name="QuantityLabel" xml:space="preserve">
+    <value>Miktar:</value>
+  </data>
   <data name="StartDate" xml:space="preserve">
     <value>BAŞLANGIÇ TARİHİ</value>
   </data>
@@ -224,6 +263,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Üretim Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="UIWarningCreateOccuredAmountFicheMessage" xml:space="preserve">
+    <value>Miktar ve Üretim tarihi Referansı alanlarının doldurulması gerekmektedir.</value>
+  </data>
+  <data name="UIWarningCreateOccuredAmountFicheTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UnitSetCode" xml:space="preserve">
     <value>BİRİM SETİ</value>
@@ -257,5 +302,17 @@
   </data>
   <data name="ValidatorUnitSetID" xml:space="preserve">
     <value>Lütfen birim seti seçin.</value>
+  </data>
+  <data name="WarehouseCodeButtonEditLabel" xml:space="preserve">
+    <value>Depo:</value>
+  </data>
+  <data name="WarehouseModalTitle" xml:space="preserve">
+    <value>Depo Kartları</value>
+  </data>
+  <data name="WarehousesPopupGridCode" xml:space="preserve">
+    <value>DEPO KODU</value>
+  </data>
+  <data name="WarehousesPopupGridName" xml:space="preserve">
+    <value>DEPO ADI</value>
   </data>
 </root>

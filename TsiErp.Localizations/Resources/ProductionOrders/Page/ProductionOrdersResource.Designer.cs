@@ -70,6 +70,51 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Şube:.
+        /// </summary>
+        public static string BranchCodeButtonEditLabel {
+            get {
+                return ResourceManager.GetString("BranchCodeButtonEditLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞUBE KODU.
+        /// </summary>
+        public static string BranchesPopupGridCode {
+            get {
+                return ResourceManager.GetString("BranchesPopupGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞUBE ADI.
+        /// </summary>
+        public static string BranchesPopupGridName {
+            get {
+                return ResourceManager.GetString("BranchesPopupGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şubeler.
+        /// </summary>
+        public static string BranchModalTitle {
+            get {
+                return ResourceManager.GetString("BranchModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kapat.
+        /// </summary>
+        public static string CloseButton {
+            get {
+                return ResourceManager.GetString("CloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı numaralı bir kayıt bulunmaktadır..
         /// </summary>
         public static string CodeControlManager {
@@ -79,11 +124,38 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fişi Oluştur.
+        /// </summary>
+        public static string CreateFicheButton {
+            get {
+                return ResourceManager.GetString("CreateFicheButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MÜŞTERİ KODU.
         /// </summary>
         public static string CustomerCode {
             get {
                 return ResourceManager.GetString("CustomerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Varyant Kodu:.
+        /// </summary>
+        public static string CustomerCodeLabel {
+            get {
+                return ResourceManager.GetString("CustomerCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fiş Tarihi:.
+        /// </summary>
+        public static string Date_Label {
+            get {
+                return ResourceManager.GetString("Date_Label", resourceCulture);
             }
         }
         
@@ -196,6 +268,24 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Malzeme Kodu:.
+        /// </summary>
+        public static string FinishedProductCodeLabel {
+            get {
+                return ResourceManager.GetString("FinishedProductCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Malzeme Açıklaması:.
+        /// </summary>
+        public static string FinishedProductNameLabel {
+            get {
+                return ResourceManager.GetString("FinishedProductNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BAĞLI ÜRÜN KODU.
         /// </summary>
         public static string LinkedProductCode {
@@ -241,6 +331,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gerçekleşen Miktar Girişi.
+        /// </summary>
+        public static string OccuredAmountTitle {
+            get {
+                return ResourceManager.GetString("OccuredAmountTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SİPARİŞ FİŞ NO.
         /// </summary>
         public static string OrderFicheNo {
@@ -264,6 +363,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string ProducedQuantity {
             get {
                 return ResourceManager.GetString("ProducedQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Tarihi Referansı:.
+        /// </summary>
+        public static string ProductionDateReferanceLabel {
+            get {
+                return ResourceManager.GetString("ProductionDateReferanceLabel", resourceCulture);
             }
         }
         
@@ -340,6 +448,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Miktar:.
+        /// </summary>
+        public static string QuantityLabel {
+            get {
+                return ResourceManager.GetString("QuantityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BAŞLANGIÇ TARİHİ.
         /// </summary>
         public static string StartDate {
@@ -381,6 +498,24 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Miktar ve Üretim tarihi Referansı alanlarının doldurulması gerekmektedir..
+        /// </summary>
+        public static string UIWarningCreateOccuredAmountFicheMessage {
+            get {
+                return ResourceManager.GetString("UIWarningCreateOccuredAmountFicheMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningCreateOccuredAmountFicheTitle {
+            get {
+                return ResourceManager.GetString("UIWarningCreateOccuredAmountFicheTitle", resourceCulture);
             }
         }
         
@@ -480,6 +615,42 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string ValidatorUnitSetID {
             get {
                 return ResourceManager.GetString("ValidatorUnitSetID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depo:.
+        /// </summary>
+        public static string WarehouseCodeButtonEditLabel {
+            get {
+                return ResourceManager.GetString("WarehouseCodeButtonEditLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depo Kartları.
+        /// </summary>
+        public static string WarehouseModalTitle {
+            get {
+                return ResourceManager.GetString("WarehouseModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEPO KODU.
+        /// </summary>
+        public static string WarehousesPopupGridCode {
+            get {
+                return ResourceManager.GetString("WarehousesPopupGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEPO ADI.
+        /// </summary>
+        public static string WarehousesPopupGridName {
+            get {
+                return ResourceManager.GetString("WarehousesPopupGridName", resourceCulture);
             }
         }
     }

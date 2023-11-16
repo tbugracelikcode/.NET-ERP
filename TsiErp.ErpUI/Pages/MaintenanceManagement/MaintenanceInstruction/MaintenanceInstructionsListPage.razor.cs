@@ -75,6 +75,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
             {
                 LineDataSource.ProductID = Guid.Empty;
                 LineDataSource.ProductCode = string.Empty;
+                LineDataSource.UnitSetID = Guid.Empty;
+                LineDataSource.UnitSetCode = string.Empty;
             }
         }
 
@@ -86,6 +88,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
             {
                 LineDataSource.ProductID = selectedProduct.Id;
                 LineDataSource.ProductCode = selectedProduct.Code;
+                LineDataSource.UnitSetID = selectedProduct.UnitSetID;
+                LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

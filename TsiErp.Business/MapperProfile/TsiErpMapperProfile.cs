@@ -211,6 +211,24 @@ using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApproval;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFiche;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecord;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -1010,6 +1028,14 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectContractTrackingFicheLinesDto, UpdateContractTrackingFicheLinesDto>();
             CreateMap<SelectContractTrackingFicheLinesDto, ContractTrackingFicheLines>();
 
+            CreateMap<ContractTrackingFicheAmountEntryLines, SelectContractTrackingFicheAmountEntryLinesDto>();
+            CreateMap<ContractTrackingFicheAmountEntryLines, ListContractTrackingFicheAmountEntryLinesDto>();
+            CreateMap<CreateContractTrackingFicheAmountEntryLinesDto, ContractTrackingFicheAmountEntryLines>();
+            CreateMap<SelectContractTrackingFicheAmountEntryLinesDto, CreateContractTrackingFicheAmountEntryLinesDto>();
+            CreateMap<UpdateContractTrackingFicheAmountEntryLinesDto, ContractTrackingFicheAmountEntryLines>();
+            CreateMap<SelectContractTrackingFicheAmountEntryLinesDto, UpdateContractTrackingFicheAmountEntryLinesDto>();
+            CreateMap<SelectContractTrackingFicheAmountEntryLinesDto, ContractTrackingFicheAmountEntryLines>();
+
 
 
             CreateMap<OperationalSPCs, SelectOperationalSPCsDto>();
@@ -1073,6 +1099,82 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateMRPLinesDto, MRPLines>();
             CreateMap<SelectMRPLinesDto, UpdateMRPLinesDto>();
             CreateMap<SelectMRPLinesDto, MRPLines>();
+
+
+
+
+            CreateMap<FirstProductApprovals, SelectFirstProductApprovalsDto>();
+            CreateMap<FirstProductApprovals, ListFirstProductApprovalsDto>();
+            CreateMap<UpdateFirstProductApprovalsDto, FirstProductApprovals>();
+            CreateMap<CreateFirstProductApprovalsDto, FirstProductApprovals>();
+            CreateMap<SelectFirstProductApprovalsDto, CreateFirstProductApprovalsDto>();
+            CreateMap<SelectFirstProductApprovalsDto, UpdateFirstProductApprovalsDto>();
+            CreateMap<FirstProductApprovals, UpdateFirstProductApprovalsDto>();
+
+            CreateMap<FirstProductApprovalLines, SelectFirstProductApprovalLinesDto>();
+            CreateMap<FirstProductApprovalLines, ListFirstProductApprovalLinesDto>();
+            CreateMap<CreateFirstProductApprovalLinesDto, FirstProductApprovalLines>();
+            CreateMap<SelectFirstProductApprovalLinesDto, CreateFirstProductApprovalLinesDto>();
+            CreateMap<UpdateFirstProductApprovalLinesDto, FirstProductApprovalLines>();
+            CreateMap<SelectFirstProductApprovalLinesDto, UpdateFirstProductApprovalLinesDto>();
+            CreateMap<SelectFirstProductApprovalLinesDto, FirstProductApprovalLines>();
+
+
+
+
+            CreateMap<PackageFiches, SelectPackageFichesDto>();
+            CreateMap<PackageFiches, ListPackageFichesDto>();
+            CreateMap<UpdatePackageFichesDto, PackageFiches>();
+            CreateMap<CreatePackageFichesDto, PackageFiches>();
+            CreateMap<SelectPackageFichesDto, CreatePackageFichesDto>();
+            CreateMap<SelectPackageFichesDto, UpdatePackageFichesDto>();
+            CreateMap<PackageFiches, UpdatePackageFichesDto>();
+
+            CreateMap<PackageFicheLines, SelectPackageFicheLinesDto>();
+            CreateMap<PackageFicheLines, ListPackageFicheLinesDto>();
+            CreateMap<CreatePackageFicheLinesDto, PackageFicheLines>();
+            CreateMap<SelectPackageFicheLinesDto, CreatePackageFicheLinesDto>();
+            CreateMap<UpdatePackageFicheLinesDto, PackageFicheLines>();
+            CreateMap<SelectPackageFicheLinesDto, UpdatePackageFicheLinesDto>();
+            CreateMap<SelectPackageFicheLinesDto, PackageFicheLines>();
+
+
+
+
+            CreateMap<PalletRecords, SelectPalletRecordsDto>();
+            CreateMap<PalletRecords, ListPalletRecordsDto>();
+            CreateMap<UpdatePalletRecordsDto, PalletRecords>();
+            CreateMap<CreatePalletRecordsDto, PalletRecords>();
+            CreateMap<SelectPalletRecordsDto, CreatePalletRecordsDto>();
+            CreateMap<SelectPalletRecordsDto, UpdatePalletRecordsDto>();
+            CreateMap<PalletRecords, UpdatePalletRecordsDto>();
+
+            CreateMap<PalletRecordLines, SelectPalletRecordLinesDto>();
+            CreateMap<PalletRecordLines, ListPalletRecordLinesDto>();
+            CreateMap<CreatePalletRecordLinesDto, PalletRecordLines>();
+            CreateMap<SelectPalletRecordLinesDto, CreatePalletRecordLinesDto>();
+            CreateMap<UpdatePalletRecordLinesDto, PalletRecordLines>();
+            CreateMap<SelectPalletRecordLinesDto, UpdatePalletRecordLinesDto>();
+            CreateMap<SelectPalletRecordLinesDto, PalletRecordLines>();
+
+
+
+
+            CreateMap<MaintenanceMRPs, SelectMaintenanceMRPsDto>();
+            CreateMap<MaintenanceMRPs, ListMaintenanceMRPsDto>();
+            CreateMap<UpdateMaintenanceMRPsDto, MaintenanceMRPs>();
+            CreateMap<CreateMaintenanceMRPsDto, MaintenanceMRPs>();
+            CreateMap<SelectMaintenanceMRPsDto, CreateMaintenanceMRPsDto>();
+            CreateMap<SelectMaintenanceMRPsDto, UpdateMaintenanceMRPsDto>();
+            CreateMap<MaintenanceMRPs, UpdateMaintenanceMRPsDto>();
+
+            CreateMap<MaintenanceMRPLines, SelectMaintenanceMRPLinesDto>();
+            CreateMap<MaintenanceMRPLines, ListMaintenanceMRPLinesDto>();
+            CreateMap<CreateMaintenanceMRPLinesDto, MaintenanceMRPLines>();
+            CreateMap<SelectMaintenanceMRPLinesDto, CreateMaintenanceMRPLinesDto>();
+            CreateMap<UpdateMaintenanceMRPLinesDto, MaintenanceMRPLines>();
+            CreateMap<SelectMaintenanceMRPLinesDto, UpdateMaintenanceMRPLinesDto>();
+            CreateMap<SelectMaintenanceMRPLinesDto, MaintenanceMRPLines>();
         }
     }
 }

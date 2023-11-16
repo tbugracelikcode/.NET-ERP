@@ -117,6 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AmountAggregate" xml:space="preserve">
+    <value>Toplam Adet:</value>
+  </data>
+  <data name="AmountEntryAmount_Label" xml:space="preserve">
+    <value>Miktar:</value>
+  </data>
+  <data name="AmountEntryDate_Label" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
+  <data name="AmountEntryLineCrudPopupModalTitle" xml:space="preserve">
+    <value>Gelen Miktar Giriş İşlemleri</value>
+  </data>
+  <data name="AmountEntryLineGridAmount_" xml:space="preserve">
+    <value>MİKTAR</value>
+  </data>
+  <data name="AmountEntryLineGridDate_" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="AmountEntryLineGridDescription_" xml:space="preserve">
+    <value>AÇIKLAMA</value>
+  </data>
+  <data name="AmountEntryLinePopupModalTitle" xml:space="preserve">
+    <value>Gelen Miktar Girişleri</value>
+  </data>
   <data name="Amount_" xml:space="preserve">
     <value>ADET</value>
   </data>
@@ -141,8 +165,23 @@
   <data name="ContractQualityPlanModalTitle" xml:space="preserve">
     <value>Fason Kalite Planları</value>
   </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="ContractTrackingFicheContextAdd" xml:space="preserve">
     <value>Ekle</value>
+  </data>
+  <data name="ContractTrackingFicheContextAmountEntry" xml:space="preserve">
+    <value>Gelen Miktar Girişi</value>
   </data>
   <data name="ContractTrackingFicheContextChange" xml:space="preserve">
     <value>Değiştir</value>
@@ -273,6 +312,9 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="OccuredAmountAggregate" xml:space="preserve">
+    <value>Toplam Gerçekleşen Adet:</value>
+  </data>
   <data name="OccuredAmount_" xml:space="preserve">
     <value>GERÇEKLEŞEN ADET</value>
   </data>
@@ -284,6 +326,9 @@
   </data>
   <data name="ProducedQuantity" xml:space="preserve">
     <value>ÜRETİLEN MİKTAR</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
   </data>
   <data name="ProductionOrderModalTitle" xml:space="preserve">
     <value>Üretim Emirleri</value>

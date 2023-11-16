@@ -129,5 +129,14 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string OperationStockMovements = "OperationStockMovements";
         public static readonly string Report8Ds = "Report8Ds";
         public static readonly string CustomerComplaintReports = "CustomerComplaintReports";
+        public static readonly string FirstProductApprovals = "FirstProductApprovals";
+        public static readonly string FirstProductApprovalLines = "FirstProductApprovalLines";
+        public static readonly string PackageFiches = "PackageFiches";
+        public static readonly string PackageFicheLines = "PackageFicheLines";
+        public static readonly string ContractTrackingFicheAmountEntryLines = "ContractTrackingFicheAmountEntryLines";
+        public static readonly string PalletRecords = "PalletRecords";
+        public static readonly string PalletRecordLines = "PalletRecordLines";
+        public static readonly string MaintenanceMRPs = "MaintenanceMRPs";
+        public static readonly string MaintenanceMRPLines = "MaintenanceMRPLines";
     }
 }

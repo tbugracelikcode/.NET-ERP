@@ -255,6 +255,9 @@
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Stok Kodu:</value>
   </data>
+  <data name="ProductionDateReferanceLabel" xml:space="preserve">
+    <value>Üretim Tarihi Referansı:</value>
+  </data>
   <data name="ProductionOrderCodeLabel" xml:space="preserve">
     <value>Üretim Emri Fiş No:</value>
   </data>

@@ -23,6 +23,10 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
         /// </summary>
         public bool IsActive { get; set; }
         /// <summary>
+        /// Birim Ağırlığı
+        /// </summary>
+        public decimal UnitWeight { get; set; }
+        /// <summary>
         /// Temin Şekli
         /// </summary>
         public int SupplyForm { get; set; }

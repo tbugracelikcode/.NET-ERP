@@ -1,5 +1,6 @@
 ﻿using Tsi.Core.Entities.Auditing;
 using TSI.QueryBuilder.MappingAttributes;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine.Dtos;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dtos
@@ -18,6 +19,18 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dt
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
+        /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
+        /// <summary>
+        /// Stok Kodu
+        /// </summary>
+        public string ProductCode { get; set; }
+        /// <summary>
+        /// Stok Açıklaması
+        /// </summary>
+        public string ProductName { get; set; }
         /// <summary>
         /// Üretim Emri ID
         /// </summary>
@@ -44,6 +57,23 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dt
         /// Müşteri Kodu
         /// </summary>
         public string CustomerCode { get; set; }
+        /// <summary>
+        /// Kalite Planı Cari Hesap ID
+        /// </summary>
+        public Guid? QualityPlanCurrentAccountCardID { get; set; }
+        /// <summary>
+        /// Kalite Planı Cari Hesap Kodu
+        /// </summary>
+        public string QualityPlanCurrentAccountCardCode { get; set; }
+
+        /// <summary>
+        /// Kalite Planı Cari Hesap Ünvanı
+        /// </summary>
+        public string QualityPlanCurrentAccountCardName { get; set; }
+        /// <summary>
+        /// Kalite Planı Müşteri Kodu
+        /// </summary>
+        public string QualityPlanCustomerCode { get; set; }
         /// <summary>
         /// İş Tanımı ID
         /// </summary>
@@ -73,5 +103,8 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dt
 
         [NoDatabaseAction]
         public List<SelectContractTrackingFicheLinesDto> SelectContractTrackingFicheLines { get; set; }
+
+        [NoDatabaseAction]
+        public List<SelectContractTrackingFicheAmountEntryLinesDto> SelectContractTrackingFicheAmountEntryLines { get; set; }
     }
 }

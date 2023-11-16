@@ -15,6 +15,10 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// </summary>
         public string FicheNo { get; set; }
         /// <summary>
+        /// Üretim Tarihi Referansı
+        /// </summary>
+        public string ProductionDateReferance { get; set; }
+        /// <summary>
         /// Tarih
         /// </summary>
         public DateTime Date_ { get; set; }

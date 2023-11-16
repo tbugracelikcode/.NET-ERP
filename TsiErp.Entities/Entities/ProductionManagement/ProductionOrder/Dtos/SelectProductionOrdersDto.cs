@@ -22,7 +22,24 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// <summary>
         /// Data Concurrency UserID
         /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
+        public Guid? DataOpenStatusUserId { get; set; } /// <summary>
+                                                        /// Şube ID
+                                                        /// </summary>
+        public Guid? BranchID { get; set; }
+        /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string BranchCode { get; set; }
+
+
+        /// <summary>
+        /// Depo ID
+        /// </summary>
+        public Guid? WarehouseID { get; set; }
+        /// <summary>
+        /// Depo Kodu
+        /// </summary>
+        public string WarehouseCode { get; set; }
         /// <summary>
         /// Tarih
         /// </summary>

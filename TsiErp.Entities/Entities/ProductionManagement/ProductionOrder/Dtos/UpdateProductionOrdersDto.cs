@@ -26,6 +26,16 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// Üretim Emri Durumu
         /// </summary>
         public int ProductionOrderState { get; set; }
+        /// <summary>
+        /// Şube ID
+        /// </summary>
+        public Guid? BranchID { get; set; }
+
+
+        /// <summary>
+        /// Depo ID
+        /// </summary>
+        public Guid? WarehouseID { get; set; }
 
         /// <summary>
         /// Planlanan Miktar

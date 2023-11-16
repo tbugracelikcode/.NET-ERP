@@ -131,6 +131,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>FinanceManagementParametersResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\FirstProductApprovals\Page\FirstProductApprovalsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FirstProductApprovalsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Forecasts\Page\ForecastsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -165,6 +170,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MaintenanceManagementParametersResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\MaintenanceMRPs\Page\MaintenanceMRPsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MaintenanceMRPsResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\MaintenancePeriods\Page\MaintenancePeriodsResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -205,6 +215,16 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>OperationUnsuitabilityReportsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\PackageFiches\Page\PackageFichesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PackageFichesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\PalletRecords\Page\PalletRecordsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PalletRecordsResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\PaymentPlans\Page\PaymentPlansResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -565,6 +585,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FinanceManagementParametersResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FirstProductApprovals\Page\FirstProductApprovalsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FirstProductApprovalsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Forecasts\Page\ForecastsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
@@ -601,6 +625,10 @@
     <EmbeddedResource Update="Resources\MaintenanceManagementParameter\Page\MaintenanceManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MaintenanceManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\MaintenanceMRPs\Page\MaintenanceMRPsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MaintenanceMRPsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\MaintenancePeriods\Page\MaintenancePeriodsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -639,6 +667,14 @@
     <EmbeddedResource Update="Resources\OperationUnsuitabilityReports\Page\OperationUnsuitabilityReportsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationUnsuitabilityReportsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PackageFiches\Page\PackageFichesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PackageFichesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PalletRecords\Page\PalletRecordsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PalletRecordsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\PaymentPlans\Page\PaymentPlansResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

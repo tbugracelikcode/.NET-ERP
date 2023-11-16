@@ -307,14 +307,14 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                    .Select<OperationalQualityPlans>(oqp => new { oqp.ProductsOperationID, oqp.ProductID, oqp.Id, oqp.DocumentNumber, oqp.Description_, oqp.DataOpenStatusUserId, oqp.DataOpenStatus })
                    .Join<Products>
                     (
-                        pr => new { ProductCode = pr.Code, ProductName = pr.Name },
+                        pr => new { ProductCode = pr.Code, ProductName = pr.Name , ProductID = pr.Id },
                         nameof(OperationalQualityPlans.ProductID),
                         nameof(Products.Id),
                         JoinType.Left
                     )
                     .Join<ProductsOperations>
                     (
-                        pro => new { OperationCode = pro.Code, OperationName = pro.Name },
+                        pro => new { OperationCode = pro.Code, OperationName = pro.Name, ProductsOperationID = pro.Id },
                         nameof(OperationalQualityPlans.ProductsOperationID),
                         nameof(ProductsOperations.Id),
                         JoinType.Left

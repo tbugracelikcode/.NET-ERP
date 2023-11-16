@@ -17,6 +17,18 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dt
         /// </summary>
         public string Description_ { get; set; }
         /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
+        /// <summary>
+        /// Stok Kodu
+        /// </summary>
+        public string ProductCode { get; set; }
+        /// <summary>
+        /// Stok Açıklaması
+        /// </summary>
+        public string ProductName { get; set; }
+        /// <summary>
         /// Üretim Emri ID
         /// </summary>
         public Guid? ProductionOrderID { get; set; }
@@ -24,6 +36,23 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dt
         /// Üretim Emri No
         /// </summary>
         public string ProductionOrderNr { get; set; }
+        /// <summary>
+        /// Kalite Planı Cari Hesap ID
+        /// </summary>
+        public Guid? QualityPlanCurrentAccountCardID { get; set; }
+        /// <summary>
+        /// Kalite Planı Cari Hesap Kodu
+        /// </summary>
+        public string QualityPlanCurrentAccountCardCode { get; set; }
+
+        /// <summary>
+        /// Kalite Planı Cari Hesap Ünvanı
+        /// </summary>
+        public string QualityPlanCurrentAccountCardName { get; set; }
+        /// <summary>
+        /// Kalite Planı Müşteri Kodu
+        /// </summary>
+        public string QualityPlanCustomerCode { get; set; }
 
         /// <summary>
         /// Cari Hesap ID

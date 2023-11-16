@@ -129,8 +129,8 @@
                         <DxTreeViewNode Text=@L["ShipmentManagementTransactionsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["ShipmentPlanningChildMenu"] />
-                                <DxTreeViewNode Text=@L["PackageFichesChildMenu"] />
-                                <DxTreeViewNode Text=@L["PalletRecordsChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/package-fiches" Text=@L["PackageFichesChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/pallet-records" Text=@L["PalletRecordsChildMenu"] />
                                 <DxTreeViewNode Text=@L["PackingListsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
@@ -231,7 +231,7 @@
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/planned-maintenances" Text=@L["PlannedMainChildMenu"] />
                                 <DxTreeViewNode NavigateUrl="/unplanned-maintenances" Text=@L["UnplannedMainChildMenu"] />
-                                <DxTreeViewNode Text=@L["MainMatReqPlanningChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/maintenance-mrps" Text=@L["MainMatReqPlanningChildMenu"] />
                                 <DxTreeViewNode Text=@L["MainMatPurchaseTrackingChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
@@ -268,7 +268,8 @@
 
                         <DxTreeViewNode Text=@L["QualityControlTransactionsMenu"]>
                             <Nodes>
-
+                                
+                                <DxTreeViewNode NavigateUrl="/first-product-approvals" Text=@L["FirstProductApprovalChildMenu"] />
 
                                 <DxTreeViewNode Text=@L["UnsRecordsMenu"]>
                                     <Nodes>

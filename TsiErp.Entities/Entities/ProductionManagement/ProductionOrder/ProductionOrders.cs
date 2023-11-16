@@ -117,5 +117,17 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder
         /// </summary>
         public Guid LinkedProductionOrderID { get; set; }
 
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Şube ID
+        /// </summary>
+        public Guid BranchID { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Depo ID
+        /// </summary>
+        public Guid WarehouseID { get; set; }
+
     }
 }

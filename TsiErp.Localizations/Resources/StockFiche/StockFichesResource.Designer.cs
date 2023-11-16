@@ -475,6 +475,15 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Tarihi Referansı:.
+        /// </summary>
+        public static string ProductionDateReferanceLabel {
+            get {
+                return ResourceManager.GetString("ProductionDateReferanceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Emri Fiş No:.
         /// </summary>
         public static string ProductionOrderCodeLabel {
