@@ -89,6 +89,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// </summary>
         public string ProductsOperationCode { get; set; }
         /// <summary>
+        /// Ürüne Özel Operasyon Açıklaması
+        /// </summary>
+        public string ProductsOperationName { get; set; }
+        /// <summary>
         /// İş İstasyonu ID
         /// </summary>
         public Guid? StationID { get; set; }

@@ -25,7 +25,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
         public bool _IsSoftDelete { get; set; }
 
-        public string BasePath { get; set; } = Directory.GetCurrentDirectory();
+        public string BasePath { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
 
         public string JsonFile { get; set; } = "appsettings.json";
 

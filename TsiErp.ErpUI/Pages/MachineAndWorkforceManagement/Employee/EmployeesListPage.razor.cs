@@ -53,7 +53,9 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Employee
             DataSource = new SelectEmployeesDto()
             {
                 IsActive = true,
-                Code = FicheNumbersAppService.GetFicheNumberAsync("EmployeesChildMenu")
+                Code = FicheNumbersAppService.GetFicheNumberAsync("EmployeesChildMenu"),
+                IsProductionScreenUser = false,
+                IsProductionScreenSettingUser = false
             };
 
             foreach (var item in bloodtypes)
@@ -76,7 +78,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Employee
 
         public override async void ShowEditPage()
         {
-            foreach(var item in bloodtypes)
+            foreach (var item in bloodtypes)
             {
                 item.BloodTypeName = L[item.BloodTypeName];
             }

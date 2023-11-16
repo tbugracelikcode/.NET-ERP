@@ -231,6 +231,12 @@
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
   </data>
+  <data name="IsProductionScreenSettingUser" xml:space="preserve">
+    <value>Production Screen Setting User</value>
+  </data>
+  <data name="IsProductionScreenUserLabel" xml:space="preserve">
+    <value>Production Screen User</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
@@ -249,6 +255,9 @@
   <data name="NameLabel" xml:space="preserve">
     <value>Employee Name:</value>
   </data>
+  <data name="ProductionScreenPasswordLabel" xml:space="preserve">
+    <value>Production Screen User Password</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -257,6 +266,9 @@
   </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>General Informations</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Production Screen User Information</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Employee Records</value>
