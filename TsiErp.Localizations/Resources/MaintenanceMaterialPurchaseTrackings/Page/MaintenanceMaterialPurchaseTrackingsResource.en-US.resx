@@ -117,172 +117,94 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="1Month" xml:space="preserve">
-    <value>1 Ay</value>
+  <data name="EnumApproved" xml:space="preserve">
+    <value>Approved</value>
   </data>
-  <data name="1Week" xml:space="preserve">
-    <value>1 Hafta</value>
+  <data name="EnumCancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="2Months" xml:space="preserve">
-    <value>2 Ay</value>
+  <data name="EnumCompleted" xml:space="preserve">
+    <value>Completed</value>
   </data>
-  <data name="2Weeks" xml:space="preserve">
-    <value>2 Hafta</value>
+  <data name="EnumInPartialCompleted" xml:space="preserve">
+    <value>Partial Completed</value>
   </data>
-  <data name="3Months" xml:space="preserve">
-    <value>3 Ay</value>
+  <data name="EnumWaiting" xml:space="preserve">
+    <value>Waiting</value>
   </data>
-  <data name="4Months" xml:space="preserve">
-    <value>4 Ay</value>
-  </data>
-  <data name="6Months" xml:space="preserve">
-    <value>6 Ay</value>
-  </data>
-  <data name="CalculateButton" xml:space="preserve">
-    <value>Hesapla</value>
-  </data>
-  <data name="CloseButton" xml:space="preserve">
-    <value>Kapat</value>
-  </data>
-  <data name="Code" xml:space="preserve">
-    <value>PLANLAMA KODU</value>
-  </data>
-  <data name="CodeControlManager" xml:space="preserve">
-    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
-  </data>
-  <data name="CodeLabel" xml:space="preserve">
-    <value>Planlama Kodu:</value>
-  </data>
-  <data name="Date_" xml:space="preserve">
-    <value>TARİH</value>
-  </data>
-  <data name="Date_Label" xml:space="preserve">
-    <value>Tarih:</value>
-  </data>
-  <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
-    <value>Silmek istediğinize emin misiniz ?</value>
-  </data>
-  <data name="DeleteConfirmationTitleBase" xml:space="preserve">
-    <value>Onay</value>
-  </data>
-  <data name="DeleteControlManager" xml:space="preserve">
-    <value>Hareket gören kayıtlar silinemez.</value>
-  </data>
-  <data name="DeleteSuccessMessage" xml:space="preserve">
-    <value>Kayıt başarıyla silindi.</value>
-  </data>
-  <data name="Description_Label" xml:space="preserve">
-    <value>Açıklama:</value>
-  </data>
-  <data name="EditModalTitle" xml:space="preserve">
-    <value>Bakım Malzemesi İhtiyaç Planlaması</value>
-  </data>
-  <data name="Error" xml:space="preserve">
-    <value>Hata</value>
-  </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>BakimMalzemesiIhtiyacPlanlamasi</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Bakım Malzemesi İhtiyaç Planlaması</value>
-  </data>
-  <data name="FilterEndDate" xml:space="preserve">
-    <value>HESAPLAMA BİTİŞ TARİHİ</value>
+  <data name="FilterButton" xml:space="preserve">
+    <value>Filter</value>
   </data>
   <data name="FilterEndDateLabel" xml:space="preserve">
-    <value>Hesaplama Bitiş Tarihi:</value>
-  </data>
-  <data name="FilterStartDate" xml:space="preserve">
-    <value>HESAPLAMA BAŞLANGIÇ TARİHİ</value>
+    <value>End Date:</value>
   </data>
   <data name="FilterStartDateLabel" xml:space="preserve">
-    <value>Hesaplama Başlangıç Tarihi:</value>
+    <value>Start Date:</value>
   </data>
-  <data name="LineGridAmount" xml:space="preserve">
-    <value>HESAPLANAN İHTİYAÇ MİKTARI</value>
+  <data name="OrderAmount" xml:space="preserve">
+    <value>ORDER AMOUNT</value>
   </data>
-  <data name="LineGridAmountOfStock" xml:space="preserve">
-    <value>STOK MİKTARI</value>
+  <data name="ProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
   </data>
-  <data name="LineGridisStockUsage" xml:space="preserve">
-    <value>STOKTAN KULLANILACAK</value>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Product Code:</value>
   </data>
-  <data name="LineGridProductCode" xml:space="preserve">
-    <value>STOK KODU</value>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Products</value>
   </data>
-  <data name="LineGridRequirementAmount" xml:space="preserve">
-    <value>SATIN ALMA İHTİYAÇ MİKTARI</value>
+  <data name="ProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
   </data>
-  <data name="LineGridUnitSetCode" xml:space="preserve">
-    <value>BİRİM SETİ</value>
+  <data name="ProductNameLabel" xml:space="preserve">
+    <value>Product Name:</value>
   </data>
-  <data name="LoadingCaption" xml:space="preserve">
-    <value>Lütfen Bekleyin..</value>
+  <data name="ProductPopupGridCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
   </data>
-  <data name="LoadingText" xml:space="preserve">
-    <value>Kayıtlar Yükleniyor..</value>
+  <data name="ProductPopupGridName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
   </data>
-  <data name="MaintenanceMRPLinesContextAdd" xml:space="preserve">
-    <value>Ekle</value>
+  <data name="PurchaseCurrentAccountCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
   </data>
-  <data name="MaintenanceMRPLinesContextChange" xml:space="preserve">
-    <value>Değiştir</value>
+  <data name="PurchaseCurrentAccountName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
   </data>
-  <data name="MaintenanceMRPLinesContextDelete" xml:space="preserve">
-    <value>Sil</value>
+  <data name="PurchaseOrderNo" xml:space="preserve">
+    <value>PURCHASE ORDER NO</value>
   </data>
-  <data name="MaintenanceMRPLinesContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
+  <data name="RequirementAmount" xml:space="preserve">
+    <value>REQUIREMENT AMOUNT</value>
   </data>
-  <data name="MaintenanceMRPLinesContextStockUsage" xml:space="preserve">
-    <value>Stoktan Kullan</value>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
   </data>
-  <data name="MaintenanceMRPsContextAdd" xml:space="preserve">
-    <value>Ekle</value>
+  <data name="SupplyDate" xml:space="preserve">
+    <value>SUPPLY DATE</value>
   </data>
-  <data name="MaintenanceMRPsContextChange" xml:space="preserve">
-    <value>Değiştir</value>
+  <data name="SupplyStatus" xml:space="preserve">
+    <value>SUPPLY STATUS</value>
   </data>
-  <data name="MaintenanceMRPsContextConvertMRP" xml:space="preserve">
-    <value>MRP'ye Dönüştür</value>
-  </data>
-  <data name="MaintenanceMRPsContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="MaintenanceMRPsContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
-  <data name="MergeLinesLabel" xml:space="preserve">
-    <value>Satırları Birleştir:</value>
-  </data>
-  <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
-    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
-  </data>
-  <data name="MessagePopupInformationTitleBase" xml:space="preserve">
-    <value>Bilgi</value>
-  </data>
-  <data name="SaveButton" xml:space="preserve">
-    <value>Kaydet</value>
-  </data>
-  <data name="SelectComboBoxItem" xml:space="preserve">
-    <value>Seçiniz</value>
-  </data>
-  <data name="TimeLeftforMaintenanceLabel" xml:space="preserve">
-    <value>Bakıma Kalan Süre:</value>
+  <data name="SupplyStatusComboBoxLabel" xml:space="preserve">
+    <value>Supply Status:</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
-    <value>Bakım Malzemesi İhtiyaç Planlaması</value>
+    <value>Maintenance Material Purchasing Process Tracking</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>MaintenanceMaterialPurchasingProcessTracking</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Maintenance Material Purchasing Process Tracking</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Bakım Yönetimi &gt; Hareketler</value>
+    <value>Maintenance Management &gt; Transactions</value>
   </data>
-  <data name="UpdateControlManager" xml:space="preserve">
-    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  <data name="UIWarningProductMessage" xml:space="preserve">
+    <value>Please select a product.</value>
   </data>
-  <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Lütfen planlama kodunu yazın.</value>
-  </data>
-  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Planlama kodu 17 karakterden fazla olamaz.</value>
+  <data name="UIWarningProductTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
 </root>

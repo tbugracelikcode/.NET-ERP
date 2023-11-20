@@ -99,5 +99,9 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
         /// Üretim Emri Oluşturulma Tarihi
         /// </summary>
         public DateTime? WorkOrderCreationDate { get; set; }
+        /// <summary>
+        /// Temin Tarihi
+        /// </summary>
+        public DateTime? SupplyDate { get; set; }
     }
 }

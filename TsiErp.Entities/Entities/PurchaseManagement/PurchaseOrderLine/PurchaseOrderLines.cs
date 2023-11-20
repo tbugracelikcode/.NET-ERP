@@ -107,6 +107,11 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine
         /// Üretim Emri Oluşturulma Tarihi
         /// </summary>
         public DateTime? WorkOrderCreationDate { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Temin Tarihi
+        /// </summary>
+        public DateTime? SupplyDate { get; set; }
 
     }
 }

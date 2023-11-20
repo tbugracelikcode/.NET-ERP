@@ -234,6 +234,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                     WorkOrderCreationDate = null,
                                     BranchID = BranchIDData,
                                     WarehouseID = WarehouseIDData,
+                                    MaintenanceMRPID = DataSource.MaintenanceMRPID,
                                     TotalVatExcludedAmount = 0,
                                     CurrencyID = Guid.Empty,
                                     MRPID = DataSource.Id,

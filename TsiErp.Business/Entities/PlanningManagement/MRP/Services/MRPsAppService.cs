@@ -169,7 +169,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                             nameof(MaintenanceMRPs.Id),
                             JoinType.Left
                         )
-                .Where(new { Id = id }, false, false, "");
+                .Where(new { Id = id }, false, false, Tables.MRPs);
             var MRP = queryFactory.Get<SelectMRPsDto>(query);
 
             var queryLines = queryFactory
@@ -248,7 +248,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                             nameof(MRPs.MaintenanceMRPID),
                             nameof(MaintenanceMRPs.Id),
                             JoinType.Left
-                        ).Where(null, false, false, "");
+                        ).Where(null, false, false, Tables.MRPs);
             var mRPs = queryFactory.GetList<ListMRPsDto>(query).ToList();
             return new SuccessDataResult<IList<ListMRPsDto>>(mRPs);
         }
@@ -257,7 +257,7 @@ namespace TsiErp.Business.Entities.MRP.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMRPsDto>> UpdateAsync(UpdateMRPsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(null)
+            var entityQuery = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(mi => new { mi.Code, mi.Id, mi.DataOpenStatus, mi.Date_, mi.DataOpenStatusUserId, mi.State_, mi.MaintenanceMRPID, mi.IsMaintenanceMRP, mi.IsDeleted, mi.Description_, mi.DeleterId })
                 .Join<MaintenanceMRPs>
                         (
                             pr => new { MaintenanceMRPCode = pr.Code, MaintenanceMRPID = pr.Id },
@@ -268,7 +268,7 @@ namespace TsiErp.Business.Entities.MRP.Services
           new
           {
               Id = input.Id
-          }, false, false, "");
+          }, false, false, Tables.MRPs);
             var entity = queryFactory.Get<SelectMRPsDto>(entityQuery);
 
             var queryLines = queryFactory

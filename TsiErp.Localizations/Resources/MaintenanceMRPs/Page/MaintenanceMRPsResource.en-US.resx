@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="1Month" xml:space="preserve">
+    <value>1 Month</value>
+  </data>
+  <data name="1Week" xml:space="preserve">
+    <value>1 Week</value>
+  </data>
+  <data name="2Months" xml:space="preserve">
+    <value>2 Months</value>
+  </data>
+  <data name="2Weeks" xml:space="preserve">
+    <value>2 Weeks</value>
+  </data>
+  <data name="3Months" xml:space="preserve">
+    <value>3 Months</value>
+  </data>
+  <data name="4Months" xml:space="preserve">
+    <value>4 Months</value>
+  </data>
+  <data name="6Months" xml:space="preserve">
+    <value>6 Months</value>
+  </data>
   <data name="CalculateButton" xml:space="preserve">
     <value>Calculate</value>
   </data>
@@ -231,6 +252,9 @@
   <data name="MaintenanceMRPsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="MergeLinesLabel" xml:space="preserve">
+    <value>Merge the Lines:</value>
+  </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
   </data>
@@ -239,6 +263,9 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="SelectComboBoxItem" xml:space="preserve">
+    <value>Select</value>
   </data>
   <data name="TimeLeftforMaintenanceLabel" xml:space="preserve">
     <value>Time Left for Maintenance:</value>

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DevExpress.Blazor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
@@ -34,6 +36,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
         List<SelectMaintenanceMRPLinesDto> GridLineList = new List<SelectMaintenanceMRPLinesDto>();
 
+        List<SelectMaintenanceMRPLinesDto> VirtualLineList = new List<SelectMaintenanceMRPLinesDto>();
+
         List<ListPlannedMaintenancesDto> PlannedMaintenancesList = new List<ListPlannedMaintenancesDto>();
 
         List<SelectMaintenanceInstructionLinesDto> MaintenanceInstructionLinesList = new List<SelectMaintenanceInstructionLinesDto>();
@@ -41,6 +45,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
         List<SelectMRPLinesDto> MRPLinesList = new List<SelectMRPLinesDto>();
 
         public bool enableEndDate = false;
+        public bool disableMergeLines = true;
 
         protected override async Task OnInitializedAsync()
         {
@@ -72,6 +77,10 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
             {
                 item.Text = L[item.Text];
             }
+
+            VirtualLineList.Clear();
+
+            disableMergeLines = true;
 
             EditPageVisible = true;
 
@@ -107,6 +116,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                 item.Text = L[item.Text];
             }
 
+
             if (DataSource != null)
             {
                 bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
@@ -119,6 +129,16 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                 }
                 else
                 {
+                    if (DataSource.SelectMaintenanceMRPLines.Count > 0)
+                    {
+                        disableMergeLines = false;
+                    }
+                    else if (DataSource.SelectMaintenanceMRPLines.Count == 0)
+                    {
+                        disableMergeLines = true;
+                    }
+
+                    VirtualLineList.Clear();
                     EditPageVisible = true;
                     await InvokeAsync(StateHasChanged);
                 }
@@ -327,7 +347,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                         Amount = Convert.ToInt32(instructionline.Amount),
                         AmountOfStock = amountofProduct,
                         RequirementAmount = Math.Abs(Convert.ToInt32(amountofProduct) - Convert.ToInt32(instructionline.Amount)),
-                        isStockUsage = false,
+                        isStockUsage = true,
                         LineNr = GridLineList.Count + 1,
                         UnitSetID = instructionline.UnitSetID,
                         UnitSetCode = instructionline.UnitSetCode,
@@ -342,7 +362,61 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
             }
 
+            VirtualLineList = GridLineList;
+
+            disableMergeLines = false;
+
             await _LineGrid.Refresh();
+        }
+
+        public void StartDateValueChangeHandler(ChangedEventArgs<DateTime?> args)
+        {
+            if(DataSource.TimeLeftforMaintenance != null)
+            {
+                switch(DataSource.TimeLeftforMaintenance)
+                {
+                    case 0: break;
+                    case 1:DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(7);   break;
+                    case 2:DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(14);  break;
+                    case 3:DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(30);  break;
+                    case 4:DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(60);  break;
+                    case 5:DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(90);  break;
+                    case 6:DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(120); break;
+                    case 7:DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(180); break;
+                    default:break;
+                }
+            }
+        }
+
+
+        private void MergeLinesSwitchChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (DataSource.IsMergeLines)
+            {
+                List<SelectMaintenanceMRPLinesDto> tempLineList = new List<SelectMaintenanceMRPLinesDto>();
+
+                foreach (var line in GridLineList)
+                {
+                    if (tempLineList.Any(t => t.ProductID == line.ProductID))
+                    {
+                        var sameProductLine = tempLineList.Where(t => t.ProductID == line.ProductID).FirstOrDefault();
+                        int sameProductIndex = tempLineList.IndexOf(sameProductLine);
+                        tempLineList[sameProductIndex].Amount += line.Amount;
+                    }
+                    else
+                    {
+                        tempLineList.Add(line);
+                    }
+                }
+
+                GridLineList = tempLineList;
+                tempLineList.Clear();
+            }
+            else
+            {
+                GridLineList = VirtualLineList;
+            }
+            _LineGrid.Refresh();
         }
 
         #endregion
@@ -391,11 +465,11 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                 switch (args.ItemData.ID)
                 {
                     case "0": DataSource.TimeLeftforMaintenance = 0; enableEndDate = true; break;
-                    case "1": DataSource.TimeLeftforMaintenance = 1; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(7); break;
-                    case "2": DataSource.TimeLeftforMaintenance = 2; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(14); break;
-                    case "3": DataSource.TimeLeftforMaintenance = 3; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(30); break;
-                    case "4": DataSource.TimeLeftforMaintenance = 4; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(60); break;
-                    case "5": DataSource.TimeLeftforMaintenance = 5; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(90); break;
+                    case "1": DataSource.TimeLeftforMaintenance = 1; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(7);   break;
+                    case "2": DataSource.TimeLeftforMaintenance = 2; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(14);  break;
+                    case "3": DataSource.TimeLeftforMaintenance = 3; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(30);  break;
+                    case "4": DataSource.TimeLeftforMaintenance = 4; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(60);  break;
+                    case "5": DataSource.TimeLeftforMaintenance = 5; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(90);  break;
                     case "6": DataSource.TimeLeftforMaintenance = 6; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(120); break;
                     case "7": DataSource.TimeLeftforMaintenance = 7; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(180); break;
 

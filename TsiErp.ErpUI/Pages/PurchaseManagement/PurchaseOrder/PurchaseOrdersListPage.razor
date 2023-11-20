@@ -345,6 +345,13 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
+                     <DxGridLayoutItem Row="6" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong> @L["SupplyDateLineLabel"] </strong></label>
+                            <SfDatePicker @bind-Value="LineDataSource.SupplyDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
 
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>

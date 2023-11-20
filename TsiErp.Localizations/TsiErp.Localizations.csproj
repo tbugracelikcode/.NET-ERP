@@ -171,6 +171,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MaintenanceManagementParametersResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\MaintenanceMaterialPurchaseTrackings\Page\MaintenanceMaterialPurchaseTrackingsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MaintenanceMaterialPurchaseTrackingsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\MaintenanceMRPs\Page\MaintenanceMRPsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -625,6 +630,10 @@
     <EmbeddedResource Update="Resources\MaintenanceManagementParameter\Page\MaintenanceManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MaintenanceManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\MaintenanceMaterialPurchaseTrackings\Page\MaintenanceMaterialPurchaseTrackingsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MaintenanceMaterialPurchaseTrackingsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\MaintenanceMRPs\Page\MaintenanceMRPsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

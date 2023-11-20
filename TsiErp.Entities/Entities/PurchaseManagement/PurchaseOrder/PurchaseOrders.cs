@@ -115,11 +115,17 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder
         /// Sevkiyat Adresi ID
         /// </summary>
         public Guid? ShippingAdressID { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// MRP ID
         /// </summary>
         public Guid MRPID { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Bakım MRP ID
+        /// </summary>
+        public Guid MaintenanceMRPID { get; set; }
 
     }
 }

@@ -556,7 +556,7 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bakım Malzemesi Satınalma Süreç Takibi.
+        ///   Looks up a localized string similar to Bakım Malzemesi Satın Alma Süreç Takibi.
         /// </summary>
         public static string MainMatPurchaseTrackingChildMenu {
             get {
@@ -1087,7 +1087,7 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Satınalma Uygunuzluk Kayıtları Analizi.
+        ///   Looks up a localized string similar to Satın Alma Uygunsuzluk Kayıtları Analizi.
         /// </summary>
         public static string PurcUnsAnlChildMenu {
             get {

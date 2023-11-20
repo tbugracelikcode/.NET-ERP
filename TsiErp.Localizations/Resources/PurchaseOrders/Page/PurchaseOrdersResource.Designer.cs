@@ -1006,6 +1006,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Temin Tarihi:.
+        /// </summary>
+        public static string SupplyDateLineLabel {
+            get {
+                return ResourceManager.GetString("SupplyDateLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İndirim Toplamı:.
         /// </summary>
         public static string TotalDiscountAmountLabel {

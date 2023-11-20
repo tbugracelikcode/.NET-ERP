@@ -283,7 +283,7 @@
     <value>Bakım Talimatları</value>
   </data>
   <data name="MainMatPurchaseTrackingChildMenu" xml:space="preserve">
-    <value>Bakım Malzemesi Satınalma Süreç Takibi</value>
+    <value>Bakım Malzemesi Satın Alma Süreç Takibi</value>
   </data>
   <data name="MainMatReqPlanningChildMenu" xml:space="preserve">
     <value>Bakım Malzemesi İhtiyaç Planlaması</value>
@@ -460,7 +460,7 @@
     <value>Satın Alma Uygunsuzluk Kayıtları</value>
   </data>
   <data name="PurcUnsAnlChildMenu" xml:space="preserve">
-    <value>Satınalma Uygunuzluk Kayıtları Analizi</value>
+    <value>Satın Alma Uygunsuzluk Kayıtları Analizi</value>
   </data>
   <data name="QualityControlAnalysisMenu" xml:space="preserve">
     <value>Analizler</value>

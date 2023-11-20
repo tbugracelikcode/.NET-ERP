@@ -61,6 +61,69 @@ namespace TsiErp.Localizations.Resources.MaintenanceMRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1 Ay.
+        /// </summary>
+        public static string _1Month {
+            get {
+                return ResourceManager.GetString("1Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 Hafta.
+        /// </summary>
+        public static string _1Week {
+            get {
+                return ResourceManager.GetString("1Week", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2 Ay.
+        /// </summary>
+        public static string _2Months {
+            get {
+                return ResourceManager.GetString("2Months", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2 Hafta.
+        /// </summary>
+        public static string _2Weeks {
+            get {
+                return ResourceManager.GetString("2Weeks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3 Ay.
+        /// </summary>
+        public static string _3Months {
+            get {
+                return ResourceManager.GetString("3Months", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4 Ay.
+        /// </summary>
+        public static string _4Months {
+            get {
+                return ResourceManager.GetString("4Months", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 6 Ay.
+        /// </summary>
+        public static string _6Months {
+            get {
+                return ResourceManager.GetString("6Months", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hesapla.
         /// </summary>
         public static string CalculateButton {
@@ -403,6 +466,15 @@ namespace TsiErp.Localizations.Resources.MaintenanceMRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satırları Birleştir:.
+        /// </summary>
+        public static string MergeLinesLabel {
+            get {
+                return ResourceManager.GetString("MergeLinesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçtiğiniz kayıt {0} tarafından kullanılmaktadır..
         /// </summary>
         public static string MessagePopupInformationDescriptionBase {
@@ -426,6 +498,15 @@ namespace TsiErp.Localizations.Resources.MaintenanceMRPs.Page {
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçiniz.
+        /// </summary>
+        public static string SelectComboBoxItem {
+            get {
+                return ResourceManager.GetString("SelectComboBoxItem", resourceCulture);
             }
         }
         
