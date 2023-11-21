@@ -15,6 +15,7 @@ using TsiErp.Business.Entities.QualityControl.FirstProductApproval.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApproval;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine;
@@ -31,16 +32,14 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
     [ServiceRegistration(typeof(IFirstProductApprovalsAppService), DependencyInjectionType.Scoped)]
     public class FirstProductApprovalsAppService : ApplicationService<FirstProductApprovalsResource>, IFirstProductApprovalsAppService
     {
-        private readonly IPurchaseRequestsAppService _PurchaseRequestsAppService;
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
 
-        public FirstProductApprovalsAppService(IStringLocalizer<FirstProductApprovalsResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public FirstProductApprovalsAppService(IStringLocalizer<FirstProductApprovalsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
-            _PurchaseRequestsAppService = PurchaseRequestsAppService;
             FicheNumbersAppService = ficheNumbersAppService;
         }
 
@@ -62,12 +61,6 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
-            string now = DateTime.Now.ToString();
-
-            string[] timeSplit = now.Split(" ");
-
-            string time = timeSplit[1];
-
             var query = queryFactory.Query().From(Tables.FirstProductApprovals).Insert(new CreateFirstProductApprovalsDto
             {
                 ControlDate = input.ControlDate,
@@ -78,7 +71,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 Code = input.Code,
                 Description_ = input.Description_,
                 CreationTime = DateTime.Now,
-                CreatorId = LoginedUserService.UserId,
+                CreatorId = input.CreatorId != Guid.Empty ? input.CreatorId : LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
                 DeleterId = Guid.Empty,
@@ -87,6 +80,8 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
+                AdjustmentUserID = input.AdjustmentUserID.GetValueOrDefault(),
+                IsApproval = input.IsApproval
             });
 
             foreach (var item in input.SelectFirstProductApprovalLines)
@@ -102,7 +97,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                     LineNr = item.LineNr,
                     FirstProductApprovalID = addedEntityId,
                     CreationTime = DateTime.Now,
-                    CreatorId = LoginedUserService.UserId,
+                    CreatorId = item.CreatorId != Guid.Empty ? item.CreatorId : LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
@@ -176,10 +171,25 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         nameof(TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees.Id),
                         JoinType.Left
                     )
+                    .Join<TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees>
+                    (
+                        p => new { AdjustmentUserID = p.Id, AdjustmentUser = p.Name },
+                        nameof(FirstProductApprovals.AdjustmentUserID),
+                        nameof(TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees.Id),
+                        "AdjustmentUser",
+                        JoinType.Left
+                    )
                     .Join<OperationalQualityPlans>
                     (
                         p => new { OperationQualityPlanID = p.Id, OperationQualityPlanDocumentNumber = p.DocumentNumber },
                         nameof(FirstProductApprovals.OperationQualityPlanID),
+                        nameof(OperationalQualityPlans.Id),
+                        JoinType.Left
+                    )
+                    .Join<WorkOrders>
+                    (
+                        p => new { WorkOrderNo = p.WorkOrderNo },
+                        nameof(FirstProductApprovals.WorkOrderID),
                         nameof(OperationalQualityPlans.Id),
                         JoinType.Left
                     )
@@ -224,10 +234,25 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         nameof(TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees.Id),
                         JoinType.Left
                     )
+                    .Join<TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees>
+                    (
+                        p => new { AdjustmentUserID = p.Id, AdjustmentUser = p.Name },
+                        nameof(FirstProductApprovals.AdjustmentUserID),
+                        nameof(TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees.Id),
+                        "AdjustmentUser",
+                        JoinType.Left
+                    )
                     .Join<OperationalQualityPlans>
                     (
                         p => new { OperationQualityPlanID = p.Id, OperationQualityPlanDocumentNumber = p.DocumentNumber },
                         nameof(FirstProductApprovals.OperationQualityPlanID),
+                        nameof(OperationalQualityPlans.Id),
+                        JoinType.Left
+                    )
+                    .Join<WorkOrders>
+                    (
+                        p => new { WorkOrderNo = p.WorkOrderNo },
+                        nameof(FirstProductApprovals.WorkOrderID),
                         nameof(OperationalQualityPlans.Id),
                         JoinType.Left
                     )
@@ -258,6 +283,14 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         p => new { EmployeeID = p.Id, EmployeeName = p.Name },
                         nameof(FirstProductApprovals.EmployeeID),
                         nameof(TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees.Id),
+                        JoinType.Left
+                    )
+                    .Join<TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees>
+                    (
+                        p => new { AdjustmentUserID = p.Id, AdjustmentUser = p.Name },
+                        nameof(FirstProductApprovals.AdjustmentUserID),
+                        nameof(TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees.Id),
+                        "AdjustmentUser",
                         JoinType.Left
                     )
                     .Join<OperationalQualityPlans>
@@ -315,6 +348,8 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = DateTime.Now,
                 LastModifierId = LoginedUserService.UserId,
+                AdjustmentUserID = input.AdjustmentUserID.GetValueOrDefault(),
+                IsApproval = entity.IsApproval
             }).Where(new { Id = input.Id }, false, false, "");
 
             foreach (var item in input.SelectFirstProductApprovalLines)
@@ -413,6 +448,8 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                AdjustmentUserID = entity.AdjustmentUserID,
+                IsApproval = entity.IsApproval
             }).Where(new { Id = id }, false, false, "");
 
             var FirstProductApprovalsDto = queryFactory.Update<SelectFirstProductApprovalsDto>(query, "Id", true);

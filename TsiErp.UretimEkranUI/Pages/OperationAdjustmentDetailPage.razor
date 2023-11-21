@@ -1,9 +1,13 @@
 ﻿@layout OperationDetailLayout
 
 @page "/operation-adjustment"
+@using TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Services;
 
 
 @inject IEmployeesAppService EmployeesAppService
+@inject IFirstProductApprovalsAppService FirstProductApprovalsAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
+@inject IOperationalQualityPlansAppService OperationalQualityPlansAppService
 
 <div style="height:800px">
 
@@ -27,7 +31,7 @@
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <WorkOrderDetailBreadCrumbFirst WorkOrderNo=@AppService.CurrentOperation.WorkOrderNo ProductName=@AppService.CurrentOperation.ProductName PlannedAmount=@AppService.CurrentOperation.PlannedQuantity />
+                            <WorkOrderDetailBreadCrumbFirst WorkOrderNo=@AppService.CurrentOperation.WorkOrder.WorkOrderNo ProductName=@AppService.CurrentOperation.WorkOrder.ProductName PlannedAmount=@AppService.CurrentOperation.WorkOrder.PlannedQuantity />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -35,7 +39,7 @@
 
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <WorkOrderDetailBreadCrumbSecond StationCode=@AppService.CurrentOperation.StationCode OperationName=@AppService.CurrentOperation.ProductsOperationName EmployeeName=@AppService.CurrentOperation.EmployeeName />
+                            <WorkOrderDetailBreadCrumbSecond StationCode=@AppService.CurrentOperation.WorkOrder.StationCode OperationName=@AppService.CurrentOperation.WorkOrder.ProductsOperationName EmployeeName=@AppService.CurrentOperation.EmployeeName />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -77,10 +81,10 @@
                                             <br />
                                             <label class="TSIOperationPageModalLabel"><strong>Ayar Yapan Kullanıcı </strong></label>
 
-                                            <SfTextBox CssClass="TSILargeButtonEdit" @ref="@EmployeesButtonEdit" Created="@EmployeesOnCreateIcon" ShowClearButton=true ValueChange="EmployeesOnValueChange" @bind-Value="AppService.CurrentOperation.OperationAdjustment.SettingUserName" Enabled=@SettingUserComponenetEnabled></SfTextBox>
+                                            <SfTextBox CssClass="TSILargeButtonEdit" @ref="@EmployeesButtonEdit" Created="@EmployeesOnCreateIcon" ShowClearButton=true ValueChange="EmployeesOnValueChange" @bind-Value="AppService.CurrentOperation.OperationAdjustment.AdjustmentUserName" Enabled=@SettingUserComponenetEnabled></SfTextBox>
                                         </Template>
-                                    </DxGridLayoutItem> 
-                                    
+                                    </DxGridLayoutItem>
+
                                     <DxGridLayoutItem Row="0" Column="4" RowSpan="1" ColumnSpan="2">
                                         <Template>
 
@@ -101,7 +105,7 @@
                                         </Template>
                                     </DxGridLayoutItem>
 
-                                    <DxGridLayoutItem Row="2" Column="4"  ColumnSpan="2">
+                                    <DxGridLayoutItem Row="2" Column="4" ColumnSpan="2">
                                         <Template>
                                             <br />
                                             <label class="TSIOperationPageModalLabel"><strong>Ayar Süresi </strong></label>
@@ -129,6 +133,14 @@
                                         </Template>
                                     </DxGridLayoutItem>
 
+                                    <DxGridLayoutItem Row="3" Column="6" Visible=@FirstApprovalCodeVisible>
+                                        <Template>
+                                            <br />
+                                            <label class="TSIOperationPageModalLabel"><strong>İlk Ürün Onay Kayıt Kodu: @FirstApprovalCode </strong></label>
+
+                                        </Template>
+                                    </DxGridLayoutItem>
+
                                     <DxGridLayoutItem Row="4" Column="1">
                                         <Template>
                                             <br />
@@ -138,9 +150,9 @@
                                     </DxGridLayoutItem>
 
                                     @*<DxGridLayoutItem Row="1" Column="3">
-                                        <Template>
+                                    <Template>
 
-                                        </Template>
+                                    </Template>
                                     </DxGridLayoutItem> *@
 
                                 </Items>

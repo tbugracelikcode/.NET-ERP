@@ -62,6 +62,42 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AYARI YAPAN.
+        /// </summary>
+        public static string AdjustmentUser {
+            get {
+                return ResourceManager.GetString("AdjustmentUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ayarı Yapan:.
+        /// </summary>
+        public static string AdjustmentUserLabel {
+            get {
+                return ResourceManager.GetString("AdjustmentUserLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ONAY.
+        /// </summary>
+        public static string Approve {
+            get {
+                return ResourceManager.GetString("Approve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onaylandı.
+        /// </summary>
+        public static string ApprovedLabel {
+            get {
+                return ResourceManager.GetString("ApprovedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -170,7 +206,7 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ÇALIŞAN ADI.
+        ///   Looks up a localized string similar to ONAYLAYAN KULLANICI.
         /// </summary>
         public static string EmployeeName {
             get {
@@ -179,7 +215,7 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Çalışan:.
+        ///   Looks up a localized string similar to Onaylayan:.
         /// </summary>
         public static string EmployeeNameLabel {
             get {
@@ -188,7 +224,7 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PERSONEL KODU.
+        ///   Looks up a localized string similar to ONAYLAYAN KULLANICI KODU.
         /// </summary>
         public static string EmployeePopupGridCode {
             get {
@@ -197,7 +233,7 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PERSONEL ADI.
+        ///   Looks up a localized string similar to ONAYLAYAN KULLANICI ADI.
         /// </summary>
         public static string EmployeePopupGridName {
             get {

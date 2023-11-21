@@ -215,7 +215,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                         )
                          .Join<ProductsOperations>
                         (
-                            pro => new { ProductsOperationCode = pro.Code },
+                            pro => new { ProductsOperationCode = pro.Code, ProductsOperationName = pro.Name },
                             nameof(WorkOrders.ProductsOperationID),
                             nameof(ProductsOperations.Id),
                             JoinType.Left

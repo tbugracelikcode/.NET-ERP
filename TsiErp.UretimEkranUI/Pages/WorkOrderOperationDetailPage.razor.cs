@@ -49,20 +49,20 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private async void ProducedQuantityAdded()
         {
-            AppService.CurrentOperation.ProducedQuantity = AppService.CurrentOperation.ProducedQuantity + 1;
+            AppService.CurrentOperation.WorkOrder.ProducedQuantity = AppService.CurrentOperation.WorkOrder.ProducedQuantity + 1;
 
-            QualityPercent = 1 - (ScrapQuantity / AppService.CurrentOperation.ProducedQuantity);
+            QualityPercent = 1 - (ScrapQuantity / AppService.CurrentOperation.WorkOrder.ProducedQuantity);
 
             await InvokeAsync(StateHasChanged);
         }
 
         private async void ScrapQuantityAdded()
         {
-            if (ScrapQuantity <= AppService.CurrentOperation.ProducedQuantity)
+            if (ScrapQuantity <= AppService.CurrentOperation.WorkOrder.ProducedQuantity)
             {
                 ScrapQuantity = ScrapQuantity + 1;
 
-                QualityPercent = 1 - (ScrapQuantity / AppService.CurrentOperation.ProducedQuantity);
+                QualityPercent = 1 - (ScrapQuantity / AppService.CurrentOperation.WorkOrder.ProducedQuantity);
 
                 await InvokeAsync(StateHasChanged);
             }

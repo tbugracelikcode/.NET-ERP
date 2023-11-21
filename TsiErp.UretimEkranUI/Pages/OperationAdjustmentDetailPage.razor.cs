@@ -8,7 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using TsiErp.Business.Entities.Employee.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 using TsiErp.UretimEkranUI.Services;
 using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
@@ -60,9 +65,9 @@ namespace TsiErp.UretimEkranUI.Pages
             {
                 if (args.Value == null)
                 {
-                    AppService.CurrentOperation.OperationAdjustment.SettingUserId = Guid.Empty;
-                    AppService.CurrentOperation.OperationAdjustment.SettingUserName = string.Empty;
-                    AppService.CurrentOperation.OperationAdjustment.SettingUserPassword = string.Empty;
+                    AppService.CurrentOperation.OperationAdjustment.AdjustmentUserId = Guid.Empty;
+                    AppService.CurrentOperation.OperationAdjustment.AdjustmentUserName = string.Empty;
+                    AppService.CurrentOperation.OperationAdjustment.AdjustmentUserPassword = string.Empty;
                     await InvokeAsync(StateHasChanged);
                 }
             }
@@ -74,9 +79,9 @@ namespace TsiErp.UretimEkranUI.Pages
 
             if (selectedEmployee != null)
             {
-                AppService.CurrentOperation.OperationAdjustment.SettingUserId = selectedEmployee.Id;
-                AppService.CurrentOperation.OperationAdjustment.SettingUserName = selectedEmployee.Name + " " + selectedEmployee.Surname;
-                AppService.CurrentOperation.OperationAdjustment.SettingUserPassword = selectedEmployee.ProductionScreenPassword;
+                AppService.CurrentOperation.OperationAdjustment.AdjustmentUserId = selectedEmployee.Id;
+                AppService.CurrentOperation.OperationAdjustment.AdjustmentUserName = selectedEmployee.Name + " " + selectedEmployee.Surname;
+                AppService.CurrentOperation.OperationAdjustment.AdjustmentUserPassword = selectedEmployee.ProductionScreenPassword;
                 SelectEmployeesPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -107,9 +112,9 @@ namespace TsiErp.UretimEkranUI.Pages
         {
 
 
-            if (AppService.CurrentOperation.OperationAdjustment.SettingUserId != Guid.Empty)
+            if (AppService.CurrentOperation.OperationAdjustment.AdjustmentUserId != Guid.Empty)
             {
-                if (AppService.CurrentOperation.OperationAdjustment.SettingUserPassword == SettingUserWrittenPassword)
+                if (AppService.CurrentOperation.OperationAdjustment.AdjustmentUserPassword == SettingUserWrittenPassword)
                 {
                     SettingUserComponenetEnabled = false;
                     SendQualityControlApprovalButtonDisabled = false;
@@ -149,6 +154,8 @@ namespace TsiErp.UretimEkranUI.Pages
         public bool SendQualityControlApprovalButtonDisabled { get; set; } = true;
 
         public string QualityControlApprovalStartTime { get; set; } = "00:00:00";
+        public string FirstApprovalCode { get; set; }
+        public bool FirstApprovalCodeVisible { get; set; } = false;
 
         private void QualityControlApprovalTimedEvent(object source, ElapsedEventArgs e)
         {
@@ -172,7 +179,60 @@ namespace TsiErp.UretimEkranUI.Pages
             QualityControlApprovalTimer.Enabled = true;
 
 
-            //İlk ürün onay kaydı oluşturulacak.
+            #region İlk Ürün Kaydı Oluşturuluyor
+            Guid OperationQualityPlanID = (await OperationalQualityPlansAppService.GetListAsync(new ListOperationalQualityPlansParameterDto())).Data.Where(t => t.ProductID == AppService.CurrentOperation.WorkOrder.ProductID && t.ProductsOperationID == AppService.CurrentOperation.WorkOrder.ProductsOperationID).Select(t => t.Id).FirstOrDefault();
+
+            if (OperationQualityPlanID != Guid.Empty)
+            {
+                var OperationalQualityPlanDataSource = (await OperationalQualityPlansAppService.GetAsync(OperationQualityPlanID)).Data;
+                var OperationalQualityPlanLineList = OperationalQualityPlanDataSource.SelectOperationalQualityPlanLines.Where(t => t.PeriodicControlMeasure == true).ToList();
+                var OperationPictureDataSource = OperationalQualityPlanDataSource.SelectOperationPictures.LastOrDefault();
+
+                var createdFirstProductApproval = new CreateFirstProductApprovalsDto()
+                {
+                    Code = FicheNumbersAppService.GetFicheNumberAsync("FirstProductApprovalChildMenu"),
+                    WorkOrderID = AppService.CurrentOperation.WorkOrder.Id,
+                    CreatorId = AppService.CurrentOperation.OperationAdjustment.AdjustmentUserId,
+                    Description_ = string.Empty,
+                    EmployeeID = Guid.Empty,
+                    ControlDate = null,
+                    ProductID = AppService.CurrentOperation.WorkOrder.ProductID,
+                    OperationQualityPlanID = OperationQualityPlanID,
+                    SelectFirstProductApprovalLines = new List<SelectFirstProductApprovalLinesDto>(),
+                    IsApproval = false,
+                    AdjustmentUserID = AppService.CurrentOperation.OperationAdjustment.AdjustmentUserId
+                };
+
+                foreach (var qualityplanline in OperationalQualityPlanLineList)
+                {
+                    SelectFirstProductApprovalLinesDto firstProductApprovalLineModel = new SelectFirstProductApprovalLinesDto
+                    {
+                        BottomTolerance = qualityplanline.BottomTolerance,
+                        Description_ = string.Empty,
+                        IdealMeasure = qualityplanline.IdealMeasure,
+                        IsCriticalMeasurement = qualityplanline.PeriodicControlMeasure,
+                        LineNr = createdFirstProductApproval.SelectFirstProductApprovalLines.Count + 1,
+                        UpperTolerance = qualityplanline.UpperTolerance,
+                        MeasurementValue = string.Empty,
+                        CreatorId = AppService.CurrentOperation.OperationAdjustment.AdjustmentUserId
+                    };
+
+                    createdFirstProductApproval.SelectFirstProductApprovalLines.Add(firstProductApprovalLineModel);
+                }
+
+                var selectFirstProductApproval = (await FirstProductApprovalsAppService.CreateAsync(createdFirstProductApproval)).Data;
+
+                if (selectFirstProductApproval.Id != Guid.Empty)
+                {
+                    SendQualityControlApprovalButtonDisabled = true;
+                    FirstApprovalCode = selectFirstProductApproval.Code;
+                    FirstApprovalCodeVisible = true;
+                    await (InvokeAsync(StateHasChanged));
+                }
+                #endregion
+            }
+
+
         }
         #endregion
 

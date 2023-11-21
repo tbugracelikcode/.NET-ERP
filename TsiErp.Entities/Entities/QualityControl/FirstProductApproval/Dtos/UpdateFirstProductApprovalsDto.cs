@@ -40,6 +40,15 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos
         /// Operasyon Kalite ID
         /// </summary>
         public Guid? OperationQualityPlanID { get; set; }
+        /// <summary>
+        /// Ayarı Yapan Kullanıcı ID
+        /// </summary>
+        public Guid? AdjustmentUserID { get; set; }
+
+        /// <summary>
+        /// Onay
+        /// </summary>
+        public bool IsApproval { get; set; }
 
         [NoDatabaseAction]
         public List<SelectFirstProductApprovalLinesDto> SelectFirstProductApprovalLines { get; set; }
