@@ -101,6 +101,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DepartmentsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\EmployeeSeniorities\Page\EmployeeSenioritiesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EmployeeSenioritiesResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Employees\Page\EmployeesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -556,6 +561,10 @@
     <EmbeddedResource Update="Resources\Departments\Page\DepartmentsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DepartmentsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\EmployeeSeniorities\Page\EmployeeSenioritiesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmployeeSenioritiesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Employees\Page\EmployeesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

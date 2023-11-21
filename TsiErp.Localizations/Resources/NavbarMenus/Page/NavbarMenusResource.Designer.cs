@@ -322,6 +322,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personel Kıdemleri.
+        /// </summary>
+        public static string EmployeeSenioritiesChildMenu {
+            get {
+                return ResourceManager.GetString("EmployeeSenioritiesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekipman Yönetimi.
         /// </summary>
         public static string EquipmentManagementMenu {

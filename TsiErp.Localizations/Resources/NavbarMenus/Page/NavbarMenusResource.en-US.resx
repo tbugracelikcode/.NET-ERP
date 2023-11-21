@@ -204,6 +204,9 @@
   <data name="EmployeeScoreListChildMenu" xml:space="preserve">
     <value>List of Employee Scoring Records</value>
   </data>
+  <data name="EmployeeSenioritiesChildMenu" xml:space="preserve">
+    <value>Employee Seniorities</value>
+  </data>
   <data name="EquipmentManagementMenu" xml:space="preserve">
     <value>Equipment Management</value>
   </data>

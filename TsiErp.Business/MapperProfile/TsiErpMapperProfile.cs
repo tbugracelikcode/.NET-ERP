@@ -229,6 +229,8 @@ using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -242,6 +244,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectUnitSetsDto, CreateUnitSetsDto>();
             CreateMap<UpdateUnitSetsDto, UnitSets>();
             CreateMap<SelectUnitSetsDto, UpdateUnitSetsDto>();
+
+            CreateMap<EmployeeSeniorities, SelectEmployeeSenioritiesDto>();
+            CreateMap<EmployeeSeniorities, ListEmployeeSenioritiesDto>();
+            CreateMap<CreateEmployeeSenioritiesDto, EmployeeSeniorities>();
+            CreateMap<SelectEmployeeSenioritiesDto, CreateEmployeeSenioritiesDto>();
+            CreateMap<UpdateEmployeeSenioritiesDto, EmployeeSeniorities>();
+            CreateMap<SelectEmployeeSenioritiesDto, UpdateEmployeeSenioritiesDto>();
 
             CreateMap<CustomerComplaintReports, SelectCustomerComplaintReportsDto>();
             CreateMap<CustomerComplaintReports, ListCustomerComplaintReportsDto>();

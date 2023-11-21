@@ -36,8 +36,6 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
         List<SelectMaintenanceMRPLinesDto> GridLineList = new List<SelectMaintenanceMRPLinesDto>();
 
-        List<SelectMaintenanceMRPLinesDto> VirtualLineList = new List<SelectMaintenanceMRPLinesDto>();
-
         List<ListPlannedMaintenancesDto> PlannedMaintenancesList = new List<ListPlannedMaintenancesDto>();
 
         List<SelectMaintenanceInstructionLinesDto> MaintenanceInstructionLinesList = new List<SelectMaintenanceInstructionLinesDto>();
@@ -77,8 +75,6 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
             {
                 item.Text = L[item.Text];
             }
-
-            VirtualLineList.Clear();
 
             disableMergeLines = true;
 
@@ -138,7 +134,6 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                         disableMergeLines = true;
                     }
 
-                    VirtualLineList.Clear();
                     EditPageVisible = true;
                     await InvokeAsync(StateHasChanged);
                 }
@@ -157,6 +152,12 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                     IsChanged = true;
                     DataSource = (await MaintenanceMRPsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectMaintenanceMRPLines;
+
+                    foreach(var line in GridLineList)
+                    {
+                        int indexofLine = GridLineList.IndexOf(line);
+                        GridLineList[indexofLine].ProductCode = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data.Code;
+                    }
 
 
                     ShowEditPage();
@@ -362,8 +363,6 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
             }
 
-            VirtualLineList = GridLineList;
-
             disableMergeLines = false;
 
             await _LineGrid.Refresh();
@@ -388,33 +387,14 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
             }
         }
 
-
         private void MergeLinesSwitchChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
         {
             if (DataSource.IsMergeLines)
             {
-                List<SelectMaintenanceMRPLinesDto> tempLineList = new List<SelectMaintenanceMRPLinesDto>();
-
-                foreach (var line in GridLineList)
-                {
-                    if (tempLineList.Any(t => t.ProductID == line.ProductID))
-                    {
-                        var sameProductLine = tempLineList.Where(t => t.ProductID == line.ProductID).FirstOrDefault();
-                        int sameProductIndex = tempLineList.IndexOf(sameProductLine);
-                        tempLineList[sameProductIndex].Amount += line.Amount;
-                    }
-                    else
-                    {
-                        tempLineList.Add(line);
-                    }
-                }
-
-                GridLineList = tempLineList;
-                tempLineList.Clear();
+               
             }
             else
             {
-                GridLineList = VirtualLineList;
             }
             _LineGrid.Refresh();
         }

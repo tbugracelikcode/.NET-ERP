@@ -204,6 +204,9 @@
   <data name="EmployeeScoreListChildMenu" xml:space="preserve">
     <value>Personel Puanlama Listesi</value>
   </data>
+  <data name="EmployeeSenioritiesChildMenu" xml:space="preserve">
+    <value>Personel Kıdemleri</value>
+  </data>
   <data name="EquipmentManagementMenu" xml:space="preserve">
     <value>Ekipman Yönetimi</value>
   </data>

@@ -128,6 +128,7 @@ using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -4410,6 +4411,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 MaintenanceMRPLinesTable.Create();
+            }
+            #endregion
+
+            #region EmployeeSeniorities Table Created
+            Table EmployeeSenioritiesTable = model.CreateTable(Tables.EmployeeSeniorities);
+
+            if (EmployeeSenioritiesTable != null)
+            {
+                var properties = (typeof(EmployeeSeniorities)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(EmployeeSenioritiesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(EmployeeSenioritiesTable, "PK_" + EmployeeSenioritiesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        EmployeeSenioritiesTable.Indexes.Add(pkIndex);
+                    }
+
+                    EmployeeSenioritiesTable.Columns.Add(column);
+                }
+
+                EmployeeSenioritiesTable.Create();
             }
             #endregion
 
