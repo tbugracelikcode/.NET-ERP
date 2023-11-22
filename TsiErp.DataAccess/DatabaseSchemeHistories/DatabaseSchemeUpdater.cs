@@ -129,6 +129,11 @@ using TsiErp.Entities.Entities.ShippingManagement.PalletRecord;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeAnnualSeniorityDifference;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkillRecord;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.TaskScoring;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.GeneralSkillRecordPriority;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -4448,7 +4453,181 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 EmployeeSenioritiesTable.Create();
             }
             #endregion
+            
+            #region EmployeeAnnualSeniorityDifferences Table Created
+            Table EmployeeAnnualSeniorityDifferencesTable = model.CreateTable(Tables.EmployeeAnnualSeniorityDifferences);
 
+            if (EmployeeAnnualSeniorityDifferencesTable != null)
+            {
+                var properties = (typeof(EmployeeAnnualSeniorityDifferences)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(EmployeeAnnualSeniorityDifferencesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(EmployeeAnnualSeniorityDifferencesTable, "PK_" + EmployeeAnnualSeniorityDifferencesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        EmployeeAnnualSeniorityDifferencesTable.Indexes.Add(pkIndex);
+                    }
+
+                    EmployeeAnnualSeniorityDifferencesTable.Columns.Add(column);
+                }
+
+                EmployeeAnnualSeniorityDifferencesTable.Create();
+            }
+            #endregion
+
+            #region EducationLevelScores Table Created
+            Table EducationLevelScoresTable = model.CreateTable(Tables.EducationLevelScores);
+
+            if (EducationLevelScoresTable != null)
+            {
+                var properties = (typeof(EducationLevelScores)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(EducationLevelScoresTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(EducationLevelScoresTable, "PK_" + EducationLevelScoresTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        EducationLevelScoresTable.Indexes.Add(pkIndex);
+                    }
+
+                    EducationLevelScoresTable.Columns.Add(column);
+                }
+
+                EducationLevelScoresTable.Create();
+            }
+            #endregion
+            
+            #region EmployeeGeneralSkillRecords Table Created
+            Table EmployeeGeneralSkillRecordsTable = model.CreateTable(Tables.EmployeeGeneralSkillRecords);
+
+            if (EmployeeGeneralSkillRecordsTable != null)
+            {
+                var properties = (typeof(EmployeeGeneralSkillRecords)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(EmployeeGeneralSkillRecordsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(EmployeeGeneralSkillRecordsTable, "PK_" + EmployeeGeneralSkillRecordsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        EmployeeGeneralSkillRecordsTable.Indexes.Add(pkIndex);
+                    }
+
+                    EmployeeGeneralSkillRecordsTable.Columns.Add(column);
+                }
+
+                EmployeeGeneralSkillRecordsTable.Create();
+            }
+            #endregion
+
+            #region TaskScorings Table Created
+            Table TaskScoringsTable = model.CreateTable(Tables.TaskScorings);
+
+            if (TaskScoringsTable != null)
+            {
+                var properties = (typeof(TaskScorings)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(TaskScoringsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(TaskScoringsTable, "PK_" + TaskScoringsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        TaskScoringsTable.Indexes.Add(pkIndex);
+                    }
+
+                    TaskScoringsTable.Columns.Add(column);
+                }
+
+                TaskScoringsTable.Create();
+            }
+            #endregion
+            
+            #region GeneralSkillRecordPriorities Table Created
+            Table GeneralSkillRecordPrioritiesTable = model.CreateTable(Tables.GeneralSkillRecordPriorities);
+
+            if (GeneralSkillRecordPrioritiesTable != null)
+            {
+                var properties = (typeof(GeneralSkillRecordPriorities)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(GeneralSkillRecordPrioritiesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(GeneralSkillRecordPrioritiesTable, "PK_" + GeneralSkillRecordPrioritiesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        GeneralSkillRecordPrioritiesTable.Indexes.Add(pkIndex);
+                    }
+
+                    GeneralSkillRecordPrioritiesTable.Columns.Add(column);
+                }
+
+                GeneralSkillRecordPrioritiesTable.Create();
+            }
+            #endregion
 
             return true;
         }

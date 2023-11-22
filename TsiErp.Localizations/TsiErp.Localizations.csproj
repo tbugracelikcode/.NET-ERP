@@ -101,6 +101,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DepartmentsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\EducationLevelScores\Page\EducationLevelScoresResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EducationLevelScoresResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\EmployeeAnnualSeniorityDifferences\Page\EmployeeAnnualSeniorityDifferencesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EmployeeAnnualSeniorityDifferencesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\EmployeeGeneralSkillRecords\Page\EmployeeGeneralSkillRecordsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EmployeeGeneralSkillRecordsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\EmployeeSeniorities\Page\EmployeeSenioritiesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -150,6 +165,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>GeneralParametersResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\GeneralSkillRecordPriorities\Page\GeneralSkillRecordPrioritiesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GeneralSkillRecordPrioritiesResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\GrandTotalStockMovements\Page\GrandTotalStockMovementsResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -401,6 +421,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>StockManagementParametersResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\TaskScorings\Page\TaskScoringsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TaskScoringsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\TechnicalDrawings\Page\TechnicalDrawingsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -562,6 +587,18 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DepartmentsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\EducationLevelScores\Page\EducationLevelScoresResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EducationLevelScoresResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\EmployeeAnnualSeniorityDifferences\Page\EmployeeAnnualSeniorityDifferencesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmployeeAnnualSeniorityDifferencesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\EmployeeGeneralSkillRecords\Page\EmployeeGeneralSkillRecordsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmployeeGeneralSkillRecordsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\EmployeeSeniorities\Page\EmployeeSenioritiesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EmployeeSenioritiesResource.Designer.cs</LastGenOutput>
@@ -613,6 +650,10 @@
     <EmbeddedResource Update="Resources\GeneralParameter\Page\GeneralParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GeneralParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\GeneralSkillRecordPriorities\Page\GeneralSkillRecordPrioritiesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GeneralSkillRecordPrioritiesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\GrandTotalStockMovements\Page\GrandTotalStockMovementsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -879,6 +920,10 @@
     <EmbeddedResource Update="Resources\StockManagementParameter\Page\StockManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StockManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\TaskScorings\Page\TaskScoringsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TaskScoringsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\TechnicalDrawings\Page\TechnicalDrawingsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

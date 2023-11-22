@@ -181,7 +181,7 @@
     <value>SENIORITY NAME</value>
   </data>
   <data name="NameLabel" xml:space="preserve">
-    <value>Department Name:</value>
+    <value>Seniority Name:</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

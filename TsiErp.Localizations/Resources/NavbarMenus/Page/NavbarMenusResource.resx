@@ -189,6 +189,15 @@
   <data name="DepartmentsChildMenu" xml:space="preserve">
     <value>Personel Departmanları</value>
   </data>
+  <data name="EducationLevelScoresChildMenu" xml:space="preserve">
+    <value>Eğitim Seviyesi Puanları</value>
+  </data>
+  <data name="EmployeeAnnualSeniorityDifferencesChildMenu" xml:space="preserve">
+    <value>Personel Yıllık Kıdem Farkları</value>
+  </data>
+  <data name="EmployeeGeneralSkillRecordsChildMenu" xml:space="preserve">
+    <value>Personel Genel Beceri Kayıtları</value>
+  </data>
   <data name="EmployeeListChildMenu" xml:space="preserve">
     <value>Personel Listesi</value>
   </data>
@@ -248,6 +257,9 @@
   </data>
   <data name="GeneralParametersChildMenu" xml:space="preserve">
     <value>Genel Parametreler</value>
+  </data>
+  <data name="GeneralSkillRecordPrioritiesChildMenu" xml:space="preserve">
+    <value>Genel Beceri Kayıtları Öncelikleri</value>
   </data>
   <data name="GeneralSystemIdentificationsParentMenu" xml:space="preserve">
     <value>Genel Sistem Tanımlamaları</value>
@@ -599,6 +611,9 @@
   </data>
   <data name="StockManagementTransactionsMenu" xml:space="preserve">
     <value>Hareketler</value>
+  </data>
+  <data name="TaskScoringsChildMenu" xml:space="preserve">
+    <value>Görev Puanlamaları</value>
   </data>
   <data name="TechAnlChildMenu" xml:space="preserve">
     <value>Teknik Analizler</value>
