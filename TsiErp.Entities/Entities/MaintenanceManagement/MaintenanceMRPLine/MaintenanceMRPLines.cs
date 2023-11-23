@@ -41,11 +41,6 @@ namespace TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine
         /// </summary>
         public int RequirementAmount { get; set; }
 
-        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Int)]
-        /// <summary>
-        /// Satın Alma İhtiyaç Miktar
-        /// </summary>
-        public int PurchaseAmount { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// Stoktan Kullanılacak

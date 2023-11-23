@@ -13,11 +13,13 @@ using TsiErp.Business.Entities.PlanningManagement.MRP.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRP.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.PlanningManagement.MRP;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
@@ -67,6 +69,8 @@ namespace TsiErp.Business.Entities.MRP.Services
             var query = queryFactory.Query().From(Tables.MRPs).Insert(new CreateMRPsDto
             {
                 Date_ = input.Date_,
+                IsMaintenanceMRP = input.IsMaintenanceMRP,
+                MaintenanceMRPID = input.MaintenanceMRPID,
                 Description_ = input.Description_,
                 State_ = input.State_,
                 Code = input.Code,
@@ -157,11 +161,15 @@ namespace TsiErp.Business.Entities.MRP.Services
 
         public async Task<IDataResult<SelectMRPsDto>> GetAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.MRPs).Select("*").Where(
-           new
-           {
-               Id = id
-           }, false, false, "");
+            var query = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(null)
+                .Join<MaintenanceMRPs>
+                        (
+                            pr => new { MaintenanceMRPCode = pr.Code, MaintenanceMRPID = pr.Id },
+                            nameof(MRPs.MaintenanceMRPID),
+                            nameof(MaintenanceMRPs.Id),
+                            JoinType.Left
+                        )
+                .Where(new { Id = id }, false, false, Tables.MRPs);
             var MRP = queryFactory.Get<SelectMRPsDto>(query);
 
             var queryLines = queryFactory
@@ -233,20 +241,34 @@ namespace TsiErp.Business.Entities.MRP.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMRPsDto>>> GetListAsync(ListMRPsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.MRPs).Select("*").Where(null, false, false, "");
-            var MRPs = queryFactory.GetList<ListMRPsDto>(query).ToList();
-            return new SuccessDataResult<IList<ListMRPsDto>>(MRPs);
+            var query = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(null)
+                .Join<MaintenanceMRPs>
+                        (
+                            pr => new { MaintenanceMRPCode = pr.Code, MaintenanceMRPID = pr.Id },
+                            nameof(MRPs.MaintenanceMRPID),
+                            nameof(MaintenanceMRPs.Id),
+                            JoinType.Left
+                        ).Where(null, false, false, Tables.MRPs);
+            var mRPs = queryFactory.GetList<ListMRPsDto>(query).ToList();
+            return new SuccessDataResult<IList<ListMRPsDto>>(mRPs);
         }
 
         [ValidationAspect(typeof(UpdateMRPsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMRPsDto>> UpdateAsync(UpdateMRPsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.MRPs).Select("*").Where(
+            var entityQuery = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(mi => new { mi.Code, mi.Id, mi.DataOpenStatus, mi.Date_, mi.DataOpenStatusUserId, mi.State_, mi.MaintenanceMRPID, mi.IsMaintenanceMRP, mi.IsDeleted, mi.Description_, mi.DeleterId })
+                .Join<MaintenanceMRPs>
+                        (
+                            pr => new { MaintenanceMRPCode = pr.Code, MaintenanceMRPID = pr.Id },
+                            nameof(MRPs.MaintenanceMRPID),
+                            nameof(MaintenanceMRPs.Id),
+                            JoinType.Left
+                        ).Where(
           new
           {
               Id = input.Id
-          }, false, false, "");
+          }, false, false, Tables.MRPs);
             var entity = queryFactory.Get<SelectMRPsDto>(entityQuery);
 
             var queryLines = queryFactory
@@ -304,7 +326,14 @@ namespace TsiErp.Business.Entities.MRP.Services
             #region Update Control
             var listQuery = queryFactory
                            .Query()
-                           .From(Tables.MRPs).Select("*").Where(new { Code = input.Code }, false, false, Tables.MRPs);
+                           .From(Tables.MRPs).Select<MRPs>(null)
+                .Join<MaintenanceMRPs>
+                        (
+                            pr => new { MaintenanceMRPCode = pr.Code, MaintenanceMRPID = pr.Id },
+                            nameof(MRPs.MaintenanceMRPID),
+                            nameof(MaintenanceMRPs.Id),
+                            JoinType.Left
+                        ).Where(new { Code = input.Code }, false, false, Tables.MRPs);
 
             var list = queryFactory.GetList<ListMRPsDto>(listQuery).ToList();
 
@@ -317,6 +346,8 @@ namespace TsiErp.Business.Entities.MRP.Services
             var query = queryFactory.Query().From(Tables.MRPs).Update(new UpdateMRPsDto
             {
                 Date_ = input.Date_,
+                MaintenanceMRPID = input.MaintenanceMRPID,
+                IsMaintenanceMRP = input.IsMaintenanceMRP,
                 Description_ = input.Description_,
                 State_ = input.State_,
                 Code = input.Code,
@@ -424,6 +455,8 @@ namespace TsiErp.Business.Entities.MRP.Services
             var query = queryFactory.Query().From(Tables.MRPs).Update(new UpdateMRPsDto
             {
                 State_ = entity.State_,
+                IsMaintenanceMRP = entity.IsMaintenanceMRP,
+                MaintenanceMRPID = entity.MaintenanceMRPID,
                 Date_ = entity.Date_,
                 Description_ = entity.Description_,
                 Code = entity.Code,

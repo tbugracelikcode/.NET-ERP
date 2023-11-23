@@ -81,7 +81,6 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
             {
                 var queryLine = queryFactory.Query().From(Tables.MaintenanceMRPLines).Insert(new CreateMaintenanceMRPLinesDto
                 {
-                    PurchaseAmount = item.PurchaseAmount,
                     isStockUsage = item.isStockUsage,
                     RequirementAmount = item.RequirementAmount,
                     Amount = item.Amount,
@@ -283,7 +282,6 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
                 {
                     var queryLine = queryFactory.Query().From(Tables.MaintenanceMRPLines).Insert(new CreateMaintenanceMRPLinesDto
                     {
-                        PurchaseAmount = item.PurchaseAmount,
                         isStockUsage = item.isStockUsage,
                         RequirementAmount = item.RequirementAmount,
                         Amount = item.Amount,
@@ -315,7 +313,6 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
                     {
                         var queryLine = queryFactory.Query().From(Tables.MaintenanceMRPLines).Update(new UpdateMaintenanceMRPLinesDto
                         {
-                            PurchaseAmount = item.PurchaseAmount,
                             isStockUsage = item.isStockUsage,
                             RequirementAmount = item.RequirementAmount,
                             MaintenanceMRPID = input.Id,

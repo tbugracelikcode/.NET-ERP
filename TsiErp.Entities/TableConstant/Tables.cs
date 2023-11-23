@@ -138,5 +138,13 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string PalletRecordLines = "PalletRecordLines";
         public static readonly string MaintenanceMRPs = "MaintenanceMRPs";
         public static readonly string MaintenanceMRPLines = "MaintenanceMRPLines";
+        public static readonly string EmployeeSeniorities = "EmployeeSeniorities";
+        public static readonly string EmployeeAnnualSeniorityDifferences = "EmployeeAnnualSeniorityDifferences";
+        public static readonly string EducationLevelScores = "EducationLevelScores";
+        public static readonly string EmployeeGeneralSkillRecords = "EmployeeGeneralSkillRecords";
+        public static readonly string TaskScorings = "TaskScorings";
+        public static readonly string GeneralSkillRecordPriorities = "GeneralSkillRecordPriorities";
+        public static readonly string StartingSalaries = "StartingSalaries";
+        public static readonly string StartingSalaryLines = "StartingSalaryLines";
     }
 }

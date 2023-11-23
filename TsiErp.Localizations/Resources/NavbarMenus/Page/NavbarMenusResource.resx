@@ -189,6 +189,15 @@
   <data name="DepartmentsChildMenu" xml:space="preserve">
     <value>Personel Departmanları</value>
   </data>
+  <data name="EducationLevelScoresChildMenu" xml:space="preserve">
+    <value>Eğitim Seviyesi Puanları</value>
+  </data>
+  <data name="EmployeeAnnualSeniorityDifferencesChildMenu" xml:space="preserve">
+    <value>Personel Yıllık Kıdem Farkları</value>
+  </data>
+  <data name="EmployeeGeneralSkillRecordsChildMenu" xml:space="preserve">
+    <value>Personel Genel Beceri Kayıtları</value>
+  </data>
   <data name="EmployeeListChildMenu" xml:space="preserve">
     <value>Personel Listesi</value>
   </data>
@@ -203,6 +212,9 @@
   </data>
   <data name="EmployeeScoreListChildMenu" xml:space="preserve">
     <value>Personel Puanlama Listesi</value>
+  </data>
+  <data name="EmployeeSenioritiesChildMenu" xml:space="preserve">
+    <value>Personel Kıdemleri</value>
   </data>
   <data name="EquipmentManagementMenu" xml:space="preserve">
     <value>Ekipman Yönetimi</value>
@@ -246,6 +258,9 @@
   <data name="GeneralParametersChildMenu" xml:space="preserve">
     <value>Genel Parametreler</value>
   </data>
+  <data name="GeneralSkillRecordPrioritiesChildMenu" xml:space="preserve">
+    <value>Genel Beceri Kayıtları Öncelikleri</value>
+  </data>
   <data name="GeneralSystemIdentificationsParentMenu" xml:space="preserve">
     <value>Genel Sistem Tanımlamaları</value>
   </data>
@@ -283,7 +298,7 @@
     <value>Bakım Talimatları</value>
   </data>
   <data name="MainMatPurchaseTrackingChildMenu" xml:space="preserve">
-    <value>Bakım Malzemesi Satınalma Süreç Takibi</value>
+    <value>Bakım Malzemesi Satın Alma Süreç Takibi</value>
   </data>
   <data name="MainMatReqPlanningChildMenu" xml:space="preserve">
     <value>Bakım Malzemesi İhtiyaç Planlaması</value>
@@ -460,7 +475,7 @@
     <value>Satın Alma Uygunsuzluk Kayıtları</value>
   </data>
   <data name="PurcUnsAnlChildMenu" xml:space="preserve">
-    <value>Satınalma Uygunuzluk Kayıtları Analizi</value>
+    <value>Satın Alma Uygunsuzluk Kayıtları Analizi</value>
   </data>
   <data name="QualityControlAnalysisMenu" xml:space="preserve">
     <value>Analizler</value>
@@ -561,6 +576,9 @@
   <data name="SPCFMEAChildMenu" xml:space="preserve">
     <value>SPC &amp; FMEA</value>
   </data>
+  <data name="StartingSalariesChildMenu" xml:space="preserve">
+    <value>Başlangıç Maaşları</value>
+  </data>
   <data name="StationCostChildMenu" xml:space="preserve">
     <value>İş İstasyonu Maliyet Kayıtları</value>
   </data>
@@ -596,6 +614,9 @@
   </data>
   <data name="StockManagementTransactionsMenu" xml:space="preserve">
     <value>Hareketler</value>
+  </data>
+  <data name="TaskScoringsChildMenu" xml:space="preserve">
+    <value>Görev Puanlamaları</value>
   </data>
   <data name="TechAnlChildMenu" xml:space="preserve">
     <value>Teknik Analizler</value>

@@ -68,6 +68,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
         public async override void ShowEditPage()
         {
+            foreach (var item in _packageTypeComboBox)
+            {
+                item.Text = L[item.Text];
+            }
 
             if (DataSource != null)
             {

@@ -85,6 +85,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         public async override void ShowEditPage()
         {
+            foreach (var item in _packageTypeComboBox)
+            {
+                item.Text = L[item.Text];
+            }
 
             if (DataSource != null)
             {

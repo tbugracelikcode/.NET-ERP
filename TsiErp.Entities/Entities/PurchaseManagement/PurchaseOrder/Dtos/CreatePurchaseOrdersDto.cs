@@ -89,6 +89,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
         /// MRP ID
         /// </summary>
         public Guid? MRPID { get; set; }
+        /// <summary>
+        /// Bakım MRP ID
+        /// </summary>
+        public Guid? MaintenanceMRPID { get; set; }
 
         /// <summary>
         /// Toplam İndirimli Tutar

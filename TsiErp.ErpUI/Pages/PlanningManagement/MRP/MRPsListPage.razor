@@ -59,9 +59,10 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListMRPsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListMRPsDto.Date_) Format="dd.MM.yyyy" HeaderText="@L["Date_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListMRPsDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["Date_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListMRPsDto.State_) HeaderText="@L["State_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListMRPsDto.Description_) HeaderText="@L["Description_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListMRPsDto.MaintenanceMRPCode) HeaderText="@L["MaintenanceMRPCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
 
                                 </GridColumns>
@@ -151,6 +152,14 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["WarehouseCodeButtonEditLabel"] </strong></label><br />
                             <SfTextBox @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="WarehouseCodeButtonEdit" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="4" Column="3">
+                        <Template>
+                            <center>
+                                <label class="TSIModalLabel"><strong>@L["IsMaintenanceMRPLabel"] </strong></label><br />
+                            <SfSwitch Disabled=true  @bind-Checked="DataSource.IsMaintenanceMRP" ></SfSwitch></center>
                         </Template>
                     </DxGridLayoutItem>
 

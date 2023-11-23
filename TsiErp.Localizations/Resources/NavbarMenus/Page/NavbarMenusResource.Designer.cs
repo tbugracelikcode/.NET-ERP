@@ -277,6 +277,33 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Eğitim Seviyesi Puanları.
+        /// </summary>
+        public static string EducationLevelScoresChildMenu {
+            get {
+                return ResourceManager.GetString("EducationLevelScoresChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Yıllık Kıdem Farkları.
+        /// </summary>
+        public static string EmployeeAnnualSeniorityDifferencesChildMenu {
+            get {
+                return ResourceManager.GetString("EmployeeAnnualSeniorityDifferencesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Genel Beceri Kayıtları.
+        /// </summary>
+        public static string EmployeeGeneralSkillRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("EmployeeGeneralSkillRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personel Listesi.
         /// </summary>
         public static string EmployeeListChildMenu {
@@ -318,6 +345,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string EmployeeScoreListChildMenu {
             get {
                 return ResourceManager.GetString("EmployeeScoreListChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Kıdemleri.
+        /// </summary>
+        public static string EmployeeSenioritiesChildMenu {
+            get {
+                return ResourceManager.GetString("EmployeeSenioritiesChildMenu", resourceCulture);
             }
         }
         
@@ -448,6 +484,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Genel Beceri Kayıtları Öncelikleri.
+        /// </summary>
+        public static string GeneralSkillRecordPrioritiesChildMenu {
+            get {
+                return ResourceManager.GetString("GeneralSkillRecordPrioritiesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Genel Sistem Tanımlamaları.
         /// </summary>
         public static string GeneralSystemIdentificationsParentMenu {
@@ -556,7 +601,7 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bakım Malzemesi Satınalma Süreç Takibi.
+        ///   Looks up a localized string similar to Bakım Malzemesi Satın Alma Süreç Takibi.
         /// </summary>
         public static string MainMatPurchaseTrackingChildMenu {
             get {
@@ -1087,7 +1132,7 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Satınalma Uygunuzluk Kayıtları Analizi.
+        ///   Looks up a localized string similar to Satın Alma Uygunsuzluk Kayıtları Analizi.
         /// </summary>
         public static string PurcUnsAnlChildMenu {
             get {
@@ -1393,6 +1438,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Başlangıç Maaşları.
+        /// </summary>
+        public static string StartingSalariesChildMenu {
+            get {
+                return ResourceManager.GetString("StartingSalariesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İş İstasyonu Maliyet Kayıtları.
         /// </summary>
         public static string StationCostChildMenu {
@@ -1497,6 +1551,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string StockManagementTransactionsMenu {
             get {
                 return ResourceManager.GetString("StockManagementTransactionsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev Puanlamaları.
+        /// </summary>
+        public static string TaskScoringsChildMenu {
+            get {
+                return ResourceManager.GetString("TaskScoringsChildMenu", resourceCulture);
             }
         }
         

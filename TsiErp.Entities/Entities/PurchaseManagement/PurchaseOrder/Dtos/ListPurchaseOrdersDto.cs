@@ -20,6 +20,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
         /// </summary>
         public DateTime Date_ { get; set; }
         /// <summary>
+        /// Bakım MRP ID
+        /// </summary>
+        public Guid? MaintenanceMRPID { get; set; }
+        /// <summary>
         /// MRP ID
         /// </summary>
         public Guid? MRPID { get; set; }
