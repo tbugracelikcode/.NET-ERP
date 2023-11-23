@@ -22,6 +22,14 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos
         /// Durum
         /// </summary>
         public string State_ { get; set; }
+        /// <summary>
+        /// Bakım MRP'den mi
+        /// </summary>
+        public bool IsMaintenanceMRP { get; set; }
+        /// <summary>
+        /// Bakım MRP ID
+        /// </summary>
+        public Guid? MaintenanceMRPID { get; set; }
 
         [NoDatabaseAction]
         public List<SelectMRPLinesDto> SelectMRPLines { get; set; }

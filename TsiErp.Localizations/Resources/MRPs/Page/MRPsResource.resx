@@ -183,6 +183,9 @@
   <data name="ExportTitle" xml:space="preserve">
     <value>Malzeme İhtiyaç Planlaması (MRP)</value>
   </data>
+  <data name="IsMaintenanceMRPLabel" xml:space="preserve">
+    <value>Bakım Malzeme İhtiyaç Planlaması:</value>
+  </data>
   <data name="LineGridAmount" xml:space="preserve">
     <value>PLANLANAN İHTİYAÇ MİKTARI</value>
   </data>
@@ -221,6 +224,9 @@
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="MaintenanceMRPCode" xml:space="preserve">
+    <value>BAKIM MALZEME İHTİYAÇ PLANLAMASI</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>

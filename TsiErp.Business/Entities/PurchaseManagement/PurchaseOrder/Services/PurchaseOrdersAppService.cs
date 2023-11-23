@@ -82,6 +82,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
+                MaintenanceMRPID = input.MaintenanceMRPID,
                 GrossAmount = input.GrossAmount,
                 LinkedPurchaseRequestID = Guid.Empty,
                 NetAmount = input.NetAmount,
@@ -125,6 +126,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
                     ProductionOrderID = Guid.Empty,
                     PurchaseOrderLineStateEnum = (int)item.PurchaseOrderLineStateEnum,
+                    SupplyDate = item.SupplyDate,
                     UnitPrice = item.UnitPrice,
                     VATamount = item.VATamount,
                     VATrate = item.VATrate,
@@ -184,6 +186,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 BranchID = input.BranchID.GetValueOrDefault(),
                 CurrencyID = input.CurrencyID.GetValueOrDefault(),
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                MaintenanceMRPID = input.MaintenanceMRPID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
@@ -225,6 +228,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     LikedPurchaseRequestLineID = Guid.Empty,
                     LineAmount = item.LineAmount,
                     LineDescription = item.LineDescription,
+                    SupplyDate = item.SupplyDate,
                     LineTotalAmount = item.LineTotalAmount,
                     LinkedPurchaseRequestID = Guid.Empty,
                     PaymentPlanID = item.PaymentPlanID,
@@ -367,7 +371,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.PurchaseOrderLines)
-                   .Select<PurchaseOrderLines>(pol => new { pol.WorkOrderCreationDate, pol.VATrate, pol.VATamount, pol.UnitSetID, pol.UnitPrice, pol.Quantity, pol.PurchaseOrderLineStateEnum, pol.PurchaseOrderID, pol.ProductionOrderID, pol.ProductID, pol.PaymentPlanID, pol.LinkedPurchaseRequestID, pol.LineTotalAmount, pol.LikedPurchaseRequestLineID, pol.Id, pol.ExchangeRate, pol.DiscountRate, pol.DiscountAmount, pol.DataOpenStatusUserId, pol.DataOpenStatus })
+                   .Select<PurchaseOrderLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -463,6 +467,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
         }
 
+
         [ValidationAspect(typeof(UpdatePurchaseOrdersValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseOrdersDto>> UpdateAsync(UpdatePurchaseOrdersDto input)
@@ -526,7 +531,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var queryLines = queryFactory
                    .Query()
                     .From(Tables.PurchaseOrderLines)
-                   .Select<PurchaseOrderLines>(pol => new { pol.WorkOrderCreationDate, pol.VATrate, pol.VATamount, pol.UnitSetID, pol.UnitPrice, pol.Quantity, pol.PurchaseOrderLineStateEnum, pol.PurchaseOrderID, pol.ProductionOrderID, pol.ProductID, pol.PaymentPlanID, pol.LinkedPurchaseRequestID, pol.LineTotalAmount, pol.LikedPurchaseRequestLineID, pol.Id, pol.ExchangeRate, pol.DiscountRate, pol.DiscountAmount, pol.DataOpenStatusUserId, pol.DataOpenStatus })
+                   .Select<PurchaseOrderLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -621,6 +626,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 MRPID = input.MRPID,
+                MaintenanceMRPID = input.MaintenanceMRPID.GetValueOrDefault(),
                 ExchangeRate = input.ExchangeRate,
                 GrossAmount = input.GrossAmount,
                 LinkedPurchaseRequestID = input.LinkedPurchaseRequestID.GetValueOrDefault(),
@@ -666,6 +672,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         PaymentPlanID = item.PaymentPlanID,
                         ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                         PurchaseOrderLineStateEnum = (int)item.PurchaseOrderLineStateEnum,
+                        SupplyDate = item.SupplyDate,
                         UnitPrice = item.UnitPrice,
                         VATamount = item.VATamount,
                         VATrate = item.VATrate,
@@ -711,6 +718,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                             PurchaseOrderLineStateEnum = (int)item.PurchaseOrderLineStateEnum,
                             UnitPrice = item.UnitPrice,
+                            SupplyDate = item.SupplyDate,
                             VATamount = item.VATamount,
                             VATrate = item.VATrate,
                             PurchaseOrderID = input.Id,
@@ -761,6 +769,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 Description_ = entity.Description_,
                 ExchangeRate = entity.ExchangeRate,
                 GrossAmount = entity.GrossAmount,
+                MaintenanceMRPID = entity.MaintenanceMRPID,
                 MRPID = entity.MRPID,
                 LinkedPurchaseRequestID = entity.LinkedPurchaseRequestID,
                 NetAmount = entity.NetAmount,

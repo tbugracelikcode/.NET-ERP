@@ -86,7 +86,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             DataSource = new SelectMRPsDto()
             {
                 Date_ = DateTime.Today,
-                Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu")
+                Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu"),
+                MaintenanceMRPID = Guid.Empty,
+                IsMaintenanceMRP = false
             };
             await GetSalesOrdersList();
             DataSource.SelectMRPLines = new List<SelectMRPLinesDto>();
@@ -232,6 +234,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                     WorkOrderCreationDate = null,
                                     BranchID = BranchIDData,
                                     WarehouseID = WarehouseIDData,
+                                    MaintenanceMRPID = DataSource.MaintenanceMRPID,
                                     TotalVatExcludedAmount = 0,
                                     CurrencyID = Guid.Empty,
                                     MRPID = DataSource.Id,

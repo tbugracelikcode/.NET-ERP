@@ -31,10 +31,6 @@ namespace TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine.Dtos
         /// </summary>
         public Guid? UnitSetID { get; set; }
         /// <summary>
-        /// Satın Alma İhtiyaç Miktar
-        /// </summary>
-        public int PurchaseAmount { get; set; }
-        /// <summary>
         /// İhtiyaç Miktar
         /// </summary>
         public int RequirementAmount { get; set; }

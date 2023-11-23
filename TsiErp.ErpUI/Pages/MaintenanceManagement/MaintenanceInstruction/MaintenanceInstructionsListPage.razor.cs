@@ -297,6 +297,10 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
                     DataSource = (await MaintenanceInstructionsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectMaintenanceInstructionLines;
 
+                    foreach(var line in GridLineList)
+                    {
+                        line.ProductCode = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data.Code;
+                    }
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);

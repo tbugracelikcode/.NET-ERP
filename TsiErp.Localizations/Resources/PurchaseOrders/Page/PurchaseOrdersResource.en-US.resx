@@ -432,6 +432,9 @@
   <data name="StockReceiptFichesContextSelect" xml:space="preserve">
     <value>Select</value>
   </data>
+  <data name="SupplyDateLineLabel" xml:space="preserve">
+    <value>Supply Date:</value>
+  </data>
   <data name="TotalDiscountAmountLabel" xml:space="preserve">
     <value>Discont Amount:</value>
   </data>

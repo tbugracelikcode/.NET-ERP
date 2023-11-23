@@ -189,6 +189,15 @@
   <data name="DepartmentsChildMenu" xml:space="preserve">
     <value>Departments</value>
   </data>
+  <data name="EducationLevelScoresChildMenu" xml:space="preserve">
+    <value>Education Level Scores</value>
+  </data>
+  <data name="EmployeeAnnualSeniorityDifferencesChildMenu" xml:space="preserve">
+    <value>Employee Annual Seniority Differences</value>
+  </data>
+  <data name="EmployeeGeneralSkillRecordsChildMenu" xml:space="preserve">
+    <value>Employee General Skill Records</value>
+  </data>
   <data name="EmployeeListChildMenu" xml:space="preserve">
     <value>List of Employees</value>
   </data>
@@ -203,6 +212,9 @@
   </data>
   <data name="EmployeeScoreListChildMenu" xml:space="preserve">
     <value>List of Employee Scoring Records</value>
+  </data>
+  <data name="EmployeeSenioritiesChildMenu" xml:space="preserve">
+    <value>Employee Seniorities</value>
   </data>
   <data name="EquipmentManagementMenu" xml:space="preserve">
     <value>Equipment Management</value>
@@ -245,6 +257,9 @@
   </data>
   <data name="GeneralParametersChildMenu" xml:space="preserve">
     <value>General Parameters</value>
+  </data>
+  <data name="GeneralSkillRecordPrioritiesChildMenu" xml:space="preserve">
+    <value>General Skill Record Priorities</value>
   </data>
   <data name="GeneralSystemIdentificationsParentMenu" xml:space="preserve">
     <value>General Identifications</value>
@@ -561,6 +576,9 @@
   <data name="SPCFMEAChildMenu" xml:space="preserve">
     <value>SPC &amp; FMEA</value>
   </data>
+  <data name="StartingSalariesChildMenu" xml:space="preserve">
+    <value>Starting Salaries</value>
+  </data>
   <data name="StationCostChildMenu" xml:space="preserve">
     <value>Station Cost Records</value>
   </data>
@@ -596,6 +614,9 @@
   </data>
   <data name="StockManagementTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
+  </data>
+  <data name="TaskScoringsChildMenu" xml:space="preserve">
+    <value>Task Scorings</value>
   </data>
   <data name="TechAnlChildMenu" xml:space="preserve">
     <value>Technical Analysis</value>

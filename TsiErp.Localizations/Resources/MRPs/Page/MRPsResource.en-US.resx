@@ -183,6 +183,9 @@
   <data name="ExportTitle" xml:space="preserve">
     <value>Material Requirement Planning (MRP)</value>
   </data>
+  <data name="IsMaintenanceMRPLabel" xml:space="preserve">
+    <value>Maintenance Material Requirement Planning:</value>
+  </data>
   <data name="LineGridAmount" xml:space="preserve">
     <value>PLANNED REQUIREMENT AMOUNT</value>
   </data>
@@ -221,6 +224,9 @@
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
+  </data>
+  <data name="MaintenanceMRPCode" xml:space="preserve">
+    <value>MAINTENANCE MATERIAL REQUREMENT PLANNING</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
