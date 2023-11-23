@@ -55,6 +55,10 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.GeneralSkillRecordPriority;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.GeneralSkillRecordPriority.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalary;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalary.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalaryLine;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalaryLine.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
@@ -1229,6 +1233,22 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateMaintenanceMRPLinesDto, MaintenanceMRPLines>();
             CreateMap<SelectMaintenanceMRPLinesDto, UpdateMaintenanceMRPLinesDto>();
             CreateMap<SelectMaintenanceMRPLinesDto, MaintenanceMRPLines>();
+
+            CreateMap<StartingSalaries, SelectStartingSalariesDto>();
+            CreateMap<StartingSalaries, ListStartingSalariesDto>();
+            CreateMap<UpdateStartingSalariesDto, StartingSalaries>();
+            CreateMap<CreateStartingSalariesDto, StartingSalaries>();
+            CreateMap<SelectStartingSalariesDto, CreateStartingSalariesDto>();
+            CreateMap<SelectStartingSalariesDto, UpdateStartingSalariesDto>();
+            CreateMap<StartingSalaries, UpdateStartingSalariesDto>();
+
+            CreateMap<StartingSalaryLines, SelectStartingSalaryLinesDto>();
+            CreateMap<StartingSalaryLines, ListStartingSalaryLinesDto>();
+            CreateMap<CreateStartingSalaryLinesDto, StartingSalaryLines>();
+            CreateMap<SelectStartingSalaryLinesDto, CreateStartingSalaryLinesDto>();
+            CreateMap<UpdateStartingSalaryLinesDto, StartingSalaryLines>();
+            CreateMap<SelectStartingSalaryLinesDto, UpdateStartingSalaryLinesDto>();
+            CreateMap<SelectStartingSalaryLinesDto, StartingSalaryLines>();
         }
     }
 }

@@ -118,114 +118,171 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CloseButton" xml:space="preserve">
-    <value>Kapat</value>
+    <value>Close</value>
   </data>
   <data name="Code" xml:space="preserve">
-    <value>ÖNCELİK KODU</value>
+    <value>STARTING SALARY CODE</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
-    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+    <value>There is a record with the same code.</value>
   </data>
   <data name="CodeLabel" xml:space="preserve">
-    <value>Öncelik Kodu:</value>
+    <value>Starting Salary Code:</value>
+  </data>
+  <data name="CurrentSalaryLowerLimitLineLabel" xml:space="preserve">
+    <value>Current Salary Lower Limit:</value>
+  </data>
+  <data name="CurrentSalaryUpperLimitLineLabel" xml:space="preserve">
+    <value>Current Salary Upper Limit:</value>
+  </data>
+  <data name="CurrentStartingSalaryLineLabel" xml:space="preserve">
+    <value>Current Starting Salary:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
-    <value>Silmek istediğinize emin misiniz ?</value>
+    <value>Are you sure you want to delete?</value>
   </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
-    <value>Onay</value>
+    <value>Confirmation</value>
   </data>
   <data name="DeleteControlManager" xml:space="preserve">
-    <value>Hareket gören kayıtlar silinemez.</value>
+    <value>Records with transaction cannot be deleted.</value>
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
-    <value>Kayıt başarıyla silindi.</value>
+    <value>The record deleted successfully.</value>
   </data>
-  <data name="DescriptionLabel" xml:space="preserve">
-    <value>Açıklama:</value>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="DifferenceLineLabel" xml:space="preserve">
+    <value>Difference:</value>
+  </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Starting Salary Lines</value>
   </data>
   <data name="EditModalTitle" xml:space="preserve">
-    <value>Genel Beceri Kayıtları Öncelikleri</value>
+    <value>Starting Salaries</value>
   </data>
-  <data name="EmployeeGeneralSkillRecordsModalGridCode" xml:space="preserve">
-    <value>BECERİ KODU</value>
+  <data name="EmployeeSenioritiesModalGridCode" xml:space="preserve">
+    <value>SENIORITY CODE</value>
   </data>
-  <data name="EmployeeGeneralSkillRecordsModalGridName" xml:space="preserve">
-    <value>BECERİ ADI</value>
+  <data name="EmployeeSenioritiesModalGridName" xml:space="preserve">
+    <value>SENIORITY NAME</value>
   </data>
-  <data name="EmployeeGeneralSkillRecordsModalTitle" xml:space="preserve">
-    <value>Personel Genel Beceri Kayıtları</value>
+  <data name="EmployeeSenioritiesModalTitle" xml:space="preserve">
+    <value>Employee Seniorities</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Hata</value>
+    <value>Error</value>
   </data>
   <data name="ExportFileName" xml:space="preserve">
-    <value>GenelBeceriKayitlariOncelikleri</value>
+    <value>StartingSalaries</value>
   </data>
   <data name="ExportTitle" xml:space="preserve">
-    <value>Genel Beceri Kayıtları Öncelikleri</value>
+    <value>Starting Salaries</value>
   </data>
-  <data name="GeneralSkillName" xml:space="preserve">
-    <value>BECERİ</value>
+  <data name="LineGridCurrentSalaryLowerLimit" xml:space="preserve">
+    <value>CURRENT SALARY LOWER LIMIT</value>
   </data>
-  <data name="GeneralSkillNameLabel" xml:space="preserve">
-    <value>Beceri Adı:</value>
+  <data name="LineGridCurrentStartingSalary" xml:space="preserve">
+    <value>CURRENT STARTING SALARY</value>
   </data>
-  <data name="GeneralSkillRecordPrioritiesContextAdd" xml:space="preserve">
-    <value>Ekle</value>
+  <data name="LineGridLineCurrentSalaryUpperLimit" xml:space="preserve">
+    <value>CURRENT SALARY UPPER LIMIT</value>
   </data>
-  <data name="GeneralSkillRecordPrioritiesContextChange" xml:space="preserve">
-    <value>Değiştir</value>
+  <data name="LineGridLineDifference" xml:space="preserve">
+    <value>DIFFERENCE</value>
   </data>
-  <data name="GeneralSkillRecordPrioritiesContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="GeneralSkillRecordPrioritiesContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
+  <data name="LineGridSeniorityName" xml:space="preserve">
+    <value>SENIORITY NAME</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
-    <value>Lütfen Bekleyin..</value>
+    <value>Please wait..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
-    <value>Kayıtlar Yükleniyor..</value>
+    <value>The records are loading..</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
-    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
+    <value>The record you selected is using by {0}.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
-    <value>Bilgi</value>
+    <value>Information</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>STARTING SALARY NAME</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Starting Salary Name:</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
-    <value>Kaydet</value>
+    <value>Save</value>
   </data>
-  <data name="Score" xml:space="preserve">
-    <value>PUAN</value>
+  <data name="SeniorityNameLabel" xml:space="preserve">
+    <value>Seniority Name:</value>
   </data>
-  <data name="ScoreLabel" xml:space="preserve">
-    <value>Puan:</value>
+  <data name="StartingSalariesContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StartingSalariesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StartingSalariesContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StartingSalariesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="StartingSalaryLinesContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StartingSalaryLinesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StartingSalaryLinesContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StartingSalaryLinesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>The record will be deleted permanently.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>The line will be deleted permanently.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Confirmation</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
-    <value>Genel Beceri Kayıtları Öncelikleri</value>
+    <value>Starting Salaries</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Makine &amp; İş Gücü Yönetimi &gt; Ana Kayıtlar</value>
+    <value>Machinery and Workforce Management &gt; Main Records</value>
   </data>
-  <data name="UIWarningScoreMessage" xml:space="preserve">
-    <value>Kayıtların toplam puanı 100'ü geçemez.</value>
+  <data name="UIWarningLimitMessage" xml:space="preserve">
+    <value>The current salary lower limit must be less than the current salary upper limit.</value>
   </data>
-  <data name="UIWarningScoreTitle" xml:space="preserve">
-    <value>Uyarı</value>
+  <data name="UIWarningLimitTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
-    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+    <value>There is a record with the same code.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Lütfen öncelik kodunu yazın.</value>
+    <value>Please enter the starting salary code.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Öncelik kodu 17 karakterden fazla olamaz.</value>
+    <value>Starting salary code cannot exceed 17 characters.</value>
   </data>
-  <data name="ValidatorGeneralSkillID" xml:space="preserve">
-    <value>Lütfen genel beceri seçin.</value>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Please enter the starting salary name.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Starting salary code cannot exceed 200 characters.</value>
+  </data>
+  <data name="Year_" xml:space="preserve">
+    <value>YEAR</value>
+  </data>
+  <data name="Year_Label" xml:space="preserve">
+    <value>Year:</value>
   </data>
 </root>

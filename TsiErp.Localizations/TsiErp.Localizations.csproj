@@ -396,6 +396,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ShippingManagementParametersResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\StartingSalaries\Page\StartingSalariesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StartingSalariesResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\StationGroups\Page\StationGroupsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -897,6 +902,10 @@
     <EmbeddedResource Update="Resources\ShippingManagementParameter\Page\ShippingManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ShippingManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\StartingSalaries\Page\StartingSalariesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StartingSalariesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\StationGroups\Page\StationGroupsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

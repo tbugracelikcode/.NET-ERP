@@ -71,11 +71,29 @@ namespace TsiErp.Localizations.Resources.GeneralSkillRecordPriorities.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ÖNCELİK KODU.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
         /// </summary>
         public static string CodeControlManager {
             get {
                 return ResourceManager.GetString("CodeControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Öncelik Kodu:.
+        /// </summary>
+        public static string CodeLabel {
+            get {
+                return ResourceManager.GetString("CodeLabel", resourceCulture);
             }
         }
         
@@ -116,11 +134,47 @@ namespace TsiErp.Localizations.Resources.GeneralSkillRecordPriorities.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Açıklama:.
+        /// </summary>
+        public static string DescriptionLabel {
+            get {
+                return ResourceManager.GetString("DescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Genel Beceri Kayıtları Öncelikleri.
         /// </summary>
         public static string EditModalTitle {
             get {
                 return ResourceManager.GetString("EditModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BECERİ KODU.
+        /// </summary>
+        public static string EmployeeGeneralSkillRecordsModalGridCode {
+            get {
+                return ResourceManager.GetString("EmployeeGeneralSkillRecordsModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BECERİ ADI.
+        /// </summary>
+        public static string EmployeeGeneralSkillRecordsModalGridName {
+            get {
+                return ResourceManager.GetString("EmployeeGeneralSkillRecordsModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Genel Beceri Kayıtları.
+        /// </summary>
+        public static string EmployeeGeneralSkillRecordsModalTitle {
+            get {
+                return ResourceManager.GetString("EmployeeGeneralSkillRecordsModalTitle", resourceCulture);
             }
         }
         
@@ -148,6 +202,24 @@ namespace TsiErp.Localizations.Resources.GeneralSkillRecordPriorities.Page {
         public static string ExportTitle {
             get {
                 return ResourceManager.GetString("ExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BECERİ.
+        /// </summary>
+        public static string GeneralSkillName {
+            get {
+                return ResourceManager.GetString("GeneralSkillName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beceri Adı:.
+        /// </summary>
+        public static string GeneralSkillNameLabel {
+            get {
+                return ResourceManager.GetString("GeneralSkillNameLabel", resourceCulture);
             }
         }
         
@@ -233,11 +305,56 @@ namespace TsiErp.Localizations.Resources.GeneralSkillRecordPriorities.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PUAN.
+        /// </summary>
+        public static string Score {
+            get {
+                return ResourceManager.GetString("Score", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puan:.
+        /// </summary>
+        public static string ScoreLabel {
+            get {
+                return ResourceManager.GetString("ScoreLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Beceri Kayıtları Öncelikleri.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Makine &amp; İş Gücü Yönetimi &gt; Ana Kayıtlar.
         /// </summary>
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kayıtların toplam puanı 100&apos;ü geçemez..
+        /// </summary>
+        public static string UIWarningScoreMessage {
+            get {
+                return ResourceManager.GetString("UIWarningScoreMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningScoreTitle {
+            get {
+                return ResourceManager.GetString("UIWarningScoreTitle", resourceCulture);
             }
         }
         

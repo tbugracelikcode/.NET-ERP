@@ -576,6 +576,9 @@
   <data name="SPCFMEAChildMenu" xml:space="preserve">
     <value>SPC &amp; FMEA</value>
   </data>
+  <data name="StartingSalariesChildMenu" xml:space="preserve">
+    <value>Starting Salaries</value>
+  </data>
   <data name="StationCostChildMenu" xml:space="preserve">
     <value>Station Cost Records</value>
   </data>

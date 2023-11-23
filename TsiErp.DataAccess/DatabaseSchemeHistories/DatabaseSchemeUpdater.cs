@@ -134,6 +134,8 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkillRecord;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.TaskScoring;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.GeneralSkillRecordPriority;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalary;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalaryLine;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -4626,6 +4628,76 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 GeneralSkillRecordPrioritiesTable.Create();
+            }
+            #endregion
+
+            #region StartingSalaries Table Created
+            Table StartingSalariesTable = model.CreateTable(Tables.StartingSalaries);
+
+            if (StartingSalariesTable != null)
+            {
+                var properties = (typeof(StartingSalaries)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(StartingSalariesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(StartingSalariesTable, "PK_" + StartingSalariesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        StartingSalariesTable.Indexes.Add(pkIndex);
+                    }
+
+                    StartingSalariesTable.Columns.Add(column);
+                }
+
+                StartingSalariesTable.Create();
+            }
+            #endregion
+
+            #region StartingSalaryLines Table Created
+            Table StartingSalaryLinesTable = model.CreateTable(Tables.StartingSalaryLines);
+
+            if (StartingSalaryLinesTable != null)
+            {
+                var properties = (typeof(StartingSalaryLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(StartingSalaryLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(StartingSalaryLinesTable, "PK_" + StartingSalaryLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        StartingSalaryLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    StartingSalaryLinesTable.Columns.Add(column);
+                }
+
+                StartingSalaryLinesTable.Create();
             }
             #endregion
 

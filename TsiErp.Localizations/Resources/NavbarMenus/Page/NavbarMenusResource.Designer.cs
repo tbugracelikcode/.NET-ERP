@@ -1438,6 +1438,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Başlangıç Maaşları.
+        /// </summary>
+        public static string StartingSalariesChildMenu {
+            get {
+                return ResourceManager.GetString("StartingSalariesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İş İstasyonu Maliyet Kayıtları.
         /// </summary>
         public static string StationCostChildMenu {

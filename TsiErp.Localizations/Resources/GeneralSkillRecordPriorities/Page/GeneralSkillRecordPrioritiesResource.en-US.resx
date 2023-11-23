@@ -120,8 +120,14 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>PRIORITY CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Priority Code:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -135,8 +141,20 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Description:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>General Skill Record Priorities</value>
+  </data>
+  <data name="EmployeeGeneralSkillRecordsModalGridCode" xml:space="preserve">
+    <value>SKILL CODE</value>
+  </data>
+  <data name="EmployeeGeneralSkillRecordsModalGridName" xml:space="preserve">
+    <value>SKILL NAME</value>
+  </data>
+  <data name="EmployeeGeneralSkillRecordsModalTitle" xml:space="preserve">
+    <value>Employee General Skill Records</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -146,6 +164,12 @@
   </data>
   <data name="ExportTitle" xml:space="preserve">
     <value>General Skill Record Priorities</value>
+  </data>
+  <data name="GeneralSkillName" xml:space="preserve">
+    <value>SKILL NAME</value>
+  </data>
+  <data name="GeneralSkillNameLabel" xml:space="preserve">
+    <value>Skill Name:</value>
   </data>
   <data name="GeneralSkillRecordPrioritiesContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -174,8 +198,23 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="Score" xml:space="preserve">
+    <value>SCORE</value>
+  </data>
+  <data name="ScoreLabel" xml:space="preserve">
+    <value>Score:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>General Skill Record Priorities</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Machinery and Workforce Management &gt; Main Records</value>
+  </data>
+  <data name="UIWarningScoreMessage" xml:space="preserve">
+    <value>The total score of the entries cannot exceed 100.</value>
+  </data>
+  <data name="UIWarningScoreTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

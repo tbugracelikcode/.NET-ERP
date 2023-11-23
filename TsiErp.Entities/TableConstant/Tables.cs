@@ -144,5 +144,7 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string EmployeeGeneralSkillRecords = "EmployeeGeneralSkillRecords";
         public static readonly string TaskScorings = "TaskScorings";
         public static readonly string GeneralSkillRecordPriorities = "GeneralSkillRecordPriorities";
+        public static readonly string StartingSalaries = "StartingSalaries";
+        public static readonly string StartingSalaryLines = "StartingSalaryLines";
     }
 }
