@@ -218,9 +218,12 @@ namespace TsiErp.UretimEkranUI.Pages
                     };
 
                     createdFirstProductApproval.SelectFirstProductApprovalLines.Add(firstProductApprovalLineModel);
+
                 }
 
                 var selectFirstProductApproval = (await FirstProductApprovalsAppService.CreateAsync(createdFirstProductApproval)).Data;
+
+                
 
                 if (selectFirstProductApproval.Id != Guid.Empty)
                 {
@@ -229,9 +232,9 @@ namespace TsiErp.UretimEkranUI.Pages
                     FirstApprovalCodeVisible = true;
                     await (InvokeAsync(StateHasChanged));
                 }
-                #endregion
             }
 
+                #endregion
 
         }
         #endregion

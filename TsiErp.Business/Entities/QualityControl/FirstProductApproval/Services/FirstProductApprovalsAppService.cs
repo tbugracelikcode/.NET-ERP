@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
+using System.ComponentModel;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -42,6 +43,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
         {
             FicheNumbersAppService = ficheNumbersAppService;
         }
+
 
         [ValidationAspect(typeof(CreateFirstProductApprovalsValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
@@ -213,7 +215,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
         }
 
-        [CacheAspect(duration: 60)]
+        [CacheAspectWithRemove(duration: 60,pattern:"Get")]
         public async Task<IDataResult<IList<ListFirstProductApprovalsDto>>> GetListAsync(ListFirstProductApprovalsParameterDto input)
         {
             var query = queryFactory
@@ -457,5 +459,9 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
 
         }
+
+
+
+
     }
 }
