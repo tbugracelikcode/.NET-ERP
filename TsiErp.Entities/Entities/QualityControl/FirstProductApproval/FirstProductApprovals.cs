@@ -30,7 +30,7 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval
 
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
-        /// Çalışan ID
+        /// Onaylayan ID
         /// </summary>
         public Guid EmployeeID { get; set; }
 
@@ -51,5 +51,17 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval
         /// Operasyon Kalite ID
         /// </summary>
         public Guid OperationQualityPlanID { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Ayarı Yapan Kullanıcı ID
+        /// </summary>
+        public Guid AdjustmentUserID { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Onay
+        /// </summary>
+        public bool IsApproval { get; set; }
     }
 }

@@ -44,28 +44,13 @@ namespace TsiErp.UretimEkranUI.Pages
                 if (res)
                 {
 
-                    OperationDetailDto operationDetail = new OperationDetailDto()
-                    {
-                        EmployeeID = Guid.Empty,
-                        EmployeeName = string.Empty,
-                        OperationAdjustment = new OperationAdjustmentDto(),
-                        PlannedQuantity = workOrder.PlannedQuantity,
-                        ProducedQuantity = workOrder.ProducedQuantity,
-                        ProductCode = workOrder.ProductCode,
-                        ProductID = workOrder.ProductID,
-                        ProductionOrderFicheNo = workOrder.ProductionOrderFicheNo,
-                        ProductionOrderID = workOrder.ProductionOrderID,
-                        ProductName = workOrder.ProductName,
-                        ProductsOperationCode = workOrder.ProductsOperationCode,
-                        ProductsOperationID = workOrder.ProductsOperationID,
-                        ProductsOperationName = workOrder.ProductsOperationName,
-                        StationCode = workOrder.StationCode,
-                        StationID = workOrder.StationID,
-                        StationName = workOrder.StationName,
-                        WorkOrderNo = workOrder.WorkOrderNo,
-                        WorkOrderState = workOrder.WorkOrderState
+                    OperationDetailDto operationDetail = new OperationDetailDto();
 
-                    };
+                    operationDetail.EmployeeID = Guid.Empty;
+                    operationDetail.EmployeeName = string.Empty;
+                    operationDetail.WorkOrder = workOrder;
+                    operationDetail.OperationAdjustment = new OperationAdjustmentDto();
+
 
                     AppService.CurrentOperation = operationDetail;
 

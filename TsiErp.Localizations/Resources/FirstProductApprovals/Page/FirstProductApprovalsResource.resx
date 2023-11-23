@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdjustmentUser" xml:space="preserve">
+    <value>AYARI YAPAN</value>
+  </data>
+  <data name="AdjustmentUserLabel" xml:space="preserve">
+    <value>Ayarı Yapan:</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>ONAY</value>
+  </data>
+  <data name="ApprovedLabel" xml:space="preserve">
+    <value>Onaylandı</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -154,16 +166,16 @@
     <value>İlk Ürün Onayları</value>
   </data>
   <data name="EmployeeName" xml:space="preserve">
-    <value>ÇALIŞAN ADI</value>
+    <value>ONAYLAYAN KULLANICI</value>
   </data>
   <data name="EmployeeNameLabel" xml:space="preserve">
-    <value>Çalışan:</value>
+    <value>Onaylayan:</value>
   </data>
   <data name="EmployeePopupGridCode" xml:space="preserve">
-    <value>PERSONEL KODU</value>
+    <value>ONAYLAYAN KULLANICI KODU</value>
   </data>
   <data name="EmployeePopupGridName" xml:space="preserve">
-    <value>PERSONEL ADI</value>
+    <value>ONAYLAYAN KULLANICI ADI</value>
   </data>
   <data name="EmployeePopupTitle" xml:space="preserve">
     <value>Personeller</value>

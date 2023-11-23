@@ -22,7 +22,7 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine
         /// </summary>
         public int LineNr { get; set; }
 
-        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Int)]
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// Kritik Ölçü
         /// </summary>

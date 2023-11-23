@@ -15,10 +15,11 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
 using Microsoft.SqlServer.Server;
 using System.DirectoryServices.ActiveDirectory;
+using System.Timers;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 {
-    public partial class FirstProductApprovalsListPage
+    public partial class FirstProductApprovalsListPage : IDisposable
     {
         private SfGrid<SelectFirstProductApprovalLinesDto> _LineGrid;
 
@@ -52,7 +53,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
+            StartTimer();
         }
+
+
 
         #region İlk Ürün Onay Satır Modalı İşlemleri
 
@@ -450,5 +454,35 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        #region Timer
+
+        System.Timers.Timer _Timer;
+
+        private void StartTimer()
+        {
+            _Timer = new System.Timers.Timer(10000);
+            _Timer.Elapsed += _TimerTimedEvent;
+            _Timer.AutoReset = true;
+            _Timer.Enabled = true;
+        }
+
+        private async void _TimerTimedEvent(object source, ElapsedEventArgs e)
+        {
+            await base.GetListDataSourceAsync();
+
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
+
+
+
+        public void Dispose()
+        {
+            _Timer.Stop();
+            _Timer.Enabled = false;
+            _Timer.Dispose();
+        }
     }
 }

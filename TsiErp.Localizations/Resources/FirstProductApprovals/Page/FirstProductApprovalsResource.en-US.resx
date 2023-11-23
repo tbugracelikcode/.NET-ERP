@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdjustmentUser" xml:space="preserve">
+    <value>ADJUSTMENT USER</value>
+  </data>
+  <data name="AdjustmentUserLabel" xml:space="preserve">
+    <value>Adjustment User:</value>
+  </data>
+  <data name="Approve" xml:space="preserve">
+    <value>APPROVE</value>
+  </data>
+  <data name="ApprovedLabel" xml:space="preserve">
+    <value>Approved</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -154,16 +166,16 @@
     <value>First Product Approval</value>
   </data>
   <data name="EmployeeName" xml:space="preserve">
-    <value>EMPLOYEE NAME</value>
+    <value>APPROVER NAME</value>
   </data>
   <data name="EmployeeNameLabel" xml:space="preserve">
-    <value>Employee:</value>
+    <value>Approver:</value>
   </data>
   <data name="EmployeePopupGridCode" xml:space="preserve">
-    <value>EMPLOYEE CODE</value>
+    <value>APPROVER USER CODE</value>
   </data>
   <data name="EmployeePopupGridName" xml:space="preserve">
-    <value>EMPLOYEE NAME</value>
+    <value>APPROVER USER NAME</value>
   </data>
   <data name="EmployeePopupTitle" xml:space="preserve">
     <value>Employees</value>
