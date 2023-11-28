@@ -251,6 +251,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PackageFichesResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\PackingLists\Page\PackingListsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PackingListsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\PalletRecords\Page\PalletRecordsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -735,6 +740,10 @@
     <EmbeddedResource Update="Resources\PackageFiches\Page\PackageFichesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PackageFichesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PackingLists\Page\PackingListsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PackingListsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\PalletRecords\Page\PalletRecordsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

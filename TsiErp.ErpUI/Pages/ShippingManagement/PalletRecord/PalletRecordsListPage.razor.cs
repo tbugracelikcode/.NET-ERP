@@ -9,6 +9,7 @@ using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -510,6 +511,49 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 await InvokeAsync(StateHasChanged);
             }
         }
+        #endregion
+
+
+        #region Çeki Listesi Button Edit
+
+        SfTextBox PackingListsButtonEdit;
+        bool SelectPackingListsPopupVisible = false;
+        List<ListPackingListsDto> PackingListsList = new List<ListPackingListsDto>();
+        public async Task PackingListsOnCreateIcon()
+        {
+            var PackingListsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, PackingListsButtonClickEvent);
+            await PackingListsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", PackingListsButtonClick } });
+        }
+
+        public async void PackingListsButtonClickEvent()
+        {
+            SelectPackingListsPopupVisible = true;
+            PackingListsList = (await PackingListsAppService.GetListAsync(new ListPackingListsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void PackingListsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.PackingListID = Guid.Empty;
+                DataSource.PackingListCode = string.Empty;
+            }
+        }
+
+        public async void PackingListsDoubleClickHandler(RecordDoubleClickEventArgs<ListPackingListsDto> args)
+        {
+            var selectedPackingList = args.RowData;
+
+            if (selectedPackingList != null)
+            {
+                DataSource.PackingListID = selectedPackingList.Id;
+                DataSource.PackingListCode = selectedPackingList.Code;
+                SelectPackingListsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
         #endregion
 
         #region Koli Türü ComboBox

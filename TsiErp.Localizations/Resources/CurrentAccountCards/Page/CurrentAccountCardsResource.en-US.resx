@@ -204,6 +204,9 @@
   <data name="EmailLabel" xml:space="preserve">
     <value>E-Mail:</value>
   </data>
+  <data name="EORINrLabel" xml:space="preserve">
+    <value>EORI No:</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
