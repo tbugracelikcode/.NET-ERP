@@ -223,6 +223,14 @@ using TsiErp.Entities.Entities.ShippingManagement.PackageFiche;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackingList;
+using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLine;
+using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLine.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletLine;
+using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletLine.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine;
+using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine;
@@ -1249,6 +1257,42 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateStartingSalaryLinesDto, StartingSalaryLines>();
             CreateMap<SelectStartingSalaryLinesDto, UpdateStartingSalaryLinesDto>();
             CreateMap<SelectStartingSalaryLinesDto, StartingSalaryLines>();
+
+
+
+
+
+            CreateMap<PackingLists, SelectPackingListsDto>();
+            CreateMap<PackingLists, ListPackingListsDto>();
+            CreateMap<UpdatePackingListsDto, PackingLists>();
+            CreateMap<CreatePackingListsDto, PackingLists>();
+            CreateMap<SelectPackingListsDto, CreatePackingListsDto>();
+            CreateMap<SelectPackingListsDto, UpdatePackingListsDto>();
+            CreateMap<PackingLists, UpdatePackingListsDto>();
+
+            CreateMap<PackingListPalletCubageLines, SelectPackingListPalletCubageLinesDto>();
+            CreateMap<PackingListPalletCubageLines, ListPackingListPalletCubageLinesDto>();
+            CreateMap<CreatePackingListPalletCubageLinesDto, PackingListPalletCubageLines>();
+            CreateMap<SelectPackingListPalletCubageLinesDto, CreatePackingListPalletCubageLinesDto>();
+            CreateMap<UpdatePackingListPalletCubageLinesDto, PackingListPalletCubageLines>();
+            CreateMap<SelectPackingListPalletCubageLinesDto, UpdatePackingListPalletCubageLinesDto>();
+            CreateMap<SelectPackingListPalletCubageLinesDto, PackingListPalletCubageLines>();
+
+            CreateMap<PackingListPalletLines, SelectPackingListPalletLinesDto>();
+            CreateMap<PackingListPalletLines, ListPackingListPalletLinesDto>();
+            CreateMap<CreatePackingListPalletLinesDto, PackingListPalletLines>();
+            CreateMap<SelectPackingListPalletLinesDto, CreatePackingListPalletLinesDto>();
+            CreateMap<UpdatePackingListPalletLinesDto, PackingListPalletLines>();
+            CreateMap<SelectPackingListPalletLinesDto, UpdatePackingListPalletLinesDto>();
+            CreateMap<SelectPackingListPalletLinesDto, PackingListPalletLines>();
+
+            CreateMap<PackingListPalletPackageLines, SelectPackingListPalletPackageLinesDto>();
+            CreateMap<PackingListPalletPackageLines, ListPackingListPalletPackageLinesDto>();
+            CreateMap<CreatePackingListPalletPackageLinesDto, PackingListPalletPackageLines>();
+            CreateMap<SelectPackingListPalletPackageLinesDto, CreatePackingListPalletPackageLinesDto>();
+            CreateMap<UpdatePackingListPalletPackageLinesDto, PackingListPalletPackageLines>();
+            CreateMap<SelectPackingListPalletPackageLinesDto, UpdatePackingListPalletPackageLinesDto>();
+            CreateMap<SelectPackingListPalletPackageLinesDto, PackingListPalletPackageLines>();
         }
     }
 }

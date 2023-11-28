@@ -29,6 +29,11 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard
         /// Tedarikçi No
         /// </summary>
         public string SupplierNo { get; set; }
+        [SqlColumnType(MaxLength = 250, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// EORİ No
+        /// </summary>
+        public string EORINr { get; set; }
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
         /// <summary>
         /// Sevkiyat Adresi

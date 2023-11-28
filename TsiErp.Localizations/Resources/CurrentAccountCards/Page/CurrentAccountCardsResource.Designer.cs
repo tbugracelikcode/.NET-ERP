@@ -323,6 +323,15 @@ namespace TsiErp.Localizations.Resources.CurrentAccountCards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to EORI Nr:.
+        /// </summary>
+        public static string EORINrLabel {
+            get {
+                return ResourceManager.GetString("EORINrLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {

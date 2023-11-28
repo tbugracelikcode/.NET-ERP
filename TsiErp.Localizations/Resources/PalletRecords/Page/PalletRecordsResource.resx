@@ -273,6 +273,18 @@
   <data name="PackageTypeLabel" xml:space="preserve">
     <value>Koli Türü:</value>
   </data>
+  <data name="PackingListModalGridCode" xml:space="preserve">
+    <value>ÇEKİ LİSTESİ KODU</value>
+  </data>
+  <data name="PackingListModalGridRecieverName" xml:space="preserve">
+    <value>GÖNDERİLEN</value>
+  </data>
+  <data name="PackingListModalGridTransmitterName" xml:space="preserve">
+    <value>GÖNDERİCİ</value>
+  </data>
+  <data name="PackingListsModalTitle" xml:space="preserve">
+    <value>Çeki Listeleri</value>
+  </data>
   <data name="PalletPackageNumber" xml:space="preserve">
     <value>PALET KOLİ ADET</value>
   </data>

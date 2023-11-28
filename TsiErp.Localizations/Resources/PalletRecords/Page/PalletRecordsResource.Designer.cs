@@ -529,6 +529,42 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ÇEKİ LİSTESİ KODU.
+        /// </summary>
+        public static string PackingListModalGridCode {
+            get {
+                return ResourceManager.GetString("PackingListModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GÖNDERİLEN.
+        /// </summary>
+        public static string PackingListModalGridRecieverName {
+            get {
+                return ResourceManager.GetString("PackingListModalGridRecieverName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GÖNDERİCİ.
+        /// </summary>
+        public static string PackingListModalGridTransmitterName {
+            get {
+                return ResourceManager.GetString("PackingListModalGridTransmitterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çeki Listeleri.
+        /// </summary>
+        public static string PackingListsModalTitle {
+            get {
+                return ResourceManager.GetString("PackingListsModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PALET KOLİ ADET.
         /// </summary>
         public static string PalletPackageNumber {

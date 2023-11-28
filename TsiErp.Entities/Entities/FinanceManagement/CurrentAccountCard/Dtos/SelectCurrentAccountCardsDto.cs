@@ -26,6 +26,10 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos
         /// </summary>
         public decimal BigPackageKG { get; set; }
         /// <summary>
+        /// EORİ No
+        /// </summary>
+        public string EORINr { get; set; }
+        /// <summary>
         /// Küçük Koli KG
         /// </summary>
         public decimal SmallPackageKG { get; set; }
