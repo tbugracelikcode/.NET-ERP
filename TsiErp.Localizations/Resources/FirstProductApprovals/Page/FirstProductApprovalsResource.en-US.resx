@@ -129,6 +129,9 @@
   <data name="ApprovedLabel" xml:space="preserve">
     <value>Approved</value>
   </data>
+  <data name="ApprovedQuantityLabel" xml:space="preserve">
+    <value>Approved Quantity</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="ControlDateLabel" xml:space="preserve">
     <value>Control Date:</value>
+  </data>
+  <data name="CreateOperationUnsuiatabilityReportButton" xml:space="preserve">
+    <value>Create Operation Unsuiatability Report</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -263,6 +269,9 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="ScrapQuantityLabel" xml:space="preserve">
+    <value>Scrap Quantity</value>
   </data>
   <data name="ShowButton" xml:space="preserve">
     <value>Show Operation Picture</value>

@@ -63,5 +63,17 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval
         /// Onay
         /// </summary>
         public bool IsApproval { get; set; }
+
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Onaylanan Adet
+        /// </summary>
+        public decimal ApprovedQuantity { get; set; }
+
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Hurda Adet
+        /// </summary>
+        public decimal ScrapQuantity { get; set; }
     }
 }

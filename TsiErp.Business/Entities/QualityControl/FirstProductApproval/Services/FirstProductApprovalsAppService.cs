@@ -83,7 +83,9 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
                 AdjustmentUserID = input.AdjustmentUserID.GetValueOrDefault(),
-                IsApproval = input.IsApproval
+                IsApproval = input.IsApproval,
+                ApprovedQuantity = input.ApprovedQuantity,
+                ScrapQuantity = input.ScrapQuantity
             });
 
             foreach (var item in input.SelectFirstProductApprovalLines)
@@ -215,7 +217,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
         }
 
-        [CacheAspectWithRemove(duration: 60,pattern:"Get")]
+        [CacheAspectWithRemove(duration: 60, pattern: "Get")]
         public async Task<IDataResult<IList<ListFirstProductApprovalsDto>>> GetListAsync(ListFirstProductApprovalsParameterDto input)
         {
             var query = queryFactory
@@ -351,7 +353,9 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 LastModificationTime = DateTime.Now,
                 LastModifierId = LoginedUserService.UserId,
                 AdjustmentUserID = input.AdjustmentUserID.GetValueOrDefault(),
-                IsApproval = entity.IsApproval
+                IsApproval = entity.IsApproval,
+                ApprovedQuantity = input.ApprovedQuantity,
+                ScrapQuantity = input.ScrapQuantity
             }).Where(new { Id = input.Id }, false, false, "");
 
             foreach (var item in input.SelectFirstProductApprovalLines)
@@ -451,7 +455,9 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 AdjustmentUserID = entity.AdjustmentUserID,
-                IsApproval = entity.IsApproval
+                IsApproval = entity.IsApproval,
+                ApprovedQuantity = entity.ApprovedQuantity,
+                ScrapQuantity = entity.ScrapQuantity
             }).Where(new { Id = id }, false, false, "");
 
             var FirstProductApprovalsDto = queryFactory.Update<SelectFirstProductApprovalsDto>(query, "Id", true);

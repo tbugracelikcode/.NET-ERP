@@ -50,6 +50,16 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos
         /// </summary>
         public bool IsApproval { get; set; }
 
+        /// <summary>
+        /// Onaylanan Adet
+        /// </summary>
+        public decimal ApprovedQuantity { get; set; }
+
+        /// <summary>
+        /// Hurda Adet
+        /// </summary>
+        public decimal ScrapQuantity { get; set; }
+
         [NoDatabaseAction]
         public List<SelectFirstProductApprovalLinesDto> SelectFirstProductApprovalLines { get; set; }
     }
