@@ -98,14 +98,16 @@ else
                     <DxGridLayoutColumn Width="3%" />
                     <DxGridLayoutColumn Width="24%" />
                     <DxGridLayoutColumn Width="3%" />
-                    <DxGridLayoutColumn Width="38%" />
+                    <DxGridLayoutColumn Width="16%" />
+                    <DxGridLayoutColumn Width="1%" />
+                    <DxGridLayoutColumn Width="21%" />
                     <DxGridLayoutColumn Width="3%" />
                 </Columns>
 
                 <Items>
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
-                            <br/>
+                            <br />
                             <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
                             @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
 
@@ -113,11 +115,22 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="0" Column="3" RowSpan="2" ColumnSpan="3">
-                        <Template> 
-                            <br/>
+                    <DxGridLayoutItem Row="0" Column="5" RowSpan="2" ColumnSpan="3">
+                        <Template>
+                            <br />
                             <label class="TSIModalLabel"><strong>@L["DescriptionLabel"] </strong></label><br />
                             <SfTextBox CssClass="TSIMemoBox60" Multiline="true" @bind-Value="DataSource.Description_"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <br />
+                            @* <label class="TSIModalLabel"><strong>@L["OperationPictureLabel"] </strong></label><br /> *@
+                            <center>
+                                <SfButton CssClass="TSISaveButton" OnClick="ShowOperationPictureButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["ShowButton"]</SfButton>
+                            </center>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -127,6 +140,14 @@ else
                             <SfTextBox @ref="@WorkOrdersButtonEdit" Created="@WorkOrdersCodeOnCreateIcon" @bind-Value="DataSource.WorkOrderNo" ShowClearButton=true ValueChange="WorkOrdersOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ControlDateLabel"] </strong></label><br />
+                            <SfDatePicker @bind-Value="DataSource.ControlDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label><br />
@@ -135,42 +156,57 @@ else
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>@L["AdjustmentUserLabel"] </strong></label><br />
-                            <SfTextBox Enabled=false @bind-Value="DataSource.AdjustmentUser"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="3" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["ApprovedLabel"] </strong></label><br />
-                            <SfSwitch @bind-Checked="@DataSource.IsApproval"></SfSwitch>
+                            <center>
+                                <label class="TSIModalLabel"><strong>@L["ApprovedLabel"] </strong></label><br />
+                                <SfSwitch @bind-Checked="@DataSource.IsApproval"></SfSwitch>
+                            </center>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="5">
+                    <DxGridLayoutItem Row="3" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["EmployeeNameLabel"] </strong></label><br />
                             <SfTextBox @ref="@EmployeesButtonEdit" Created="@EmployeesCodeOnCreateIcon" @bind-Value="DataSource.EmployeeName" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
+
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
-                           
-                                <label class="TSIModalLabel"><strong>@L["OperationPictureLabel"] </strong></label><br />
-                             <center> <SfButton CssClass="TSISaveButton" OnClick="ShowOperationPictureButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["ShowButton"]</SfButton>
-                            </center>
+                            <label class="TSIModalLabel"><strong>@L["AdjustmentUserLabel"] </strong></label><br />
+                            <SfTextBox Enabled=false @bind-Value="DataSource.AdjustmentUser"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="3" Column="5">
+                    
+
+                    <DxGridLayoutItem Row="2" Column="5">
                         <Template>
-                                <label class="TSIModalLabel"><strong>@L["ControlDateLabel"] </strong></label><br />
-                                <SfDatePicker @bind-Value="DataSource.ControlDate"></SfDatePicker>
+                            <label class="TSIModalLabel"><strong>@L["ApprovedQuantityLabel"] </strong></label><br />
+                              <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.ApprovedQuantity"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    
+
+                    <DxGridLayoutItem Row="2" Column="7">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ScrapQuantityLabel"] </strong></label><br />
+                              <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.ScrapQuantity"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    
+
+                    <DxGridLayoutItem Row="3" Column="7">
+                        <Template>
+                            <br />
+                            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit">&nbsp;@L["CreateOperationUnsuiatabilityReportButton"]</SfButton>
                         </Template>
                     </DxGridLayoutItem>
 
 
-                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="5">
+                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="7">
                         <Template>
                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectFirstProductApprovalLinesDto"></GridEvents>
@@ -183,10 +219,10 @@ else
                                     <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.IsCriticalMeasurement) DisplayAsCheckBox=true HeaderText="@L["LineGridIsCriticalMeasurement"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.Description_) HeaderText="@L["LineGridDescription_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.IdealMeasure)  Type="ColumnType.Number" HeaderText="@L["LineGridIdealMeasure"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.MeasurementValue)  HeaderText="@L["LineGridMeasurementValue"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.BottomTolerance)  Type="ColumnType.Number" HeaderText="@L["LineGridBottomTolerance"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.UpperTolerance)  Type="ColumnType.Number" HeaderText="@L["LineGridUpperTolerance"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.IdealMeasure) Type="ColumnType.Number" HeaderText="@L["LineGridIdealMeasure"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.MeasurementValue) HeaderText="@L["LineGridMeasurementValue"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.BottomTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridBottomTolerance"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.UpperTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridUpperTolerance"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -347,15 +383,15 @@ else
 @if (SelectEmployeesPopupVisible)
 {
     <DxPopup @bind-Visible="SelectEmployeesPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EmployeePopupTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EmployeePopupTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
@@ -366,7 +402,7 @@ else
 
                                 <CardContent>
                                     <SfGrid ID="EmployeesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@EmployeesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@EmployeesDoubleClickHandler" TValue="ListEmployeesDto"></GridEvents>

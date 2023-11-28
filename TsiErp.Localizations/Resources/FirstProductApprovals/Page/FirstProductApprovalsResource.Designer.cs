@@ -98,6 +98,15 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Onaylanan Miktar.
+        /// </summary>
+        public static string ApprovedQuantityLabel {
+            get {
+                return ResourceManager.GetString("ApprovedQuantityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -139,6 +148,15 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         public static string ControlDateLabel {
             get {
                 return ResourceManager.GetString("ControlDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon Uygunsuzluk Kaydı Oluştur.
+        /// </summary>
+        public static string CreateOperationUnsuiatabilityReportButton {
+            get {
+                return ResourceManager.GetString("CreateOperationUnsuiatabilityReportButton", resourceCulture);
             }
         }
         
@@ -499,6 +517,15 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hurda Miktar.
+        /// </summary>
+        public static string ScrapQuantityLabel {
+            get {
+                return ResourceManager.GetString("ScrapQuantityLabel", resourceCulture);
             }
         }
         

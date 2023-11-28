@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
-using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+﻿using Tsi.Core.Entities.Auditing;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos;
 
@@ -48,6 +42,16 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos
         /// Onay
         /// </summary>
         public bool IsApproval { get; set; }
+
+        /// <summary>
+        /// Onaylanan Adet
+        /// </summary>
+        public decimal ApprovedQuantity { get; set; }
+
+        /// <summary>
+        /// Hurda Adet
+        /// </summary>
+        public decimal ScrapQuantity { get; set; }
 
         [NoDatabaseAction]
         public List<SelectFirstProductApprovalLinesDto> SelectFirstProductApprovalLines { get; set; }

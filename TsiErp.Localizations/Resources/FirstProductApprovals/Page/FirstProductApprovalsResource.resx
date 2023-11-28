@@ -129,6 +129,9 @@
   <data name="ApprovedLabel" xml:space="preserve">
     <value>Onaylandı</value>
   </data>
+  <data name="ApprovedQuantityLabel" xml:space="preserve">
+    <value>Onaylanan Miktar</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="ControlDateLabel" xml:space="preserve">
     <value>Kontrol Tarihi:</value>
+  </data>
+  <data name="CreateOperationUnsuiatabilityReportButton" xml:space="preserve">
+    <value>Operasyon Uygunsuzluk Kaydı Oluştur</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -263,6 +269,9 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="ScrapQuantityLabel" xml:space="preserve">
+    <value>Hurda Miktar</value>
   </data>
   <data name="ShowButton" xml:space="preserve">
     <value>Operasyon Resmini Göster</value>
