@@ -136,6 +136,10 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.TaskScoring;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.GeneralSkillRecordPriority;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalary;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalaryLine;
+using TsiErp.Entities.Entities.ShippingManagement.PackingList;
+using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLine;
+using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletLine;
+using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -4698,6 +4702,146 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 StartingSalaryLinesTable.Create();
+            }
+            #endregion
+
+            #region PackingLists Table Created
+            Table PackingListsTable = model.CreateTable(Tables.PackingLists);
+
+            if (PackingListsTable != null)
+            {
+                var properties = (typeof(PackingLists)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(PackingListsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PackingListsTable, "PK_" + PackingListsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        PackingListsTable.Indexes.Add(pkIndex);
+                    }
+
+                    PackingListsTable.Columns.Add(column);
+                }
+
+                PackingListsTable.Create();
+            }
+            #endregion
+
+            #region PackingListPalletCubageLines Table Created
+            Table PackingListPalletCubageLinesTable = model.CreateTable(Tables.PackingListPalletCubageLines);
+
+            if (PackingListPalletCubageLinesTable != null)
+            {
+                var properties = (typeof(PackingListPalletCubageLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(PackingListPalletCubageLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PackingListPalletCubageLinesTable, "PK_" + PackingListPalletCubageLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        PackingListPalletCubageLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    PackingListPalletCubageLinesTable.Columns.Add(column);
+                }
+
+                PackingListPalletCubageLinesTable.Create();
+            }
+            #endregion
+
+            #region PackingListPalletLines Table Created
+            Table PackingListPalletLinesTable = model.CreateTable(Tables.PackingListPalletLines);
+
+            if (PackingListPalletLinesTable != null)
+            {
+                var properties = (typeof(PackingListPalletLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(PackingListPalletLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PackingListPalletLinesTable, "PK_" + PackingListPalletLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        PackingListPalletLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    PackingListPalletLinesTable.Columns.Add(column);
+                }
+
+                PackingListPalletLinesTable.Create();
+            }
+            #endregion
+
+            #region PackingListPalletPackageLines Table Created
+            Table PackingListPalletPackageLinesTable = model.CreateTable(Tables.PackingListPalletPackageLines);
+
+            if (PackingListPalletPackageLinesTable != null)
+            {
+                var properties = (typeof(PackingListPalletPackageLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(PackingListPalletPackageLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PackingListPalletPackageLinesTable, "PK_" + PackingListPalletPackageLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        PackingListPalletPackageLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    PackingListPalletPackageLinesTable.Columns.Add(column);
+                }
+
+                PackingListPalletPackageLinesTable.Create();
             }
             #endregion
 

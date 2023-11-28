@@ -14,6 +14,7 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
+using TsiErp.Entities.Entities.ShippingManagement.PackingList;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine;
@@ -160,6 +161,13 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
+                     .Join<PackingLists>
+                    (
+                        pr => new { PackingListCode = pr.Code, PackingListID = pr.Id },
+                        nameof(PalletRecords.PackingListID),
+                        nameof(PackingLists.Id),
+                        JoinType.Left
+                    )
                     .Where(new { Id = id }, false, false, Tables.PalletRecords);
 
             var palletRecords = queryFactory.Get<SelectPalletRecordsDto>(query);
@@ -210,6 +218,13 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
+                     .Join<PackingLists>
+                    (
+                        pr => new { PackingListCode = pr.Code, PackingListID = pr.Id },
+                        nameof(PalletRecords.PackingListID),
+                        nameof(PackingLists.Id),
+                        JoinType.Left
+                    )
                     .Where(null, false, false, Tables.PalletRecords);
 
             var palletRecords = queryFactory.GetList<ListPalletRecordsDto>(query).ToList();
@@ -230,6 +245,13 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         pr => new { CurrentAccountCardName = pr.Name, CurrentAccountCardCode = pr.Code, CurrentAccountCardID = pr.Id },
                         nameof(PalletRecords.CurrentAccountCardID),
                         nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                     .Join<PackingLists>
+                    (
+                        pr => new { PackingListCode = pr.Code, PackingListID = pr.Id },
+                        nameof(PalletRecords.PackingListID),
+                        nameof(PackingLists.Id),
                         JoinType.Left
                     )
                     .Where(new { Id = input.Id }, false, false, Tables.PalletRecords);

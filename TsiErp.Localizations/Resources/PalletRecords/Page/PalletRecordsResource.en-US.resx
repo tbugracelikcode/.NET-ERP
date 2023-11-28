@@ -273,6 +273,18 @@
   <data name="PackageTypeLabel" xml:space="preserve">
     <value>Package Type:</value>
   </data>
+  <data name="PackingListModalGridCode" xml:space="preserve">
+    <value>PACKING LIST CODE</value>
+  </data>
+  <data name="PackingListModalGridRecieverName" xml:space="preserve">
+    <value>SENT</value>
+  </data>
+  <data name="PackingListModalGridTransmitterName" xml:space="preserve">
+    <value>SENDER</value>
+  </data>
+  <data name="PackingListsModalTitle" xml:space="preserve">
+    <value>Packing Lists</value>
+  </data>
   <data name="PalletPackageNumber" xml:space="preserve">
     <value>PALLET PACKAGE NUMBER</value>
   </data>

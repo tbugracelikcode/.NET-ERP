@@ -65,6 +65,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos
         /// Çeki Listesi ID
         /// </summary>
         public Guid? PackingListID { get; set; }
+        /// <summary>
+        /// Çeki Listesi Kodu
+        /// </summary>
+        public string PackingListCode { get; set; }
 
         [NoDatabaseAction]
         public List<SelectPalletRecordLinesDto> SelectPalletRecordLines { get; set; }
