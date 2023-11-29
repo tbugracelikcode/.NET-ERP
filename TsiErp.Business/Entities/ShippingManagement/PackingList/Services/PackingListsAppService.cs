@@ -106,6 +106,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                 var queryLine = queryFactory.Query().From(Tables.PackingListPalletCubageLines).Insert(new CreatePackingListPalletCubageLinesDto
                 {
                     Cubage = item.Cubage,
+                     NumberofPallet = item.NumberofPallet,
                     Height_ = item.Height_,
                     Load_ = item.Load_,
                     Width_ = item.Width_,
@@ -564,6 +565,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         PackingListID = input.Id,
                         Cubage = item.Cubage,
                         Height_ = item.Height_,
+                        NumberofPallet = item.NumberofPallet,
                         Load_ = item.Load_,
                         Width_ = item.Width_,
                         CreationTime = DateTime.Now,
@@ -593,6 +595,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         {
                             PackingListID = input.Id,
                             Cubage = item.Cubage,
+                            NumberofPallet = item.NumberofPallet,
                             Height_ = item.Height_,
                             Load_ = item.Load_,
                             Width_ = item.Width_,

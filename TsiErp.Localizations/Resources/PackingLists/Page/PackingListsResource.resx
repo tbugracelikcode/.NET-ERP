@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BigPackage" xml:space="preserve">
+    <value>Büyük Koli</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -192,11 +195,41 @@
   <data name="PackingListsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="PackingListsPalletLineContextSelectPallet" xml:space="preserve">
+    <value>Palet Seç</value>
+  </data>
+  <data name="PackingListsPalletPackageLineContextEnumarate" xml:space="preserve">
+    <value>Numaralandır</value>
+  </data>
+  <data name="PackingListsPalletSelectionContextRemove" xml:space="preserve">
+    <value>Seçimi Kaldır</value>
+  </data>
+  <data name="PackingListsPalletSelectionContextSelect" xml:space="preserve">
+    <value>Seç</value>
+  </data>
+  <data name="PackingListsPalletSelectionContextSelectAll" xml:space="preserve">
+    <value>Hepsini Seç</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="SmallPackage" xml:space="preserve">
+    <value>Küçük Koli</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sevkiyat Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="UIWarningPalletSelectionMessage" xml:space="preserve">
+    <value>Çeki listesi kaydı yapılmadan palet seçimi yapılamaz.</value>
+  </data>
+  <data name="UIWarningPalletSelectionTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningSelectedIndexMessage" xml:space="preserve">
+    <value>Palet seçimi, isim sırasıyla yapılmalıdır.</value>
+  </data>
+  <data name="UIWarningSelectedIndexTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

@@ -61,6 +61,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Büyük Koli.
+        /// </summary>
+        public static string BigPackage {
+            get {
+                return ResourceManager.GetString("BigPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -286,6 +295,51 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Palet Seç.
+        /// </summary>
+        public static string PackingListsPalletLineContextSelectPallet {
+            get {
+                return ResourceManager.GetString("PackingListsPalletLineContextSelectPallet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Numaralandır.
+        /// </summary>
+        public static string PackingListsPalletPackageLineContextEnumarate {
+            get {
+                return ResourceManager.GetString("PackingListsPalletPackageLineContextEnumarate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçimi Kaldır.
+        /// </summary>
+        public static string PackingListsPalletSelectionContextRemove {
+            get {
+                return ResourceManager.GetString("PackingListsPalletSelectionContextRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seç.
+        /// </summary>
+        public static string PackingListsPalletSelectionContextSelect {
+            get {
+                return ResourceManager.GetString("PackingListsPalletSelectionContextSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hepsini Seç.
+        /// </summary>
+        public static string PackingListsPalletSelectionContextSelectAll {
+            get {
+                return ResourceManager.GetString("PackingListsPalletSelectionContextSelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -295,11 +349,56 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Küçük Koli.
+        /// </summary>
+        public static string SmallPackage {
+            get {
+                return ResourceManager.GetString("SmallPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sevkiyat Yönetimi &gt; Hareketler.
         /// </summary>
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çeki listesi kaydı yapılmadan palet seçimi yapılamaz..
+        /// </summary>
+        public static string UIWarningPalletSelectionMessage {
+            get {
+                return ResourceManager.GetString("UIWarningPalletSelectionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningPalletSelectionTitle {
+            get {
+                return ResourceManager.GetString("UIWarningPalletSelectionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet seçimi, isim sırasıyla yapılmalıdır..
+        /// </summary>
+        public static string UIWarningSelectedIndexMessage {
+            get {
+                return ResourceManager.GetString("UIWarningSelectedIndexMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningSelectedIndexTitle {
+            get {
+                return ResourceManager.GetString("UIWarningSelectedIndexTitle", resourceCulture);
             }
         }
         

@@ -1,0 +1,14 @@
+﻿@page "/packing-lists"
+
+@layout MainLayout
+
+@inherits BaseListPage<SelectPackingListsDto, ListPackingListsDto, CreatePackingListsDto, UpdatePackingListsDto, ListPackingListsParameterDto>
+
+@inject IStringLocalizer<PackingListsResource> L 
+@inject IPackingListsAppService PackingListsAppService
+@inject IPalletRecordsAppService PalletRecordsAppService
+@inject IProductsAppService ProductsAppService
+@inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
+@inject IShippingAdressesAppService ShippingAdressesAppService
+@inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
+@inject IFicheNumbersAppService FicheNumbersAppService

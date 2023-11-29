@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BigPackage" xml:space="preserve">
+    <value>Big Package</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -192,11 +195,41 @@
   <data name="PackingListsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PackingListsPalletLineContextSelectPallet" xml:space="preserve">
+    <value>Select Pallet</value>
+  </data>
+  <data name="PackingListsPalletPackageLineContextEnumarate" xml:space="preserve">
+    <value>Enumarate</value>
+  </data>
+  <data name="PackingListsPalletSelectionContextRemove" xml:space="preserve">
+    <value>Remove the Selection</value>
+  </data>
+  <data name="PackingListsPalletSelectionContextSelect" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="PackingListsPalletSelectionContextSelectAll" xml:space="preserve">
+    <value>Select All</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SmallPackage" xml:space="preserve">
+    <value>Small Package</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Shipment Management &gt; Transactions</value>
+  </data>
+  <data name="UIWarningPalletSelectionMessage" xml:space="preserve">
+    <value>Pallet selection cannot be made without recording the packing list.</value>
+  </data>
+  <data name="UIWarningPalletSelectionTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningSelectedIndexMessage" xml:space="preserve">
+    <value>Pallet selection should be made in order of name.</value>
+  </data>
+  <data name="UIWarningSelectedIndexTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
