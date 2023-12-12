@@ -11,10 +11,12 @@ using System.Timers;
 using TsiErp.Business.Entities.Employee.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.OperationAdjustment.Dtos;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
+using TsiErp.UretimEkranUI.Models;
 using TsiErp.UretimEkranUI.Services;
 using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
 
@@ -22,11 +24,13 @@ namespace TsiErp.UretimEkranUI.Pages
 {
     public partial class OperationAdjustmentDetailPage : IDisposable
     {
-        public string SettingUserWrittenPassword { get; set; }
+        public string AdjustmentUserWrittenPassword { get; set; }
 
-        public bool SettingUserComponenetEnabled { get; set; } = true;
+        public bool AdjustmentUserComponenetEnabled { get; set; } = true;
 
         public bool FinishAdjustmentButtonDisabled { get; set; } = true;
+
+        OperationAdjustmentDto Adjustment = new OperationAdjustmentDto();
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -45,7 +49,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
         public async void EmployeesButtonClickEvent()
         {
-            if (SettingUserComponenetEnabled)
+            if (AdjustmentUserComponenetEnabled)
             {
                 SelectEmployeesPopupVisible = true;
                 EmployeesList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.Where(t => t.IsProductionScreenUser == true && t.IsProductionScreenSettingUser == true).ToList();
@@ -56,13 +60,13 @@ namespace TsiErp.UretimEkranUI.Pages
 
         public async void EmployeesOnValueChange(ChangedEventArgs args)
         {
-            if (SettingUserComponenetEnabled)
+            if (AdjustmentUserComponenetEnabled)
             {
                 if (args.Value == null)
                 {
-                    AppService.CurrentOperation.OperationAdjustment.AdjustmentUserId = Guid.Empty;
-                    AppService.CurrentOperation.OperationAdjustment.AdjustmentUserName = string.Empty;
-                    AppService.CurrentOperation.OperationAdjustment.AdjustmentUserPassword = string.Empty;
+                    Adjustment.AdjustmentUserId = Guid.Empty;
+                    Adjustment.AdjustmentUserName = string.Empty;
+                    Adjustment.AdjustmentUserPassword = string.Empty;
                     await InvokeAsync(StateHasChanged);
                 }
             }
@@ -74,9 +78,9 @@ namespace TsiErp.UretimEkranUI.Pages
 
             if (selectedEmployee != null)
             {
-                AppService.CurrentOperation.OperationAdjustment.AdjustmentUserId = selectedEmployee.Id;
-                AppService.CurrentOperation.OperationAdjustment.AdjustmentUserName = selectedEmployee.Name + " " + selectedEmployee.Surname;
-                AppService.CurrentOperation.OperationAdjustment.AdjustmentUserPassword = selectedEmployee.ProductionScreenPassword;
+                Adjustment.AdjustmentUserId = selectedEmployee.Id;
+                Adjustment.AdjustmentUserName = selectedEmployee.Name + " " + selectedEmployee.Surname;
+                Adjustment.AdjustmentUserPassword = selectedEmployee.ProductionScreenPassword;
                 SelectEmployeesPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -87,33 +91,38 @@ namespace TsiErp.UretimEkranUI.Pages
 
         #region Ayar Süresi Metotlar
 
-        System.Timers.Timer AdjustmentTimer = new System.Timers.Timer(1);
+        System.Timers.Timer AdjustmentTimer;
+
+        public int TotalAdjustmentTime { get; set; }
         public bool StartAdjustmenButtonDisabled { get; set; } = false;
 
-        public string AdjustmentStartTime { get; set; } = "00:00:00";
+        public string AdjustmentStartTime { get; set; }
 
         private void SettingsTimedEvent(object source, ElapsedEventArgs e)
         {
-            DateTime currentTime = e.SignalTime;
+            TotalAdjustmentTime++;
 
-            AdjustmentStartTime = currentTime.Subtract(AppService.CurrentOperation.OperationAdjustment.AdjustmentStartDate).Hours.ToString("D2") +
-                ":" + currentTime.Subtract(AppService.CurrentOperation.OperationAdjustment.AdjustmentStartDate).Minutes.ToString("D2") +
-                ":" + currentTime.Subtract(AppService.CurrentOperation.OperationAdjustment.AdjustmentStartDate).Seconds.ToString("D2");
+            TimeSpan time = TimeSpan.FromSeconds(TotalAdjustmentTime);
+
+            AdjustmentStartTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                time.Hours,
+                time.Minutes,
+                time.Seconds);
 
             InvokeAsync(StateHasChanged);
         }
 
         async void StartAdjustmentButtonClick()
         {
-            if (AppService.CurrentOperation.OperationAdjustment.AdjustmentUserId != Guid.Empty)
+            if (Adjustment.AdjustmentUserId != Guid.Empty)
             {
-                if (AppService.CurrentOperation.OperationAdjustment.AdjustmentUserPassword == SettingUserWrittenPassword)
+                if (Adjustment.AdjustmentUserPassword == AdjustmentUserWrittenPassword)
                 {
-                    SettingUserComponenetEnabled = false;
+                    AdjustmentUserComponenetEnabled = false;
                     SendQualityControlApprovalButtonDisabled = false;
-                    AppService.CurrentOperation.OperationAdjustment.AdjustmentStartDate = DateTime.Now;
+                    Adjustment.AdjustmentDate = DateTime.Today;
 
-                    AdjustmentTimer = new System.Timers.Timer(1);
+                    AdjustmentTimer = new System.Timers.Timer(1000);
                     AdjustmentTimer.Elapsed += SettingsTimedEvent;
                     AdjustmentTimer.Enabled = true;
                     StartAdjustmenButtonDisabled = true;
@@ -134,22 +143,32 @@ namespace TsiErp.UretimEkranUI.Pages
 
         #region Kalite Kontrol Onay Metotlar
 
-        System.Timers.Timer QualityControlApprovalTimer = new System.Timers.Timer(1);
+        System.Timers.Timer QualityControlApprovalTimer;
+
+        public int TotalQualityControlApprovalTime { get; set; }
 
         public bool SendQualityControlApprovalButtonDisabled { get; set; } = true;
 
-        public string QualityControlApprovalStartTime { get; set; } = "00:00:00";
+        public string QualityControlApprovalStartTime { get; set; }
+
         public string FirstApprovalCode { get; set; }
+
+        public string FirstApprovalStatus { get; set; } = "Onay Bekliyor";
+
         public Guid FirstApprovalId { get; set; }
+
         public bool FirstApprovalCodeVisible { get; set; } = false;
 
         private void QualityControlApprovalTimedEvent(object source, ElapsedEventArgs e)
         {
-            DateTime currentTime = e.SignalTime;
+            TotalQualityControlApprovalTime++;
 
-            QualityControlApprovalStartTime = currentTime.Subtract(AppService.CurrentOperation.OperationAdjustment.QualitControlApprovalStartDate).Hours.ToString("D2") +
-                ":" + currentTime.Subtract(AppService.CurrentOperation.OperationAdjustment.QualitControlApprovalStartDate).Minutes.ToString("D2") +
-                ":" + currentTime.Subtract(AppService.CurrentOperation.OperationAdjustment.QualitControlApprovalStartDate).Seconds.ToString("D2");
+            TimeSpan time = TimeSpan.FromSeconds(TotalQualityControlApprovalTime);
+
+            QualityControlApprovalStartTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                time.Hours,
+                time.Minutes,
+                time.Seconds);
 
             InvokeAsync(StateHasChanged);
         }
@@ -157,15 +176,13 @@ namespace TsiErp.UretimEkranUI.Pages
         async void SendQualityControlButtonClick()
         {
             AdjustmentTimer.Stop();
+            AdjustmentTimer.Enabled = false;
             StartAdjustmenButtonDisabled = true;
-            AppService.CurrentOperation.OperationAdjustment.QualitControlApprovalStartDate = DateTime.Now;
-            QualityControlApprovalTimer = new System.Timers.Timer(1);
+
+            AppService.CurrentOperation.QualitControlApprovalDate = DateTime.Today;
+            QualityControlApprovalTimer = new System.Timers.Timer(1000);
             QualityControlApprovalTimer.Elapsed += QualityControlApprovalTimedEvent;
-            QualityControlApprovalTimer.AutoReset = true;
             QualityControlApprovalTimer.Enabled = true;
-
-           
-
 
             #region İlk Ürün Kaydı Oluşturuluyor
             Guid OperationQualityPlanID = (await OperationalQualityPlansAppService.GetListAsync(new ListOperationalQualityPlansParameterDto())).Data.Where(t => t.ProductID == AppService.CurrentOperation.WorkOrder.ProductID && t.ProductsOperationID == AppService.CurrentOperation.WorkOrder.ProductsOperationID).Select(t => t.Id).FirstOrDefault();
@@ -180,7 +197,7 @@ namespace TsiErp.UretimEkranUI.Pages
                 {
                     Code = FicheNumbersAppService.GetFicheNumberAsync("FirstProductApprovalChildMenu"),
                     WorkOrderID = AppService.CurrentOperation.WorkOrder.Id,
-                    CreatorId = AppService.CurrentOperation.OperationAdjustment.AdjustmentUserId,
+                    CreatorId = Adjustment.AdjustmentUserId,
                     Description_ = string.Empty,
                     EmployeeID = Guid.Empty,
                     ControlDate = null,
@@ -188,7 +205,7 @@ namespace TsiErp.UretimEkranUI.Pages
                     OperationQualityPlanID = OperationQualityPlanID,
                     SelectFirstProductApprovalLines = new List<SelectFirstProductApprovalLinesDto>(),
                     IsApproval = false,
-                    AdjustmentUserID = AppService.CurrentOperation.OperationAdjustment.AdjustmentUserId,
+                    AdjustmentUserID = Adjustment.AdjustmentUserId,
                     ApprovedQuantity = 0,
                     ScrapQuantity = 0
                 };
@@ -204,7 +221,7 @@ namespace TsiErp.UretimEkranUI.Pages
                         LineNr = createdFirstProductApproval.SelectFirstProductApprovalLines.Count + 1,
                         UpperTolerance = qualityplanline.UpperTolerance,
                         MeasurementValue = string.Empty,
-                        CreatorId = AppService.CurrentOperation.OperationAdjustment.AdjustmentUserId
+                        CreatorId = Adjustment.AdjustmentUserId
                     };
 
                     createdFirstProductApproval.SelectFirstProductApprovalLines.Add(firstProductApprovalLineModel);
@@ -222,12 +239,10 @@ namespace TsiErp.UretimEkranUI.Pages
                     FirstApprovalCode = selectFirstProductApproval.Code;
                     FirstApprovalCodeVisible = true;
 
-
-                    FirstApprovalControlTimer = new System.Timers.Timer(1);
+                    //System.Threading.Thread.Sleep(2000);
+                    FirstApprovalControlTimer = new System.Timers.Timer(10000);
                     FirstApprovalControlTimer.Enabled = true;
                     FirstApprovalControlTimer.Elapsed += FirstApprovalTimedEvent;
-
-                    await (InvokeAsync(StateHasChanged));
                 }
             }
 
@@ -239,7 +254,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
         #region Kalite Kontrol Onay Bekleme Metotlar
 
-        System.Timers.Timer FirstApprovalControlTimer = new System.Timers.Timer(1);
+        System.Timers.Timer FirstApprovalControlTimer;
 
         private async void FirstApprovalTimedEvent(object source, ElapsedEventArgs e)
         {
@@ -248,7 +263,15 @@ namespace TsiErp.UretimEkranUI.Pages
             if (isFirstApprovalRecordIsApproved)
             {
                 FirstApprovalControlTimer.Stop();
+                FirstApprovalControlTimer.Enabled = false;
+
+                QualityControlApprovalTimer.Stop();
+                AppService.CurrentOperation.TotalQualityControlApprovalTime = TotalQualityControlApprovalTime;
+                QualityControlApprovalTimer.Enabled = false;
+
                 AdjustmentTimer.Start();
+                AdjustmentTimer.Enabled = true;
+
                 FinishAdjustmentButtonDisabled = false;
             }
 
@@ -266,7 +289,17 @@ namespace TsiErp.UretimEkranUI.Pages
                 if (firstApprovalRecord.Id != Guid.Empty)
                 {
                     firstApprovalControl = firstApprovalRecord.IsApproval;
+
+                    ApprovedQuantity = firstApprovalRecord.ApprovedQuantity;
+
+                    ScrapQuantity = firstApprovalRecord.ScrapQuantity;
                 }
+            }
+
+            if (firstApprovalControl)
+            {
+
+                FirstApprovalStatus = "Onaylandı";
             }
 
             return firstApprovalControl;
@@ -275,14 +308,97 @@ namespace TsiErp.UretimEkranUI.Pages
 
         #endregion
 
-        async void FinishAdjustmentButtonClick()
+
+        public decimal ApprovedQuantity { get; set; }
+
+        public decimal ScrapQuantity { get; set; }
+
+        private async void FinishAdjustmentButtonClick()
+        {
+            AdjustmentTimer.Stop();
+            AdjustmentTimer.Enabled = false;
+
+            QualityControlApprovalTimer.Stop();
+            QualityControlApprovalTimer.Enabled = false;
+
+            FirstApprovalControlTimer.Stop();
+            FirstApprovalControlTimer.Enabled = false;
+
+            Adjustment.TotalAdjustmentTime = TotalAdjustmentTime;
+            AppService.CurrentOperation.ApprovedQuantity = ApprovedQuantity;
+            AppService.CurrentOperation.ScrapQuantity = ScrapQuantity;
+            AppService.CurrentOperation.WorkOrder.ProducedQuantity = ApprovedQuantity;
+
+            AppService.CurrentOperation.OperationAdjustment.Add(Adjustment);
+
+            foreach (var item in AppService.CurrentOperation.OperationAdjustment)
+            {
+                var createAdjustmentDto = new CreateOperationAdjustmentsDto
+                {
+                    AdjustmentStartDate = item.AdjustmentDate,
+                    AdjustmentUserId = item.AdjustmentUserId,
+                    TotalAdjustmentTime = item.TotalAdjustmentTime,
+                    WorkOrderId = AppService.CurrentOperation.WorkOrder.Id,
+                    ApprovedQuantity = AppService.CurrentOperation.ApprovedQuantity,
+                    ScrapQuantity = AppService.CurrentOperation.ScrapQuantity,
+                    OperatorId = Guid.NewGuid(),
+                    TotalQualityControlApprovedTime = AppService.CurrentOperation.TotalQualityControlApprovalTime
+                };
+
+                await OperationAdjustmentAppService.CreateAsync(createAdjustmentDto);
+            }
+
+            NavigationManager.NavigateTo("/work-order-detail", true);
+
+            await Task.CompletedTask;
+        }
+
+        private async void CancelButtonClick()
         {
 
+            if (AdjustmentTimer != null)
+            {
+                AdjustmentTimer.Stop();
+                AdjustmentTimer.Dispose();
+                AdjustmentTimer.Enabled = false;
+            }
+
+            if (QualityControlApprovalTimer != null)
+            {
+                QualityControlApprovalTimer.Stop();
+                QualityControlApprovalTimer.Dispose();
+                QualityControlApprovalTimer.Enabled = false;
+            }
+
+            if (FirstApprovalControlTimer != null)
+            {
+                FirstApprovalControlTimer.Stop();
+                FirstApprovalControlTimer.Dispose();
+                FirstApprovalControlTimer.Enabled = false;
+            }
+
+            NavigationManager.NavigateTo("/work-order-detail");
+
+            await Task.CompletedTask;
         }
+
 
         public void Dispose()
         {
+            if (AdjustmentTimer != null)
+            {
+                AdjustmentTimer.Dispose();
+            }
 
+            if (QualityControlApprovalTimer != null)
+            {
+                QualityControlApprovalTimer.Dispose();
+            }
+
+            if (FirstApprovalControlTimer != null)
+            {
+                FirstApprovalControlTimer.Dispose();
+            }
         }
     }
 }

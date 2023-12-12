@@ -21,6 +21,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 {
     public partial class FirstProductApprovalsListPage : IDisposable
     {
+
+        
+
         private SfGrid<SelectFirstProductApprovalLinesDto> _LineGrid;
 
         [Inject]
@@ -128,6 +131,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                     break;
 
                 case "changed":
+
+                    if (_Timer.Enabled == true)
+                    {
+                        _Timer.Stop();
+                        _Timer.Enabled = false;
+                    }
+
                     IsChanged = true;
                     DataSource = (await FirstProductApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectFirstProductApprovalLines;
@@ -222,6 +232,17 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
             }
         }
 
+        public override void HideEditPage()
+        {
+            if (_Timer.Enabled == false)
+            {
+                _Timer.Start();
+                _Timer.Enabled = true;
+            }
+
+            base.HideEditPage();
+        }
+
         public void HideLinesPopup()
         {
             LineCrudPopup = false;
@@ -267,7 +288,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
         public async void ShowOperationPictureButtonClicked()
         {
-            if(OperationPictureDataSource != null)
+            if (OperationPictureDataSource != null)
             {
                 if (OperationPictureDataSource.Id == Guid.Empty)
                 {
@@ -301,7 +322,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
             {
                 await ModalManager.MessagePopupAsync(L["UIMessageOprPictureTitle"], L["UIMessageOprPictureNullMessage"]);
             }
-           
+
         }
 
         public void HidePreviewPopup()
@@ -456,6 +477,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
         #endregion
 
 
+
         #region Timer
 
         System.Timers.Timer _Timer;
@@ -471,7 +493,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
         private async void _TimerTimedEvent(object source, ElapsedEventArgs e)
         {
             await base.GetListDataSourceAsync();
-
             await InvokeAsync(StateHasChanged);
         }
         #endregion
@@ -480,9 +501,15 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
         public void Dispose()
         {
-            _Timer.Stop();
-            _Timer.Enabled = false;
-            _Timer.Dispose();
+            if (_Timer != null)
+            {
+                if (_Timer.Enabled)
+                {
+                    _Timer.Stop();
+                    _Timer.Enabled = false;
+                    _Timer.Dispose();
+                }
+            }
         }
     }
 }

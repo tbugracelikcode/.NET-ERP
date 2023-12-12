@@ -399,7 +399,6 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
             }
             #endregion
 
-
             #region Periods Table Created
             Table PeriodsTable = model.CreateTable(Tables.Periods);
 
@@ -4842,6 +4841,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 PackingListPalletPackageLinesTable.Create();
+            }
+            #endregion
+
+            #region Operation Adjustment Table Created
+            Table OperationAdjustmentsTable = model.CreateTable(Tables.OperationAdjustments);
+
+            if (OperationAdjustmentsTable != null)
+            {
+                var properties = (typeof(PackingListPalletPackageLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(OperationAdjustmentsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(OperationAdjustmentsTable, "PK_" + OperationAdjustmentsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        OperationAdjustmentsTable.Indexes.Add(pkIndex);
+                    }
+
+                    OperationAdjustmentsTable.Columns.Add(column);
+                }
+
+                OperationAdjustmentsTable.Create();
             }
             #endregion
 

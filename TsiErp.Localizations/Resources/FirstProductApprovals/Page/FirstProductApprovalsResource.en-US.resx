@@ -150,6 +150,9 @@
   <data name="CreateOperationUnsuiatabilityReportButton" xml:space="preserve">
     <value>Create Operation Unsuiatability Report</value>
   </data>
+  <data name="CreationDate" xml:space="preserve">
+    <value>CREATION DATE</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>

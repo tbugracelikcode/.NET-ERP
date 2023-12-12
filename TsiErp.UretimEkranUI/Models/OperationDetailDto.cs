@@ -13,17 +13,27 @@ namespace TsiErp.UretimEkranUI.Models
 
         public ListWorkOrdersDto WorkOrder { get; set; }
 
-        public OperationAdjustmentDto OperationAdjustment { get; set; }
+        public List<OperationAdjustmentDto> OperationAdjustment { get; set; }
 
         public Guid EmployeeID { get; set; }
 
         public string EmployeeName { get; set; }
 
 
+        public DateTime QualitControlApprovalDate { get; set; }
+
+        public int TotalQualityControlApprovalTime { get; set; }
+
+
+        public decimal ApprovedQuantity { get; set; } = 0;
+
+        public decimal ScrapQuantity { get; set; } = 0;
+
+
         public OperationDetailDto()
         {
             WorkOrder = new ListWorkOrdersDto();
-            OperationAdjustment = new OperationAdjustmentDto();
+            OperationAdjustment = new List<OperationAdjustmentDto>();
         }
     }
 }

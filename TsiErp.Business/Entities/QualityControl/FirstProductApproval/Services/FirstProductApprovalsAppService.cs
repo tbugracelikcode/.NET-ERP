@@ -109,7 +109,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                     Id = GuidGenerator.CreateGuid(),
                     IsDeleted = false,
                     LastModificationTime = null,
-                    LastModifierId = Guid.Empty,
+                    LastModifierId = Guid.Empty
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -353,7 +353,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 LastModificationTime = DateTime.Now,
                 LastModifierId = LoginedUserService.UserId,
                 AdjustmentUserID = input.AdjustmentUserID.GetValueOrDefault(),
-                IsApproval = entity.IsApproval,
+                IsApproval = input.IsApproval,
                 ApprovedQuantity = input.ApprovedQuantity,
                 ScrapQuantity = input.ScrapQuantity
             }).Where(new { Id = input.Id }, false, false, "");

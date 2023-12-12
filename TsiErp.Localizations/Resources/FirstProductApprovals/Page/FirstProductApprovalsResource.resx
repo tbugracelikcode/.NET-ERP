@@ -150,6 +150,9 @@
   <data name="CreateOperationUnsuiatabilityReportButton" xml:space="preserve">
     <value>Operasyon Uygunsuzluk Kaydı Oluştur</value>
   </data>
+  <data name="CreationDate" xml:space="preserve">
+    <value>OLUŞTURULMA TARİHİ</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>

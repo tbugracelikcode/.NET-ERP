@@ -10,33 +10,63 @@ using TsiErp.UretimEkranUI.Services;
 
 namespace TsiErp.UretimEkranUI.Pages
 {
-    public partial class WorkOrderOperationDetailPage
+    public partial class WorkOrderOperationDetailPage : IDisposable
     {
+
+        #region Button Disable Properties
+        public bool StartOperationButtonDisabled { get; set; } = true;
+        public bool PauseOperationButtonDisabled { get; set; } = true;
+        public bool EndOperationButtonDisabled { get; set; } = true;
+        public bool ScrapQuantityButtonDisabled { get; set; } = true;
+        public bool ChangeOperationButtonDisabled { get; set; } = true;
+        public bool ChangeShiftButtonDisabled { get; set; } = true;
+        public bool ChangeCaseButtonDisabled { get; set; } = true;
+        #endregion
+
+        public decimal QualityPercent { get; set; } = 0;
+
+        protected override void OnInitialized()
+        {
+            QualityPercent = 1;
+
+            ScrapQuantityCalculate();
+
+            //StartTimer();
+        }
+
+        private async void ProducedQuantityAdded()
+        {
+            //AppService.CurrentOperation.WorkOrder.ProducedQuantity = AppService.CurrentOperation.WorkOrder.ProducedQuantity + 1;
+
+            //QualityPercent = 1 - (AppService.CurrentOperation.ScrapQuantity / AppService.CurrentOperation.WorkOrder.ProducedQuantity);
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        private async void ScrapQuantityCalculate()
+        {
+            if (AppService.CurrentOperation.ScrapQuantity > 0)
+            {
+
+                if (AppService.CurrentOperation.ScrapQuantity <= AppService.CurrentOperation.WorkOrder.ProducedQuantity)
+                {
+                    //AppService.CurrentOperation.ScrapQuantity = AppService.CurrentOperation.ScrapQuantity + 1;
+
+                    QualityPercent = 1 - (AppService.CurrentOperation.ScrapQuantity / AppService.CurrentOperation.WorkOrder.ProducedQuantity);
+
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+        }
+
+
+        #region Operation Timer
 
         public string ElapsedTime { get; set; } = "0:0:0";
 
         System.Timers.Timer _timer = new System.Timers.Timer(1);
 
         DateTime StartTime = DateTime.Now;
-
-
-        public decimal ScrapQuantity { get; set; } = 0;
-        public decimal QualityPercent { get; set; } = 0;
-
-        protected override async void OnInitialized()
-        {
-            QualityPercent = 1;
-            //StartTimer();
-        }
-
-        private void OnTimedEvent(object source, ElapsedEventArgs e)
-        {
-            DateTime currentTime = e.SignalTime;
-            
-            ElapsedTime = currentTime.Subtract(StartTime).Hours + ":" + currentTime.Subtract(StartTime).Minutes + ":" + currentTime.Subtract(StartTime).Seconds;
-
-            InvokeAsync(StateHasChanged);
-        }
 
         void StartTimer()
         {
@@ -47,26 +77,25 @@ namespace TsiErp.UretimEkranUI.Pages
             _timer.Enabled = true;
         }
 
-        private async void ProducedQuantityAdded()
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            AppService.CurrentOperation.WorkOrder.ProducedQuantity = AppService.CurrentOperation.WorkOrder.ProducedQuantity + 1;
+            DateTime currentTime = e.SignalTime;
 
-            QualityPercent = 1 - (ScrapQuantity / AppService.CurrentOperation.WorkOrder.ProducedQuantity);
+            ElapsedTime = currentTime.Subtract(StartTime).Hours + ":" + currentTime.Subtract(StartTime).Minutes + ":" + currentTime.Subtract(StartTime).Seconds;
 
-            await InvokeAsync(StateHasChanged);
+            InvokeAsync(StateHasChanged);
         }
 
-        private async void ScrapQuantityAdded()
+        #endregion
+
+        public void Dispose()
         {
-            if (ScrapQuantity <= AppService.CurrentOperation.WorkOrder.ProducedQuantity)
+            if (_timer != null)
             {
-                ScrapQuantity = ScrapQuantity + 1;
-
-                QualityPercent = 1 - (ScrapQuantity / AppService.CurrentOperation.WorkOrder.ProducedQuantity);
-
-                await InvokeAsync(StateHasChanged);
+                _timer.Stop();
+                _timer.Enabled = false;
+                _timer.Dispose();
             }
-
         }
     }
 }

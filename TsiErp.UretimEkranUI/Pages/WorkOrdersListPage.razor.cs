@@ -49,7 +49,6 @@ namespace TsiErp.UretimEkranUI.Pages
                     operationDetail.EmployeeID = Guid.Empty;
                     operationDetail.EmployeeName = string.Empty;
                     operationDetail.WorkOrder = workOrder;
-                    operationDetail.OperationAdjustment = new OperationAdjustmentDto();
 
 
                     AppService.CurrentOperation = operationDetail;

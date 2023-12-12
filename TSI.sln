@@ -47,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.UretimEkranUI", "Tsi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FatekCommunication", "FatekCommunication", "{E8F645E3-0EEE-48D0-859C-BA1B7BD6BC74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TsiErp.Fatek.CommunicationCore", "TsiErp.Fatek.CommunicationCore\TsiErp.Fatek.CommunicationCore.csproj", "{7904DB92-EF3A-48ED-8F58-C5091C3C9AB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.Fatek.CommunicationCore", "TsiErp.Fatek.CommunicationCore\TsiErp.Fatek.CommunicationCore.csproj", "{7904DB92-EF3A-48ED-8F58-C5091C3C9AB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
