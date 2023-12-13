@@ -13,7 +13,7 @@ namespace TsiErp.UretimEkranUI.Models
 
         public ListWorkOrdersDto WorkOrder { get; set; }
 
-        public List<OperationAdjustmentDto> OperationAdjustment { get; set; }
+        public OperationAdjustmentDto OperationAdjustment { get; set; }
 
         public Guid EmployeeID { get; set; }
 
@@ -33,7 +33,7 @@ namespace TsiErp.UretimEkranUI.Models
         public OperationDetailDto()
         {
             WorkOrder = new ListWorkOrdersDto();
-            OperationAdjustment = new List<OperationAdjustmentDto>();
+            OperationAdjustment = new OperationAdjustmentDto();
         }
     }
 }

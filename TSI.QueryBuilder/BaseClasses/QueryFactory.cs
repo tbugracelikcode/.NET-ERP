@@ -141,7 +141,15 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     command.CommandText = query.Sql;
 
-                    query.SqlResult = command.ExecuteReader().DataReaderMapToGet<T>();
+                    if(!query.IsSumQuery)
+                    {
+                        query.SqlResult = command.ExecuteReader().DataReaderMapToGet<T>();
+                    }
+                    else
+                    {
+                        query.SqlResult = command.ExecuteScalar();
+                    }
+                    
 
                     query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 

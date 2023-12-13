@@ -329,15 +329,14 @@ namespace TsiErp.UretimEkranUI.Pages
             AppService.CurrentOperation.ScrapQuantity = ScrapQuantity;
             AppService.CurrentOperation.WorkOrder.ProducedQuantity = ApprovedQuantity;
 
-            AppService.CurrentOperation.OperationAdjustment.Add(Adjustment);
+            AppService.CurrentOperation.OperationAdjustment=Adjustment;
 
-            foreach (var item in AppService.CurrentOperation.OperationAdjustment)
-            {
+            
                 var createAdjustmentDto = new CreateOperationAdjustmentsDto
                 {
-                    AdjustmentStartDate = item.AdjustmentDate,
-                    AdjustmentUserId = item.AdjustmentUserId,
-                    TotalAdjustmentTime = item.TotalAdjustmentTime,
+                    AdjustmentStartDate = Adjustment.AdjustmentDate,
+                    AdjustmentUserId = Adjustment.AdjustmentUserId,
+                    TotalAdjustmentTime = Adjustment.TotalAdjustmentTime,
                     WorkOrderId = AppService.CurrentOperation.WorkOrder.Id,
                     ApprovedQuantity = AppService.CurrentOperation.ApprovedQuantity,
                     ScrapQuantity = AppService.CurrentOperation.ScrapQuantity,
@@ -346,7 +345,7 @@ namespace TsiErp.UretimEkranUI.Pages
                 };
 
                 await OperationAdjustmentAppService.CreateAsync(createAdjustmentDto);
-            }
+            
 
             NavigationManager.NavigateTo("/work-order-detail", true);
 
@@ -381,7 +380,6 @@ namespace TsiErp.UretimEkranUI.Pages
 
             await Task.CompletedTask;
         }
-
 
         public void Dispose()
         {

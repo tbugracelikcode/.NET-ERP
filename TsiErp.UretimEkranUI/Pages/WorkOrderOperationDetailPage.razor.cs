@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.UretimEkranUI.Services;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace TsiErp.UretimEkranUI.Pages
 {
@@ -23,15 +24,33 @@ namespace TsiErp.UretimEkranUI.Pages
         public bool ChangeCaseButtonDisabled { get; set; } = true;
         #endregion
 
+        public string TotalAdjusmentTime { get; set; }
+
         public decimal QualityPercent { get; set; } = 0;
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
+            var totalAdjusmentTime = (await OperationAdjustmentAppService.GetTotalAdjustmentTimeAsync(AppService.CurrentOperation.WorkOrder.Id));
+
+            if(totalAdjusmentTime > 0)
+            {
+                TimeSpan time = TimeSpan.FromSeconds(totalAdjusmentTime);
+
+                TotalAdjusmentTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                    time.Hours,
+                    time.Minutes,
+                    time.Seconds);
+            }
+
+
             QualityPercent = 1;
+
 
             ScrapQuantityCalculate();
 
             //StartTimer();
+
+
         }
 
         private async void ProducedQuantityAdded()

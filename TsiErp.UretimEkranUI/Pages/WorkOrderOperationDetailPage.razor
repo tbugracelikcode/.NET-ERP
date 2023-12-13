@@ -4,6 +4,7 @@
 
 @inject AppService AppService
 @inject NavigationManager NavigationManager
+@inject IOperationAdjustmentsAppService OperationAdjustmentAppService
 
 
 <div style="height:800px">
@@ -245,7 +246,7 @@
                                                         </center>
                                                         <br />
                                                         <center>
-                                                            <SfTextBox CssClass="TSITxtBox" Readonly=true></SfTextBox>
+                                                            <SfTextBox CssClass="TSITxtBox" Readonly=true @bind-Value=TotalAdjusmentTime></SfTextBox>
                                                         </center>
                                                     </strong>
                                                 </label>

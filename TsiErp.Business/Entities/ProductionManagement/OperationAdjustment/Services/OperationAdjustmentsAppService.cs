@@ -144,6 +144,14 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Serv
         }
 
 
+        public async Task<int> GetTotalAdjustmentTimeAsync(Guid workOrderId)
+        {
+            var query = queryFactory.Query().From(Tables.OperationAdjustments).Sum("TotalAdjustmentTime").Where("WorkOrderId",workOrderId,"");
+
+            var operationAdjustment = queryFactory.Get<int>(query);
+
+            return operationAdjustment;
+        }
 
 
 
@@ -165,6 +173,7 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Serv
         {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 }

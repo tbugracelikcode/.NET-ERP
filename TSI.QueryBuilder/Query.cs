@@ -27,5 +27,8 @@ namespace TSI.QueryBuilder
         public string TablesJoinKeywords { get; set; }
 
         public bool UseIsDeleteInQuery { get; set; } = true;
+
+        public bool IsSumQuery { get; set; } = false;
+
     }
 }
