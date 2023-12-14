@@ -206,6 +206,51 @@ namespace TsiErp.Localizations.Resources.EmployeeSeniorities.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ayar yapabilir mi?.
+        /// </summary>
+        public static string IsAdjustmentLabel {
+            get {
+                return ResourceManager.GetString("IsAdjustmentLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalitesizliği ve arızayı fark edebilir mi?.
+        /// </summary>
+        public static string IsDetectFaultLabel {
+            get {
+                return ResourceManager.GetString("IsDetectFaultLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşi geliştirecek fikir üretebilir mi?.
+        /// </summary>
+        public static string IsDeveloperIdeaLabel {
+            get {
+                return ResourceManager.GetString("IsDeveloperIdeaLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev yerine getirilebilir mi?.
+        /// </summary>
+        public static string IsTaskDoneLabel {
+            get {
+                return ResourceManager.GetString("IsTaskDoneLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev yerine getirilebilir mi?.
+        /// </summary>
+        public static string IsTaskSharingLabel {
+            get {
+                return ResourceManager.GetString("IsTaskSharingLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
@@ -265,6 +310,42 @@ namespace TsiErp.Localizations.Resources.EmployeeSeniorities.Page {
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puan:.
+        /// </summary>
+        public static string ScoreLabel {
+            get {
+                return ResourceManager.GetString("ScoreLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Kıdemleri.
+        /// </summary>
+        public static string Tab1Name {
+            get {
+                return ResourceManager.GetString("Tab1Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev Puanlamaları.
+        /// </summary>
+        public static string Tab2Name {
+            get {
+                return ResourceManager.GetString("Tab2Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev Puanlandırma Kodu:.
+        /// </summary>
+        public static string TaskScoringCodeLabel {
+            get {
+                return ResourceManager.GetString("TaskScoringCodeLabel", resourceCulture);
             }
         }
         

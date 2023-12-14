@@ -206,6 +206,87 @@ namespace TsiErp.Localizations.Resources.TemplateOperations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hata, sonraki operasyonda yakalanabilir mi?.
+        /// </summary>
+        public static string IsCanBeDetectedLabel {
+            get {
+                return ResourceManager.GetString("IsCanBeDetectedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buradaki hata, sonraki operasyonda ekstra maliyet oluşturur mu?.
+        /// </summary>
+        public static string IsCauseExtraCostLabel {
+            get {
+                return ResourceManager.GetString("IsCauseExtraCostLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İstasyon tamir maliyeti yüksek mi?.
+        /// </summary>
+        public static string IsHighRepairCostLabel {
+            get {
+                return ResourceManager.GetString("IsHighRepairCostLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operatörün çalışma süresi uzun mu?.
+        /// </summary>
+        public static string IsLongWorktimeforOperatorLabel {
+            get {
+                return ResourceManager.GetString("IsLongWorktimeforOperatorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş fiziken zor mu?.
+        /// </summary>
+        public static string IsPhysicallyHardLabel {
+            get {
+                return ResourceManager.GetString("IsPhysicallyHardLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş, bilgi gerektiriyor mu?.
+        /// </summary>
+        public static string IsRequiresKnowledgeLabel {
+            get {
+                return ResourceManager.GetString("IsRequiresKnowledgeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş, yetenek gerektiriyor mu?.
+        /// </summary>
+        public static string IsRequiresSkillLabel {
+            get {
+                return ResourceManager.GetString("IsRequiresSkillLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş, operatöre risk oluşturuyor mu?.
+        /// </summary>
+        public static string IsRiskyforOperatorLabel {
+            get {
+                return ResourceManager.GetString("IsRiskyforOperatorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş hassas mı?.
+        /// </summary>
+        public static string IsSensitiveLabel {
+            get {
+                return ResourceManager.GetString("IsSensitiveLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AYAR KONTROL SÜRESİ.
         /// </summary>
         public static string LineGridAdjustment {
@@ -458,6 +539,15 @@ namespace TsiErp.Localizations.Resources.TemplateOperations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İş Kritiklik Seviyesi.
+        /// </summary>
+        public static string Tab3Name {
+            get {
+                return ResourceManager.GetString("Tab3Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string TemplateOperationContextAdd {
@@ -652,6 +742,15 @@ namespace TsiErp.Localizations.Resources.TemplateOperations.Page {
         public static string WorkCenterCodeLabel {
             get {
                 return ResourceManager.GetString("WorkCenterCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş Puanı:.
+        /// </summary>
+        public static string WorkScoreLabel {
+            get {
+                return ResourceManager.GetString("WorkScoreLabel", resourceCulture);
             }
         }
     }

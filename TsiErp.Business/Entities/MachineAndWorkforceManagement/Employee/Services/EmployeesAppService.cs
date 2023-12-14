@@ -12,8 +12,10 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Employees.Page;
 
@@ -57,6 +59,11 @@ namespace TsiErp.Business.Entities.Employee.Services
                 Code = input.Code,
                 Address = input.Address,
                 Birthday = input.Birthday,
+                CurrentSalary = input.CurrentSalary,
+                EducationLevelID = input.EducationLevelID,
+                HiringDate = input.HiringDate,
+                SeniorityID = input.SeniorityID,
+                TaskDefinition = input.TaskDefinition,
                 BloodType = (int)input.BloodType,
                 CellPhone = input.CellPhone,
                 City = input.City,
@@ -109,12 +116,26 @@ namespace TsiErp.Business.Entities.Employee.Services
         public async Task<IDataResult<SelectEmployeesDto>> GetAsync(Guid id)
         {
             var query = queryFactory
-                    .Query().From(Tables.Employees).Select<Employees>(e => new { e.Surname, e.Birthday, e.BloodType, e.CellPhone, e.HomePhone, e.City, e.Name, e.Address, e.Code, e.DataOpenStatus, e.DataOpenStatusUserId, e.DepartmentID, e.District, e.Email, e.Id, e.IDnumber, e.IsActive, e.ProductionScreenPassword,e.IsProductionScreenSettingUser, e.IsProductionScreenUser })
+                    .Query().From(Tables.Employees).Select<Employees>(null)
                         .Join<Departments>
                         (
                             d => new { Department = d.Name, DepartmentID = d.Id },
                             nameof(Employees.DepartmentID),
                             nameof(Departments.Id),
+                            JoinType.Left
+                        )
+                          .Join<EmployeeSeniorities>
+                        (
+                            d => new { SeniorityName = d.Name, SeniorityID = d.Id },
+                            nameof(Employees.SeniorityID),
+                            nameof(EmployeeSeniorities.Id),
+                            JoinType.Left
+                        )
+                            .Join<EducationLevelScores>
+                        (
+                            d => new { EducationLevelName = d.Name, EducationLevelID = d.Id },
+                            nameof(Employees.EducationLevelID),
+                            nameof(EducationLevelScores.Id),
                             JoinType.Left
                         )
                         .Where(new { Id = id }, true, true, Tables.Employees);
@@ -133,13 +154,28 @@ namespace TsiErp.Business.Entities.Employee.Services
             var query = queryFactory
                .Query()
                .From(Tables.Employees)
-               .Select<Employees>(e => new { e.Surname, e.Birthday, e.BloodType, e.CellPhone, e.HomePhone, e.City, e.Name, e.Address, e.Code, e.DataOpenStatus, e.DataOpenStatusUserId, e.DepartmentID, e.District, e.Email, e.Id, e.IDnumber, e.IsActive, e.ProductionScreenPassword, e.IsProductionScreenSettingUser, e.IsProductionScreenUser })
+               .Select<Employees>(null)
                    .Join<Departments>
                    (
                        d => new { Department = d.Name },
                          nameof(Employees.DepartmentID),
                          nameof(Departments.Id),
                          JoinType.Left
+                   )
+
+                     .Join<EmployeeSeniorities>
+                   (
+                       d => new { SeniorityName = d.Name, SeniorityID = d.Id },
+                       nameof(Employees.SeniorityID),
+                       nameof(EmployeeSeniorities.Id),
+                       JoinType.Left
+                   )
+                       .Join<EducationLevelScores>
+                   (
+                       d => new { EducationLevelName = d.Name, EducationLevelID = d.Id },
+                       nameof(Employees.EducationLevelID),
+                       nameof(EducationLevelScores.Id),
+                       JoinType.Left
                    ).Where(null, true, true, Tables.Employees);
 
             var employees = queryFactory.GetList<ListEmployeesDto>(query).ToList();
@@ -172,6 +208,11 @@ namespace TsiErp.Business.Entities.Employee.Services
                 Code = input.Code,
                 Name = input.Name,
                 Id = input.Id,
+                TaskDefinition = input.TaskDefinition,
+                SeniorityID = input.SeniorityID,
+                HiringDate = input.HiringDate,
+                EducationLevelID = input.EducationLevelID,
+                CurrentSalary = input.CurrentSalary,
                 Address = input.Address,
                 Birthday = input.Birthday,
                 BloodType = input.BloodType,
@@ -218,6 +259,11 @@ namespace TsiErp.Business.Entities.Employee.Services
                 Name = entity.Name,
                 Surname = entity.Surname,
                 HomePhone = entity.HomePhone,
+                CurrentSalary = entity.CurrentSalary,
+                EducationLevelID = entity.EducationLevelID,
+                HiringDate = entity.HiringDate,
+                SeniorityID = entity.SeniorityID,
+                TaskDefinition = entity.TaskDefinition,
                 Email = entity.Email,
                 District = entity.District,
                 DepartmentID = entity.DepartmentID,

@@ -85,5 +85,33 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos
         /// Üretim Ekran Ayar Kullanıcısı
         /// </summary>
         public bool IsProductionScreenSettingUser { get; set; }
+        /// <summary>
+        /// Kıdem ID
+        /// </summary>
+        public Guid? SeniorityID { get; set; }
+        /// <summary>
+        /// Kıdem Adı
+        /// </summary>
+        public string SeniorityName { get; set; }
+        /// <summary>
+        /// Eğitim Seviyesi ID
+        /// </summary>
+        public Guid? EducationLevelID { get; set; }
+        /// <summary>
+        /// Eğitim Seviyesi Adı
+        /// </summary>
+        public string EducationLevelName { get; set; }
+        /// <summary>
+        /// Mevcut Maaş
+        /// </summary>
+        public decimal CurrentSalary { get; set; }
+        /// <summary>
+        /// Görev Tanımı
+        /// </summary>
+        public string TaskDefinition { get; set; }
+        /// <summary>
+        /// İşe Alınma Tarihi
+        /// </summary>
+        public DateTime HiringDate { get; set; }
     }
 }

@@ -140,6 +140,9 @@ using TsiErp.Entities.Entities.ShippingManagement.PackingList;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLine;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletLine;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoringLine;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeOperation;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -4841,6 +4844,111 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 PackingListPalletPackageLinesTable.Create();
+            }
+            #endregion
+
+            #region EmployeeScorings Table Created
+            Table EmployeeScoringsTable = model.CreateTable(Tables.EmployeeScorings);
+
+            if (EmployeeScoringsTable != null)
+            {
+                var properties = (typeof(EmployeeScorings)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(EmployeeScoringsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(EmployeeScoringsTable, "PK_" + EmployeeScoringsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        EmployeeScoringsTable.Indexes.Add(pkIndex);
+                    }
+
+                    EmployeeScoringsTable.Columns.Add(column);
+                }
+
+                EmployeeScoringsTable.Create();
+            }
+            #endregion
+
+            #region EmployeeScoringLines Table Created
+            Table EmployeeScoringLinesTable = model.CreateTable(Tables.EmployeeScoringLines);
+
+            if (EmployeeScoringLinesTable != null)
+            {
+                var properties = (typeof(EmployeeScoringLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(EmployeeScoringLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(EmployeeScoringLinesTable, "PK_" + EmployeeScoringLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        EmployeeScoringLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    EmployeeScoringLinesTable.Columns.Add(column);
+                }
+
+                EmployeeScoringLinesTable.Create();
+            }
+            #endregion
+
+            #region EmployeeOperations Table Created
+            Table EmployeeOperationsTable = model.CreateTable(Tables.EmployeeOperations);
+
+            if (EmployeeOperationsTable != null)
+            {
+                var properties = (typeof(EmployeeOperations)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(EmployeeOperationsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(EmployeeOperationsTable, "PK_" + EmployeeOperationsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        EmployeeOperationsTable.Indexes.Add(pkIndex);
+                    }
+
+                    EmployeeOperationsTable.Columns.Add(column);
+                }
+
+                EmployeeOperationsTable.Create();
             }
             #endregion
 

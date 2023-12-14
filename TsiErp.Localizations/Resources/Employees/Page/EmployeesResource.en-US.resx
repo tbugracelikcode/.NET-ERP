@@ -168,6 +168,9 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Employee Code:</value>
   </data>
+  <data name="CurrentSalaryLabel" xml:space="preserve">
+    <value>Current Salary:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -195,6 +198,18 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Employees</value>
   </data>
+  <data name="EducationLevelNameLabel" xml:space="preserve">
+    <value>Education Level:</value>
+  </data>
+  <data name="EducationLevelScoresModalGridCode" xml:space="preserve">
+    <value>EDUCATION LEVEL CODE</value>
+  </data>
+  <data name="EducationLevelScoresModalGridName" xml:space="preserve">
+    <value>EDUCATION LEVEN NAME</value>
+  </data>
+  <data name="EducationLevelScoresModalTitle" xml:space="preserve">
+    <value>Education Levels</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>E-MAIL</value>
   </data>
@@ -213,8 +228,20 @@
   <data name="EmployeeContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="EmployeeSenioritiesModalGridCode" xml:space="preserve">
+    <value>SENIORITY CODE</value>
+  </data>
+  <data name="EmployeeSenioritiesModalGridName" xml:space="preserve">
+    <value>SENIORITY NAME</value>
+  </data>
+  <data name="EmployeeSenioritiesModalTitle" xml:space="preserve">
+    <value>Employee Seniorities</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="HiringDateLabel" xml:space="preserve">
+    <value>Hiring Date:</value>
   </data>
   <data name="HomePhoneLabel" xml:space="preserve">
     <value>Home Phone:</value>
@@ -261,6 +288,9 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SeniorityNameLabel" xml:space="preserve">
+    <value>Employee Seniority:</value>
+  </data>
   <data name="SurnameLabel" xml:space="preserve">
     <value>Employee Surname:</value>
   </data>
@@ -269,6 +299,9 @@
   </data>
   <data name="Tab2Name" xml:space="preserve">
     <value>Production Screen User Information</value>
+  </data>
+  <data name="TaskDefinitionLabel" xml:space="preserve">
+    <value>Task Definition:</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Employee Records</value>

@@ -98,6 +98,32 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee
         /// Üretim Ekran Ayar Kullanıcısı
         /// </summary>
         public bool IsProductionScreenSettingUser { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Kıdem ID
+        /// </summary>
+        public Guid SeniorityID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Eğitim Seviyesi ID
+        /// </summary>
+        public Guid EducationLevelID { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Mevcut Maaş
+        /// </summary>
+        public decimal CurrentSalary { get; set; }
+        [SqlColumnType( SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Görev Tanımı
+        /// </summary>
+        public string TaskDefinition { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// İşe Alınma Tarihi
+        /// </summary>
+        public DateTime HiringDate { get; set; }
 
     }
 }

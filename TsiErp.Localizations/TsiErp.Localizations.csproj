@@ -116,6 +116,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>EmployeeGeneralSkillRecordsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\EmployeeScorings\Page\EmployeeScoringsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EmployeeScoringsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\EmployeeSeniorities\Page\EmployeeSenioritiesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -608,6 +613,10 @@
     <EmbeddedResource Update="Resources\EmployeeGeneralSkillRecords\Page\EmployeeGeneralSkillRecordsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EmployeeGeneralSkillRecordsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\EmployeeScorings\Page\EmployeeScoringsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmployeeScoringsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\EmployeeSeniorities\Page\EmployeeSenioritiesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
