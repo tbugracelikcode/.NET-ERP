@@ -14,15 +14,9 @@ namespace TsiErp.UretimEkranUI.Models
 
         public string AdjustmentUserPassword { get; set; }
 
-        public DateTime AdjustmentStartDate { get; set; }
+        public DateTime AdjustmentDate { get; set; }
 
-        public DateTime AdjustmentEndDate { get; set; }
+        public int TotalAdjustmentTime { get; set; }
 
-        public decimal AdjustmentQuantity { get; set; }
-
-
-        public DateTime QualitControlApprovalStartDate { get; set; }
-
-        public DateTime QualitControlApprovalEndDate { get; set; }
     }
 }

@@ -19,4 +19,13 @@ namespace TsiErp.Business.BusinessCoreServices
             L = l;
         }
     }
+
+    public class ApplicationService
+    {
+        public IGuidGenerator GuidGenerator { get; set; } = new SequentialGuidGenerator();
+
+        public ApplicationService()
+        {
+        }
+    }
 }

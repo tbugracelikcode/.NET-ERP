@@ -20,6 +20,16 @@ namespace TsiErp.UretimEkranUI.Models
         public string EmployeeName { get; set; }
 
 
+        public DateTime QualitControlApprovalDate { get; set; }
+
+        public int TotalQualityControlApprovalTime { get; set; }
+
+
+        public decimal ApprovedQuantity { get; set; } = 0;
+
+        public decimal ScrapQuantity { get; set; } = 0;
+
+
         public OperationDetailDto()
         {
             WorkOrder = new ListWorkOrdersDto();

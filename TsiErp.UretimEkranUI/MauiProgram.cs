@@ -13,6 +13,7 @@ using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
 using TsiErp.Business.Entities.FirstProductApproval.Services;
 using TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Services;
 using TsiErp.Business.Entities.OperationalQualityPlan.Services;
+using TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Services;
 #if WINDOWS
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -97,6 +98,7 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<IFirstProductApprovalsAppService, FirstProductApprovalsAppService>();
             builder.Services.AddScoped<IFicheNumbersAppService, FicheNumbersAppService>();
             builder.Services.AddScoped<IOperationalQualityPlansAppService, OperationalQualityPlansAppService>();
+            builder.Services.AddScoped<IOperationAdjustmentsAppService, OperationAdjustmentsAppService>();
 
 
 

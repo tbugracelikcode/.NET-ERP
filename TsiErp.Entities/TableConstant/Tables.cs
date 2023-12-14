@@ -153,5 +153,6 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string EmployeeScorings = "EmployeeScorings";
         public static readonly string EmployeeScoringLines = "EmployeeScoringLines";
         public static readonly string EmployeeOperations = "EmployeeOperations";
+        public static readonly string OperationAdjustments = "OperationAdjustments";
     }
 }

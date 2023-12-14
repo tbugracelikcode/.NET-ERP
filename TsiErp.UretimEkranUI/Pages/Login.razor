@@ -1,4 +1,4 @@
-﻿@page "/login"
+﻿@page "/h"
 
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
@@ -8,18 +8,20 @@
 <html class="no-js" lang="">
 
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Xmee | Login and Register Form Html Templates</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    @* <link rel="stylesheet" href="css/fontawesome-all.min.css"> *@
-   @*  <link rel="stylesheet" href="./login/font/flaticon.css"> *@
+    <link rel="stylesheet" href="/login/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/login/font/flaticon.css">
 
-   @*  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"> *@
 
-    @* <link rel="stylesheet" href="./login/style.css"> *@
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/login/style.css">
 </head>
 
 <body>
@@ -130,6 +132,13 @@
     string Password = string.Empty;
     bool vispopup = false;
     bool VisibleSpinner = false;
+    private Task<IJSObjectReference> _module;
+
+    public Task<IJSObjectReference> Module1 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/jquery-3.5.0.min.js").AsTask();
+    public Task<IJSObjectReference> Module2 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/bootstrap.min.js").AsTask();
+    public Task<IJSObjectReference> Module3 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/imagesloaded.pkgd.min.js").AsTask();
+    public Task<IJSObjectReference> Module4 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/validator.min.js").AsTask();
+    public Task<IJSObjectReference> Module5 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/main.js").AsTask();
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
@@ -177,7 +186,7 @@
             //     }
             // }
 
-            NavigationManager.NavigateTo("/home");
+            // NavigationManager.NavigateTo("/home");
         }
         else
         {

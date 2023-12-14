@@ -49,11 +49,45 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
+
                                     <GridColumn Field=@nameof(ListFirstProductApprovalsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.IsApproval) HeaderText="@L["Approve"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.CreationTime) HeaderText="@L["CreationDate"]" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                var creationTime = ((context as ListFirstProductApprovalsDto).CreationTime);
+
+                                                var creationDate = creationTime.ToString("dd.MM.yyyy HH:mm:ss");
+                                            }
+                                            @creationDate
+                                        </Template>
+                                    </GridColumn>
+
+                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.IsApproval) HeaderText="@L["Approve"]" TextAlign="TextAlign.Center" Width="120">
+
+                                        <Template>
+
+                                            @{
+                                                var isApproval = ((context as ListFirstProductApprovalsDto).IsApproval);
+
+                                                string approvalStatus = "Onay Bekliyor";
+
+                                                if (isApproval)
+                                                {
+                                                    approvalStatus = "Onaylandı";
+                                                }
+                                            }
+                                            @approvalStatus
+                                        </Template>
+
+                                    </GridColumn>
+
                                     <GridColumn Field=@nameof(ListFirstProductApprovalsDto.WorkOrderNo) HeaderText="@L["WorkOrderNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListFirstProductApprovalsDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListFirstProductApprovalsDto.AdjustmentUser) HeaderText="@L["AdjustmentUser"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListFirstProductApprovalsDto.EmployeeName) HeaderText="@L["EmployeeName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
 
@@ -178,25 +212,25 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    
+
 
                     <DxGridLayoutItem Row="2" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ApprovedQuantityLabel"] </strong></label><br />
-                              <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.ApprovedQuantity"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.ApprovedQuantity"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    
+
 
                     <DxGridLayoutItem Row="2" Column="7">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ScrapQuantityLabel"] </strong></label><br />
-                              <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.ScrapQuantity"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.ScrapQuantity"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    
+
 
                     <DxGridLayoutItem Row="3" Column="7">
                         <Template>

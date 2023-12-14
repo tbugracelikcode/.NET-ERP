@@ -11,6 +11,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business;
 using TsiErp.Business.DependencyResolvers.Autofac;
 using TsiErp.DataAccess;
+using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Shared;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -31,6 +32,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Conf
 {
     container.RegisterModule(new AutofacBusinessModule());
 });
+
 
 builder.Services.AddSyncfusionBlazor();
 builder.Services.AddDevExpressBlazor();

@@ -55,6 +55,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Remove="wwwroot\login\css\webfonts\fa-brands-400.woff2" />
+      <Content Remove="wwwroot\login\css\webfonts\fa-regular-400.woff2" />
+      <Content Remove="wwwroot\login\css\webfonts\fa-solid-900.woff2" />
       <Content Remove="wwwroot\login\font\Flaticon.svg" />
       <Content Remove="wwwroot\login\font\Flaticon.woff2" />
       <Content Remove="wwwroot\login\font\_flaticon.scss" />
@@ -92,6 +95,9 @@
 
 
     <ItemGroup>
+      <None Include="wwwroot\login\css\webfonts\fa-brands-400.woff2" />
+      <None Include="wwwroot\login\css\webfonts\fa-regular-400.woff2" />
+      <None Include="wwwroot\login\css\webfonts\fa-solid-900.woff2" />
       <None Include="wwwroot\login\font\Flaticon.svg" />
       <None Include="wwwroot\login\font\Flaticon.woff2" />
       <None Include="wwwroot\login\font\_flaticon.scss" />
