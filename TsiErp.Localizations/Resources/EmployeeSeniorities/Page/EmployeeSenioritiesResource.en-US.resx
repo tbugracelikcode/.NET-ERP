@@ -165,6 +165,21 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="IsAdjustmentLabel" xml:space="preserve">
+    <value>Can he/she make adjustments?</value>
+  </data>
+  <data name="IsDetectFaultLabel" xml:space="preserve">
+    <value>Can he/she detect poor quality and malfunction?</value>
+  </data>
+  <data name="IsDeveloperIdeaLabel" xml:space="preserve">
+    <value>Can he/she generate ideas that will improve the business?</value>
+  </data>
+  <data name="IsTaskDoneLabel" xml:space="preserve">
+    <value>Can the task be accomplished?</value>
+  </data>
+  <data name="IsTaskSharingLabel" xml:space="preserve">
+    <value>Can he/she transfer the work to others and share the work?</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
@@ -185,6 +200,18 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="ScoreLabel" xml:space="preserve">
+    <value>Score:</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Employee Seniorities</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Task Scorings</value>
+  </data>
+  <data name="TaskScoringCodeLabel" xml:space="preserve">
+    <value>Task Scoring Code:</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Employee Seniorities</value>

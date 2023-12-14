@@ -61,6 +61,16 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             var query = queryFactory.Query().From(Tables.TemplateOperations).Insert(new CreateTemplateOperationsDto
             {
                 WorkCenterID = input.WorkCenterID,
+                IsCanBeDetected = input.IsCanBeDetected,
+                IsCauseExtraCost = input.IsCauseExtraCost,
+                IsHighRepairCost = input.IsHighRepairCost,
+                IsLongWorktimeforOperator = input.IsLongWorktimeforOperator,
+                IsPhysicallyHard = input.IsPhysicallyHard,
+                IsRequiresKnowledge = input.IsRequiresKnowledge,
+                IsRequiresSkill = input.IsRequiresSkill,
+                IsRiskyforOperator = input.IsRiskyforOperator,
+                IsSensitive = input.IsSensitive,
+                WorkScore = input.WorkScore,
                 Code = input.Code,
                 CreationTime = DateTime.Now,
                 CreatorId = LoginedUserService.UserId,
@@ -173,7 +183,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
         public async Task<IDataResult<SelectTemplateOperationsDto>> GetAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.TemplateOperations).Select<TemplateOperations>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.WorkCenterID })
+            var query = queryFactory.Query().From(Tables.TemplateOperations).Select<TemplateOperations>(null)
                 .Join<StationGroups>
                 (
                     g => new { WorkCenterName = g.Name },
@@ -277,7 +287,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         public async Task<IDataResult<IList<ListTemplateOperationsDto>>> GetListAsync(ListTemplateOperationsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.TemplateOperations)
-                .Select<TemplateOperations>(p => new { p.Id, p.Name, p.Code, p.IsActive, p.WorkCenterID })
+                .Select<TemplateOperations>(null)
                 .Join<StationGroups>
                 (
                     g => new { WorkCenterName = g.Name },
@@ -373,6 +383,16 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             {
                 Name = input.Name,
                 WorkCenterID = input.WorkCenterID,
+                IsCanBeDetected = input.IsCanBeDetected,
+                IsCauseExtraCost = input.IsCauseExtraCost,
+                IsHighRepairCost = input.IsHighRepairCost,
+                IsLongWorktimeforOperator = input.IsLongWorktimeforOperator,
+                IsPhysicallyHard = input.IsPhysicallyHard,
+                IsRequiresKnowledge = input.IsRequiresKnowledge,
+                IsRequiresSkill = input.IsRequiresSkill,
+                IsRiskyforOperator = input.IsRiskyforOperator,
+                IsSensitive = input.IsSensitive,
+                WorkScore = input.WorkScore,
                 Code = input.Code,
                 CreationTime = entity.CreationTime,
                 CreatorId = entity.CreatorId,
@@ -528,6 +548,16 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             var query = queryFactory.Query().From(Tables.TemplateOperations).Update(new UpdateTemplateOperationsDto
             {
                 WorkCenterID = entity.WorkCenterID,
+                IsCanBeDetected = entity.IsCanBeDetected,
+                IsCauseExtraCost = entity.IsCauseExtraCost,
+                IsHighRepairCost = entity.IsHighRepairCost,
+                IsLongWorktimeforOperator = entity.IsLongWorktimeforOperator,
+                IsPhysicallyHard = entity.IsPhysicallyHard,
+                IsRequiresKnowledge = entity.IsRequiresKnowledge,
+                IsRequiresSkill = entity.IsRequiresSkill,
+                IsRiskyforOperator = entity.IsRiskyforOperator,
+                IsSensitive = entity.IsSensitive,
+                WorkScore = entity.WorkScore,
                 Code = entity.Code,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,

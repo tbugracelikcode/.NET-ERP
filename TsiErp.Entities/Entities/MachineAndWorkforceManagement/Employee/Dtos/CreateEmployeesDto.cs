@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos
@@ -74,5 +75,25 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos
         /// Üretim Ekran Ayar Kullanıcısı
         /// </summary>
         public bool IsProductionScreenSettingUser { get; set; }
+        /// <summary>
+        /// Kıdem ID
+        /// </summary>
+        public Guid? SeniorityID { get; set; }
+        /// <summary>
+        /// Eğitim Seviyesi ID
+        /// </summary>
+        public Guid? EducationLevelID { get; set; }
+        /// <summary>
+        /// Mevcut Maaş
+        /// </summary>
+        public decimal CurrentSalary { get; set; }
+        /// <summary>
+        /// Görev Tanımı
+        /// </summary>
+        public string TaskDefinition { get; set; }
+        /// <summary>
+        /// İşe Alınma Tarihi
+        /// </summary>
+        public DateTime HiringDate { get; set; }
     }
 }

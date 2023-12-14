@@ -51,6 +51,12 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeAnnualSenio
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeAnnualSeniorityDifference.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkillRecord;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkillRecord.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeOperation;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeOperation.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoringLine;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoringLine.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.GeneralSkillRecordPriority;
@@ -1293,6 +1299,33 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdatePackingListPalletPackageLinesDto, PackingListPalletPackageLines>();
             CreateMap<SelectPackingListPalletPackageLinesDto, UpdatePackingListPalletPackageLinesDto>();
             CreateMap<SelectPackingListPalletPackageLinesDto, PackingListPalletPackageLines>();
+
+
+
+
+            CreateMap<EmployeeScorings, SelectEmployeeScoringsDto>();
+            CreateMap<EmployeeScorings, ListEmployeeScoringsDto>();
+            CreateMap<UpdateEmployeeScoringsDto, EmployeeScorings>();
+            CreateMap<CreateEmployeeScoringsDto, EmployeeScorings>();
+            CreateMap<SelectEmployeeScoringsDto, CreateEmployeeScoringsDto>();
+            CreateMap<SelectEmployeeScoringsDto, UpdateEmployeeScoringsDto>();
+            CreateMap<EmployeeScorings, UpdateEmployeeScoringsDto>();
+
+            CreateMap<EmployeeScoringLines, SelectEmployeeScoringLinesDto>();
+            CreateMap<EmployeeScoringLines, ListEmployeeScoringLinesDto>();
+            CreateMap<CreateEmployeeScoringLinesDto, EmployeeScoringLines>();
+            CreateMap<SelectEmployeeScoringLinesDto, CreateEmployeeScoringLinesDto>();
+            CreateMap<UpdateEmployeeScoringLinesDto, EmployeeScoringLines>();
+            CreateMap<SelectEmployeeScoringLinesDto, UpdateEmployeeScoringLinesDto>();
+            CreateMap<SelectEmployeeScoringLinesDto, EmployeeScoringLines>();
+
+            CreateMap<EmployeeOperations, SelectEmployeeOperationsDto>();
+            CreateMap<EmployeeOperations, ListEmployeeOperationsDto>();
+            CreateMap<CreateEmployeeOperationsDto, EmployeeOperations>();
+            CreateMap<SelectEmployeeOperationsDto, CreateEmployeeOperationsDto>();
+            CreateMap<UpdateEmployeeOperationsDto, EmployeeOperations>();
+            CreateMap<SelectEmployeeOperationsDto, UpdateEmployeeOperationsDto>();
+            CreateMap<SelectEmployeeOperationsDto, EmployeeOperations>();
         }
     }
 }

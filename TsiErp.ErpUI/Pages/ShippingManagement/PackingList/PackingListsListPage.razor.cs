@@ -1,7 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Lists;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using TsiErp.Business.Entities.PackageFiche.Services;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
@@ -10,6 +16,7 @@ using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
+using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using static TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord.PalletRecordsListPage;
 
@@ -82,6 +89,27 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             DataSource.SelectPackingListPalletPackageLines = new List<SelectPackingListPalletPackageLinesDto>();
             GridLinePalletPackageList = DataSource.SelectPackingListPalletPackageLines;
 
+            PalletSelectionList = new List<PalletSelectionModal>();
+
+            #region Enum Combobox Localization
+
+            foreach (var item in salesTypes)
+            {
+                item.SalesTypeName = L[item.SalesTypeName];
+            }
+
+            foreach (var item in tIRTypes)
+            {
+                item.TIRTypeName = L[item.TIRTypeName];
+            }
+
+            foreach (var item in packingListStates)
+            {
+                item.PackingListStateName = L[item.PackingListStateName];
+            }
+
+            #endregion
+
             EditPageVisible = true;
 
 
@@ -90,6 +118,25 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
         public async override void ShowEditPage()
         {
+            #region Enum Combobox Localization
+
+            foreach (var item in salesTypes)
+            {
+                item.SalesTypeName = L[item.SalesTypeName];
+            }
+
+            foreach (var item in tIRTypes)
+            {
+                item.TIRTypeName = L[item.TIRTypeName];
+            }
+
+            foreach (var item in packingListStates)
+            {
+                item.PackingListStateName = L[item.PackingListStateName];
+            }
+
+            #endregion
+
             if (DataSource != null)
             {
                 bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
@@ -433,6 +480,190 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             }
         }
 
+        #endregion
+
+        #region Gönderici ButtonEdit
+
+        SfTextBox TransmittersButtonEdit;
+        bool SelectTransmittersPopupVisible = false;
+        List<ListCurrentAccountCardsDto> TransmittersList = new List<ListCurrentAccountCardsDto>();
+
+        public async Task TransmitterOnCreateIcon()
+        {
+            var TransmitterButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, TransmittersButtonClickEvent);
+            await TransmittersButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", TransmitterButtonClick } });
+        }
+
+        public async void TransmittersButtonClickEvent()
+        {
+            SelectTransmittersPopupVisible = true;
+            TransmittersList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void TransmittersOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.TransmitterID = Guid.Empty;
+                DataSource.TransmitterCode = string.Empty;
+                DataSource.TransmitterName = string.Empty;
+                DataSource.TransmitterSupplierNo = string.Empty;
+                DataSource.TransmitterEORINo = string.Empty;
+                DataSource.RecieverCustomerCode = string.Empty;
+            }
+        }
+
+        public async void TransmittersDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
+        {
+            var selectedTransmitter = args.RowData;
+
+            if (selectedTransmitter != null)
+            {
+                DataSource.TransmitterID = selectedTransmitter.Id;
+                DataSource.TransmitterCode = selectedTransmitter.Code;
+                DataSource.TransmitterName = selectedTransmitter.Name;
+                DataSource.TransmitterSupplierNo = selectedTransmitter.SupplierNo;
+                DataSource.TransmitterEORINo = selectedTransmitter.EORINr;
+                DataSource.RecieverCustomerCode = selectedTransmitter.CustomerCode;
+                SelectTransmittersPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region Gönderilen ButtonEdit
+
+        SfTextBox RecieversButtonEdit;
+        bool SelectRecieversPopupVisible = false;
+        List<ListCurrentAccountCardsDto> RecieversList = new List<ListCurrentAccountCardsDto>();
+
+        public async Task RecieverOnCreateIcon()
+        {
+            var RecieverButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, RecieversButtonClickEvent);
+            await RecieversButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", RecieverButtonClick } });
+        }
+
+        public async void RecieversButtonClickEvent()
+        {
+            SelectRecieversPopupVisible = true;
+            RecieversList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void RecieversOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.RecieverID = Guid.Empty;
+                DataSource.ShippingAddressID = Guid.Empty;
+                DataSource.RecieverCode = string.Empty;
+                DataSource.RecieverName = string.Empty;
+                DataSource.ShippingAddressAddress = string.Empty;
+            }
+        }
+
+        public async void RecieversDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
+        {
+            var selectedReciever = args.RowData;
+
+            if (selectedReciever != null)
+            {
+                DataSource.RecieverID = selectedReciever.Id;
+                DataSource.RecieverCode = selectedReciever.Code;
+                DataSource.RecieverName = selectedReciever.Name;
+                DataSource.ShippingAddressAddress = selectedReciever.ShippingAddress;
+                SelectRecieversPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region Satış Şekli Enum Combobox
+
+        public IEnumerable<SelectPackingListsDto> salesTypes = GetEnumDisplaySalesTypesNames<PackingListSalesTypeEnum>();
+
+        public static List<SelectPackingListsDto> GetEnumDisplaySalesTypesNames<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<PackingListSalesTypeEnum>()
+                       .Select(x => new SelectPackingListsDto
+                       {
+                           SalesType = x,
+                           SalesTypeName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
+        }
+
+
+        #endregion
+
+        #region TIR Şekli Enum Combobox
+
+        public IEnumerable<SelectPackingListsDto> tIRTypes = GetEnumDisplayTIRTypesNames<PackingListTIRTypeEnum>();
+
+        public static List<SelectPackingListsDto> GetEnumDisplayTIRTypesNames<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<PackingListTIRTypeEnum>()
+                       .Select(x => new SelectPackingListsDto
+                       {
+                           TIRType = x,
+                           TIRTypeName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
+        }
+
+
+        #endregion
+
+        #region Çeki Listesi Durum Enum Combobox
+
+        public IEnumerable<SelectPackingListsDto> packingListStates = GetEnumDisplayStateNames<PackingListStateEnum>();
+
+        public static List<SelectPackingListsDto> GetEnumDisplayStateNames<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<PackingListStateEnum>()
+                       .Select(x => new SelectPackingListsDto
+                       {
+                           PackingListState = x,
+                           PackingListStateName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
+        }
+
+
+        #endregion
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("PackingListsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
     }
 }

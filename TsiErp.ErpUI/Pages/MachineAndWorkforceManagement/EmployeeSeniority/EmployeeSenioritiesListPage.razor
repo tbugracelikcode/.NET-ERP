@@ -2,11 +2,12 @@
 @layout MainLayout
 
 
-@inject IStringLocalizer<EmployeeSenioritiesResource> L 
+@inject IStringLocalizer<EmployeeSenioritiesResource> L
 @inherits BaseListPage<SelectEmployeeSenioritiesDto, ListEmployeeSenioritiesDto, CreateEmployeeSenioritiesDto, UpdateEmployeeSenioritiesDto, ListEmployeeSenioritiesParameterDto>
 
 @inject IEmployeeSenioritiesAppService EmployeeSenioritiesService
 @inject IFicheNumbersAppService FicheNumbersAppService
+@inject ITaskScoringsAppService TaskScoringsAppService
 
 @if (!base.IsLoaded)
 {
@@ -62,10 +63,10 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["EditModalTitle"]"
-             Width="40%"
-             Height="44%"
-             MinWidth="760px"
-             MinHeight="480px"
+             Width="47%"
+             Height="74%"
+             MinWidth="800px"
+             MinHeight="800px"
              HeaderCssClass="HeaderTitleCss"
              Showing="CrudModalShowing"
              Closing="CrudModalClosing">
@@ -74,44 +75,209 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="36%" />
-                    <DxGridLayoutRow Height="46%" />
+                    <DxGridLayoutRow Height="98%" />
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="6%" />
-                    <DxGridLayoutColumn Width="40%" />
-                    <DxGridLayoutColumn Width="6%" />
-                    <DxGridLayoutColumn Width="40%" />
-                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
                 </Columns>
 
                 <Items>
+
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
-                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+                            <SfTab>
+                                <TabItems>
+                                    <TabItem>
+                                        <ChildContent>
+                                            <TabHeader Text="@L["Tab1Name"]"></TabHeader>
+                                        </ChildContent>
+                                        <ContentTemplate>
 
-                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
+                                            <DxGridLayout CssClass="TSIEmployeeSenioritiesGridLayout">
+
+                                                <Rows>
+                                                    <DxGridLayoutRow Height="15%" />
+                                                    <DxGridLayoutRow Height="13%" />
+                                                    <DxGridLayoutRow Height="13%" />
+                                                    <DxGridLayoutRow Height="13%" />
+                                                    <DxGridLayoutRow Height="13%" />
+                                                    <DxGridLayoutRow Height="13%" />
+                                                    <DxGridLayoutRow Height="13%" />
+                                                </Rows>
+
+                                                <Columns>
+                                                    <DxGridLayoutColumn Width="6%" />
+                                                    <DxGridLayoutColumn Width="40%" />
+                                                    <DxGridLayoutColumn Width="6%" />
+                                                    <DxGridLayoutColumn Width="40%" />
+                                                    <DxGridLayoutColumn Width="6%" />
+                                                </Columns>
+
+                                                <Items>
+                                                    <DxGridLayoutItem Row="0" Column="1">
+                                                        <Template>
+                                                            <br />
+                                                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                                                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                                                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
+
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                    <DxGridLayoutItem Row="0" Column="3">
+                                                        <Template>
+                                                            <br />
+                                                            <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name"></SfTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="1" Column="1" ColumnSpan="3" RowSpan="3">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["DescriptionLabel"] </strong></label><br />
+                                                            <SfTextBox CssClass="TSIMemoBox100" Multiline="true" @bind-Value="DataSource.Description_"></SfTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+
+
+
+                                                </Items>
+                                            </DxGridLayout>
+
+                                        </ContentTemplate>
+                                    </TabItem>
+
+                                    <TabItem>
+                                        <ChildContent>
+                                            <TabHeader Text="@L["Tab2Name"]"></TabHeader>
+                                        </ChildContent>
+                                        <ContentTemplate>
+
+                                            <DxGridLayout CssClass="TSIEmployeeSenioritiesGridLayout">
+
+                                                <Rows>
+                                                    <DxGridLayoutRow Height="15%" />
+                                                    <DxGridLayoutRow Height="13%" />
+                                                    <DxGridLayoutRow Height="13%" />
+                                                    <DxGridLayoutRow Height="13%" />
+                                                    <DxGridLayoutRow Height="13%" />
+                                                    <DxGridLayoutRow Height="13%" />
+                                                    <DxGridLayoutRow Height="13%" />
+                                                </Rows>
+
+                                                <Columns>
+                                                    <DxGridLayoutColumn Width="6%" />
+                                                    <DxGridLayoutColumn Width="40%" />
+                                                    <DxGridLayoutColumn Width="6%" />
+                                                    <DxGridLayoutColumn Width="40%" />
+                                                    <DxGridLayoutColumn Width="6%" />
+                                                </Columns>
+
+                                                <Items>
+                                                    <DxGridLayoutItem Row="0" Column="1">
+                                                        <Template>
+                                                            <br />
+                                                            <label class="TSIModalLabel"><strong>@L["TaskScoringCodeLabel"] </strong></label>
+
+                                                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="TaskScoringDataSource.Code" ShowClearButton=true></SfTextBox>
+
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                    <DxGridLayoutItem Row="0" Column="3">
+                                                        <Template>
+                                                            <br />
+                                                            <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Enabled="false"></SfTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="1" Column="1">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["IsTaskDoneLabel"] </strong></label>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="1" Column="3">
+                                                        <Template>
+                                                            <center><SfSwitch @bind-Checked="TaskScoringDataSource.IsTaskDone" ValueChange="IsTaskDoneChange" TChecked="bool"></SfSwitch></center>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="2" Column="1">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["IsDetectFaultLabel"] </strong></label>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="2" Column="3">
+                                                        <Template>
+                                                            <center> <SfSwitch @bind-Checked="TaskScoringDataSource.IsDetectFault" ValueChange="IsDetectFaultChange" TChecked="bool"></SfSwitch></center>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="3" Column="1">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["IsAdjustmentLabel"] </strong></label>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="3" Column="3">
+                                                        <Template>
+                                                            <center><SfSwitch @bind-Checked="TaskScoringDataSource.IsAdjustment" ValueChange="IsAdjustmentChange" TChecked="bool"></SfSwitch></center>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="4" Column="1">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["IsDeveloperIdeaLabel"] </strong></label>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="4" Column="3">
+                                                        <Template>
+                                                            <center><SfSwitch @bind-Checked="TaskScoringDataSource.IsDeveloperIdea" ValueChange="IsDeveloperIdeaChange" TChecked="bool"></SfSwitch></center>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="5" Column="1">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["IsTaskSharingLabel"] </strong></label>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="5" Column="3">
+                                                        <Template>
+                                                            <center><SfSwitch @bind-Checked="TaskScoringDataSource.IsTaskSharing" ValueChange="IsTaskSharingChange" TChecked="bool"></SfSwitch></center>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="6" Column="1">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["ScoreLabel"] </strong></label>
+                                                            <SfNumericTextBox Min="0" TValue="int"  @bind-Value="TaskScoringDataSource.Score"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+
+                                                </Items>
+                                            </DxGridLayout>
+
+                                        </ContentTemplate>
+                                    </TabItem>
+
+                                </TabItems>
+                            </SfTab>
 
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="0" Column="3">
-                        <Template>
-                            <br />
-                            <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
 
 
-                    <DxGridLayoutItem Row="1" Column="1" ColumnSpan="4">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["DescriptionLabel"] </strong></label><br />
-                            <SfTextBox CssClass="TSIMemoBox100" Multiline="true" @bind-Value="DataSource.Description_"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+
 
                 </Items>
             </DxGridLayout>

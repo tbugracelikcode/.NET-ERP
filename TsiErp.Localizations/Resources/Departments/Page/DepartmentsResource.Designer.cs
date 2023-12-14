@@ -178,6 +178,33 @@ namespace TsiErp.Localizations.Resources.Departments.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KIDEM KODU.
+        /// </summary>
+        public static string EmployeeSenioritiesModalGridCode {
+            get {
+                return ResourceManager.GetString("EmployeeSenioritiesModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KIDEM ADI.
+        /// </summary>
+        public static string EmployeeSenioritiesModalGridName {
+            get {
+                return ResourceManager.GetString("EmployeeSenioritiesModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Kıdemleri.
+        /// </summary>
+        public static string EmployeeSenioritiesModalTitle {
+            get {
+                return ResourceManager.GetString("EmployeeSenioritiesModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
@@ -255,6 +282,15 @@ namespace TsiErp.Localizations.Resources.Departments.Page {
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yetkili Kıdemi:.
+        /// </summary>
+        public static string SeniorityNameLabel {
+            get {
+                return ResourceManager.GetString("SeniorityNameLabel", resourceCulture);
             }
         }
         

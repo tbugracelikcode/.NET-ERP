@@ -165,6 +165,33 @@
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Aktiflik:</value>
   </data>
+  <data name="IsCanBeDetectedLabel" xml:space="preserve">
+    <value>Hata, sonraki operasyonda yakalanabilir mi?</value>
+  </data>
+  <data name="IsCauseExtraCostLabel" xml:space="preserve">
+    <value>Buradaki hata, sonraki operasyonda ekstra maliyet oluşturur mu?</value>
+  </data>
+  <data name="IsHighRepairCostLabel" xml:space="preserve">
+    <value>İstasyon tamir maliyeti yüksek mi?</value>
+  </data>
+  <data name="IsLongWorktimeforOperatorLabel" xml:space="preserve">
+    <value>Operatörün çalışma süresi uzun mu?</value>
+  </data>
+  <data name="IsPhysicallyHardLabel" xml:space="preserve">
+    <value>İş fiziken zor mu?</value>
+  </data>
+  <data name="IsRequiresKnowledgeLabel" xml:space="preserve">
+    <value>İş, bilgi gerektiriyor mu?</value>
+  </data>
+  <data name="IsRequiresSkillLabel" xml:space="preserve">
+    <value>İş, yetenek gerektiriyor mu?</value>
+  </data>
+  <data name="IsRiskyforOperatorLabel" xml:space="preserve">
+    <value>İş, operatöre risk oluşturuyor mu?</value>
+  </data>
+  <data name="IsSensitiveLabel" xml:space="preserve">
+    <value>İş hassas mı?</value>
+  </data>
   <data name="LineGridAdjustment" xml:space="preserve">
     <value>AYAR KONTROL SÜRESİ</value>
   </data>
@@ -249,6 +276,9 @@
   <data name="Tab2Name" xml:space="preserve">
     <value>Operasyon Uygunsuzluk Başlıkları</value>
   </data>
+  <data name="Tab3Name" xml:space="preserve">
+    <value>İş Kritiklik Seviyesi</value>
+  </data>
   <data name="TemplateOperationContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -314,5 +344,8 @@
   </data>
   <data name="WorkCenterCodeLabel" xml:space="preserve">
     <value>İş Merkezi Kodu:</value>
+  </data>
+  <data name="WorkScoreLabel" xml:space="preserve">
+    <value>İş Puanı:</value>
   </data>
 </root>

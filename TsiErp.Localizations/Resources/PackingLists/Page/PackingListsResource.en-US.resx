@@ -117,14 +117,53 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BankNameLabel" xml:space="preserve">
+    <value>Payment Bank:</value>
+  </data>
   <data name="BigPackage" xml:space="preserve">
     <value>Big Package</value>
+  </data>
+  <data name="BillDate" xml:space="preserve">
+    <value>BILL DATE</value>
+  </data>
+  <data name="BillDateLabel" xml:space="preserve">
+    <value>Bill Date:</value>
+  </data>
+  <data name="BillNoLabel" xml:space="preserve">
+    <value>Bill Number:</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>PACKING LIST NUMBER</value>
+  </data>
+  <data name="Code2" xml:space="preserve">
+    <value>PACKING LIST NUMBER 2</value>
+  </data>
+  <data name="Code2Label" xml:space="preserve">
+    <value>Packing List Number 2:</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Packing List Number:</value>
+  </data>
+  <data name="CurrentAccountModalGridCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="CurrentAccountModalGridName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="CurrentAccountModalGridResponsible" xml:space="preserve">
+    <value>RESPONSIBLE</value>
+  </data>
+  <data name="CurrentAccountModalTitle" xml:space="preserve">
+    <value>Current Account Cards</value>
+  </data>
+  <data name="CustomsOfficialLabel" xml:space="preserve">
+    <value>Customs Responsible:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -137,6 +176,21 @@
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
+  </data>
+  <data name="DeliveryDate" xml:space="preserve">
+    <value>DELIVERY DATE</value>
+  </data>
+  <data name="DeliveryDateLabel" xml:space="preserve">
+    <value>Delivery Date:</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="DriverNameSurnameLabel" xml:space="preserve">
+    <value>Driver Name Surname:</value>
+  </data>
+  <data name="DriverPhoneLabel" xml:space="preserve">
+    <value>Driver Phone Number:</value>
   </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Packing Lists</value>
@@ -171,8 +225,80 @@
   <data name="ExportTitle" xml:space="preserve">
     <value>Packing Lists</value>
   </data>
+  <data name="LineCubageGridCubage" xml:space="preserve">
+    <value>CUBAGE</value>
+  </data>
+  <data name="LineCubageGridHeight_" xml:space="preserve">
+    <value>HEIGHT</value>
+  </data>
+  <data name="LineCubageGridLoad_" xml:space="preserve">
+    <value>LENGHT</value>
+  </data>
+  <data name="LineCubageGridNumberofPallet" xml:space="preserve">
+    <value>PALLET AMOUNT</value>
+  </data>
+  <data name="LineCubageGridWidth_" xml:space="preserve">
+    <value>WIDTH</value>
+  </data>
+  <data name="LinePalletGridFirstPackageNo" xml:space="preserve">
+    <value>FIRST PACKAGE NO</value>
+  </data>
+  <data name="LinePalletGridLastPackageNo" xml:space="preserve">
+    <value>LAST PACKAGE NO</value>
+  </data>
+  <data name="LinePalletGridNumberofPackage" xml:space="preserve">
+    <value>NUMBER OF PACKAGE</value>
+  </data>
+  <data name="LinePalletGridPalletName" xml:space="preserve">
+    <value>PALLET NAME</value>
+  </data>
+  <data name="LinePalletPackageGridCustomerCode" xml:space="preserve">
+    <value>VARIANT CODE</value>
+  </data>
+  <data name="LinePalletPackageGridNumberofPackage" xml:space="preserve">
+    <value>NUMBER OF PACKAGE</value>
+  </data>
+  <data name="LinePalletPackageGridOnePackageGrossKG" xml:space="preserve">
+    <value>1 PACKAGE GROSS KG</value>
+  </data>
+  <data name="LinePalletPackageGridOnePackageNetKG" xml:space="preserve">
+    <value>1 PACKAGE NET KG</value>
+  </data>
+  <data name="LinePalletPackageGridPackageContent" xml:space="preserve">
+    <value>PACKAGE CONTENT</value>
+  </data>
+  <data name="LinePalletPackageGridPackageNo" xml:space="preserve">
+    <value>PACKAGE NO</value>
+  </data>
+  <data name="LinePalletPackageGridPackageType" xml:space="preserve">
+    <value>PACKAGE TYPE</value>
+  </data>
+  <data name="LinePalletPackageGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="LinePalletPackageGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="LinePalletPackageGridTotalAmount" xml:space="preserve">
+    <value>TOTAL AMOUNT</value>
+  </data>
+  <data name="LinePalletPackageGridTotalGrossKG" xml:space="preserve">
+    <value>TOTAL GROSS KG</value>
+  </data>
+  <data name="LinePalletPackageGridTotalNetKG" xml:space="preserve">
+    <value>TOTAL NET KG</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
+  </data>
+  <data name="LoadingDate" xml:space="preserve">
+    <value>LOADING DATE</value>
+  </data>
+  <data name="LoadingDateLabel" xml:space="preserve">
+    <value>Loading Date:</value>
+  </data>
+  <data name="LoadingHourLabel" xml:space="preserve">
+    <value>Loading Hour:</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
@@ -182,6 +308,9 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="OrderNoLabel" xml:space="preserve">
+    <value>Order Number:</value>
   </data>
   <data name="PackingListsContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -210,11 +339,80 @@
   <data name="PackingListsPalletSelectionContextSelectAll" xml:space="preserve">
     <value>Select All</value>
   </data>
+  <data name="PackingListStateLabel" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="PalletRecordsModalTitle" xml:space="preserve">
+    <value>Pallet Records</value>
+  </data>
+  <data name="PalletSelectionNumberofPackage" xml:space="preserve">
+    <value>NUMBER OF PACKAGE</value>
+  </data>
+  <data name="PalletSelectionPalletCode" xml:space="preserve">
+    <value>PALLET CODE</value>
+  </data>
+  <data name="PalletSelectionPalletName" xml:space="preserve">
+    <value>PALLET NAME</value>
+  </data>
+  <data name="PaymentDate" xml:space="preserve">
+    <value>PAYMENT DATE</value>
+  </data>
+  <data name="PaymentDateLabel" xml:space="preserve">
+    <value>Payment Date:</value>
+  </data>
+  <data name="RecieverCustomerCodeLabel" xml:space="preserve">
+    <value>Main Loading:</value>
+  </data>
+  <data name="RecieverName" xml:space="preserve">
+    <value>SENT</value>
+  </data>
+  <data name="RecieverNameLabel" xml:space="preserve">
+    <value>Sent Company:</value>
+  </data>
+  <data name="SalesTypeLabel" xml:space="preserve">
+    <value>Sales Type:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="ShippingAddressAddressLabel" xml:space="preserve">
+    <value>Shipping Address:</value>
+  </data>
+  <data name="ShippingCompanyLabel" xml:space="preserve">
+    <value>Shipping Company:</value>
+  </data>
+  <data name="ShippingOfficialLabel" xml:space="preserve">
+    <value>Shipping Responsible:</value>
+  </data>
   <data name="SmallPackage" xml:space="preserve">
     <value>Small Package</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Pallet Information</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Package Fiches</value>
+  </data>
+  <data name="TIRTypeLabel" xml:space="preserve">
+    <value>TIR Type:</value>
+  </data>
+  <data name="TransferButton" xml:space="preserve">
+    <value>Transfer Pallets</value>
+  </data>
+  <data name="TransmitterEORINoLabel" xml:space="preserve">
+    <value>EORI Nr:</value>
+  </data>
+  <data name="TransmitterName" xml:space="preserve">
+    <value>SENDER</value>
+  </data>
+  <data name="TransmitterNameLabel" xml:space="preserve">
+    <value>Sender Company:</value>
+  </data>
+  <data name="TransmitterSupplierNoLabel" xml:space="preserve">
+    <value>Supplier Number:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Packing Lists</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Shipment Management &gt; Transactions</value>
@@ -290,5 +488,11 @@
   </data>
   <data name="ValidatorTransmitterID" xml:space="preserve">
     <value>Please select sender.</value>
+  </data>
+  <data name="VehiclePlateNumber1Label" xml:space="preserve">
+    <value>Vehicle Plate Number -1:</value>
+  </data>
+  <data name="VehiclePlateNumber2Label" xml:space="preserve">
+    <value>Vehicle Plate Number -2:</value>
   </data>
 </root>

@@ -109,9 +109,17 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos
         /// </summary>
         public PackingListStateEnum PackingListState { get; set; }
         /// <summary>
+        /// Durum Adı
+        /// </summary>
+        public string PackingListStateName { get; set; }
+        /// <summary>
         /// Satış Şekli
         /// </summary>
         public PackingListSalesTypeEnum SalesType { get; set; }
+        /// <summary>
+        /// Satış Şekli Adı
+        /// </summary>
+        public string SalesTypeName { get; set; }
         /// <summary>
         /// Gümrük Yetkili
         /// </summary>
@@ -144,6 +152,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos
         /// TIR Şekli
         /// </summary>
         public PackingListTIRTypeEnum TIRType { get; set; }
+        /// <summary>
+        /// TIR Şekli Adı
+        /// </summary>
+        public string TIRTypeName { get; set; }
         /// <summary>
         /// Yükleme Saati
         /// </summary>

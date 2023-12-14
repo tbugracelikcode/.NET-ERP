@@ -156,6 +156,15 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Departments</value>
   </data>
+  <data name="EmployeeSenioritiesModalGridCode" xml:space="preserve">
+    <value>SENIORITY CODE</value>
+  </data>
+  <data name="EmployeeSenioritiesModalGridName" xml:space="preserve">
+    <value>SENIORITY NAME</value>
+  </data>
+  <data name="EmployeeSenioritiesModalTitle" xml:space="preserve">
+    <value>Employee Seniorities</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -182,6 +191,9 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="SeniorityNameLabel" xml:space="preserve">
+    <value>Official Seniority:</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Employee Departments</value>
