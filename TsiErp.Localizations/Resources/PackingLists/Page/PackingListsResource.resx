@@ -117,11 +117,53 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BankNameLabel" xml:space="preserve">
+    <value>Ödeme Bankası:</value>
+  </data>
+  <data name="BigPackage" xml:space="preserve">
+    <value>Büyük Koli</value>
+  </data>
+  <data name="BillDate" xml:space="preserve">
+    <value>FATURA TARİHİ</value>
+  </data>
+  <data name="BillDateLabel" xml:space="preserve">
+    <value>Fatura Tarihi:</value>
+  </data>
+  <data name="BillNoLabel" xml:space="preserve">
+    <value>Fatura Numarası:</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>ÇEKİ LİSTESİ NUMARASI</value>
+  </data>
+  <data name="Code2" xml:space="preserve">
+    <value>ÇEKİ LİSTESİ NUMARASI 2</value>
+  </data>
+  <data name="Code2Label" xml:space="preserve">
+    <value>Çeki Listesi Numarası 2:</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Çeki Listesi Numarası:</value>
+  </data>
+  <data name="CurrentAccountModalGridCode" xml:space="preserve">
+    <value>CARİ KOD</value>
+  </data>
+  <data name="CurrentAccountModalGridName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="CurrentAccountModalGridResponsible" xml:space="preserve">
+    <value>SORUMLU</value>
+  </data>
+  <data name="CurrentAccountModalTitle" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
+  <data name="CustomsOfficialLabel" xml:space="preserve">
+    <value>Gümrük Yetkilisi:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -134,6 +176,21 @@
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
+  </data>
+  <data name="DeliveryDate" xml:space="preserve">
+    <value>TESLİMAT TARİHİ</value>
+  </data>
+  <data name="DeliveryDateLabel" xml:space="preserve">
+    <value>Teslimat Tarihi:</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="DriverNameSurnameLabel" xml:space="preserve">
+    <value>Sürücü Adı Soyadı:</value>
+  </data>
+  <data name="DriverPhoneLabel" xml:space="preserve">
+    <value>Sürücü Tel. No:</value>
   </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Çeki Listeleri</value>
@@ -168,8 +225,80 @@
   <data name="ExportTitle" xml:space="preserve">
     <value>Çeki Listeleri</value>
   </data>
+  <data name="LineCubageGridCubage" xml:space="preserve">
+    <value>KÜBAJ</value>
+  </data>
+  <data name="LineCubageGridHeight_" xml:space="preserve">
+    <value>BOY</value>
+  </data>
+  <data name="LineCubageGridLoad_" xml:space="preserve">
+    <value>YÜK</value>
+  </data>
+  <data name="LineCubageGridNumberofPallet" xml:space="preserve">
+    <value>PALET ADET</value>
+  </data>
+  <data name="LineCubageGridWidth_" xml:space="preserve">
+    <value>EN </value>
+  </data>
+  <data name="LinePalletGridFirstPackageNo" xml:space="preserve">
+    <value>İLK KOLİ NO</value>
+  </data>
+  <data name="LinePalletGridLastPackageNo" xml:space="preserve">
+    <value>SON KOLİ NO</value>
+  </data>
+  <data name="LinePalletGridNumberofPackage" xml:space="preserve">
+    <value>KOLİ SAYISI</value>
+  </data>
+  <data name="LinePalletGridPalletName" xml:space="preserve">
+    <value>PALET ADI</value>
+  </data>
+  <data name="LinePalletPackageGridCustomerCode" xml:space="preserve">
+    <value>VARYANT KODU</value>
+  </data>
+  <data name="LinePalletPackageGridNumberofPackage" xml:space="preserve">
+    <value>PAKET SAYISI</value>
+  </data>
+  <data name="LinePalletPackageGridOnePackageGrossKG" xml:space="preserve">
+    <value>1 KOLİ BRÜT KG</value>
+  </data>
+  <data name="LinePalletPackageGridOnePackageNetKG" xml:space="preserve">
+    <value>1 KOLİ NET KG</value>
+  </data>
+  <data name="LinePalletPackageGridPackageContent" xml:space="preserve">
+    <value>PAKET İÇERİK</value>
+  </data>
+  <data name="LinePalletPackageGridPackageNo" xml:space="preserve">
+    <value>PAKET NO</value>
+  </data>
+  <data name="LinePalletPackageGridPackageType" xml:space="preserve">
+    <value>PAKET CİNSİ</value>
+  </data>
+  <data name="LinePalletPackageGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="LinePalletPackageGridProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="LinePalletPackageGridTotalAmount" xml:space="preserve">
+    <value>TOPLAM ADET</value>
+  </data>
+  <data name="LinePalletPackageGridTotalGrossKG" xml:space="preserve">
+    <value>TOPLAM BRÜT KG</value>
+  </data>
+  <data name="LinePalletPackageGridTotalNetKG" xml:space="preserve">
+    <value>TOPLAM NET KG</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
+  </data>
+  <data name="LoadingDate" xml:space="preserve">
+    <value>YÜKLEME TARİHİ</value>
+  </data>
+  <data name="LoadingDateLabel" xml:space="preserve">
+    <value>Yükleme Tarihi:</value>
+  </data>
+  <data name="LoadingHourLabel" xml:space="preserve">
+    <value>Yükleme Saati:</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
@@ -179,6 +308,9 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="OrderNoLabel" xml:space="preserve">
+    <value>Sipariş Numarası:</value>
   </data>
   <data name="PackingListsContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -192,11 +324,110 @@
   <data name="PackingListsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="PackingListsPalletLineContextSelectPallet" xml:space="preserve">
+    <value>Palet Seç</value>
+  </data>
+  <data name="PackingListsPalletPackageLineContextEnumarate" xml:space="preserve">
+    <value>Numaralandır</value>
+  </data>
+  <data name="PackingListsPalletSelectionContextRemove" xml:space="preserve">
+    <value>Seçimi Kaldır</value>
+  </data>
+  <data name="PackingListsPalletSelectionContextSelect" xml:space="preserve">
+    <value>Seç</value>
+  </data>
+  <data name="PackingListsPalletSelectionContextSelectAll" xml:space="preserve">
+    <value>Hepsini Seç</value>
+  </data>
+  <data name="PackingListStateLabel" xml:space="preserve">
+    <value>Durum:</value>
+  </data>
+  <data name="PalletRecordsModalTitle" xml:space="preserve">
+    <value>Palet Kayıtları</value>
+  </data>
+  <data name="PalletSelectionNumberofPackage" xml:space="preserve">
+    <value>PAKET SAYISI</value>
+  </data>
+  <data name="PalletSelectionPalletCode" xml:space="preserve">
+    <value>PALET KODU</value>
+  </data>
+  <data name="PalletSelectionPalletName" xml:space="preserve">
+    <value>PALET ADI</value>
+  </data>
+  <data name="PaymentDate" xml:space="preserve">
+    <value>ÖDEME TARİHİ</value>
+  </data>
+  <data name="PaymentDateLabel" xml:space="preserve">
+    <value>Ödeme Tarihi:</value>
+  </data>
+  <data name="RecieverCustomerCodeLabel" xml:space="preserve">
+    <value>Ana Yükleme:</value>
+  </data>
+  <data name="RecieverName" xml:space="preserve">
+    <value>GÖNDERİLEN</value>
+  </data>
+  <data name="RecieverNameLabel" xml:space="preserve">
+    <value>Gönderilen Şirket:</value>
+  </data>
+  <data name="SalesTypeLabel" xml:space="preserve">
+    <value>Satış Şekli:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="ShippingAddressAddressLabel" xml:space="preserve">
+    <value>Sevkiyat Adresi:</value>
+  </data>
+  <data name="ShippingCompanyLabel" xml:space="preserve">
+    <value>Nakliye Firması:</value>
+  </data>
+  <data name="ShippingOfficialLabel" xml:space="preserve">
+    <value>Nakliye Yetkilisi:</value>
+  </data>
+  <data name="SmallPackage" xml:space="preserve">
+    <value>Küçük Koli</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Palet Bilgileri</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Paket Fişleri</value>
+  </data>
+  <data name="TIRTypeLabel" xml:space="preserve">
+    <value>TIR Şekli:</value>
+  </data>
+  <data name="TransferButton" xml:space="preserve">
+    <value>Paletleri Aktar</value>
+  </data>
+  <data name="TransmitterEORINoLabel" xml:space="preserve">
+    <value>EORI Nr:</value>
+  </data>
+  <data name="TransmitterName" xml:space="preserve">
+    <value>GÖNDERİCİ</value>
+  </data>
+  <data name="TransmitterNameLabel" xml:space="preserve">
+    <value>Gönderici Şirket:</value>
+  </data>
+  <data name="TransmitterSupplierNoLabel" xml:space="preserve">
+    <value>Tedarikçi Numarası:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Çeki Listeleri</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sevkiyat Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="UIWarningPalletSelectionMessage" xml:space="preserve">
+    <value>Çeki listesi kaydı yapılmadan palet seçimi yapılamaz.</value>
+  </data>
+  <data name="UIWarningPalletSelectionTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningSelectedIndexMessage" xml:space="preserve">
+    <value>Palet seçimi, isim sırasıyla yapılmalıdır.</value>
+  </data>
+  <data name="UIWarningSelectedIndexTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
@@ -257,5 +488,11 @@
   </data>
   <data name="ValidatorTransmitterID" xml:space="preserve">
     <value>Lütfen gönderici seçin.</value>
+  </data>
+  <data name="VehiclePlateNumber1Label" xml:space="preserve">
+    <value>Araç Plakası -1:</value>
+  </data>
+  <data name="VehiclePlateNumber2Label" xml:space="preserve">
+    <value>Araç Plakası -2:</value>
   </data>
 </root>

@@ -28,5 +28,13 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos
         /// Data Concurrency UserID
         /// </summary>
         public Guid? DataOpenStatusUserId { get; set; }
+        /// <summary>
+        /// Kıdem ID
+        /// </summary>
+        public Guid? SeniorityID { get; set; }
+        /// <summary>
+        /// Kıdem Adı
+        /// </summary>
+        public string SeniorityName { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Department.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -12,6 +13,7 @@ using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Departments.Page;
 
@@ -53,6 +55,7 @@ namespace TsiErp.Business.Entities.Department.Services
             {
                 Code = input.Code,
                 Name = input.Name,
+                SeniorityID = input.SeniorityID,
                 IsActive = true,
                 Id = addedEntityId,
                 CreationTime = DateTime.Now,
@@ -94,11 +97,15 @@ namespace TsiErp.Business.Entities.Department.Services
 
         public async Task<IDataResult<SelectDepartmentsDto>> GetAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Departments).Select("*").Where(
-            new
-            {
-                Id = id
-            }, true, true, "");
+            var query = queryFactory.Query().From(Tables.Departments).Select<Departments>(null)
+                  .Join<EmployeeSeniorities>
+                        (
+                            d => new { SeniorityName = d.Name, SeniorityID = d.Id },
+                            nameof(Departments.SeniorityID),
+                            nameof(EmployeeSeniorities.Id),
+                            JoinType.Left
+                        )
+                .Where(new { Id = id }, true, true, Tables.Departments);
             var department = queryFactory.Get<SelectDepartmentsDto>(query);
 
 
@@ -111,7 +118,15 @@ namespace TsiErp.Business.Entities.Department.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListDepartmentsDto>>> GetListAsync(ListDepartmentsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Departments).Select("*").Where(null, true, true, "");
+            var query = queryFactory.Query().From(Tables.Departments).Select<Departments>(null)
+                 .Join<EmployeeSeniorities>
+                        (
+                            d => new { SeniorityName = d.Name, SeniorityID = d.Id },
+                            nameof(Departments.SeniorityID),
+                            nameof(EmployeeSeniorities.Id),
+                            JoinType.Left
+                        )
+                .Where(null, true, true, Tables.Departments);
             var departments = queryFactory.GetList<ListDepartmentsDto>(query).ToList();
             return new SuccessDataResult<IList<ListDepartmentsDto>>(departments);
         }
@@ -140,6 +155,7 @@ namespace TsiErp.Business.Entities.Department.Services
             {
                 Code = input.Code,
                 Name = input.Name,
+                SeniorityID = input.SeniorityID,
                 Id = input.Id,
                 IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
@@ -170,6 +186,7 @@ namespace TsiErp.Business.Entities.Department.Services
             {
                 Code = entity.Code,
                 Name = entity.Name,
+                SeniorityID = entity.SeniorityID,
                 IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,

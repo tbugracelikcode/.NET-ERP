@@ -142,6 +142,15 @@ namespace TsiErp.Localizations.Resources.Employees.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mevcut Maaş:.
+        /// </summary>
+        public static string CurrentSalaryLabel {
+            get {
+                return ResourceManager.GetString("CurrentSalaryLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {
@@ -223,6 +232,42 @@ namespace TsiErp.Localizations.Resources.Employees.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Eğitim Seviyesi:.
+        /// </summary>
+        public static string EducationLevelNameLabel {
+            get {
+                return ResourceManager.GetString("EducationLevelNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EĞİTİM SEVİYESİ KODU.
+        /// </summary>
+        public static string EducationLevelScoresModalGridCode {
+            get {
+                return ResourceManager.GetString("EducationLevelScoresModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EĞİTİM SEVİYESİ ADI.
+        /// </summary>
+        public static string EducationLevelScoresModalGridName {
+            get {
+                return ResourceManager.GetString("EducationLevelScoresModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eğitim Seviyeleri.
+        /// </summary>
+        public static string EducationLevelScoresModalTitle {
+            get {
+                return ResourceManager.GetString("EducationLevelScoresModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-POSTA.
         /// </summary>
         public static string Email {
@@ -277,11 +322,47 @@ namespace TsiErp.Localizations.Resources.Employees.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KIDEM KODU.
+        /// </summary>
+        public static string EmployeeSenioritiesModalGridCode {
+            get {
+                return ResourceManager.GetString("EmployeeSenioritiesModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KIDEM ADI.
+        /// </summary>
+        public static string EmployeeSenioritiesModalGridName {
+            get {
+                return ResourceManager.GetString("EmployeeSenioritiesModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Kıdemleri.
+        /// </summary>
+        public static string EmployeeSenioritiesModalTitle {
+            get {
+                return ResourceManager.GetString("EmployeeSenioritiesModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşe Alınma Tarihi:.
+        /// </summary>
+        public static string HiringDateLabel {
+            get {
+                return ResourceManager.GetString("HiringDateLabel", resourceCulture);
             }
         }
         
@@ -421,6 +502,15 @@ namespace TsiErp.Localizations.Resources.Employees.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personel Kıdemi:.
+        /// </summary>
+        public static string SeniorityNameLabel {
+            get {
+                return ResourceManager.GetString("SeniorityNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personel Soyadı:.
         /// </summary>
         public static string SurnameLabel {
@@ -444,6 +534,15 @@ namespace TsiErp.Localizations.Resources.Employees.Page {
         public static string Tab2Name {
             get {
                 return ResourceManager.GetString("Tab2Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev Tanımı:.
+        /// </summary>
+        public static string TaskDefinitionLabel {
+            get {
+                return ResourceManager.GetString("TaskDefinitionLabel", resourceCulture);
             }
         }
         

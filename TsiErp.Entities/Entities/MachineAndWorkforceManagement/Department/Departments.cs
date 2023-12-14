@@ -24,6 +24,11 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Kıdem ID
+        /// </summary>
+        public Guid SeniorityID { get; set; }
 
     }
 }

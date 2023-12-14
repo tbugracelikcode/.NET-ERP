@@ -7,7 +7,9 @@ using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -55,7 +57,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Employee
                 IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("EmployeesChildMenu"),
                 IsProductionScreenUser = false,
-                IsProductionScreenSettingUser = false
+                IsProductionScreenSettingUser = false,
+                HiringDate = DateTime.Today,
             };
 
             foreach (var item in bloodtypes)
@@ -138,6 +141,92 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Employee
                 DataSource.DepartmentID = selectedDepartment.Id;
                 DataSource.Department = selectedDepartment.Name;
                 SelectDepartmentPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region Eğitim Seviyesi ButtonEdit
+
+        SfTextBox EducationLevelScoresButtonEdit;
+        bool SelectEducationLevelScoresPopupVisible = false;
+        List<ListEducationLevelScoresDto> EducationLevelScoresList = new List<ListEducationLevelScoresDto>();
+
+        public async Task EducationLevelScoresOnCreateIcon()
+        {
+            var EducationLevelScoresButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, EducationLevelScoresButtonClickEvent);
+            await EducationLevelScoresButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", EducationLevelScoresButtonClick } });
+        }
+
+        public async void EducationLevelScoresButtonClickEvent()
+        {
+            SelectEducationLevelScoresPopupVisible = true;
+            EducationLevelScoresList = (await EducationLevelScoresAppService.GetListAsync(new ListEducationLevelScoresParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void EducationLevelScoresOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.EducationLevelID = Guid.Empty;
+                DataSource.EducationLevelName = string.Empty;
+            }
+        }
+
+        public async void EducationLevelScoresDoubleClickHandler(RecordDoubleClickEventArgs<ListEducationLevelScoresDto> args)
+        {
+            var selectedEducationLevelScores = args.RowData;
+
+            if (selectedEducationLevelScores != null)
+            {
+                DataSource.EducationLevelID = selectedEducationLevelScores.Id;
+                DataSource.EducationLevelName = selectedEducationLevelScores.Name;
+                SelectEducationLevelScoresPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region Kıdem ButtonEdit
+
+        SfTextBox EmployeeSenioritiesButtonEdit;
+        bool SelectEmployeeSenioritiesPopupVisible = false;
+        List<ListEmployeeSenioritiesDto> EmployeeSenioritiesList = new List<ListEmployeeSenioritiesDto>();
+
+        public async Task EmployeeSenioritiesOnCreateIcon()
+        {
+            var EmployeeSenioritiesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, EmployeeSenioritiesButtonClickEvent);
+            await EmployeeSenioritiesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", EmployeeSenioritiesButtonClick } });
+        }
+
+        public async void EmployeeSenioritiesButtonClickEvent()
+        {
+            SelectEmployeeSenioritiesPopupVisible = true;
+            EmployeeSenioritiesList = (await EmployeeSenioritiesAppService.GetListAsync(new ListEmployeeSenioritiesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void EmployeeSenioritiesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.SeniorityID = Guid.Empty;
+                DataSource.SeniorityName = string.Empty;
+            }
+        }
+
+        public async void EmployeeSenioritiesDoubleClickHandler(RecordDoubleClickEventArgs<ListEmployeeSenioritiesDto> args)
+        {
+            var selectedEmployeeSeniorities = args.RowData;
+
+            if (selectedEmployeeSeniorities != null)
+            {
+                DataSource.SeniorityID = selectedEmployeeSeniorities.Id;
+                DataSource.SeniorityName = selectedEmployeeSeniorities.Name;
+                SelectEmployeeSenioritiesPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
         }

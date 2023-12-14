@@ -165,6 +165,21 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
+  <data name="IsAdjustmentLabel" xml:space="preserve">
+    <value>Ayar yapabilir mi?</value>
+  </data>
+  <data name="IsDetectFaultLabel" xml:space="preserve">
+    <value>Kalitesizliği ve arızayı fark edebilir mi?</value>
+  </data>
+  <data name="IsDeveloperIdeaLabel" xml:space="preserve">
+    <value>İşi geliştirecek fikir üretebilir mi?</value>
+  </data>
+  <data name="IsTaskDoneLabel" xml:space="preserve">
+    <value>Görev yerine getirilebilir mi?</value>
+  </data>
+  <data name="IsTaskSharingLabel" xml:space="preserve">
+    <value>Görev yerine getirilebilir mi?</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
@@ -185,6 +200,18 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="ScoreLabel" xml:space="preserve">
+    <value>Puan:</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Personel Kıdemleri</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Görev Puanlamaları</value>
+  </data>
+  <data name="TaskScoringCodeLabel" xml:space="preserve">
+    <value>Görev Puanlandırma Kodu:</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Personel Kıdemleri</value>

@@ -150,5 +150,8 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string PackingListPalletCubageLines = "PackingListPalletCubageLines";
         public static readonly string PackingListPalletLines = "PackingListPalletLines";
         public static readonly string PackingListPalletPackageLines = "PackingListPalletPackageLines";
+        public static readonly string EmployeeScorings = "EmployeeScorings";
+        public static readonly string EmployeeScoringLines = "EmployeeScoringLines";
+        public static readonly string EmployeeOperations = "EmployeeOperations";
     }
 }

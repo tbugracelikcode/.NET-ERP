@@ -20,6 +20,11 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLin
         /// Satır No
         /// </summary>
         public int LineNr { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Palet Adedi
+        /// </summary>
+        public int NumberofPallet { get; set; }
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// En

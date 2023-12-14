@@ -55,7 +55,7 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListSalesOrderDto.FicheNo) HeaderText="@L["FicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesOrderDto.Date_) Format="dd.MM.yyyy" HeaderText="@L["Date_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesOrderDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["Date_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListSalesOrderDto.CurrentAccountCardCode) HeaderText="@L["CurrentAccountCardCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListSalesOrderDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>

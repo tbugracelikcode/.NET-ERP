@@ -168,6 +168,9 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Personel Kodu:</value>
   </data>
+  <data name="CurrentSalaryLabel" xml:space="preserve">
+    <value>Mevcut Maaş:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -195,6 +198,18 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Personeller</value>
   </data>
+  <data name="EducationLevelNameLabel" xml:space="preserve">
+    <value>Eğitim Seviyesi:</value>
+  </data>
+  <data name="EducationLevelScoresModalGridCode" xml:space="preserve">
+    <value>EĞİTİM SEVİYESİ KODU</value>
+  </data>
+  <data name="EducationLevelScoresModalGridName" xml:space="preserve">
+    <value>EĞİTİM SEVİYESİ ADI</value>
+  </data>
+  <data name="EducationLevelScoresModalTitle" xml:space="preserve">
+    <value>Eğitim Seviyeleri</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>E-POSTA</value>
   </data>
@@ -213,8 +228,20 @@
   <data name="EmployeeContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="EmployeeSenioritiesModalGridCode" xml:space="preserve">
+    <value>KIDEM KODU</value>
+  </data>
+  <data name="EmployeeSenioritiesModalGridName" xml:space="preserve">
+    <value>KIDEM ADI</value>
+  </data>
+  <data name="EmployeeSenioritiesModalTitle" xml:space="preserve">
+    <value>Personel Kıdemleri</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="HiringDateLabel" xml:space="preserve">
+    <value>İşe Alınma Tarihi:</value>
   </data>
   <data name="HomePhoneLabel" xml:space="preserve">
     <value>Ev Telefonu:</value>
@@ -261,6 +288,9 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="SeniorityNameLabel" xml:space="preserve">
+    <value>Personel Kıdemi:</value>
+  </data>
   <data name="SurnameLabel" xml:space="preserve">
     <value>Personel Soyadı:</value>
   </data>
@@ -269,6 +299,9 @@
   </data>
   <data name="Tab2Name" xml:space="preserve">
     <value>Üretim Ekranı Kullanıcı Bilgileri</value>
+  </data>
+  <data name="TaskDefinitionLabel" xml:space="preserve">
+    <value>Görev Tanımı:</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Personel Kayıtları</value>

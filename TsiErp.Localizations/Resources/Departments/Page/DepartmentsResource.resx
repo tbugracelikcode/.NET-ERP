@@ -156,6 +156,15 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Departmanlar</value>
   </data>
+  <data name="EmployeeSenioritiesModalGridCode" xml:space="preserve">
+    <value>KIDEM KODU</value>
+  </data>
+  <data name="EmployeeSenioritiesModalGridName" xml:space="preserve">
+    <value>KIDEM ADI</value>
+  </data>
+  <data name="EmployeeSenioritiesModalTitle" xml:space="preserve">
+    <value>Personel Kıdemleri</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
@@ -182,6 +191,9 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="SeniorityNameLabel" xml:space="preserve">
+    <value>Yetkili Kıdemi:</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Personel Departmanları</value>

@@ -387,6 +387,14 @@
     width: 100%;
     height: 100%;
 }
+.TSIPackingListGridLayout {
+    width: 100%;
+    height: 320px;
+}
+.TSIEmployeeSenioritiesGridLayout {
+    width: 100%;
+    height: 600px;
+}
 .TSI8DGridLayout {
     width: 100%;
     height: 550px;

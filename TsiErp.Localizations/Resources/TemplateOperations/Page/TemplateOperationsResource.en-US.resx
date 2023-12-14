@@ -165,6 +165,33 @@
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
   </data>
+  <data name="IsCanBeDetectedLabel" xml:space="preserve">
+    <value>Can the error be detected in the next operation?</value>
+  </data>
+  <data name="IsCauseExtraCostLabel" xml:space="preserve">
+    <value>Will an error here cause extra costs in the next operation?</value>
+  </data>
+  <data name="IsHighRepairCostLabel" xml:space="preserve">
+    <value>Is the station repair cost high?</value>
+  </data>
+  <data name="IsLongWorktimeforOperatorLabel" xml:space="preserve">
+    <value>Is the operator working time long?</value>
+  </data>
+  <data name="IsPhysicallyHardLabel" xml:space="preserve">
+    <value>Is the job physically difficult?</value>
+  </data>
+  <data name="IsRequiresKnowledgeLabel" xml:space="preserve">
+    <value>Does the job require knowledge?</value>
+  </data>
+  <data name="IsRequiresSkillLabel" xml:space="preserve">
+    <value>Does the job require skills?</value>
+  </data>
+  <data name="IsRiskyforOperatorLabel" xml:space="preserve">
+    <value>Does the job pose a risk to the operator?</value>
+  </data>
+  <data name="IsSensitiveLabel" xml:space="preserve">
+    <value>Is the job sensitive?</value>
+  </data>
   <data name="LineGridAdjustment" xml:space="preserve">
     <value>ADJUSTMENT AND CONTROL TIME</value>
   </data>
@@ -249,6 +276,9 @@
   <data name="Tab2Name" xml:space="preserve">
     <value>Operation Unsuitability Items</value>
   </data>
+  <data name="Tab3Name" xml:space="preserve">
+    <value>Job Criticality Level</value>
+  </data>
   <data name="TemplateOperationContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -314,5 +344,8 @@
   </data>
   <data name="WorkCenterCodeLabel" xml:space="preserve">
     <value>Work Center Code:</value>
+  </data>
+  <data name="WorkScoreLabel" xml:space="preserve">
+    <value>Job Score:</value>
   </data>
 </root>

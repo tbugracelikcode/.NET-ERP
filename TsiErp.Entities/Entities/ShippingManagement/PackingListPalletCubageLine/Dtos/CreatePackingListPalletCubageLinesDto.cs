@@ -13,6 +13,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLin
         /// </summary>
         public int LineNr { get; set; }
         /// <summary>
+        /// Palet Adedi
+        /// </summary>
+        public int NumberofPallet { get; set; }
+        /// <summary>
         /// En
         /// </summary>
         public decimal Width_ { get; set; }

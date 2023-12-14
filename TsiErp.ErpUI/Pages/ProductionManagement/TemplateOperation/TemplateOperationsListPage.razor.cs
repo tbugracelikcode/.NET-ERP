@@ -153,7 +153,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
             DataSource = new SelectTemplateOperationsDto()
             {
                 IsActive = true,
-                Code = FicheNumbersAppService.GetFicheNumberAsync("TempOperationsChildMenu")
+                Code = FicheNumbersAppService.GetFicheNumberAsync("TempOperationsChildMenu"),
+                WorkScore = 0
             };
             DataSource.SelectTemplateOperationLines = new List<SelectTemplateOperationLinesDto>();
             GridLineList = DataSource.SelectTemplateOperationLines;
@@ -231,7 +232,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
                     IsChanged = true;
                     DataSource = (await TemplateOperationsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectTemplateOperationLines.OrderBy(t => t.Priority).ToList();
-                    UnsuitabilityItemsLineGridList = DataSource.SelectTemplateOperationUnsuitabilityItems.OrderBy(t=>t.LineNr).ToList();
+                    UnsuitabilityItemsLineGridList = DataSource.SelectTemplateOperationUnsuitabilityItems.OrderBy(t => t.LineNr).ToList();
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -458,7 +459,117 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
 
         }
 
+        #region Switch İşlemleri
 
+        private void IsCanBeDetectedChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (DataSource.IsCanBeDetected)
+            {
+                DataSource.WorkScore += 1;
+            }
+            else
+            {
+                DataSource.WorkScore -= 1;
+            }
+        }
+
+        private void IsCauseExtraCostChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (DataSource.IsCauseExtraCost)
+            {
+                DataSource.WorkScore += 1;
+            }
+            else
+            {
+                DataSource.WorkScore -= 1;
+            }
+        }
+
+        private void IsHighRepairCostChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (DataSource.IsHighRepairCost)
+            {
+                DataSource.WorkScore += 1;
+            }
+            else
+            {
+                DataSource.WorkScore -= 1;
+            }
+        }
+
+        private void IsLongWorktimeforOperatorChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (DataSource.IsLongWorktimeforOperator)
+            {
+                DataSource.WorkScore += 1;
+            }
+            else
+            {
+                DataSource.WorkScore -= 1;
+            }
+        }
+
+        private void IsPhysicallyHardChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (DataSource.IsPhysicallyHard)
+            {
+                DataSource.WorkScore += 1;
+            }
+            else
+            {
+                DataSource.WorkScore -= 1;
+            }
+        }
+
+        private void IsRequiresKnowledgeChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (DataSource.IsRequiresKnowledge)
+            {
+                DataSource.WorkScore += 1;
+            }
+            else
+            {
+                DataSource.WorkScore -= 1;
+            }
+        }
+
+        private void IsRequiresSkillChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (DataSource.IsRequiresSkill)
+            {
+                DataSource.WorkScore += 1;
+            }
+            else
+            {
+                DataSource.WorkScore -= 1;
+            }
+        }
+
+        private void IsRiskyforOperatorChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (DataSource.IsRiskyforOperator)
+            {
+                DataSource.WorkScore += 1;
+            }
+            else
+            {
+                DataSource.WorkScore -= 1;
+            }
+        }
+
+        private void IsSensitiveChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (DataSource.IsSensitive)
+            {
+                DataSource.WorkScore += 1;
+            }
+            else
+            {
+                DataSource.WorkScore -= 1;
+            }
+        }
+
+        #endregion
 
         #region Kod ButtonEdit
 
