@@ -12,14 +12,8 @@ using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ShippingManagement.PackingList.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
-using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
-using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
-using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLine;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletLine;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletLine.Dtos;
@@ -210,11 +204,15 @@ namespace TsiErp.Business.Entities.PackingList.Services
             var line3DeleteQuery = queryFactory.Query().From(Tables.PackingListPalletPackageLines).Delete(LoginedUserService.UserId).Where(new { PackingListID = id }, false, false, "");
 
             deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+            deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + line2DeleteQuery.Sql + " where " + line2DeleteQuery.WhereSentence;
+            deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + line3DeleteQuery.Sql + " where " + line3DeleteQuery.WhereSentence;
 
             var PackingList = queryFactory.Update<SelectPackingListsDto>(deleteQuery, "Id", true);
-            var SelectPackingListsDtoLine = queryFactory.Update<SelectPackingListPalletCubageLinesDto>(lineDeleteQuery, "Id", true);
-            var SelectPackingListsDtoLine2 = queryFactory.Update<SelectPackingListPalletLinesDto>(line2DeleteQuery, "Id", true);
-            var SelectPackingListsDtoLine3 = queryFactory.Update<SelectPackingListPalletPackageLinesDto>(line3DeleteQuery, "Id", true);
+            //var SelectPackingListsDtoLine = queryFactory.Update<SelectPackingListPalletCubageLinesDto>(lineDeleteQuery, "Id", true);
+            //var SelectPackingListsDtoLine2 = queryFactory.Update<SelectPackingListPalletLinesDto>(line2DeleteQuery, "Id", true);
+            //var SelectPackingListsDtoLine3 = queryFactory.Update<SelectPackingListPalletPackageLinesDto>(line3DeleteQuery, "Id", true);
+
+
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PackingLists, LogType.Delete, id);
             return new SuccessDataResult<SelectPackingListsDto>(PackingList);
 
@@ -448,7 +446,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                     )
                     .Where(new { PackingListID = input.Id }, false, false, Tables.PackingListPalletLines);
 
-            var PackingListLine2 = queryFactory.GetList<SelectPackingListPalletLinesDto>(queryLines).ToList();
+            var PackingListLine2 = queryFactory.GetList<SelectPackingListPalletLinesDto>(queryLines2).ToList();
 
             entity.SelectPackingListPalletLines = PackingListLine2;
 
