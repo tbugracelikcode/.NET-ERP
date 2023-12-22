@@ -50,6 +50,11 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring
         /// Kıdem Değeri
         /// </summary>
         public decimal SeniorityValue { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Kıdem Oranı
+        /// </summary>
+        public decimal SeniorityRatio { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Eğitim Seviyesi ID
@@ -75,6 +80,11 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring
         /// Görev Kabiliyet Oranı
         /// </summary>
         public decimal TaskCapabilityRatio { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Üretim Performans Oranı
+        /// </summary>
+        public decimal ProductionPerformanceRatio { get; set; }
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// İşe Devam Oranı

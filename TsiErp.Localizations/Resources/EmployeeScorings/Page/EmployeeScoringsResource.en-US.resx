@@ -117,11 +117,86 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AttendanceRatioNameLineLabel" xml:space="preserve">
+    <value>Attendance Ratio:</value>
+  </data>
+  <data name="CalculateButton" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>SCORING CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Scoring Code:</value>
+  </data>
+  <data name="Combo23" xml:space="preserve">
+    <value>2023</value>
+  </data>
+  <data name="Combo24" xml:space="preserve">
+    <value>2024</value>
+  </data>
+  <data name="Combo25" xml:space="preserve">
+    <value>2025</value>
+  </data>
+  <data name="Combo26" xml:space="preserve">
+    <value>2026</value>
+  </data>
+  <data name="Combo27" xml:space="preserve">
+    <value>2027</value>
+  </data>
+  <data name="Combo28" xml:space="preserve">
+    <value>2028</value>
+  </data>
+  <data name="Combo29" xml:space="preserve">
+    <value>2029</value>
+  </data>
+  <data name="Combo30" xml:space="preserve">
+    <value>2030</value>
+  </data>
+  <data name="Combo31" xml:space="preserve">
+    <value>2031</value>
+  </data>
+  <data name="ComboApr" xml:space="preserve">
+    <value>April</value>
+  </data>
+  <data name="ComboAug" xml:space="preserve">
+    <value>August</value>
+  </data>
+  <data name="ComboDec" xml:space="preserve">
+    <value>December</value>
+  </data>
+  <data name="ComboFeb" xml:space="preserve">
+    <value>February</value>
+  </data>
+  <data name="ComboJan" xml:space="preserve">
+    <value>January</value>
+  </data>
+  <data name="ComboJul" xml:space="preserve">
+    <value>July</value>
+  </data>
+  <data name="ComboJun" xml:space="preserve">
+    <value>June</value>
+  </data>
+  <data name="ComboMar" xml:space="preserve">
+    <value>March</value>
+  </data>
+  <data name="ComboMay" xml:space="preserve">
+    <value>May</value>
+  </data>
+  <data name="ComboNov" xml:space="preserve">
+    <value>November</value>
+  </data>
+  <data name="ComboOct" xml:space="preserve">
+    <value>October</value>
+  </data>
+  <data name="ComboSep" xml:space="preserve">
+    <value>September</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -135,8 +210,23 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Employee Scoring Record Lines</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Employee Scoring Records</value>
+  </data>
+  <data name="EducationLevelScoreNameLineLabel" xml:space="preserve">
+    <value>Education Level Score:</value>
+  </data>
+  <data name="EmployeeScoringLineLinesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="EmployeeScoringLinesContextChange" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="EmployeeScoringsContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -150,6 +240,21 @@
   <data name="EmployeeScoringsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>END DATE</value>
+  </data>
+  <data name="EndDateLabel" xml:space="preserve">
+    <value>End Date:</value>
+  </data>
+  <data name="EnumApproved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="EnumDraft" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="EnumSaved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -159,11 +264,110 @@
   <data name="ExportTitle" xml:space="preserve">
     <value>Employee Scoring Records</value>
   </data>
+  <data name="GeneralSkillRecordPrioritiesGeneralSkillName" xml:space="preserve">
+    <value>SKILL NAME</value>
+  </data>
+  <data name="GeneralSkillRecordPrioritiesModalTitle" xml:space="preserve">
+    <value>General Skill Record Priorities </value>
+  </data>
+  <data name="GeneralSkillRecordPrioritiesScore" xml:space="preserve">
+    <value>SKILL SCORE</value>
+  </data>
+  <data name="LineGridAbsencePeriod" xml:space="preserve">
+    <value>ABSENCE PERIOD</value>
+  </data>
+  <data name="LineGridAfterEvaluationSalary" xml:space="preserve">
+    <value>AFTER EVALUATION SALARY</value>
+  </data>
+  <data name="LineGridAttendanceRatio" xml:space="preserve">
+    <value>ATTENDACE RATIO</value>
+  </data>
+  <data name="LineGridDepartmentName" xml:space="preserve">
+    <value>DEPARTMENT</value>
+  </data>
+  <data name="LineGridEducationLevelName" xml:space="preserve">
+    <value>EDUCATION LEVEL</value>
+  </data>
+  <data name="LineGridEducationLevelScore" xml:space="preserve">
+    <value>EDUCATION LEVEL SCORE</value>
+  </data>
+  <data name="LineGridEmployeeCurrentSalary" xml:space="preserve">
+    <value>CURRENT SALARY</value>
+  </data>
+  <data name="LineGridEmployeeHiringDate" xml:space="preserve">
+    <value>HIRING DATE</value>
+  </data>
+  <data name="LineGridEmployeeID" xml:space="preserve">
+    <value>EMPLOYEE NAME</value>
+  </data>
+  <data name="LineGridEmployeeTaskDefinition" xml:space="preserve">
+    <value>TASK DEFINITION</value>
+  </data>
+  <data name="LineGridGeneralSkillRatio" xml:space="preserve">
+    <value>GENERAL SKILL RATIO</value>
+  </data>
+  <data name="LineGridManagementImprovementRatio" xml:space="preserve">
+    <value>MANAGEMENT IMPROVEMENT RATIO</value>
+  </data>
+  <data name="LineGridOfficialSeniorityName" xml:space="preserve">
+    <value>OFFICIAL SENIORITY</value>
+  </data>
+  <data name="LineGridPositionValuationRaiseRatio" xml:space="preserve">
+    <value>POSITION VALUATION RAISE RATIO</value>
+  </data>
+  <data name="LineGridProductionPerformanceRatio" xml:space="preserve">
+    <value>PRODUCTION PERFORMANCE RATIO</value>
+  </data>
+  <data name="LineGridRaiseMonth" xml:space="preserve">
+    <value>RAISE MONTH</value>
+  </data>
+  <data name="LineGridReevaluationRatio" xml:space="preserve">
+    <value>REEVALUATION RATIO</value>
+  </data>
+  <data name="LineGridSeniorityName" xml:space="preserve">
+    <value>TITLE</value>
+  </data>
+  <data name="LineGridSeniorityRatio" xml:space="preserve">
+    <value>SENIORITY RATIO</value>
+  </data>
+  <data name="LineGridSeniorityValue" xml:space="preserve">
+    <value>SENIORITY</value>
+  </data>
+  <data name="LineGridShiftValue" xml:space="preserve">
+    <value>SHIFT</value>
+  </data>
+  <data name="LineGridStartingSalaryofPosition" xml:space="preserve">
+    <value>STARTING SALARY OF POSITION</value>
+  </data>
+  <data name="LineGridTaskCapabilityRatio" xml:space="preserve">
+    <value>TASK CAPABILITY RATIO</value>
+  </data>
+  <data name="LineGridTaskCompetenceScore" xml:space="preserve">
+    <value>TASK COMPETENCE SCORE</value>
+  </data>
+  <data name="LineGridTodaysDate" xml:space="preserve">
+    <value>TODAY'S DATE</value>
+  </data>
+  <data name="LinesLineGridScore_" xml:space="preserve">
+    <value>SCORE</value>
+  </data>
+  <data name="LinesLineGridTemplateOperationName" xml:space="preserve">
+    <value>OPERATION NAME</value>
+  </data>
+  <data name="LinesLineGridTemplateOperationWorkScore" xml:space="preserve">
+    <value>OPERATION WORK SCORE</value>
+  </data>
+  <data name="LinesLineModalTitle" xml:space="preserve">
+    <value>Employee Operations</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
+  </data>
+  <data name="ManagementImprovementRatioLineLabel" xml:space="preserve">
+    <value>Management Improvement Ratio:</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
@@ -171,8 +375,38 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="MonthLabel" xml:space="preserve">
+    <value>Month:</value>
+  </data>
+  <data name="Month_" xml:space="preserve">
+    <value>MONTH</value>
+  </data>
+  <data name="ProductionPerformanceRatioNameLineLabel" xml:space="preserve">
+    <value>Production Performance Ratio:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="Score_LinesLineLabel" xml:space="preserve">
+    <value>Score:</value>
+  </data>
+  <data name="ScoringStateLabel" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>START DATE</value>
+  </data>
+  <data name="StartDateLabel" xml:space="preserve">
+    <value>Start Date:</value>
+  </data>
+  <data name="TaskCapabilityRatioNameLineLabel" xml:space="preserve">
+    <value>Task Capability Ratio:</value>
+  </data>
+  <data name="TemplateOperationWorkScoreLinesLineLabel" xml:space="preserve">
+    <value>Operation Work Score:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Employee Scoring Records</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Machinery and Workforce Management Management &gt; Transactions</value>
@@ -185,5 +419,11 @@
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
     <value>Employee scoring code cannot exceed 17 characters.</value>
+  </data>
+  <data name="YearLabel" xml:space="preserve">
+    <value>Year:</value>
+  </data>
+  <data name="Year_" xml:space="preserve">
+    <value>YEAR</value>
   </data>
 </root>

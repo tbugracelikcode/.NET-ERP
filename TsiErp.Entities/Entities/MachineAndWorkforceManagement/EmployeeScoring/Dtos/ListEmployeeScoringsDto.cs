@@ -1,4 +1,5 @@
 ﻿using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring.Dtos
 {
@@ -16,6 +17,22 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring
         /// Ay
         /// </summary>
         public int Month_ { get; set; }
+        /// <summary>
+        /// Puantaj Durumu
+        /// </summary>
+        public EmployeeScoringsStateEnum ScoringState { get; set; }
+        /// <summary>
+        /// Puantaj Durumu Adı
+        /// </summary>
+        public string ScoringStateName { get; set; }
+        /// <summary>
+        /// Başlangıç Tarihi
+        /// </summary>
+        public DateTime StartDate { get; set; }
+        /// <summary>
+        /// Bitiş Tarihi
+        /// </summary>
+        public DateTime EndDate { get; set; }
         /// <summary>
         /// Açıklama
         /// </summary>

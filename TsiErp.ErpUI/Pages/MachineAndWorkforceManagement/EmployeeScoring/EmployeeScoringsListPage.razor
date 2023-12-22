@@ -1,5 +1,658 @@
-﻿<h3>EmployeeScoringsListPage</h3>
+﻿@page "/employee-scorings"
+@layout MainLayout
 
-@code {
 
+
+@inherits BaseListPage<SelectEmployeeScoringsDto, ListEmployeeScoringsDto, CreateEmployeeScoringsDto, UpdateEmployeeScoringsDto, ListEmployeeScoringsParameterDto>
+
+
+@inject IEmployeeScoringsAppService EmployeeScoringsService
+@inject IEmployeesAppService EmployeesAppService
+@inject IStringLocalizer<EmployeeScoringsResource> L
+@inject IDepartmentsAppService DepartmentsAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
+@inject IEmployeeSenioritiesAppService EmployeeSenioritiesAppService
+@inject IEducationLevelScoresAppService EducationLevelScoresAppService
+@inject ITemplateOperationsAppService TemplateOperationsAppService
+@inject IProductionTrackingsAppService ProductionTrackingsAppService
+@inject IStationGroupsAppService StationGroupsAppService
+@inject IStationsAppService StationsAppService
+@inject IWorkOrdersAppService WorkOrdersAppService
+@inject IProductsOperationsAppService ProductsOperationsAppService
+@inject IEducationLevelScoresAppService EducationLevelScoresAppService
+@inject IGeneralSkillRecordPrioritiesAppService GeneralSkillRecordPrioritiesAppService
+@inject IStartingSalariesAppService StartingSalariesAppService
+
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+        <GridLayoutItems>
+            <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+            <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIGridCards">
+
+                        <CardContent>
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListEmployeeScoringsDto"></GridEvents>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListEmployeeScoringsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEmployeeScoringsDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["StartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEmployeeScoringsDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["EndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEmployeeScoringsDto.Year_) Type="ColumnType.Number" HeaderText="@L["Year_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEmployeeScoringsDto.Month_) Type="ColumnType.Number" HeaderText="@L["Month_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+
+                                </GridColumns>
+                            </SfGrid>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
+
+
+    <DxPopup @bind-Visible="base.EditPageVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="81%"
+             Height="74%"
+             MinWidth="1400px"
+             MinHeight="800px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="8%" />
+                    <DxGridLayoutRow Height="63%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                            @* <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.FicheNo"></SfTextBox> *@
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["StartDateLabel"] </strong></label>
+                            <SfDatePicker @bind-Value="@DataSource.StartDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["EndDateLabel"] </strong></label>
+                            <SfDatePicker @bind-Value="@DataSource.EndDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="7" RowSpan="2">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label><br />
+                            <SfTextBox CssClass="TSIMemoBox60" Multiline=true @bind-Value="@DataSource.Description_"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+
+                            <label class="TSIModalLabel"><strong>@L["YearLabel"] </strong></label><br />
+                            <SfComboBox TValue="string" TItem="YearComboBox" DataSource="@_yearComboBox">
+                                <ComboBoxEvents TItem="YearComboBox" TValue="string" ValueChange="@YearComboBoxValueChangeHandler"></ComboBoxEvents>
+                                <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+
+                            <label class="TSIModalLabel"><strong>@L["MonthLabel"] </strong></label><br />
+                            <SfComboBox TValue="string" TItem="MonthComboBox" DataSource="@_monthComboBox">
+                                <ComboBoxEvents TItem="MonthComboBox" TValue="string" ValueChange="@MonhtComboBoxValueChangeHandler"></ComboBoxEvents>
+                                <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="5">
+                        <Template>
+
+                            <label class="TSIModalLabel"><strong>@L["ScoringStateLabel"] </strong></label><br />
+                            <SfDropDownList TItem="SelectEmployeeScoringsDto" TValue="EmployeeScoringsStateEnum" PopupHeight="230px" @bind-Value="@DataSource.ScoringState" DataSource="@scoringStates">
+                                <DropDownListFieldSettings Text="ScoringStateName" Value="ScoringState"></DropDownListFieldSettings>
+                            </SfDropDownList>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+            <center><SfButton CssClass="TSISaveButton" OnClick="CreateLines"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["CalculateButton"]</SfButton></center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+
+                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="7">
+                        <Template>
+                            <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectEmployeeScoringLinesDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridTemplates Context="lineContext">
+                                    <DetailTemplate>
+
+                                        @{
+                                            var employeeID = (lineContext as SelectEmployeeScoringLinesDto).EmployeeID;
+
+                                            <table>
+                                            <tr>
+                                            <td style="width:300px">
+                                                        <SfGrid @ref=_LinesLineGrid ID="LinesLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@EmployeeOperationsList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="15%" class="GridZebra" ContextMenuItems="@LinesLineGridContextMenu" Query="@(new Query().Where("EmployeeID", "equal", employeeID))">
+                                                            <GridEvents ContextMenuItemClicked="@OnListLineContextMenuClick" TValue="SelectEmployeeOperationsDto"></GridEvents>
+                                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+
+                                                            <GridColumns>
+                                                                <GridColumn Field=@nameof(SelectEmployeeOperationsDto.TemplateOperationName) HeaderText="@L["LinesLineGridTemplateOperationName"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                                                <GridColumn Field=@nameof(SelectEmployeeOperationsDto.TemplateOperationWorkScore) Type="ColumnType.Number" HeaderText="@L["LinesLineGridTemplateOperationWorkScore"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
+                                                                <GridColumn Field=@nameof(SelectEmployeeOperationsDto.Score_) Type="ColumnType.Number" HeaderText="@L["LinesLineGridScore_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                            </GridColumns>
+                                                        </SfGrid>
+                                            </td>
+
+                                            </tr>
+                                            </table>
+
+                                           
+                                        }
+
+                                        
+
+                                    </DetailTemplate>
+                                </GridTemplates>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.DepartmentName) HeaderText="@L["LineGridDepartmentName"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.OfficialSeniorityName) HeaderText="@L["LineGridOfficialSeniorityName"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.SeniorityName) HeaderText="@L["LineGridSeniorityName"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.EmployeeID) HeaderText="@L["LineGridEmployeeID"]" TextAlign="TextAlign.Center" Width="200" Context="lineContext">
+                                        <Template>
+                                            @{
+                                                string fullName = (lineContext as SelectEmployeeScoringLinesDto).EmployeeName + (lineContext as SelectEmployeeScoringLinesDto).EmployeeSurname;
+                                            }
+                                            @fullName
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.EmployeeHiringDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridEmployeeHiringDate"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.TodaysDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridTodaysDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.SeniorityValue) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridSeniorityValue"]" TextAlign="TextAlign.Center" Width="140"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.EducationLevelName) HeaderText="@L["LineGridEducationLevelName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.EmployeeTaskDefinition) HeaderText="@L["LineGridEmployeeTaskDefinition"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.AbsencePeriod) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridAbsencePeriod"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.ShiftValue) Type="ColumnType.Number" HeaderText="@L["LineGridShiftValue"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.TaskCompetenceScore) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridTaskCompetenceScore"]" TextAlign="TextAlign.Center" Width="260"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.TaskCapabilityRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridTaskCapabilityRatio"]" TextAlign="TextAlign.Center" Width="260" Context="lineContext">
+                                        <Template>
+                                            @{
+                                                string taskCapability = (lineContext as SelectEmployeeScoringLinesDto).TaskCapabilityRatio.ToString() + "%";
+                                            }
+                                            @taskCapability
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.EducationLevelScore)  Type="ColumnType.Number" HeaderText="@L["LineGridEducationLevelScore"]" TextAlign="TextAlign.Center" Width="260" Context="lineContext">
+                                        <Template>
+                                            @{
+                                                string educationLevel = (lineContext as SelectEmployeeScoringLinesDto).EducationLevelScore.ToString() + "%";
+                                            }
+                                            @educationLevel
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.ProductionPerformanceRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridProductionPerformanceRatio"]" TextAlign="TextAlign.Center" Width="280" Context="lineContext">
+                                        <Template>
+                                            @{
+                                                string productionPerformance = (lineContext as SelectEmployeeScoringLinesDto).ProductionPerformanceRatio.ToString() + "%";
+                                            }
+                                            @productionPerformance
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.AttendanceRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridAttendanceRatio"]" TextAlign="TextAlign.Center" Width="240" Context="lineContext">
+                                        <Template>
+                                            @{
+                                                string attendance = (lineContext as SelectEmployeeScoringLinesDto).AttendanceRatio.ToString() + "%";
+                                            }
+                                            @attendance
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.SeniorityRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridSeniorityRatio"]" TextAlign="TextAlign.Center" Width="220" Context="lineContext">
+                                        <Template>
+                                            @{
+                                                string seniority = (lineContext as SelectEmployeeScoringLinesDto).SeniorityRatio.ToString() + "%";
+                                            }
+                                            @seniority
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.GeneralSkillRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridGeneralSkillRatio"]" TextAlign="TextAlign.Center" Width="260" Context="lineContext">
+                                        <Template>
+                                            @{
+                                                string generalSkill = (lineContext as SelectEmployeeScoringLinesDto).GeneralSkillRatio.ToString() + "%";  
+                                            }
+                                            @generalSkill
+                                        </Template>
+                                    </GridColumn> 
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.ManagementImprovementRatio) Type="ColumnType.Number" HeaderText="@L["LineGridManagementImprovementRatio"]" TextAlign="TextAlign.Center" Width="260"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.EmployeeCurrentSalary) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridEmployeeCurrentSalary"]" TextAlign="TextAlign.Center" Width="260"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.StartingSalaryofPosition) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridStartingSalaryofPosition"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.AfterEvaluationSalary) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridAfterEvaluationSalary"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.ReevaluationRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridReevaluationRatio"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.PositionValuationRaiseRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridPositionValuationRaiseRatio"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.RaiseMonth) Type="ColumnType.Number" HeaderText="@L["LineGridRaiseMonth"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                     
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+
+    <DxPopup @bind-Visible="LineCrudPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditLineModalTitle"]"
+             Width="62%"
+             Height="32%"
+             MinWidth="1060px"
+             MinHeight="350px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="45%" />
+                    <DxGridLayoutRow Height="45%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["TaskCapabilityRatioNameLineLabel"] </strong></label>
+                            <SfTextBox @ref="@GeneralSkillRecordPriorities1ButtonEdit" Created="@GeneralSkillRecordPriorities1OnCreateIcon" @bind-Value="LineDataSource.TaskCapabilityRatioName" ShowClearButton=true ValueChange="GeneralSkillRecordPriorities1OnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["EducationLevelScoreNameLineLabel"] </strong></label>
+                            <SfTextBox @ref="@GeneralSkillRecordPriorities2ButtonEdit" Created="@GeneralSkillRecordPriorities2OnCreateIcon" @bind-Value="LineDataSource.EducationLevelScoreName" ShowClearButton=true ValueChange="GeneralSkillRecordPriorities2OnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ProductionPerformanceRatioNameLineLabel"] </strong></label>
+                            <SfTextBox @ref="@GeneralSkillRecordPriorities3ButtonEdit" Created="@GeneralSkillRecordPriorities3OnCreateIcon" @bind-Value="LineDataSource.ProductionPerformanceRatioName" ShowClearButton=true ValueChange="GeneralSkillRecordPriorities3OnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["AttendanceRatioNameLineLabel"] </strong></label>
+                            <SfTextBox @ref="@GeneralSkillRecordPriorities4ButtonEdit" Created="@GeneralSkillRecordPriorities4OnCreateIcon" @bind-Value="LineDataSource.AttendanceRatioName" ShowClearButton=true ValueChange="GeneralSkillRecordPriorities4OnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ManagementImprovementRatioLineLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.ManagementImprovementRatio">
+                            </SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="@LinesLineCrudPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["LinesLineModalTitle"]"
+             Width="42%"
+             Height="19%"
+             MinWidth="720px"
+             MinHeight="200px"
+             HeaderCssClass="HeaderTitleCss"
+             ShowCloseButton=false>
+
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="90%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                </Columns>
+
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["TemplateOperationWorkScoreLinesLineLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" Enabled=false TValue="int" @bind-Value="LinesLineDataSource.TemplateOperationWorkScore">
+                            </SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["Score_LinesLineLabel"] </strong></label>
+                            <SfNumericTextBox Min="0"  TValue="int" @bind-Value="LinesLineDataSource.Score_">
+                            </SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnLinesLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLinesLinePopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+
+}
+
+ @if (SelectGeneralSkillRecordPriorities1PopupVisible)
+{
+    <DxPopup @bind-Visible="SelectGeneralSkillRecordPriorities1PopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["GeneralSkillRecordPrioritiesModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="GeneralSkillRecordPrioritiesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GeneralSkillRecordPriorities1List" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                        <GridEvents OnRecordDoubleClick="@GeneralSkillRecordPriorities1DoubleClickHandler" TValue="ListGeneralSkillRecordPrioritiesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListGeneralSkillRecordPrioritiesDto.GeneralSkillName) HeaderText="@L["GeneralSkillRecordPrioritiesGeneralSkillName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListGeneralSkillRecordPrioritiesDto.Score) HeaderText="@L["GeneralSkillRecordPrioritiesScore"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+ @if (SelectGeneralSkillRecordPriorities2PopupVisible)
+{
+    <DxPopup @bind-Visible="SelectGeneralSkillRecordPriorities2PopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["GeneralSkillRecordPrioritiesModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="GeneralSkillRecordPriorities2Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GeneralSkillRecordPriorities2List" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                        <GridEvents OnRecordDoubleClick="@GeneralSkillRecordPriorities2DoubleClickHandler" TValue="ListGeneralSkillRecordPrioritiesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListGeneralSkillRecordPrioritiesDto.GeneralSkillName) HeaderText="@L["GeneralSkillRecordPrioritiesGeneralSkillName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListGeneralSkillRecordPrioritiesDto.Score) HeaderText="@L["GeneralSkillRecordPrioritiesScore"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+ @if (SelectGeneralSkillRecordPriorities3PopupVisible)
+{
+    <DxPopup @bind-Visible="SelectGeneralSkillRecordPriorities3PopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["GeneralSkillRecordPrioritiesModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="GeneralSkillRecordPriorities3Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GeneralSkillRecordPriorities3List" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                        <GridEvents OnRecordDoubleClick="@GeneralSkillRecordPriorities3DoubleClickHandler" TValue="ListGeneralSkillRecordPrioritiesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListGeneralSkillRecordPrioritiesDto.GeneralSkillName) HeaderText="@L["GeneralSkillRecordPrioritiesGeneralSkillName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListGeneralSkillRecordPrioritiesDto.Score) HeaderText="@L["GeneralSkillRecordPrioritiesScore"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectGeneralSkillRecordPriorities4PopupVisible)
+{
+    <DxPopup @bind-Visible="SelectGeneralSkillRecordPriorities4PopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["GeneralSkillRecordPrioritiesModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="GeneralSkillRecordPriorities4Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GeneralSkillRecordPriorities4List" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                        <GridEvents OnRecordDoubleClick="@GeneralSkillRecordPriorities4DoubleClickHandler" TValue="ListGeneralSkillRecordPrioritiesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListGeneralSkillRecordPrioritiesDto.GeneralSkillName) HeaderText="@L["GeneralSkillRecordPrioritiesGeneralSkillName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListGeneralSkillRecordPrioritiesDto.Score) HeaderText="@L["GeneralSkillRecordPrioritiesScore"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
 }

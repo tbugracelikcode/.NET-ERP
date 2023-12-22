@@ -117,11 +117,86 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AttendanceRatioNameLineLabel" xml:space="preserve">
+    <value>İşe Devam Oranı:</value>
+  </data>
+  <data name="CalculateButton" xml:space="preserve">
+    <value>Hesapla</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>PUANTAJ KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Puantaj Kodu:</value>
+  </data>
+  <data name="Combo23" xml:space="preserve">
+    <value>2023</value>
+  </data>
+  <data name="Combo24" xml:space="preserve">
+    <value>2024</value>
+  </data>
+  <data name="Combo25" xml:space="preserve">
+    <value>2025</value>
+  </data>
+  <data name="Combo26" xml:space="preserve">
+    <value>2026</value>
+  </data>
+  <data name="Combo27" xml:space="preserve">
+    <value>2027</value>
+  </data>
+  <data name="Combo28" xml:space="preserve">
+    <value>2028</value>
+  </data>
+  <data name="Combo29" xml:space="preserve">
+    <value>2029</value>
+  </data>
+  <data name="Combo30" xml:space="preserve">
+    <value>2030</value>
+  </data>
+  <data name="Combo31" xml:space="preserve">
+    <value>2031</value>
+  </data>
+  <data name="ComboApr" xml:space="preserve">
+    <value>Nisan</value>
+  </data>
+  <data name="ComboAug" xml:space="preserve">
+    <value>Ağustos</value>
+  </data>
+  <data name="ComboDec" xml:space="preserve">
+    <value>Aralık</value>
+  </data>
+  <data name="ComboFeb" xml:space="preserve">
+    <value>Şubat</value>
+  </data>
+  <data name="ComboJan" xml:space="preserve">
+    <value>Ocak</value>
+  </data>
+  <data name="ComboJul" xml:space="preserve">
+    <value>Temmuz</value>
+  </data>
+  <data name="ComboJun" xml:space="preserve">
+    <value>Haziran</value>
+  </data>
+  <data name="ComboMar" xml:space="preserve">
+    <value>Mart</value>
+  </data>
+  <data name="ComboMay" xml:space="preserve">
+    <value>Mayıs</value>
+  </data>
+  <data name="ComboNov" xml:space="preserve">
+    <value>Kasım </value>
+  </data>
+  <data name="ComboOct" xml:space="preserve">
+    <value>Ekim</value>
+  </data>
+  <data name="ComboSep" xml:space="preserve">
+    <value>Eylül</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -135,8 +210,23 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Personel Puanlama Kayıt Satırları</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Personel Puanlama Kayıtları</value>
+  </data>
+  <data name="EducationLevelScoreNameLineLabel" xml:space="preserve">
+    <value>Eğitim Seviyesi Oranı:</value>
+  </data>
+  <data name="EmployeeScoringLineLinesContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="EmployeeScoringLinesContextChange" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="EmployeeScoringsContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -150,6 +240,21 @@
   <data name="EmployeeScoringsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>BİTİŞ TARİHİ</value>
+  </data>
+  <data name="EndDateLabel" xml:space="preserve">
+    <value>Bitiş Tarihi:</value>
+  </data>
+  <data name="EnumApproved" xml:space="preserve">
+    <value>Onaylandı</value>
+  </data>
+  <data name="EnumDraft" xml:space="preserve">
+    <value>Taslak</value>
+  </data>
+  <data name="EnumSaved" xml:space="preserve">
+    <value>Kaydedildi</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
@@ -159,11 +264,110 @@
   <data name="ExportTitle" xml:space="preserve">
     <value>Personel Puanlama Kayıtları</value>
   </data>
+  <data name="GeneralSkillRecordPrioritiesGeneralSkillName" xml:space="preserve">
+    <value>BECERİ ADI</value>
+  </data>
+  <data name="GeneralSkillRecordPrioritiesModalTitle" xml:space="preserve">
+    <value>Genel Beceri Kayıtları Öncelikleri</value>
+  </data>
+  <data name="GeneralSkillRecordPrioritiesScore" xml:space="preserve">
+    <value>BECERİ PUANI</value>
+  </data>
+  <data name="LineGridAbsencePeriod" xml:space="preserve">
+    <value>DEVAMSIZLIK SÜRESİ</value>
+  </data>
+  <data name="LineGridAfterEvaluationSalary" xml:space="preserve">
+    <value>DEĞERLENDİRME SONRASI MAAŞ</value>
+  </data>
+  <data name="LineGridAttendanceRatio" xml:space="preserve">
+    <value>İŞE DEVAM ORANI</value>
+  </data>
+  <data name="LineGridDepartmentName" xml:space="preserve">
+    <value>DEPARTMAN</value>
+  </data>
+  <data name="LineGridEducationLevelName" xml:space="preserve">
+    <value>EĞİTİM SEVİYESİ</value>
+  </data>
+  <data name="LineGridEducationLevelScore" xml:space="preserve">
+    <value>EĞİTİM SEVİYESİ ORANI</value>
+  </data>
+  <data name="LineGridEmployeeCurrentSalary" xml:space="preserve">
+    <value>MEVCUT MAAŞ</value>
+  </data>
+  <data name="LineGridEmployeeHiringDate" xml:space="preserve">
+    <value>İŞE BAŞLAMA TARİHİ</value>
+  </data>
+  <data name="LineGridEmployeeID" xml:space="preserve">
+    <value>ÇALIŞAN ADI</value>
+  </data>
+  <data name="LineGridEmployeeTaskDefinition" xml:space="preserve">
+    <value>GÖREV TANIMI</value>
+  </data>
+  <data name="LineGridGeneralSkillRatio" xml:space="preserve">
+    <value>GENEL BECERİ ORANI</value>
+  </data>
+  <data name="LineGridManagementImprovementRatio" xml:space="preserve">
+    <value>YÖNETİM İYİLEŞTİRME ORANI</value>
+  </data>
+  <data name="LineGridOfficialSeniorityName" xml:space="preserve">
+    <value>BAĞLI OLDUĞU KADEME</value>
+  </data>
+  <data name="LineGridPositionValuationRaiseRatio" xml:space="preserve">
+    <value>POZİSYONUN DEĞERLEME ZAM ORANI</value>
+  </data>
+  <data name="LineGridProductionPerformanceRatio" xml:space="preserve">
+    <value>ÜRETİM PERFORMANS ORANI</value>
+  </data>
+  <data name="LineGridRaiseMonth" xml:space="preserve">
+    <value>ZAM AYI</value>
+  </data>
+  <data name="LineGridReevaluationRatio" xml:space="preserve">
+    <value>YENİDEN DEĞERLENDİRME ORANI</value>
+  </data>
+  <data name="LineGridSeniorityName" xml:space="preserve">
+    <value>ÜNVAN</value>
+  </data>
+  <data name="LineGridSeniorityRatio" xml:space="preserve">
+    <value>KIDEM ORANI</value>
+  </data>
+  <data name="LineGridSeniorityValue" xml:space="preserve">
+    <value>KIDEM</value>
+  </data>
+  <data name="LineGridShiftValue" xml:space="preserve">
+    <value>VARDİYA</value>
+  </data>
+  <data name="LineGridStartingSalaryofPosition" xml:space="preserve">
+    <value>POZİSYONUN BAŞLANGIÇ MAAŞI</value>
+  </data>
+  <data name="LineGridTaskCapabilityRatio" xml:space="preserve">
+    <value>GÖREV KABİLİYET ORANI</value>
+  </data>
+  <data name="LineGridTaskCompetenceScore" xml:space="preserve">
+    <value>GÖREV YETKİNLİĞİ PUANI</value>
+  </data>
+  <data name="LineGridTodaysDate" xml:space="preserve">
+    <value>BUGÜNÜN TARİHİ</value>
+  </data>
+  <data name="LinesLineGridScore_" xml:space="preserve">
+    <value>PUAN</value>
+  </data>
+  <data name="LinesLineGridTemplateOperationName" xml:space="preserve">
+    <value>OPERASYON ADI</value>
+  </data>
+  <data name="LinesLineGridTemplateOperationWorkScore" xml:space="preserve">
+    <value>OPERASYON İŞ PUANI</value>
+  </data>
+  <data name="LinesLineModalTitle" xml:space="preserve">
+    <value>Personel Operasyonları</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="ManagementImprovementRatioLineLabel" xml:space="preserve">
+    <value>Yönetim İyileştirme Oranı:</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
@@ -171,8 +375,38 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="MonthLabel" xml:space="preserve">
+    <value>Ay:</value>
+  </data>
+  <data name="Month_" xml:space="preserve">
+    <value>AY</value>
+  </data>
+  <data name="ProductionPerformanceRatioNameLineLabel" xml:space="preserve">
+    <value>Üretim Performans Oranı:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="Score_LinesLineLabel" xml:space="preserve">
+    <value>Puan:</value>
+  </data>
+  <data name="ScoringStateLabel" xml:space="preserve">
+    <value>Durum:</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>BAŞLANGIÇ TARİHİ</value>
+  </data>
+  <data name="StartDateLabel" xml:space="preserve">
+    <value>Başlangıç Tarihi:</value>
+  </data>
+  <data name="TaskCapabilityRatioNameLineLabel" xml:space="preserve">
+    <value>Görev Kabiliyet Oranı:</value>
+  </data>
+  <data name="TemplateOperationWorkScoreLinesLineLabel" xml:space="preserve">
+    <value>Operasyon İş Puanı:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Personel Puanlama Kayıtları</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Makine &amp; İş Gücü Yönetimi Yönetimi &gt; Hareketler</value>
@@ -185,5 +419,11 @@
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
     <value>Personel puanlama kodu 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="YearLabel" xml:space="preserve">
+    <value>Yıl:</value>
+  </data>
+  <data name="Year_" xml:space="preserve">
+    <value>YIL</value>
   </data>
 </root>

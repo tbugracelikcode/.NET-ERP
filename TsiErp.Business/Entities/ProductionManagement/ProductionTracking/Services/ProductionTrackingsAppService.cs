@@ -397,6 +397,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 Cancel_ = productionOrder.Cancel_,
                                 CreationTime = productionOrder.CreationTime,
                                 CreatorId = productionOrder.CreatorId,
+                                BranchID = productionOrder.BranchID,
+                                WarehouseID = productionOrder.WarehouseID,
                                 CurrentAccountID = productionOrder.CurrentAccountID.GetValueOrDefault(),
                                 CustomerOrderNo = productionOrder.CustomerOrderNo,
                                 DataOpenStatus = productionOrder.DataOpenStatus,
