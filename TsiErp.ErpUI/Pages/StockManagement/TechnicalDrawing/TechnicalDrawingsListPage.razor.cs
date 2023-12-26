@@ -70,9 +70,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
             if (DataSource != null)
             {
-                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
 
-                if (dataOpenStatus == true && dataOpenStatus != null)
+                if (DataSource.DataOpenStatus == true && DataSource.DataOpenStatus != null)
                 {
                     TechnicalDrawingsChangedCrudPopup = false;
                     await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);

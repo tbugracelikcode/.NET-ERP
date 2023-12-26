@@ -15,6 +15,7 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.GeneralSkillRecordP
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalary.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalaryLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
 using TsiErp.Entities.Enums;
@@ -46,6 +47,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
         decimal productionPerformanceRatio = 0;
         decimal attendanceRatio = 0;
         decimal educationLevelScore = 0;
+        int oldScore = 0;
 
         protected override async void OnInitialized()
         {
@@ -75,6 +77,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
             GridLineList = DataSource.SelectEmployeeScoringLines;
 
             EmployeeOperationsList = new List<SelectEmployeeOperationsDto>();
+
+           
 
             #region Combobox Localization
 
@@ -226,6 +230,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
 
                 case "changed":
                     LinesLineDataSource = args.RowInfo.RowData;
+                    oldScore = LinesLineDataSource.Score_;
                     LinesLineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -358,11 +363,15 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
 
         }
 
-        public void GetLinesLineTotal()
+        public async void GetLinesLineTotal()
         {
             LineDataSource = DataSource.SelectEmployeeScoringLines.Where(t => t.EmployeeID == LinesLineDataSource.EmployeeID).FirstOrDefault();
 
-            LineDataSource.TaskCompetenceScore = LineDataSource.TaskCompetenceScore + (LinesLineDataSource.Score_ * LinesLineDataSource.TemplateOperationWorkScore);
+            LineDataSource.TaskCompetenceScore = LineDataSource.TaskCompetenceScore + ((LinesLineDataSource.Score_ - oldScore) * LinesLineDataSource.TemplateOperationWorkScore);
+
+            var workScoreSum = (await TemplateOperationsAppService.GetListAsync(new ListTemplateOperationsParameterDto())).Data.Select(t => t.WorkScore).Sum();
+
+            LineDataSource.TaskCapabilityRatio = (LineDataSource.TaskCompetenceScore) / (workScoreSum * 5) * 100;
 
         }
 
@@ -463,10 +472,22 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
 
                 GridLineList.Add(scoringLineModel);
 
-                //await _LinesLineGrid.Refresh();
             }
 
             await _LineGrid.Refresh();
+        }
+
+        public void RowBound(RowDataBoundEventArgs<SelectEmployeeScoringLinesDto> args)
+        {
+            if (args.Data.TaskCompetenceScore > 0)
+            {
+                args.Row.AddClass(new string[] { "modified" });
+            }
+            else if (args.Data.TaskCompetenceScore <= 0)
+            {
+
+                args.Row.AddClass(new string[] { "notmodified" });
+            }
         }
 
 

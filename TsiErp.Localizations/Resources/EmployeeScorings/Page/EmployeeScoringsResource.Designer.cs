@@ -547,7 +547,7 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to İŞE DEVAM ORANI.
+        ///   Looks up a localized string similar to İŞE DEVAM ORANI (%).
         /// </summary>
         public static string LineGridAttendanceRatio {
             get {
@@ -574,7 +574,7 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EĞİTİM SEVİYESİ ORANI.
+        ///   Looks up a localized string similar to EĞİTİM SEVİYESİ ORANI (%).
         /// </summary>
         public static string LineGridEducationLevelScore {
             get {
@@ -619,7 +619,7 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GENEL BECERİ ORANI.
+        ///   Looks up a localized string similar to GENEL BECERİ ORANI (%).
         /// </summary>
         public static string LineGridGeneralSkillRatio {
             get {
@@ -655,7 +655,7 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ÜRETİM PERFORMANS ORANI.
+        ///   Looks up a localized string similar to ÜRETİM PERFORMANS ORANI (%).
         /// </summary>
         public static string LineGridProductionPerformanceRatio {
             get {
@@ -691,7 +691,7 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to KIDEM ORANI.
+        ///   Looks up a localized string similar to KIDEM ORANI (%).
         /// </summary>
         public static string LineGridSeniorityRatio {
             get {
@@ -727,7 +727,7 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GÖREV KABİLİYET ORANI.
+        ///   Looks up a localized string similar to GÖREV KABİLİYET ORANI (%).
         /// </summary>
         public static string LineGridTaskCapabilityRatio {
             get {

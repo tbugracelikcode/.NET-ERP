@@ -23,6 +23,16 @@
 @inject IGeneralSkillRecordPrioritiesAppService GeneralSkillRecordPrioritiesAppService
 @inject IStartingSalariesAppService StartingSalariesAppService
 
+<style> 
+    .modified { 
+        background-color: #8AFF45 !important;
+    } 
+    .notmodified { 
+        background-color: transparent;  
+    }
+</style> 
+
+
 @if (!base.IsLoaded)
 {
     <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
@@ -82,8 +92,8 @@ else
              HeaderText="@L["EditModalTitle"]"
              Width="81%"
              Height="74%"
-             MinWidth="1400px"
-             MinHeight="800px"
+             MinWidth="1700px"
+             MinHeight="900px"
              HeaderCssClass="HeaderTitleCss"
              Showing="CrudModalShowing"
              Closing="CrudModalClosing">
@@ -187,7 +197,7 @@ else
                     <DxGridLayoutItem Row="3" Column="1" ColumnSpan="7">
                         <Template>
                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
-                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectEmployeeScoringLinesDto"></GridEvents>
+                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" RowDataBound="RowBound" TValue="SelectEmployeeScoringLinesDto"></GridEvents>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
@@ -235,7 +245,7 @@ else
                                     <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.EmployeeID) HeaderText="@L["LineGridEmployeeID"]" TextAlign="TextAlign.Center" Width="200" Context="lineContext">
                                         <Template>
                                             @{
-                                                string fullName = (lineContext as SelectEmployeeScoringLinesDto).EmployeeName + (lineContext as SelectEmployeeScoringLinesDto).EmployeeSurname;
+                                                string fullName = (lineContext as SelectEmployeeScoringLinesDto).EmployeeName+ " " + (lineContext as SelectEmployeeScoringLinesDto).EmployeeSurname;
                                             }
                                             @fullName
                                         </Template>
@@ -248,54 +258,12 @@ else
                                     <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.AbsencePeriod) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridAbsencePeriod"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                     <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.ShiftValue) Type="ColumnType.Number" HeaderText="@L["LineGridShiftValue"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.TaskCompetenceScore) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridTaskCompetenceScore"]" TextAlign="TextAlign.Center" Width="260"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.TaskCapabilityRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridTaskCapabilityRatio"]" TextAlign="TextAlign.Center" Width="260" Context="lineContext">
-                                        <Template>
-                                            @{
-                                                string taskCapability = (lineContext as SelectEmployeeScoringLinesDto).TaskCapabilityRatio.ToString() + "%";
-                                            }
-                                            @taskCapability
-                                        </Template>
-                                    </GridColumn>
-                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.EducationLevelScore)  Type="ColumnType.Number" HeaderText="@L["LineGridEducationLevelScore"]" TextAlign="TextAlign.Center" Width="260" Context="lineContext">
-                                        <Template>
-                                            @{
-                                                string educationLevel = (lineContext as SelectEmployeeScoringLinesDto).EducationLevelScore.ToString() + "%";
-                                            }
-                                            @educationLevel
-                                        </Template>
-                                    </GridColumn>
-                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.ProductionPerformanceRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridProductionPerformanceRatio"]" TextAlign="TextAlign.Center" Width="280" Context="lineContext">
-                                        <Template>
-                                            @{
-                                                string productionPerformance = (lineContext as SelectEmployeeScoringLinesDto).ProductionPerformanceRatio.ToString() + "%";
-                                            }
-                                            @productionPerformance
-                                        </Template>
-                                    </GridColumn>
-                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.AttendanceRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridAttendanceRatio"]" TextAlign="TextAlign.Center" Width="240" Context="lineContext">
-                                        <Template>
-                                            @{
-                                                string attendance = (lineContext as SelectEmployeeScoringLinesDto).AttendanceRatio.ToString() + "%";
-                                            }
-                                            @attendance
-                                        </Template>
-                                    </GridColumn>
-                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.SeniorityRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridSeniorityRatio"]" TextAlign="TextAlign.Center" Width="220" Context="lineContext">
-                                        <Template>
-                                            @{
-                                                string seniority = (lineContext as SelectEmployeeScoringLinesDto).SeniorityRatio.ToString() + "%";
-                                            }
-                                            @seniority
-                                        </Template>
-                                    </GridColumn>
-                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.GeneralSkillRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridGeneralSkillRatio"]" TextAlign="TextAlign.Center" Width="260" Context="lineContext">
-                                        <Template>
-                                            @{
-                                                string generalSkill = (lineContext as SelectEmployeeScoringLinesDto).GeneralSkillRatio.ToString() + "%";  
-                                            }
-                                            @generalSkill
-                                        </Template>
-                                    </GridColumn> 
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.TaskCapabilityRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridTaskCapabilityRatio"]" TextAlign="TextAlign.Center" Width="260" Context="lineContext"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.EducationLevelScore) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridEducationLevelScore"]" TextAlign="TextAlign.Center" Width="260" Context="lineContext"> </GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.ProductionPerformanceRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridProductionPerformanceRatio"]" TextAlign="TextAlign.Center" Width="280" Context="lineContext"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.AttendanceRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridAttendanceRatio"]" TextAlign="TextAlign.Center" Width="240" Context="lineContext"> </GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.SeniorityRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridSeniorityRatio"]" TextAlign="TextAlign.Center" Width="220" Context="lineContext"> </GridColumn>
+                                    <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.GeneralSkillRatio) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridGeneralSkillRatio"]" TextAlign="TextAlign.Center" Width="260" Context="lineContext"></GridColumn> 
                                     <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.ManagementImprovementRatio) Type="ColumnType.Number" HeaderText="@L["LineGridManagementImprovementRatio"]" TextAlign="TextAlign.Center" Width="260"></GridColumn>
                                     <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.EmployeeCurrentSalary) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridEmployeeCurrentSalary"]" TextAlign="TextAlign.Center" Width="260"></GridColumn>
                                     <GridColumn Field=@nameof(SelectEmployeeScoringLinesDto.StartingSalaryofPosition) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridStartingSalaryofPosition"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
@@ -382,6 +350,14 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ManagementImprovementRatioLineLabel"] </strong></label>
                             <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.ManagementImprovementRatio">
+                            </SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="1" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>İşe Devam Oranı (%): </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.AttendanceRatio">
                             </SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>

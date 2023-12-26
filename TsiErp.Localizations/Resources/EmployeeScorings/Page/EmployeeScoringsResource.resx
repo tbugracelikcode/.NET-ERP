@@ -280,7 +280,7 @@
     <value>DEĞERLENDİRME SONRASI MAAŞ</value>
   </data>
   <data name="LineGridAttendanceRatio" xml:space="preserve">
-    <value>İŞE DEVAM ORANI</value>
+    <value>İŞE DEVAM ORANI (%)</value>
   </data>
   <data name="LineGridDepartmentName" xml:space="preserve">
     <value>DEPARTMAN</value>
@@ -289,7 +289,7 @@
     <value>EĞİTİM SEVİYESİ</value>
   </data>
   <data name="LineGridEducationLevelScore" xml:space="preserve">
-    <value>EĞİTİM SEVİYESİ ORANI</value>
+    <value>EĞİTİM SEVİYESİ ORANI (%)</value>
   </data>
   <data name="LineGridEmployeeCurrentSalary" xml:space="preserve">
     <value>MEVCUT MAAŞ</value>
@@ -304,7 +304,7 @@
     <value>GÖREV TANIMI</value>
   </data>
   <data name="LineGridGeneralSkillRatio" xml:space="preserve">
-    <value>GENEL BECERİ ORANI</value>
+    <value>GENEL BECERİ ORANI (%)</value>
   </data>
   <data name="LineGridManagementImprovementRatio" xml:space="preserve">
     <value>YÖNETİM İYİLEŞTİRME ORANI</value>
@@ -316,7 +316,7 @@
     <value>POZİSYONUN DEĞERLEME ZAM ORANI</value>
   </data>
   <data name="LineGridProductionPerformanceRatio" xml:space="preserve">
-    <value>ÜRETİM PERFORMANS ORANI</value>
+    <value>ÜRETİM PERFORMANS ORANI (%)</value>
   </data>
   <data name="LineGridRaiseMonth" xml:space="preserve">
     <value>ZAM AYI</value>
@@ -328,7 +328,7 @@
     <value>ÜNVAN</value>
   </data>
   <data name="LineGridSeniorityRatio" xml:space="preserve">
-    <value>KIDEM ORANI</value>
+    <value>KIDEM ORANI (%)</value>
   </data>
   <data name="LineGridSeniorityValue" xml:space="preserve">
     <value>KIDEM</value>
@@ -340,7 +340,7 @@
     <value>POZİSYONUN BAŞLANGIÇ MAAŞI</value>
   </data>
   <data name="LineGridTaskCapabilityRatio" xml:space="preserve">
-    <value>GÖREV KABİLİYET ORANI</value>
+    <value>GÖREV KABİLİYET ORANI (%)</value>
   </data>
   <data name="LineGridTaskCompetenceScore" xml:space="preserve">
     <value>GÖREV YETKİNLİĞİ PUANI</value>

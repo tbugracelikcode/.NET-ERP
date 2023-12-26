@@ -139,9 +139,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             if (DataSource != null)
             {
-                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
 
-                if (dataOpenStatus == true && dataOpenStatus != null)
+                if (DataSource.DataOpenStatus == true && DataSource.DataOpenStatus != null)
                 {
                     EditPageVisible = false;
                     await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);

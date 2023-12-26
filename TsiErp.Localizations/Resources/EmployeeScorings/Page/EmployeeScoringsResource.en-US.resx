@@ -280,7 +280,7 @@
     <value>AFTER EVALUATION SALARY</value>
   </data>
   <data name="LineGridAttendanceRatio" xml:space="preserve">
-    <value>ATTENDACE RATIO</value>
+    <value>ATTENDACE RATIO (%)</value>
   </data>
   <data name="LineGridDepartmentName" xml:space="preserve">
     <value>DEPARTMENT</value>
@@ -289,7 +289,7 @@
     <value>EDUCATION LEVEL</value>
   </data>
   <data name="LineGridEducationLevelScore" xml:space="preserve">
-    <value>EDUCATION LEVEL SCORE</value>
+    <value>EDUCATION LEVEL SCORE (%)</value>
   </data>
   <data name="LineGridEmployeeCurrentSalary" xml:space="preserve">
     <value>CURRENT SALARY</value>
@@ -304,7 +304,7 @@
     <value>TASK DEFINITION</value>
   </data>
   <data name="LineGridGeneralSkillRatio" xml:space="preserve">
-    <value>GENERAL SKILL RATIO</value>
+    <value>GENERAL SKILL RATIO (%)</value>
   </data>
   <data name="LineGridManagementImprovementRatio" xml:space="preserve">
     <value>MANAGEMENT IMPROVEMENT RATIO</value>
@@ -316,7 +316,7 @@
     <value>POSITION VALUATION RAISE RATIO</value>
   </data>
   <data name="LineGridProductionPerformanceRatio" xml:space="preserve">
-    <value>PRODUCTION PERFORMANCE RATIO</value>
+    <value>PRODUCTION PERFORMANCE RATIO (%)</value>
   </data>
   <data name="LineGridRaiseMonth" xml:space="preserve">
     <value>RAISE MONTH</value>
@@ -328,7 +328,7 @@
     <value>TITLE</value>
   </data>
   <data name="LineGridSeniorityRatio" xml:space="preserve">
-    <value>SENIORITY RATIO</value>
+    <value>SENIORITY RATIO (%)</value>
   </data>
   <data name="LineGridSeniorityValue" xml:space="preserve">
     <value>SENIORITY</value>
@@ -340,7 +340,7 @@
     <value>STARTING SALARY OF POSITION</value>
   </data>
   <data name="LineGridTaskCapabilityRatio" xml:space="preserve">
-    <value>TASK CAPABILITY RATIO</value>
+    <value>TASK CAPABILITY RATIO (%)</value>
   </data>
   <data name="LineGridTaskCompetenceScore" xml:space="preserve">
     <value>TASK COMPETENCE SCORE</value>
