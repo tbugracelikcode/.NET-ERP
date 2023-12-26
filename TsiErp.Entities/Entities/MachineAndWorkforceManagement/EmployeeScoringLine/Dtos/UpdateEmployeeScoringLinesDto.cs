@@ -27,6 +27,14 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring
         /// </summary>
         public Guid OfficialSeniorityID { get; set; }
         /// <summary>
+        /// Üretim Performans Oranı
+        /// </summary>
+        public decimal ProductionPerformanceRatio { get; set; }
+        /// <summary>
+        /// Kıdem Oranı
+        /// </summary>
+        public decimal SeniorityRatio { get; set; }
+        /// <summary>
         /// Kıdem ID
         /// </summary>
         public Guid SeniorityID { get; set; }

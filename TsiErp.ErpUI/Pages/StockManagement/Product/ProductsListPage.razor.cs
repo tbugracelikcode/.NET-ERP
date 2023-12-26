@@ -271,9 +271,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
             if (TechnicalDrawingsDataSource != null)
             {
-                bool? dataOpenStatus = (bool?)TechnicalDrawingsDataSource.GetType().GetProperty("DataOpenStatus").GetValue(TechnicalDrawingsDataSource);
 
-                if (dataOpenStatus == true && dataOpenStatus != null)
+                if (TechnicalDrawingsDataSource.DataOpenStatus == true && TechnicalDrawingsDataSource.DataOpenStatus != null)
                 {
                     TechnicalDrawingsChangedCrudPopup = false;
                     await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
@@ -495,9 +494,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
             if (ProductReferanceNumbersDataSource != null)
             {
-                bool? dataOpenStatus = (bool?)ProductReferanceNumbersDataSource.GetType().GetProperty("DataOpenStatus").GetValue(ProductReferanceNumbersDataSource);
 
-                if (dataOpenStatus == true && dataOpenStatus != null)
+                if (ProductReferanceNumbersDataSource.DataOpenStatus == true && ProductReferanceNumbersDataSource.DataOpenStatus != null)
                 {
                     ProductReferanceNumbersCrudPopup = false;
                     await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);

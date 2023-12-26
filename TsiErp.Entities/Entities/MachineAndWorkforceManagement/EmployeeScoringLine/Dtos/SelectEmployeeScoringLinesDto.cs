@@ -31,6 +31,14 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring
         /// </summary>
         public DateTime EmployeeHiringDate { get; set; }
         /// <summary>
+        /// Üretim Performans Oranı
+        /// </summary>
+        public decimal ProductionPerformanceRatio { get; set; }
+        /// <summary>
+        /// Kıdem Oranı
+        /// </summary>
+        public decimal SeniorityRatio { get; set; }
+        /// <summary>
         /// Personel Mevcut Maaş
         /// </summary>
         public decimal EmployeeCurrentSalary { get; set; }
@@ -130,6 +138,24 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring
         /// Zam Ayı
         /// </summary>
         public int RaiseMonth { get; set; }
+
+        /// <summary>
+        /// Görev Yetkinliği Adı
+        /// </summary>
+        public string TaskCapabilityRatioName { get; set; }
+
+        /// <summary>
+        /// Eğitim Seviyesi Puanı Adı
+        /// </summary>
+        public string EducationLevelScoreName { get; set; }
+        /// <summary>
+        /// Üretim Performance Adı
+        /// </summary>
+        public string ProductionPerformanceRatioName { get; set; }
+        /// <summary>
+        /// Devamlılık Adı
+        /// </summary>
+        public string AttendanceRatioName { get; set; }
 
         [NoDatabaseAction]
         public List<SelectEmployeeOperationsDto> SelectEmployeeOperations { get; set; }

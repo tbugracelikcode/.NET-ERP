@@ -61,6 +61,24 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İşe Devam Oranı:.
+        /// </summary>
+        public static string AttendanceRatioNameLineLabel {
+            get {
+                return ResourceManager.GetString("AttendanceRatioNameLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hesapla.
+        /// </summary>
+        public static string CalculateButton {
+            get {
+                return ResourceManager.GetString("CalculateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -70,11 +88,218 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PUANTAJ KODU.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
         /// </summary>
         public static string CodeControlManager {
             get {
                 return ResourceManager.GetString("CodeControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puantaj Kodu:.
+        /// </summary>
+        public static string CodeLabel {
+            get {
+                return ResourceManager.GetString("CodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2023.
+        /// </summary>
+        public static string Combo23 {
+            get {
+                return ResourceManager.GetString("Combo23", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2024.
+        /// </summary>
+        public static string Combo24 {
+            get {
+                return ResourceManager.GetString("Combo24", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2025.
+        /// </summary>
+        public static string Combo25 {
+            get {
+                return ResourceManager.GetString("Combo25", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2026.
+        /// </summary>
+        public static string Combo26 {
+            get {
+                return ResourceManager.GetString("Combo26", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2027.
+        /// </summary>
+        public static string Combo27 {
+            get {
+                return ResourceManager.GetString("Combo27", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2028.
+        /// </summary>
+        public static string Combo28 {
+            get {
+                return ResourceManager.GetString("Combo28", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2029.
+        /// </summary>
+        public static string Combo29 {
+            get {
+                return ResourceManager.GetString("Combo29", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2030.
+        /// </summary>
+        public static string Combo30 {
+            get {
+                return ResourceManager.GetString("Combo30", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2031.
+        /// </summary>
+        public static string Combo31 {
+            get {
+                return ResourceManager.GetString("Combo31", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nisan.
+        /// </summary>
+        public static string ComboApr {
+            get {
+                return ResourceManager.GetString("ComboApr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ağustos.
+        /// </summary>
+        public static string ComboAug {
+            get {
+                return ResourceManager.GetString("ComboAug", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aralık.
+        /// </summary>
+        public static string ComboDec {
+            get {
+                return ResourceManager.GetString("ComboDec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şubat.
+        /// </summary>
+        public static string ComboFeb {
+            get {
+                return ResourceManager.GetString("ComboFeb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ocak.
+        /// </summary>
+        public static string ComboJan {
+            get {
+                return ResourceManager.GetString("ComboJan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temmuz.
+        /// </summary>
+        public static string ComboJul {
+            get {
+                return ResourceManager.GetString("ComboJul", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Haziran.
+        /// </summary>
+        public static string ComboJun {
+            get {
+                return ResourceManager.GetString("ComboJun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mart.
+        /// </summary>
+        public static string ComboMar {
+            get {
+                return ResourceManager.GetString("ComboMar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mayıs.
+        /// </summary>
+        public static string ComboMay {
+            get {
+                return ResourceManager.GetString("ComboMay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kasım .
+        /// </summary>
+        public static string ComboNov {
+            get {
+                return ResourceManager.GetString("ComboNov", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekim.
+        /// </summary>
+        public static string ComboOct {
+            get {
+                return ResourceManager.GetString("ComboOct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eylül.
+        /// </summary>
+        public static string ComboSep {
+            get {
+                return ResourceManager.GetString("ComboSep", resourceCulture);
             }
         }
         
@@ -115,11 +340,56 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Açıklama:.
+        /// </summary>
+        public static string Description_Label {
+            get {
+                return ResourceManager.GetString("Description_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Puanlama Kayıt Satırları.
+        /// </summary>
+        public static string EditLineModalTitle {
+            get {
+                return ResourceManager.GetString("EditLineModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personel Puanlama Kayıtları.
         /// </summary>
         public static string EditModalTitle {
             get {
                 return ResourceManager.GetString("EditModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eğitim Seviyesi Oranı:.
+        /// </summary>
+        public static string EducationLevelScoreNameLineLabel {
+            get {
+                return ResourceManager.GetString("EducationLevelScoreNameLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string EmployeeScoringLineLinesContextChange {
+            get {
+                return ResourceManager.GetString("EmployeeScoringLineLinesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string EmployeeScoringLinesContextChange {
+            get {
+                return ResourceManager.GetString("EmployeeScoringLinesContextChange", resourceCulture);
             }
         }
         
@@ -160,6 +430,51 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BİTİŞ TARİHİ.
+        /// </summary>
+        public static string EndDate {
+            get {
+                return ResourceManager.GetString("EndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bitiş Tarihi:.
+        /// </summary>
+        public static string EndDateLabel {
+            get {
+                return ResourceManager.GetString("EndDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onaylandı.
+        /// </summary>
+        public static string EnumApproved {
+            get {
+                return ResourceManager.GetString("EnumApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Taslak.
+        /// </summary>
+        public static string EnumDraft {
+            get {
+                return ResourceManager.GetString("EnumDraft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydedildi.
+        /// </summary>
+        public static string EnumSaved {
+            get {
+                return ResourceManager.GetString("EnumSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
@@ -187,6 +502,294 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BECERİ ADI.
+        /// </summary>
+        public static string GeneralSkillRecordPrioritiesGeneralSkillName {
+            get {
+                return ResourceManager.GetString("GeneralSkillRecordPrioritiesGeneralSkillName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Beceri Kayıtları Öncelikleri.
+        /// </summary>
+        public static string GeneralSkillRecordPrioritiesModalTitle {
+            get {
+                return ResourceManager.GetString("GeneralSkillRecordPrioritiesModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BECERİ PUANI.
+        /// </summary>
+        public static string GeneralSkillRecordPrioritiesScore {
+            get {
+                return ResourceManager.GetString("GeneralSkillRecordPrioritiesScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEVAMSIZLIK SÜRESİ.
+        /// </summary>
+        public static string LineGridAbsencePeriod {
+            get {
+                return ResourceManager.GetString("LineGridAbsencePeriod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEĞERLENDİRME SONRASI MAAŞ.
+        /// </summary>
+        public static string LineGridAfterEvaluationSalary {
+            get {
+                return ResourceManager.GetString("LineGridAfterEvaluationSalary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞE DEVAM ORANI (%).
+        /// </summary>
+        public static string LineGridAttendanceRatio {
+            get {
+                return ResourceManager.GetString("LineGridAttendanceRatio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEPARTMAN.
+        /// </summary>
+        public static string LineGridDepartmentName {
+            get {
+                return ResourceManager.GetString("LineGridDepartmentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EĞİTİM SEVİYESİ.
+        /// </summary>
+        public static string LineGridEducationLevelName {
+            get {
+                return ResourceManager.GetString("LineGridEducationLevelName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EĞİTİM SEVİYESİ ORANI (%).
+        /// </summary>
+        public static string LineGridEducationLevelScore {
+            get {
+                return ResourceManager.GetString("LineGridEducationLevelScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MEVCUT MAAŞ.
+        /// </summary>
+        public static string LineGridEmployeeCurrentSalary {
+            get {
+                return ResourceManager.GetString("LineGridEmployeeCurrentSalary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞE BAŞLAMA TARİHİ.
+        /// </summary>
+        public static string LineGridEmployeeHiringDate {
+            get {
+                return ResourceManager.GetString("LineGridEmployeeHiringDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÇALIŞAN ADI.
+        /// </summary>
+        public static string LineGridEmployeeID {
+            get {
+                return ResourceManager.GetString("LineGridEmployeeID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GÖREV TANIMI.
+        /// </summary>
+        public static string LineGridEmployeeTaskDefinition {
+            get {
+                return ResourceManager.GetString("LineGridEmployeeTaskDefinition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GENEL BECERİ ORANI (%).
+        /// </summary>
+        public static string LineGridGeneralSkillRatio {
+            get {
+                return ResourceManager.GetString("LineGridGeneralSkillRatio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to YÖNETİM İYİLEŞTİRME ORANI.
+        /// </summary>
+        public static string LineGridManagementImprovementRatio {
+            get {
+                return ResourceManager.GetString("LineGridManagementImprovementRatio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAĞLI OLDUĞU KADEME.
+        /// </summary>
+        public static string LineGridOfficialSeniorityName {
+            get {
+                return ResourceManager.GetString("LineGridOfficialSeniorityName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POZİSYONUN DEĞERLEME ZAM ORANI.
+        /// </summary>
+        public static string LineGridPositionValuationRaiseRatio {
+            get {
+                return ResourceManager.GetString("LineGridPositionValuationRaiseRatio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRETİM PERFORMANS ORANI (%).
+        /// </summary>
+        public static string LineGridProductionPerformanceRatio {
+            get {
+                return ResourceManager.GetString("LineGridProductionPerformanceRatio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZAM AYI.
+        /// </summary>
+        public static string LineGridRaiseMonth {
+            get {
+                return ResourceManager.GetString("LineGridRaiseMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to YENİDEN DEĞERLENDİRME ORANI.
+        /// </summary>
+        public static string LineGridReevaluationRatio {
+            get {
+                return ResourceManager.GetString("LineGridReevaluationRatio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜNVAN.
+        /// </summary>
+        public static string LineGridSeniorityName {
+            get {
+                return ResourceManager.GetString("LineGridSeniorityName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KIDEM ORANI (%).
+        /// </summary>
+        public static string LineGridSeniorityRatio {
+            get {
+                return ResourceManager.GetString("LineGridSeniorityRatio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KIDEM.
+        /// </summary>
+        public static string LineGridSeniorityValue {
+            get {
+                return ResourceManager.GetString("LineGridSeniorityValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VARDİYA.
+        /// </summary>
+        public static string LineGridShiftValue {
+            get {
+                return ResourceManager.GetString("LineGridShiftValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POZİSYONUN BAŞLANGIÇ MAAŞI.
+        /// </summary>
+        public static string LineGridStartingSalaryofPosition {
+            get {
+                return ResourceManager.GetString("LineGridStartingSalaryofPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GÖREV KABİLİYET ORANI (%).
+        /// </summary>
+        public static string LineGridTaskCapabilityRatio {
+            get {
+                return ResourceManager.GetString("LineGridTaskCapabilityRatio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GÖREV YETKİNLİĞİ PUANI.
+        /// </summary>
+        public static string LineGridTaskCompetenceScore {
+            get {
+                return ResourceManager.GetString("LineGridTaskCompetenceScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BUGÜNÜN TARİHİ.
+        /// </summary>
+        public static string LineGridTodaysDate {
+            get {
+                return ResourceManager.GetString("LineGridTodaysDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PUAN.
+        /// </summary>
+        public static string LinesLineGridScore_ {
+            get {
+                return ResourceManager.GetString("LinesLineGridScore_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OPERASYON ADI.
+        /// </summary>
+        public static string LinesLineGridTemplateOperationName {
+            get {
+                return ResourceManager.GetString("LinesLineGridTemplateOperationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OPERASYON İŞ PUANI.
+        /// </summary>
+        public static string LinesLineGridTemplateOperationWorkScore {
+            get {
+                return ResourceManager.GetString("LinesLineGridTemplateOperationWorkScore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Operasyonları.
+        /// </summary>
+        public static string LinesLineModalTitle {
+            get {
+                return ResourceManager.GetString("LinesLineModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
@@ -201,6 +804,15 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         public static string LoadingText {
             get {
                 return ResourceManager.GetString("LoadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yönetim İyileştirme Oranı:.
+        /// </summary>
+        public static string ManagementImprovementRatioLineLabel {
+            get {
+                return ResourceManager.GetString("ManagementImprovementRatioLineLabel", resourceCulture);
             }
         }
         
@@ -223,11 +835,101 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AY.
+        /// </summary>
+        public static string Month_ {
+            get {
+                return ResourceManager.GetString("Month_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ay:.
+        /// </summary>
+        public static string MonthLabel {
+            get {
+                return ResourceManager.GetString("MonthLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Performans Oranı:.
+        /// </summary>
+        public static string ProductionPerformanceRatioNameLineLabel {
+            get {
+                return ResourceManager.GetString("ProductionPerformanceRatioNameLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puan:.
+        /// </summary>
+        public static string Score_LinesLineLabel {
+            get {
+                return ResourceManager.GetString("Score_LinesLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durum:.
+        /// </summary>
+        public static string ScoringStateLabel {
+            get {
+                return ResourceManager.GetString("ScoringStateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAŞLANGIÇ TARİHİ.
+        /// </summary>
+        public static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başlangıç Tarihi:.
+        /// </summary>
+        public static string StartDateLabel {
+            get {
+                return ResourceManager.GetString("StartDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görev Kabiliyet Oranı:.
+        /// </summary>
+        public static string TaskCapabilityRatioNameLineLabel {
+            get {
+                return ResourceManager.GetString("TaskCapabilityRatioNameLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon İş Puanı:.
+        /// </summary>
+        public static string TemplateOperationWorkScoreLinesLineLabel {
+            get {
+                return ResourceManager.GetString("TemplateOperationWorkScoreLinesLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Puanlama Kayıtları.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
             }
         }
         
@@ -264,6 +966,24 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         public static string ValidatorCodeMaxLenght {
             get {
                 return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to YIL.
+        /// </summary>
+        public static string Year_ {
+            get {
+                return ResourceManager.GetString("Year_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yıl:.
+        /// </summary>
+        public static string YearLabel {
+            get {
+                return ResourceManager.GetString("YearLabel", resourceCulture);
             }
         }
     }

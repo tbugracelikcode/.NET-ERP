@@ -30,6 +30,14 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring
         /// </summary>
         public string EmployeeSurname { get; set; }
         /// <summary>
+        /// Üretim Performans Oranı
+        /// </summary>
+        public decimal ProductionPerformanceRatio { get; set; }
+        /// <summary>
+        /// Kıdem Oranı
+        /// </summary>
+        public decimal SeniorityRatio { get; set; }
+        /// <summary>
         /// Personel İşe Giriş Tarihi
         /// </summary>
         public DateTime EmployeeHiringDate { get; set; }
