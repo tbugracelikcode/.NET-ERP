@@ -6,7 +6,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementParam
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.StockManagementParameter
 {
-    public partial class StockManagementParametersListPage
+    public partial class StockManagementParametersListPage : IDisposable
     {
         protected override async void OnInitialized()
         {
@@ -52,6 +52,13 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.StockManagementParamet
 
                 await InvokeAsync(StateHasChanged);
             }
+        }
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
         }
     }
 }

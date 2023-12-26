@@ -7,7 +7,7 @@ using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
 
 namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenancePeriod
 {
-    public partial class MaintenancePeriodsListPage
+    public partial class MaintenancePeriodsListPage : IDisposable
     {
 
         public bool? isChecked = false;
@@ -75,6 +75,12 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenancePeriod
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
 
     }
 }

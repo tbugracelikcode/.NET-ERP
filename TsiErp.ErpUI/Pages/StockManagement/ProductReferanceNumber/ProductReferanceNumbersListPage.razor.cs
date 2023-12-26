@@ -9,7 +9,7 @@ using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 
 namespace TsiErp.ErpUI.Pages.StockManagement.ProductReferanceNumber
 {
-    public partial class ProductReferanceNumbersListPage
+    public partial class ProductReferanceNumbersListPage : IDisposable
     {
         protected override async void OnInitialized()
         {
@@ -173,6 +173,13 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReferanceNumber
         }
 
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
 
     }
 

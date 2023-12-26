@@ -7,7 +7,7 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EducationLevelScore
 {
-    public partial class EducationLevelScoresListPage
+    public partial class EducationLevelScoresListPage : IDisposable
     {
         protected override async void OnInitialized()
         {
@@ -51,5 +51,12 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EducationLevelScore
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

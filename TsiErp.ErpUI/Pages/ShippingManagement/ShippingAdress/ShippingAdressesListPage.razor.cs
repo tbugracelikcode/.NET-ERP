@@ -8,7 +8,7 @@ using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.ShippingAdress
 {
-    public partial class ShippingAdressesListPage
+    public partial class ShippingAdressesListPage : IDisposable
     {
 
         protected override async void OnInitialized()
@@ -117,5 +117,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.ShippingAdress
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

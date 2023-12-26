@@ -15,7 +15,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 {
-    public partial class Report8DsListPage
+    public partial class Report8DsListPage : IDisposable
     {
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -1648,5 +1648,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
         #endregion
 
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

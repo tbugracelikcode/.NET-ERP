@@ -8,7 +8,7 @@ using TsiErp.Entities.Entities.QualityControl.EquipmentRecord.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationVerification
 {
-    public partial class CalibrationVerificationsListPage
+    public partial class CalibrationVerificationsListPage : IDisposable
     {
 
         protected override async void OnInitialized()
@@ -99,5 +99,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationVerification
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

@@ -14,7 +14,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
 {
-    public partial class PurchasePricesListPage
+    public partial class PurchasePricesListPage : IDisposable
     {
 
         private SfGrid<SelectPurchasePriceLinesDto> _LineGrid;
@@ -547,5 +547,11 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
         }
         #endregion
 
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

@@ -15,7 +15,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.MaintenanceManagement.PlannedMaintenance
 {
-    public partial class PlannedMaintenancesListPage
+    public partial class PlannedMaintenancesListPage : IDisposable
     {
 
         #region Combobox İşlemleri
@@ -555,5 +555,11 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.PlannedMaintenance
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

@@ -19,7 +19,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 {
-    public partial class CalendarsListPage
+    public partial class CalendarsListPage : IDisposable
     {
         SfSchedule<AppointmentData> ScheduleObj;
 
@@ -794,6 +794,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         #endregion
 
 
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
 
     }
 }

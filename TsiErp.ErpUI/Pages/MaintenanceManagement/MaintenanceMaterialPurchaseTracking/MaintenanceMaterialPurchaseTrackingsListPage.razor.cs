@@ -16,7 +16,7 @@ using static TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP.Maintenance
 
 namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTracking
 {
-    public partial class MaintenanceMaterialPurchaseTrackingsListPage
+    public partial class MaintenanceMaterialPurchaseTrackingsListPage : IDisposable
     {
         public class MaintenanceMaterialPurchaseTracking
         {
@@ -347,5 +347,12 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
         }
 
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

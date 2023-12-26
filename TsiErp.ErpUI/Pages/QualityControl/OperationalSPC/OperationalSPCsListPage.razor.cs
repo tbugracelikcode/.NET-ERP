@@ -19,7 +19,7 @@ using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 {
-    public partial class OperationalSPCsListPage
+    public partial class OperationalSPCsListPage : IDisposable
     {
 
         private SfGrid<SelectOperationalSPCLinesDto> _LineGrid;
@@ -508,5 +508,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

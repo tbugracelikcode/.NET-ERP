@@ -10,7 +10,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Branch
 {
-    public partial class BranchesListPage
+    public partial class BranchesListPage : IDisposable
     {
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -83,5 +83,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Branch
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

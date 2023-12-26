@@ -8,7 +8,7 @@ using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.ControlType
 {
-    partial class ControlTypesListPage
+    partial class ControlTypesListPage : IDisposable
     {
 
         bool _isOperation;
@@ -125,5 +125,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ControlType
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

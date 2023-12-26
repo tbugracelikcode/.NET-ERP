@@ -30,7 +30,7 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 {
-    public partial class MRPsListPage
+    public partial class MRPsListPage : IDisposable
     {
         private SfGrid<SelectMRPLinesDto> _LineGrid;
         private SfGrid<ListSalesOrderDto> _OrdersGrid;
@@ -829,5 +829,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             }
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

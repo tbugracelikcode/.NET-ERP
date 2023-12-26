@@ -10,7 +10,7 @@ using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItem
 {
-    partial class UnsuitabilityItemListPage
+    partial class UnsuitabilityItemListPage : IDisposable
     {
         private List<SelectionList> SelectionLists = new List<SelectionList>() { new SelectionList { Text = "Evet", Id = 1 }, new SelectionList { Text = "Hayır", Id = 2 } };
 
@@ -195,6 +195,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItem
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 
 

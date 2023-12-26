@@ -9,7 +9,7 @@ using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.ControlCondition
 {
-    partial class ControlConditionsDocumentsListPage
+    partial class ControlConditionsDocumentsListPage:IDisposable
     {
 
         bool _isOperation;
@@ -125,5 +125,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ControlCondition
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

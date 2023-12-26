@@ -6,7 +6,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementPa
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PlanningManagementParameter
 {
-    public partial class PlanningManagementParametersListPage
+    public partial class PlanningManagementParametersListPage : IDisposable
     {
         protected override async void OnInitialized()
         {
@@ -88,6 +88,13 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PlanningManagementPara
 
                 await InvokeAsync(StateHasChanged);
             }
+        }
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -7,7 +7,7 @@ using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 
 namespace TsiErp.ErpUI.Pages.FinanceManagement.PaymentPlan
 {
-    public partial class PaymentPlansListPage
+    public partial class PaymentPlansListPage : IDisposable
     {
 
         protected override async void OnInitialized()
@@ -54,5 +54,12 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.PaymentPlan
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

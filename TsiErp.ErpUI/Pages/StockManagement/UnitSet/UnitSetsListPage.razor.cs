@@ -7,7 +7,7 @@ using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 
 namespace TsiErp.ErpUI.Pages.StockManagement.UnitSet
 {
-    public partial class UnitSetsListPage
+    public partial class UnitSetsListPage : IDisposable
     {
 
         protected override async void OnInitialized()
@@ -54,5 +54,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.UnitSet
         }
         #endregion
 
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

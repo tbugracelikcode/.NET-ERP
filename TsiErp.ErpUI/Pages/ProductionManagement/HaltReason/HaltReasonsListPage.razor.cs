@@ -7,7 +7,7 @@ using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.HaltReason
 {
-    public partial class HaltReasonsListPage
+    public partial class HaltReasonsListPage : IDisposable
     {
         protected override void OnInitialized()
         {
@@ -51,5 +51,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.HaltReason
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

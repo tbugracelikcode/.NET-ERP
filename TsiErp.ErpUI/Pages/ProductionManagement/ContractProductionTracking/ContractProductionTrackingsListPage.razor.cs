@@ -15,7 +15,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractProductionTracking
 {
-    public partial class ContractProductionTrackingsListPage
+    public partial class ContractProductionTrackingsListPage : IDisposable
     {
 
 
@@ -420,5 +420,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractProductionTracking
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

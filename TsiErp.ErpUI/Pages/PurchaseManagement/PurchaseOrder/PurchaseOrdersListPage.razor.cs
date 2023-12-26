@@ -22,7 +22,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 {
-    public partial class PurchaseOrdersListPage
+    public partial class PurchaseOrdersListPage : IDisposable
     {
         private SfGrid<SelectPurchaseOrderLinesDto> _LineGrid;
         private SfGrid<CreateStockReceiptFishes> _CreateStockFishesGrid;
@@ -1258,5 +1258,11 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

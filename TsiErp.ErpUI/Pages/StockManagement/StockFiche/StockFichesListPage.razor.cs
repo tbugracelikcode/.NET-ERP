@@ -17,7 +17,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 {
-    public partial class StockFichesListPage
+    public partial class StockFichesListPage : IDisposable
     {
 
         #region Stock Parameters
@@ -677,5 +677,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
 
 
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }
