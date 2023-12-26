@@ -16,8 +16,10 @@ using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
+using TsiErp.Fatek.CommunicationCore.Base;
 using TsiErp.UretimEkranUI.Models;
 using TsiErp.UretimEkranUI.Services;
+using TsiErp.UretimEkranUI.Utilities.EnumUtilities;
 using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
 
 namespace TsiErp.UretimEkranUI.Pages
@@ -126,6 +128,12 @@ namespace TsiErp.UretimEkranUI.Pages
                     AdjustmentTimer.Elapsed += SettingsTimedEvent;
                     AdjustmentTimer.Enabled = true;
                     StartAdjustmenButtonDisabled = true;
+
+                    // Ayar süresi sıfırlandı.
+                    AppService.FatekCommunication.SetItem(MemoryType.DR, 200, 0);
+
+                    //PLC de ayar register'ı set ediliyor.
+                    AppService.FatekCommunication.SetDis(MemoryType.M, 8, RunningCode.Set);
                 }
                 else
                 {
@@ -185,7 +193,7 @@ namespace TsiErp.UretimEkranUI.Pages
             QualityControlApprovalTimer.Enabled = true;
 
             #region İlk Ürün Kaydı Oluşturuluyor
-            Guid OperationQualityPlanID = (await OperationalQualityPlansAppService.GetListAsync(new ListOperationalQualityPlansParameterDto())).Data.Where(t => t.ProductID == AppService.CurrentOperation.WorkOrder.ProductID && t.ProductsOperationID == AppService.CurrentOperation.WorkOrder.ProductsOperationID).Select(t => t.Id).FirstOrDefault();
+            Guid OperationQualityPlanID = (await OperationalQualityPlansAppService.GetListAsync(new ListOperationalQualityPlansParameterDto())).Data.Where(t => t.ProductID == AppService.CurrentOperation.ProductID && t.ProductsOperationID == AppService.CurrentOperation.ProductsOperationID).Select(t => t.Id).FirstOrDefault();
 
             if (OperationQualityPlanID != Guid.Empty)
             {
@@ -196,12 +204,12 @@ namespace TsiErp.UretimEkranUI.Pages
                 var createdFirstProductApproval = new CreateFirstProductApprovalsDto()
                 {
                     Code = FicheNumbersAppService.GetFicheNumberAsync("FirstProductApprovalChildMenu"),
-                    WorkOrderID = AppService.CurrentOperation.WorkOrder.Id,
+                    WorkOrderID = AppService.CurrentOperation.WorkOrderID,
                     CreatorId = Adjustment.AdjustmentUserId,
                     Description_ = string.Empty,
                     EmployeeID = Guid.Empty,
                     ControlDate = null,
-                    ProductID = AppService.CurrentOperation.WorkOrder.ProductID,
+                    ProductID = AppService.CurrentOperation.ProductID,
                     OperationQualityPlanID = OperationQualityPlanID,
                     SelectFirstProductApprovalLines = new List<SelectFirstProductApprovalLinesDto>(),
                     IsApproval = false,
@@ -324,28 +332,30 @@ namespace TsiErp.UretimEkranUI.Pages
             FirstApprovalControlTimer.Stop();
             FirstApprovalControlTimer.Enabled = false;
 
+            // Ayar süresi PLC den okundu.
+            TotalAdjustmentTime = AppService.FatekCommunication.GetItem(MemoryType.DR, 200);
+
             Adjustment.TotalAdjustmentTime = TotalAdjustmentTime;
             AppService.CurrentOperation.ApprovedQuantity = ApprovedQuantity;
             AppService.CurrentOperation.ScrapQuantity = ScrapQuantity;
-            AppService.CurrentOperation.WorkOrder.ProducedQuantity = ApprovedQuantity;
+            AppService.CurrentOperation.ProducedQuantity = ApprovedQuantity;
 
-            AppService.CurrentOperation.OperationAdjustment=Adjustment;
+            AppService.OperationAdjustment = Adjustment;
 
-            
-                var createAdjustmentDto = new CreateOperationAdjustmentsDto
-                {
-                    AdjustmentStartDate = Adjustment.AdjustmentDate,
-                    AdjustmentUserId = Adjustment.AdjustmentUserId,
-                    TotalAdjustmentTime = Adjustment.TotalAdjustmentTime,
-                    WorkOrderId = AppService.CurrentOperation.WorkOrder.Id,
-                    ApprovedQuantity = AppService.CurrentOperation.ApprovedQuantity,
-                    ScrapQuantity = AppService.CurrentOperation.ScrapQuantity,
-                    OperatorId = Guid.NewGuid(),
-                    TotalQualityControlApprovedTime = AppService.CurrentOperation.TotalQualityControlApprovalTime
-                };
+            var createAdjustmentDto = new CreateOperationAdjustmentsDto
+            {
+                AdjustmentStartDate = Adjustment.AdjustmentDate,
+                AdjustmentUserId = Adjustment.AdjustmentUserId,
+                TotalAdjustmentTime = Adjustment.TotalAdjustmentTime,
+                WorkOrderId = AppService.CurrentOperation.WorkOrderID,
+                ApprovedQuantity = AppService.CurrentOperation.ApprovedQuantity,
+                ScrapQuantity = AppService.CurrentOperation.ScrapQuantity,
+                OperatorId = Guid.NewGuid(),
+                TotalQualityControlApprovedTime = AppService.CurrentOperation.TotalQualityControlApprovalTime
+            };
 
-                await OperationAdjustmentAppService.CreateAsync(createAdjustmentDto);
-            
+            await OperationAdjustmentAppService.CreateAsync(createAdjustmentDto);
+
 
             NavigationManager.NavigateTo("/work-order-detail", true);
 
@@ -376,7 +386,22 @@ namespace TsiErp.UretimEkranUI.Pages
                 FirstApprovalControlTimer.Enabled = false;
             }
 
-            NavigationManager.NavigateTo("/work-order-detail");
+            if (AppService.AdjustmentState == States.AdjustmentState.FromNonOperation)
+            {
+                //Ayar süresini durdurmak için M8 registerını resetliyoruz
+                AppService.FatekCommunication.SetDis(Fatek.CommunicationCore.Base.MemoryType.M, 8, Fatek.CommunicationCore.Base.RunningCode.Reset);
+                NavigationManager.NavigateTo("/before-operation");
+            }
+
+            if (AppService.AdjustmentState == States.AdjustmentState.FromOperation)
+            {
+                //Operasyon süresini başlatmak için M9 registerını setliyoruz
+                AppService.FatekCommunication.SetDis(Fatek.CommunicationCore.Base.MemoryType.M, 9, Fatek.CommunicationCore.Base.RunningCode.Set);
+                //Ayar süresini durdurmak için M8 registerını resetliyoruz
+                AppService.FatekCommunication.SetDis(Fatek.CommunicationCore.Base.MemoryType.M, 8, Fatek.CommunicationCore.Base.RunningCode.Reset);
+                NavigationManager.NavigateTo("/work-order-detail");
+            }
+
 
             await Task.CompletedTask;
         }

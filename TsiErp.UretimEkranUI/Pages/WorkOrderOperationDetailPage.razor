@@ -41,7 +41,7 @@
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <WorkOrderDetailBreadCrumbFirst WorkOrderNo=@AppService.CurrentOperation.WorkOrder.WorkOrderNo ProductName=@AppService.CurrentOperation.WorkOrder.ProductName PlannedAmount=@AppService.CurrentOperation.WorkOrder.PlannedQuantity />
+                            <WorkOrderDetailBreadCrumbFirst WorkOrderNo=@AppService.CurrentOperation.WorkOrderNo ProductName=@AppService.CurrentOperation.ProductName PlannedAmount=@AppService.CurrentOperation.PlannedQuantity />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -49,7 +49,7 @@
 
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <WorkOrderDetailBreadCrumbSecond StationCode=@AppService.CurrentOperation.WorkOrder.StationCode OperationName=@AppService.CurrentOperation.WorkOrder.ProductsOperationName EmployeeName=@AppService.CurrentOperation.EmployeeName />
+                            <WorkOrderDetailBreadCrumbSecond StationCode=@AppService.CurrentOperation.StationCode OperationName=@AppService.CurrentOperation.ProductsOperationName EmployeeName=@AppService.CurrentOperation.EmployeeName />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -67,7 +67,7 @@
                                 <tr>
                                     <td style="width:20%">
 
-                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="@(()=>NavigationManager.NavigateTo("/operation-adjustment"))"><SfIcon Size="IconSize.Large" Name="IconName.Settings"></SfIcon>&nbsp;Ayar Yap</SfButton>
+                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="@StartAdjustment"><SfIcon Size="IconSize.Large" Name="IconName.Settings"></SfIcon>&nbsp;Ayar Yap</SfButton>
                                     </td>
 
                                     <td style="width:20%">
@@ -167,7 +167,7 @@
                                             <SfCircularGauge Title="ÜRETİLEN MİKTAR" CenterY="180" Height="350px">
                                                 <CircularGaugeTitleStyle FontFamily="Verdana" FontStyle="normal" FontWeight="bold" Size="14px"></CircularGaugeTitleStyle>
                                                 <CircularGaugeAxes>
-                                                    <CircularGaugeAxis Minimum="1" Maximum="@((double)AppService.CurrentOperation.WorkOrder.PlannedQuantity)">
+                                                    <CircularGaugeAxis Minimum="1" Maximum="@((double)AppService.CurrentOperation.PlannedQuantity)">
                                                         <CircularGaugeAxisLineStyle Width="0" />
                                                         <CircularGaugeAxisLabelStyle>
                                                             <CircularGaugeAxisLabelFont Size="0px" FontFamily="inherit" />
@@ -175,10 +175,10 @@
                                                         <CircularGaugeAxisMajorTicks Height="0" />
                                                         <CircularGaugeAxisMinorTicks Height="0" />
                                                         <CircularGaugeRanges>
-                                                            <CircularGaugeRange Start="1" End="@((double)AppService.CurrentOperation.WorkOrder.PlannedQuantity)" Radius="90%" StartWidth="30" EndWidth="30" Color="#E0E0E0" />
+                                                            <CircularGaugeRange Start="1" End="@((double)AppService.CurrentOperation.PlannedQuantity)" Radius="90%" StartWidth="30" EndWidth="30" Color="#E0E0E0" />
                                                         </CircularGaugeRanges>
                                                         <CircularGaugePointers>
-                                                            <CircularGaugePointer Value="@((double)AppService.CurrentOperation.WorkOrder.ProducedQuantity)" Type="PointerType.RangeBar" Radius="90%" Color="green" PointerWidth="30">
+                                                            <CircularGaugePointer Value="@((double)AppService.CurrentOperation.ProducedQuantity)" Type="PointerType.RangeBar" Radius="90%" Color="green" PointerWidth="30">
                                                                 <CircularGaugePointerAnimation Enable="false" />
                                                                 <CircularGaugePointerBorder Width="0" />
                                                             </CircularGaugePointer>
@@ -186,7 +186,7 @@
                                                         <CircularGaugeAnnotations>
                                                             <CircularGaugeAnnotation Radius="0%" Angle="0" ZIndex="1">
                                                                 <ContentTemplate>
-                                                                    <div class="annotationText">@string.Format("{0:0}",AppService.CurrentOperation.WorkOrder.ProducedQuantity)/@string.Format("{0:0}",AppService.CurrentOperation.WorkOrder.PlannedQuantity)</div>
+                                                                    <div class="annotationText">@string.Format("{0:0}",AppService.CurrentOperation.ProducedQuantity)/@string.Format("{0:0}",AppService.CurrentOperation.PlannedQuantity)</div>
                                                                 </ContentTemplate>
                                                             </CircularGaugeAnnotation>
                                                         </CircularGaugeAnnotations>
@@ -276,7 +276,7 @@
                                                         </center>
                                                         <br />
                                                         <center>
-                                                            <SfTextBox CssClass="TSITxtBox" Readonly=true></SfTextBox>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value=TotalOperationTime Readonly=true></SfTextBox>
                                                         </center>
                                                     </strong>
                                                 </label>

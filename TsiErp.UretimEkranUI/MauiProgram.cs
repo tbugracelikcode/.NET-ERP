@@ -89,6 +89,9 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddBlazoredModal();
             builder.Services.AddSyncfusionBlazor();
             builder.Services.AddDevExpressBlazor();
+            //builder.Services.AddSingleton<LocalDbService>();
+            builder.Services.AddSingleton<OperationDetailLocalDbService>();
+            builder.Services.AddSingleton<ParametersTableLocalDbService>();
             builder.Services.AddScoped<ModalManager>();
             builder.Services.AddScoped<AppService>();
             builder.Services.AddScoped<IFicheNumbersAppService, FicheNumbersAppService>();
