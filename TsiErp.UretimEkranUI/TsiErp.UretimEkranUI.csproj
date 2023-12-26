@@ -141,6 +141,7 @@
         <PackageReference Include="runtime.native.System.IO.Ports" Version="7.0.0" />
         <PackageReference Include="runtime.osx-arm64.runtime.native.System.IO.Ports" Version="7.0.0" />
         <PackageReference Include="runtime.osx-x64.runtime.native.System.IO.Ports" Version="7.0.0" />
+        <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
         <PackageReference Include="Syncfusion.Blazor.CircularGauge" Version="23.1.43" />
 		<PackageReference Include="Syncfusion.Blazor.Grid" Version="23.1.43" />
 		<PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="23.1.43" />
