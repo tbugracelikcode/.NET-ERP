@@ -188,6 +188,32 @@
         border: 3px solid;
     }
 
+.TSIOperationDetailButton2 {
+    border-color: #565656 !important;
+    font-family: Verdana !important;
+    background-image: linear-gradient(135deg, rgb(168 20 20) 20%, #f82121 90%) !important;
+    color: #ffffff !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    width: 210px;
+    border-radius: 5px;
+    height: 120px;
+    border: 2px solid;
+}
+    .TSIOperationDetailButton2:hover {
+        border-color: #565656 !important;
+        font-family: Verdana !important;
+        background-image: linear-gradient(135deg, rgb(231 64 64) 20%, #f66d6d 90%) !important;
+        box-shadow: rgb(0 0 0 / 70%) 0px 2px 8px;
+        color: #ffffff !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+        width: 210px;
+        border-radius: 5px;
+        height: 120px;
+        border: 3px solid;
+    }
+
     .TSISaveButton {
         border-color: #565656 !important;
         background-color: white !important;
@@ -436,6 +462,14 @@
     background-image: linear-gradient(356deg, rgb(215 214 214) 0%, #f9f8f8 70%) !important;
     box-shadow: rgb(0 0 0 / 60%) 0px 1px 4px;
     height: 65px;
+}
+
+.TSIListPageButtonCard2 {
+    font-size: 14px;
+    color: white;
+    background-image: linear-gradient(356deg, rgb(215 214 214) 0%, #f9f8f8 70%) !important;
+    box-shadow: rgb(0 0 0 / 60%) 0px 1px 4px;
+    height: 200px;
 }
 
 .TSIOperationDetailListPageTitleCard {

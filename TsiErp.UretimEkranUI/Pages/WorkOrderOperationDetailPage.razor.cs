@@ -30,7 +30,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
         protected override async void OnInitialized()
         {
-            var totalAdjusmentTime = (await OperationAdjustmentAppService.GetTotalAdjustmentTimeAsync(AppService.CurrentOperation.WorkOrder.Id));
+            var totalAdjusmentTime = (await OperationAdjustmentAppService.GetTotalAdjustmentTimeAsync(AppService.CurrentOperation.WorkOrderID));
 
             if(totalAdjusmentTime > 0)
             {
@@ -48,7 +48,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
             ScrapQuantityCalculate();
 
-            //StartTimer();
+            StartTimer();
 
 
         }
@@ -67,11 +67,11 @@ namespace TsiErp.UretimEkranUI.Pages
             if (AppService.CurrentOperation.ScrapQuantity > 0)
             {
 
-                if (AppService.CurrentOperation.ScrapQuantity <= AppService.CurrentOperation.WorkOrder.ProducedQuantity)
+                if (AppService.CurrentOperation.ScrapQuantity <= AppService.CurrentOperation.ProducedQuantity)
                 {
                     //AppService.CurrentOperation.ScrapQuantity = AppService.CurrentOperation.ScrapQuantity + 1;
 
-                    QualityPercent = 1 - (AppService.CurrentOperation.ScrapQuantity / AppService.CurrentOperation.WorkOrder.ProducedQuantity);
+                    QualityPercent = 1 - (AppService.CurrentOperation.ScrapQuantity / AppService.CurrentOperation.ProducedQuantity);
 
                     await InvokeAsync(StateHasChanged);
                 }
@@ -81,16 +81,16 @@ namespace TsiErp.UretimEkranUI.Pages
 
         #region Operation Timer
 
-        public string ElapsedTime { get; set; } = "0:0:0";
+        public string TotalOperationTime { get; set; } = "0:0:0";
 
-        System.Timers.Timer _timer = new System.Timers.Timer(1);
+        System.Timers.Timer _timer = new System.Timers.Timer(1000);
 
         DateTime StartTime = DateTime.Now;
 
         void StartTimer()
         {
             StartTime = DateTime.Now;
-            _timer = new System.Timers.Timer(1);
+            _timer = new System.Timers.Timer(1000);
             _timer.Elapsed += OnTimedEvent;
             _timer.AutoReset = true;
             _timer.Enabled = true;
@@ -100,12 +100,24 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             DateTime currentTime = e.SignalTime;
 
-            ElapsedTime = currentTime.Subtract(StartTime).Hours + ":" + currentTime.Subtract(StartTime).Minutes + ":" + currentTime.Subtract(StartTime).Seconds;
+            TotalOperationTime = currentTime.Subtract(StartTime).Hours + ":" + currentTime.Subtract(StartTime).Minutes + ":" + currentTime.Subtract(StartTime).Seconds;
 
             InvokeAsync(StateHasChanged);
         }
 
         #endregion
+
+        public void StartAdjustment()
+        {
+            //Operasyon süresini durdurmak için M9 registerını resetliyoruz
+            AppService.FatekCommunication.SetDis(Fatek.CommunicationCore.Base.MemoryType.M, 9, Fatek.CommunicationCore.Base.RunningCode.Reset);
+
+            //Ayar süresini başlatmak için M8 registerını setliyoruz
+            AppService.FatekCommunication.SetDis(Fatek.CommunicationCore.Base.MemoryType.M, 8, Fatek.CommunicationCore.Base.RunningCode.Set);
+
+            AppService.AdjustmentState = Utilities.EnumUtilities.States.AdjustmentState.FromOperation;
+            NavigationManager.NavigateTo("/operation-adjustment");
+        }
 
         public void Dispose()
         {

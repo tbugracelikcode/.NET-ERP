@@ -51,16 +51,18 @@ namespace TsiErp.Fatek.CommunicationCore
         /// <summary>
         /// PC connect with PLC FATEK.
         /// </summary>
-        public void Connect()
+        public bool Connect()
         {
             try
             {
                 if (objSerialPort.IsOpen) objSerialPort.Close();
                 objSerialPort.Open();
+
+                return objSerialPort.IsOpen;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //throw ex;
+                return false;
             }
         }
 

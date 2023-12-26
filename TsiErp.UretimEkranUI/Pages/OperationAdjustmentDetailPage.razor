@@ -42,7 +42,7 @@
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <WorkOrderDetailBreadCrumbFirst WorkOrderNo=@AppService.CurrentOperation.WorkOrder.WorkOrderNo ProductName=@AppService.CurrentOperation.WorkOrder.ProductName PlannedAmount=@AppService.CurrentOperation.WorkOrder.PlannedQuantity />
+                            <WorkOrderDetailBreadCrumbFirst WorkOrderNo=@AppService.CurrentOperation.WorkOrderNo ProductName=@AppService.CurrentOperation.ProductName PlannedAmount=@AppService.CurrentOperation.PlannedQuantity />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -50,7 +50,7 @@
 
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <WorkOrderDetailBreadCrumbSecond StationCode=@AppService.CurrentOperation.WorkOrder.StationCode OperationName=@AppService.CurrentOperation.WorkOrder.ProductsOperationName EmployeeName=@AppService.CurrentOperation.EmployeeName />
+                            <WorkOrderDetailBreadCrumbSecond StationCode=@AppService.CurrentOperation.StationCode OperationName=@AppService.CurrentOperation.ProductsOperationName EmployeeName=@AppService.CurrentOperation.EmployeeName />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
