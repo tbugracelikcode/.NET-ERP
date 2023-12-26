@@ -1,130 +1,130 @@
-﻿@page "/h"
+﻿@page "/"
 
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 @inject IUsersAppService UsersAppService
+@inject AppService AppService
+@inject IEmployeesAppService EmployeesAppService
 
-<!doctype html>
-<html class="no-js" lang="">
+<SfCard class="TSILoginPageCard">
+    <CardContent>
+        <DxGridLayout CssClass="TSIGridLayout">
 
-<head>
+            <Rows>
+                <DxGridLayoutRow Height="60%" />
+                <DxGridLayoutRow Height="60%" />
+                <DxGridLayoutRow Height="33%" />
+            </Rows>
 
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Xmee | Login and Register Form Html Templates</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+            <Columns>
+                <DxGridLayoutColumn Width="10%" />
+                <DxGridLayoutColumn Width="80%" />
+                <DxGridLayoutColumn Width="10%" />
+            </Columns>
 
-    <link rel="stylesheet" href="/login/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="/login/font/flaticon.css">
-
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="/login/style.css">
-</head>
-
-<body>
-    <div id="preloader" class="preloader">
-        <div class='inner'>
-            <div class='line1'></div>
-            <div class='line2'></div>
-            <div class='line3'></div>
-        </div>
-    </div>
-    <section class="fxt-template-animation fxt-template-layout31">
-        <span class="fxt-shape fxt-animation-active" style="background-image: linear-gradient(135deg, rgb(36 36 36) 70%, #4c4343 90%) !important;"></span>
-        <div class="fxt-content-wrap" style="box-shadow: rgb(0 0 0 / 35%) 0px 10px 10px;">
-            <div class="fxt-heading-content" style="background-image: linear-gradient(135deg, rgb(168 20 20) 20%, #f82121 90%) !important;">
-                <div class="fxt-inner-wrap">
-                    <div class="fxt-transformY-50 fxt-transition-delay-3">
-                        <a href="login-31.html" class="fxt-logo"><img src="/tsilogodikdortgenpng.png" style="width:300px;" alt="Logo"></a>
-                    </div>
-                    <div class="fxt-transformY-50 fxt-transition-delay-4">
-                        <h1 class="fxt-main-title" style="margin-top:3%">Teknoloji Yazılım Hizmetleri</h1>
-                    </div>
-                    <div class="fxt-login-option">
-                        @*<ul>
-                        <li class="fxt-transformY-50 fxt-transition-delay-6"><a href="#">Sing in with Google</a></li>
-                        <li class="fxt-transformY-50 fxt-transition-delay-7"><a href="#">Sing in with Facebook</a></li>
-                        </ul>*@
-                    </div>
-                </div>
-            </div>
-            <div class="fxt-form-content">
-                <div class="fxt-page-switcher" style="padding-left: 24%;">
-                    <h2 class="fxt-page-title mr-3">TSI ERP - Kurumsal Yazılım Çözümleri</h2>
-                    @*<ul class="fxt-switcher-wrap">
-                    <li><a href="login-31.html" class="fxt-switcher-btn active">Login</a></li>
-                    <li><a href="register-31.html" class="fxt-switcher-btn">Register</a></li>
-                    </ul>*@
-                </div>
-                <div class="fxt-main-form" style="padding-left: 24%;">
-                    <div class="fxt-inner-wrap">
-                        <form method="POST">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <input type="email" id="email" class="form-control" name="email" placeholder="Email" required="required" @bind-value="User">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <input id="password" type="password" class="form-control" name="password" placeholder="********" required="required" @bind-value="Password">
-                                        <i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <button type="submit" class="fxt-btn-fill" style="background-color: #cc0000 !important;" @onclick="OnLoginButtonClicked">Giriş Yap</button>
-                                    </div>
-                                </div>
-                                <br>
-                                <br />
-                                <div class="col-12" style="margin-top:20%">
-                                    <div class="form-group">
-                                        <div class="fxt-checkbox-wrap">
-                                            <i class="fab fa-linkedin-in fa-2x" style="color: #0082ca;margin-left:40%"></i>
-                                            <i class="fab fa-youtube fa-2x" style="color: #ed302f; margin-right:40%"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        @*<div class="fxt-switcher-description">Don't have an account?<a href="register-31.html" class="fxt-switcher-text ms-1">Register</a></div>*@
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</body>
-</html>
-
-<DxPopup CssClass="PopUpCss" Visible="@vispopup"
-         ShowFooter="false"
-         ShowHeader="false"
-         Width="600px"
-         Height="300px"
-         Closing="LoginPopupClosing">
-    <BodyTemplate>
-        <SfCard class="CardsLogin">
-            <CardContent>
+            <Items>
                 <br />
-                <center><h1 style="color:white">Hatalı Kullanıcı Girişi</h1></center>	<br /><br />
-                <center><span style="font-size:16px; font-weight:bold; color:white">Kullanıcı adı veya şifre hatalı. Lütfen tekrar deneyiniz.</span></center>
-                <br /><br /><br />
-            </CardContent>
-            <CardFooter>
-                @*<center><DxButton  CssClass="e-btn e-secondary" style="background-color:#1E1E1E; font-size:18px; font-weight:bold;" Click="@OnOkButtonClicked" Text="Kapat" /></center>*@
-                <center><DxButton class="btn login_btn" style="width:75px" Click="@OnOkButtonClicked" Text="Kapat" /></center>
-            </CardFooter>
-        </SfCard>
-    </BodyTemplate>
-    <FooterContentTemplate>
-        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
-    </FooterContentTemplate>
-</DxPopup>
+                <center>
+                    <img src="tsi.png" style=" border-radius: 0% !important; width: 425px;height: 135px; margin-left: 0% !important;" />
+                </center>
+                <br />
+                <br />
+                <br />
+                <br />
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <br />
+                        <SfTextBox CssClass="TSI40pxHeightButton" @ref="@EmployeesButtonEdit" Created="@EmployeesCodeOnCreateIcon" @bind-Value="User" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+
+                <DxGridLayoutItem Row="1" Column="1">
+                    <Template>
+                        <SfTextBox CssClass="TSI40pxHeightButton" @bind-Value="Password" Type="Syncfusion.Blazor.Inputs.InputType.Password"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+
+                <DxGridLayoutItem Row="2" Column="1">
+                    <Template>
+                        <center><SfButton CssClass="TSILoginButton" OnClick="OnLoginButtonClicked"><SfIcon Size="IconSize.Large" Name="IconName.Export"></SfIcon>&nbsp;Giriş</SfButton></center>
+                    </Template>
+                </DxGridLayoutItem>
+
+            </Items>
+        </DxGridLayout>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+
+
+
+
+
+
+@if (SelectEmployeesPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectEmployeesPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="Personeller"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="EmployeesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@EmployeesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@EmployeesDoubleClickHandler" TValue="ListEmployeesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListEmployeesDto.Code) HeaderText="PERSONEL KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListEmployeesDto.Name) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120" Context="logincontext">
+                                                <Template>
+                                                    @{
+                                                        string userNameSurname = (logincontext as ListEmployeesDto).Name + " " + (logincontext as ListEmployeesDto).Surname;
+                                                    }
+                                                    @userNameSurname
+                                                </Template>
+                                            </GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+
+
+
 
 @code {
 
@@ -132,76 +132,88 @@
     string Password = string.Empty;
     bool vispopup = false;
     bool VisibleSpinner = false;
-    private Task<IJSObjectReference> _module;
+    public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+    List<ListEmployeesDto> EmployeesList = new List<ListEmployeesDto>();
 
-    public Task<IJSObjectReference> Module1 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/jquery-3.5.0.min.js").AsTask();
-    public Task<IJSObjectReference> Module2 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/bootstrap.min.js").AsTask();
-    public Task<IJSObjectReference> Module3 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/imagesloaded.pkgd.min.js").AsTask();
-    public Task<IJSObjectReference> Module4 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/validator.min.js").AsTask();
-    public Task<IJSObjectReference> Module5 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/main.js").AsTask();
+    #region Yorum
+    // private Task<IJSObjectReference> _module;
 
-    protected async override Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/jquery-3.5.0.min.js");
-            // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/bootstrap.min.js");
-            // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/imagesloaded.pkgd.min.js");
-            // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/validator.min.js");
-            // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/main.js");
-        }
-    }
+    // public Task<IJSObjectReference> Module1 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/jquery-3.5.0.min.js").AsTask();
+    // public Task<IJSObjectReference> Module2 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/bootstrap.min.js").AsTask();
+    // public Task<IJSObjectReference> Module3 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/imagesloaded.pkgd.min.js").AsTask();
+    // public Task<IJSObjectReference> Module4 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/validator.min.js").AsTask();
+    // public Task<IJSObjectReference> Module5 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/main.js").AsTask();
 
-    void LoginPopupClosing(PopupClosingEventArgs args)
-    {
-        vispopup = false;
-    }
+    // protected async override Task OnAfterRenderAsync(bool firstRender)
+    // {
+    //     if (firstRender)
+    //     {
+    //         // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/jquery-3.5.0.min.js");
+    //         // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/bootstrap.min.js");
+    //         // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/imagesloaded.pkgd.min.js");
+    //         // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/validator.min.js");
+    //         // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/main.js");
+    //     }
+    // }
+
+    // void LoginPopupClosing(PopupClosingEventArgs args)
+    // {
+    //     vispopup = false;
+    // }
+    #endregion
+
 
 
     private async void OnLoginButtonClicked()
     {
         var loginnedUser = (await UsersAppService.GetAsyncByUserNameAndPassword(User, Password)).Data;
 
-        if (loginnedUser != null)
-        {
-            VisibleSpinner = true;
+        // if (loginnedUser != null)
+        // {
+        //     VisibleSpinner = true;
 
-            //LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
+        //     //LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
 
-            LoginedUserService.UserId = loginnedUser.Id;
+        //      LoginedUserService.UserId = loginnedUser.Id;
 
-            LoginedUserService.VersionTableId = Guid.Parse("8A5F698D-D632-4314-A0C4-02E496FEB6CD");
+        //     AppService.EmployeeID = loginnedUser.Id;
 
-            // var permissions = (await UserPermissionsAppService.GetListAsyncByUserId(loginnedUser.Id)).Data;
+        //     LoginedUserService.VersionTableId = Guid.Parse("8A5F698D-D632-4314-A0C4-02E496FEB6CD");
 
-            // var menus = (typeof(NavBarPermissionsModel)).GetProperties();
+        #region Yetki
 
-            // foreach (var item in permissions)
-            // {
-            //     var menu = menus.Where(t => t.Name == item.MenuName).FirstOrDefault();
+        // var permissions = (await UserPermissionsAppService.GetListAsyncByUserId(loginnedUser.Id)).Data;
 
-            //     if (menu != null)
-            //     {
-            //         menu.SetValue(menu, item.IsUserPermitted);
-            //     }
-            // }
+        // var menus = (typeof(NavBarPermissionsModel)).GetProperties();
 
-            // NavigationManager.NavigateTo("/home");
-        }
-        else
-        {
-            vispopup = true;
-        }
+        // foreach (var item in permissions)
+        // {
+        //     var menu = menus.Where(t => t.Name == item.MenuName).FirstOrDefault();
+
+        //     if (menu != null)
+        //     {
+        //         menu.SetValue(menu, item.IsUserPermitted);
+        //     }
+        // }
+
+        // NavigationManager.NavigateTo("/home");
+
+        #endregion
+        // }
+        // else
+        // {
+        //     vispopup = true;
+        // }
 
         //if (User == "admin" && Password == "admin")
         //{
-        //    VisibleSpinner = true;
+        VisibleSpinner = true;
 
         //    LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
 
         //    LoginedUserService.VersionTableId = Guid.Parse("8A5F698D-D632-4314-A0C4-02E496FEB6CD");
 
-        //    NavigationManager.NavigateTo("/home");
+        NavigationManager.NavigateTo("/home");
         //}
         //else
         //{
@@ -210,9 +222,53 @@
 
     }
 
-    private void OnOkButtonClicked()
+    // private void OnOkButtonClicked()
+    // {
+    //     vispopup = false;
+    //     NavigationManager.NavigateTo("/");
+    // }
+
+    #region Operatör ButtonEdit
+
+    SfTextBox EmployeesButtonEdit;
+    bool SelectEmployeesPopupVisible = false;
+
+    public async Task EmployeesCodeOnCreateIcon()
     {
-        vispopup = false;
-        NavigationManager.NavigateTo("/");
+        var EmployeesCodeButtonClick = EventCallback.Factory.Create<Microsoft.AspNetCore.Components.Web.MouseEventArgs>(this, EmployeesButtonClickEvent);
+        await EmployeesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", EmployeesCodeButtonClick } });
     }
+
+    public async void EmployeesButtonClickEvent()
+    {
+        SelectEmployeesPopupVisible = true;
+        EmployeesList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.Where(t => t.IsProductionScreenUser == true).ToList();
+        await InvokeAsync(StateHasChanged);
+    }
+
+
+    public void EmployeesOnValueChange(ChangedEventArgs args)
+    {
+        if (args.Value == null)
+        {
+            LoginedUserService.UserId = Guid.Empty;
+            AppService.EmployeeID = Guid.Empty;
+            User = string.Empty;
+        }
+    }
+
+    public async void EmployeesDoubleClickHandler(RecordDoubleClickEventArgs<ListEmployeesDto> args)
+    {
+        var selectedEmployee = args.RowData;
+
+        if (selectedEmployee != null)
+        {
+            LoginedUserService.UserId = selectedEmployee.Id;
+            AppService.EmployeeID = selectedEmployee.Id;
+            User = selectedEmployee.Name + " " + selectedEmployee.Surname;
+            SelectEmployeesPopupVisible = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+    #endregion
 }
