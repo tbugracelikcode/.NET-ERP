@@ -6,6 +6,24 @@
 @inject AppService AppService
 @inject IEmployeesAppService EmployeesAppService
 
+<div class="TSIArea">
+
+   
+    <ul class="TSICircles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+</div>
+
 <SfCard class="TSILoginPageCard">
     <CardContent>
         <DxGridLayout CssClass="TSIGridLayout">
@@ -25,7 +43,7 @@
             <Items>
                 <br />
                 <center>
-                    <img src="tsi.png" style=" border-radius: 0% !important; width: 425px;height: 135px; margin-left: 0% !important;" />
+                    <img src="tsi.png" style=" border-radius: 0% !important; width: 425px;height: 135px; margin-left: 0% !important;position: relative;" />
                 </center>
                 <br />
                 <br />
@@ -58,10 +76,6 @@
     <CardFooter>
     </CardFooter>
 </SfCard>
-
-
-
-
 
 
 @if (SelectEmployeesPopupVisible)
