@@ -763,6 +763,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sipariş Onay Kayıtları.
+        /// </summary>
+        public static string OrderAcceptanceRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paket Fişleri.
         /// </summary>
         public static string PackageFichesChildMenu {

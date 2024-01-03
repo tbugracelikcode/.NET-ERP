@@ -73,7 +73,7 @@
          Width="42%"
          Height="46%"
          MinWidth="720px"
-         MinHeight="500px"
+         MinHeight="700px"
          HeaderCssClass="HeaderTitleCss"
          Showing="CrudModalShowing"
          Closing="CrudModalClosing">
@@ -81,10 +81,12 @@
 
                 <DxGridLayout CssClass="TSIGridLayout">
                     <Rows>
+                        <DxGridLayoutRow Height="17%" />
+                        <DxGridLayoutRow Height="15%" />
+                        <DxGridLayoutRow Height="15%" />
+                        <DxGridLayoutRow Height="15%" />
+                        <DxGridLayoutRow Height="15%" />
                         <DxGridLayoutRow Height="25%" />
-                        <DxGridLayoutRow Height="20%" />
-                        <DxGridLayoutRow Height="20%" />
-                        <DxGridLayoutRow Height="40%" />
                     </Rows>
                     <Columns>
                         <DxGridLayoutColumn Width="6%" />
@@ -131,7 +133,35 @@
                             </Template>
                         </DxGridLayoutItem>
 
-                        <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
+                         <DxGridLayoutItem Row="2" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["OrderReferanceNoLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.OrderReferanceNo"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="3" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["CustomerReferanceNoLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.CustomerReferanceNo"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                         <DxGridLayoutItem Row="3" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["CustomerBarcodeNoLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.CustomerBarcodeNo"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="4" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["MinOrderAmountLabel"] </strong></label>
+                                <SfNumericTextBox CssClass="TSITxtBox" TValue="decimal" Min="0" @bind-Value="DataSource.MinOrderAmount"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="5" Column="1" ColumnSpan="3">
                             <Template>
                                  <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label><br />
                             <SfTextBox CssClass="TSIMemoBox57" @bind-Value="DataSource.Description_" Multiline=true ></SfTextBox>

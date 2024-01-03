@@ -29,6 +29,26 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Sipariş Referans No
+        /// </summary>
+        public string OrderReferanceNo { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Müşteri Referans No
+        /// </summary>
+        public string CustomerReferanceNo { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Müşteri Barkod No
+        /// </summary>
+        public string CustomerBarcodeNo { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Minimum Sipariş Miktarı
+        /// </summary>
+        public decimal MinOrderAmount { get; set; }
 
     }
 }
