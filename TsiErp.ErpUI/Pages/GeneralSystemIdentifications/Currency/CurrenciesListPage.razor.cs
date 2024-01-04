@@ -9,7 +9,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Currency
 {
 
-    public partial class CurrenciesListPage
+    public partial class CurrenciesListPage : IDisposable
     {
 
         protected override async void OnInitialized()
@@ -56,5 +56,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Currency
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

@@ -7,7 +7,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup.Dtos;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.UserGroup
 {
-    public partial class UserGroupsListPage
+    public partial class UserGroupsListPage : IDisposable
     {
         protected override async void OnInitialized()
         {
@@ -53,5 +53,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.UserGroup
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

@@ -6,7 +6,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParam
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.SalesManagementParameter
 {
-    public partial class SalesManagementParametersListPage
+    public partial class SalesManagementParametersListPage : IDisposable
     {
         protected override async void OnInitialized()
         {
@@ -57,6 +57,13 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.SalesManagementParamet
 
                 await InvokeAsync(StateHasChanged);
             }
+        }
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
         }
     }
 }

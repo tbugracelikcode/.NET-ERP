@@ -13,7 +13,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 {
-    public partial class TechnicalDrawingsListPage
+    public partial class TechnicalDrawingsListPage : IDisposable
     {
         List<string> Drawers = new List<string>();
 
@@ -532,6 +532,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
             await InvokeAsync(() => StateHasChanged());
 
             #endregion
+        }
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
         }
     }
 }

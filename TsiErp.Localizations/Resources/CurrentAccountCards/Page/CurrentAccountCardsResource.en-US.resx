@@ -189,6 +189,9 @@
   <data name="DeleteControlManager" xml:space="preserve">
     <value>Records with transaction cannot be deleted.</value>
   </data>
+  <data name="DeleteControlMessage" xml:space="preserve">
+    <value>Recordings with activity cannot be deleted.</value>
+  </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>

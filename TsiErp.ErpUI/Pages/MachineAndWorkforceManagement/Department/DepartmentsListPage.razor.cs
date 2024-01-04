@@ -9,7 +9,7 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority.D
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Department
 {
-    public partial class DepartmentsListPage
+    public partial class DepartmentsListPage : IDisposable
     {
         protected override async void OnInitialized()
         {
@@ -98,5 +98,12 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Department
         }
 
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

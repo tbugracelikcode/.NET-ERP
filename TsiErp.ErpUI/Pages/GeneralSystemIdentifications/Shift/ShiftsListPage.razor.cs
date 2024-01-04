@@ -14,7 +14,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
 {
-    public partial class ShiftsListPage
+    public partial class ShiftsListPage : IDisposable
     {
 
         private SfGrid<SelectShiftLinesDto> _LineGrid;
@@ -508,5 +508,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

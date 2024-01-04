@@ -12,7 +12,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.GeneralSkillRecordPriority
 {
-    public partial class GeneralSkillRecordPrioritiesListPage
+    public partial class GeneralSkillRecordPrioritiesListPage : IDisposable
     {
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -154,5 +154,12 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.GeneralSkillRecordPri
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

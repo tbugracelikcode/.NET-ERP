@@ -189,6 +189,9 @@
   <data name="DeleteControlManager" xml:space="preserve">
     <value>Hareket gören kayıtlar silinemez.</value>
   </data>
+  <data name="DeleteControlMessage" xml:space="preserve">
+    <value>Hareket gören kayıtlar silinemez.</value>
+  </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>

@@ -37,7 +37,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
 {
-    public partial class ContractTrackingFichesListPage
+    public partial class ContractTrackingFichesListPage : IDisposable
     {
 
         private SfGrid<SelectContractTrackingFicheLinesDto> _LineGrid;
@@ -915,5 +915,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
         }
         #endregion
 
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

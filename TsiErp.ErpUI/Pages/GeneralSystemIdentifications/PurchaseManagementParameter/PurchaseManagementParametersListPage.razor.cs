@@ -11,7 +11,7 @@ using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PurchaseManagementParameter
 {
-    public partial class PurchaseManagementParametersListPage
+    public partial class PurchaseManagementParametersListPage : IDisposable
     {
         protected override async void OnInitialized()
         {
@@ -147,5 +147,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PurchaseManagementPara
             }
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

@@ -12,7 +12,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
 {
-    public partial class TemplateOperationsListPage
+    public partial class TemplateOperationsListPage : IDisposable
     {
         SfTextBox StationGroupButtonEdit;
         bool SelectStationGroupPopupVisible = false;
@@ -586,5 +586,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

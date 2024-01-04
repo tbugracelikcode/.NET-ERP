@@ -7,7 +7,7 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkil
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeGeneralSkillRecord
 {
-    public partial class EmployeeGeneralSkillRecordsListPage
+    public partial class EmployeeGeneralSkillRecordsListPage : IDisposable
     {
         protected override async void OnInitialized()
         {
@@ -51,5 +51,12 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeGeneralSkillR
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

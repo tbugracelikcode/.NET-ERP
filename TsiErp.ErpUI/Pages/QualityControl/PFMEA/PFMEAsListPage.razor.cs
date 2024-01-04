@@ -16,7 +16,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
 {
-    public partial class PFMEAsListPage
+    public partial class PFMEAsListPage : IDisposable
     {
 
         public List<SelectOperationalSPCLinesDto> OperationalSPCLineList = new List<SelectOperationalSPCLinesDto>();
@@ -330,5 +330,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
 
         #endregion
 
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

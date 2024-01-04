@@ -15,7 +15,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 {
-    public partial class PalletRecordsListPage
+    public partial class PalletRecordsListPage : IDisposable
     {
         private SfGrid<SelectPalletRecordLinesDto> _LineGrid;
         private SfGrid<PackageFicheSelectionGrid> _PackageFichesGrid;
@@ -723,5 +723,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

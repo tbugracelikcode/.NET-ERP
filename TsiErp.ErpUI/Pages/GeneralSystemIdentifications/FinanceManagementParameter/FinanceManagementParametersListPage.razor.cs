@@ -5,7 +5,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.FinanceManagementPar
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.FinanceManagementParameter
 {
-    public partial class FinanceManagementParametersListPage
+    public partial class FinanceManagementParametersListPage : IDisposable
     {
         protected override async void OnInitialized()
         {
@@ -46,6 +46,13 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.FinanceManagementParam
 
                 await InvokeAsync(StateHasChanged);
             }
+        }
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
         }
     }
 }

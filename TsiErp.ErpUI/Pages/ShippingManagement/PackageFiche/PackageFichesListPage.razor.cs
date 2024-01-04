@@ -16,7 +16,7 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 {
-    public partial class PackageFichesListPage
+    public partial class PackageFichesListPage : IDisposable
     {
         private SfGrid<SelectPackageFicheLinesDto> _LineGrid;
 
@@ -425,5 +425,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

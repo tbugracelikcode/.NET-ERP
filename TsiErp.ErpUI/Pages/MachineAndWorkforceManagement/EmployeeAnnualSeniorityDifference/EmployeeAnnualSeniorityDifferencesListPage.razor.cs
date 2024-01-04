@@ -11,7 +11,7 @@ using Syncfusion.Blazor.Calendars;
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeAnnualSeniorityDifference
 {
-    public partial class EmployeeAnnualSeniorityDifferencesListPage
+    public partial class EmployeeAnnualSeniorityDifferencesListPage : IDisposable
     {
 
         DateTime dateYear = DateTime.Today;
@@ -89,5 +89,12 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeAnnualSeniori
         }
 
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

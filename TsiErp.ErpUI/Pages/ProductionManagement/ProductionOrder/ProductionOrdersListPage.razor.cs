@@ -17,7 +17,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 {
-    public partial class ProductionOrdersListPage
+    public partial class ProductionOrdersListPage : IDisposable
     {
 
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -265,6 +265,12 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
             }
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
 
     }
 }

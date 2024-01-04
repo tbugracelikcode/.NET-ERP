@@ -14,7 +14,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeSeniority
 {
-    public partial class EmployeeSenioritiesListPage
+    public partial class EmployeeSenioritiesListPage : IDisposable
     {
         SelectTaskScoringsDto TaskScoringDataSource;
         [Inject]
@@ -241,5 +241,12 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeSeniority
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

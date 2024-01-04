@@ -13,7 +13,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
 {
-    public partial class ForecastsListPage
+    public partial class ForecastsListPage : IDisposable
     {
         private SfGrid<SelectForecastLinesDto> _LineGrid;
 
@@ -497,6 +497,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
 
     }
 }

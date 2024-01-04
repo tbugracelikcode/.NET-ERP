@@ -13,7 +13,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
 {
-    public partial class StationsListPage
+    public partial class StationsListPage : IDisposable
     {
 
         #region İstasyon Grubu ButtonEdit
@@ -347,5 +347,12 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

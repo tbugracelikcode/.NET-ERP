@@ -12,7 +12,7 @@ using TsiErp.ErpUI.Helpers;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 {
-    public partial class UsersListPage
+    public partial class UsersListPage : IDisposable
     {
         protected override async void OnInitialized()
         {
@@ -182,5 +182,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

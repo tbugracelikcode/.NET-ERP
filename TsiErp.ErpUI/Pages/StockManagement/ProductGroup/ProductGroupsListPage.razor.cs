@@ -8,7 +8,7 @@ using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 
 namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
 {
-    public partial class ProductGroupsListPage
+    public partial class ProductGroupsListPage : IDisposable
     {
 
         protected override async void OnInitialized()
@@ -55,5 +55,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
         }
         #endregion
 
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

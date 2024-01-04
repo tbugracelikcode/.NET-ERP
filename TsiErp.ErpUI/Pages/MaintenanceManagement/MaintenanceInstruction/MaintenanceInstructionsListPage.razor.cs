@@ -13,7 +13,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
 {
-    public partial class MaintenanceInstructionsListPage
+    public partial class MaintenanceInstructionsListPage : IDisposable
     {
         private SfGrid<SelectMaintenanceInstructionLinesDto> _LineGrid;
 
@@ -481,5 +481,12 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

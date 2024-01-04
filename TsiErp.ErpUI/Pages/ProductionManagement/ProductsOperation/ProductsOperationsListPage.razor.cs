@@ -20,7 +20,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
 {
-    public partial class ProductsOperationsListPage
+    public partial class ProductsOperationsListPage : IDisposable
     {
         private SfGrid<SelectProductsOperationLinesDto> _LineGrid;
         private SfGrid<SelectContractOfProductsOperationsDto> _ContractOfProductsOperationsGrid;
@@ -767,6 +767,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }
 

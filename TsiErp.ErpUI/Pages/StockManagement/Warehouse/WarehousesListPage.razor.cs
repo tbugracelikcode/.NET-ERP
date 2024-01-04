@@ -7,7 +7,7 @@ using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 
 namespace TsiErp.ErpUI.Pages.StockManagement.Warehouse
 {
-    public partial class WarehousesListPage
+    public partial class WarehousesListPage : IDisposable
     {
 
         protected override async void OnInitialized()
@@ -55,5 +55,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Warehouse
         }
         #endregion
 
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

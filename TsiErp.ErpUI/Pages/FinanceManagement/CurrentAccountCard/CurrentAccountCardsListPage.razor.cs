@@ -12,7 +12,7 @@ using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 
 namespace TsiErp.ErpUI.Pages.FinanceManagement.CurrentAccountCard
 {
-    public partial class CurrentAccountCardsListPage
+    public partial class CurrentAccountCardsListPage : IDisposable
     {
 
         SfComboBox<string, ListShippingAdressesDto> ShippingAdressesComboBox;
@@ -107,6 +107,13 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CurrentAccountCard
         private async Task GetCurrenciesList()
         {
             CurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
+        }
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
         }
 
     }

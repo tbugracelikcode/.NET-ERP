@@ -8,7 +8,7 @@ using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPC.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPCComparing
 {
-    public partial class OperationalSPCComparingsListPage
+    public partial class OperationalSPCComparingsListPage : IDisposable
     {
         public class OperationalSPCComparingModel
         {
@@ -59,6 +59,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPCComparing
 
                 };
             }
+        }
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
         }
     }
 }
