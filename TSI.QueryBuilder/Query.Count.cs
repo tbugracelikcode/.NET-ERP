@@ -6,9 +6,9 @@ namespace TSI.QueryBuilder
 {
     public partial class Query
     {
-        public Query Sum(string ColumnName)
+        public Query Count(string ColumnName)
         {
-            Sql = "select sum(" + ColumnName + ") from " + TableName;
+            Sql = "select count(" + ColumnName + ") from " + TableName;
 
             IsMapQuery = false;
 
