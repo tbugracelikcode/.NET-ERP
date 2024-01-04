@@ -14,7 +14,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.SalesPrice
 {
-    public partial class SalesPricesListPage
+    public partial class SalesPricesListPage : IDisposable
     {
       
         private SfGrid<SelectSalesPriceLinesDto> _LineGrid;
@@ -560,5 +560,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesPrice
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

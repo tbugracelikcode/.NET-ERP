@@ -7,7 +7,7 @@ using System.Dynamic;
 namespace TsiErp.ErpUI.Pages.PlanningManagement.Excel2Grid
 {
     
-    public partial class Excel2Grid
+    public partial class Excel2Grid : IDisposable
     {
         SfGrid<ExpandoObject> Grid;
         public DataTable table = new DataTable();
@@ -53,6 +53,13 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Excel2Grid
                 list.Add(e);
             }
             CustomerList = list;
+        }
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
         }
     }
 }

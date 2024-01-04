@@ -12,7 +12,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
 {
-    public partial class RoutesListPage
+    public partial class RoutesListPage : IDisposable
     {
         private SfGrid<SelectRouteLinesDto> _LineGrid;
         private SfGrid<ListProductsOperationsDto> _ProductsOperationGrid;
@@ -374,5 +374,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
         }
         #endregion
 
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

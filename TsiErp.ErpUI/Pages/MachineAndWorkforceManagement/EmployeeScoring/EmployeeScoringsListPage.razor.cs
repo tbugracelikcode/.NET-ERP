@@ -24,7 +24,7 @@ using static TsiErp.ErpUI.Pages.QualityControl.Report8D.Report8DsListPage;
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
 {
-    public partial class EmployeeScoringsListPage
+    public partial class EmployeeScoringsListPage : IDisposable
     {
         private SfGrid<SelectEmployeeScoringLinesDto> _LineGrid;
         private SfGrid<SelectEmployeeOperationsDto> _LinesLineGrid;
@@ -854,5 +854,12 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
         #endregion
 
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

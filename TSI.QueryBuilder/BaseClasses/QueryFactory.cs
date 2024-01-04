@@ -141,7 +141,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     command.CommandText = query.Sql;
 
-                    if(!query.IsSumQuery)
+                    if(query.IsMapQuery)
                     {
                         query.SqlResult = command.ExecuteReader().DataReaderMapToGet<T>();
                     }

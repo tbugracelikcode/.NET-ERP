@@ -3,7 +3,7 @@ using Syncfusion.Blazor.Grids;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
 {
-    public partial class WorkOrdersListPage
+    public partial class WorkOrdersListPage : IDisposable
     {
         protected override void OnInitialized()
         {
@@ -20,5 +20,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
             GridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextRefresh"], Id = "refresh" });
         }
 
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

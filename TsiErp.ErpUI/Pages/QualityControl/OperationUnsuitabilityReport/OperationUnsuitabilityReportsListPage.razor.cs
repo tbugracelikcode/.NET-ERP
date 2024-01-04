@@ -18,7 +18,7 @@ using Microsoft.Extensions.Localization;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
 {
-    public partial class OperationUnsuitabilityReportsListPage
+    public partial class OperationUnsuitabilityReportsListPage : IDisposable
     {
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -398,5 +398,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

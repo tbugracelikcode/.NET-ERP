@@ -15,7 +15,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
 {
-    public partial class PurchaseUnsuitabilityReportsListPage
+    public partial class PurchaseUnsuitabilityReportsListPage : IDisposable
     {
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -323,5 +323,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

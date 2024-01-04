@@ -9,7 +9,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StartingSalary
 {
-    public partial class StartingSalariesListPage
+    public partial class StartingSalariesListPage : IDisposable
     {
         private SfGrid<SelectStartingSalaryLinesDto> _LineGrid;
 
@@ -313,5 +313,12 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StartingSalary
         }
 
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

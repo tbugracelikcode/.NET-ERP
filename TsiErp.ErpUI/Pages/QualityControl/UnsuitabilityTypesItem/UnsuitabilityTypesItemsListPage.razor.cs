@@ -9,7 +9,7 @@ using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
 {
-    partial class UnsuitabilityTypesItemsListPage
+    partial class UnsuitabilityTypesItemsListPage : IDisposable
     {
         bool _isOperation;
         bool _isPurchase;
@@ -124,5 +124,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

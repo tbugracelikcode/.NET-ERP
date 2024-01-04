@@ -15,7 +15,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Employee
 {
-    public partial class EmployeesListPage
+    public partial class EmployeesListPage : IDisposable
     {
 
         [Inject]
@@ -232,9 +232,6 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Employee
 
         #endregion
 
-
-
-
         #region Kod ButtonEdit
 
         SfTextBox CodeButtonEdit;
@@ -251,5 +248,12 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Employee
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

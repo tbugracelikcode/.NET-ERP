@@ -21,7 +21,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 {
-    public partial class ProductionTrackingsListPage
+    public partial class ProductionTrackingsListPage : IDisposable
     {
         private SfGrid<SelectProductionTrackingHaltLinesDto> _LineGrid;
 
@@ -747,6 +747,12 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                 await base.OnSubmit();
             }
 
+        }
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
         }
     }
 }

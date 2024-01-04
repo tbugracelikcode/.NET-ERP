@@ -27,7 +27,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 {
-    public partial class SalesOrdersListPage
+    public partial class SalesOrdersListPage : IDisposable
     {
         private SfGrid<SelectSalesOrderLinesDto> _LineGrid;
         private SfGrid<SelectSalesOrderLinesDto> _ProductionOrderGrid;
@@ -970,6 +970,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
 
     }
 }

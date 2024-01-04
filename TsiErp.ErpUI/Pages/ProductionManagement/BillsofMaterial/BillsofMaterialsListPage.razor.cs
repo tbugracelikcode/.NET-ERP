@@ -14,7 +14,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
 {
-    public partial class BillsofMaterialsListPage
+    public partial class BillsofMaterialsListPage : IDisposable
     {
 
         private SfGrid<SelectBillsofMaterialLinesDto> _LineGrid;
@@ -542,5 +542,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

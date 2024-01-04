@@ -13,7 +13,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
 {
-    public partial class PurchaseQualityPlansListPage
+    public partial class PurchaseQualityPlansListPage : IDisposable
     {
         private SfGrid<SelectPurchaseQualityPlanLinesDto> _LineGrid;
 
@@ -583,5 +583,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

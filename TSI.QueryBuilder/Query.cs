@@ -28,7 +28,7 @@ namespace TSI.QueryBuilder
 
         public bool UseIsDeleteInQuery { get; set; } = true;
 
-        public bool IsSumQuery { get; set; } = false;
+        public bool IsMapQuery { get; set; } = true;
 
     }
 }

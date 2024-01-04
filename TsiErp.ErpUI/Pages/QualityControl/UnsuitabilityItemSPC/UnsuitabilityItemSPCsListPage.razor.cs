@@ -15,7 +15,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
 {
-    public partial class UnsuitabilityItemSPCsListPage
+    public partial class UnsuitabilityItemSPCsListPage : IDisposable
     {
         private SfGrid<SelectUnsuitabilityItemSPCLinesDto> _LineGrid;
 
@@ -449,5 +449,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

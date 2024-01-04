@@ -29,7 +29,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.StockManagement.Product
 {
-    public partial class ProductsListPage
+    public partial class ProductsListPage : IDisposable
     {
 
         #region Ürün Grubu ButtonEdit
@@ -1413,6 +1413,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
 
     }
 }

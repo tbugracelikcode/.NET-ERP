@@ -67,7 +67,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                 Id = addedEntityId,
                 IsDeleted = false,
                 LastModificationTime = null,
-                LastModifierId = Guid.Empty,
+                LastModifierId = Guid.Empty
             });
 
             var productReferanceNumbers = queryFactory.Insert<SelectProductReferanceNumbersDto>(query, "Id", true);

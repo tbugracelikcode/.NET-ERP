@@ -22,7 +22,7 @@ using static TsiErp.ErpUI.Pages.QualityControl.Report8D.Report8DsListPage;
 
 namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 {
-    public partial class MaintenanceMRPsListPage
+    public partial class MaintenanceMRPsListPage : IDisposable
     {
         private SfGrid<SelectMaintenanceMRPLinesDto> _LineGrid;
 
@@ -459,5 +459,11 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

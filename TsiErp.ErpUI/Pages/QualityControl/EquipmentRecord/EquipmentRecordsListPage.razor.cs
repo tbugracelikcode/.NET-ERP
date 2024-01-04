@@ -8,7 +8,7 @@ using TsiErp.Entities.Entities.QualityControl.EquipmentRecord.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.EquipmentRecord
 {
-    public partial class EquipmentRecordsListPage
+    public partial class EquipmentRecordsListPage : IDisposable
     {
         bool cancelReasonVisible = false;
         
@@ -125,6 +125,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.EquipmentRecord
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
 
     }
 }

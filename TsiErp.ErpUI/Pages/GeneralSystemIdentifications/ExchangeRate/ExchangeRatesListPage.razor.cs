@@ -8,7 +8,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
 {
-    public partial class ExchangeRatesListPage
+    public partial class ExchangeRatesListPage : IDisposable
     {
 
 
@@ -82,5 +82,10 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
         #endregion
 
 
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

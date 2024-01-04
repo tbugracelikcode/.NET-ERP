@@ -7,7 +7,7 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StationGroup
 {
-    public partial class StationGroupsListPage
+    public partial class StationGroupsListPage : IDisposable
     {
 
         protected override async void OnInitialized()
@@ -54,5 +54,12 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StationGroup
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

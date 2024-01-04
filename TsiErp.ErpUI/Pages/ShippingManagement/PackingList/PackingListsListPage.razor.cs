@@ -22,7 +22,7 @@ using static TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord.PalletRecordsLis
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 {
-    public partial class PackingListsListPage
+    public partial class PackingListsListPage : IDisposable
     {
 
         public class PalletSelectionModal
@@ -664,5 +664,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

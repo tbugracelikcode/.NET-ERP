@@ -20,7 +20,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTrackingIoT
 
 
 
-    public partial class ProductionTrackingsIoTListPage
+    public partial class ProductionTrackingsIoTListPage : IDisposable
     {
 
         private SfGrid<SelectProductionTrackingHaltLinesDto> _LineGrid;
@@ -551,5 +551,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTrackingIoT
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

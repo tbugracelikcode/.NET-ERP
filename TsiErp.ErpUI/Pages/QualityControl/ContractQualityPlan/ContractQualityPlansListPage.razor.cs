@@ -22,7 +22,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 {
-    public partial class ContractQualityPlansListPage
+    public partial class ContractQualityPlansListPage : IDisposable
     {
         private SfGrid<SelectContractQualityPlanLinesDto> _LineGrid;
         private SfGrid<SelectContractOperationPicturesDto> _OperationPicturesGrid;
@@ -1177,5 +1177,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

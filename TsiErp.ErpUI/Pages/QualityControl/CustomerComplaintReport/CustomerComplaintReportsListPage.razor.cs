@@ -20,7 +20,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
 {
-    public partial class CustomerComplaintReportsListPage
+    public partial class CustomerComplaintReportsListPage : IDisposable
     {
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -611,5 +611,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

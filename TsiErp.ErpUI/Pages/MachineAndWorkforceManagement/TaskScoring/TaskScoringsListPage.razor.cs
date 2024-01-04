@@ -10,7 +10,7 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.TaskScoring.Dtos;
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.TaskScoring
 {
-    public partial class TaskScoringsListPage
+    public partial class TaskScoringsListPage : IDisposable
     {
         protected override async void OnInitialized()
         {
@@ -160,5 +160,12 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.TaskScoring
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
     public partial class FirstProductApprovalsListPage : IDisposable
     {
 
-        
+
 
         private SfGrid<SelectFirstProductApprovalLinesDto> _LineGrid;
 
@@ -510,6 +510,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                     _Timer.Dispose();
                 }
             }
+
+            GC.Collect();
+            GC.SuppressFinalize(this);
         }
     }
 }

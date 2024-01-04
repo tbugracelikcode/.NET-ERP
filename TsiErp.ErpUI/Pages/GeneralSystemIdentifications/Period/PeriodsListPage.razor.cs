@@ -9,7 +9,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period.Dtos;
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Period
 {
 
-    public partial class PeriodsListPage
+    public partial class PeriodsListPage : IDisposable
     {
 
         protected override async void OnInitialized()
@@ -107,5 +107,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Period
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public void Dispose()
+        {
+            GC.Collect();
+            GC.SuppressFinalize(this);
+        }
     }
 }
