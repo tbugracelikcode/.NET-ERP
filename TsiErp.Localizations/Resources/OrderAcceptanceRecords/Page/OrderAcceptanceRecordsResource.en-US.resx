@@ -168,6 +168,18 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="OrderAcceptanceRecordLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="OrderAcceptanceRecordLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="OrderAcceptanceRecordLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="OrderAcceptanceRecordLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -182,6 +194,15 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="UIConfirmationPopupLineMessage" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Are you sure you want to delete?</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Confirmation</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sales Management &gt; Transactions</value>

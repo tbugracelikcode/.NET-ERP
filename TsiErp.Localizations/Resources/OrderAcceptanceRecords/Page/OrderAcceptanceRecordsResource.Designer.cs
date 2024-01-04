@@ -217,6 +217,42 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
+        public static string OrderAcceptanceRecordLineContextAdd {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string OrderAcceptanceRecordLineContextChange {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string OrderAcceptanceRecordLineContextDelete {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string OrderAcceptanceRecordLineContextRefresh {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
         public static string OrderAcceptanceRecordsContextAdd {
             get {
                 return ResourceManager.GetString("OrderAcceptanceRecordsContextAdd", resourceCulture);
@@ -256,6 +292,33 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz satır kalıcı olarak silinecektir..
+        /// </summary>
+        public static string UIConfirmationPopupLineMessage {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupLineMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
+        /// </summary>
+        public static string UIConfirmationPopupMessageBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupMessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string UIConfirmationPopupTitleBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupTitleBase", resourceCulture);
             }
         }
         

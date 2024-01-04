@@ -150,6 +150,10 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos
         /// </summary>
         public string Currency { get; set; }
         /// <summary>
+        /// Para Birimi ID 
+        /// </summary>
+        public Guid? CurrencyID { get; set; }
+        /// <summary>
         /// Tedarikçi
         /// </summary>
         public bool Supplier { get; set; }

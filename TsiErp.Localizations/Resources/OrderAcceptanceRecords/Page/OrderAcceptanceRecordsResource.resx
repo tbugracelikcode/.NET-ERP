@@ -168,6 +168,18 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="OrderAcceptanceRecordLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="OrderAcceptanceRecordLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="OrderAcceptanceRecordLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="OrderAcceptanceRecordLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -182,6 +194,15 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="UIConfirmationPopupLineMessage" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Silmek istediğinize emin misiniz ?</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Onay</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Satış Yönetimi &gt; Hareketler</value>

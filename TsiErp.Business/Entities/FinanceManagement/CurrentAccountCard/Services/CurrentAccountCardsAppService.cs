@@ -137,50 +137,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         {
 
             var query = queryFactory
-                    .Query().From(Tables.CurrentAccountCards).Select<CurrentAccountCards>(ca => new
-                    {
-                        ca.Id,
-                        ca.IDnumber,
-                        ca.Address2,
-                        ca.Address1,
-                        ca.City,
-                        ca.CoatingCustomer,
-                        ca.Code,
-                        ca.ContractSupplier,
-                        ca.Country,
-                        ca.EORINr,
-                        ca.CurrencyID,
-                        ca.DataOpenStatus,
-                        ca.DataOpenStatusUserId,
-                        ca.District,
-                        ca.Email,
-                        ca.Fax,
-                        ca.TaxNumber,
-                        ca.Tel1,
-                        ca.CustomerCode,
-                        ca.Tel2,
-                        ca.Type_,
-                        ca.Web,
-                        ca.TaxAdministration,
-                        ca.SupplierNo,
-                        ca.Supplier,
-                        ca.SoleProprietorship,
-                        ca.ShippingAddress,
-                        ca.SaleContract,
-                        ca.Responsible,
-                        ca.PrivateCode5,
-                        ca.PrivateCode4,
-                        ca.PrivateCode3,
-                        ca.PrivateCode2,
-                        ca.PrivateCode1,
-                        ca.PostCode,
-                        ca.PlusPercentage,
-                        ca.Name,
-                        ca.IsActive,
-                        ca.NumberOfStations,
-                        ca.ContractDailyWorkingCapacity,
-                        ca.IsSoftwareCompanyInformation
-                    })
+                    .Query().From(Tables.CurrentAccountCards).Select<CurrentAccountCards>(null)
                         .Join<Currencies>
                         (
                             c => new { Currency = c.Code, CurrencyID = c.Id },
@@ -206,52 +163,10 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             var query = queryFactory
                .Query()
                .From(Tables.CurrentAccountCards)
-               .Select<CurrentAccountCards>(ca => new
-               {
-                   ca.Id,
-                   ca.IDnumber,
-                   ca.Address2,
-                   ca.CustomerCode,
-                   ca.Address1,
-                   ca.City,
-                   ca.CoatingCustomer,
-                   ca.Code,
-                   ca.ContractSupplier,
-                   ca.EORINr,
-                   ca.Country,
-                   ca.CurrencyID,
-                   ca.DataOpenStatus,
-                   ca.DataOpenStatusUserId,
-                   ca.District,
-                   ca.Email,
-                   ca.Fax,
-                   ca.TaxNumber,
-                   ca.Tel1,
-                   ca.Tel2,
-                   ca.Type_,
-                   ca.Web,
-                   ca.TaxAdministration,
-                   ca.SupplierNo,
-                   ca.Supplier,
-                   ca.SoleProprietorship,
-                   ca.ShippingAddress,
-                   ca.SaleContract,
-                   ca.Responsible,
-                   ca.PrivateCode5,
-                   ca.PrivateCode4,
-                   ca.PrivateCode3,
-                   ca.PrivateCode2,
-                   ca.PrivateCode1,
-                   ca.PostCode,
-                   ca.PlusPercentage,
-                   ca.Name,
-                   ca.NumberOfStations,
-                   ca.ContractDailyWorkingCapacity,
-                   ca.IsSoftwareCompanyInformation
-               })
+               .Select<CurrentAccountCards>(null)
                    .Join<Currencies>
                    (
-                       c => new { Currency = c.Code },
+                       c => new { Currency = c.Code, CurrencyID = c.Id},
                        nameof(CurrentAccountCards.CurrencyID),
                        nameof(Currencies.Id),
                        JoinType.Left
