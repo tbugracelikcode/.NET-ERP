@@ -143,6 +143,8 @@ using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoringLine;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeOperation;
+using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord;
+using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -4984,6 +4986,76 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 OperationAdjustmentsTable.Create();
+            }
+            #endregion
+
+            #region OrderAcceptanceRecords Table Created
+            Table OrderAcceptanceRecordsTable = model.CreateTable(Tables.OrderAcceptanceRecords);
+
+            if (OrderAcceptanceRecordsTable != null)
+            {
+                var properties = (typeof(OrderAcceptanceRecords)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(OrderAcceptanceRecordsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(OrderAcceptanceRecordsTable, "PK_" + OrderAcceptanceRecordsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        OrderAcceptanceRecordsTable.Indexes.Add(pkIndex);
+                    }
+
+                    OrderAcceptanceRecordsTable.Columns.Add(column);
+                }
+
+                OrderAcceptanceRecordsTable.Create();
+            }
+            #endregion
+
+            #region OrderAcceptanceRecordLines Table Created
+            Table OrderAcceptanceRecordLinesTable = model.CreateTable(Tables.OrderAcceptanceRecordLines);
+
+            if (OrderAcceptanceRecordLinesTable != null)
+            {
+                var properties = (typeof(OrderAcceptanceRecordLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(OrderAcceptanceRecordLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(OrderAcceptanceRecordLinesTable, "PK_" + OrderAcceptanceRecordLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        OrderAcceptanceRecordLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    OrderAcceptanceRecordLinesTable.Columns.Add(column);
+                }
+
+                OrderAcceptanceRecordLinesTable.Create();
             }
             #endregion
 

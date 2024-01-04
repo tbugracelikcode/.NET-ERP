@@ -26,5 +26,21 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
+        /// <summary>
+        /// Sipariş Referans No
+        /// </summary>
+        public string OrderReferanceNo { get; set; }
+        /// <summary>
+        /// Müşteri Referans No
+        /// </summary>
+        public string CustomerReferanceNo { get; set; }
+        /// <summary>
+        /// Müşteri Barkod No
+        /// </summary>
+        public string CustomerBarcodeNo { get; set; }
+        /// <summary>
+        /// Minimum Sipariş Miktarı
+        /// </summary>
+        public decimal MinOrderAmount { get; set; }
     }
 }

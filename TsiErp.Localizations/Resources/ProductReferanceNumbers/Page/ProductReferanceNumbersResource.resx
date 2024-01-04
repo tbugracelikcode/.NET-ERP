@@ -156,6 +156,12 @@
   <data name="CurrentAccountModalTitle" xml:space="preserve">
     <value>Cari Hesap Kartları</value>
   </data>
+  <data name="CustomerBarcodeNoLabel" xml:space="preserve">
+    <value>Müşteri Barkod Numarası:</value>
+  </data>
+  <data name="CustomerReferanceNoLabel" xml:space="preserve">
+    <value>Müşteri Referans Numarası:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -188,6 +194,12 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="MinOrderAmountLabel" xml:space="preserve">
+    <value>Minimum Sipariş Miktarı:</value>
+  </data>
+  <data name="OrderReferanceNoLabel" xml:space="preserve">
+    <value>Sipariş Referans Numarası:</value>
   </data>
   <data name="ProductCode" xml:space="preserve">
     <value>STOK KODU</value>

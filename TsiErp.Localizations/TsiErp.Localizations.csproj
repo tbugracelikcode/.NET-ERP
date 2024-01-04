@@ -251,6 +251,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>OperationUnsuitabilityReportsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\OrderAcceptanceRecords\Page\OrderAcceptanceRecordsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>OrderAcceptanceRecordsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\PackageFiches\Page\PackageFichesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -745,6 +750,10 @@
     <EmbeddedResource Update="Resources\OperationUnsuitabilityReports\Page\OperationUnsuitabilityReportsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationUnsuitabilityReportsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\OrderAcceptanceRecords\Page\OrderAcceptanceRecordsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OrderAcceptanceRecordsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\PackageFiches\Page\PackageFichesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

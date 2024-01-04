@@ -118,156 +118,105 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CloseButton" xml:space="preserve">
-    <value>Close</value>
+    <value>Kapat</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
-    <value>There is a record with the same number.</value>
-  </data>
-  <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
-    <value>Customer Code:</value>
-  </data>
-  <data name="CurrentAccountCardName" xml:space="preserve">
-    <value>CURRENT ACCOUNT NAME</value>
-  </data>
-  <data name="CurrentAccountCardNameLabel" xml:space="preserve">
-    <value>Current Account Name:</value>
-  </data>
-  <data name="CurrentAccountModalGridCode" xml:space="preserve">
-    <value>CURRENT ACCOUNT CODE</value>
-  </data>
-  <data name="CurrentAccountModalGridCustomerCode" xml:space="preserve">
-    <value>CUSTOMER CODE</value>
-  </data>
-  <data name="CurrentAccountModalGridEmail" xml:space="preserve">
-    <value>E-MAIL</value>
-  </data>
-  <data name="CurrentAccountModalGridName" xml:space="preserve">
-    <value>CURRENT ACCOUNT NAME</value>
-  </data>
-  <data name="CurrentAccountModalGridResponsible" xml:space="preserve">
-    <value>RESPONSIBLE</value>
-  </data>
-  <data name="CurrentAccountModalGridTaxNumber" xml:space="preserve">
-    <value>TAX NUMBER</value>
-  </data>
-  <data name="CurrentAccountModalGridTel" xml:space="preserve">
-    <value>PHONE (1)</value>
-  </data>
-  <data name="CurrentAccountModalTitle" xml:space="preserve">
-    <value>Current Account Cards</value>
-  </data>
-  <data name="CustomerBarcodeNoLabel" xml:space="preserve">
-    <value>Customer Barcode Number:</value>
-  </data>
-  <data name="CustomerReferanceNoLabel" xml:space="preserve">
-    <value>Customer Referance Number:</value>
+    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
-    <value>Are you sure you want to delete?</value>
+    <value>Silmek istediğinize emin misiniz ?</value>
   </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
-    <value>Confirmation</value>
+    <value>Onay</value>
+  </data>
+  <data name="DeleteControlManager" xml:space="preserve">
+    <value>Hareket gören kayıtlar silinemez.</value>
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
-    <value>The record deleted successfully.</value>
+    <value>Kayıt başarıyla silindi.</value>
   </data>
-  <data name="Description_" xml:space="preserve">
-    <value>DESCRIPTION</value>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Sipariş Onay Kayıtları</value>
   </data>
-  <data name="Description_Label" xml:space="preserve">
-    <value>Description:</value>
+  <data name="EnumOrderApproval" xml:space="preserve">
+    <value>Sipariş / Fiyat Onayı Verildi</value>
   </data>
-  <data name="EditModaltTitle" xml:space="preserve">
-    <value>Product Reference Numbers</value>
+  <data name="EnumPending" xml:space="preserve">
+    <value>Beklemede</value>
+  </data>
+  <data name="EnumTechnicalApproval" xml:space="preserve">
+    <value>Teknik Onay Verildi</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Hata</value>
+  </data>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>SiparisOnayKayitlari</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Sipariş Onay Kayıtları</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
-    <value>Please wait..</value>
+    <value>Lütfen Bekleyin..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
-    <value>The records are loading..</value>
+    <value>Kayıtlar Yükleniyor..</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
-    <value>The record you selected is using by {0}.</value>
+    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
-    <value>Information</value>
+    <value>Bilgi</value>
   </data>
-  <data name="MinOrderAmountLabel" xml:space="preserve">
-    <value>Minimum Order Amount:</value>
+  <data name="OrderAcceptanceRecordLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
   </data>
-  <data name="OrderReferanceNoLabel" xml:space="preserve">
-    <value>Order Referance Number:</value>
+  <data name="OrderAcceptanceRecordLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
-  <data name="ProductCode" xml:space="preserve">
-    <value>PRODUCT CODE</value>
+  <data name="OrderAcceptanceRecordLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
   </data>
-  <data name="ProductCodeLabel" xml:space="preserve">
-    <value>Porduct Code:</value>
+  <data name="OrderAcceptanceRecordLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
-  <data name="ProductModalGridCode" xml:space="preserve">
-    <value>PRODUCT CODE</value>
+  <data name="OrderAcceptanceRecordsContextAdd" xml:space="preserve">
+    <value>Ekle</value>
   </data>
-  <data name="ProductModalGridName" xml:space="preserve">
-    <value>PRODUCT NAME</value>
+  <data name="OrderAcceptanceRecordsContextChange" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
-  <data name="ProductModalTitle" xml:space="preserve">
-    <value>Products</value>
+  <data name="OrderAcceptanceRecordsContextDelete" xml:space="preserve">
+    <value>Sil</value>
   </data>
-  <data name="ProductName" xml:space="preserve">
-    <value>PRODUCT NAME</value>
-  </data>
-  <data name="ProductNameLabel" xml:space="preserve">
-    <value>Product Name:</value>
-  </data>
-  <data name="ProductReferanceNumberContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ProductReferanceNumberContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ProductReferanceNumberContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ProductReferanceNumberContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="ReferanceNo" xml:space="preserve">
-    <value>SUPPLIER REFERENCE NUMBER</value>
-  </data>
-  <data name="ReferanceNoLabel" xml:space="preserve">
-    <value>Supplier Reference Number:</value>
+  <data name="OrderAcceptanceRecordsContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
-    <value>Save</value>
+    <value>Kaydet</value>
   </data>
-  <data name="UICurrentMenu" xml:space="preserve">
-    <value>Product Reference Numbers</value>
+  <data name="UIConfirmationPopupLineMessage" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
   </data>
-  <data name="UIExportFileName" xml:space="preserve">
-    <value>ProductReferenceNumbers</value>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Silmek istediğinize emin misiniz ?</value>
   </data>
-  <data name="UIExportTitle" xml:space="preserve">
-    <value>Product Reference Numbers</value>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Onay</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Inventrory Management &gt; Main Records</value>
+    <value>Satış Yönetimi &gt; Hareketler</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
-    <value>There is a record with the same number.</value>
+    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Please enter the product reference number.</value>
+    <value>Lütfen sipariş onay kodunu yazın.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Product reference number cannot exceed 17 characters.</value>
+    <value>Sipariş onay kodu 17 karakterden fazla olamaz.</value>
   </data>
-  <data name="ValidatorCurrentAccountID" xml:space="preserve">
-    <value>Please select a current account card.</value>
-  </data>
-  <data name="ValidatorProductID" xml:space="preserve">
-    <value>Please select a product.</value>
+  <data name="ValidatorCurrentAccountCardID" xml:space="preserve">
+    <value>Lütfen cari hesap seçiniz.</value>
   </data>
 </root>

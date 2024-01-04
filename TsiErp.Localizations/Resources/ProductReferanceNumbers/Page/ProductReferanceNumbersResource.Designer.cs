@@ -179,6 +179,24 @@ namespace TsiErp.Localizations.Resources.ProductReferanceNumbers.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Barkod Numarası:.
+        /// </summary>
+        public static string CustomerBarcodeNoLabel {
+            get {
+                return ResourceManager.GetString("CustomerBarcodeNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteri Referans Numarası:.
+        /// </summary>
+        public static string CustomerReferanceNoLabel {
+            get {
+                return ResourceManager.GetString("CustomerReferanceNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {
@@ -274,6 +292,24 @@ namespace TsiErp.Localizations.Resources.ProductReferanceNumbers.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum Sipariş Miktarı:.
+        /// </summary>
+        public static string MinOrderAmountLabel {
+            get {
+                return ResourceManager.GetString("MinOrderAmountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sipariş Referans Numarası:.
+        /// </summary>
+        public static string OrderReferanceNoLabel {
+            get {
+                return ResourceManager.GetString("OrderReferanceNoLabel", resourceCulture);
             }
         }
         

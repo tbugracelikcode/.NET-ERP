@@ -213,6 +213,10 @@ using TsiErp.Entities.Entities.SalesManagement.Forecast;
 using TsiErp.Entities.Entities.SalesManagement.Forecast.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord;
+using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine;
+using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
@@ -1326,6 +1330,25 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateEmployeeOperationsDto, EmployeeOperations>();
             CreateMap<SelectEmployeeOperationsDto, UpdateEmployeeOperationsDto>();
             CreateMap<SelectEmployeeOperationsDto, EmployeeOperations>();
+
+
+
+
+            CreateMap<OrderAcceptanceRecords, SelectOrderAcceptanceRecordsDto>();
+            CreateMap<OrderAcceptanceRecords, ListOrderAcceptanceRecordsDto>();
+            CreateMap<UpdateOrderAcceptanceRecordsDto, OrderAcceptanceRecords>();
+            CreateMap<CreateOrderAcceptanceRecordsDto, OrderAcceptanceRecords>();
+            CreateMap<SelectOrderAcceptanceRecordsDto, CreateOrderAcceptanceRecordsDto>();
+            CreateMap<SelectOrderAcceptanceRecordsDto, UpdateOrderAcceptanceRecordsDto>();
+            CreateMap<OrderAcceptanceRecords, UpdateOrderAcceptanceRecordsDto>();
+
+            CreateMap<OrderAcceptanceRecordLines, SelectOrderAcceptanceRecordLinesDto>();
+            CreateMap<OrderAcceptanceRecordLines, ListOrderAcceptanceRecordLinesDto>();
+            CreateMap<CreateOrderAcceptanceRecordLinesDto, OrderAcceptanceRecordLines>();
+            CreateMap<SelectOrderAcceptanceRecordLinesDto, CreateOrderAcceptanceRecordLinesDto>();
+            CreateMap<UpdateOrderAcceptanceRecordLinesDto, OrderAcceptanceRecordLines>();
+            CreateMap<SelectOrderAcceptanceRecordLinesDto, UpdateOrderAcceptanceRecordLinesDto>();
+            CreateMap<SelectOrderAcceptanceRecordLinesDto, OrderAcceptanceRecordLines>();
         }
     }
 }

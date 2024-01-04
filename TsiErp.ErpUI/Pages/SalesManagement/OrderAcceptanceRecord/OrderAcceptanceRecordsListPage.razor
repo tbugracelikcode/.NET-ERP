@@ -1,0 +1,16 @@
+﻿@page "/order-acceptance-records"
+@layout MainLayout
+
+
+
+
+@inherits BaseListPage<SelectOrderAcceptanceRecordsDto, ListOrderAcceptanceRecordsDto, CreateOrderAcceptanceRecordsDto, UpdateOrderAcceptanceRecordsDto, ListOrderAcceptanceRecordsParameterDto>
+
+@inject IStringLocalizer<OrderAcceptanceRecordsResource> L
+@inject IOrderAcceptanceRecordsAppService OrderAcceptanceRecordsAppService
+@inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
+@inject IProductsAppService ProductsAppService
+@inject IProductReferanceNumbersAppService ProductReferanceNumbersAppService
+@inject ICurrenciesAppService CurrenciesAppService
+@inject IUnitSetsAppService UnitSetsAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
