@@ -10,6 +10,7 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.MachineAndWorkforceManagement.EducationLevelScore.Services;
 using TsiErp.Business.Entities.MachineAndWorkforceManagement.EducationLevelScore.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore.Dtos;
@@ -83,14 +84,30 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            DeleteControl.ControlList.Clear();
 
-            var query = queryFactory.Query().From(Tables.EducationLevelScores).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            DeleteControl.ControlList.Add("EducationLevelID", new List<string>
+            {
+                Tables.Employees,
+                Tables.EmployeeScoringLines
+            });
 
-            var EducationLevelScores = queryFactory.Update<SelectEducationLevelScoresDto>(query, "Id", true);
+            bool control = DeleteControl.Control(queryFactory, id);
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EducationLevelScores, LogType.Delete, id);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.EducationLevelScores).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-            return new SuccessDataResult<SelectEducationLevelScoresDto>(EducationLevelScores);
+                var EducationLevelScores = queryFactory.Update<SelectEducationLevelScoresDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EducationLevelScores, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectEducationLevelScoresDto>(EducationLevelScores);
+            }
         }
 
 

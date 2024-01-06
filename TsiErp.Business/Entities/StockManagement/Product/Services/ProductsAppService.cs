@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Product.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
@@ -109,14 +110,74 @@ namespace TsiErp.Business.Entities.Product.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Products).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Clear();
 
-            var products = queryFactory.Update<SelectProductsDto>(query, "Id", true);
+            DeleteControl.ControlList.Add("FinishedProductID", new List<string>
+            {
+                Tables.BillsofMaterials,
+                Tables.ProductionOrders
+            });
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Products, LogType.Delete, id);
+            DeleteControl.ControlList.Add("ProductID", new List<string>
+            {
+                Tables.BillsofMaterialLines,
+                Tables.ByDateStockMovements,
+                Tables.ContractProductionTrackings,
+                Tables.ContractQualityPlanLines,
+                Tables.ContractQualityPlans,
+                Tables.ContractTrackingFiches,
+                Tables.CustomerComplaintReports,
+                Tables.FinalControlUnsuitabilityReports,
+                Tables.FirstProductApprovals,
+                Tables.ForecastLines,
+                Tables.GrandTotalStockMovements,
+                Tables.MaintenanceInstructionLines,
+                Tables.MaintenanceMRPLines,
+                Tables.MRPLines,
+                Tables.OperationalQualityPlanLines,
+                Tables.OperationalQualityPlans,
+                Tables.OperationUnsuitabilityReports,
+                Tables.PackageFicheLines,
+                Tables.PackageFiches,
+                Tables.PackingListPalletPackageLines,
+                Tables.PalletRecordLines,
+                Tables.PlannedMaintenanceLines,
+                Tables.ProductReferanceNumbers,
+                Tables.ProductsOperations,
+                Tables.PurchaseOrderLines,
+                Tables.PurchasePriceLines,
+                Tables.PurchaseQualityPlanLines,
+                Tables.PurchaseQualityPlans,
+                Tables.PurchaseRequestLines,
+                Tables.PurchaseUnsuitabilityReports,
+                Tables.Report8Ds,
+                Tables.RouteLines,
+                Tables.Routes,
+                Tables.SalesOrderLines,
+                Tables.SalesPriceLines,
+                Tables.SalesPropositionLines,
+                Tables.StationInventories,
+                Tables.StockFicheLines,
+                Tables.TechnicalDrawings,Tables.UnplannedMaintenanceLines,
+                Tables.WorkOrders
+            });
 
-            return new SuccessDataResult<SelectProductsDto>(products);
+            bool control = DeleteControl.Control(queryFactory, id);
 
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.Products).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var products = queryFactory.Update<SelectProductsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Products, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectProductsDto>(products);
+            }
         }
 
 

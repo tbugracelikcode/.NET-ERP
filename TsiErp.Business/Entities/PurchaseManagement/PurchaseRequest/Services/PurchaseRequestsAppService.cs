@@ -11,6 +11,7 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PurchaseRequest.Validations;
 using TsiErp.Business.Entities.StockMovement;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
@@ -160,6 +161,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+
             var query = queryFactory.Query().From(Tables.PurchaseRequests).Select("*").Where(new { Id = id }, false, false, "");
 
             var purchaseRequests = queryFactory.Get<SelectPurchaseRequestsDto>(query);

@@ -11,6 +11,7 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Services;
 using TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
@@ -164,21 +165,36 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            DeleteControl.ControlList.Clear();
 
-            var deleteQuery = queryFactory.Query().From(Tables.OperationalQualityPlans).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            DeleteControl.ControlList.Add("OperationQualityPlanID", new List<string>
+            {
+                Tables.FirstProductApprovals
+            });
 
-            var lineDeleteQuery = queryFactory.Query().From(Tables.OperationalQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { OperationalQualityPlanID = id }, false, false, "");
 
-            deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+            bool control = DeleteControl.Control(queryFactory, id);
 
-            var operationPictureDeleteQuery = queryFactory.Query().From(Tables.OperationPictures).Delete(LoginedUserService.UserId).Where(new { OperationalQualityPlanID = id }, false, false, "");
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var deleteQuery = queryFactory.Query().From(Tables.OperationalQualityPlans).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-            deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + operationPictureDeleteQuery.Sql + " where " + operationPictureDeleteQuery.WhereSentence;
+                var lineDeleteQuery = queryFactory.Query().From(Tables.OperationalQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { OperationalQualityPlanID = id }, false, false, "");
 
-            var operationalQualityPlan = queryFactory.Update<SelectOperationalQualityPlansDto>(deleteQuery, "Id", true);
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Delete, id);
-            return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlan);
+                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
+                var operationPictureDeleteQuery = queryFactory.Query().From(Tables.OperationPictures).Delete(LoginedUserService.UserId).Where(new { OperationalQualityPlanID = id }, false, false, "");
+
+                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + operationPictureDeleteQuery.Sql + " where " + operationPictureDeleteQuery.WhereSentence;
+
+                var operationalQualityPlan = queryFactory.Update<SelectOperationalQualityPlansDto>(deleteQuery, "Id", true);
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Delete, id);
+                return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlan);
+            }
         }
 
         public async Task<IResult> DeleteLineAsync(Guid id)

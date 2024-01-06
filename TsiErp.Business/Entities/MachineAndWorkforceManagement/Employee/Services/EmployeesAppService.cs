@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Employee.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore;
@@ -103,13 +104,40 @@ namespace TsiErp.Business.Entities.Employee.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Employees).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Clear();
 
-            var employees = queryFactory.Update<SelectEmployeesDto>(query, "Id", true);
+            DeleteControl.ControlList.Add("AdjustmentUserId", new List<string>
+            {
+                Tables.OperationAdjustments
+            });
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Employees, LogType.Delete, id);
+            DeleteControl.ControlList.Add("EmployeeID", new List<string>
+            {
+                Tables.ContractProductionTrackings,
+                Tables.EmployeeOperations,
+                Tables.EmployeeScoringLines,
+                Tables.FinalControlUnsuitabilityReports,
+                Tables.FirstProductApprovals,
+                Tables.OperationUnsuitabilityReports,
+                Tables.ProductionTrackings
+            });
 
-            return new SuccessDataResult<SelectEmployeesDto>(employees);
+            bool control = DeleteControl.Control(queryFactory, id);
+
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.Employees).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var employees = queryFactory.Update<SelectEmployeesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Employees, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectEmployeesDto>(employees);
+            }
         }
 
 

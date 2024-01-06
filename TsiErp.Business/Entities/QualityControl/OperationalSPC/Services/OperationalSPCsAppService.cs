@@ -12,6 +12,7 @@ using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.OperationalSPC.Validations;
 using TsiErp.Business.Entities.PurchaseRequest.Services;
 using TsiErp.Business.Entities.StockMovement;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
@@ -140,40 +141,61 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.OperationalSPCs).Select("*").Where(new { Id = id }, false, false, "");
+            DeleteControl.ControlList.Clear();
 
-            var OperationalSPCs = queryFactory.Get<SelectOperationalSPCsDto>(query);
-
-            if (OperationalSPCs.Id != Guid.Empty && OperationalSPCs != null)
+            DeleteControl.ControlList.Add("FirstOperationalSPCID", new List<string>
             {
+                Tables.PFMEAs
+            });
 
-                var deleteQuery = queryFactory.Query().From(Tables.OperationalSPCs).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            DeleteControl.ControlList.Add("SecondOperationalSPCID", new List<string>
+            {
+                Tables.PFMEAs
+            });
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.OperationalSPCLines).Delete(LoginedUserService.UserId).Where(new { OperationalSPCID = id }, false, false, "");
 
-                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+            bool control = DeleteControl.Control(queryFactory, id);
 
-                var OperationalSPC = queryFactory.Update<SelectOperationalSPCsDto>(deleteQuery, "Id", true);
-
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationalSPCs, LogType.Delete, id);
-
-                return new SuccessDataResult<SelectOperationalSPCsDto>(OperationalSPC);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
             }
             else
             {
-                var queryLineGet = queryFactory.Query().From(Tables.OperationalSPCLines).Select("*").Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.OperationalSPCs).Select("*").Where(new { Id = id }, false, false, "");
 
-                var OperationalSPCsLineGet = queryFactory.Get<SelectOperationalSPCLinesDto>(queryLineGet);
+                var OperationalSPCs = queryFactory.Get<SelectOperationalSPCsDto>(query);
 
-                var queryLine = queryFactory.Query().From(Tables.OperationalSPCLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                if (OperationalSPCs.Id != Guid.Empty && OperationalSPCs != null)
+                {
 
-                var OperationalSPCLines = queryFactory.Update<SelectOperationalSPCLinesDto>(queryLine, "Id", true);
+                    var deleteQuery = queryFactory.Query().From(Tables.OperationalSPCs).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationalSPCLines, LogType.Delete, id);
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.OperationalSPCLines).Delete(LoginedUserService.UserId).Where(new { OperationalSPCID = id }, false, false, "");
 
-                return new SuccessDataResult<SelectOperationalSPCLinesDto>(OperationalSPCLines);
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                    var OperationalSPC = queryFactory.Update<SelectOperationalSPCsDto>(deleteQuery, "Id", true);
+
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationalSPCs, LogType.Delete, id);
+
+                    return new SuccessDataResult<SelectOperationalSPCsDto>(OperationalSPC);
+                }
+                else
+                {
+                    var queryLineGet = queryFactory.Query().From(Tables.OperationalSPCLines).Select("*").Where(new { Id = id }, false, false, "");
+
+                    var OperationalSPCsLineGet = queryFactory.Get<SelectOperationalSPCLinesDto>(queryLineGet);
+
+                    var queryLine = queryFactory.Query().From(Tables.OperationalSPCLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                    var OperationalSPCLines = queryFactory.Update<SelectOperationalSPCLinesDto>(queryLine, "Id", true);
+
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationalSPCLines, LogType.Delete, id);
+
+                    return new SuccessDataResult<SelectOperationalSPCLinesDto>(OperationalSPCLines);
+                }
             }
-
         }
 
         public async Task<IDataResult<SelectOperationalSPCsDto>> GetAsync(Guid id)

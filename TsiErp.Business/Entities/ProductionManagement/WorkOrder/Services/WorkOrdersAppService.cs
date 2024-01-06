@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.WorkOrder.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
@@ -103,14 +104,44 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.WorkOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            DeleteControl.ControlList.Clear();
 
-            var workOrders = queryFactory.Update<SelectWorkOrdersDto>(query, "Id", true);
+            DeleteControl.ControlList.Add("LinkedWorkOrderID", new List<string>
+            {
+                Tables.WorkOrders
+            });
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.WorkOrders, LogType.Delete, id);
+            DeleteControl.ControlList.Add("WorkOrderId", new List<string>
+            {
+                Tables.OperationAdjustments
+            });
 
-            return new SuccessDataResult<SelectWorkOrdersDto>(workOrders);
+            DeleteControl.ControlList.Add("WorkOrderID", new List<string>
+            {
+                Tables.ContractProductionTrackings,
+                Tables.ContractTrackingFicheLines,
+                Tables.ContractUnsuitabilityReports,
+                Tables.FirstProductApprovals,
+                Tables.OperationUnsuitabilityReports,
+                Tables.ProductionTrackings
+            });
 
+            bool control = DeleteControl.Control(queryFactory, id);
+
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.WorkOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var workOrders = queryFactory.Update<SelectWorkOrdersDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.WorkOrders, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectWorkOrdersDto>(workOrders);
+            }
         }
 
 

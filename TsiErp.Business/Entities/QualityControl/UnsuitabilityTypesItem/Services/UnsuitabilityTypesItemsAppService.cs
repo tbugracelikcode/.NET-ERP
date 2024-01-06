@@ -9,6 +9,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
@@ -127,14 +128,29 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.UnsuitabilityTypesItems).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Clear();
 
-            var unsuitabilityTypesItems = queryFactory.Update<SelectUnsuitabilityTypesItemsDto>(query, "Id", true);
+            DeleteControl.ControlList.Add("UnsuitabilityTypeID", new List<string>
+            {
+                Tables.UnsuitabilityItemSPCLines
+            });
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.UnsuitabilityTypesItems, LogType.Delete, id);
+            bool control = DeleteControl.Control(queryFactory, id);
 
-            return new SuccessDataResult<SelectUnsuitabilityTypesItemsDto>(unsuitabilityTypesItems);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.UnsuitabilityTypesItems).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
+                var unsuitabilityTypesItems = queryFactory.Update<SelectUnsuitabilityTypesItemsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.UnsuitabilityTypesItems, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectUnsuitabilityTypesItemsDto>(unsuitabilityTypesItems);
+            }
         }
 
         public async Task<IDataResult<SelectUnsuitabilityTypesItemsDto>> GetAsync(Guid id)
