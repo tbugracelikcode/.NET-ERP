@@ -120,8 +120,74 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>ORDER ACCEPTANCE CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Order Acceptance Code:</value>
+  </data>
+  <data name="ConfirmedLoadingDate" xml:space="preserve">
+    <value>CONFIRMED LOADING DATE</value>
+  </data>
+  <data name="ConfirmedLoadingDateLabel" xml:space="preserve">
+    <value>Confirmed Loading Date:</value>
+  </data>
+  <data name="CurrentAccountCardCustomerCodeLabel" xml:space="preserve">
+    <value>Customer Code:</value>
+  </data>
+  <data name="CurrentAccountCardName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="CurrentAccountCardNameLabel" xml:space="preserve">
+    <value>Current Account Name:</value>
+  </data>
+  <data name="CurrentAccountPopupGridCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="CurrentAccountPopupGridEmail" xml:space="preserve">
+    <value>E-MAIL</value>
+  </data>
+  <data name="CurrentAccountPopupGridName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="CurrentAccountPopupGridResponsible" xml:space="preserve">
+    <value>RESPONSIBLE</value>
+  </data>
+  <data name="CurrentAccountPopupTitle" xml:space="preserve">
+    <value>Current Account Cards</value>
+  </data>
+  <data name="CurrenyCodeLabel" xml:space="preserve">
+    <value>Curreny:</value>
+  </data>
+  <data name="CustomerBarcodeNoLineLabel" xml:space="preserve">
+    <value>Customer Barcode Number:</value>
+  </data>
+  <data name="CustomerOrderNo" xml:space="preserve">
+    <value>CUSTOMER ORDER NO</value>
+  </data>
+  <data name="CustomerOrderNoLabel" xml:space="preserve">
+    <value>Customer Order Number:</value>
+  </data>
+  <data name="CustomerReferanceNoLineLabel" xml:space="preserve">
+    <value>Customer Referance Number:</value>
+  </data>
+  <data name="CustomerRequestedDate" xml:space="preserve">
+    <value>CUSTOMER REQUESTED DATE</value>
+  </data>
+  <data name="CustomerRequestedDateLabel" xml:space="preserve">
+    <value>Customer Requested Date:</value>
+  </data>
+  <data name="Date_" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="DefinedUnitPriceLineLabel" xml:space="preserve">
+    <value>Defined Unit Price:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -134,6 +200,12 @@
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="Description_LineLabel" xml:space="preserve">
+    <value>Description:</value>
   </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Order Acceptance Records</value>
@@ -150,11 +222,53 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="ExchangeRateAmountLabel" xml:space="preserve">
+    <value>Exchange Rate Amount:</value>
+  </data>
   <data name="ExportFileName" xml:space="preserve">
     <value>OrderAcceptanceRecords</value>
   </data>
   <data name="ExportTitle" xml:space="preserve">
     <value>Order Acceptance Records</value>
+  </data>
+  <data name="LineAmountLineLabel" xml:space="preserve">
+    <value>Line Amount:</value>
+  </data>
+  <data name="LineGridCustomerBarcodeNo" xml:space="preserve">
+    <value>CUSTOMER BARCODE NO</value>
+  </data>
+  <data name="LineGridCustomerReferanceNo" xml:space="preserve">
+    <value>CUSTOMER REFERANCE NO</value>
+  </data>
+  <data name="LineGridDefinedUnitPrice" xml:space="preserve">
+    <value>DEFINED UNIT PRICE</value>
+  </data>
+  <data name="LineGridDescription_" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
+  <data name="LineGridLineAmount" xml:space="preserve">
+    <value>LINE AMOUNT</value>
+  </data>
+  <data name="LineGridMinOrderAmount" xml:space="preserve">
+    <value>MIN. ORDER AMOUNT</value>
+  </data>
+  <data name="LineGridOrderAmount" xml:space="preserve">
+    <value>ORDER AMOUNT</value>
+  </data>
+  <data name="LineGridOrderReferanceNo" xml:space="preserve">
+    <value>ORDER REFERANCE NO</value>
+  </data>
+  <data name="LineGridOrderUnitPrice" xml:space="preserve">
+    <value>ORDER UNIT PRICE</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="LineGridUnitSetCode" xml:space="preserve">
+    <value>UNIT SET</value>
+  </data>
+  <data name="LinePopupTitle" xml:space="preserve">
+    <value>Order Acceptance Record Lines</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -167,6 +281,9 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="MinOrderAmountLineLabel" xml:space="preserve">
+    <value>Min. Order Amount:</value>
   </data>
   <data name="OrderAcceptanceRecordLineContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -192,6 +309,27 @@
   <data name="OrderAcceptanceRecordsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="OrderAcceptanceRecordState" xml:space="preserve">
+    <value>STATUS</value>
+  </data>
+  <data name="OrderAmountLineLabel" xml:space="preserve">
+    <value>Order Amount:</value>
+  </data>
+  <data name="OrderReferanceNoLineLabel" xml:space="preserve">
+    <value>Order Referance Number:</value>
+  </data>
+  <data name="OrderUnitPriceLineLabel" xml:space="preserve">
+    <value>Order Unit Price:</value>
+  </data>
+  <data name="ProductCodeLineLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="ProductionOrderLoadingDate" xml:space="preserve">
+    <value>PRODUCTION ORDER LOADING DATE</value>
+  </data>
+  <data name="ProductionOrderLoadingDateLabel" xml:space="preserve">
+    <value>Production Order Loading Date:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -204,8 +342,20 @@
   <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
     <value>Confirmation</value>
   </data>
+  <data name="UICurrentAccountMessage" xml:space="preserve">
+    <value>It is not possible to add lines without selecting the date and current account card.</value>
+  </data>
+  <data name="UICurrentAccountTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Order Acceptance Records</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sales Management &gt; Transactions</value>
+  </data>
+  <data name="UnitSetCodeLineLabel" xml:space="preserve">
+    <value>Unit Set:</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

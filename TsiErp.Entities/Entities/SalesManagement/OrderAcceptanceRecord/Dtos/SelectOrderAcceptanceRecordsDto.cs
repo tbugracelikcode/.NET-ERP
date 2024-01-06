@@ -36,6 +36,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos
         /// </summary>
         public string CustomerOrderNo { get; set; }
         /// <summary>
+        /// Açıklama
+        /// </summary>
+        public string Description_ { get; set; }
+        /// <summary>
         /// Müşterinin İstediği Tarih
         /// </summary>
         public DateTime CustomerRequestedDate { get; set; }

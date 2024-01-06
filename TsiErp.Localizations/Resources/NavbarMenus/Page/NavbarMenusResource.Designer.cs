@@ -763,7 +763,7 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sipariş Onay Kayıtları.
+        ///   Looks up a localized string similar to Sipariş Kabul Kayıtları.
         /// </summary>
         public static string OrderAcceptanceRecordsChildMenu {
             get {

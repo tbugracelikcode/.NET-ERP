@@ -352,7 +352,7 @@
     <value>Operasyon Uygunsuzluk Kayıtları</value>
   </data>
   <data name="OrderAcceptanceRecordsChildMenu" xml:space="preserve">
-    <value>Sipariş Onay Kayıtları</value>
+    <value>Sipariş Kabul Kayıtları</value>
   </data>
   <data name="PackageFichesChildMenu" xml:space="preserve">
     <value>Paket Fişleri</value>

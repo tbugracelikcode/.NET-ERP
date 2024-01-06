@@ -56,5 +56,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord
         /// Sipariş Onay Durumu
         /// </summary>
         public OrderAcceptanceRecordStateEnum OrderAcceptanceRecordState { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Açıklama
+        /// </summary>
+        public string Description_ { get; set; }
     }
 }

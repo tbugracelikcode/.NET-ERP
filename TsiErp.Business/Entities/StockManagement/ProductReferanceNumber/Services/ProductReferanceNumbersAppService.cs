@@ -127,10 +127,10 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductReferanceNumbers).Select<ProductReferanceNumbers>(prn => new { prn.ProductID, prn.DataOpenStatus, prn.DataOpenStatusUserId, prn.Id, prn.CurrentAccountCardID, prn.Description_, prn.ReferanceNo })
+               .From(Tables.ProductReferanceNumbers).Select<ProductReferanceNumbers>(null)
                         .Join<Products>
                         (
-                            p => new { ProductCode = p.Code, ProductName = p.Name },
+                            p => new { ProductCode = p.Code, ProductName = p.Name, ProductID = p.Id },
                             nameof(ProductReferanceNumbers.ProductID),
                             nameof(Products.Id),
                             JoinType.Left
@@ -153,7 +153,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         public async Task<IDataResult<IList<SelectProductReferanceNumbersDto>>> GetSelectListAsync(Guid productId)
         {
             var query = queryFactory
-                    .Query().From(Tables.ProductReferanceNumbers).Select<ProductReferanceNumbers>(prn => new { prn.ProductID, prn.DataOpenStatus, prn.DataOpenStatusUserId, prn.Id, prn.CurrentAccountCardID, prn.Description_, prn.ReferanceNo })
+                    .Query().From(Tables.ProductReferanceNumbers).Select<ProductReferanceNumbers>(null)
                         .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },

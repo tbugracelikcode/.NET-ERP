@@ -46,6 +46,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos
         /// Sipariş Onay Durumu
         /// </summary>
         public int OrderAcceptanceRecordState { get; set; }
+        /// <summary>
+        /// Açıklama
+        /// </summary>
+        public string Description_ { get; set; }
 
         [NoDatabaseAction]
         public List<SelectOrderAcceptanceRecordLinesDto> SelectOrderAcceptanceRecordLines { get; set; }
