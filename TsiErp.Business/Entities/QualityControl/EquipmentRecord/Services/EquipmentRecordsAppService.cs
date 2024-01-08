@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.EquipmentRecord.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
 using TsiErp.Entities.Entities.QualityControl.EquipmentRecord;
@@ -94,14 +95,32 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.EquipmentRecords).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Clear();
 
-            var equipmentRecords = queryFactory.Update<SelectEquipmentRecordsDto>(query, "Id", true);
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EquipmentRecords, LogType.Delete, id);
+            DeleteControl.ControlList.Add("EquipmentID", new List<string>
+            {
+                Tables.CalibrationRecords,
+                Tables.CalibrationVerifications
+            });
 
-            return new SuccessDataResult<SelectEquipmentRecordsDto>(equipmentRecords);
 
+            bool control = DeleteControl.Control(queryFactory, id);
+
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.EquipmentRecords).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var equipmentRecords = queryFactory.Update<SelectEquipmentRecordsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EquipmentRecords, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectEquipmentRecordsDto>(equipmentRecords);
+            }
         }
 
 

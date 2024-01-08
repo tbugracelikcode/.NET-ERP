@@ -11,6 +11,7 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkillRecord.Services;
 using TsiErp.Business.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkillRecord.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkillRecord;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkillRecord.Dtos;
@@ -83,14 +84,29 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            DeleteControl.ControlList.Clear();
 
-            var query = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            DeleteControl.ControlList.Add("GeneralSkillID", new List<string>
+            {
+                Tables.GeneralSkillRecordPriorities
+            });
 
-            var EmployeeGeneralSkillRecords = queryFactory.Update<SelectEmployeeGeneralSkillRecordsDto>(query, "Id", true);
+            bool control = DeleteControl.Control(queryFactory, id);
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EmployeeGeneralSkillRecords, LogType.Delete, id);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-            return new SuccessDataResult<SelectEmployeeGeneralSkillRecordsDto>(EmployeeGeneralSkillRecords);
+                var EmployeeGeneralSkillRecords = queryFactory.Update<SelectEmployeeGeneralSkillRecordsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EmployeeGeneralSkillRecords, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectEmployeeGeneralSkillRecordsDto>(EmployeeGeneralSkillRecords);
+            }
         }
 
 

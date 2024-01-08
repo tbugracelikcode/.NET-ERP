@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ProductsOperation.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
@@ -142,38 +143,64 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.ProductsOperations).Select("*").Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Clear();
 
-            var productsOperations = queryFactory.Get<SelectProductsOperationsDto>(query);
-
-            if (productsOperations.Id != Guid.Empty && productsOperations != null)
+            DeleteControl.ControlList.Add("OperationID", new List<string>
             {
-                var deleteQuery = queryFactory.Query().From(Tables.ProductsOperations).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                Tables.ContractTrackingFicheLines,
+                Tables.OperationalSPCLines,
+                Tables.OperationStockMovements,
+                Tables.OperationUnsuitabilityReports,
+                Tables.PFMEAs
+            });
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.ProductsOperationLines).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, false, false, "");
+            DeleteControl.ControlList.Add("ProductsOperationID", new List<string>
+            {
+                Tables.OperationalQualityPlans,
+                Tables.RouteLines,
+                Tables.WorkOrders
+            });
 
-                var lineQualityPlansDeleteQuery = queryFactory.Query().From(Tables.ProductOperationQualityPlans).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, false, false, "");
+            bool control = DeleteControl.Control(queryFactory, id);
 
-                var lineContractDeleteQuery = queryFactory.Query().From(Tables.ContractOfProductsOperations).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, false, false, "");
-
-                deleteQuery.Sql = deleteQuery.Sql
-                    + QueryConstants.QueryConstant + lineDeleteQuery.Sql
-                    + QueryConstants.QueryConstant + lineQualityPlansDeleteQuery.Sql
-                    + QueryConstants.QueryConstant + lineContractDeleteQuery.Sql
-                    + " where " + lineDeleteQuery.WhereSentence;
-
-                var productsOperation = queryFactory.Update<SelectProductsOperationsDto>(deleteQuery, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductsOperations, LogType.Delete, id);
-                return new SuccessDataResult<SelectProductsOperationsDto>(productsOperation);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.ProductsOperationLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
-                var productsOperationLines = queryFactory.Update<SelectProductsOperationLinesDto>(queryLine, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductsOperationLines, LogType.Delete, id);
-                return new SuccessDataResult<SelectProductsOperationLinesDto>(productsOperationLines);
-            }
+                var query = queryFactory.Query().From(Tables.ProductsOperations).Select("*").Where(new { Id = id }, true, true, "");
 
+                var productsOperations = queryFactory.Get<SelectProductsOperationsDto>(query);
+
+                if (productsOperations.Id != Guid.Empty && productsOperations != null)
+                {
+                    var deleteQuery = queryFactory.Query().From(Tables.ProductsOperations).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.ProductsOperationLines).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, false, false, "");
+
+                    var lineQualityPlansDeleteQuery = queryFactory.Query().From(Tables.ProductOperationQualityPlans).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, false, false, "");
+
+                    var lineContractDeleteQuery = queryFactory.Query().From(Tables.ContractOfProductsOperations).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql
+                        + QueryConstants.QueryConstant + lineDeleteQuery.Sql
+                        + QueryConstants.QueryConstant + lineQualityPlansDeleteQuery.Sql
+                        + QueryConstants.QueryConstant + lineContractDeleteQuery.Sql
+                        + " where " + lineDeleteQuery.WhereSentence;
+
+                    var productsOperation = queryFactory.Update<SelectProductsOperationsDto>(deleteQuery, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductsOperations, LogType.Delete, id);
+                    return new SuccessDataResult<SelectProductsOperationsDto>(productsOperation);
+                }
+                else
+                {
+                    var queryLine = queryFactory.Query().From(Tables.ProductsOperationLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var productsOperationLines = queryFactory.Update<SelectProductsOperationLinesDto>(queryLine, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductsOperationLines, LogType.Delete, id);
+                    return new SuccessDataResult<SelectProductsOperationLinesDto>(productsOperationLines);
+                }
+            }
         }
 
         public async Task<IDataResult<SelectProductsOperationsDto>> GetAsync(Guid id)

@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Shift.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
@@ -108,28 +109,47 @@ namespace TsiErp.Business.Entities.Shift.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Shifts).Select("*").Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Clear();
 
-            var shifts = queryFactory.Get<SelectShiftsDto>(query);
-
-            if (shifts.Id != Guid.Empty && shifts != null)
+            DeleteControl.ControlList.Add("ShiftID", new List<string>
             {
-                var deleteQuery = queryFactory.Query().From(Tables.Shifts).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                Tables.CalendarLines,
+                Tables.ContractProductionTrackings,
+                Tables.ProductionTrackings
+            });
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.ShiftLines).Delete(LoginedUserService.UserId).Where(new { ShiftID = id }, false, false, "");
+            bool control = DeleteControl.Control(queryFactory, id);
 
-                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
-
-                var shift = queryFactory.Update<SelectShiftsDto>(deleteQuery, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Shifts, LogType.Delete, id);
-                return new SuccessDataResult<SelectShiftsDto>(shift);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.ShiftLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
-                var shiftLines = queryFactory.Update<SelectShiftLinesDto>(queryLine, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ShiftLines, LogType.Delete, id);
-                return new SuccessDataResult<SelectShiftLinesDto>(shiftLines);
+
+                var query = queryFactory.Query().From(Tables.Shifts).Select("*").Where(new { Id = id }, true, true, "");
+
+                var shifts = queryFactory.Get<SelectShiftsDto>(query);
+
+                if (shifts.Id != Guid.Empty && shifts != null)
+                {
+                    var deleteQuery = queryFactory.Query().From(Tables.Shifts).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.ShiftLines).Delete(LoginedUserService.UserId).Where(new { ShiftID = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                    var shift = queryFactory.Update<SelectShiftsDto>(deleteQuery, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Shifts, LogType.Delete, id);
+                    return new SuccessDataResult<SelectShiftsDto>(shift);
+                }
+                else
+                {
+                    var queryLine = queryFactory.Query().From(Tables.ShiftLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var shiftLines = queryFactory.Update<SelectShiftLinesDto>(queryLine, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ShiftLines, LogType.Delete, id);
+                    return new SuccessDataResult<SelectShiftLinesDto>(shiftLines);
+                }
             }
         }
 

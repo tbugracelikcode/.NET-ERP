@@ -24,6 +24,7 @@ using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.MaintenanceMRPs.Page;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 
 namespace TsiErp.Business.Entities.MaintenanceMRP.Services
 {
@@ -116,28 +117,46 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.MaintenanceMRPs).Select("*").Where(new { Id = id }, false, false, "");
+            DeleteControl.ControlList.Clear();
 
-            var maintenanceMRPs = queryFactory.Get<SelectMaintenanceMRPsDto>(query);
 
-            if (maintenanceMRPs.Id != Guid.Empty && maintenanceMRPs != null)
+            DeleteControl.ControlList.Add("MaintenanceMRPID", new List<string>
             {
-                var deleteQuery = queryFactory.Query().From(Tables.MaintenanceMRPs).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                Tables.PurchaseOrders,
+                Tables.MRPs
+            });
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.MaintenanceMRPLines).Delete(LoginedUserService.UserId).Where(new { MaintenanceMRPID = id }, false, false, "");
+            bool control = DeleteControl.Control(queryFactory, id);
 
-                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
-
-                var maintenanceMRP = queryFactory.Update<SelectMaintenanceMRPsDto>(deleteQuery, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MaintenanceMRPs, LogType.Delete, id);
-                return new SuccessDataResult<SelectMaintenanceMRPsDto>(maintenanceMRP);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.MaintenanceMRPLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
-                var maintenanceMRPLines = queryFactory.Update<SelectMaintenanceMRPLinesDto>(queryLine, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MaintenanceMRPLines, LogType.Delete, id);
-                return new SuccessDataResult<SelectMaintenanceMRPLinesDto>(maintenanceMRPLines);
+                var query = queryFactory.Query().From(Tables.MaintenanceMRPs).Select("*").Where(new { Id = id }, false, false, "");
+
+                var maintenanceMRPs = queryFactory.Get<SelectMaintenanceMRPsDto>(query);
+
+                if (maintenanceMRPs.Id != Guid.Empty && maintenanceMRPs != null)
+                {
+                    var deleteQuery = queryFactory.Query().From(Tables.MaintenanceMRPs).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.MaintenanceMRPLines).Delete(LoginedUserService.UserId).Where(new { MaintenanceMRPID = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                    var maintenanceMRP = queryFactory.Update<SelectMaintenanceMRPsDto>(deleteQuery, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MaintenanceMRPs, LogType.Delete, id);
+                    return new SuccessDataResult<SelectMaintenanceMRPsDto>(maintenanceMRP);
+                }
+                else
+                {
+                    var queryLine = queryFactory.Query().From(Tables.MaintenanceMRPLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var maintenanceMRPLines = queryFactory.Update<SelectMaintenanceMRPLinesDto>(queryLine, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MaintenanceMRPLines, LogType.Delete, id);
+                    return new SuccessDataResult<SelectMaintenanceMRPLinesDto>(maintenanceMRPLines);
+                }
             }
         }
 

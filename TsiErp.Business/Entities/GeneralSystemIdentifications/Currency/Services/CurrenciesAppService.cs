@@ -9,6 +9,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Currency.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
@@ -83,15 +84,39 @@ namespace TsiErp.Business.Entities.Currency.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            DeleteControl.ControlList.Clear();
 
-            var query = queryFactory.Query().From(Tables.Currencies).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Add("CurrencyID", new List<string>
+            {
+                Tables.CurrentAccountCards,
+                Tables.ExchangeRates,
+                Tables.PurchaseOrders,
+                Tables.PurchasePriceLines,
+                Tables.PurchasePrices,
+                Tables.PurchaseRequests,
+                Tables.SalesOrders,
+                Tables.SalesPriceLines,
+                Tables.SalesPrices,
+                Tables.SalesPropositions,
+                Tables.StockFiches
+            });
 
-            var currencies = queryFactory.Update<SelectCurrenciesDto>(query, "Id", true);
+            bool control = DeleteControl.Control(queryFactory, id);
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Currencies, LogType.Delete, id);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.Currencies).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
-            return new SuccessDataResult<SelectCurrenciesDto>(currencies);
+                var currencies = queryFactory.Update<SelectCurrenciesDto>(query, "Id", true);
 
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Currencies, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectCurrenciesDto>(currencies);
+            }
         }
 
 

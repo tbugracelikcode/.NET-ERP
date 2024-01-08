@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Department.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos;
@@ -84,14 +85,30 @@ namespace TsiErp.Business.Entities.Department.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            DeleteControl.ControlList.Clear();
 
-            var query = queryFactory.Query().From(Tables.Departments).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Add("DepartmentID", new List<string>
+            {
+                Tables.Employees,
+                Tables.EmployeeScoringLines
+            });
 
-            var departments = queryFactory.Update<SelectDepartmentsDto>(query, "Id", true);
+            bool control = DeleteControl.Control(queryFactory, id);
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Departments, LogType.Delete, id);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.Departments).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
-            return new SuccessDataResult<SelectDepartmentsDto>(departments);
+                var departments = queryFactory.Update<SelectDepartmentsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Departments, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectDepartmentsDto>(departments);
+            }
         }
 
 

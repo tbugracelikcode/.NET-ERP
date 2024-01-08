@@ -226,7 +226,7 @@
     <value>Periyot Süresi:</value>
   </data>
   <data name="PlannedDate" xml:space="preserve">
-    <value>BİTİŞ TARİHİ</value>
+    <value>PLANLANAN BAKIM TARİHİ</value>
   </data>
   <data name="PlannedDateLabel" xml:space="preserve">
     <value>Planlanan Tarih:</value>

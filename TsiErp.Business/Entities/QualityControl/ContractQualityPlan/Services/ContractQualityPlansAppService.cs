@@ -11,6 +11,7 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.QualityControl.ContractQualityPlan.Services;
 using TsiErp.Business.Entities.QualityControl.ContractQualityPlan.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
@@ -180,25 +181,43 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var deleteQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            DeleteControl.ControlList.Clear();
 
-            var lineDeleteQuery = queryFactory.Query().From(Tables.ContractQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { ContractQualityPlanID = id }, false, false, "");
-
-
-            var contractPictureDeleteQuery = queryFactory.Query().From(Tables.OperationPictures).Delete(LoginedUserService.UserId).Where(new { ContractQualityPlanID = id }, false, false, "");
-
-
-            var contractOperationDeleteQuery = queryFactory.Query().From(Tables.ContractQualityPlanOperations).Delete(LoginedUserService.UserId).Where(new { ContractQualityPlanID = id }, false, false, "");
+            DeleteControl.ControlList.Add("ContractQualityPlanID", new List<string>
+            {
+                Tables.ContractTrackingFiches
+            });
 
 
-            var ContractQualityPlan = queryFactory.Update<SelectContractQualityPlansDto>(deleteQuery, "Id", true);
-            var ContractQualityPlanLines = queryFactory.Update<SelectContractQualityPlanLinesDto>(lineDeleteQuery, "Id", true);
-            var contractPictures = queryFactory.Update<SelectContractOperationPicturesDto>(contractPictureDeleteQuery, "Id", true);
-            var contractOperations = queryFactory.Update<SelectContractQualityPlanOperationsDto>(contractOperationDeleteQuery, "Id", true);
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractQualityPlans, LogType.Delete, id);
-            return new SuccessDataResult<SelectContractQualityPlansDto>(ContractQualityPlan);
+            bool control = DeleteControl.Control(queryFactory, id);
+
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var deleteQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var lineDeleteQuery = queryFactory.Query().From(Tables.ContractQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { ContractQualityPlanID = id }, false, false, "");
+
+                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
 
+                var contractPictureDeleteQuery = queryFactory.Query().From(Tables.OperationPictures).Delete(LoginedUserService.UserId).Where(new { ContractQualityPlanID = id }, false, false, "");
+
+                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + contractPictureDeleteQuery.Sql + " where " + contractPictureDeleteQuery.WhereSentence;
+
+
+                var contractOperationDeleteQuery = queryFactory.Query().From(Tables.ContractQualityPlanOperations).Delete(LoginedUserService.UserId).Where(new { ContractQualityPlanID = id }, false, false, "");
+
+                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + contractOperationDeleteQuery.Sql + " where " + contractOperationDeleteQuery.WhereSentence;
+
+                var ContractQualityPlan = queryFactory.Update<SelectContractQualityPlansDto>(deleteQuery, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractQualityPlans, LogType.Delete, id);
+                return new SuccessDataResult<SelectContractQualityPlansDto>(ContractQualityPlan);
+            }
         }
 
         public async Task<IResult> DeleteLineAsync(Guid id)

@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.TechnicalDrawing.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.StockManagement.Product;
@@ -85,14 +86,30 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.TechnicalDrawings).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            DeleteControl.ControlList.Clear();
 
-            var technicalDrawings = queryFactory.Update<SelectTechnicalDrawingsDto>(query, "Id", true);
+            DeleteControl.ControlList.Add("TechnicalDrawingID", new List<string>
+            {
+                Tables.Report8Ds
+            });
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Delete, id);
 
-            return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawings);
+            bool control = DeleteControl.Control(queryFactory, id);
 
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.TechnicalDrawings).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var technicalDrawings = queryFactory.Update<SelectTechnicalDrawingsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawings);
+            }
         }
 
 

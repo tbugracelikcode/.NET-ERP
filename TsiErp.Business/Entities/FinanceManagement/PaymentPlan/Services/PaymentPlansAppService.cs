@@ -9,6 +9,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PaymentPlan.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
@@ -85,14 +86,37 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.PaymentPlans).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
-            var paymentPlans = queryFactory.Update<SelectPaymentPlansDto>(query, "Id", true);
+            DeleteControl.ControlList.Clear();
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PaymentPlans, LogType.Delete, id);
+            DeleteControl.ControlList.Add("PaymentPlanID", new List<string>
+            {
+                Tables.PurchaseOrderLines,
+                Tables.PurchaseOrders,
+                Tables.PurchaseRequestLines,
+                Tables.PurchaseRequests,
+                Tables.SalesOrderLines,
+                Tables.SalesOrders,
+                Tables.SalesPropositionLines,
+                Tables.SalesPropositions
+            });
 
-            return new SuccessDataResult<SelectPaymentPlansDto>(paymentPlans);
+            bool control = DeleteControl.Control(queryFactory, id);
 
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.PaymentPlans).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var paymentPlans = queryFactory.Update<SelectPaymentPlansDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PaymentPlans, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectPaymentPlansDto>(paymentPlans);
+            }
         }
 
 

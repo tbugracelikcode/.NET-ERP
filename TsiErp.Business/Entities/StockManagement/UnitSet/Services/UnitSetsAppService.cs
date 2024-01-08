@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.UnitSet.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
@@ -82,35 +83,42 @@ namespace TsiErp.Business.Entities.UnitSet.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            #region Delete Control
+            DeleteControl.ControlList.Clear();
 
-            var salesPropositionLineQuery = queryFactory.Query().From(Tables.SalesPropositionLines).Select("*").Where(new { UnitSetID = id }, true, true, "");
-            var salesPropositionLines = queryFactory.Get<SalesPropositionLines>(salesPropositionLineQuery);
+            DeleteControl.ControlList.Add("UnitSetID", new List<string>
+            {
+                Tables.BillsofMaterialLines,
+                Tables.MaintenanceInstructionLines,
+                Tables.MaintenanceMRPLines,
+                Tables.PlannedMaintenanceLines,
+                Tables.ProductionOrders,
+                Tables.Products,
+                Tables.PurchaseOrderLines,
+                Tables.PurchaseRequestLines,
+                Tables.SalesOrderLines,
+                Tables.SalesPropositionLines,
+                Tables.StockFicheLines,
+                Tables.UnplannedMaintenanceLines,
+                Tables.MRPLines
+            });
 
-            if (salesPropositionLines != null && salesPropositionLines.Id != Guid.Empty)
+            bool control = DeleteControl.Control(queryFactory, id);
+
+            if (!control)
             {
                 throw new Exception(L["DeleteControlManager"]);
             }
-
-            var productQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { UnitSetID = id }, false, false, "");
-            var products = queryFactory.Get<Products>(productQuery);
-
-            if (products != null && products.Id != Guid.Empty)
+            else
             {
-                throw new Exception(L["DeleteControlManager"]);
+                var query = queryFactory.Query().From(Tables.UnitSets).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var unitsets = queryFactory.Update<SelectUnitSetsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.UnitSets, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectUnitSetsDto>(unitsets);
+
             }
-
-            #endregion
-
-            var query = queryFactory.Query().From(Tables.UnitSets).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
-
-            var unitsets = queryFactory.Update<SelectUnitSetsDto>(query, "Id", true);
-
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.UnitSets, LogType.Delete, id);
-
-            return new SuccessDataResult<SelectUnitSetsDto>(unitsets);
-
-
         }
 
         public async Task<IDataResult<SelectUnitSetsDto>> GetAsync(Guid id)

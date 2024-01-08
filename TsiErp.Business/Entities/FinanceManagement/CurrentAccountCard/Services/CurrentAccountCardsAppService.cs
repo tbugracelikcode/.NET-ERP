@@ -163,7 +163,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 
             if(!control)
             {
-                throw new Exception(L["DeleteControlMessage"]);
+                throw new Exception(L["DeleteControlManager"]);
             }
             else
             {

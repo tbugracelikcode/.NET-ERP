@@ -198,7 +198,7 @@ else
                      <DxGridLayoutItem Row="3" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["OccuredTimeLabel"] </strong></label><br />
-                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.OccuredTime"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Enabled=false Min="0" @bind-Value="DataSource.OccuredTime"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

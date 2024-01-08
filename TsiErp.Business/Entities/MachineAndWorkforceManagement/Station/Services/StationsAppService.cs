@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
@@ -119,28 +120,55 @@ namespace TsiErp.Business.Entities.Station.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Stations).Select("*").Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Clear();
 
-            var stations = queryFactory.Get<SelectStationsDto>(query);
-
-            if (stations.Id != Guid.Empty && stations != null)
+            DeleteControl.ControlList.Add("StationID", new List<string>
             {
-                var deleteQuery = queryFactory.Query().From(Tables.Stations).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                Tables.CalendarLines,
+                Tables.ContractProductionTrackings,
+                Tables.ContractTrackingFicheLines,
+                Tables.MaintenanceInstructions,
+                Tables.OperationUnsuitabilityReports,
+                Tables.PlannedMaintenances,
+                Tables.ProductionTrackings,
+                Tables.ProductsOperationLines,
+                Tables.TemplateOperationLines,
+                Tables.UnplannedMaintenances,
+                Tables.WorkOrders
+            });
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.StationInventories).Delete(LoginedUserService.UserId).Where(new { StationID = id }, false, false, "");
+            bool control = DeleteControl.Control(queryFactory, id);
 
-                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
-
-                var station = queryFactory.Update<SelectStationsDto>(deleteQuery, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Stations, LogType.Delete, id);
-                return new SuccessDataResult<SelectStationsDto>(station);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.StationInventories).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
-                var stationInventories = queryFactory.Update<SelectStationInventoriesDto>(queryLine, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StationInventories, LogType.Delete, id);
-                return new SuccessDataResult<SelectStationInventoriesDto>(stationInventories);
+
+                var query = queryFactory.Query().From(Tables.Stations).Select("*").Where(new { Id = id }, true, true, "");
+
+                var stations = queryFactory.Get<SelectStationsDto>(query);
+
+                if (stations.Id != Guid.Empty && stations != null)
+                {
+                    var deleteQuery = queryFactory.Query().From(Tables.Stations).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.StationInventories).Delete(LoginedUserService.UserId).Where(new { StationID = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                    var station = queryFactory.Update<SelectStationsDto>(deleteQuery, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Stations, LogType.Delete, id);
+                    return new SuccessDataResult<SelectStationsDto>(station);
+                }
+                else
+                {
+                    var queryLine = queryFactory.Query().From(Tables.StationInventories).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var stationInventories = queryFactory.Update<SelectStationInventoriesDto>(queryLine, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StationInventories, LogType.Delete, id);
+                    return new SuccessDataResult<SelectStationInventoriesDto>(stationInventories);
+                }
             }
         }
 
