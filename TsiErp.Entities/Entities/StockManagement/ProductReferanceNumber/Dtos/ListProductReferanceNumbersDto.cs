@@ -11,6 +11,10 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos
     {
 
         /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
+        /// <summary>
         /// Stok Kodu
         /// </summary>
         public string ProductCode { get; set; }

@@ -20,6 +20,11 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder
         /// Tarih
         /// </summary>
         public DateTime Date_ { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Müşterinin İstediği Tarih
+        /// </summary>
+        public DateTime CustomerRequestedDate { get; set; }
         [SqlColumnType(MaxLength = 20, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Saat

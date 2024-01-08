@@ -120,8 +120,74 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>SİPARİŞ KABUL KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Sipariş Kabul Kodu:</value>
+  </data>
+  <data name="ConfirmedLoadingDate" xml:space="preserve">
+    <value>TEYİT EDİLEN YÜKLEME TARİHİ</value>
+  </data>
+  <data name="ConfirmedLoadingDateLabel" xml:space="preserve">
+    <value>Teyit Edilen Yükleme Tarihi:</value>
+  </data>
+  <data name="CurrentAccountCardCustomerCodeLabel" xml:space="preserve">
+    <value>Müşteri Kodu:</value>
+  </data>
+  <data name="CurrentAccountCardName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="CurrentAccountCardNameLabel" xml:space="preserve">
+    <value>Cari Hesap Ünvanı:</value>
+  </data>
+  <data name="CurrentAccountPopupGridCode" xml:space="preserve">
+    <value>CARİ KOD</value>
+  </data>
+  <data name="CurrentAccountPopupGridEmail" xml:space="preserve">
+    <value>E-POSTA</value>
+  </data>
+  <data name="CurrentAccountPopupGridName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="CurrentAccountPopupGridResponsible" xml:space="preserve">
+    <value>İLGİLİ</value>
+  </data>
+  <data name="CurrentAccountPopupTitle" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
+  <data name="CurrenyCodeLabel" xml:space="preserve">
+    <value>Para Birimi:</value>
+  </data>
+  <data name="CustomerBarcodeNoLineLabel" xml:space="preserve">
+    <value>Müşteri Barkod Numarası:</value>
+  </data>
+  <data name="CustomerOrderNo" xml:space="preserve">
+    <value>MÜŞTERİ SİPARİŞ NO</value>
+  </data>
+  <data name="CustomerOrderNoLabel" xml:space="preserve">
+    <value>Müşteri Sipariş Numarası:</value>
+  </data>
+  <data name="CustomerReferanceNoLineLabel" xml:space="preserve">
+    <value>Müşteri Referans Numarası:</value>
+  </data>
+  <data name="CustomerRequestedDate" xml:space="preserve">
+    <value>MÜŞTERİNİN İSTEDİĞİ TARİH</value>
+  </data>
+  <data name="CustomerRequestedDateLabel" xml:space="preserve">
+    <value>Müşterinin İstediği Tarih:</value>
+  </data>
+  <data name="Date_" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
+  <data name="DefinedUnitPriceLineLabel" xml:space="preserve">
+    <value>Tanımlı Birim Fiyat:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -135,8 +201,14 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="Description_LineLabel" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
-    <value>Sipariş Onay Kayıtları</value>
+    <value>Sipariş Kabul Kayıtları</value>
   </data>
   <data name="EnumOrderApproval" xml:space="preserve">
     <value>Sipariş / Fiyat Onayı Verildi</value>
@@ -150,11 +222,53 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
+  <data name="ExchangeRateAmountLabel" xml:space="preserve">
+    <value>Kur Tutarı:</value>
+  </data>
   <data name="ExportFileName" xml:space="preserve">
-    <value>SiparisOnayKayitlari</value>
+    <value>SiparisKabulKayitlari</value>
   </data>
   <data name="ExportTitle" xml:space="preserve">
-    <value>Sipariş Onay Kayıtları</value>
+    <value>Sipariş Kabul Kayıtları</value>
+  </data>
+  <data name="LineAmountLineLabel" xml:space="preserve">
+    <value>Satır Toplamı:</value>
+  </data>
+  <data name="LineGridCustomerBarcodeNo" xml:space="preserve">
+    <value>MÜŞTERİ BARKOD NO</value>
+  </data>
+  <data name="LineGridCustomerReferanceNo" xml:space="preserve">
+    <value>MÜŞTERİ REFERANS NO</value>
+  </data>
+  <data name="LineGridDefinedUnitPrice" xml:space="preserve">
+    <value>TANIMLI BİRİM FİYAT</value>
+  </data>
+  <data name="LineGridDescription_" xml:space="preserve">
+    <value>AÇIKLAMA</value>
+  </data>
+  <data name="LineGridLineAmount" xml:space="preserve">
+    <value>SATIR TOPLAMI</value>
+  </data>
+  <data name="LineGridMinOrderAmount" xml:space="preserve">
+    <value>MİN. SİPARİŞ MİKTARI</value>
+  </data>
+  <data name="LineGridOrderAmount" xml:space="preserve">
+    <value>SİPARİŞ MİKTARI</value>
+  </data>
+  <data name="LineGridOrderReferanceNo" xml:space="preserve">
+    <value>SİPARİŞ REFERANS NO</value>
+  </data>
+  <data name="LineGridOrderUnitPrice" xml:space="preserve">
+    <value>SİPARİŞ BİRİM FİYATI</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="LineGridUnitSetCode" xml:space="preserve">
+    <value>BİRİM SETİ</value>
+  </data>
+  <data name="LinePopupTitle" xml:space="preserve">
+    <value>Sipariş Kabul Kayıt Satırları</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -167,6 +281,9 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="MinOrderAmountLineLabel" xml:space="preserve">
+    <value>Min. Sipariş Miktarı:</value>
   </data>
   <data name="OrderAcceptanceRecordLineContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -186,11 +303,35 @@
   <data name="OrderAcceptanceRecordsContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextConverttoOrder" xml:space="preserve">
+    <value>Satış Siparişine Dönüştür</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
   <data name="OrderAcceptanceRecordsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="OrderAcceptanceRecordState" xml:space="preserve">
+    <value>DURUM</value>
+  </data>
+  <data name="OrderAmountLineLabel" xml:space="preserve">
+    <value>Sipariş Miktarı:</value>
+  </data>
+  <data name="OrderReferanceNoLineLabel" xml:space="preserve">
+    <value>Sipariş Referans Numarası:</value>
+  </data>
+  <data name="OrderUnitPriceLineLabel" xml:space="preserve">
+    <value>Sipariş Birim Fiyatı:</value>
+  </data>
+  <data name="ProductCodeLineLabel" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
+  <data name="ProductionOrderLoadingDate" xml:space="preserve">
+    <value>ÜRETİM EMRİ YÜKLEME TARİHİ</value>
+  </data>
+  <data name="ProductionOrderLoadingDateLabel" xml:space="preserve">
+    <value>Üretim Emri Yükleme Tarihi:</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
@@ -204,8 +345,26 @@
   <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
     <value>Onay</value>
   </data>
+  <data name="UIConvertOrderMessage" xml:space="preserve">
+    <value>Sipariş kabul kaydı, satış siparişine dönüştürülmüştür.</value>
+  </data>
+  <data name="UIConvertOrderTitle" xml:space="preserve">
+    <value>Bilgilendirme</value>
+  </data>
+  <data name="UICurrentAccountMessage" xml:space="preserve">
+    <value>Tarih ve cari hesap kartı seçilmeden satır ekleme işlemi yapılamaz.</value>
+  </data>
+  <data name="UICurrentAccountTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Sipariş Onay Kayıtları</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Satış Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="UnitSetCodeLineLabel" xml:space="preserve">
+    <value>Birim Seti:</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

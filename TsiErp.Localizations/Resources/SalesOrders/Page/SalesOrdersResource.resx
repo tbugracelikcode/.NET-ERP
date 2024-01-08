@@ -213,6 +213,9 @@
   <data name="CustomerCode" xml:space="preserve">
     <value>MÜŞTERİ KODU</value>
   </data>
+  <data name="CustomerRequestedDateLabel" xml:space="preserve">
+    <value>Müşterinin İstediği Tarih:</value>
+  </data>
   <data name="Date_" xml:space="preserve">
     <value>TARİH</value>
   </data>

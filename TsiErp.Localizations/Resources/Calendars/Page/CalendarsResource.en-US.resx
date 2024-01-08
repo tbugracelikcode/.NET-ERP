@@ -189,6 +189,9 @@
   <data name="DescriptionLabel" xml:space="preserve">
     <value>Description:</value>
   </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
   <data name="EndDateLineLabel" xml:space="preserve">
     <value>End Date:</value>
   </data>
@@ -329,6 +332,9 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Calendar Name:</value>
+  </data>
+  <data name="NotDone" xml:space="preserve">
+    <value>Not Done</value>
   </data>
   <data name="Note_Label" xml:space="preserve">
     <value>Note:</value>

@@ -156,6 +156,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 Tables.SalesPriceLines,
                 Tables.SalesPrices,
                 Tables.SalesPropositions,
+                Tables.OrderAcceptanceRecords,
                 Tables.WorkOrders
             });
 

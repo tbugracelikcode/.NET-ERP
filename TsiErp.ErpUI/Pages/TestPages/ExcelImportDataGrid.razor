@@ -1,0 +1,35 @@
+﻿@page "/excel-import-datagrid"
+@layout MainLayout
+
+@inject IExcelService ExcelService
+
+
+<SfUploader AutoUpload="false">
+    <UploaderEvents ValueChange="OnChange"></UploaderEvents>
+</SfUploader>
+
+@if (Columns != null)
+{
+    <SfGrid @ref="Grid" DataSource="@CustomerList" AllowFiltering="true" AllowPaging="true">
+        <GridColumns>
+            @* @{
+        foreach (var val in Columns)
+        {
+        <GridColumn Field="@val"></GridColumn>
+        }
+        } *@
+
+            <GridColumn Field="SiparisReferansNo"></GridColumn>
+            <GridColumn Field="StokKodu"></GridColumn>
+            <GridColumn Field="MusteriReferansNo"></GridColumn>
+            <GridColumn Field="MusteriBarkodNo"></GridColumn>
+            <GridColumn Field="Adet"></GridColumn>
+            <GridColumn Field="SiparisBirimFiyat"></GridColumn>
+            <GridColumn Field="SatirToplami"></GridColumn>
+        </GridColumns>
+    </SfGrid>
+}
+else
+{
+    <div>Upload an excel file to show grid</div>
+}

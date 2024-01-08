@@ -34,6 +34,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos
         /// </summary>
         public bool IsActive { get; set; }
         // <summary>
+        /// Cari ID
+        /// </summary>
+        public Guid? CurrentAccountCardID { get; set; }
+        // <summary>
         /// Cari Kod
         /// </summary>
         public string CurrentAccountCardCode { get; set; }

@@ -100,9 +100,9 @@ else
                     <DxGridLayoutRow Height="9%" />
                     <DxGridLayoutRow Height="11%" />
                     <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="28%" />
                     <DxGridLayoutRow Height="1%" />
-                    <DxGridLayoutRow Height="35%" />
-                    <DxGridLayoutRow Height="2%" />
                     <DxGridLayoutRow Height="9%" />
                     <DxGridLayoutRow Height="9%" />
                     <DxGridLayoutRow Height="1%" />
@@ -197,6 +197,13 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ExchangeRateLabel"] </strong></label>
                             <SfNumericTextBox CssClass="TSITxtBox" Min="0" TValue="decimal" @bind-Value="DataSource.ExchangeRate"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="4" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["CustomerRequestedDateLabel"] </strong></label>
+                            <SfDatePicker @bind-Value="@DataSource.CustomerRequestedDate" ></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 

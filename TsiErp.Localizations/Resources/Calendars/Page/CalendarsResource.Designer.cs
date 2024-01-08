@@ -286,6 +286,15 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yapıldı.
+        /// </summary>
+        public static string Done {
+            get {
+                return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Çalışma Takvimi.
         /// </summary>
         public static string EditModalTitle {
@@ -723,6 +732,15 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         public static string NameLabel {
             get {
                 return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yapılmadı.
+        /// </summary>
+        public static string NotDone {
+            get {
+                return ResourceManager.GetString("NotDone", resourceCulture);
             }
         }
         

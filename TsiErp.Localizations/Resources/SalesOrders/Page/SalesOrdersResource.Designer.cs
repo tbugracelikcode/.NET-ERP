@@ -349,6 +349,15 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşterinin İstediği Tarih:.
+        /// </summary>
+        public static string CustomerRequestedDateLabel {
+            get {
+                return ResourceManager.GetString("CustomerRequestedDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TARİH.
         /// </summary>
         public static string Date_ {

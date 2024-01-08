@@ -152,7 +152,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.SalesPrices)
-                   .Select<SalesPrices>(sp => new { sp.WarehouseID, sp.StartDate, sp.Name, sp.IsApproved, sp.IsActive, sp.Id, sp.EndDate, sp.DataOpenStatusUserId, sp.DataOpenStatus, sp.CurrentAccountCardID, sp.CurrencyID, sp.Code, sp.BranchID })
+                   .Select<SalesPrices>(null)
                    .Join<Currencies>
                     (
                         c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
@@ -188,7 +188,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.SalesPriceLines)
-                   .Select<SalesPriceLines>(spl => new { spl.StartDate, spl.SalesPriceID, spl.ProductID, spl.Price, spl.Linenr, spl.Id, spl.EndDate, spl.DataOpenStatusUserId, spl.DataOpenStatus, spl.CurrentAccountCardID, spl.CurrencyID })
+                   .Select<SalesPriceLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -221,7 +221,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.SalesPrices)
-                   .Select<SalesPrices>(sp => new { sp.WarehouseID, sp.StartDate, sp.Name, sp.IsApproved, sp.IsActive, sp.Id, sp.EndDate, sp.DataOpenStatusUserId, sp.DataOpenStatus, sp.CurrentAccountCardID, sp.CurrencyID, sp.Code, sp.BranchID })
+                   .Select<SalesPrices>(null)
                    .Join<Currencies>
                     (
                         c => new { CurrencyCode = c.Code },
@@ -245,7 +245,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                     )
                     .Join<CurrentAccountCards>
                     (
-                        ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
                         nameof(SalesPrices.CurrentAccountCardID),
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
@@ -300,7 +300,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.SalesPriceLines)
-                   .Select<SalesPriceLines>(spl => new { spl.StartDate, spl.SalesPriceID, spl.ProductID, spl.Price, spl.Linenr, spl.Id, spl.EndDate, spl.DataOpenStatusUserId, spl.DataOpenStatus, spl.CurrentAccountCardID, spl.CurrencyID })
+                   .Select<SalesPriceLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -325,7 +325,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
             var listQuery = queryFactory
                            .Query()
                             .From(Tables.SalesPrices)
-                   .Select<SalesPrices>(sp => new { sp.WarehouseID, sp.StartDate, sp.Name, sp.IsApproved, sp.IsActive, sp.Id, sp.EndDate, sp.DataOpenStatusUserId, sp.DataOpenStatus, sp.CurrentAccountCardID, sp.CurrencyID, sp.Code, sp.BranchID })
+                   .Select<SalesPrices>(null)
                    .Join<Currencies>
                     (
                         c => new { CurrencyCode = c.Code },
@@ -349,7 +349,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                     )
                     .Join<CurrentAccountCards>
                     (
-                        ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
                         nameof(SalesPrices.CurrentAccountCardID),
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
