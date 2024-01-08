@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ShippingManagement.PalletRecord.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
@@ -122,30 +123,46 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.PalletRecords).Select("*").Where(new { Id = id }, false, false, "");
+            DeleteControl.ControlList.Clear();
 
-            var PalletRecords = queryFactory.Get<SelectPalletRecordsDto>(query);
-
-            if (PalletRecords.Id != Guid.Empty && PalletRecords != null)
+            DeleteControl.ControlList.Add("PalletID", new List<string>
             {
-                var deleteQuery = queryFactory.Query().From(Tables.PalletRecords).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                Tables.PackingListPalletLines
+            });
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.PalletRecordLines).Delete(LoginedUserService.UserId).Where(new { PalletRecordID = id }, false, false, "");
 
-                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+            bool control = DeleteControl.Control(queryFactory, id);
 
-                var PalletRecord = queryFactory.Update<SelectPalletRecordsDto>(deleteQuery, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PalletRecords, LogType.Delete, id);
-                return new SuccessDataResult<SelectPalletRecordsDto>(PalletRecord);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.PalletRecordLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
-                var PalletRecordLines = queryFactory.Update<SelectPalletRecordLinesDto>(queryLine, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PalletRecordLines, LogType.Delete, id);
-                return new SuccessDataResult<SelectPalletRecordLinesDto>(PalletRecordLines);
-            }
+                var query = queryFactory.Query().From(Tables.PalletRecords).Select("*").Where(new { Id = id }, false, false, "");
 
+                var PalletRecords = queryFactory.Get<SelectPalletRecordsDto>(query);
+
+                if (PalletRecords.Id != Guid.Empty && PalletRecords != null)
+                {
+                    var deleteQuery = queryFactory.Query().From(Tables.PalletRecords).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.PalletRecordLines).Delete(LoginedUserService.UserId).Where(new { PalletRecordID = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                    var PalletRecord = queryFactory.Update<SelectPalletRecordsDto>(deleteQuery, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PalletRecords, LogType.Delete, id);
+                    return new SuccessDataResult<SelectPalletRecordsDto>(PalletRecord);
+                }
+                else
+                {
+                    var queryLine = queryFactory.Query().From(Tables.PalletRecordLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var PalletRecordLines = queryFactory.Update<SelectPalletRecordLinesDto>(queryLine, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PalletRecordLines, LogType.Delete, id);
+                    return new SuccessDataResult<SelectPalletRecordLinesDto>(PalletRecordLines);
+                }
+            }
         }
 
         public async Task<IDataResult<SelectPalletRecordsDto>> GetAsync(Guid id)

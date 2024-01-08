@@ -69,9 +69,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.PlannedMaintenance
         {
             DataSource = new SelectPlannedMaintenancesDto()
             {
-                StartDate = DateTime.Today,
                 PlannedDate = DateTime.Today,
-                CompletionDate = DateTime.Today,
+                Status=PlannedMaintenanceStateEnum.Yapılmadı,
                 RegistrationNo = FicheNumbersAppService.GetFicheNumberAsync("PlannedMainChildMenu")
             };
 

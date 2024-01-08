@@ -8,6 +8,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
@@ -80,13 +81,52 @@ namespace TsiErp.Business.Entities.StationGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.StationGroups).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Clear();
 
-            var stationGroups = queryFactory.Update<SelectStationGroupsDto>(query, "Id", true);
+            DeleteControl.ControlList.Add("GroupID", new List<string>
+            {
+                Tables.Stations
+            });
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StationGroups, LogType.Delete, id);
+            DeleteControl.ControlList.Add("StationGroupID", new List<string>
+            {
+                Tables.OperationUnsuitabilityReports,
+                Tables.WorkOrders
+            });
 
-            return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
+            DeleteControl.ControlList.Add("StationGroupId", new List<string>
+            {
+                Tables.UnsuitabilityItems
+            });
+
+            DeleteControl.ControlList.Add("WorkCenterID", new List<string>
+            {
+                Tables.ContractQualityPlanLines,
+                Tables.OperationalQualityPlanLines,
+                Tables.OperationalSPCLines,
+                Tables.PFMEAs,
+                Tables.ProductsOperations,
+                Tables.PurchaseQualityPlanLines,
+                Tables.TemplateOperations,
+                Tables.UnsuitabilityItemSPCLines
+            });
+
+            bool control = DeleteControl.Control(queryFactory, id);
+
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.StationGroups).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var stationGroups = queryFactory.Update<SelectStationGroupsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StationGroups, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
+            }
         }
 
         public async Task<IDataResult<SelectStationGroupsDto>> GetAsync(Guid id)

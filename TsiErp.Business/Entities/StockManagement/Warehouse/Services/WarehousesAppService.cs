@@ -9,6 +9,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Warehouse.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
@@ -81,14 +82,39 @@ namespace TsiErp.Business.Entities.Warehouse.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Warehouses).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Clear();
 
-            var warehouses = queryFactory.Update<SelectWarehousesDto>(query, "Id", true);
+            DeleteControl.ControlList.Add("WarehouseID", new List<string>
+            {
+                Tables.ByDateStockMovements,
+                Tables.GrandTotalStockMovements,
+                Tables.MRPLines,
+                Tables.ProductionOrders,
+                Tables.PurchaseOrders,
+                Tables.PurchasePrices,
+                Tables.PurchaseRequests,
+                Tables.SalesOrders,
+                Tables.SalesPrices,
+                Tables.SalesPropositions,
+                Tables.StockFiches
+            });
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Warehouses, LogType.Delete, id);
+            bool control = DeleteControl.Control(queryFactory, id);
 
-            return new SuccessDataResult<SelectWarehousesDto>(warehouses);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.Warehouses).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
+                var warehouses = queryFactory.Update<SelectWarehousesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Warehouses, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectWarehousesDto>(warehouses);
+            }
         }
 
         public async Task<IDataResult<SelectWarehousesDto>> GetAsync(Guid id)

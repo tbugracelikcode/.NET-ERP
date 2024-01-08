@@ -11,6 +11,7 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRP.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRP.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP;
@@ -133,30 +134,45 @@ namespace TsiErp.Business.Entities.MRP.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.MRPs).Select("*").Where(new { Id = id }, false, false, "");
+            DeleteControl.ControlList.Clear();
 
-            var MRPs = queryFactory.Get<SelectMRPsDto>(query);
-
-            if (MRPs.Id != Guid.Empty && MRPs != null)
+            DeleteControl.ControlList.Add("MRPID", new List<string>
             {
-                var deleteQuery = queryFactory.Query().From(Tables.MRPs).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                Tables.PurchaseRequests
+            });
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.MRPLines).Delete(LoginedUserService.UserId).Where(new { BomID = id }, false, false, "");
+            bool control = DeleteControl.Control(queryFactory, id);
 
-                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
-
-                var MRP = queryFactory.Update<SelectMRPsDto>(deleteQuery, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MRPs, LogType.Delete, id);
-                return new SuccessDataResult<SelectMRPsDto>(MRP);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.MRPLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
-                var MRPLines = queryFactory.Update<SelectMRPLinesDto>(queryLine, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MRPLines, LogType.Delete, id);
-                return new SuccessDataResult<SelectMRPLinesDto>(MRPLines);
-            }
+                var query = queryFactory.Query().From(Tables.MRPs).Select("*").Where(new { Id = id }, false, false, "");
 
+                var MRPs = queryFactory.Get<SelectMRPsDto>(query);
+
+                if (MRPs.Id != Guid.Empty && MRPs != null)
+                {
+                    var deleteQuery = queryFactory.Query().From(Tables.MRPs).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.MRPLines).Delete(LoginedUserService.UserId).Where(new { BomID = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                    var MRP = queryFactory.Update<SelectMRPsDto>(deleteQuery, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MRPs, LogType.Delete, id);
+                    return new SuccessDataResult<SelectMRPsDto>(MRP);
+                }
+                else
+                {
+                    var queryLine = queryFactory.Query().From(Tables.MRPLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var MRPLines = queryFactory.Update<SelectMRPLinesDto>(queryLine, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MRPLines, LogType.Delete, id);
+                    return new SuccessDataResult<SelectMRPLinesDto>(MRPLines);
+                }
+            }
         }
 
         public async Task<IDataResult<SelectMRPsDto>> GetAsync(Guid id)

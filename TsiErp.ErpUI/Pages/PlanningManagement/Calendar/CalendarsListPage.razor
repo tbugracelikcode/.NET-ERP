@@ -12,6 +12,11 @@
 @inject IStationGroupsAppService StationGroupsAppService
 @inject IShiftsAppService ShiftsAppService
 @inject IFicheNumbersAppService FicheNumbersAppService
+@inject IPlannedMaintenancesAppService PlannedMaintenancesAppService
+@inject IProductsAppService ProductsAppService
+@inject IUnitSetsAppService UnitSetsAppService
+@inject IMaintenancePeriodsAppService MaintenancePeriodsAppService
+@inject IMaintenanceInstructionsAppService MaintenanceInstructionsAppService
 
 @{
     if (!base.IsLoaded)
@@ -100,7 +105,6 @@
                             <Template>
                                 <br />
                                 <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
-                                // <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" ></SfTextBox>
                             <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
@@ -172,7 +176,7 @@
                         <DxGridLayoutItem Row="4" Column="3">
                             <Template>
                                 <br />
-                                <SfButton CssClass="TSISaveButton" OnClick="AddOfficialHoliday"><SfIcon Size="IconSize.Medium" Name="IconName.CommentAdd"></SfIcon>&nbsp;@L["ContextAdd"]</SfButton>
+                                <SfButton CssClass="TSISaveButton" OnClick="AddOfficialHoliday"><SfIcon Size="IconSize.Medium" Name="IconName.CommentAdd"></SfIcon>&nbsp;@L["CalendarContextAdd"]</SfButton>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="5" Column="1" ColumnSpan="3">
@@ -303,50 +307,50 @@
 
                     </th>
                     <th style="width:25%">
-                        <table id='property' class='property-panel-table' style="width: 100%;">
-                            <tbody>
-                                <tr style="height: 50px">
-                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
-                                        <SfSwitch id="chcTumu" TChecked="bool" @bind-Checked="@chcTumu" ValueChange="@(()=>customChange("chcTumu"))"></SfSwitch><label for="chcTumu" style="padding-left:5%;"> Tümü</label>
-                                    </td>
-                                </tr>
-                                <tr style="height: 50px">
-                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
-                                        <SfSwitch id="chcCalismaVar" TChecked="bool" @bind-Checked="@chcCalismaVar" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcCalismaVar" style="padding-left:5%; color:#00ff14;"> Çalışma Var</label>
-                                    </td>
-                                </tr>
-                                <tr style="height: 50px">
-                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
-                                        <SfSwitch id="chcCalismaYok" TChecked="bool" @bind-Checked="@chcCalismaYok" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcCalismaYok" style="padding-left:5%; color:#ff0000;"> Çalışma Yok</label>
-                                    </td>
-                                </tr>
-                                <tr style="height: 50px">
-                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
-                                        <SfSwitch id="chcResmiTatil" TChecked="bool" @bind-Checked="@chcResmiTatil" ValueChange="@(()=>customChange("chcDiger"))">Resmi tatil</SfSwitch><label for="chcResmiTatil" style="padding-left:5%; color:#6c757d;"> Resmi Tatil</label>
-                                    </td>
-                                </tr>
-                                <tr style="height: 50px">
-                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
-                                        <SfSwitch id="chcTatil" TChecked="bool" @bind-Checked="@chcTatil" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcTatil" style="padding-left:5%; color:#b75050ed;"> Tatil</label>
-                                    </td>
-                                </tr>
-                                <tr style="height: 50px">
-                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
-                                        <SfSwitch id="chcYarimGun" TChecked="bool" @bind-Checked="@chcYarimGun" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcYarimGun" style="padding-left:5%; color:#0089ff;"> Yarım Gün</label>
-                                    </td>
-                                </tr>
-                                <tr style="height: 50px">
-                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
-                                        <SfSwitch id="chcYuklemeGunu" TChecked="bool" @bind-Checked="@chcYuklemeGunu" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcYuklemeGunu" style="padding-left:5%; color:#ffeb00;">Yükleme Günü</label>
-                                    </td>
-                                </tr>
-                                <tr style="height: 50px">
-                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
-                                        <SfSwitch id="chcBakim" TChecked="bool" @bind-Checked="@chcBakim" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcBakim" style="padding-left:5%; color:#ff8d00;"> Bakım</label>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        @* <table id='property' class='property-panel-table' style="width: 100%;">
+                        //     <tbody>
+                        //         <tr style="height: 50px">
+                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
+                        //                 <SfSwitch id="chcTumu" TChecked="bool" @bind-Checked="@chcTumu" ValueChange="@(()=>customChange("chcTumu"))"></SfSwitch><label for="chcTumu" style="padding-left:5%;"> Tümü</label>
+                        //             </td>
+                        //         </tr>
+                        //         <tr style="height: 50px">
+                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
+                        //                 <SfSwitch id="chcCalismaVar" TChecked="bool" @bind-Checked="@chcCalismaVar" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcCalismaVar" style="padding-left:5%; color:#00ff14;"> Çalışma Var</label>
+                        //             </td>
+                        //         </tr>
+                        //         <tr style="height: 50px">
+                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
+                        //                 <SfSwitch id="chcCalismaYok" TChecked="bool" @bind-Checked="@chcCalismaYok" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcCalismaYok" style="padding-left:5%; color:#ff0000;"> Çalışma Yok</label>
+                        //             </td>
+                        //         </tr>
+                        //         <tr style="height: 50px">
+                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
+                        //                 <SfSwitch id="chcResmiTatil" TChecked="bool" @bind-Checked="@chcResmiTatil" ValueChange="@(()=>customChange("chcDiger"))">Resmi tatil</SfSwitch><label for="chcResmiTatil" style="padding-left:5%; color:#6c757d;"> Resmi Tatil</label>
+                        //             </td>
+                        //         </tr>
+                        //         <tr style="height: 50px">
+                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
+                        //                 <SfSwitch id="chcTatil" TChecked="bool" @bind-Checked="@chcTatil" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcTatil" style="padding-left:5%; color:#b75050ed;"> Tatil</label>
+                        //             </td>
+                        //         </tr>
+                        //         <tr style="height: 50px">
+                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
+                        //                 <SfSwitch id="chcYarimGun" TChecked="bool" @bind-Checked="@chcYarimGun" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcYarimGun" style="padding-left:5%; color:#0089ff;"> Yarım Gün</label>
+                        //             </td>
+                        //         </tr>
+                        //         <tr style="height: 50px">
+                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
+                        //                 <SfSwitch id="chcYuklemeGunu" TChecked="bool" @bind-Checked="@chcYuklemeGunu" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcYuklemeGunu" style="padding-left:5%; color:#ffeb00;">Yükleme Günü</label>
+                        //             </td>
+                        //         </tr>
+                        //         <tr style="height: 50px">
+                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
+                        //                 <SfSwitch id="chcBakim" TChecked="bool" @bind-Checked="@chcBakim" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcBakim" style="padding-left:5%; color:#ff8d00;"> Bakım</label>
+                        //             </td>
+                        //         </tr>
+                        //     </tbody>
+                        // </table>*@
                     </th>
                 </table>
             </BodyTemplate>
@@ -615,7 +619,9 @@
                     <DxGridLayoutColumn Width="15%" />
                     <DxGridLayoutColumn Width="3%" />
                     <DxGridLayoutColumn Width="15%" />
-                    <DxGridLayoutColumn Width="61%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="15%" />
+                    <DxGridLayoutColumn Width="43%" />
                     <DxGridLayoutColumn Width="3%" />
 
                 </Columns>
@@ -655,7 +661,15 @@
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="2" Column="1" ColumnSpan="4">
+                    <DxGridLayoutItem Row="1" Column="5">
+                        <Template>
+                        <br/>
+                        
+                <SfButton CssClass="TSISaveButton" OnClick="ShowMaintenanceInformationsButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["ShowMaintenanceInfosButton"]</SfButton>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="2" Column="1" ColumnSpan="6">
                         <Template>
                             
                                 <SfGrid ID="LineGrid" @ref=_LineGrid DataSource="@LineGridList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
@@ -710,10 +724,10 @@
                                         
                                         <GridColumn Field=@nameof(SelectCalendarLinesDto.AvailableTime) Type="ColumnType.Number" HeaderText="@L["LineAvailableTime"]"  TextAlign="TextAlign.Center" Width="170"></GridColumn>
 
-                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.PlannedMaintenanceTime) Type="ColumnType.Number" HeaderText="@L["LinePlannedMaintenanceTime"]"  TextAlign="TextAlign.Center" Width="170"></GridColumn>
-
-                                         <GridColumn Field=@nameof(SelectCalendarLinesDto.MaintenanceType) HeaderText="@L["LineMaintenanceType"]" TextAlign="TextAlign.Center" Width="140">
-                                        </GridColumn>
+                                        @* <GridColumn Field=@nameof(SelectCalendarLinesDto.PlannedMaintenanceTime) Type="ColumnType.Number" HeaderText="@L["LinePlannedMaintenanceTime"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                        
+                                          <GridColumn Field=@nameof(SelectCalendarLinesDto.MaintenanceType) HeaderText="@L["LineMaintenanceType"]" TextAlign="TextAlign.Center" Width="140">
+                                         </GridColumn>*@
                                     </GridColumns>
                                 </SfGrid>
 
@@ -813,5 +827,321 @@
 
         </style>
     }
+}
+
+
+    <DxPopup @bind-Visible="MaintenanceModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["PlannedMaintenanceModalTitle"]"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="96%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="1%" />
+                    <DxGridLayoutColumn Width="98%" />
+                    <DxGridLayoutColumn Width="1%" />
+
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                                    <SfGrid @ref=_MaintenanceGrid ID="MaintenanceGrid" DataSource="@PlannedMaintenanceList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra"  ContextMenuItems="@MaintenanceGridContextMenu">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents ContextMenuItemClicked="@OnLineMaintenaceInfosContextMenuClick" TValue="ListPlannedMaintenancesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                        <GridColumns>
+                                             <GridColumn Field=@nameof(ListPlannedMaintenancesDto.RegistrationNo) HeaderText="@L["MaintenanceModalRegistrationNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StationCode) HeaderText="@L["MaintenanceModalStationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.PeriodName) HeaderText="@L["MaintenanceModalPeriodName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.Caregiver) HeaderText="@L["MaintenanceModalCaregiver"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> 
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["MaintenanceModalStartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.PlannedDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["MaintenanceModalPlannedDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    
+
+                </Items>
+            </DxGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+
+
+<DxPopup @bind-Visible="MaintenanceCrudModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["MaintenanceCrudModalTitle"]"
+         Width="67%"
+         Height="65%"
+         MinWidth="1160px"
+         MinHeight="700px"
+         HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="13%" />
+                    <DxGridLayoutRow Height="40%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="22%" />
+                    <DxGridLayoutColumn Width="3%" />
+
+                </Columns>
+
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["RegistrationNoLabel"] </strong></label>
+                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="MaintenanceDataSource.Code"></SfTextBox> *@
+
+                            <SfTextBox @ref="@CodeMaintenanceButtonEdit" Created="@CodeMaintenanceOnCreateIcon" @bind-Value="MaintenanceDataSource.RegistrationNo" ShowClearButton=true></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["CaregiverLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="MaintenanceDataSource.Caregiver"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["PlannedDateLabel"] </strong></label><br />
+                            <SfDatePicker @bind-Value="MaintenanceDataSource.PlannedDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="7" RowSpan="2">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["Note_Label"] </strong></label><br />
+                            <SfTextBox CssClass="TSIMemoBox57" @bind-Value="MaintenanceDataSource.Note_" Multiline=true ></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["StationCodeLabel"] </strong></label><br />
+                             <SfTextBox  @bind-Value="MaintenanceDataSource.StationCode"  Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["NumberofCaregiversLabel"] </strong></label><br />
+                            <SfNumericTextBox TValue="int" Min="0" @bind-Value="MaintenanceDataSource.NumberofCaregivers"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["CompletionDateLabel"] </strong></label><br />
+                            <SfDatePicker @bind-Value="MaintenanceDataSource.CompletionDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PeriodNameLabel"] </strong></label><br />
+                            <SfTextBox @ref="@MaintenancePeriodsButtonEdit" Created="@MaintenancePeriodsOnCreateIcon" @bind-Value="MaintenanceDataSource.PeriodName" ShowClearButton=true ValueChange="MaintenancePeriodsOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PlannedTimeLabel"] </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="MaintenanceDataSource.PlannedTime"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["RemainingTimeLabel"] </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="MaintenanceDataSource.RemainingTime"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                      <DxGridLayoutItem Row="3" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PeriodTimeLabel"] </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="MaintenanceDataSource.PeriodTime" Enabled=false></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["StartDateLabel"] </strong></label><br />
+                            <SfDatePicker @bind-Value="MaintenanceDataSource.StartDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="3" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["OccuredTimeLabel"] </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Enabled=false Min="0" @bind-Value="MaintenanceDataSource.OccuredTime"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="7">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["StatusLabel"] </strong></label><br />
+                            <SfDropDownList TItem="SelectPlannedMaintenancesDto" TValue="PlannedMaintenanceStateEnum" PopupHeight="230px" @bind-Value="@MaintenanceDataSource.Status" DataSource="@status">
+                                <DropDownListFieldSettings Text="StatusName" Value="Status"></DropDownListFieldSettings>
+                            </SfDropDownList>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="7">
+                        <Template>
+                            <SfGrid @ref=_MaintenanceLineGrid ID="MaintenanceLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@PlannedMaintenanceLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MaintenanceLineGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnListMaintenaceInfosContextMenuClick" TValue="SelectPlannedMaintenanceLinesDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.Amount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.InstructionDescription) HeaderText="@L["LineGridInstructionDescription"]" TextAlign="TextAlign.Center" Width="400"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.MaintenanceNote) HeaderText="@L["LineGridMaintenanceNote"]" TextAlign="TextAlign.Center" Width="400"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnMaintenanceSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideMaintenanceModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="MaintenanceLineCrudModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["MaintenanceLineEditModalTitle"]"
+         Width="42%"
+         Height="52%"
+         MinWidth="720px"
+         MinHeight="550px"
+         HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="20%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="30%" />
+                    <DxGridLayoutRow Height="30%" />
+                </Rows>
+
+                <Columns>
+                   <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="44%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="44%" />
+                    <DxGridLayoutColumn Width="4%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ProductCodeLineLabel"] </strong></label>
+                            <SfTextBox Enabled=false @bind-Value="MaintenanceLineDataSource.ProductCode"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ProductNameLineLabel"] </strong></label>
+                            <SfTextBox  Enabled=false @bind-Value="MaintenanceLineDataSource.ProductName" ></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["UnitSetCodeLineLabel"] </strong></label><br />
+                             <SfTextBox Enabled=false @bind-Value="MaintenanceLineDataSource.UnitSetCode"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["AmountLineLabel"] </strong></label><br />
+                             <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" Enabled=false @bind-Value="MaintenanceLineDataSource.Amount"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["InstructionDescriptionLineLabel"] </strong></label><br />
+                            <SfTextBox @bind-Value="MaintenanceLineDataSource.InstructionDescription" CssClass="TSIMemoBox70" Enabled=false Multiline=true></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["MaintenanceNoteLineLabel"] </strong></label><br />
+                            <SfTextBox @bind-Value="MaintenanceLineDataSource.MaintenanceNote" CssClass="TSIMemoBox70" Multiline=true></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+            
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnMaintenanceLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideMaintenanceLineModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
 }
 

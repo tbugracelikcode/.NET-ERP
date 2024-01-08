@@ -13,6 +13,7 @@ using TsiErp.Business.Entities.ProductionManagement.ContractTrackingFiche.Valida
 using TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.Services;
 using TsiErp.Business.Entities.ProductionTracking.Services;
 using TsiErp.Business.Entities.WorkOrder.Services;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
@@ -310,25 +311,37 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.ContractTrackingFiches).Select("*").Where(new { Id = id }, false, false, "");
+            DeleteControl.ControlList.Clear();
 
-            var ContractTrackingFiches = queryFactory.Get<SelectContractTrackingFichesDto>(query);
-
-
-            var deleteQuery = queryFactory.Query().From(Tables.ContractTrackingFiches).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
-
-            var lineDeleteQuery = queryFactory.Query().From(Tables.ContractTrackingFicheLines).Delete(LoginedUserService.UserId).Where(new { ContractTrackingFicheID = id }, false, false, "");
-            var line2DeleteQuery = queryFactory.Query().From(Tables.ContractTrackingFicheAmountEntryLines).Delete(LoginedUserService.UserId).Where(new { ContractTrackingFicheID = id }, false, false, "");
-
-            deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
-
-            var ContractTrackingFiche = queryFactory.Update<SelectContractTrackingFichesDto>(deleteQuery, "Id", true);
-            var ContractTrackingFicheLine = queryFactory.Update<SelectContractTrackingFicheLinesDto>(lineDeleteQuery, "Id", true);
-            var ContractTrackingFicheAmountEntryLine = queryFactory.Update<SelectContractTrackingFicheAmountEntryLinesDto>(line2DeleteQuery, "Id", true);
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractTrackingFiches, LogType.Delete, id);
-            return new SuccessDataResult<SelectContractTrackingFichesDto>(ContractTrackingFiche);
+            DeleteControl.ControlList.Add("ContractTrackingFicheID", new List<string>
+            {
+                Tables.ContractUnsuitabilityReports
+            });
 
 
+            bool control = DeleteControl.Control(queryFactory, id);
+
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var deleteQuery = queryFactory.Query().From(Tables.ContractTrackingFiches).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var lineDeleteQuery = queryFactory.Query().From(Tables.ContractTrackingFicheLines).Delete(LoginedUserService.UserId).Where(new { ContractTrackingFicheID = id }, false, false, "");
+
+                var line2DeleteQuery = queryFactory.Query().From(Tables.ContractTrackingFicheAmountEntryLines).Delete(LoginedUserService.UserId).Where(new { ContractTrackingFicheID = id }, false, false, "");
+
+                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + line2DeleteQuery.Sql + " where " + line2DeleteQuery.WhereSentence;
+
+                var ContractTrackingFiche = queryFactory.Update<SelectContractTrackingFichesDto>(deleteQuery, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractTrackingFiches, LogType.Delete, id);
+                return new SuccessDataResult<SelectContractTrackingFichesDto>(ContractTrackingFiche);
+
+            }
         }
 
         public async Task<IResult> DeleteLineAsync(Guid id)

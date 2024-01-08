@@ -9,6 +9,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ProductGroup.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
@@ -83,14 +84,31 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.ProductGroups).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Clear();
 
-            var productGroups = queryFactory.Update<SelectProductGroupsDto>(query, "Id", true);
+            DeleteControl.ControlList.Add("ProductGrpID", new List<string>
+            {
+                Tables.Products
+            });
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductGroups, LogType.Delete, id);
+            
 
-            return new SuccessDataResult<SelectProductGroupsDto>(productGroups);
+            bool control = DeleteControl.Control(queryFactory, id);
 
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.ProductGroups).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var productGroups = queryFactory.Update<SelectProductGroupsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductGroups, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectProductGroupsDto>(productGroups);
+            }
         }
 
 

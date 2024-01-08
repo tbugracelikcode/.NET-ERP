@@ -11,6 +11,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.TemplateOperation.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
@@ -149,36 +150,53 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Clear();
 
-            var templateOperations = queryFactory.Get<SelectTemplateOperationsDto>(query);
-
-            if (templateOperations.Id != Guid.Empty && templateOperations != null)
+            DeleteControl.ControlList.Add("TemplateOperationID", new List<string>
             {
-                var deleteQuery = queryFactory.Query().From(Tables.TemplateOperations).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                Tables.EmployeeOperations,
+                Tables.ProductsOperations
+            });
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.TemplateOperationLines).Delete(LoginedUserService.UserId).Where(new { TemplateOperationID = id }, false, false, "");
 
-                var lineUnsuitabilityItemsQuery = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Delete(LoginedUserService.UserId).Where(new { TemplateOperationId = id }, false, false, "");
+            bool control = DeleteControl.Control(queryFactory, id);
 
-                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + QueryConstants.QueryConstant + lineUnsuitabilityItemsQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
-
-                var templateOperation = queryFactory.Update<SelectTemplateOperationsDto>(deleteQuery, "Id", true);
-
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Delete, id);
-                return new SuccessDataResult<SelectTemplateOperationsDto>(templateOperation);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.TemplateOperationLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Id = id }, true, true, "");
 
-                var templateOperationLines = queryFactory.Update<SelectTemplateOperationLinesDto>(queryLine, "Id", true);
+                var templateOperations = queryFactory.Get<SelectTemplateOperationsDto>(query);
 
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TemplateOperationLines, LogType.Delete, id);
+                if (templateOperations.Id != Guid.Empty && templateOperations != null)
+                {
+                    var deleteQuery = queryFactory.Query().From(Tables.TemplateOperations).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
-                return new SuccessDataResult<SelectTemplateOperationLinesDto>(templateOperationLines);
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.TemplateOperationLines).Delete(LoginedUserService.UserId).Where(new { TemplateOperationID = id }, false, false, "");
+
+                    var lineUnsuitabilityItemsQuery = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Delete(LoginedUserService.UserId).Where(new { TemplateOperationId = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + QueryConstants.QueryConstant + lineUnsuitabilityItemsQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                    var templateOperation = queryFactory.Update<SelectTemplateOperationsDto>(deleteQuery, "Id", true);
+
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Delete, id);
+                    return new SuccessDataResult<SelectTemplateOperationsDto>(templateOperation);
+                }
+                else
+                {
+                    var queryLine = queryFactory.Query().From(Tables.TemplateOperationLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                    var templateOperationLines = queryFactory.Update<SelectTemplateOperationLinesDto>(queryLine, "Id", true);
+
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TemplateOperationLines, LogType.Delete, id);
+
+                    return new SuccessDataResult<SelectTemplateOperationLinesDto>(templateOperationLines);
+                }
             }
-
         }
 
         public async Task<IDataResult<SelectTemplateOperationsDto>> GetAsync(Guid id)

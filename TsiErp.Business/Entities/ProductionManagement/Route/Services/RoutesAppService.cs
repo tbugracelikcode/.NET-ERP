@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Route.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
@@ -114,30 +115,48 @@ namespace TsiErp.Business.Entities.Route.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Routes).Select("*").Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Clear();
 
-            var routes = queryFactory.Get<SelectRoutesDto>(query);
 
-            if (routes.Id != Guid.Empty && routes != null)
+            DeleteControl.ControlList.Add("RouteID", new List<string>
             {
-                var deleteQuery = queryFactory.Query().From(Tables.Routes).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                Tables.WorkOrders,
+                Tables.ProductionOrders
+            });
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.RouteLines).Delete(LoginedUserService.UserId).Where(new { RouteID = id }, false, false, "");
 
-                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+            bool control = DeleteControl.Control(queryFactory, id);
 
-                var route = queryFactory.Update<SelectRoutesDto>(deleteQuery, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Routes, LogType.Delete, id);
-                return new SuccessDataResult<SelectRoutesDto>(route);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.RouteLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
-                var routeLines = queryFactory.Update<SelectRouteLinesDto>(queryLine, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.RouteLines, LogType.Delete, id);
-                return new SuccessDataResult<SelectRouteLinesDto>(routeLines);
-            }
+                var query = queryFactory.Query().From(Tables.Routes).Select("*").Where(new { Id = id }, true, true, "");
 
+                var routes = queryFactory.Get<SelectRoutesDto>(query);
+
+                if (routes.Id != Guid.Empty && routes != null)
+                {
+                    var deleteQuery = queryFactory.Query().From(Tables.Routes).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.RouteLines).Delete(LoginedUserService.UserId).Where(new { RouteID = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                    var route = queryFactory.Update<SelectRoutesDto>(deleteQuery, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Routes, LogType.Delete, id);
+                    return new SuccessDataResult<SelectRoutesDto>(route);
+                }
+                else
+                {
+                    var queryLine = queryFactory.Query().From(Tables.RouteLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var routeLines = queryFactory.Update<SelectRouteLinesDto>(queryLine, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.RouteLines, LogType.Delete, id);
+                    return new SuccessDataResult<SelectRouteLinesDto>(routeLines);
+                }
+            }
         }
 
         public async Task<IDataResult<SelectRoutesDto>> GetAsync(Guid id)

@@ -15,6 +15,7 @@ using TsiErp.Business.Entities.ProductionOrder.Validations;
 using TsiErp.Business.Entities.ProductsOperation.Services;
 using TsiErp.Business.Entities.Route.Services;
 using TsiErp.Business.Entities.Station.Services;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
@@ -381,14 +382,43 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.ProductionOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            DeleteControl.ControlList.Clear();
 
-            var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
+            DeleteControl.ControlList.Add("LinkedProductionOrderID", new List<string>
+            {
+                Tables.ProductionOrders
+            });
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Delete, id);
+            DeleteControl.ControlList.Add("ProductionOrderID", new List<string>
+            {
+                Tables.ContractTrackingFiches,
+                Tables.ContractUnsuitabilityReports,
+                Tables.OperationUnsuitabilityReports,
+                Tables.PackageFicheLines,
+                Tables.PurchaseOrderLines,
+                Tables.PurchaseOrders,
+                Tables.PurchaseRequestLines,
+                Tables.PurchaseRequests,
+                Tables.StockFiches,
+                Tables.WorkOrders
+            });
 
-            return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
+            bool control = DeleteControl.Control(queryFactory, id);
 
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.ProductionOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
+            }
         }
 
 

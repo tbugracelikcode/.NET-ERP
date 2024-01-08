@@ -11,6 +11,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.BillsofMaterial.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
@@ -40,82 +41,97 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBillsofMaterialsDto>> CreateAsync(CreateBillsofMaterialsDto input)
         {
-                var listQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Code = input.Code }, false, false, "");
-                var list = queryFactory.ControlList<BillsofMaterials>(listQuery).ToList();
+            var listQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var list = queryFactory.ControlList<BillsofMaterials>(listQuery).ToList();
 
-                #region Code Control 
+            #region Code Control 
 
-                if (list.Count > 0)
+            if (list.Count > 0)
+            {
+                throw new DuplicateCodeException(L["CodeControlManager"]);
+            }
+
+            #endregion
+
+            Guid addedEntityId = GuidGenerator.CreateGuid();
+
+            var query = queryFactory.Query().From(Tables.BillsofMaterials).Insert(new CreateBillsofMaterialsDto
+            {
+                Code = input.Code,
+
+                CreationTime = DateTime.Now,
+                CreatorId = LoginedUserService.UserId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = Guid.Empty,
+                CurrentAccountCardID = input.CurrentAccountCardID,
+                DeletionTime = null,
+                Id = addedEntityId,
+                IsActive = true,
+                IsDeleted = false,
+                LastModificationTime = null,
+                LastModifierId = Guid.Empty,
+                Name = input.Name,
+                FinishedProductID = input.FinishedProductID,
+                _Description = input._Description
+            });
+
+            foreach (var item in input.SelectBillsofMaterialLines)
+            {
+                var queryLine = queryFactory.Query().From(Tables.BillsofMaterialLines).Insert(new CreateBillsofMaterialLinesDto
                 {
-                    throw new DuplicateCodeException(L["CodeControlManager"]);
-                }
-
-                #endregion
-
-                Guid addedEntityId = GuidGenerator.CreateGuid();
-
-                var query = queryFactory.Query().From(Tables.BillsofMaterials).Insert(new CreateBillsofMaterialsDto
-                {
-                    Code = input.Code,
-
+                    BoMID = addedEntityId,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
-                    CurrentAccountCardID = input.CurrentAccountCardID,
                     DeletionTime = null,
-                    Id = addedEntityId,
-                    IsActive = true,
+                    FinishedProductID = item.FinishedProductID,
+                    Id = GuidGenerator.CreateGuid(),
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
-                    Name = input.Name,
-                    FinishedProductID = input.FinishedProductID,
-                    _Description = input._Description
+                    LineNr = item.LineNr,
+                    MaterialType = (int)item.MaterialType,
+                    ProductID = item.ProductID,
+                    Quantity = item.Quantity,
+                    Size = item.Size,
+                    UnitSetID = item.UnitSetID,
+                    _Description = item._Description
                 });
 
-                foreach (var item in input.SelectBillsofMaterialLines)
-                {
-                    var queryLine = queryFactory.Query().From(Tables.BillsofMaterialLines).Insert(new CreateBillsofMaterialLinesDto
-                    {
-                        BoMID = addedEntityId,
-                        CreationTime = DateTime.Now,
-                        CreatorId = LoginedUserService.UserId,
-                        DataOpenStatus = false,
-                        DataOpenStatusUserId = Guid.Empty,
-                        DeleterId = Guid.Empty,
-                        DeletionTime = null,
-                        FinishedProductID = item.FinishedProductID,
-                        Id = GuidGenerator.CreateGuid(),
-                        IsDeleted = false,
-                        LastModificationTime = null,
-                        LastModifierId = Guid.Empty,
-                        LineNr = item.LineNr,
-                        MaterialType = (int)item.MaterialType,
-                        ProductID = item.ProductID,
-                        Quantity = item.Quantity,
-                        Size = item.Size,
-                        UnitSetID = item.UnitSetID,
-                        _Description = item._Description
-                    });
+                query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+            }
 
-                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
-                }
+            var billOfMaterial = queryFactory.Insert<SelectBillsofMaterialsDto>(query, "Id", true);
 
-                var billOfMaterial = queryFactory.Insert<SelectBillsofMaterialsDto>(query, "Id", true);
+            await FicheNumbersAppService.UpdateFicheNumberAsync("BOMChildMenu", input.Code);
 
-                await FicheNumbersAppService.UpdateFicheNumberAsync("BOMChildMenu", input.Code);
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Insert, addedEntityId);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Insert, addedEntityId);
+            return new SuccessDataResult<SelectBillsofMaterialsDto>(billOfMaterial);
 
-                return new SuccessDataResult<SelectBillsofMaterialsDto>(billOfMaterial);
-            
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            DeleteControl.ControlList.Clear();
+
+            DeleteControl.ControlList.Add("BOMID", new List<string>
+            {
+                Tables.ProductionOrders
+            });
+
+            bool control = DeleteControl.Control(queryFactory, id);
+
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
                 var query = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id }, true, true, "");
 
                 var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
@@ -139,348 +155,381 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.BillsofMaterialLines, LogType.Delete, id);
                     return new SuccessDataResult<SelectBillsofMaterialLinesDto>(billOfMaterialLines);
                 }
-            
+            }
         }
 
         public async Task<IDataResult<SelectBillsofMaterialsDto>> GetAsync(Guid id)
         {
-                var query = queryFactory
-                       .Query()
-                       .From(Tables.BillsofMaterials)
-                       .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
-                       .Join<Products>
-                        (
-                            pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
-                            nameof(BillsofMaterials.FinishedProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                        .Join<CurrentAccountCards>
-                        (
-                            pr => new { CustomerCode = pr.CustomerCode, CurrentAccountCardID = pr.Id },
-                            nameof(BillsofMaterials.CurrentAccountCardID),
-                            nameof(CurrentAccountCards.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { Id = id }, true, true, Tables.BillsofMaterials);
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.BillsofMaterials)
+                   .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
+                   .Join<Products>
+                    (
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                        nameof(BillsofMaterials.FinishedProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        pr => new { CustomerCode = pr.CustomerCode, CurrentAccountCardID = pr.Id },
+                        nameof(BillsofMaterials.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Id = id }, true, true, Tables.BillsofMaterials);
 
-                var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
+            var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
 
-                var queryLines = queryFactory
-                       .Query()
-                       .From(Tables.BillsofMaterialLines)
-                       .Select<BillsofMaterialLines>(b => new { b.Id, b.BoMID, b.FinishedProductID, b.MaterialType, b.ProductID, b.UnitSetID, b.Quantity, b._Description, b.LineNr, b.Size, b.CreatorId, b.CreationTime, b.LastModifierId, b.LastModificationTime, b.DeleterId, b.DeletionTime, b.IsDeleted, b.DataOpenStatus, b.DataOpenStatusUserId })
-                       .Join<Products>
-                        (
-                            p => new { FinishedProductCode = p.Code },
-                            nameof(BillsofMaterialLines.FinishedProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                       .Join<Products>
-                        (
-                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
-                            nameof(BillsofMaterialLines.ProductID),
-                            nameof(Products.Id),
-                            "ProductLine",
-                            JoinType.Left
-                        )
-                       .Join<UnitSets>
-                        (
-                            u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
-                            nameof(BillsofMaterialLines.UnitSetID),
-                            nameof(UnitSets.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { BoMID = id }, false, false, Tables.BillsofMaterialLines);
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.BillsofMaterialLines)
+                   .Select<BillsofMaterialLines>(b => new { b.Id, b.BoMID, b.FinishedProductID, b.MaterialType, b.ProductID, b.UnitSetID, b.Quantity, b._Description, b.LineNr, b.Size, b.CreatorId, b.CreationTime, b.LastModifierId, b.LastModificationTime, b.DeleterId, b.DeletionTime, b.IsDeleted, b.DataOpenStatus, b.DataOpenStatusUserId })
+                   .Join<Products>
+                    (
+                        p => new { FinishedProductCode = p.Code },
+                        nameof(BillsofMaterialLines.FinishedProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(BillsofMaterialLines.ProductID),
+                        nameof(Products.Id),
+                        "ProductLine",
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(BillsofMaterialLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { BoMID = id }, false, false, Tables.BillsofMaterialLines);
 
-                var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
+            var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
 
-                billsOfMaterials.SelectBillsofMaterialLines = billsOfMaterialLine;
+            billsOfMaterials.SelectBillsofMaterialLines = billsOfMaterialLine;
 
-                LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, id);
 
-                return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
-            
+            return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
+
         }
 
         public async Task<IDataResult<SelectBillsofMaterialsDto>> GetbyCurrentAccountIDAsync(Guid currentAccountID, Guid finishedProductId)
         {
-                var query = queryFactory
-                       .Query()
-                       .From(Tables.BillsofMaterials)
-                       .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
-                       .Join<Products>
-                        (
-                            pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
-                            nameof(BillsofMaterials.FinishedProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                        .Join<CurrentAccountCards>
-                        (
-                            pr => new { CustomerCode = pr.CustomerCode, CurrentAccountCardID = pr.Id },
-                            nameof(BillsofMaterials.CurrentAccountCardID),
-                            nameof(CurrentAccountCards.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { CurrentAccountCardID = currentAccountID, FinishedProductID= finishedProductId }, true, true, Tables.BillsofMaterials);
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.BillsofMaterials)
+                   .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
+                   .Join<Products>
+                    (
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                        nameof(BillsofMaterials.FinishedProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        pr => new { CustomerCode = pr.CustomerCode, CurrentAccountCardID = pr.Id },
+                        nameof(BillsofMaterials.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { CurrentAccountCardID = currentAccountID, FinishedProductID = finishedProductId }, true, true, Tables.BillsofMaterials);
 
-                var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
+            var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
 
-                var queryLines = queryFactory
-                       .Query()
-                       .From(Tables.BillsofMaterialLines)
-                       .Select<BillsofMaterialLines>(b => new { b.Id, b.BoMID, b.FinishedProductID, b.MaterialType, b.ProductID, b.UnitSetID, b.Quantity, b._Description, b.LineNr, b.Size, b.CreatorId, b.CreationTime, b.LastModifierId, b.LastModificationTime, b.DeleterId, b.DeletionTime, b.IsDeleted, b.DataOpenStatus, b.DataOpenStatusUserId })
-                       .Join<Products>
-                        (
-                            p => new { FinishedProductCode = p.Code },
-                            nameof(BillsofMaterialLines.FinishedProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                       .Join<Products>
-                        (
-                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
-                            nameof(BillsofMaterialLines.ProductID),
-                            nameof(Products.Id),
-                            "ProductLine",
-                            JoinType.Left
-                        )
-                       .Join<UnitSets>
-                        (
-                            u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
-                            nameof(BillsofMaterialLines.UnitSetID),
-                            nameof(UnitSets.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { BoMID = billsOfMaterials.Id }, false, false, Tables.BillsofMaterialLines);
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.BillsofMaterialLines)
+                   .Select<BillsofMaterialLines>(b => new { b.Id, b.BoMID, b.FinishedProductID, b.MaterialType, b.ProductID, b.UnitSetID, b.Quantity, b._Description, b.LineNr, b.Size, b.CreatorId, b.CreationTime, b.LastModifierId, b.LastModificationTime, b.DeleterId, b.DeletionTime, b.IsDeleted, b.DataOpenStatus, b.DataOpenStatusUserId })
+                   .Join<Products>
+                    (
+                        p => new { FinishedProductCode = p.Code },
+                        nameof(BillsofMaterialLines.FinishedProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(BillsofMaterialLines.ProductID),
+                        nameof(Products.Id),
+                        "ProductLine",
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(BillsofMaterialLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { BoMID = billsOfMaterials.Id }, false, false, Tables.BillsofMaterialLines);
 
-                var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
+            var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
 
-                billsOfMaterials.SelectBillsofMaterialLines = billsOfMaterialLine;
+            billsOfMaterials.SelectBillsofMaterialLines = billsOfMaterialLine;
 
-                LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, billsOfMaterials.Id);
+            LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, billsOfMaterials.Id);
 
-                return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
-            
+            return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
+
         }
 
         public async Task<IDataResult<SelectBillsofMaterialsDto>> GetbyProductIDAsync(Guid finishedProductId)
         {
-                var query = queryFactory
-                       .Query()
-                       .From(Tables.BillsofMaterials)
-                       .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
-                       .Join<Products>
-                        (
-                            pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
-                            nameof(BillsofMaterials.FinishedProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                        .Join<CurrentAccountCards>
-                        (
-                            pr => new { CustomerCode = pr.CustomerCode, CurrentAccountCardID = pr.Id },
-                            nameof(BillsofMaterials.CurrentAccountCardID),
-                            nameof(CurrentAccountCards.Id),
-                            JoinType.Left
-                        )
-                        .Where(new {  FinishedProductID = finishedProductId }, true, true, Tables.BillsofMaterials);
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.BillsofMaterials)
+                   .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
+                   .Join<Products>
+                    (
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                        nameof(BillsofMaterials.FinishedProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        pr => new { CustomerCode = pr.CustomerCode, CurrentAccountCardID = pr.Id },
+                        nameof(BillsofMaterials.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { FinishedProductID = finishedProductId }, true, true, Tables.BillsofMaterials);
 
-                var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
+            var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
 
-                var queryLines = queryFactory
-                       .Query()
-                       .From(Tables.BillsofMaterialLines)
-                       .Select<BillsofMaterialLines>(b => new { b.Id, b.BoMID, b.FinishedProductID, b.MaterialType, b.ProductID, b.UnitSetID, b.Quantity, b._Description, b.LineNr, b.Size, b.CreatorId, b.CreationTime, b.LastModifierId, b.LastModificationTime, b.DeleterId, b.DeletionTime, b.IsDeleted, b.DataOpenStatus, b.DataOpenStatusUserId })
-                       .Join<Products>
-                        (
-                            p => new { FinishedProductCode = p.Code },
-                            nameof(BillsofMaterialLines.FinishedProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                       .Join<Products>
-                        (
-                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
-                            nameof(BillsofMaterialLines.ProductID),
-                            nameof(Products.Id),
-                            "ProductLine",
-                            JoinType.Left
-                        )
-                       .Join<UnitSets>
-                        (
-                            u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
-                            nameof(BillsofMaterialLines.UnitSetID),
-                            nameof(UnitSets.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { BoMID = billsOfMaterials.Id }, false, false, Tables.BillsofMaterialLines);
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.BillsofMaterialLines)
+                   .Select<BillsofMaterialLines>(b => new { b.Id, b.BoMID, b.FinishedProductID, b.MaterialType, b.ProductID, b.UnitSetID, b.Quantity, b._Description, b.LineNr, b.Size, b.CreatorId, b.CreationTime, b.LastModifierId, b.LastModificationTime, b.DeleterId, b.DeletionTime, b.IsDeleted, b.DataOpenStatus, b.DataOpenStatusUserId })
+                   .Join<Products>
+                    (
+                        p => new { FinishedProductCode = p.Code },
+                        nameof(BillsofMaterialLines.FinishedProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(BillsofMaterialLines.ProductID),
+                        nameof(Products.Id),
+                        "ProductLine",
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(BillsofMaterialLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { BoMID = billsOfMaterials.Id }, false, false, Tables.BillsofMaterialLines);
 
-                var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
+            var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
 
-                billsOfMaterials.SelectBillsofMaterialLines = billsOfMaterialLine;
+            billsOfMaterials.SelectBillsofMaterialLines = billsOfMaterialLine;
 
-                LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, billsOfMaterials.Id);
+            LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, billsOfMaterials.Id);
 
-                return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
-            
+            return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
+
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBillsofMaterialsDto>>> GetListAsync(ListBillsofMaterialsParameterDto input)
         {
-                var query = queryFactory
-                       .Query()
-                       .From(Tables.BillsofMaterials)
-                       .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
-                       .Join<Products>
-                        (
-                            pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
-                            nameof(BillsofMaterials.FinishedProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                        .Join<CurrentAccountCards>
-                        (
-                            pr => new { CustomerCode = pr.CustomerCode },
-                            nameof(BillsofMaterials.CurrentAccountCardID),
-                            nameof(CurrentAccountCards.Id),
-                            JoinType.Left
-                        )
-                        .Where(null, true, true, Tables.BillsofMaterials);
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.BillsofMaterials)
+                   .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
+                   .Join<Products>
+                    (
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                        nameof(BillsofMaterials.FinishedProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        pr => new { CustomerCode = pr.CustomerCode },
+                        nameof(BillsofMaterials.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Where(null, true, true, Tables.BillsofMaterials);
 
-                var billsOfMaterials = queryFactory.GetList<ListBillsofMaterialsDto>(query).ToList();
-                return new SuccessDataResult<IList<ListBillsofMaterialsDto>>(billsOfMaterials);
-            
+            var billsOfMaterials = queryFactory.GetList<ListBillsofMaterialsDto>(query).ToList();
+            return new SuccessDataResult<IList<ListBillsofMaterialsDto>>(billsOfMaterials);
+
         }
 
         [ValidationAspect(typeof(UpdateBillsofMaterialsValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBillsofMaterialsDto>> UpdateAsync(UpdateBillsofMaterialsDto input)
         {
-                var entityQuery = queryFactory
-                       .Query()
-                       .From(Tables.BillsofMaterials)
-                       .Select("*")
-                       .Join<Products>
-                        (
-                            pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
-                            nameof(BillsofMaterials.FinishedProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                        .Join<CurrentAccountCards>
-                        (
-                            pr => new { CustomerCode = pr.CustomerCode, CurrentAccountCardID = pr.Id },
-                            nameof(BillsofMaterials.CurrentAccountCardID),
-                            nameof(CurrentAccountCards.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { Id = input.Id }, true, true, Tables.BillsofMaterials);
+            var entityQuery = queryFactory
+                   .Query()
+                   .From(Tables.BillsofMaterials)
+                   .Select("*")
+                   .Join<Products>
+                    (
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                        nameof(BillsofMaterials.FinishedProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        pr => new { CustomerCode = pr.CustomerCode, CurrentAccountCardID = pr.Id },
+                        nameof(BillsofMaterials.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Id = input.Id }, true, true, Tables.BillsofMaterials);
 
-                var entity = queryFactory.Get<SelectBillsofMaterialsDto>(entityQuery);
+            var entity = queryFactory.Get<SelectBillsofMaterialsDto>(entityQuery);
 
-                var queryLines = queryFactory
-                       .Query()
-                       .From(Tables.BillsofMaterialLines)
-                       .Select<BillsofMaterialLines>(b => new { b.BoMID, b.FinishedProductID, b.MaterialType, b.Quantity, b._Description, b.LineNr, b.Size })
-                       .Join<Products>
-                        (
-                            p => new { FinishedProductCode = p.Code },
-                            nameof(BillsofMaterialLines.FinishedProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                       .Join<Products>
-                        (
-                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
-                            nameof(BillsofMaterialLines.ProductID),
-                            nameof(Products.Id),
-                            "ProductLine",
-                            JoinType.Left
-                        )
-                       .Join<UnitSets>
-                        (
-                            u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
-                            nameof(BillsofMaterialLines.UnitSetID),
-                            nameof(UnitSets.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { BoMID = input.Id }, false, false, Tables.BillsofMaterialLines);
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.BillsofMaterialLines)
+                   .Select<BillsofMaterialLines>(b => new { b.BoMID, b.FinishedProductID, b.MaterialType, b.Quantity, b._Description, b.LineNr, b.Size })
+                   .Join<Products>
+                    (
+                        p => new { FinishedProductCode = p.Code },
+                        nameof(BillsofMaterialLines.FinishedProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(BillsofMaterialLines.ProductID),
+                        nameof(Products.Id),
+                        "ProductLine",
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(BillsofMaterialLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { BoMID = input.Id }, false, false, Tables.BillsofMaterialLines);
 
-                var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
+            var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
 
-                entity.SelectBillsofMaterialLines = billsOfMaterialLine;
+            entity.SelectBillsofMaterialLines = billsOfMaterialLine;
 
-                #region Update Control
-                var listQuery = queryFactory
-                               .Query()
-                               .From(Tables.BillsofMaterials)
-                               .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
-                               .Join<Products>
-                                (
-                                    pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
-                                    nameof(BillsofMaterials.FinishedProductID),
-                                    nameof(Products.Id),
-                                    JoinType.Left
-                                )
-                                .Join<CurrentAccountCards>
-                        (
-                            pr => new { CustomerCode = pr.CustomerCode },
-                            nameof(BillsofMaterials.CurrentAccountCardID),
-                            nameof(CurrentAccountCards.Id),
-                            JoinType.Left
-                        )
-                                .Where(new { Code = input.Code }, false, false, Tables.BillsofMaterials);
+            #region Update Control
+            var listQuery = queryFactory
+                           .Query()
+                           .From(Tables.BillsofMaterials)
+                           .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
+                           .Join<Products>
+                            (
+                                pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                                nameof(BillsofMaterials.FinishedProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                            .Join<CurrentAccountCards>
+                    (
+                        pr => new { CustomerCode = pr.CustomerCode },
+                        nameof(BillsofMaterials.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                            .Where(new { Code = input.Code }, false, false, Tables.BillsofMaterials);
 
-                var list = queryFactory.GetList<ListBillsofMaterialsDto>(listQuery).ToList();
+            var list = queryFactory.GetList<ListBillsofMaterialsDto>(listQuery).ToList();
 
-                if (list.Count > 0 && entity.Code != input.Code)
+            if (list.Count > 0 && entity.Code != input.Code)
+            {
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
+            }
+            #endregion
+
+            var query = queryFactory.Query().From(Tables.BillsofMaterials).Update(new UpdateBillsofMaterialsDto
+            {
+                Code = input.Code,
+                CreationTime = entity.CreationTime,
+                CreatorId = entity.CreatorId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                Id = input.Id,
+                IsActive = input.IsActive,
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = DateTime.Now,
+                LastModifierId = LoginedUserService.UserId,
+                Name = input.Name,
+                FinishedProductID = input.FinishedProductID,
+                _Description = input._Description,
+                CurrentAccountCardID = input.CurrentAccountCardID
+            }).Where(new { Id = input.Id }, true, true, "");
+
+            foreach (var item in input.SelectBillsofMaterialLines)
+            {
+                if (item.Id == Guid.Empty)
                 {
-                    throw new DuplicateCodeException(L["UpdateControlManager"]);
-                }
-                #endregion
-
-                var query = queryFactory.Query().From(Tables.BillsofMaterials).Update(new UpdateBillsofMaterialsDto
-                {
-                    Code = input.Code,
-                    CreationTime = entity.CreationTime,
-                    CreatorId = entity.CreatorId,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    Id = input.Id,
-                    IsActive = input.IsActive,
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId,
-                    Name = input.Name,
-                    FinishedProductID = input.FinishedProductID,
-                    _Description = input._Description,
-                    CurrentAccountCardID = input.CurrentAccountCardID
-                }).Where(new { Id = input.Id }, true, true, "");
-
-                foreach (var item in input.SelectBillsofMaterialLines)
-                {
-                    if (item.Id == Guid.Empty)
+                    var queryLine = queryFactory.Query().From(Tables.BillsofMaterialLines).Insert(new CreateBillsofMaterialLinesDto
                     {
-                        var queryLine = queryFactory.Query().From(Tables.BillsofMaterialLines).Insert(new CreateBillsofMaterialLinesDto
+                        BoMID = input.Id,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        FinishedProductID = item.FinishedProductID,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        MaterialType = (int)item.MaterialType,
+                        ProductID = item.ProductID,
+                        Quantity = item.Quantity,
+                        Size = item.Size,
+                        UnitSetID = item.UnitSetID,
+                        _Description = item._Description
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                }
+                else
+                {
+                    var lineGetQuery = queryFactory.Query().From(Tables.BillsofMaterialLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+
+                    var line = queryFactory.Get<SelectBillsofMaterialLinesDto>(lineGetQuery);
+
+                    if (line != null)
+                    {
+                        var queryLine = queryFactory.Query().From(Tables.BillsofMaterialLines).Update(new UpdateBillsofMaterialLinesDto
                         {
                             BoMID = input.Id,
-                            CreationTime = DateTime.Now,
-                            CreatorId = LoginedUserService.UserId,
+                            CreationTime = line.CreationTime,
+                            CreatorId = line.CreatorId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
-                            DeleterId = Guid.Empty,
-                            DeletionTime = null,
+                            DeleterId = line.DeleterId.GetValueOrDefault(),
+                            DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             FinishedProductID = item.FinishedProductID,
-                            Id = GuidGenerator.CreateGuid(),
-                            IsDeleted = false,
-                            LastModificationTime = null,
-                            LastModifierId = Guid.Empty,
+                            Id = item.Id,
+                            IsDeleted = item.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             MaterialType = (int)item.MaterialType,
                             ProductID = item.ProductID,
@@ -488,84 +537,51 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                             Size = item.Size,
                             UnitSetID = item.UnitSetID,
                             _Description = item._Description
-                        });
+                        }).Where(new { Id = line.Id }, false, false, "");
 
-                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
-                    }
-                    else
-                    {
-                        var lineGetQuery = queryFactory.Query().From(Tables.BillsofMaterialLines).Select("*").Where(new { Id = item.Id }, false, false, "");
-
-                        var line = queryFactory.Get<SelectBillsofMaterialLinesDto>(lineGetQuery);
-
-                        if (line != null)
-                        {
-                            var queryLine = queryFactory.Query().From(Tables.BillsofMaterialLines).Update(new UpdateBillsofMaterialLinesDto
-                            {
-                                BoMID = input.Id,
-                                CreationTime = line.CreationTime,
-                                CreatorId = line.CreatorId,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = line.DeleterId.GetValueOrDefault(),
-                                DeletionTime = line.DeletionTime.GetValueOrDefault(),
-                                FinishedProductID = item.FinishedProductID,
-                                Id = item.Id,
-                                IsDeleted = item.IsDeleted,
-                                LastModificationTime = DateTime.Now,
-                                LastModifierId = LoginedUserService.UserId,
-                                LineNr = item.LineNr,
-                                MaterialType = (int)item.MaterialType,
-                                ProductID = item.ProductID,
-                                Quantity = item.Quantity,
-                                Size = item.Size,
-                                UnitSetID = item.UnitSetID,
-                                _Description = item._Description
-                            }).Where(new { Id = line.Id }, false, false, "");
-
-                            query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
-                        }
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
                 }
+            }
 
-                var billOfMaterial = queryFactory.Update<SelectBillsofMaterialsDto>(query, "Id", true);
+            var billOfMaterial = queryFactory.Update<SelectBillsofMaterialsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Update, billOfMaterial.Id);
+            LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Update, billOfMaterial.Id);
 
-                return new SuccessDataResult<SelectBillsofMaterialsDto>(billOfMaterial);
-            
+            return new SuccessDataResult<SelectBillsofMaterialsDto>(billOfMaterial);
+
         }
 
         public async Task<IDataResult<SelectBillsofMaterialsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-                var entityQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id }, true, true, "");
 
-                var entity = queryFactory.Get<BillsofMaterials>(entityQuery);
+            var entity = queryFactory.Get<BillsofMaterials>(entityQuery);
 
-                var query = queryFactory.Query().From(Tables.BillsofMaterials).Update(new UpdateBillsofMaterialsDto
-                {
-                    Code = entity.Code,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DataOpenStatus = lockRow,
-                    DataOpenStatusUserId = userId,
-                    DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    Id = entity.Id,
-                    IsActive = entity.IsActive,
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
-                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-                    Name = entity.Name,
-                    FinishedProductID = entity.FinishedProductID,
-                    _Description = entity._Description,
-                    CurrentAccountCardID = entity.CurrentAccountCardID
-                }).Where(new { Id = id }, true, true, "");
+            var query = queryFactory.Query().From(Tables.BillsofMaterials).Update(new UpdateBillsofMaterialsDto
+            {
+                Code = entity.Code,
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.Value,
+                DataOpenStatus = lockRow,
+                DataOpenStatusUserId = userId,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                Id = entity.Id,
+                IsActive = entity.IsActive,
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                Name = entity.Name,
+                FinishedProductID = entity.FinishedProductID,
+                _Description = entity._Description,
+                CurrentAccountCardID = entity.CurrentAccountCardID
+            }).Where(new { Id = id }, true, true, "");
 
-                var billsofMaterialsDto = queryFactory.Update<SelectBillsofMaterialsDto>(query, "Id", true);
-                return new SuccessDataResult<SelectBillsofMaterialsDto>(billsofMaterialsDto);
+            var billsofMaterialsDto = queryFactory.Update<SelectBillsofMaterialsDto>(query, "Id", true);
+            return new SuccessDataResult<SelectBillsofMaterialsDto>(billsofMaterialsDto);
 
-            
+
         }
     }
 }

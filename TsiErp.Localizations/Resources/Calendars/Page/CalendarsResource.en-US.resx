@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AmountLineLabel" xml:space="preserve">
+    <value>Amount:</value>
+  </data>
   <data name="CalendarContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -147,6 +150,9 @@
   <data name="CalendarLineContextWorkStatus" xml:space="preserve">
     <value>Update Working Status</value>
   </data>
+  <data name="CaregiverLabel" xml:space="preserve">
+    <value>Maintenance Technician:</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -158,6 +164,9 @@
   </data>
   <data name="CodeLabel" xml:space="preserve">
     <value>Calendar Code:</value>
+  </data>
+  <data name="CompletionDateLabel" xml:space="preserve">
+    <value>Completion Date:</value>
   </data>
   <data name="DateLabel" xml:space="preserve">
     <value>Calendar Year:</value>
@@ -192,6 +201,9 @@
   <data name="Holiday" xml:space="preserve">
     <value>Holiday</value>
   </data>
+  <data name="InstructionDescriptionLineLabel" xml:space="preserve">
+    <value>Instruction Description:</value>
+  </data>
   <data name="IsPlanned" xml:space="preserve">
     <value>PLANNED</value>
   </data>
@@ -206,6 +218,24 @@
   </data>
   <data name="LineDate" xml:space="preserve">
     <value>DATE</value>
+  </data>
+  <data name="LineGridAmount" xml:space="preserve">
+    <value>AMOUNT</value>
+  </data>
+  <data name="LineGridInstructionDescription" xml:space="preserve">
+    <value>INSTRUCTION DESCRIPTION</value>
+  </data>
+  <data name="LineGridLineNr" xml:space="preserve">
+    <value>LINE NO</value>
+  </data>
+  <data name="LineGridMaintenanceNote" xml:space="preserve">
+    <value>NOTE</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="LineGridUnitSetCode" xml:space="preserve">
+    <value>UNIT SET</value>
   </data>
   <data name="LineMaintenanceType" xml:space="preserve">
     <value>MAINTENANCE TYPE</value>
@@ -246,8 +276,47 @@
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
   </data>
+  <data name="MaintenaceInfosContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="MaintenaceInfosContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="MaintenaceInfosContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MaintenaceInfosContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="Maintenance" xml:space="preserve">
     <value>Maintenance</value>
+  </data>
+  <data name="MaintenanceCrudModalTitle" xml:space="preserve">
+    <value>Preventive / Planned Maintenances</value>
+  </data>
+  <data name="MaintenanceLineEditModalTitle" xml:space="preserve">
+    <value>Preventive / Planned Maintenance Lines</value>
+  </data>
+  <data name="MaintenanceModalCaregiver" xml:space="preserve">
+    <value>MAINTENANCE TECHNICIAN</value>
+  </data>
+  <data name="MaintenanceModalPeriodName" xml:space="preserve">
+    <value>MAINTENANCE PERIOD</value>
+  </data>
+  <data name="MaintenanceModalPlannedDate" xml:space="preserve">
+    <value>PLANNED MAINTENANCE DATE</value>
+  </data>
+  <data name="MaintenanceModalRegistrationNo" xml:space="preserve">
+    <value>REGISTRATION NO</value>
+  </data>
+  <data name="MaintenanceModalStartDate" xml:space="preserve">
+    <value>START DATE</value>
+  </data>
+  <data name="MaintenanceModalStationCode" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
+  <data name="MaintenanceNoteLineLabel" xml:space="preserve">
+    <value>Note:</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
@@ -260,6 +329,15 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Calendar Name:</value>
+  </data>
+  <data name="Note_Label" xml:space="preserve">
+    <value>Note:</value>
+  </data>
+  <data name="NumberofCaregiversLabel" xml:space="preserve">
+    <value>Number of Maintenance Technician:</value>
+  </data>
+  <data name="OccuredTimeLabel" xml:space="preserve">
+    <value>Occured Time:</value>
   </data>
   <data name="OfficialHoliday" xml:space="preserve">
     <value>Official Holiday</value>
@@ -276,8 +354,35 @@
   <data name="PartialProduction" xml:space="preserve">
     <value>Production Constraint</value>
   </data>
+  <data name="PeriodNameLabel" xml:space="preserve">
+    <value>Maintenance Period:</value>
+  </data>
+  <data name="PeriodTimeLabel" xml:space="preserve">
+    <value>Period Time:</value>
+  </data>
   <data name="PlaceHolderWorkState" xml:space="preserve">
     <value>Select work status</value>
+  </data>
+  <data name="PlannedDateLabel" xml:space="preserve">
+    <value>Planned Maintenance Date:</value>
+  </data>
+  <data name="PlannedMaintenanceModalTitle" xml:space="preserve">
+    <value>Preventive / Planned Maintenances</value>
+  </data>
+  <data name="PlannedTimeLabel" xml:space="preserve">
+    <value>Planned Maintenance Time:</value>
+  </data>
+  <data name="ProductCodeLineLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="ProductNameLineLabel" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
+  <data name="RegistrationNoLabel" xml:space="preserve">
+    <value>Registration Number:</value>
+  </data>
+  <data name="RemainingTimeLabel" xml:space="preserve">
+    <value>Remaining Time:</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
@@ -294,14 +399,35 @@
   <data name="SelectedStationPlan" xml:space="preserve">
     <value>Schedule Selected Stations</value>
   </data>
+  <data name="ShowMaintenanceInfosButton" xml:space="preserve">
+    <value>Show Maintenance Informations</value>
+  </data>
+  <data name="StartDateLabel" xml:space="preserve">
+    <value>Start Date:</value>
+  </data>
   <data name="StartDateLineLabel" xml:space="preserve">
     <value>Start Date:</value>
+  </data>
+  <data name="StationCodeLabel" xml:space="preserve">
+    <value>Station Code:</value>
   </data>
   <data name="StationShiftModalTitle" xml:space="preserve">
     <value>Station Shift Information</value>
   </data>
   <data name="StationsModalTitle" xml:space="preserve">
     <value>Stations</value>
+  </data>
+  <data name="StatusLabel" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Selected record will be deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageMaintenanceBase" xml:space="preserve">
+    <value>Selected record will be deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Confirmation</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Work Calendar</value>
@@ -326,6 +452,9 @@
   </data>
   <data name="UIWarningTitle" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="UnitSetCodeLineLabel" xml:space="preserve">
+    <value>Unit Set:</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Please enter the calendar code.</value>

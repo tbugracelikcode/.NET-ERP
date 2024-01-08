@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Period.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
@@ -80,13 +81,32 @@ namespace TsiErp.Business.Entities.Period.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Periods).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            DeleteControl.ControlList.Clear();
 
-            var periods = queryFactory.Update<SelectPeriodsDto>(query, "Id", true);
+            DeleteControl.ControlList.Add("PeriodID", new List<string>
+            {
+                Tables.Forecasts,
+                Tables.MaintenanceInstructions,
+                Tables.PlannedMaintenances,
+                Tables.UnplannedMaintenances
+            });
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Periods, LogType.Delete, id);
+            bool control = DeleteControl.Control(queryFactory, id);
 
-            return new SuccessDataResult<SelectPeriodsDto>(periods);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.Periods).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var periods = queryFactory.Update<SelectPeriodsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Periods, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectPeriodsDto>(periods);
+            }
         }
 
         public async Task<IDataResult<SelectPeriodsDto>> GetAsync(Guid id)

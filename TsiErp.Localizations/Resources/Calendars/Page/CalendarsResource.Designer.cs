@@ -70,6 +70,15 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Miktar:.
+        /// </summary>
+        public static string AmountLineLabel {
+            get {
+                return ResourceManager.GetString("AmountLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string CalendarContextAdd {
@@ -160,6 +169,15 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bakımı Yapan:.
+        /// </summary>
+        public static string CaregiverLabel {
+            get {
+                return ResourceManager.GetString("CaregiverLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -192,6 +210,15 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         public static string CodeLabel {
             get {
                 return ResourceManager.GetString("CodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tamamlanma Tarihi:.
+        /// </summary>
+        public static string CompletionDateLabel {
+            get {
+                return ResourceManager.GetString("CompletionDateLabel", resourceCulture);
             }
         }
         
@@ -304,6 +331,15 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Talimat Açıklaması:.
+        /// </summary>
+        public static string InstructionDescriptionLineLabel {
+            get {
+                return ResourceManager.GetString("InstructionDescriptionLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aktiflik:.
         /// </summary>
         public static string IsActiveLabel {
@@ -354,6 +390,60 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         public static string LineDate {
             get {
                 return ResourceManager.GetString("LineDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MİKTAR.
+        /// </summary>
+        public static string LineGridAmount {
+            get {
+                return ResourceManager.GetString("LineGridAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AÇIKLAMA.
+        /// </summary>
+        public static string LineGridInstructionDescription {
+            get {
+                return ResourceManager.GetString("LineGridInstructionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SATIR NO.
+        /// </summary>
+        public static string LineGridLineNr {
+            get {
+                return ResourceManager.GetString("LineGridLineNr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOT.
+        /// </summary>
+        public static string LineGridMaintenanceNote {
+            get {
+                return ResourceManager.GetString("LineGridMaintenanceNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string LineGridProductCode {
+            get {
+                return ResourceManager.GetString("LineGridProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BİRİM SETİ.
+        /// </summary>
+        public static string LineGridUnitSetCode {
+            get {
+                return ResourceManager.GetString("LineGridUnitSetCode", resourceCulture);
             }
         }
         
@@ -475,11 +565,128 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string MaintenaceInfosContextAdd {
+            get {
+                return ResourceManager.GetString("MaintenaceInfosContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MaintenaceInfosContextChange {
+            get {
+                return ResourceManager.GetString("MaintenaceInfosContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string MaintenaceInfosContextDelete {
+            get {
+                return ResourceManager.GetString("MaintenaceInfosContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string MaintenaceInfosContextRefresh {
+            get {
+                return ResourceManager.GetString("MaintenaceInfosContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bakım.
         /// </summary>
         public static string Maintenance {
             get {
                 return ResourceManager.GetString("Maintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Planlı / Önleyici Bakım Kayıtları .
+        /// </summary>
+        public static string MaintenanceCrudModalTitle {
+            get {
+                return ResourceManager.GetString("MaintenanceCrudModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Planlı / Önleyici Bakım Kayıt Satırları.
+        /// </summary>
+        public static string MaintenanceLineEditModalTitle {
+            get {
+                return ResourceManager.GetString("MaintenanceLineEditModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAKIMI YAPAN.
+        /// </summary>
+        public static string MaintenanceModalCaregiver {
+            get {
+                return ResourceManager.GetString("MaintenanceModalCaregiver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAKIM PERİYODU.
+        /// </summary>
+        public static string MaintenanceModalPeriodName {
+            get {
+                return ResourceManager.GetString("MaintenanceModalPeriodName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PLANLANAN BAKIM TARİHİ.
+        /// </summary>
+        public static string MaintenanceModalPlannedDate {
+            get {
+                return ResourceManager.GetString("MaintenanceModalPlannedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KAYIT NO.
+        /// </summary>
+        public static string MaintenanceModalRegistrationNo {
+            get {
+                return ResourceManager.GetString("MaintenanceModalRegistrationNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAŞLANGIÇ TARİHİ.
+        /// </summary>
+        public static string MaintenanceModalStartDate {
+            get {
+                return ResourceManager.GetString("MaintenanceModalStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞ İSTASYONU.
+        /// </summary>
+        public static string MaintenanceModalStationCode {
+            get {
+                return ResourceManager.GetString("MaintenanceModalStationCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not:.
+        /// </summary>
+        public static string MaintenanceNoteLineLabel {
+            get {
+                return ResourceManager.GetString("MaintenanceNoteLineLabel", resourceCulture);
             }
         }
         
@@ -516,6 +723,33 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         public static string NameLabel {
             get {
                 return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not:.
+        /// </summary>
+        public static string Note_Label {
+            get {
+                return ResourceManager.GetString("Note_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bakımı Yapan Kişi Sayısı:.
+        /// </summary>
+        public static string NumberofCaregiversLabel {
+            get {
+                return ResourceManager.GetString("NumberofCaregiversLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gerçekleşen Süre:.
+        /// </summary>
+        public static string OccuredTimeLabel {
+            get {
+                return ResourceManager.GetString("OccuredTimeLabel", resourceCulture);
             }
         }
         
@@ -565,11 +799,92 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bakım Periyodu:.
+        /// </summary>
+        public static string PeriodNameLabel {
+            get {
+                return ResourceManager.GetString("PeriodNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Periyot Süresi:.
+        /// </summary>
+        public static string PeriodTimeLabel {
+            get {
+                return ResourceManager.GetString("PeriodTimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Çalışma durumu seçin..
         /// </summary>
         public static string PlaceHolderWorkState {
             get {
                 return ResourceManager.GetString("PlaceHolderWorkState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Planlanan Bakım Tarihi:.
+        /// </summary>
+        public static string PlannedDateLabel {
+            get {
+                return ResourceManager.GetString("PlannedDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Planlı / Önleyici Bakım Kayıtları.
+        /// </summary>
+        public static string PlannedMaintenanceModalTitle {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Planlanan Bakım Süresi:.
+        /// </summary>
+        public static string PlannedTimeLabel {
+            get {
+                return ResourceManager.GetString("PlannedTimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Kodu:.
+        /// </summary>
+        public static string ProductCodeLineLabel {
+            get {
+                return ResourceManager.GetString("ProductCodeLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Açıklaması:.
+        /// </summary>
+        public static string ProductNameLineLabel {
+            get {
+                return ResourceManager.GetString("ProductNameLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kayıt Numarası:.
+        /// </summary>
+        public static string RegistrationNoLabel {
+            get {
+                return ResourceManager.GetString("RegistrationNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalan Süre:.
+        /// </summary>
+        public static string RemainingTimeLabel {
+            get {
+                return ResourceManager.GetString("RemainingTimeLabel", resourceCulture);
             }
         }
         
@@ -610,11 +925,38 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bakım Bilgilerini Görüntüle.
+        /// </summary>
+        public static string ShowMaintenanceInfosButton {
+            get {
+                return ResourceManager.GetString("ShowMaintenanceInfosButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başlangıç Tarihi:.
+        /// </summary>
+        public static string StartDateLabel {
+            get {
+                return ResourceManager.GetString("StartDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Başlangıç Tarihi:.
         /// </summary>
         public static string StartDateLineLabel {
             get {
                 return ResourceManager.GetString("StartDateLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş İstasyonu:.
+        /// </summary>
+        public static string StationCodeLabel {
+            get {
+                return ResourceManager.GetString("StationCodeLabel", resourceCulture);
             }
         }
         
@@ -633,6 +975,42 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         public static string StationsModalTitle {
             get {
                 return ResourceManager.GetString("StationsModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durum:.
+        /// </summary>
+        public static string StatusLabel {
+            get {
+                return ResourceManager.GetString("StatusLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçilen kayıt silinecektir..
+        /// </summary>
+        public static string UIConfirmationPopupMessageBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupMessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçilen kayıt silinecektir..
+        /// </summary>
+        public static string UIConfirmationPopupMessageMaintenanceBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupMessageMaintenanceBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string UIConfirmationPopupTitleBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupTitleBase", resourceCulture);
             }
         }
         
@@ -705,6 +1083,15 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         public static string UIWarningTitle {
             get {
                 return ResourceManager.GetString("UIWarningTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Birim Seti:.
+        /// </summary>
+        public static string UnitSetCodeLineLabel {
+            get {
+                return ResourceManager.GetString("UnitSetCodeLineLabel", resourceCulture);
             }
         }
         

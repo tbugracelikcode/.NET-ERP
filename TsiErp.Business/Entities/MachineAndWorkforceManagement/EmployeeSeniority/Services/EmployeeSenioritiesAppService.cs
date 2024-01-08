@@ -9,6 +9,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Department.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority.Dtos;
@@ -81,14 +82,35 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            DeleteControl.ControlList.Clear();
 
-            var query = queryFactory.Query().From(Tables.EmployeeSeniorities).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-            var EmployeeSeniorities = queryFactory.Update<SelectEmployeeSenioritiesDto>(query, "Id", true);
+            DeleteControl.ControlList.Add("SeniorityID", new List<string>
+            {
+                Tables.Departments,
+                Tables.Employees,
+                Tables.EmployeeAnnualSeniorityDifferences,
+                Tables.EmployeeScoringLines,
+                Tables.StartingSalaryLines,
+                Tables.TaskScorings
+            });
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EmployeeSeniorities, LogType.Delete, id);
+            bool control = DeleteControl.Control(queryFactory, id);
 
-            return new SuccessDataResult<SelectEmployeeSenioritiesDto>(EmployeeSeniorities);
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var query = queryFactory.Query().From(Tables.EmployeeSeniorities).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var EmployeeSeniorities = queryFactory.Update<SelectEmployeeSenioritiesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EmployeeSeniorities, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectEmployeeSenioritiesDto>(EmployeeSeniorities);
+            }
         }
 
 

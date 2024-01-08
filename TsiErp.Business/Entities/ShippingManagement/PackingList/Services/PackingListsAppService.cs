@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ShippingManagement.PackingList.Validations;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList;
@@ -192,30 +193,38 @@ namespace TsiErp.Business.Entities.PackingList.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.PackingLists).Select("*").Where(new { Id = id }, false, false, "");
+            DeleteControl.ControlList.Clear();
 
-            var PackingLists = queryFactory.Get<SelectPackingListsDto>(query);
-
-
-            var deleteQuery = queryFactory.Query().From(Tables.PackingLists).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
-
-            var lineDeleteQuery = queryFactory.Query().From(Tables.PackingListPalletCubageLines).Delete(LoginedUserService.UserId).Where(new { PackingListID = id }, false, false, "");
-            var line2DeleteQuery = queryFactory.Query().From(Tables.PackingListPalletLines).Delete(LoginedUserService.UserId).Where(new { PackingListID = id }, false, false, "");
-            var line3DeleteQuery = queryFactory.Query().From(Tables.PackingListPalletPackageLines).Delete(LoginedUserService.UserId).Where(new { PackingListID = id }, false, false, "");
-
-            deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
-            deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + line2DeleteQuery.Sql + " where " + line2DeleteQuery.WhereSentence;
-            deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + line3DeleteQuery.Sql + " where " + line3DeleteQuery.WhereSentence;
-
-            var PackingList = queryFactory.Update<SelectPackingListsDto>(deleteQuery, "Id", true);
-            //var SelectPackingListsDtoLine = queryFactory.Update<SelectPackingListPalletCubageLinesDto>(lineDeleteQuery, "Id", true);
-            //var SelectPackingListsDtoLine2 = queryFactory.Update<SelectPackingListPalletLinesDto>(line2DeleteQuery, "Id", true);
-            //var SelectPackingListsDtoLine3 = queryFactory.Update<SelectPackingListPalletPackageLinesDto>(line3DeleteQuery, "Id", true);
+            DeleteControl.ControlList.Add("PackingListID", new List<string>
+            {
+                Tables.PalletRecords
+            });
 
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PackingLists, LogType.Delete, id);
-            return new SuccessDataResult<SelectPackingListsDto>(PackingList);
+            bool control = DeleteControl.Control(queryFactory, id);
 
+            if (!control)
+            {
+                throw new Exception(L["DeleteControlManager"]);
+            }
+            else
+            {
+                var deleteQuery = queryFactory.Query().From(Tables.PackingLists).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var lineDeleteQuery = queryFactory.Query().From(Tables.PackingListPalletCubageLines).Delete(LoginedUserService.UserId).Where(new { PackingListID = id }, false, false, "");
+                var line2DeleteQuery = queryFactory.Query().From(Tables.PackingListPalletLines).Delete(LoginedUserService.UserId).Where(new { PackingListID = id }, false, false, "");
+                var line3DeleteQuery = queryFactory.Query().From(Tables.PackingListPalletPackageLines).Delete(LoginedUserService.UserId).Where(new { PackingListID = id }, false, false, "");
+
+                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + line2DeleteQuery.Sql + " where " + line2DeleteQuery.WhereSentence;
+                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + line3DeleteQuery.Sql + " where " + line3DeleteQuery.WhereSentence;
+
+                var PackingList = queryFactory.Update<SelectPackingListsDto>(deleteQuery, "Id", true);
+
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PackingLists, LogType.Delete, id);
+                return new SuccessDataResult<SelectPackingListsDto>(PackingList);
+            }
         }
 
         #region Satır Delete Methodları
