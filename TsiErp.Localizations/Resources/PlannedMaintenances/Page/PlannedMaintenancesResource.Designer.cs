@@ -386,7 +386,7 @@ namespace TsiErp.Localizations.Resources.PlannedMaintenances.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BİTİŞ TARİHİ.
+        ///   Looks up a localized string similar to PLANLANAN BAKIM TARİHİ.
         /// </summary>
         public static string PlannedDate {
             get {

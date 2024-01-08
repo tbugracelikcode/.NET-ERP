@@ -226,7 +226,7 @@
     <value>Period Time:</value>
   </data>
   <data name="PlannedDate" xml:space="preserve">
-    <value>END DATE</value>
+    <value>PLANNED MAINTENANCE DATE</value>
   </data>
   <data name="PlannedDateLabel" xml:space="preserve">
     <value>Planned Date:</value>
