@@ -22,7 +22,13 @@ namespace TsiErp.ErpUI.Services
             return path;
         }
 
-       
+        public string ImportGetPath(string filename)
+        {
+            string path = Path.Combine(_hostEnvironment.WebRootPath, filename);
+            return path;
+        }
+
+
 
     }
 }

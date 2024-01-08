@@ -15,6 +15,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos
         /// </summary>
         public DateTime Date_ { get; set; }
         /// <summary>
+        /// Açıklama
+        /// </summary>
+        public string Description_ { get; set; }
+        /// <summary>
         /// Cari Hesap ID
         /// </summary>
         public Guid? CurrentAccountCardID { get; set; }

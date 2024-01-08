@@ -213,6 +213,9 @@
   <data name="CustomerCode" xml:space="preserve">
     <value>CUSTOMER CODE</value>
   </data>
+  <data name="CustomerRequestedDateLabel" xml:space="preserve">
+    <value>Customer Requested Date:</value>
+  </data>
   <data name="Date_" xml:space="preserve">
     <value>DATE</value>
   </data>
