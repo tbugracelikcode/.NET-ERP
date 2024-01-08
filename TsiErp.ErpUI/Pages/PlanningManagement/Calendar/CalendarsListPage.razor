@@ -872,7 +872,20 @@
                                     <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StationCode) HeaderText="@L["MaintenanceModalStationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPlannedMaintenancesDto.PeriodName) HeaderText="@L["MaintenanceModalPeriodName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPlannedMaintenancesDto.Caregiver) HeaderText="@L["MaintenanceModalCaregiver"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> 
-                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["MaintenanceModalStartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["MaintenanceModalStartDate"]" TextAlign="TextAlign.Center" Width="120" Context="maintenancecontext">
+                                        <Template>
+                                            @{
+                                                var date = (maintenancecontext as ListPlannedMaintenancesDto).StartDate;
+                                                string dateStr = string.Empty;
+
+                                                if(date.GetValueOrDefault().Year!=1900)
+                                                {
+                                                    dateStr = date.GetValueOrDefault().ToShortDateString();
+                                                }
+                                            }
+                                            @dateStr
+                                        </Template>
+                                    </GridColumn>
                                     <GridColumn Field=@nameof(ListPlannedMaintenancesDto.PlannedDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["MaintenanceModalPlannedDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
@@ -886,6 +899,7 @@
 
         </BodyTemplate>
         <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideMaintenanceModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -1057,7 +1071,7 @@
         </BodyTemplate>
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnMaintenanceSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideMaintenanceModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideMaintenanceCrudModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

@@ -53,7 +53,20 @@ else
                                     <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StationCode) HeaderText="@L["StationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPlannedMaintenancesDto.PeriodName) HeaderText="@L["PeriodName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPlannedMaintenancesDto.Caregiver) HeaderText="@L["Caregiver"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["StartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["StartDate"]" TextAlign="TextAlign.Center" Width="120" Context="maintenancecontext">
+                                         <Template>
+                                            @{
+                                                var date = (maintenancecontext as ListPlannedMaintenancesDto).StartDate;
+                                                string dateStr = string.Empty;
+
+                                                if(date.GetValueOrDefault().Year!=1900)
+                                                {
+                                                    dateStr = date.GetValueOrDefault().ToShortDateString();
+                                                }
+                                            }
+                                            @dateStr
+                                        </Template>
+                                    </GridColumn>
                                     <GridColumn Field=@nameof(ListPlannedMaintenancesDto.PlannedDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["PlannedDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
 

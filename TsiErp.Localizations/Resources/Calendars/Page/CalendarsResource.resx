@@ -189,6 +189,9 @@
   <data name="DescriptionLabel" xml:space="preserve">
     <value>Açıklama:</value>
   </data>
+  <data name="Done" xml:space="preserve">
+    <value>Yapıldı</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Çalışma Takvimi</value>
   </data>
@@ -335,6 +338,9 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Takvim Adı:</value>
+  </data>
+  <data name="NotDone" xml:space="preserve">
+    <value>Yapılmadı</value>
   </data>
   <data name="Note_Label" xml:space="preserve">
     <value>Not:</value>
