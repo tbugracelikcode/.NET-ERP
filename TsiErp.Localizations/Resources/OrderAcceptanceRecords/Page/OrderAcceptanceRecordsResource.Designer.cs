@@ -620,6 +620,15 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satış Siparişine Dönüştür.
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextConverttoOrder {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextConverttoOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string OrderAcceptanceRecordsContextDelete {
@@ -733,6 +742,24 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         public static string UIConfirmationPopupTitleBase {
             get {
                 return ResourceManager.GetString("UIConfirmationPopupTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sipariş kabul kaydı, satış siparişine dönüştürülmüştür..
+        /// </summary>
+        public static string UIConvertOrderMessage {
+            get {
+                return ResourceManager.GetString("UIConvertOrderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgilendirme.
+        /// </summary>
+        public static string UIConvertOrderTitle {
+            get {
+                return ResourceManager.GetString("UIConvertOrderTitle", resourceCulture);
             }
         }
         

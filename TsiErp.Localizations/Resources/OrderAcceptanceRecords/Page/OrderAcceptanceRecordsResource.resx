@@ -303,6 +303,9 @@
   <data name="OrderAcceptanceRecordsContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextConverttoOrder" xml:space="preserve">
+    <value>Satış Siparişine Dönüştür</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
@@ -341,6 +344,12 @@
   </data>
   <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
     <value>Onay</value>
+  </data>
+  <data name="UIConvertOrderMessage" xml:space="preserve">
+    <value>Sipariş kabul kaydı, satış siparişine dönüştürülmüştür.</value>
+  </data>
+  <data name="UIConvertOrderTitle" xml:space="preserve">
+    <value>Bilgilendirme</value>
   </data>
   <data name="UICurrentAccountMessage" xml:space="preserve">
     <value>Tarih ve cari hesap kartı seçilmeden satır ekleme işlemi yapılamaz.</value>

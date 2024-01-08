@@ -303,6 +303,9 @@
   <data name="OrderAcceptanceRecordsContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextConverttoOrder" xml:space="preserve">
+    <value>Convert to Sales Order</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -341,6 +344,12 @@
   </data>
   <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
     <value>Confirmation</value>
+  </data>
+  <data name="UIConvertOrderMessage" xml:space="preserve">
+    <value>Order acceptance record has converted to sales order.</value>
+  </data>
+  <data name="UIConvertOrderTitle" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="UICurrentAccountMessage" xml:space="preserve">
     <value>It is not possible to add lines without selecting the date and current account card.</value>

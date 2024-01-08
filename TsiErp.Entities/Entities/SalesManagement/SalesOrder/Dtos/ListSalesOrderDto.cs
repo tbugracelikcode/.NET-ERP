@@ -23,6 +23,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// </summary>
         public string CustomerOrderNr { get; set; }
         /// <summary>
+        /// Müşterinin İstediği Tarih
+        /// </summary>
+        public DateTime CustomerRequestedDate { get; set; }
+        /// <summary>
         /// Özel Kod
         /// </summary>
         public string SpecialCode { get; set; }

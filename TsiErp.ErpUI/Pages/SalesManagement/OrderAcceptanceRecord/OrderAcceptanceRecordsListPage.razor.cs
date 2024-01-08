@@ -6,15 +6,21 @@ using Syncfusion.XlsIO;
 using System.Data;
 using System.Dynamic;
 using System.Linq;
+using Tsi.Core.Utilities.Guids;
 using TsiErp.Business.Entities.Forecast.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.SalesOrder.Services;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.Forecast.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPriceLine;
+using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.ErpUI.Services;
@@ -111,6 +117,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             {
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextAdd"], Id = "new" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextConverttoOrder"], Id = "convertorder" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextDelete"], Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextRefresh"], Id = "refresh" });
             }
@@ -212,6 +219,101 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "convertorder":
+
+                    DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    var shippingaddressID = (await ShippingAdressesAppService.GetListAsync(new ListShippingAdressesParameterDto())).Data.Where(t => t.CustomerCardName == DataSource.CurrentAccountCardName).Select(t => t.Id).FirstOrDefault();
+
+                    CreateSalesOrderDto createdSalesOrderEntity = new CreateSalesOrderDto
+                    {
+                        BranchID = Guid.Empty,
+                        CurrencyID = DataSource.CurrenyID,
+                        CurrentAccountCardID = DataSource.CurrentAccountCardID,
+                        CustomerRequestedDate = DataSource.CustomerRequestedDate,
+                        CustomerOrderNr = string.Empty,
+                        Date_ = DateTime.Today,
+                        Description_ = string.Empty,
+                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesOrdersChildMenu"),
+                        WorkOrderCreationDate = null,
+                        WarehouseID = Guid.Empty,
+                        TotalVatExcludedAmount = 0,
+                        TotalVatAmount = 0,
+                        TotalDiscountAmount = 0,
+                        Time_ = string.Empty,
+                        SpecialCode = string.Empty,
+                        ShippingAdressID = shippingaddressID,
+                        SalesOrderState = 1,
+                        PaymentPlanID = Guid.Empty,
+                        NetAmount = 0,
+                        LinkedSalesPropositionID = Guid.Empty,
+                        GrossAmount = 0,
+                        ExchangeRate = 0,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = Guid.Empty,
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+
+
+                    };
+
+                    foreach (var line in DataSource.SelectOrderAcceptanceRecordLines)
+                    {
+
+                        SelectSalesOrderLinesDto createdSalesOrderLine = new SelectSalesOrderLinesDto
+                        {
+                            ExchangeRate = 0,
+                            LinkedSalesPropositionID = Guid.Empty,
+                            DiscountAmount = 0,
+                            DiscountRate = 0,
+                            LikedPropositionLineID = Guid.Empty,
+                            LineAmount = 0,
+                            LineDescription = string.Empty,
+                            LineNr = line.LineNr,
+                            LineTotalAmount = 0,
+                            PaymentPlanID = Guid.Empty,
+                            PaymentPlanName = string.Empty,
+                            WorkOrderCreationDate = null,
+                            VATrate = 0,
+                            VATamount = 0,
+                            UnitSetID = line.UnitSetID,
+                            UnitSetCode = line.UnitSetCode,
+                            UnitPrice = 0,
+                            SalesOrderLineStateEnum = Entities.Enums.SalesOrderLineStateEnum.Beklemede,
+                            SalesOrderID = Guid.Empty,
+                            Quantity = 0,
+                            ProductID = line.ProductID,
+                            ProductName = line.ProductName,
+                            ProductCode = line.ProductCode,
+                            CreationTime = DateTime.Now,
+                            CreatorId = LoginedUserService.UserId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = Guid.Empty,
+                            DeletionTime = null,
+                            Id = Guid.Empty,
+                            IsDeleted = false,
+                            LastModificationTime = null,
+                            LastModifierId = Guid.Empty,
+                        };
+
+                        createdSalesOrderEntity.SelectSalesOrderLines.Add(createdSalesOrderLine);
+                    }
+
+                    await SalesOrdersAppService.CreateAsync(createdSalesOrderEntity);
+
+                    await ModalManager.MessagePopupAsync(L["UIConvertOrderTitle"], L["UIConvertOrderMessage"]);
+
+                    await InvokeAsync(StateHasChanged);
+
                     break;
 
                 case "delete":
@@ -475,11 +577,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                 #region Row DBNull Kontrolleri
 
-                string productCode =!string.IsNullOrEmpty(Convert.ToString(row.ProductCode)) ?  (string)row.ProductCode : string.Empty;
-                string customerBarcodeNo = !string.IsNullOrEmpty(Convert.ToString(row.CustomerBarcodeNo)) ?  (string)row.CustomerBarcodeNo : string.Empty;
-                string customerReferanceNo = !string.IsNullOrEmpty(Convert.ToString(row.CustomerReferanceNo)) ?  (string)row.CustomerReferanceNo : string.Empty;
-                string orderReferanceNo = !string.IsNullOrEmpty(Convert.ToString(row.OrderReferanceNo)) ?  (string)row.OrderReferanceNo : string.Empty;
-                decimal lineAmount =!string.IsNullOrEmpty(Convert.ToString(row.LineAmount)) ? Convert.ToDecimal(row.LineAmount) : 0;
+                string productCode = !string.IsNullOrEmpty(Convert.ToString(row.ProductCode)) ? (string)row.ProductCode : string.Empty;
+                string customerBarcodeNo = !string.IsNullOrEmpty(Convert.ToString(row.CustomerBarcodeNo)) ? (string)row.CustomerBarcodeNo : string.Empty;
+                string customerReferanceNo = !string.IsNullOrEmpty(Convert.ToString(row.CustomerReferanceNo)) ? (string)row.CustomerReferanceNo : string.Empty;
+                string orderReferanceNo = !string.IsNullOrEmpty(Convert.ToString(row.OrderReferanceNo)) ? (string)row.OrderReferanceNo : string.Empty;
+                decimal lineAmount = !string.IsNullOrEmpty(Convert.ToString(row.LineAmount)) ? Convert.ToDecimal(row.LineAmount) : 0;
                 decimal orderAmount = !string.IsNullOrEmpty(Convert.ToString(row.OrderAmount)) ? Convert.ToDecimal(row.OrderAmount) : 0;
                 decimal orderUnitPrice = !string.IsNullOrEmpty(Convert.ToString(row.OrderUnitPrice)) ? Convert.ToDecimal(row.OrderUnitPrice) : 0;
 
@@ -516,7 +618,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                     GridVirtualLineList.Add(virtualModel);
                 }
-                else if(product == null && productCode!= string.Empty)
+                else if (product == null && productCode != string.Empty)
                 {
                     VirtualLineModel virtualModel = new VirtualLineModel
                     {

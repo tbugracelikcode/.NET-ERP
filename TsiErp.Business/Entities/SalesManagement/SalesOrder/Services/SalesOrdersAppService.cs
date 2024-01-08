@@ -80,6 +80,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 CurrencyID = input.CurrencyID,
                 CurrentAccountCardID = input.CurrentAccountCardID,
                 Date_ = input.Date_,
+                CustomerRequestedDate = input.CustomerRequestedDate,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
                 GrossAmount = input.GrossAmount,
@@ -431,7 +432,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     )
                      .Join<CurrentAccountCards>
                     (
-                        ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode,CurrentAccountCardID = ca.Id },
+                        ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode, CurrentAccountCardID = ca.Id },
                         nameof(SalesOrders.CurrentAccountCardID),
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left)
@@ -619,6 +620,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 Time_ = input.Time_,
                 TotalDiscountAmount = input.TotalDiscountAmount,
                 TotalVatAmount = input.TotalVatAmount,
+                CustomerRequestedDate = input.CustomerRequestedDate,
                 TotalVatExcludedAmount = input.TotalVatExcludedAmount,
                 WarehouseID = input.WarehouseID,
                 WorkOrderCreationDate = input.WorkOrderCreationDate,
@@ -744,6 +746,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 CurrentAccountCardID = entity.CurrentAccountCardID,
                 Date_ = entity.Date_,
                 Description_ = entity.Description_,
+                CustomerRequestedDate = entity.CustomerRequestedDate,
                 ExchangeRate = entity.ExchangeRate,
                 GrossAmount = entity.GrossAmount,
                 NetAmount = entity.NetAmount,
