@@ -33,4 +33,8 @@
     <ProjectReference Include="..\TsiErp.Localizations\TsiErp.Localizations.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\PlanningManagement\ShipmentPlanning\Services\" />
+  </ItemGroup>
+
 </Project>
