@@ -105,6 +105,10 @@ using TsiErp.Entities.Entities.PlanningManagement.MRP;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning;
+using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine;
+using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine;
@@ -1349,6 +1353,25 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateOrderAcceptanceRecordLinesDto, OrderAcceptanceRecordLines>();
             CreateMap<SelectOrderAcceptanceRecordLinesDto, UpdateOrderAcceptanceRecordLinesDto>();
             CreateMap<SelectOrderAcceptanceRecordLinesDto, OrderAcceptanceRecordLines>();
+
+
+
+
+            CreateMap<ShipmentPlannings, SelectShipmentPlanningsDto>();
+            CreateMap<ShipmentPlannings, ListShipmentPlanningsDto>();
+            CreateMap<UpdateShipmentPlanningsDto, ShipmentPlannings>();
+            CreateMap<CreateShipmentPlanningsDto, ShipmentPlannings>();
+            CreateMap<SelectShipmentPlanningsDto, CreateShipmentPlanningsDto>();
+            CreateMap<SelectShipmentPlanningsDto, UpdateShipmentPlanningsDto>();
+            CreateMap<ShipmentPlannings, UpdateShipmentPlanningsDto>();
+
+            CreateMap<ShipmentPlanningLines, SelectShipmentPlanningLinesDto>();
+            CreateMap<ShipmentPlanningLines, ListShipmentPlanningLinesDto>();
+            CreateMap<CreateShipmentPlanningLinesDto, ShipmentPlanningLines>();
+            CreateMap<SelectShipmentPlanningLinesDto, CreateShipmentPlanningLinesDto>();
+            CreateMap<UpdateShipmentPlanningLinesDto, ShipmentPlanningLines>();
+            CreateMap<SelectShipmentPlanningLinesDto, UpdateShipmentPlanningLinesDto>();
+            CreateMap<SelectShipmentPlanningLinesDto, ShipmentPlanningLines>();
         }
     }
 }

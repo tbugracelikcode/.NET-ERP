@@ -568,7 +568,7 @@
     <value>Shipment Management</value>
   </data>
   <data name="ShipmentPlanningChildMenu" xml:space="preserve">
-    <value>Shipment Planning</value>
+    <value>Shipment Planning Lists</value>
   </data>
   <data name="ShippingAdressesChildMenu" xml:space="preserve">
     <value>Shipping Addresses</value>

@@ -396,6 +396,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 Tables.OperationUnsuitabilityReports,
                 Tables.PackageFicheLines,
                 Tables.PurchaseOrderLines,
+                Tables.ShipmentPlanningLines,
                 Tables.PurchaseOrders,
                 Tables.PurchaseRequestLines,
                 Tables.PurchaseRequests,
@@ -535,7 +536,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                .From(Tables.ProductionOrders).Select<ProductionOrders>(null)
                         .Join<SalesOrders>
                         (
-                            so => new { OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
+                            so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
                             nameof(ProductionOrders.OrderID),
                             nameof(SalesOrders.Id),
                             JoinType.Left

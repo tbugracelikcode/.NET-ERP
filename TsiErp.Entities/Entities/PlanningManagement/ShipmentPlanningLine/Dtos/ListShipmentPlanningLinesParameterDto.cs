@@ -9,5 +9,9 @@ namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos
 {
     public class ListShipmentPlanningLinesParameterDto : FullAuditedEntityDto
     {
+        /// <summary>
+        /// Yükleme Planlama ID
+        /// </summary>
+        public Guid? ShipmentPlanningID { get; set; }
     }
 }

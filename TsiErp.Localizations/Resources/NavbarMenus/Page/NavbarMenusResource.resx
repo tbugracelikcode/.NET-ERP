@@ -568,7 +568,7 @@
     <value>Sevkiyat Yönetimi</value>
   </data>
   <data name="ShipmentPlanningChildMenu" xml:space="preserve">
-    <value>Sevkiyat Planlama</value>
+    <value>Sevkiyat Planlama Listeleri</value>
   </data>
   <data name="ShippingAdressesChildMenu" xml:space="preserve">
     <value>Sevkiyat Adresleri</value>

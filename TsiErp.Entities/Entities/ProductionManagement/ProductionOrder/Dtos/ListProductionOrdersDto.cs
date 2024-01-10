@@ -44,6 +44,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// Müşteri Sipariş No
         /// </summary>
         public string CustomerOrderNo { get; set; }
+        /// <summary>
+        /// Sipariş ID
+        /// </summary>
+        public Guid? OrderID { get; set; }
 
         /// <summary>
         /// Sipariş Fiş No

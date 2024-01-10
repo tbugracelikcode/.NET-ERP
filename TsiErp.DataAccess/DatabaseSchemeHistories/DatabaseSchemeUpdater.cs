@@ -145,6 +145,8 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoringLine
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeOperation;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine;
+using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning;
+using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -5056,6 +5058,76 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 OrderAcceptanceRecordLinesTable.Create();
+            }
+            #endregion
+
+            #region ShipmentPlannings Table Created
+            Table ShipmentPlanningsTable = model.CreateTable(Tables.ShipmentPlannings);
+
+            if (ShipmentPlanningsTable != null)
+            {
+                var properties = (typeof(ShipmentPlannings)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ShipmentPlanningsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ShipmentPlanningsTable, "PK_" + ShipmentPlanningsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ShipmentPlanningsTable.Indexes.Add(pkIndex);
+                    }
+
+                    ShipmentPlanningsTable.Columns.Add(column);
+                }
+
+                ShipmentPlanningsTable.Create();
+            }
+            #endregion
+
+            #region ShipmentPlanningLines Table Created
+            Table ShipmentPlanningLinesTable = model.CreateTable(Tables.ShipmentPlanningLines);
+
+            if (ShipmentPlanningLinesTable != null)
+            {
+                var properties = (typeof(ShipmentPlanningLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ShipmentPlanningLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ShipmentPlanningLinesTable, "PK_" + ShipmentPlanningLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ShipmentPlanningLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    ShipmentPlanningLinesTable.Columns.Add(column);
+                }
+
+                ShipmentPlanningLinesTable.Create();
             }
             #endregion
 
