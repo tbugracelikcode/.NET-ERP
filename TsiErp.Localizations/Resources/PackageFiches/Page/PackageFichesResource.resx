@@ -136,10 +136,10 @@
     <value>Satırları Oluştur</value>
   </data>
   <data name="CustomerCode" xml:space="preserve">
-    <value>VARYANT KODU</value>
+    <value>MÜŞTERİ KODU</value>
   </data>
   <data name="CustomerCodeLabel" xml:space="preserve">
-    <value>Varyant Kodu:</value>
+    <value>Müşteri Kodu:</value>
   </data>
   <data name="Date_Label" xml:space="preserve">
     <value>Tarih:</value>

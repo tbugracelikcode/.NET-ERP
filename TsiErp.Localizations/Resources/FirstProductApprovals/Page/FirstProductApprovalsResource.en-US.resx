@@ -126,6 +126,9 @@
   <data name="Approve" xml:space="preserve">
     <value>APPROVE</value>
   </data>
+  <data name="Approved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
   <data name="ApprovedLabel" xml:space="preserve">
     <value>Approved</value>
   </data>
@@ -222,6 +225,12 @@
   <data name="FirstProductApprovalLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="IsFinalControl" xml:space="preserve">
+    <value>IS FINAL CONTROL</value>
+  </data>
+  <data name="IsFinalControlLabel" xml:space="preserve">
+    <value>Is Final Control? :</value>
+  </data>
   <data name="LineGridBottomTolerance" xml:space="preserve">
     <value>(-) TOLERANCE</value>
   </data>
@@ -270,6 +279,9 @@
   <data name="ProductCodeLabel" xml:space="preserve">
     <value>Product Code:</value>
   </data>
+  <data name="ProductionOrderFicheNo" xml:space="preserve">
+    <value>PRODUCTION ORDER NO</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -312,6 +324,9 @@
   <data name="ValidatorWorkOrderID" xml:space="preserve">
     <value>Please select a work order.</value>
   </data>
+  <data name="WaitingtobeApproved" xml:space="preserve">
+    <value>Waiting to be Approved</value>
+  </data>
   <data name="WorkOrderNo" xml:space="preserve">
     <value>WORK ORDER</value>
   </data>
@@ -326,5 +341,8 @@
   </data>
   <data name="WorkOrderPopupTitle" xml:space="preserve">
     <value>Work Orders</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

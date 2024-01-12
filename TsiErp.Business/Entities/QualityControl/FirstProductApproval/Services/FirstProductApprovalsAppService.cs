@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Localization;
-using System.ComponentModel;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -7,23 +6,17 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
-using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Entities.PurchaseRequest.Services;
 using TsiErp.Business.Entities.QualityControl.FirstProductApproval.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApproval;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
-using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.FirstProductApprovals.Page;
@@ -67,8 +60,10 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
             {
                 ControlDate = input.ControlDate,
                 WorkOrderID = input.WorkOrderID,
+                IsFinalControl = input.IsFinalControl,
                 EmployeeID = input.EmployeeID,
                 OperationQualityPlanID = input.OperationQualityPlanID,
+                ProductionOrderID = input.ProductionOrderID,
                 ProductID = input.ProductID,
                 Code = input.Code,
                 Description_ = input.Description_,
@@ -260,6 +255,14 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         nameof(OperationalQualityPlans.Id),
                         JoinType.Left
                     )
+                    .Join<ProductionOrders>
+                    (
+                        p => new { ProductionOrderFicheNo = p.FicheNo, ProductionOrderID=p.Id },
+                        nameof(FirstProductApprovals.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        "PO",
+                        JoinType.Left
+                    )
                     .Where(null, false, false, Tables.FirstProductApprovals);
 
             var firstProductApprovals = queryFactory.GetList<ListFirstProductApprovalsDto>(query).ToList();
@@ -338,7 +341,9 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 ControlDate = input.ControlDate,
                 EmployeeID = input.EmployeeID,
                 OperationQualityPlanID = input.OperationQualityPlanID,
+                IsFinalControl = input.IsFinalControl,
                 ProductID = input.ProductID,
+                ProductionOrderID = input.ProductionOrderID,
                 WorkOrderID = input.WorkOrderID,
                 Code = input.Code,
                 Description_ = input.Description_,
@@ -440,6 +445,8 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 WorkOrderID = entity.WorkOrderID,
                 ControlDate = entity.ControlDate,
                 EmployeeID = entity.EmployeeID,
+                IsFinalControl = entity.IsFinalControl,
+                ProductionOrderID = entity.ProductionOrderID,
                 OperationQualityPlanID = entity.OperationQualityPlanID,
                 ProductID = entity.ProductID,
                 Code = entity.Code,

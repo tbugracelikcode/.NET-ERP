@@ -126,6 +126,9 @@
   <data name="Approve" xml:space="preserve">
     <value>ONAY</value>
   </data>
+  <data name="Approved" xml:space="preserve">
+    <value>Onaylandı</value>
+  </data>
   <data name="ApprovedLabel" xml:space="preserve">
     <value>Onaylandı</value>
   </data>
@@ -222,6 +225,12 @@
   <data name="FirstProductApprovalLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="IsFinalControl" xml:space="preserve">
+    <value>FİNAL KONTROL MÜ</value>
+  </data>
+  <data name="IsFinalControlLabel" xml:space="preserve">
+    <value>Final Kontrol mü? :</value>
+  </data>
   <data name="LineGridBottomTolerance" xml:space="preserve">
     <value>(-) TOLERANS</value>
   </data>
@@ -270,6 +279,9 @@
   <data name="ProductCodeLabel" xml:space="preserve">
     <value>Ürün Kodu:</value>
   </data>
+  <data name="ProductionOrderFicheNo" xml:space="preserve">
+    <value>ÜRETİM EMRİ NO</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
@@ -312,6 +324,9 @@
   <data name="ValidatorWorkOrderID" xml:space="preserve">
     <value>Lütfen iş emri seçin.</value>
   </data>
+  <data name="WaitingtobeApproved" xml:space="preserve">
+    <value>Onay Beliyor</value>
+  </data>
   <data name="WorkOrderNo" xml:space="preserve">
     <value>İŞ EMRİ</value>
   </data>
@@ -326,5 +341,8 @@
   </data>
   <data name="WorkOrderPopupTitle" xml:space="preserve">
     <value>İş Emirleri</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Evet</value>
   </data>
 </root>

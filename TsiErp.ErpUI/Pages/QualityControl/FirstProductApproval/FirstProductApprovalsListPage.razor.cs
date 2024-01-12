@@ -366,6 +366,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                 DataSource.WorkOrderNo = string.Empty;
                 DataSource.ProductName = string.Empty;
                 DataSource.ProductCode = string.Empty;
+                DataSource.ProductionOrderID = Guid.Empty;
                 DataSource.OperationQualityPlanID = Guid.Empty;
                 DataSource.OperationQualityPlanDocumentNumber = string.Empty;
                 OperationalQualityPlanLineList.Clear();
@@ -385,6 +386,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                 DataSource.ProductID = selectedWorkOrder.ProductID;
                 DataSource.ProductName = selectedWorkOrder.ProductName;
                 DataSource.ProductCode = selectedWorkOrder.ProductCode;
+                DataSource.ProductionOrderID = selectedWorkOrder.ProductionOrderID;
 
                 DataSource.OperationQualityPlanID = (await OperationalQualityPlansAppService.GetListAsync(new ListOperationalQualityPlansParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID && t.ProductsOperationID == selectedWorkOrder.ProductsOperationID).Select(t => t.Id).FirstOrDefault();
 

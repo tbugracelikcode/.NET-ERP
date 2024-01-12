@@ -11,6 +11,14 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos
         /// </summary>
         public string Code { get; set; }
         /// <summary>
+        /// Final Kontrol mü?
+        /// </summary>
+        public bool IsFinalControl { get; set; }
+        /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid? ProductionOrderID { get; set; }
+        /// <summary>
         /// İş Emri ID
         /// </summary>
         public Guid? WorkOrderID { get; set; }

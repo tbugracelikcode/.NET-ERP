@@ -136,10 +136,10 @@
     <value>Create Lines</value>
   </data>
   <data name="CustomerCode" xml:space="preserve">
-    <value>VARIANT CODE</value>
+    <value>CUSTOMER CODE</value>
   </data>
   <data name="CustomerCodeLabel" xml:space="preserve">
-    <value>Variant Code:</value>
+    <value>Customer Code:</value>
   </data>
   <data name="Date_Label" xml:space="preserve">
     <value>Date:</value>

@@ -70,11 +70,11 @@ else
                                             @{
                                                 var isApproval = ((context as ListFirstProductApprovalsDto).IsApproval);
 
-                                                string approvalStatus = "Onay Bekliyor";
+                                                string approvalStatus = L["WaitingtobeApproved"];
 
                                                 if (isApproval)
                                                 {
-                                                    approvalStatus = "Onaylandı";
+                                                    approvalStatus = L["Approved"];
                                                 }
                                             }
                                             @approvalStatus
@@ -84,11 +84,32 @@ else
 
                                     <GridColumn Field=@nameof(ListFirstProductApprovalsDto.WorkOrderNo) HeaderText="@L["WorkOrderNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
+                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.ProductionOrderFicheNo) HeaderText="@L["ProductionOrderFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListFirstProductApprovalsDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListFirstProductApprovalsDto.AdjustmentUser) HeaderText="@L["AdjustmentUser"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListFirstProductApprovalsDto.EmployeeName) HeaderText="@L["EmployeeName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                     <GridColumn Field=@nameof(ListFirstProductApprovalsDto.IsFinalControl) HeaderText="@L["IsFinalControl"]" TextAlign="TextAlign.Center" Width="120">
+
+                                        <Template>
+
+                                            @{
+                                                var isFinalControl = ((context as ListFirstProductApprovalsDto).IsFinalControl);
+
+                                                string finalControlStatus = "";
+
+                                                if (isFinalControl)
+                                                {
+                                                    finalControlStatus = L["Yes"];
+                                                }
+                                            }
+                                            @finalControlStatus
+                                        </Template>
+
+                                    </GridColumn>
 
 
                                 </GridColumns>
@@ -123,7 +144,8 @@ else
                     <DxGridLayoutRow Height="11%" />
                     <DxGridLayoutRow Height="11%" />
                     <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="50%" />
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="39%" />
                 </Rows>
 
                 <Columns>
@@ -239,8 +261,17 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
+                     <DxGridLayoutItem Row="4" Column="1">
+                        <Template>
+                            <center>
+                                <label class="TSIModalLabel"><strong>@L["IsFinalControlLabel"] </strong></label><br />
+                                <SfSwitch @bind-Checked="@DataSource.IsFinalControl"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="7">
+
+                    <DxGridLayoutItem Row="5" Column="1" ColumnSpan="7">
                         <Template>
                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectFirstProductApprovalLinesDto"></GridEvents>
