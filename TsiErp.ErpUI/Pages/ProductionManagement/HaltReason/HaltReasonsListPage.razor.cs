@@ -4,15 +4,30 @@ using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Grids;
 using Microsoft.Extensions.Localization;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.DataAccess.Services.Login;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.HaltReason
 {
     public partial class HaltReasonsListPage : IDisposable
     {
-        protected override void OnInitialized()
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+        protected override async void OnInitialized()
         {
             BaseCrudService = HaltReasonsService;
             _L = L;
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "HaltReasonsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
         }
 
         protected override Task BeforeInsertAsync()
@@ -29,10 +44,26 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.HaltReason
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextRefresh"], Id = "refresh" });
+
+            foreach (var context in contextsList)
+            {
+                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    switch (context.MenuName)
+                    {
+                        case "HaltReasonContextAdd":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextAdd"], Id = "new" }); break;
+                        case "HaltReasonContextChange":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextChange"], Id = "changed" }); break;
+                        case "HaltReasonContextDelete":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextDelete"], Id = "delete" }); break;
+                        case "HaltReasonContextRefresh":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextRefresh"], Id = "refresh" }); break;
+                        default: break;
+                    }
+                }
+            }
         }
 
         #region Kod ButtonEdit

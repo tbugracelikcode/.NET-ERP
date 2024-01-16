@@ -14,8 +14,11 @@ using TsiErp.Business.Entities.MaintenancePeriod.Services;
 using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Entities.UnitSet.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.CalendarColorConstant;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
@@ -58,6 +61,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
         List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
         SfComboBox<int, int> Years;
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         public List<ContextMenuItemModel> DayGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -110,6 +116,15 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             CreateLineMaintenaceInfosContextMenuItems();
             CreateLineMaintenaceInfosLineContextMenuItems();
             FinalDataSource = DataSourceEvent;
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "CalendarMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
             base.OnInitialized();
 
         }
@@ -162,11 +177,28 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextShowCalendar"], Id = "schedular" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "CalendarContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextAdd"], Id = "new" }); break;
+                            case "CalendarContextShowCalendar":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextShowCalendar"], Id = "schedular" }); break;
+                            case "CalendarContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextChange"], Id = "changed" }); break;
+                            case "CalendarContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextDelete"], Id = "delete" }); break;
+                            case "CalendarContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -245,7 +277,13 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             if (DayGridContextMenu.Count() == 0)
             {
-                DayGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarDayContextDelete"], Id = "delete" });
+
+                var contextID = contextsList.Where(t => t.MenuName == "CalendarDayContextDelete").Select(t => t.Id).FirstOrDefault();
+                var permission = UserPermissionsList.Where(t => t.MenuId == contextID).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    DayGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarDayContextDelete"], Id = "delete" });
+                }
             }
         }
 
@@ -636,8 +674,14 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                //LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarLineContextMaintenance"], Id = "maintenance" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarLineContextWorkStatus"], Id = "workstatus" });
+
+                var contextID = contextsList.Where(t => t.MenuName == "CalendarLineContextWorkStatus").Select(t => t.Id).FirstOrDefault();
+                var permission = UserPermissionsList.Where(t => t.MenuId == contextID).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarLineContextWorkStatus"], Id = "workstatus" });
+                }
+
             }
         }
 
@@ -645,9 +689,24 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             if (MaintenanceGridContextMenu.Count() == 0)
             {
-                MaintenanceGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextChange"], Id = "change" });
-                MaintenanceGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextDelete"], Id = "delete" });
-                MaintenanceGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "MaintenaceInfosContextChange":
+                                MaintenanceGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextChange"], Id = "change" }); break;
+                            case "MaintenaceInfosContextDelete":
+                                MaintenanceGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextDelete"], Id = "delete" }); break;
+                            case "MaintenaceInfosContextRefresh":
+                                MaintenanceGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -655,9 +714,24 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             if (MaintenanceLineGridContextMenu.Count() == 0)
             {
-                MaintenanceLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextChange"], Id = "changed" });
-                MaintenanceLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextDelete"], Id = "delete" });
-                MaintenanceLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "MaintenaceInfosContextChange":
+                                MaintenanceLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextChange"], Id = "changed" }); break;
+                            case "MaintenaceInfosContextDelete":
+                                MaintenanceLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextDelete"], Id = "delete" }); break;
+                            case "MaintenaceInfosContextRefresh":
+                                MaintenanceLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

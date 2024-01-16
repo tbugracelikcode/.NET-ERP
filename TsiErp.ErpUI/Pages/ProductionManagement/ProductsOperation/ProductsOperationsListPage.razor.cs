@@ -5,7 +5,10 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.Linq;
 using TsiErp.Business.Entities.CurrentAccountCard.Services;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation.Dtos;
@@ -32,6 +35,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         SelectProductsOperationLinesDto StationLineDataSource;
 
         SelectContractOfProductsOperationsDto ContractOfProductsOperationsGridDataSource;
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         public List<ContextMenuItemModel> StationLineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -79,6 +85,15 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
             CreateMainContextMenuItems();
             CreateStationLineContextMenuItems();
             CreateContractOfProductsOperationsContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "ProdOperationsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
             BaseCrudService = ProductsOperationsAppService;
             _L = L;
@@ -307,10 +322,26 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         {
             if (StationLineGridContextMenu.Count() == 0)
             {
-                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationLineContextAdd"], Id = "new" });
-                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationLineContextChange"], Id = "changed" });
-                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationLineContextDelete"], Id = "delete" });
-                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ProductsOperationLineContextAdd":
+                                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationLineContextAdd"], Id = "new" }); break;
+                            case "ProductsOperationLineContextChange":
+                                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationLineContextChange"], Id = "changed" }); break;
+                            case "ProductsOperationLineContextDelete":
+                                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationLineContextDelete"], Id = "delete" }); break;
+                            case "ProductsOperationLineContextRefresh":
+                                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -318,11 +349,28 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextAmounts"], Id = "amounts" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ProductsOperationContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextAdd"], Id = "new" }); break;
+                            case "ProductsOperationContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextChange"], Id = "changed" }); break;
+                            case "ProductsOperationContextAmounts":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextAmounts"], Id = "amounts" }); break;
+                            case "ProductsOperationContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextDelete"], Id = "delete" }); break;
+                            case "ProductsOperationContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -625,8 +673,22 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         {
             if (ContractOfProductsOperationsGridContextMenu.Count() == 0)
             {
-                ContractOfProductsOperationsGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOfProductsOperationContextSelectSupplier"], Id = "new" });
-                ContractOfProductsOperationsGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOfProductsOperationContextDelete"], Id = "delete" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ContractOfProductsOperationContextSelectSupplier":
+                                ContractOfProductsOperationsGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOfProductsOperationContextSelectSupplier"], Id = "new" }); break;
+                            case "ContractOfProductsOperationContextDelete":
+                                ContractOfProductsOperationsGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOfProductsOperationContextDelete"], Id = "delete" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

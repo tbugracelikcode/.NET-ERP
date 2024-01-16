@@ -5,10 +5,13 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
@@ -28,6 +31,9 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         private SfGrid<CreateStockReceiptFishes> _CreateStockFishesGrid;
         private SfGrid<CreateStockReceiptFishes> _CancelOrderGrid;
 
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
         [Inject]
         ModalManager ModalManager { get; set; }
 
@@ -599,9 +605,24 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         {
             if (CreateStockFishesGridContextMenu.Count() == 0)
             {
-                CreateStockFishesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockReceiptFichesContextSelect"], Id = "select" });
-                CreateStockFishesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockReceiptFichesContextMultiSelect"], Id = "multiselect" });
-                CreateStockFishesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockReceiptFichesContextRemoveAll"], Id = "removeall" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "StockReceiptFichesContextSelect":
+                                CreateStockFishesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockReceiptFichesContextSelect"], Id = "select" }); break;
+                            case "StockReceiptFichesContextMultiSelect":
+                                CreateStockFishesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockReceiptFichesContextMultiSelect"], Id = "multiselect" }); break;
+                            case "StockReceiptFichesContextRemoveAll":
+                                CreateStockFishesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockReceiptFichesContextRemoveAll"], Id = "removeall" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -771,6 +792,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             CreateLineContextMenuItems();
             CreateStockReceiptFishesContextMenuItems();
 
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "PurchaseOrdersChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
+
             futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
         }
 
@@ -797,24 +827,59 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderLineContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "PurchaseOrderLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderLineContextAdd"], Id = "new" }); break;
+                            case "PurchaseOrderLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderLineContextChange"], Id = "changed" }); break;
+                            case "PurchaseOrderLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderLineContextDelete"], Id = "delete" }); break;
+                            case "PurchaseOrderLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
         protected void CreateMainContextMenuItems()
         {
-            if (LineGridContextMenu.Count() == 0)
+            if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextApproveOrder"], Id = "approveorder" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextCreateStockFiches"], Id = "createstockfiches" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextCancelOrder"], Id = "cancelorder" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "PurchaseOrderContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextAdd"], Id = "new" }); break;
+                            case "PurchaseOrderContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextChange"], Id = "changed" }); break;
+                            case "PurchaseOrderContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextDelete"], Id = "delete" }); break;
+                            case "PurchaseOrderContextApproveOrder":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextApproveOrder"], Id = "approveorder" }); break;
+                            case "PurchaseOrderContextCreateStockFiches":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextCreateStockFiches"], Id = "createstockfiches" }); break;
+                            case "PurchaseOrderContextCancelOrder":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextCancelOrder"], Id = "cancelorder" }); break;
+                            case "PurchaseOrderContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

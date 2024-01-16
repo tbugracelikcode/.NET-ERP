@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalary.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalaryLine.Dtos;
@@ -15,6 +18,9 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StartingSalary
 
         [Inject]
         ModalManager ModalManager { get; set; }
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         SelectStartingSalaryLinesDto LineDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -31,6 +37,15 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StartingSalary
             _L = L;
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "StartingSalariesChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -57,10 +72,26 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StartingSalary
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalaryLinesContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalaryLinesContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalaryLinesContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalaryLinesContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "StartingSalaryLinesContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalaryLinesContextAdd"], Id = "new" }); break;
+                            case "StartingSalaryLinesContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalaryLinesContextChange"], Id = "changed" }); break;
+                            case "StartingSalaryLinesContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalaryLinesContextDelete"], Id = "delete" }); break;
+                            case "StartingSalaryLinesContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalaryLinesContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -68,10 +99,26 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StartingSalary
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalariesContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalariesContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalariesContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalariesContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "StartingSalariesContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalariesContextAdd"], Id = "new" }); break;
+                            case "StartingSalariesContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalariesContextChange"], Id = "changed" }); break;
+                            case "StartingSalariesContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalariesContextDelete"], Id = "delete" }); break;
+                            case "StartingSalariesContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StartingSalariesContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

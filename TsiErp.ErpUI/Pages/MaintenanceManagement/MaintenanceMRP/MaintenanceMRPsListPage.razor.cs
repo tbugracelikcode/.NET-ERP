@@ -9,6 +9,8 @@ using Tsi.Core.Utilities.Guids;
 using TsiErp.Business.Entities.GrandTotalStockMovement.Services;
 using TsiErp.Business.Entities.MaintenanceInstruction.Services;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceInstruction.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceInstructionLine.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP.Dtos;
@@ -30,6 +32,9 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
         ModalManager ModalManager { get; set; }
 
         SelectMaintenanceMRPLinesDto LineDataSource;
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -51,6 +56,15 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
             _L = L;
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "MainMatReqPlanningChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -87,9 +101,24 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPLinesContextStockUsage"], Id = "stockusage" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPLinesContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPLinesContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "MaintenanceMRPLinesContextStockUsage":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPLinesContextStockUsage"], Id = "stockusage" }); break;
+                            case "MaintenanceMRPLinesContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPLinesContextDelete"], Id = "delete" }); break;
+                            case "MaintenanceMRPLinesContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPLinesContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -97,11 +126,27 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextRefresh"], Id = "refresh" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextConvertMRP"], Id = "convertmrp" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "MaintenanceMRPsContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextAdd"], Id = "new" }); break;
+                            case "MaintenanceMRPsContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextChange"], Id = "changed" }); break;
+                            case "MaintenanceMRPsContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextDelete"], Id = "delete" }); break;
+                            case "MaintenanceMRPsContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextRefresh"], Id = "refresh" }); break;
+                            case "MaintenanceMRPsContextConvertMRP":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextConvertMRP"], Id = "convertmrp" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

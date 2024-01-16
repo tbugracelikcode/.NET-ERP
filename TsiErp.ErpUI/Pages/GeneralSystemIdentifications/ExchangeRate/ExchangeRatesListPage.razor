@@ -7,7 +7,9 @@
 
 @inject IExchangeRatesAppService ExchangeRatesService
 @inject ICurrenciesAppService CurrenciesAppService
-@inject IStringLocalizer<ExchangeRatesResource> L 
+@inject IStringLocalizer<ExchangeRatesResource> L
+@inject IUserPermissionsAppService UserPermissionsAppService
+@inject IMenusAppService MenusAppService
 
 
 @if (!base.IsLoaded)

@@ -4,6 +4,9 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.UnplannedMaintenance.Dtos;
@@ -17,6 +20,9 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
 {
     public partial class UnplannedMaintenancesListPage : IDisposable
     {
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         #region Combobox İşlemleri
 
@@ -59,9 +65,18 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
             _L = L;
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "UnplannedMainChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
         }
 
-        #region Planlı Bakımlar Satır Modalı İşlemleri
+        #region Plansız Bakımlar Satır Modalı İşlemleri
 
         protected override async Task BeforeInsertAsync()
         {
@@ -85,10 +100,26 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceLineContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "UnplannedMaintenanceLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceLineContextAdd"], Id = "new" }); break;
+                            case "UnplannedMaintenanceLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceLineContextChange"], Id = "changed" }); break;
+                            case "UnplannedMaintenanceLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceLineContextDelete"], Id = "delete" }); break;
+                            case "UnplannedMaintenanceLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -96,10 +127,26 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "UnplannedMaintenanceContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceContextAdd"], Id = "new" }); break;
+                            case "UnplannedMaintenanceContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceContextChange"], Id = "changed" }); break;
+                            case "UnplannedMaintenanceContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceContextDelete"], Id = "delete" }); break;
+                            case "UnplannedMaintenanceContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["UnplannedMaintenanceContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

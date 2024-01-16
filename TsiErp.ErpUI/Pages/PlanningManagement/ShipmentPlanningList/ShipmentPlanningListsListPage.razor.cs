@@ -7,6 +7,11 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using TsiErp.Business.Entities.Product.Services;
 using Microsoft.AspNetCore.Components.Web;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.Services;
+using TsiErp.Business.Entities.Menu.Services;
+using TsiErp.DataAccess.Services.Login;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 {
@@ -14,6 +19,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
     {
         private SfGrid<SelectShipmentPlanningLinesDto> _LineGrid;
         private SfGrid<ListProductionOrdersDto> _ProductionOrdersGrid;
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -39,6 +47,15 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             CreateProductionOrderContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "ShipmentPlanningChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -84,9 +101,24 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShipmentPlanningLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShipmentPlanningLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShipmentPlanningLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ShipmentPlanningLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShipmentPlanningLineContextChange"], Id = "changed" }); break;
+                            case "ShipmentPlanningLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShipmentPlanningLineContextDelete"], Id = "delete" }); break;
+                            case "ShipmentPlanningLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShipmentPlanningLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -94,7 +126,20 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
         {
             if (ProductionOrderGridContextMenu.Count() == 0)
             {
-                ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextAddtoShipmentPlanning"], Id = "addtoplanning" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ProductionOrderContextAddtoShipmentPlanning":
+                                ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextAddtoShipmentPlanning"], Id = "addtoplanning" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -102,10 +147,26 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShipmentPlanningsContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShipmentPlanningsContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShipmentPlanningsContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShipmentPlanningsContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ShipmentPlanningsContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShipmentPlanningsContextAdd"], Id = "new" }); break;
+                            case "ShipmentPlanningsContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShipmentPlanningsContextChange"], Id = "changed" }); break;
+                            case "ShipmentPlanningsContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShipmentPlanningsContextDelete"], Id = "delete" }); break;
+                            case "ShipmentPlanningsContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShipmentPlanningsContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

@@ -8,7 +8,10 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManagementParameter.Services;
 using TsiErp.Business.Entities.Warehouse.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
@@ -26,6 +29,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         ModalManager ModalManager { get; set; }
 
         List<SelectStockFicheLinesDto> StockFicheLineList = new List<SelectStockFicheLinesDto>();
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         public bool OccuredAmountPopup = false;
         public string productionDateReferance = string.Empty;
@@ -44,15 +50,39 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
             BranchIDParameter = purchaseParameter.BranchID;
             WarehouseIDParameter = purchaseParameter.WarehouseID;
 
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "ProductionOrdersChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
+
         }
 
         protected void CreateMainContextMenuItems()
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextWorkOrders"], Id = "workorders" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextOccuredAmountEntry"], Id = "occuredamountentry" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextConsumptionReceipt"], Id = "consumptionreceipt" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ProductionOrderContextWorkOrders":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextWorkOrders"], Id = "workorders" }); break;
+                            case "ProductionOrderContextOccuredAmountEntry":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextOccuredAmountEntry"], Id = "occuredamountentry" }); break;
+                            case "ProductionOrderContextConsumptionReceipt":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextConsumptionReceipt"], Id = "consumptionreceipt" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

@@ -34,6 +34,8 @@ using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
 {
@@ -42,6 +44,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
 
         private SfGrid<SelectContractTrackingFicheLinesDto> _LineGrid;
         private SfGrid<SelectContractTrackingFicheAmountEntryLinesDto> _AmountEntryLineGrid;
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -70,6 +75,15 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
             CreateAmountEntryLineContextMenuItems();
             //CreateLineContextMenuItems();
 
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "ContractTrackingFichesChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
+
         }
 
         #region Fason Takip Fişleri Satır Modalı İşlemleri
@@ -97,10 +111,26 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheLineContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ContractTrackingFicheLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheLineContextAdd"], Id = "new" }); break;
+                            case "ContractTrackingFicheLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheLineContextChange"], Id = "changed" }); break;
+                            case "ContractTrackingFicheLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheLineContextDelete"], Id = "delete" }); break;
+                            case "ContractTrackingFicheLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -108,10 +138,26 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
         {
             if (AmountEntryLineGridContextMenu.Count() == 0)
             {
-                AmountEntryLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheAmountEntryLineContextAdd"], Id = "new" });
-                AmountEntryLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheAmountEntryLineContextChange"], Id = "changed" });
-                AmountEntryLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheAmountEntryLineContextDelete"], Id = "delete" });
-                AmountEntryLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheAmountEntryLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ContractTrackingFicheAmountEntryLineContextAdd":
+                                AmountEntryLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheAmountEntryLineContextAdd"], Id = "new" }); break;
+                            case "ContractTrackingFicheAmountEntryLineContextChange":
+                                AmountEntryLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheAmountEntryLineContextChange"], Id = "changed" }); break;
+                            case "ContractTrackingFicheAmountEntryLineContextDelete":
+                                AmountEntryLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheAmountEntryLineContextDelete"], Id = "delete" }); break;
+                            case "ContractTrackingFicheAmountEntryLineContextRefresh":
+                                AmountEntryLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheAmountEntryLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -119,11 +165,28 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheContextRefresh"], Id = "refresh" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheContextAmountEntry"], Id = "amountentry" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ContractTrackingFicheContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheContextAdd"], Id = "new" }); break;
+                            case "ContractTrackingFicheContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheContextChange"], Id = "changed" }); break;
+                            case "ContractTrackingFicheContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheContextDelete"], Id = "delete" }); break;
+                            case "ContractTrackingFicheContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheContextRefresh"], Id = "refresh" }); break;
+                            case "ContractTrackingFicheContextAmountEntry":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheContextAmountEntry"], Id = "amountentry" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceInstruction.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceInstructionLine.Dtos;
@@ -21,6 +24,9 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
         ModalManager ModalManager { get; set; }
 
         SelectMaintenanceInstructionLinesDto LineDataSource;
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -35,6 +41,15 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
             _L = L;
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "MainInstructionsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -245,10 +260,26 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionLineContextAdd"]    , Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionLineContextChange"] , Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionLineContextDelete"] , Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "MaintenanceInstructionLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionLineContextAdd"], Id = "new" }); break;
+                            case "MaintenanceInstructionLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionLineContextChange"], Id = "changed" }); break;
+                            case "MaintenanceInstructionLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionLineContextDelete"], Id = "delete" }); break;
+                            case "MaintenanceInstructionLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -256,10 +287,26 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text =  L["MaintenanceInstructionContextAdd"]    , Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text =  L["MaintenanceInstructionContextChange"] , Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text =  L["MaintenanceInstructionContextDelete"] , Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "MaintenanceInstructionContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionContextAdd"], Id = "new" }); break;
+                            case "MaintenanceInstructionContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionContextChange"], Id = "changed" }); break;
+                            case "MaintenanceInstructionContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionContextDelete"], Id = "delete" }); break;
+                            case "MaintenanceInstructionContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

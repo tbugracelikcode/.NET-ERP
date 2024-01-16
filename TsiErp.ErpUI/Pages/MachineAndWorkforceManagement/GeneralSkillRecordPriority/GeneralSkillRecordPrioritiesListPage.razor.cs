@@ -9,6 +9,9 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkil
 using TsiErp.ErpUI.Helpers;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.DataAccess.Services.Login;
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.GeneralSkillRecordPriority
 {
@@ -16,10 +19,22 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.GeneralSkillRecordPri
     {
         [Inject]
         ModalManager ModalManager { get; set; }
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
         protected override async void OnInitialized()
         {
             BaseCrudService = GeneralSkillRecordPrioritiesService;
             _L = L;
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "GeneralSkillRecordPrioritiesChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
         }
 
         protected override Task BeforeInsertAsync()
@@ -36,10 +51,26 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.GeneralSkillRecordPri
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["GeneralSkillRecordPrioritiesContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["GeneralSkillRecordPrioritiesContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["GeneralSkillRecordPrioritiesContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["GeneralSkillRecordPrioritiesContextRefresh"], Id = "refresh" });
+
+            foreach (var context in contextsList)
+            {
+                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    switch (context.MenuName)
+                    {
+                        case "GeneralSkillRecordPrioritiesContextAdd":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["GeneralSkillRecordPrioritiesContextAdd"], Id = "new" }); break;
+                        case "GeneralSkillRecordPrioritiesContextChange":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["GeneralSkillRecordPrioritiesContextChange"], Id = "changed" }); break;
+                        case "GeneralSkillRecordPrioritiesContextDelete":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["GeneralSkillRecordPrioritiesContextDelete"], Id = "delete" }); break;
+                        case "GeneralSkillRecordPrioritiesContextRefresh":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["GeneralSkillRecordPrioritiesContextRefresh"], Id = "refresh" }); break;
+                        default: break;
+                    }
+                }
+            }
         }
 
         protected override async Task OnSubmit()

@@ -4,8 +4,11 @@ using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractProductionTracking.Dtos;
@@ -21,6 +24,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractProductionTracking
 
         [Inject]
         ModalManager ModalManager { get; set; }
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
@@ -33,6 +39,15 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractProductionTracking
             BaseCrudService = ContractProductionTrackingsAppService;
             _L = L;
             CreateMainContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "ContractProdTrackingsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -56,10 +71,26 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractProductionTracking
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractProductionTrackingContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractProductionTrackingContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractProductionTrackingContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractProductionTrackingContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ContractProductionTrackingContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractProductionTrackingContextAdd"], Id = "new" }); break;
+                            case "ContractProductionTrackingContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractProductionTrackingContextChange"], Id = "changed" }); break;
+                            case "ContractProductionTrackingContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractProductionTrackingContextDelete"], Id = "delete" }); break;
+                            case "ContractProductionTrackingContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractProductionTrackingContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

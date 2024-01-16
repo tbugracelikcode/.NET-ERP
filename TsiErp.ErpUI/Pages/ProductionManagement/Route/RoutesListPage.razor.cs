@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
@@ -27,6 +30,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
         List<ListProductsOperationsDto> GridProductsOperationList = new List<ListProductsOperationsDto>();
 
         List<SelectProductsOperationLinesDto> ProductsOperationLinesList = new List<SelectProductsOperationLinesDto>();
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
 
         protected override async Task OnInitializedAsync()
@@ -34,6 +40,15 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
             BaseCrudService = RoutesAppService;
             _L = L;
             CreateMainContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "RoutesChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -60,10 +75,26 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["RouteContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["RouteContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["RouteContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["RouteContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "RouteContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["RouteContextAdd"], Id = "new" }); break;
+                            case "RouteContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["RouteContextChange"], Id = "changed" }); break;
+                            case "RouteContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["RouteContextDelete"], Id = "delete" }); break;
+                            case "RouteContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["RouteContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

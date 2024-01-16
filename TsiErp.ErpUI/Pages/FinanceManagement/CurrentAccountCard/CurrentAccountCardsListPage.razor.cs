@@ -6,14 +6,21 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.HeatMap.Internal;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 
 namespace TsiErp.ErpUI.Pages.FinanceManagement.CurrentAccountCard
 {
     public partial class CurrentAccountCardsListPage : IDisposable
     {
+
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         SfComboBox<string, ListShippingAdressesDto> ShippingAdressesComboBox;
         List<ListShippingAdressesDto> ShippingAdressesList = new List<ListShippingAdressesDto>();
@@ -81,6 +88,15 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CurrentAccountCard
         {
             BaseCrudService = CurrentAccountCardsService;
             _L = L;
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "CurrentAccountsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
         }
 
         protected override Task BeforeInsertAsync()
@@ -98,10 +114,25 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CurrentAccountCard
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CurrentAccountCardContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CurrentAccountCardContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CurrentAccountCardContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CurrentAccountCardContextRefresh"], Id = "refresh" });
+            foreach (var context in contextsList)
+            {
+                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    switch (context.MenuName)
+                    {
+                        case "CurrentAccountCardContextAdd":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CurrentAccountCardContextAdd"], Id = "new" }); break;
+                        case "CurrentAccountCardContextChange":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CurrentAccountCardContextChange"], Id = "changed" }); break; 
+                        case "CurrentAccountCardContextDelete":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CurrentAccountCardContextDelete"], Id = "delete" }); break;
+                        case "CurrentAccountCardContextRefresh":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CurrentAccountCardContextRefresh"], Id = "refresh" }); break;
+                        default: break;
+                    }
+                }
+            }
         }
 
         private async Task GetCurrenciesList()

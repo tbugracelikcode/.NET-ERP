@@ -4,6 +4,9 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory.Dtos;
@@ -104,8 +107,11 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
 
 
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
-    
+
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -127,6 +133,14 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
 
             CreateLineContextMenuItems();
             CreateMainContextMenuItems();
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "StationsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
 
         }
@@ -135,10 +149,26 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StationContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StationContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StationContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StationContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "StationContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StationContextAdd"], Id = "new" }); break;
+                            case "StationContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StationContextChange"], Id = "changed" }); break;
+                            case "StationContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StationContextDelete"], Id = "delete" }); break;
+                            case "StationContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StationContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -201,8 +231,22 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
         {
             if (InventoryGridContextMenu.Count() == 0)
             {
-                InventoryGridContextMenu.Add(new ContextMenuItemModel { Text = L["InventoryContextChange"], Id = "changed" });
-                InventoryGridContextMenu.Add(new ContextMenuItemModel { Text = L["InventoryContextDelete"], Id = "delete" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "InventoryContextChange":
+                                InventoryGridContextMenu.Add(new ContextMenuItemModel { Text = L["InventoryContextChange"], Id = "changed" }); break;
+                            case "InventoryContextDelete":
+                                InventoryGridContextMenu.Add(new ContextMenuItemModel { Text = L["InventoryContextDelete"], Id = "delete" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

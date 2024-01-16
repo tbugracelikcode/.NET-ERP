@@ -6,6 +6,9 @@ using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using TsiErp.Business.Entities.PackageFiche.Services;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeOperation.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring.Dtos;
@@ -40,6 +43,9 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
 
         List<SelectEmployeeScoringLinesDto> GridLineList = new List<SelectEmployeeScoringLinesDto>();
         List<SelectEmployeeOperationsDto> EmployeeOperationsList = new List<SelectEmployeeOperationsDto>();
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         private bool LineCrudPopup = false;
         private bool LinesLineCrudPopup = false;
@@ -56,6 +62,14 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             CreateLinesLineContextMenuItems();
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "EmployeeScoreChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -144,10 +158,26 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeScoringsContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeScoringsContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeScoringsContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeScoringsContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "EmployeeScoringsContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeScoringsContextAdd"], Id = "new" }); break;
+                            case "EmployeeScoringsContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeScoringsContextChange"], Id = "changed" }); break;
+                            case "EmployeeScoringsContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeScoringsContextDelete"], Id = "delete" }); break;
+                            case "EmployeeScoringsContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeScoringsContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -155,7 +185,14 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeScoringLinesContextChange"], Id = "changed" });
+
+                var contextId= contextsList.Where(t => t.MenuName == "EmployeeScoringLinesContextChange").Select(t => t.Id).FirstOrDefault();
+                var permission = UserPermissionsList.Where(t => t.MenuId == contextId).Select(t => t.IsUserPermitted).FirstOrDefault();
+
+                if (permission)
+                {
+                    LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeScoringLinesContextChange"], Id = "changed" });
+                }
             }
         }
 
@@ -163,7 +200,14 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
         {
             if (LinesLineGridContextMenu.Count() == 0)
             {
-                LinesLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeScoringLineLinesContextChange"], Id = "changed" });
+
+                var contextId = contextsList.Where(t => t.MenuName == "EmployeeScoringLineLinesContextChange").Select(t => t.Id).FirstOrDefault();
+                var permission = UserPermissionsList.Where(t => t.MenuId == contextId).Select(t => t.IsUserPermitted).FirstOrDefault();
+
+                if (permission)
+                {
+                    LinesLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeScoringLineLinesContextChange"], Id = "changed" });
+                }
             }
         }
 

@@ -4,6 +4,9 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.PlannedMaintenance.Dtos;
@@ -42,6 +45,9 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.PlannedMaintenance
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
         List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
         private SfGrid<SelectPlannedMaintenanceLinesDto> _LineGrid;
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -61,6 +67,15 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.PlannedMaintenance
             _L = L;
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "PlannedMainChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
         }
 
         #region Planlı Bakımlar Satır Modalı İşlemleri
@@ -91,9 +106,24 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.PlannedMaintenance
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PlannedMaintenanceLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PlannedMaintenanceLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PlannedMaintenanceLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "PlannedMaintenanceLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PlannedMaintenanceLineContextChange"], Id = "changed" }); break;
+                            case "PlannedMaintenanceLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PlannedMaintenanceLineContextDelete"], Id = "delete" }); break;
+                            case "PlannedMaintenanceLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PlannedMaintenanceLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -101,10 +131,26 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.PlannedMaintenance
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PlannedMaintenanceContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PlannedMaintenanceContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PlannedMaintenanceContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PlannedMaintenanceContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "PlannedMaintenanceContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PlannedMaintenanceContextAdd"], Id = "new" }); break;
+                            case "PlannedMaintenanceContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PlannedMaintenanceContextChange"], Id = "changed" }); break;
+                            case "PlannedMaintenanceContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PlannedMaintenanceContextDelete"], Id = "delete" }); break;
+                            case "PlannedMaintenanceContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PlannedMaintenanceContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
