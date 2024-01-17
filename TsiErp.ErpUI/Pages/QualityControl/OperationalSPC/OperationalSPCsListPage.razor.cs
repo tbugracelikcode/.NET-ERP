@@ -16,6 +16,9 @@ using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.DataAccess.Services.Login;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 {
@@ -37,6 +40,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
         List<ListProductsOperationsDto> OperationsList = new List<ListProductsOperationsDto>();
 
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+
         private bool LineCrudPopup = false;
 
         protected override async Task OnInitializedAsync()
@@ -45,6 +52,15 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
             _L = L;
             CreateMainContextMenuItems();
             //CreateLineContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "OperationalSPCChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -73,10 +89,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCLineContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "OperationalSPCLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCLineContextAdd"], Id = "new" }); break;
+                            case "OperationalSPCLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCLineContextChange"], Id = "changed" }); break;
+                            case "OperationalSPCLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCLineContextDelete"], Id = "delete" }); break;
+                            case "OperationalSPCLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -84,10 +116,25 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCContextRefresh"], Id = "refresh" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "OperationalSPCContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCContextAdd"], Id = "new" }); break;
+                            case "OperationalSPCContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCContextChange"], Id = "changed" }); break;
+                            case "OperationalSPCContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCContextDelete"], Id = "delete" }); break;
+                            case "OperationalSPCContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

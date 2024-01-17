@@ -4,6 +4,9 @@ using Microsoft.Extensions.Localization;
 using Microsoft.SqlServer.Management.Smo;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
@@ -18,11 +21,23 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItem
 
         List<ListUnsuitabilityTypesItemsDto> UnsuitabilityTypesItemList = new List<ListUnsuitabilityTypesItemsDto>();
 
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+
         protected override async void OnInitialized()
         {
             BaseCrudService = UnsuitabilityItemsService;
             _L = L;
             UnsuitabilityTypesItemList = (await UnsuitabilityTypesItemsService.GetListAsync(new ListUnsuitabilityTypesItemsParameterDto())).Data.ToList();
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "UnsItemsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
         }
 
         protected override Task BeforeInsertAsync()
@@ -82,10 +97,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItem
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityItemContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityItemContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityItemContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityItemContextRefresh"], Id = "refresh" });
+
+            foreach (var context in contextsList)
+            {
+                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    switch (context.MenuName)
+                    {
+                        case "UnsuitabilityItemContextAdd":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityItemContextAdd"], Id = "new" }); break;
+                        case "UnsuitabilityItemContextChange":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityItemContextChange"], Id = "changed" }); break;
+                        case "UnsuitabilityItemContextDelete":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityItemContextDelete"], Id = "delete" }); break;
+                        case "UnsuitabilityItemContextRefresh":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityItemContextRefresh"], Id = "refresh" }); break;
+                        default: break;
+                    }
+                }
+            }
         }
 
         private void IntensityRangeCalculate()

@@ -4,10 +4,13 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
@@ -24,6 +27,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
     {
         private SfGrid<SelectPurchaseRequestLinesDto> _LineGrid;
         private SfGrid<SelectPurchaseRequestLinesDto> _ConvertToOrderGrid;
+
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         #region Stock Parameters
 
@@ -474,6 +481,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
             futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
 
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "PurchaseRequestsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
+
         }
 
         #region Satın Almayı Talebe Dönüştürme Modalı İşlemleri
@@ -482,8 +498,22 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
         {
             if (ConvertToOrderGridContextMenu.Count() == 0)
             {
-                ConvertToOrderGridContextMenu.Add(new ContextMenuItemModel { Text =L["ConvertContextApprove"], Id = "approve" });
-                ConvertToOrderGridContextMenu.Add(new ContextMenuItemModel { Text =L["ConvertContextPending"], Id = "onhold" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ConvertContextApprove":
+                                ConvertToOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ConvertContextApprove"], Id = "approve" }); break;
+                            case "ConvertContextPending":
+                                ConvertToOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ConvertContextPending"], Id = "onhold" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -752,10 +782,26 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestLineContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "PurchaseRequestLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestLineContextAdd"], Id = "new" }); break;
+                            case "PurchaseRequestLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestLineContextChange"], Id = "changed" }); break;
+                            case "PurchaseRequestLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestLineContextDelete"], Id = "delete" }); break;
+                            case "PurchaseRequestLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -763,11 +809,28 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextConverttoOrder"], Id = "converttoorder" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "PurchaseRequestContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextAdd"], Id = "new" }); break;
+                            case "PurchaseRequestContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextChange"], Id = "changed" }); break;
+                            case "PurchaseRequestContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextDelete"], Id = "delete" }); break;
+                            case "PurchaseRequestContextConverttoOrder":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextConverttoOrder"], Id = "converttoorder" }); break;
+                            case "PurchaseRequestContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

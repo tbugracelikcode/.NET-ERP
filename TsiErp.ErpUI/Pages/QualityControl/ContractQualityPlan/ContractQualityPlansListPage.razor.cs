@@ -6,7 +6,10 @@ using Microsoft.AspNetCore.JsonPatch.Operations;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ContractOperationPicture.Dtos;
@@ -27,6 +30,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
         private SfGrid<SelectContractQualityPlanLinesDto> _LineGrid;
         private SfGrid<SelectContractOperationPicturesDto> _OperationPicturesGrid;
         private SfGrid<SelectContractQualityPlanOperationsDto> _ContractOperationsGrid;
+
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -95,6 +102,15 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
             CreateLineContextMenuItems();
             CreateContractOperationContextMenuItems();
             //CreateOperationPictureContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "ContractQualityPlansChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -274,10 +290,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ContractQualityPlanContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanContextAdd"], Id = "new" }); break;
+                            case "ContractQualityPlanContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanContextChange"], Id = "changed" }); break;
+                            case "ContractQualityPlanContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanContextDelete"], Id = "delete" }); break;
+                            case "ContractQualityPlanContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -285,10 +317,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanLineContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ContractQualityPlanLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanLineContextAdd"], Id = "new" }); break;
+                            case "ContractQualityPlanLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanLineContextChange"], Id = "changed" }); break;
+                            case "ContractQualityPlanLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanLineContextDelete"], Id = "delete" }); break;
+                            case "ContractQualityPlanLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -749,9 +797,24 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
         {
             if (ContractOperationGridContextMenu.Count() == 0)
             {
-                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOprContextAdd"], Id = "new" });
-                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOprContextDelete"], Id = "delete" });
-                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOprContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ContractOprContextAdd":
+                                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOprContextAdd"], Id = "new" }); break;
+                            case "ContractOprContextDelete":
+                                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOprContextDelete"], Id = "delete" }); break;
+                            case "ContractOprContextRefresh":
+                                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOprContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

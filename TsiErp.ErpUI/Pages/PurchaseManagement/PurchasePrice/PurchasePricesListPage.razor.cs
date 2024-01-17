@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchasePrice.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
@@ -27,6 +30,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectPurchasePriceLinesDto> GridLineList = new List<SelectPurchasePriceLinesDto>();
+
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         private bool LineCrudPopup = false;
 
@@ -278,6 +285,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "PurchasePricesChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
+
         }
 
         #region Fiyat Listesi Satır Modalı İşlemleri
@@ -303,10 +319,26 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceLineContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "PurchasePriceLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceLineContextAdd"], Id = "new" }); break;
+                            case "PurchasePriceLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceLineContextChange"], Id = "changed" }); break;
+                            case "PurchasePriceLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceLineContextDelete"], Id = "delete" }); break;
+                            case "PurchasePriceLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -314,10 +346,26 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "PurchasePriceContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceContextAdd"], Id = "new" }); break;
+                            case "PurchasePriceContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceContextChange"], Id = "changed" }); break;
+                            case "PurchasePriceContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceContextDelete"], Id = "delete" }); break;
+                            case "PurchasePriceContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchasePriceContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

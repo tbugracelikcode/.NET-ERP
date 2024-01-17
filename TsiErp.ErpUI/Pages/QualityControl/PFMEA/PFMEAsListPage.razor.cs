@@ -6,6 +6,9 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.QualityControl.CalibrationRecord.Dtos;
 using TsiErp.Entities.Entities.QualityControl.EquipmentRecord.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPC.Dtos;
@@ -22,6 +25,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
         public List<SelectOperationalSPCLinesDto> OperationalSPCLineList = new List<SelectOperationalSPCLinesDto>();
         public List<SelectOperationalSPCLinesDto> SecondOperationalSPCLineList = new List<SelectOperationalSPCLinesDto>();
 
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+
         [Inject]
         ModalManager ModalManager { get; set; }
 
@@ -33,6 +40,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
         {
             BaseCrudService = PFMEAsService;
             _L = L;
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "PFMEAChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
         }
 
         protected override Task BeforeInsertAsync()
@@ -51,10 +66,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PFMEAContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PFMEAContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PFMEAContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PFMEAContextRefresh"], Id = "refresh" });
+
+            foreach (var context in contextsList)
+            {
+                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    switch (context.MenuName)
+                    {
+                        case "PFMEAContextAdd":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PFMEAContextAdd"], Id = "new" }); break;
+                        case "PFMEAContextChange":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PFMEAContextChange"], Id = "changed" }); break;
+                        case "PFMEAContextDelete":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PFMEAContextDelete"], Id = "delete" }); break;
+                        case "PFMEAContextRefresh":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PFMEAContextRefresh"], Id = "refresh" }); break;
+                        default: break;
+                    }
+                }
+            }
         }
 
         #region 1. SPC ButtonEdit

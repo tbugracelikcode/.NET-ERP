@@ -16,12 +16,18 @@ using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
 using Microsoft.SqlServer.Server;
 using System.DirectoryServices.ActiveDirectory;
 using System.Timers;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.DataAccess.Services.Login;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 {
     public partial class FirstProductApprovalsListPage : IDisposable
     {
 
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
 
         private SfGrid<SelectFirstProductApprovalLinesDto> _LineGrid;
@@ -55,6 +61,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
             _L = L;
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "FirstProductApprovalChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
             StartTimer();
         }
@@ -104,10 +118,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalLineContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "FirstProductApprovalLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalLineContextAdd"], Id = "new" }); break;
+                            case "FirstProductApprovalLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalLineContextChange"], Id = "changed" }); break;
+                            case "FirstProductApprovalLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalLineContextDelete"], Id = "delete" }); break;
+                            case "FirstProductApprovalLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -115,10 +145,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "FirstProductApprovalContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalContextAdd"], Id = "new" }); break;
+                            case "FirstProductApprovalContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalContextChange"], Id = "changed" }); break;
+                            case "FirstProductApprovalContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalContextDelete"], Id = "delete" }); break;
+                            case "FirstProductApprovalContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["FirstProductApprovalContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

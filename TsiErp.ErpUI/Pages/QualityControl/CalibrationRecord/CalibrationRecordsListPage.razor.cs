@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.QualityControl.CalibrationRecord.Dtos;
 using TsiErp.Entities.Entities.QualityControl.EquipmentRecord.Dtos;
 
@@ -11,10 +14,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationRecord
     public partial class CalibrationRecordsListPage : IDisposable
     {
 
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
         protected override async void OnInitialized()
         {
             _L = L;
             BaseCrudService = CalibrationRecordsService;
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "CalRecordsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -79,10 +94,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationRecord
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextRefresh"], Id = "refresh" });
+
+            foreach (var context in contextsList)
+            {
+                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    switch (context.MenuName)
+                    {
+                        case "CalibrationRecordContextAdd":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextAdd"], Id = "new" }); break;
+                        case "CalibrationRecordContextChange":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextChange"], Id = "changed" }); break;
+                        case "CalibrationRecordContextDelete":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextDelete"], Id = "delete" }); break;
+                        case "CalibrationRecordContextRefresh":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextRefresh"], Id = "refresh" }); break;
+                        default: break;
+                    }
+                }
+            }
         }
 
 

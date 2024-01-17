@@ -12,6 +12,8 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.SalesOrder.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.Forecast.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
@@ -31,6 +33,10 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
     public partial class OrderAcceptanceRecordsListPage : IDisposable
     {
         private SfGrid<VirtualLineModel> _VirtualLineGrid;
+
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         VirtualLineModel VirtualLineDataSource;
 
@@ -75,6 +81,15 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "OrderAcceptanceRecordsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
+
         }
 
         #region Sipariş Kabul Satır Modalı İşlemleri
@@ -104,10 +119,25 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordLineContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordLineContextRefresh"], Id = "refresh" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "OrderAcceptanceRecordLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordLineContextAdd"], Id = "new" }); break;
+                            case "OrderAcceptanceRecordLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordLineContextChange"], Id = "changed" }); break;
+                            case "OrderAcceptanceRecordLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordLineContextDelete"], Id = "delete" }); break;
+                            case "OrderAcceptanceRecordLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -115,11 +145,27 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextConverttoOrder"], Id = "convertorder" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextRefresh"], Id = "refresh" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "OrderAcceptanceRecordsContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextAdd"], Id = "new" }); break;
+                            case "OrderAcceptanceRecordsContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextChange"], Id = "changed" }); break;
+                            case "OrderAcceptanceRecordsContextConverttoOrder":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextConverttoOrder"], Id = "convertorder" }); break;
+                            case "OrderAcceptanceRecordsContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextDelete"], Id = "delete" }); break;
+                            case "OrderAcceptanceRecordsContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
