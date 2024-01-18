@@ -13,12 +13,19 @@ using Syncfusion.Blazor.DropDowns;
 using static TsiErp.ErpUI.Pages.QualityControl.Report8D.Report8DsListPage;
 using DevExpress.Blazor.Grid.Internal;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.DataAccess.Services.Login;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 {
     public partial class PackageFichesListPage : IDisposable
     {
         private SfGrid<SelectPackageFicheLinesDto> _LineGrid;
+
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -35,6 +42,15 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             BaseCrudService = PackageFichesAppService;
             _L = L;
             CreateMainContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "PackageFichesChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -95,10 +111,25 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackageFichesContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackageFichesContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackageFichesContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackageFichesContextRefresh"], Id = "refresh" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "PackageFichesContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackageFichesContextAdd"], Id = "new" }); break;
+                            case "PackageFichesContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackageFichesContextChange"], Id = "changed" }); break;
+                            case "PackageFichesContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackageFichesContextDelete"], Id = "delete" }); break;
+                            case "PackageFichesContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackageFichesContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

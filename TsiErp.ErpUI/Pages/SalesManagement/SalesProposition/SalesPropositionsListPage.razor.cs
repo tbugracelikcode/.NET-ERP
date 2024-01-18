@@ -4,10 +4,13 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos;
@@ -25,6 +28,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
     {
         private SfGrid<SelectSalesPropositionLinesDto> _LineGrid;
         private SfGrid<SelectSalesPropositionLinesDto> _ConvertToOrderGrid;
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         #region Stock Parameters
 
@@ -448,6 +454,15 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
             CreateLineContextMenuItems();
             CreateConvertToOrderContextMenuItems();
 
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "SalesPropositionsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
+
             BaseCrudService = SalesPropositionsAppService;
             _L = L;
 
@@ -461,8 +476,21 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
         {
             if (ConvertToOrderGridContextMenu.Count() == 0)
             {
-                ConvertToOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ConvertContextApprove"], Id = "approve" });
-                ConvertToOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ConvertContextPending"], Id = "onhold" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ConvertContextApprove":
+                                ConvertToOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ConvertContextApprove"], Id = "approve" }); break;
+                            case "ConvertContextPending":
+                                ConvertToOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ConvertContextPending"], Id = "onhold" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -731,10 +759,25 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionLineContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionLineContextRefresh"], Id = "refresh" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "SalesPropositionLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionLineContextAdd"], Id = "new" }); break;
+                            case "SalesPropositionLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionLineContextChange"], Id = "changed" }); break;
+                            case "SalesPropositionLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionLineContextDelete"], Id = "delete" }); break;
+                            case "SalesPropositionLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -742,11 +785,27 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionContextConverttoOrder"], Id = "converttoorder" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionContextRefresh"], Id = "refresh" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "SalesPropositionContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionContextAdd"], Id = "new" }); break;
+                            case "SalesPropositionContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionContextChange"], Id = "changed" }); break;
+                            case "SalesPropositionContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionContextDelete"], Id = "delete" }); break;
+                            case "SalesPropositionContextConverttoOrder":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionContextConverttoOrder"], Id = "converttoorder" }); break;
+                            case "SalesPropositionContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesPropositionContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

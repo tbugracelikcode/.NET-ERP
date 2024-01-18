@@ -9,7 +9,10 @@ using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
@@ -76,6 +79,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         #endregion
 
+        #region Listeler ve DataSource
+
         public SelectTechnicalDrawingsDto TechnicalDrawingsDataSource { get; set; }
         public SelectProductReferanceNumbersDto ProductReferanceNumbersDataSource { get; set; }
         public SelectBillsofMaterialsDto BillsofMaterialsDataSource { get; set; }
@@ -106,9 +111,19 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         public List<ListGrandTotalStockMovementsDto> StockAmountsList = new List<ListGrandTotalStockMovementsDto>();
 
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+
+        #endregion
+
 
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        #region Grid
 
         private SfGrid<SelectTechnicalDrawingsDto> _TechnicalDrawingGrid;
         private SfGrid<SelectTechnicalDrawingsDto> _TechnicalDrawingChangeGrid;
@@ -121,6 +136,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         private SfGrid<SelectRouteLinesDto> _RouteLineGrid;
         private SfGrid<SelectContractProductionTrackingsDto> _ContractProductionTrackingGrid;
         private SfGrid<ListGrandTotalStockMovementsDto> _StockAmountsGrid;
+
+        #endregion
 
         #region Değişkenler
 
@@ -232,18 +249,42 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextTechnicalDrawings"], Id = "technicaldrawings" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextProductRefNr"], Id = "productreferancenumbers" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextPurchasePrices"], Id = "purchaseprices" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextSalesPrices"], Id = "salesprices" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextBOMs"], Id = "billsofmaterials" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextRoutes"], Id = "routes" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextContProdTrackings"], Id = "contractproductiontrackings" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextStockAmounts"], Id = "stockamounts" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ProductContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextAdd"], Id = "new" }); break;
+                            case "ProductContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextChange"], Id = "changed" }); break;
+                            case "ProductContextTechnicalDrawings":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextTechnicalDrawings"], Id = "technicaldrawings" }); break;
+                            case "ProductContextProductRefNr":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextProductRefNr"], Id = "productreferancenumbers" }); break;
+                            case "ProductContextPurchasePrices":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextPurchasePrices"], Id = "purchaseprices" }); break;
+                            case "ProductContextSalesPrices":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextSalesPrices"], Id = "salesprices" }); break;
+                            case "ProductContextBOMs":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextBOMs"], Id = "billsofmaterials" }); break;
+                            case "ProductContextRoutes":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextRoutes"], Id = "routes" }); break;
+                            case "ProductContextContProdTrackings":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextContProdTrackings"], Id = "contractproductiontrackings" }); break;
+                            case "ProductContextStockAmounts":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextStockAmounts"], Id = "stockamounts" }); break;
+                            case "ProductContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextDelete"], Id = "delete" }); break;
+                            case "ProductContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -290,10 +331,26 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             if (TechnicalDrawingGridContextMenu.Count() == 0)
             {
-                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextAdd"], Id = "new" });
-                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextChange"], Id = "changed" });
-                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextDelete"], Id = "delete" });
-                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "TechnicalDrawingContextAdd":
+                                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextAdd"], Id = "new" }); break;
+                            case "TechnicalDrawingContextChange":
+                                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextChange"], Id = "changed" }); break;
+                            case "TechnicalDrawingContextDelete":
+                                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextDelete"], Id = "delete" }); break;
+                            case "TechnicalDrawingContextRefresh":
+                                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -513,10 +570,25 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             if (ProductReferanceNumberGridContextMenu.Count() == 0)
             {
-                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextAdd"], Id = "new" });
-                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextChange"], Id = "changed" });
-                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextDelete"], Id = "delete" });
-                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextRefresh"], Id = "refresh" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ProductReferanceNumberContextAdd":
+                                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextAdd"], Id = "new" }); break;
+                            case "ProductReferanceNumberContextChange":
+                                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextChange"], Id = "changed" }); break;
+                            case "ProductReferanceNumberContextDelete":
+                                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextDelete"], Id = "delete" }); break;
+                            case "ProductReferanceNumberContextRefresh":
+                                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -714,7 +786,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             if (BillsofMaterialGridContextMenu.Count() == 0)
             {
-                BillsofMaterialGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextExamine"], Id = "examine" });
+                var contextID = contextsList.Where(t => t.MenuName == "BoMContextExamine").Select(t => t.Id).FirstOrDefault();
+                var permission = UserPermissionsList.Where(t => t.MenuId == contextID).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    BillsofMaterialGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextExamine"], Id = "examine" });
+                }
             }
         }
 
@@ -764,7 +841,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             if (RouteGridContextMenu.Count() == 0)
             {
-                RouteGridContextMenu.Add(new ContextMenuItemModel { Text = L["RouteContextExamine"], Id = "examine" });
+                var contextID = contextsList.Where(t => t.MenuName == "RouteContextExamine").Select(t => t.Id).FirstOrDefault();
+                var permission = UserPermissionsList.Where(t => t.MenuId == contextID).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    RouteGridContextMenu.Add(new ContextMenuItemModel { Text = L["RouteContextExamine"], Id = "examine" });
+                }
             }
         }
 
@@ -1288,6 +1370,15 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             CreateProductReferanceNumberContextMenuItems();
             CreateBillsofMaterialsContextMenuItems();
             CreateRoutesContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "ProductsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
 
         }
