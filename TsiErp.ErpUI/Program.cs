@@ -15,6 +15,7 @@ using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Shared;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -36,6 +37,8 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Conf
 
 builder.Services.AddSyncfusionBlazor();
 builder.Services.AddDevExpressBlazor();
+
+
 
 builder.Services.AddLocalization();
 
@@ -78,7 +81,11 @@ builder.Services.AddDevExpressBlazor();
 builder.Services.AddScoped<ModalManager>();
 
 
+
+
 var app = builder.Build();
+
+
 
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzA0MDk0QDMyMzAyZTMyMmUzMEVjb29PTkxlM3YvRVZwVTR5U0VCT2toK24vMEJlYmFVeFkwRlYrT1cwMzA9");
 

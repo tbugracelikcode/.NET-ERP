@@ -133,7 +133,7 @@
 
     <ItemGroup>
 		<PackageReference Include="Blazored.Modal" Version="7.0.0" />
-		<PackageReference Include="DevExpress.Blazor" Version="21.1.9" />
+		<PackageReference Include="DevExpress.Blazor" Version="23.2.3" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
         <PackageReference Include="runtime.linux-arm.runtime.native.System.IO.Ports" Version="7.0.0" />
         <PackageReference Include="runtime.linux-arm64.runtime.native.System.IO.Ports" Version="7.0.0" />
