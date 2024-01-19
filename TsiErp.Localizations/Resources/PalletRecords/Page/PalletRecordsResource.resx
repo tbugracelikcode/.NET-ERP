@@ -148,7 +148,7 @@
     <value>Cari Hesap Kartları</value>
   </data>
   <data name="CustomerCodeLabel" xml:space="preserve">
-    <value>Varyant Kodu:</value>
+    <value>Müşteri Kodu:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -181,7 +181,7 @@
     <value>Uzunluk:</value>
   </data>
   <data name="LineGridCustomerCode" xml:space="preserve">
-    <value>VARYANT KODU</value>
+    <value>MÜŞTERİ KODU</value>
   </data>
   <data name="LineGridNumberofPackage" xml:space="preserve">
     <value>PAKET SAYISI</value>

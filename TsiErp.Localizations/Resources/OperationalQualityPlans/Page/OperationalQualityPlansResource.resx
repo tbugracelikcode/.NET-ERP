@@ -129,6 +129,18 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı döküman numaralı bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ContextOprPicAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ContextOprPicChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ContextOprPicDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ContextOprPicRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="ControlConditionsCode" xml:space="preserve">
     <value>KONTROL ŞARTI KODU</value>
   </data>

@@ -115,7 +115,7 @@ namespace TsiErp.Localizations.Resources.PackageFiches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to VARYANT KODU.
+        ///   Looks up a localized string similar to MÜŞTERİ KODU.
         /// </summary>
         public static string CustomerCode {
             get {
@@ -124,7 +124,7 @@ namespace TsiErp.Localizations.Resources.PackageFiches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Varyant Kodu:.
+        ///   Looks up a localized string similar to Müşteri Kodu:.
         /// </summary>
         public static string CustomerCodeLabel {
             get {

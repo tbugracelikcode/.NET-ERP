@@ -11,6 +11,8 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
@@ -38,6 +40,10 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         bool futureDateParameter;
 
         #endregion
+
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -467,7 +473,15 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             CreateProductionOrderContextMenuItems();
-            CreateBoMLineContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "SalesOrdersChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
             await GetProductsList();
 
@@ -523,7 +537,16 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         {
             if (ProductionOrderGridContextMenu.Count() == 0)
             {
-                ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductOrderContextTree"], Id = "productstree" });
+
+                var contextID = contextsList.Where(t => t.MenuName == "ProductOrderContextTree").Select(t => t.Id).FirstOrDefault();
+                var permission = UserPermissionsList.Where(t => t.MenuId == contextID).Select(t => t.IsUserPermitted).FirstOrDefault();
+
+                if (permission)
+                {
+                    ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductOrderContextTree"], Id = "productstree" });
+                }
+
+              
             }
         }
 
@@ -658,10 +681,25 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderLineContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderLineContextRefresh"], Id = "refresh" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "SalesOrderLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderLineContextAdd"], Id = "new" }); break;
+                            case "SalesOrderLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderLineContextChange"], Id = "changed" }); break;
+                            case "SalesOrderLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderLineContextDelete"], Id = "delete" }); break;
+                            case "SalesOrderLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -669,11 +707,27 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextProdOrder"], Id = "createproductionorder" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextRefresh"], Id = "refresh" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "SalesOrderContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextAdd"], Id = "new" }); break;
+                            case "SalesOrderContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextChange"], Id = "changed" }); break;
+                            case "SalesOrderContextProdOrder":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextProdOrder"], Id = "createproductionorder" }); break;
+                            case "SalesOrderContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextDelete"], Id = "delete" }); break;
+                            case "SalesOrderContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

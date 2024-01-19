@@ -1,13 +1,14 @@
-﻿using Syncfusion.Blazor.Grids;
+﻿using Microsoft.Extensions.Hosting;
+using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using Syncfusion.XlsIO;
 using System.Data;
 using System.Dynamic;
+using TsiErp.ErpUI.Services;
 
-namespace TsiErp.ErpUI.Pages.PlanningManagement.Excel2Grid
+namespace TsiErp.ErpUI.Pages.TestPages.ExcelImportDataGrid
 {
-    
-    public partial class Excel2Grid : IDisposable
+    public partial class ExcelImportDataGrid
     {
         SfGrid<ExpandoObject> Grid;
         public DataTable table = new DataTable();
@@ -15,26 +16,24 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Excel2Grid
         {
             foreach (var file in args.Files)
             {
+                #region Expando Object Örneği
+
                 var path = file.FileInfo.Name;
                 ExcelEngine excelEngine = new ExcelEngine();
                 IApplication application = excelEngine.Excel;
                 application.DefaultVersion = ExcelVersion.Excel2016;
 
-                //get local wwwroot path of application
-                var check = ExcelService.GetPath(path);
-                //create new filestream into above path
+                var check = ExcelService.ImportGetPath(path);
                 FileStream openFileStream = new FileStream(check, FileMode.OpenOrCreate);
-                //write the uploaded memorystream to file stream
                 file.Stream.WriteTo(openFileStream);
-                //again open the filstream from that path
                 FileStream fileStream = new FileStream(check, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                //access the workbook from that filtestream
                 IWorkbook workbook = application.Workbooks.Open(fileStream);
-                IWorksheet worksheet = workbook.Worksheets[0];
-                //get datatable from workbook
+                IWorksheet worksheet = workbook.Worksheets[1];
                 table = worksheet.ExportDataTable(worksheet.UsedRange, ExcelExportDataTableOptions.ColumnNames);
-                //convert to dynamic list and append to Grid. 
                 GenerateListFromTable(table);
+
+                #endregion
+
             }
         }
         string[] Columns;
@@ -47,7 +46,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Excel2Grid
                                  .ToArray();
             foreach (DataRow row in input.Rows)
             {
-                System.Dynamic.ExpandoObject e = new System.Dynamic.ExpandoObject();
+                ExpandoObject e = new ExpandoObject();
                 foreach (DataColumn col in input.Columns)
                     e.TryAdd(col.ColumnName, row.ItemArray[col.Ordinal]);
                 list.Add(e);
@@ -56,10 +55,5 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Excel2Grid
         }
 
 
-        public void Dispose()
-        {
-            GC.Collect();
-            GC.SuppressFinalize(this);
-        }
     }
 }

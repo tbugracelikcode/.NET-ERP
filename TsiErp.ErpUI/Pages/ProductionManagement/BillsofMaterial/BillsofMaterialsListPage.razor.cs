@@ -4,7 +4,10 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Entities.CurrentAccountCard.Services;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
@@ -18,6 +21,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
     {
 
         private SfGrid<SelectBillsofMaterialLinesDto> _LineGrid;
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -78,6 +84,15 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "BOMChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
+
         }
 
         #region Reçete Satır Modalı İşlemleri
@@ -123,10 +138,26 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextAdd"]    , Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextChange"] , Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextDelete"] , Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "BoMLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMLineContextAdd"], Id = "new" }); break;
+                            case "BoMLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMLineContextChange"], Id = "changed" }); break;
+                            case "BoMLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMLineContextDelete"], Id = "delete" }); break;
+                            case "BoMLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -134,10 +165,26 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text =L["BoMLineContextAdd"]     , Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text =L["BoMLineContextChange"]  , Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text =L["BoMLineContextDelete"]  , Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "BoMContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextAdd"], Id = "new" }); break;
+                            case "BoMContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextChange"], Id = "changed" }); break;
+                            case "BoMContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextDelete"], Id = "delete" }); break;
+                            case "BoMContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

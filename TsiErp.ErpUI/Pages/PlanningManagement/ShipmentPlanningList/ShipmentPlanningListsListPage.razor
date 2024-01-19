@@ -1,0 +1,420 @@
+﻿@page "/shipment-planning-lists"
+@layout MainLayout
+
+
+
+@inherits BaseListPage<SelectShipmentPlanningsDto, ListShipmentPlanningsDto, CreateShipmentPlanningsDto, UpdateShipmentPlanningsDto, ListShipmentPlanningsParameterDto>
+@inject IStringLocalizer<ShipmentPlanningsResource> L
+
+
+@inject IShipmentPlanningsAppService ShipmentPlanningsService
+@inject IFicheNumbersAppService FicheNumbersAppService
+@inject ISalesOrdersAppService SalesOrderAppService
+@inject IProductionOrdersAppService ProductionOrdersAppService
+@inject IProductsAppService ProductsAppService
+@inject IUserPermissionsAppService UserPermissionsAppService
+@inject IMenusAppService MenusAppService
+
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+        <GridLayoutItems>
+            <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+
+            <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIGridCards">
+
+                        <CardContent>
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+
+                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListShipmentPlanningsDto"></GridEvents>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListShipmentPlanningsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListShipmentPlanningsDto.ShipmentPlanningDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["ShipmentPlanningDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListShipmentPlanningsDto.TotalNetKG) Type="ColumnType.Number" Format="N2" HeaderText="@L["TotalNetKG"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListShipmentPlanningsDto.TotalGrossKG) Type="ColumnType.Number" Format="N2" HeaderText="@L["TotalGrossKG"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListShipmentPlanningsDto.TotalAmount) Type="ColumnType.Number" HeaderText="@L["TotalAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListShipmentPlanningsDto.PlannedAmount) Type="ColumnType.Number" HeaderText="@L["PlannedAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                </GridColumns>
+                            </SfGrid>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
+
+    <DxPopup @bind-Visible="base.EditPageVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="62%"
+             Height="83%"
+             MinWidth="1060px"
+             MinHeight="900px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="28%" />
+                    <DxGridLayoutRow Height="28%" />
+                    <DxGridLayoutRow Height="28%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                </Columns>
+
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["ShipmentPlanningDateLabel"] </strong></label>
+                            
+                            <SfDatePicker @bind-Value="DataSource.ShipmentPlanningDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="5" RowSpan="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label>
+                            <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.Description_"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["TotalNetKGLabel"] </strong></label><br />
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.TotalNetKG" CssClass="TSITxtBox" Enabled=false></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["TotalGrossKGLabel"] </strong></label><br />
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.TotalGrossKG" CssClass="TSITxtBox" Enabled=false></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["TotalAmountLabel"] </strong></label><br />
+                            <SfNumericTextBox Min="0" TValue="int" @bind-Value="DataSource.TotalAmount" CssClass="TSITxtBox" Enabled=false></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PlannedAmountLabel"] </strong></label><br />
+                            <SfNumericTextBox Min="0" TValue="int" @bind-Value="DataSource.PlannedAmount" CssClass="TSITxtBox" Enabled=false></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="3" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["filterStartDateLabel"] </strong></label><br />
+                            <SfDatePicker @bind-Value="filterStartDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["filterEndDateLabel"] </strong></label><br />
+                            <SfDatePicker @bind-Value="filterEndDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="5">
+                        <Template><br />
+            <SfButton CssClass="TSISaveButton" OnClick="FilterButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["FilterButton"]</SfButton>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="5">
+                        <Template>
+                            <SfGrid @ref=_ProductionOrdersGrid ID="ProductionOrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductionOrdersList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra"ContextMenuItems="@ProductionOrderGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnProductionOrderContextMenuClick" TValue="ListProductionOrdersDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.CustomerOrderNo) Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridCustomerOrderNo"]" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                ListProductionOrdersDto prodorder = (ProductionOrdersContext as ListProductionOrdersDto);
+
+                                                if (GridLineList.Where(t => t.ProductionOrderID == prodorder.Id).Count() > 0)
+                                                {
+                                                    <div style="background-color : #69F713;width: 100%;height: 100%;">@prodorder.CustomerOrderNo</div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@prodorder.CustomerOrderNo</div>
+                                                }
+                                            }
+
+                                        </Template>
+
+                                    </GridColumn>
+
+                                     <GridColumn Field=@nameof(ListProductionOrdersDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridShipmentPlanningDate"]" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                ListProductionOrdersDto prodorder = (ProductionOrdersContext as ListProductionOrdersDto);
+
+                                                if (GridLineList.Where(t => t.ProductionOrderID == prodorder.Id).Count() > 0)
+                                                {
+                                                    <div style="background-color : #69F713;width: 100%;height: 100%;">@DataSource.ShipmentPlanningDate.ToShortDateString()</div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@DataSource.ShipmentPlanningDate.ToShortDateString()</div>
+                                                }
+                                            }
+
+                                        </Template>
+
+                                    </GridColumn>
+
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.FinishedProductCode) Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridFinishedProductCode"]" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                ListProductionOrdersDto prodorder = (ProductionOrdersContext as ListProductionOrdersDto);
+
+                                                if (GridLineList.Where(t => t.ProductionOrderID == prodorder.Id).Count() > 0)
+                                                {
+                                                    <div style="background-color : #69F713;width: 100%;height: 100%;">@prodorder.FinishedProductCode</div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@prodorder.FinishedProductCode</div>
+                                                }
+                                            }
+
+                                        </Template>
+                                    </GridColumn>
+
+                                     <GridColumn Field=@nameof(ListProductionOrdersDto.CustomerCode) Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridCustomerCode"]" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                ListProductionOrdersDto prodorder = (ProductionOrdersContext as ListProductionOrdersDto);
+
+                                                if (GridLineList.Where(t => t.ProductionOrderID == prodorder.Id).Count() > 0)
+                                                {
+                                                    <div style="background-color : #69F713;width: 100%;height: 100%;">@prodorder.CustomerCode</div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@prodorder.CustomerCode</div>
+                                                }
+                                            }
+
+                                        </Template>
+                                    </GridColumn>
+
+                                     <GridColumn Field=@nameof(ListProductionOrdersDto.PlannedQuantity) Type="ColumnType.Number" Format="N2" Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridPlannedQuantity"]" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                ListProductionOrdersDto prodorder = (ProductionOrdersContext as ListProductionOrdersDto);
+
+                                                if (GridLineList.Where(t => t.ProductionOrderID == prodorder.Id).Count() > 0)
+                                                {
+                                                    <div style="background-color : #69F713;width: 100%;height: 100%;">@prodorder.PlannedQuantity</div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@prodorder.PlannedQuantity</div>
+                                                }
+                                            }
+
+                                        </Template>
+                                    </GridColumn>
+
+                                     <GridColumn Field=@nameof(ListProductionOrdersDto.ProducedQuantity) Type="ColumnType.Number" Format="N2" Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridProducedQuantity"]" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                ListProductionOrdersDto prodorder = (ProductionOrdersContext as ListProductionOrdersDto);
+
+                                                if (GridLineList.Where(t => t.ProductionOrderID == prodorder.Id).Count() > 0)
+                                                {
+                                                    <div style="background-color : #69F713;width: 100%;height: 100%;">@prodorder.ProducedQuantity</div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@prodorder.ProducedQuantity</div>
+                                                }
+                                            }
+
+                                        </Template>
+                                    </GridColumn>
+
+                                     <GridColumn Field=@nameof(ListProductionOrdersDto.ProducedQuantity) Type="ColumnType.Number" Format="N2" Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridLoadingList"]" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                ListProductionOrdersDto prodorder = (ProductionOrdersContext as ListProductionOrdersDto);
+
+                                                var shipmentPlanningID = (ShipmentPlanningsService.GetLinebyProductionOrderAsync(prodorder.Id)).Result.Data.ShipmentPlanningID;
+
+                                                var shipmentPlanning = (ShipmentPlanningsService.GetAsync(shipmentPlanningID.GetValueOrDefault())).Result.Data;
+
+                                                if (GridLineList.Where(t => t.ProductionOrderID == prodorder.Id).Count() > 0)
+                                                {
+                                                    <div style="background-color : #69F713;width: 100%;height: 100%;">@shipmentPlanning.Code</div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@shipmentPlanning.Code</div>
+                                                }
+                                            }
+
+                                        </Template>
+                                    </GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                   
+
+
+                    <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
+                        <Template>
+                            <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectShipmentPlanningLinesDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.CustomerOrderNr)  HeaderText="@L["LineGridCustomerOrderNr"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.RequestedLoadingDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime"  HeaderText="@L["LineGridLoadingDate"]" TextAlign="TextAlign.Center" Width="240" Context="LineContext">
+                                          <Template>
+                                           @DataSource.ShipmentPlanningDate.ToShortDateString()
+
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.PlannedQuantity) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridPlannedQuantity"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.SentQuantity) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridSentQuantity"]" TextAlign="TextAlign.Center" Width="200"></GridColumn> 
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.ShipmentQuantity) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridShipmentQuantity"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.UnitWeightKG) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridUnitWeightKG"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.NetWeightKG) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridNetWeightKG"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.GrossWeightKG) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridGrossWeightKG"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.LineDescription_)  HeaderText="@L["LineGridLineDescription_"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+
+    <DxPopup @bind-Visible="LineCrudPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["LineModalTitle"]"
+             Width="42%"
+             Height="26%"
+             MinWidth="720px"
+             MinHeight="200px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1" ColumnSpan ="3">
+                        <Template>
+                            <label class="TSIModalLabel">
+                                <strong> @L["LineDescription_Label"] </strong></label>
+                            <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="LineDataSource.LineDescription_" ShowClearButton=true ></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                   
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+}
+

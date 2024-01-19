@@ -6,8 +6,11 @@ using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
@@ -16,6 +19,10 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
 {
     public partial class ShiftsListPage : IDisposable
     {
+
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         private SfGrid<SelectShiftLinesDto> _LineGrid;
 
@@ -36,6 +43,15 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
             _L = L;
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "ShiftsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -134,23 +150,48 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
 
         protected void CreateLineContextMenuItems()
         {
-            if (LineGridContextMenu.Count() == 0)
+
+            foreach (var context in contextsList)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftLineContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftLineContextRefresh"], Id = "refresh" });
+                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    switch (context.MenuName)
+                    {
+                        case "ShiftLineContextAdd":
+                            LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftLineContextAdd"], Id = "new" }); break;
+                        case "ShiftLineContextChange":
+                            LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftLineContextChange"], Id = "changed" }); break;
+                        case "ShiftLineContextDelete":
+                            LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftLineContextDelete"], Id = "delete" }); break;
+                        case "ShiftLineContextRefresh":
+                            LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftLineContextRefresh"], Id = "refresh" }); break;
+                        default: break;
+                    }
+                }
             }
         }
 
         protected void CreateMainContextMenuItems()
         {
-            if (LineGridContextMenu.Count() == 0)
+            foreach (var context in contextsList)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftContextRefresh"], Id = "refresh" });
+                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    switch (context.MenuName)
+                    {
+                        case "ShiftContextAdd":
+                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftContextAdd"], Id = "new" }); break;
+                        case "ShiftContextChange":
+                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftContextChange"], Id = "changed" }); break;
+                        case "ShiftContextDelete":
+                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftContextDelete"], Id = "delete" }); break;
+                        case "ShiftContextRefresh":
+                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ShiftContextRefresh"], Id = "refresh" }); break;
+                        default: break;
+                    }
+                }
             }
         }
 

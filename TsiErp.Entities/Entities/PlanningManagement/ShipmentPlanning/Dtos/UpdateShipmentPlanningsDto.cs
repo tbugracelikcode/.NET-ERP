@@ -1,4 +1,6 @@
 ﻿using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
+using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos;
 
 namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos
 {
@@ -39,5 +41,9 @@ namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos
         /// Toplam Adet
         /// </summary>
         public int PlannedAmount { get; set; }
+
+
+        [NoDatabaseAction]
+        public List<SelectShipmentPlanningLinesDto> SelectShipmentPlanningLines { get; set; }
     }
 }

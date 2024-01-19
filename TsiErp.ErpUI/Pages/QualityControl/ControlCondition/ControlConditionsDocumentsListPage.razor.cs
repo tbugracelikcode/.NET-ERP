@@ -4,6 +4,9 @@ using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlCondition.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
 
@@ -11,15 +14,27 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ControlCondition
 {
     partial class ControlConditionsDocumentsListPage:IDisposable
     {
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         bool _isOperation;
         bool _isPurchase;
         bool _isContract;
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
             BaseCrudService = ControlConditionsService;
             _L = L;
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "ControlConditionsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
         }
 
         protected override Task BeforeInsertAsync()
@@ -41,10 +56,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ControlCondition
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextRefresh"], Id = "refresh" });
+
+            foreach (var context in contextsList)
+            {
+                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    switch (context.MenuName)
+                    {
+                        case "ControlConditionContextAdd":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextAdd"], Id = "new" }); break;
+                        case "ControlConditionContextChange":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextChange"], Id = "changed" }); break;
+                        case "ControlConditionContextDelete":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextDelete"], Id = "delete" }); break;
+                        case "ControlConditionContextRefresh":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextRefresh"], Id = "refresh" }); break;
+                        default: break;
+                    }
+                }
+            }
         }
 
         public override void ShowEditPage()

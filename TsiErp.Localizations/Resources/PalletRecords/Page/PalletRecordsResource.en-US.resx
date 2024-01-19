@@ -148,7 +148,7 @@
     <value>Current Account Cards</value>
   </data>
   <data name="CustomerCodeLabel" xml:space="preserve">
-    <value>Variant Code:</value>
+    <value>Customer Code:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -181,7 +181,7 @@
     <value>Lenght:</value>
   </data>
   <data name="LineGridCustomerCode" xml:space="preserve">
-    <value>VARIANT CODE</value>
+    <value>CUSTOMER CODE</value>
   </data>
   <data name="LineGridNumberofPackage" xml:space="preserve">
     <value>NUMBER OF PACKAGES</value>

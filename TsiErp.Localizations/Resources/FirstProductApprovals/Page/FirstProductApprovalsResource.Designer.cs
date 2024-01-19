@@ -91,6 +91,15 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         /// <summary>
         ///   Looks up a localized string similar to Onaylandı.
         /// </summary>
+        public static string Approved {
+            get {
+                return ResourceManager.GetString("Approved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onaylandı.
+        /// </summary>
         public static string ApprovedLabel {
             get {
                 return ResourceManager.GetString("ApprovedLabel", resourceCulture);
@@ -377,6 +386,24 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FİNAL KONTROL MÜ.
+        /// </summary>
+        public static string IsFinalControl {
+            get {
+                return ResourceManager.GetString("IsFinalControl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Final Kontrol mü? :.
+        /// </summary>
+        public static string IsFinalControlLabel {
+            get {
+                return ResourceManager.GetString("IsFinalControlLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (-) TOLERANS.
         /// </summary>
         public static string LineGridBottomTolerance {
@@ -521,6 +548,15 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ÜRETİM EMRİ NO.
+        /// </summary>
+        public static string ProductionOrderFicheNo {
+            get {
+                return ResourceManager.GetString("ProductionOrderFicheNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -647,6 +683,15 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Onay Beliyor.
+        /// </summary>
+        public static string WaitingtobeApproved {
+            get {
+                return ResourceManager.GetString("WaitingtobeApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İŞ EMRİ.
         /// </summary>
         public static string WorkOrderNo {
@@ -688,6 +733,15 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         public static string WorkOrderPopupTitle {
             get {
                 return ResourceManager.GetString("WorkOrderPopupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evet.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

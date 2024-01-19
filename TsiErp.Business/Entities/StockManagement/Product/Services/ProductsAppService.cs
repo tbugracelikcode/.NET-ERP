@@ -128,6 +128,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 Tables.ContractTrackingFiches,
                 Tables.CustomerComplaintReports,
                 Tables.FinalControlUnsuitabilityReports,
+                Tables.ShipmentPlanningLines,
                 Tables.FirstProductApprovals,
                 Tables.ForecastLines,
                 Tables.GrandTotalStockMovements,

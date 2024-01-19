@@ -5,6 +5,8 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.TaskScoring.Dtos;
@@ -19,11 +21,23 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeSeniority
         SelectTaskScoringsDto TaskScoringDataSource;
         [Inject]
         ModalManager ModalManager { get; set; }
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         protected override async void OnInitialized()
         {
             BaseCrudService = EmployeeSenioritiesService;
             _L = L;
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "EmployeeSenioritiesChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
         }
 
         protected override Task BeforeInsertAsync()
@@ -45,10 +59,26 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeSeniority
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextRefresh"], Id = "refresh" });
+
+            foreach (var context in contextsList)
+            {
+                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    switch (context.MenuName)
+                    {
+                        case "EmployeeSenioritiesContextAdd":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextAdd"], Id = "new" }); break;
+                        case "EmployeeSenioritiesContextChange":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextChange"], Id = "changed" }); break;
+                        case "EmployeeSenioritiesContextDelete":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextDelete"], Id = "delete" }); break;
+                        case "EmployeeSenioritiesContextRefresh":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextRefresh"], Id = "refresh" }); break;
+                        default: break;
+                    }
+                }
+            }
         }
 
         public async override void ShowEditPage()

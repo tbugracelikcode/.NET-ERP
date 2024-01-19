@@ -12,6 +12,9 @@ using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.DataAccess.Services.Login;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 {
@@ -19,6 +22,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
     {
         private SfGrid<SelectPalletRecordLinesDto> _LineGrid;
         private SfGrid<PackageFicheSelectionGrid> _PackageFichesGrid;
+
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -56,6 +63,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             _L = L;
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "PalletRecordsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -112,8 +127,21 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordLinesContextAddPackageFiche"], Id = "addpackagefiche" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordLinesContextRemovePackageFiche"], Id = "removepackagefiche" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "PalletRecordLinesContextAddPackageFiche":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordLinesContextAddPackageFiche"], Id = "addpackagefiche" }); break;
+                            case "PalletRecordLinesContextRemovePackageFiche":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordLinesContextRemovePackageFiche"], Id = "removepackagefiche" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -121,10 +149,25 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextRefresh"], Id = "refresh" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "PalletRecordsContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextAdd"], Id = "new" }); break;
+                            case "PalletRecordsContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextChange"], Id = "changed" }); break;
+                            case "PalletRecordsContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextDelete"], Id = "delete" }); break;
+                            case "PalletRecordsContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

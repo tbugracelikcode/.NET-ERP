@@ -24,6 +24,12 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval
 
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid ProductionOrderID { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
         /// Stok ID
         /// </summary>
         public Guid ProductID { get; set; }
@@ -75,5 +81,11 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval
         /// Hurda Adet
         /// </summary>
         public decimal ScrapQuantity { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Final Kontrol mü?
+        /// </summary>
+        public bool IsFinalControl { get; set; }
     }
 }

@@ -98,6 +98,42 @@ namespace TsiErp.Localizations.Resources.OperationalQualityPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ContextOprPicAdd {
+            get {
+                return ResourceManager.GetString("ContextOprPicAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ContextOprPicChange {
+            get {
+                return ResourceManager.GetString("ContextOprPicChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ContextOprPicDelete {
+            get {
+                return ResourceManager.GetString("ContextOprPicDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ContextOprPicRefresh {
+            get {
+                return ResourceManager.GetString("ContextOprPicRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KONTROL ŞARTI KODU.
         /// </summary>
         public static string ControlConditionsCode {

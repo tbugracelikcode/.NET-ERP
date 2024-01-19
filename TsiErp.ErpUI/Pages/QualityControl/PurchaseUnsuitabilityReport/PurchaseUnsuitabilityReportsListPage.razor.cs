@@ -5,7 +5,10 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
@@ -20,6 +23,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
         [Inject]
         ModalManager ModalManager { get; set; }
 
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
         public class UnsComboBox
         {
             public string ID { get; set; }
@@ -38,6 +44,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
         {
             BaseCrudService = PurchaseUnsuitabilityReportsService;
             _L = L;
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "PurchUnsRecordsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -47,6 +61,25 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
             GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextChange"], Id = "changed" });
             GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextDelete"], Id = "delete" });
             GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextRefresh"], Id = "refresh" });
+            foreach (var context in contextsList)
+            {
+                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    switch (context.MenuName)
+                    {
+                        case "PurchaseUnsuitabilityReportContextAdd":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextAdd"], Id = "new" }); break;
+                        case "PurchaseUnsuitabilityReportContextChange":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextChange"], Id = "changed" }); break;
+                        case "PurchaseUnsuitabilityReportContextDelete":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextDelete"], Id = "delete" }); break;
+                        case "PurchaseUnsuitabilityReportContextRefresh":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextRefresh"], Id = "refresh" }); break;
+                        default: break;
+                    }
+                }
+            }
         }
 
         private void UnsComboBoxValueChangeHandler(ChangeEventArgs<string, UnsComboBox> args)

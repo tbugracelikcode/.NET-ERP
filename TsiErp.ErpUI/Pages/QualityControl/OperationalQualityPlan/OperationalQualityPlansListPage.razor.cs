@@ -9,6 +9,9 @@ using Syncfusion.Blazor.Inputs;
 using System.IO;
 using System.Text;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
@@ -29,6 +32,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
     {
         private SfGrid<SelectOperationalQualityPlanLinesDto> _LineGrid;
         private SfGrid<SelectOperationPicturesDto> _OperationPicturesGrid;
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -88,6 +94,15 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             CreateOperationPictureContextMenuItems();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "OperationalQualityPlansChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
 
         }
 
@@ -245,10 +260,25 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanContextRefresh"], Id = "refresh" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "OperationalQualityPlanContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanContextAdd"], Id = "new" }); break;
+                            case "OperationalQualityPlanContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanContextChange"], Id = "changed" }); break;
+                            case "OperationalQualityPlanContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanContextDelete"], Id = "delete" }); break;
+                            case "OperationalQualityPlanContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -256,10 +286,25 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanLineContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanLineContextRefresh"], Id = "refresh" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "OperationalQualityPlanLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanLineContextAdd"], Id = "new" }); break;
+                            case "OperationalQualityPlanLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanLineContextChange"], Id = "changed" }); break;
+                            case "OperationalQualityPlanLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanLineContextDelete"], Id = "delete" }); break;
+                            case "OperationalQualityPlanLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
@@ -485,10 +530,25 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         {
             if (OperationPictureGridContextMenu.Count() == 0)
             {
-                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ContextOprPicAdd":
+                                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextOprPicAdd"], Id = "new" }); break;
+                            case "ContextOprPicChange":
+                                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextOprPicChange"], Id = "changed" }); break;
+                            case "ContextOprPicDelete":
+                                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextOprPicDelete"], Id = "delete" }); break;
+                            case "ContextOprPicRefresh":
+                                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextOprPicRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

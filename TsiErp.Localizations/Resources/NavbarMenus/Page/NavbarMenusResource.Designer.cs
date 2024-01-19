@@ -1411,7 +1411,7 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sevkiyat Planlama.
+        ///   Looks up a localized string similar to Sevkiyat Planlama Listeleri.
         /// </summary>
         public static string ShipmentPlanningChildMenu {
             get {

@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Period
 {
@@ -12,11 +15,23 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Period
     public partial class PeriodsListPage : IDisposable
     {
 
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
         protected override async void OnInitialized()
         {
             BaseCrudService = PeriodsService;
             _L = L;
             await GetBranchsList();
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "PeriodsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
         }
 
         protected override Task BeforeInsertAsync()
@@ -77,10 +92,26 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Period
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PeriodContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PeriodContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PeriodContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PeriodContextRefresh"], Id = "refresh" });
+
+            foreach (var context in contextsList)
+            {
+                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    switch (context.MenuName)
+                    {
+                        case "PeriodContextAdd":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PeriodContextAdd"], Id = "new" }); break;
+                        case "PeriodContextChange":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PeriodContextChange"], Id = "changed" }); break;
+                        case "PeriodContextDelete":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PeriodContextDelete"], Id = "delete" }); break;
+                        case "PeriodContextRefresh":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PeriodContextRefresh"], Id = "refresh" }); break;
+                        default: break;
+                    }
+                }
+            }
         }
 
 

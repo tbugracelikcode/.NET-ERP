@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
@@ -17,6 +20,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
         SfTextBox StationGroupButtonEdit;
         bool SelectStationGroupPopupVisible = false;
         List<ListStationGroupsDto> StationGroupList = new List<ListStationGroupsDto>();
+
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         private SfGrid<SelectTemplateOperationLinesDto> _LineGrid;
         private SfGrid<SelectTemplateOperationUnsuitabilityItemsDto> _UnsuitabilityItemsLineGrid;
@@ -42,7 +49,18 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "TempOperationsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
+
         }
+
+        #region Station ButtonEdit
 
         public async Task StationGroupOnCreateIcon()
         {
@@ -88,6 +106,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
                 await InvokeAsync(StateHasChanged);
             }
         }
+
+        #endregion
 
         #region İş İstasyonu ButtonEdit
 
@@ -181,21 +201,53 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationLineContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationLineContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationLineContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationLineContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "TemplateOperationLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationLineContextAdd"], Id = "new" }); break;
+                            case "TemplateOperationLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationLineContextChange"], Id = "changed" }); break;
+                            case "TemplateOperationLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationLineContextDelete"], Id = "delete" }); break;
+                            case "TemplateOperationLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
         protected void CreateMainContextMenuItems()
         {
-            if (LineGridContextMenu.Count() == 0)
+            if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "TemplateOperationContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationContextAdd"], Id = "new" }); break;
+                            case "TemplateOperationContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationContextChange"], Id = "changed" }); break;
+                            case "TemplateOperationContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationContextDelete"], Id = "delete" }); break;
+                            case "TemplateOperationContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 

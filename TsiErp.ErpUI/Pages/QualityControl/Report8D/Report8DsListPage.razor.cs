@@ -5,7 +5,10 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.QualityControl.CalibrationRecord.Dtos;
 using TsiErp.Entities.Entities.QualityControl.EquipmentRecord.Dtos;
 using TsiErp.Entities.Entities.QualityControl.Report8D.Dtos;
@@ -19,6 +22,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
     {
         [Inject]
         ModalManager ModalManager { get; set; }
+
+
+        public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+        public List<ListMenusDto> MenusList = new List<ListMenusDto>();
+        public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         #region Değişkenler
 
@@ -47,6 +55,15 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
         {
             _L = L;
             BaseCrudService = Report8DsService;
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "Report8DChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            #endregion
         }
 
         protected override Task BeforeInsertAsync()
@@ -362,12 +379,30 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforSupplier"], Id = "newsupplier" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforCustomer"], Id = "newcustomer" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextState"], Id = "state" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextRefresh"], Id = "refresh" });
+
+            foreach (var context in contextsList)
+            {
+                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    switch (context.MenuName)
+                    {
+                        case "8DContextAddforSupplier":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforSupplier"], Id = "newsupplier" }); break;
+                        case "8DContextAddforCustomer":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforCustomer"], Id = "newcustomer" }); break;
+                        case "8DContextChange":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextChange"], Id = "changed" }); break;
+                        case "8DContextState":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextState"], Id = "state" }); break;
+                        case "8DContextDelete":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextDelete"], Id = "delete" }); break;
+                        case "8DContextRefresh":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextRefresh"], Id = "refresh" }); break;
+                        default: break;
+                    }
+                }
+            }
         }
 
         public override async void OnContextMenuClick(ContextMenuClickEventArgs<ListReport8DsDto> args)
