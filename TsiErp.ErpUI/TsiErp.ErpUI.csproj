@@ -48,8 +48,7 @@
 	<ItemGroup>
 		<PackageReference Include="Blazored.Modal" Version="7.0.0" />
 		<PackageReference Include="BlazorInputFile" Version="0.2.0" />
-		<PackageReference Include="BoldReports.Net.Core" Version="5.2.38" />
-		<PackageReference Include="DevExpress.Blazor" Version="21.1.9" />
+		<PackageReference Include="DevExpress.Blazor" Version="23.2.3" />
 		<PackageReference Include="Syncfusion.Blazor.Grid" Version="20.3.0.59" />
 		<PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="20.3.0.59" />
 		<PackageReference Include="Syncfusion.Blazor.Charts" Version="20.3.0.59" />

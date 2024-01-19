@@ -14,7 +14,6 @@ using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
 using Microsoft.SqlServer.Server;
-using System.DirectoryServices.ActiveDirectory;
 using System.Timers;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
