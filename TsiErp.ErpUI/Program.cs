@@ -36,9 +36,9 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Conf
 
 
 builder.Services.AddSyncfusionBlazor();
-builder.Services.AddDevExpressBlazor();
+builder.Services.AddDevExpressBlazor(configure => configure.BootstrapVersion = DevExpress.Blazor.BootstrapVersion.v5);
 
-
+builder.Services.AddDevExpressServerSideBlazorReportViewer();
 
 builder.Services.AddLocalization();
 

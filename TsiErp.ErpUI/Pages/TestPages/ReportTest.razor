@@ -1,0 +1,26 @@
+﻿@page "/viewer"
+
+@using DevExpress.Blazor.Reporting
+@using DevExpress.XtraReports.UI;
+@using TsiErp.ErpUI.Reports.StockManagement;
+
+@inject IProductsAppService ProductsAppService
+
+
+<link href="_content/DevExpress.Blazor.Themes/blazing-berry.bs5.min.css" rel="stylesheet" />
+
+@*  <link rel="stylesheet" href="_content/DevExpress.Blazor.Reporting.Viewer/css/dx-blazor-reporting-components.bs5.css"> *@
+
+<DxReportViewer @ref="reportViewer" Report="@Report">
+</DxReportViewer>
+
+@code {
+    DxReportViewer reportViewer { get; set; }
+    XtraReport Report { get; set; }
+
+    protected override async Task OnInitializedAsync() 
+    {
+        Report = new ProductListReport();
+        Report.DataSource = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
+    }
+}
