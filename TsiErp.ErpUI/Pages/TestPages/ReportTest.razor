@@ -9,10 +9,12 @@
 
 <link href="_content/DevExpress.Blazor.Themes/blazing-berry.bs5.min.css" rel="stylesheet" />
 
-@*  <link rel="stylesheet" href="_content/DevExpress.Blazor.Reporting.Viewer/css/dx-blazor-reporting-components.bs5.css"> *@
+ <link rel="stylesheet" href="_content/DevExpress.Blazor.Reporting.Viewer/css/dx-blazor-reporting-components.bs5.css">
 
-<DxReportViewer @ref="reportViewer" Report="@Report">
+
+<DxReportViewer @ref="reportViewer" Report="@Report" CssClass="TSIReportViewer">
 </DxReportViewer>
+
 
 @code {
     DxReportViewer reportViewer { get; set; }
@@ -23,4 +25,6 @@
         Report = new ProductListReport();
         Report.DataSource = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
     }
+
+
 }
