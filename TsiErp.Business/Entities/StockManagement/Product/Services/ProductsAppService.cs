@@ -235,7 +235,7 @@ namespace TsiErp.Business.Entities.Product.Services
                    )
                    .Join<ProductGroups>
                    (
-                        pg => new { ProductGrp = pg.Name },
+                        pg => new { ProductGrp = pg.Name, ProductGrpID = pg.Id },
                             nameof(Products.ProductGrpID),
                             nameof(ProductGroups.Id),
                        JoinType.Left
