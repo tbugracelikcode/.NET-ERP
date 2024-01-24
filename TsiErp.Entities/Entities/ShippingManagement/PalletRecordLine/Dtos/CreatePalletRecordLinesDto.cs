@@ -19,6 +19,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos
         /// </summary>
         public Guid? ProductID { get; set; }
         /// <summary>
+        /// Paket Fiş ID
+        /// </summary>
+        public Guid? PackageFicheID { get; set; }
+        /// <summary>
         /// Cari Hesap ID
         /// </summary>
         public Guid? CurrentAccountCardID { get; set; }

@@ -35,6 +35,21 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLi
         /// Müşteri ID
         /// </summary>
         public Guid CustomerID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid SalesOrderID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satış Sipariş Satır ID
+        /// </summary>
+        public Guid SalesOrderLineID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid ProductionOrderID { get; set; }
         [SqlColumnType(MaxLength = 250, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Paket Cinsi

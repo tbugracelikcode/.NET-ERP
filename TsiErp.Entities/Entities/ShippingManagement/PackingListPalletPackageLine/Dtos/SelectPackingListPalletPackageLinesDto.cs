@@ -17,6 +17,18 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLi
         /// </summary>
         public string PackageNo { get; set; }
         /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid? SalesOrderID { get; set; }
+        /// <summary>
+        /// Satış Sipariş Satır ID
+        /// </summary>
+        public Guid? SalesOrderLineID { get; set; }
+        /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid? ProductionOrderID { get; set; }
+        /// <summary>
         ///  Stok ID
         /// </summary>
         public Guid? ProductID { get; set; }

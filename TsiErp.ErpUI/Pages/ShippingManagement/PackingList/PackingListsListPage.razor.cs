@@ -11,6 +11,7 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
@@ -446,6 +447,12 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     {
                         var unitKG = (await ProductsAppService.GetAsync(palletLine.ProductID.GetValueOrDefault())).Data.UnitWeight;
 
+                        var packageFiche = (await PackageFichesAppService.GetAsync(palletLine.PackageFicheID.GetValueOrDefault())).Data;
+
+                        var productionOrderListDto = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.FinishedProductID == packageFiche.ProductID && t.OrderID == packageFiche.SalesOrderID).FirstOrDefault();
+
+                        var productionOrder = (await ProductionOrdersAppService.GetAsync(productionOrderListDto.Id)).Data;
+
                         decimal onePackageNetKG = palletLine.PackageContent * unitKG;
                         decimal onePackageGrossKG = onePackageNetKG + packageKG;
 
@@ -464,7 +471,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                             OnePackageGrossKG = onePackageGrossKG,
                             OnePackageNetKG = onePackageNetKG,
                             PackageContent = palletLine.PackageContent,
-                            PackageNo = string.Empty
+                            PackageNo = string.Empty,
+                            ProductionOrderID = productionOrder.Id,
+                            SalesOrderID = productionOrder.OrderID,
+                            SalesOrderLineID = productionOrder.OrderLineID
                         };
                     }
 
@@ -491,7 +501,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     Height_ = height,
                     Width_ = width,
                     Load_ = lenght,
-                    Cubage = (height * width * lenght* pallet.Pallet.Count) / 1000000
+                    Cubage = (height * width * lenght * pallet.Pallet.Count) / 1000000
                 };
 
                 GridLineCubageList.Add(palletCubageLineModel);
@@ -512,14 +522,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             {
                 case "enumarate":
 
-                    if(GridLinePalletPackageList != null && GridLinePalletPackageList.Count > 0)
+                    if (GridLinePalletPackageList != null && GridLinePalletPackageList.Count > 0)
                     {
                         int packageNo = 1;
 
-                        foreach(var line in GridLinePalletPackageList)
+                        foreach (var line in GridLinePalletPackageList)
                         {
                             int lineIndex = GridLinePalletPackageList.IndexOf(line);
-                            if(GridLinePalletPackageList[lineIndex].NumberofPackage != 1)
+                            if (GridLinePalletPackageList[lineIndex].NumberofPackage != 1)
                             {
                                 GridLinePalletPackageList[lineIndex].PackageNo = packageNo.ToString() + "-" + (packageNo + line.NumberofPackage - 1).ToString();
                             }
@@ -527,7 +537,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                             {
                                 GridLinePalletPackageList[lineIndex].PackageNo = packageNo.ToString();
                             }
-                            packageNo = packageNo + line.NumberofPackage ;
+                            packageNo = packageNo + line.NumberofPackage;
                         }
                     }
                     break;
