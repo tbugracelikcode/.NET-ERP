@@ -1064,7 +1064,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
                 #endregion
             }
-            catch (Exception ex) 
+            catch (Exception) 
             {
 
                 string webHostEnvironment =  FileUploadService.GetRootPath();

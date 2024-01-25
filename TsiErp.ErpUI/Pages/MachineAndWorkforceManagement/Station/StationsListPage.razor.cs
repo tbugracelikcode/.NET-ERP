@@ -225,6 +225,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
 
             EditPageVisible=true;
 
+            
         }
 
         protected void CreateLineContextMenuItems()

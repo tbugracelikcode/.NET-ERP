@@ -114,7 +114,7 @@ namespace TsiErp.ErpUI.Services
 
                 File.WriteAllBytes(path, file);
             }
-            catch (Exception exp)
+            catch (Exception)
             {
                 var path = Path.Combine(_webHostEnvironment.WebRootPath, rootPath, fileName);
                 File.Delete(path);

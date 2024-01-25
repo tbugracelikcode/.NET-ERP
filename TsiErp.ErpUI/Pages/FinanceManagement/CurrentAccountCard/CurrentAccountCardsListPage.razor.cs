@@ -4,7 +4,6 @@ using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
-using Syncfusion.Blazor.HeatMap.Internal;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;

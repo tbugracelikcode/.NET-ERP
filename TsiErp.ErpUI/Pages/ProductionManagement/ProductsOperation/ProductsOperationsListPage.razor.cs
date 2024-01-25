@@ -34,7 +34,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
 
         SelectProductsOperationLinesDto StationLineDataSource;
 
-        SelectContractOfProductsOperationsDto ContractOfProductsOperationsGridDataSource;
+       
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();

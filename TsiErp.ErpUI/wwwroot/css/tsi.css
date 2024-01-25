@@ -1260,4 +1260,22 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
     color: var(--dxbl-treeview-item-selection-color);
 }
 
+.dxbrv-surface-wrapper img {
+    pointer-events: none;
+    margin-left: 0% !important;
+    border-radius: 0% !important;
+}
+
+.dxbl-treeview .dxbl-treeview-item > .dxbl-treeview-item-content > .dxbl-btn > svg.dxbl-image {
+    color: var(--dxbl-treeview-btn-color,var(--dxbl-image-color,currentcolor));
+    opacity: var(--dxbl-treeview-btn-color,var(--dxbl-image-color,70%));
+    fill: white !important;
+}
+
+.dxbl-treeview .dxbl-treeview-item > .dxbl-treeview-item-content > .dxbl-btn:not(.dxbl-disabled):not(:disabled):hover > svg.dxbl-image {
+    color: var(--dxbl-treeview-btn-hover-color,var(--dxbl-image-color,currentcolor));
+    opacity: var(--dxbl-treeview-btn-hover-color,var(--dxbl-image-color,70%));
+    fill: white !important;
+}
+
  

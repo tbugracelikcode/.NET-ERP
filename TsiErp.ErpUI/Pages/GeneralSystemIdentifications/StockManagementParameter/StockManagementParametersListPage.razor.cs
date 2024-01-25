@@ -17,7 +17,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.StockManagementParamet
             DataSource = (await StockManagementParametersService.GetStockManagementParametersAsync()).Data;
         }
 
-        private async void StockFichesChange(ChangeEventArgs<bool> args)
+        private void StockFichesChange(ChangeEventArgs<bool> args)
         {
             DataSource.FutureDateParameter = args.Checked;
         }

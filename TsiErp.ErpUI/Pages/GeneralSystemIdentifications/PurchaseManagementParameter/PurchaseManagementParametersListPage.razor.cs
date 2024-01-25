@@ -22,12 +22,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PurchaseManagementPara
             DataSource = (await PurchaseManagementParametersService.GetPurchaseManagementParametersAsync()).Data;
         }
 
-        private async void PurchaseOrderFichesChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        private void PurchaseOrderFichesChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
         {
             DataSource.OrderFutureDateParameter = args.Checked;
         }
 
-        private async void PurchaseRequestFichesChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        private void PurchaseRequestFichesChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
         {
             DataSource.RequestFutureDateParameter = args.Checked;
         }

@@ -58,7 +58,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
 
         #endregion
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
             foreach (var item in _supplyStatusComboBox)
             {
@@ -194,7 +194,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
                 builder.AddAttribute(1, "ID", "srcText");
                 builder.AddAttribute(2, "CssClass", "TSITxtBox");
                 builder.AddAttribute(3, "Value", BindConverter.FormatValue(GridSearchText));
-                builder.AddAttribute(4, "onchange", EventCallback.Factory.CreateBinder<string?>(this, __value => GridSearchText = __value, GridSearchText));
+                builder.AddAttribute(4, "onchange", EventCallback.Factory.CreateBinder<string>(this, __value => GridSearchText = __value, GridSearchText));
                 builder.AddAttribute(5, "onkeydown", OnToolbarSearchChange);
                 builder.AddAttribute(6, "ShowClearButton", true);
                 builder.CloseComponent();
