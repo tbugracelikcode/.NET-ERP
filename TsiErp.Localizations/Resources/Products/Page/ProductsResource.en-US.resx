@@ -706,7 +706,7 @@
     <value>Information</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Inventory Management &gt; Main Records</value>
+    <value>Stock Management &gt; Main Records</value>
   </data>
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
     <value>Saving cannot be done without selecting the product type.</value>

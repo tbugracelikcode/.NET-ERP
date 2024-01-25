@@ -1,0 +1,133 @@
+﻿@page "/products-list-report"
+@layout MainLayout
+
+@inject IProductGroupsAppService ProductGroupsAppService
+@inject IProductReportsAppService ProductReportsAppService
+@inject IStringLocalizer<ReportsResource> ReportLocalizer
+@inject IStringLocalizer<ProductsResource> ProductLocalizer 
+
+<DevGridLayoutFilterRow ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+    <GridLayoutItems>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIListPageTitleCard">
+                    <CardContent>
+                        <TsiBreadCrumb PreviousMenus="@ReportLocalizer["ProductListUIPreviousMenu"]" CurrentMenu="@ReportLocalizer["ProductListUICurrentMenu"]" />
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+        <DxGridLayoutItem Row="1" Column="0" ColumnSpan="1">
+            <Template>
+
+                <SfCard class="TSIReportFilterCard">
+
+                    <CardContent>
+
+                        <DxGridLayout CssClass="TSIGridLayout">
+                            <Rows>
+                                <DxGridLayoutRow Height="48%" />
+                                <DxGridLayoutRow Height="48%" />
+                            </Rows>
+                            <Columns>
+                                <DxGridLayoutColumn Width="2%" />
+                                <DxGridLayoutColumn Width="30%" />
+                                <DxGridLayoutColumn Width="4%" />
+                                <DxGridLayoutColumn Width="30%" />
+                                <DxGridLayoutColumn Width="4%" />
+                                <DxGridLayoutColumn Width="28%" />
+                                <DxGridLayoutColumn Width="2%" />
+                            </Columns>
+                            <Items>
+
+                                <DxGridLayoutItem Row="0" Column="1">
+                                    <Template>
+
+                                        <br />
+                                        <label class="TSIModalLabel"><strong>@ReportLocalizer["ProductListProductGroupsFilterLabel"] </strong></label><br />
+
+                                        <SfMultiSelect @bind-Value="@BindingProductGroups"
+                                                       DataSource="@ProductGoups"
+                                                       AllowFiltering=true
+                                                       Mode="VisualMode.CheckBox"
+                                                       ShowSelectAll=true
+                                                       SelectAllText=@ReportLocalizer["ProductListProductGroupsMSSelectAllText"]
+                                                       UnSelectAllText=@ReportLocalizer["ProductListProductGroupsMSUnSelectAllText"]
+                                                       ShowDropDownIcon="true">
+
+                                            <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                        </SfMultiSelect>
+
+                                    </Template>
+                                </DxGridLayoutItem>
+
+                                <DxGridLayoutItem Row="1" Column="1">
+                                    <Template>
+                                        <br />
+                                        <label class="TSIModalLabel"><strong>@ReportLocalizer["ProductListProductTypesFilterLabel"] </strong></label><br />
+
+                                        <SfMultiSelect @bind-Value="@BindingProductTypeEnumList"
+                                                       DataSource="@ProductTypeEnumList"
+                                                       AllowFiltering=true
+                                                       Mode="VisualMode.CheckBox"
+                                                       ShowSelectAll=true
+                                                       SelectAllText=@ReportLocalizer["ProductListProductGroupsMSSelectAllText"]
+                                                       UnSelectAllText=@ReportLocalizer["ProductListProductGroupsMSUnSelectAllText"]
+                                                       ShowDropDownIcon="true">
+
+                                            <MultiSelectFieldSettings Value="Value" Text="Text"></MultiSelectFieldSettings>
+                                        </SfMultiSelect>
+
+                                    </Template>
+                                </DxGridLayoutItem>
+
+                                <DxGridLayoutItem Row="0" Column="3">
+                                    <Template>
+                                        <br />
+                                        <label class="TSIModalLabel"><strong>@ReportLocalizer["ProductListProductSupplyFormsFilterLabel"] </strong></label><br />
+                                        <SfMultiSelect @bind-Value="@BindingProductSupplyFormEnumList"
+                                                       DataSource="@ProductSupplyFormEnumList"
+                                                       AllowFiltering=true
+                                                       Mode="VisualMode.CheckBox"
+                                                       ShowSelectAll=true
+                                                       SelectAllText=@ReportLocalizer["ProductListProductGroupsMSSelectAllText"]
+                                                       UnSelectAllText=@ReportLocalizer["ProductListProductGroupsMSUnSelectAllText"]
+                                                       ShowDropDownIcon="true">
+
+                                            <MultiSelectFieldSettings Value="Value" Text="Text"></MultiSelectFieldSettings>
+                                        </SfMultiSelect>
+                                    </Template>
+                                </DxGridLayoutItem>
+                            </Items>
+                        </DxGridLayout>
+                    </CardContent>
+                    <CardFooter>
+                        <div style="float:right;margin-right:10px;">
+                            <SfButton CssClass="TSISaveButton" OnClick="CreateReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["ProductListCreateReport"]</SfButton>
+                            &nbsp;&nbsp;
+                            <SfButton CssClass="TSICancelButton" OnClick="ResetReport"><SfIcon Size="IconSize.Medium" Name="IconName.FilterClear"></SfIcon>&nbsp;@ReportLocalizer["ProductListResetReport"]</SfButton>
+                        </div>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+
+        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIGridCards">
+
+                    <CardContent>
+                        <DxReportViewer @ref="reportViewer" Report="@Report">
+                        </DxReportViewer>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </GridLayoutItems>
+</DevGridLayoutFilterRow>

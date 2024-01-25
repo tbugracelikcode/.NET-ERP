@@ -59,6 +59,10 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
         /// </summary>
         public string ProductDescription { get; set; }
         /// <summary>
+        /// Ürün Grup  ID
+        /// </summary>
+        public Guid ProductGrpID { get; set; }
+        /// <summary>
         /// Ürün Grup 
         /// </summary>
         public string ProductGrp { get; set; }
