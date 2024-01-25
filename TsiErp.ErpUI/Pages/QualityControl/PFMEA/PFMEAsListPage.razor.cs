@@ -139,7 +139,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
 
         #region 1. SPC Satır ButtonEdit
 
-        SfTextBox FirstSPCLineButtonEdit;
+        
         bool SelectFirstSPCLinePopupVisible = false;
 
         public async void FirstSPCLineButtonClick()

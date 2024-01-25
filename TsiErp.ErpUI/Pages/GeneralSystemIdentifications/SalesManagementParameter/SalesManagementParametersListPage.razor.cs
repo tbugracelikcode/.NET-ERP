@@ -17,12 +17,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.SalesManagementParamet
             DataSource = (await SalesManagementParametersService.GetSalesManagementParametersAsync()).Data;
         }
 
-        private async void SalesOrderFichesChange(ChangeEventArgs<bool> args)
+        private void SalesOrderFichesChange(ChangeEventArgs<bool> args)
         {
             DataSource.OrderFutureDateParameter = args.Checked;
         }
 
-        private async void SalesPropositionFichesChange(ChangeEventArgs<bool> args)
+        private void SalesPropositionFichesChange(ChangeEventArgs<bool> args)
         {
             DataSource.PropositionFutureDateParameter = args.Checked;
         }

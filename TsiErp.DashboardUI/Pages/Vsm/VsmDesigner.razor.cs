@@ -6,7 +6,6 @@ using Microsoft.JSInterop;
 using System.Reflection.Metadata;
 using TsiErp.DashboardUI.Data;
 using System.Text.Json;
-using Syncfusion.Blazor.RichTextEditor;
 
 namespace TsiErp.DashboardUI.Pages.Vsm
 {
