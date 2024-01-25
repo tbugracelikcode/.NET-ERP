@@ -17,6 +17,8 @@ namespace TsiErp.Entities.Enums
         [Display(Name = "EnumInProduction")]
         UretimeVerildi = 3,
         [Display(Name = "EnumCancel")]
-        Iptal = 4
+        Iptal = 4,
+        [Display(Name = "EnumTransfer")]
+        SevkEdildi = 5
     }
 }

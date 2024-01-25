@@ -276,6 +276,9 @@
   <data name="EnumInProduction" xml:space="preserve">
     <value>Üretime Verildi</value>
   </data>
+  <data name="EnumTransfer" xml:space="preserve">
+    <value>Sevk Edildi</value>
+  </data>
   <data name="EnumWaiting" xml:space="preserve">
     <value>Beklemede</value>
   </data>

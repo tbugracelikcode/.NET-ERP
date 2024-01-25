@@ -303,6 +303,12 @@
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
   </data>
+  <data name="MessageApproveMessage" xml:space="preserve">
+    <value>Çeki listesi onaylanmıştır.</value>
+  </data>
+  <data name="MessageApproveTitle" xml:space="preserve">
+    <value>Bilgilendirme</value>
+  </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
@@ -314,6 +320,9 @@
   </data>
   <data name="PackingListsContextAdd" xml:space="preserve">
     <value>Ekle</value>
+  </data>
+  <data name="PackingListsContextApprove" xml:space="preserve">
+    <value>Çeki Listesini Onayla</value>
   </data>
   <data name="PackingListsContextChange" xml:space="preserve">
     <value>Değiştir</value>
