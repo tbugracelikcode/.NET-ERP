@@ -17,14 +17,12 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.ReportDtos.ProductLis
 
         public List<ProductSupplyFormEnum> ProductSupplyForms { get; set; }
 
-        public List<string> GtipCodes { get; set; }
 
         public ProductListReportParametersDto()
         {
             ProductGroups= new List<Guid>();
             ProductTypes = new List<ProductTypeEnum>();
             ProductSupplyForms = new List<ProductSupplyFormEnum>();
-            GtipCodes = new List<string>();
         }
     }
 }

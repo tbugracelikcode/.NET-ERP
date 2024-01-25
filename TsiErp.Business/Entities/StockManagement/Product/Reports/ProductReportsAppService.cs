@@ -36,10 +36,6 @@ namespace TsiErp.Business.Entities.StockManagement.Product.Reports
                 products = products.Where(t => filters.ProductSupplyForms.Contains(t.SupplyForm)).AsQueryable();
             }
 
-            if (filters.GtipCodes.Count > 0)
-            {
-                products = products.Where(t => filters.GtipCodes.Contains(t.GTIP)).AsQueryable();
-            }
 
             var productList = products.ToList();
 
