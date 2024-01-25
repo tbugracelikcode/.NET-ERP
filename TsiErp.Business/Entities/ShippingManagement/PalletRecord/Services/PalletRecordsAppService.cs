@@ -87,6 +87,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 {
                     PackageType = item.PackageType,
                     CurrentAccountCardID = item.CurrentAccountCardID,
+                    PackageFicheID = item.PackageFicheID,
                     NumberofPackage = item.NumberofPackage,
                     PackageContent = item.PackageContent,
                     TotalAmount = item.TotalAmount,
@@ -356,6 +357,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                     {
                         PackageType = item.PackageType,
                         CurrentAccountCardID = item.CurrentAccountCardID,
+                        PackageFicheID = item.PackageFicheID,
                         NumberofPackage = item.NumberofPackage,
                         PackageContent = item.PackageContent,
                         TotalAmount = item.TotalAmount,

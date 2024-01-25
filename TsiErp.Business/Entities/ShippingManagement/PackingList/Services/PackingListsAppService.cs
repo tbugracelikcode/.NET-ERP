@@ -101,7 +101,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                 var queryLine = queryFactory.Query().From(Tables.PackingListPalletCubageLines).Insert(new CreatePackingListPalletCubageLinesDto
                 {
                     Cubage = item.Cubage,
-                     NumberofPallet = item.NumberofPallet,
+                    NumberofPallet = item.NumberofPallet,
                     Height_ = item.Height_,
                     Load_ = item.Load_,
                     Width_ = item.Width_,
@@ -153,6 +153,9 @@ namespace TsiErp.Business.Entities.PackingList.Services
                 var queryLine = queryFactory.Query().From(Tables.PackingListPalletPackageLines).Insert(new CreatePackingListPalletPackageLinesDto
                 {
                     CustomerID = item.CustomerID,
+                    ProductionOrderID = item.ProductionOrderID,
+                    SalesOrderID = item.SalesOrderID,
+                    SalesOrderLineID = item.SalesOrderLineID,
                     OnePackageGrossKG = item.OnePackageGrossKG,
                     OnePackageNetKG = item.OnePackageNetKG,
                     PackageContent = item.PackageContent,
@@ -690,6 +693,9 @@ namespace TsiErp.Business.Entities.PackingList.Services
                     var queryLine = queryFactory.Query().From(Tables.PackingListPalletPackageLines).Insert(new CreatePackingListPalletPackageLinesDto
                     {
                         PackingListID = input.Id,
+                        ProductionOrderID = item.ProductionOrderID,
+                        SalesOrderID = item.SalesOrderID,
+                        SalesOrderLineID = item.SalesOrderLineID,
                         NumberofPackage = item.NumberofPackage,
                         CustomerID = item.CustomerID,
                         OnePackageGrossKG = item.OnePackageGrossKG,
@@ -727,6 +733,9 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         var queryLine = queryFactory.Query().From(Tables.PackingListPalletPackageLines).Update(new UpdatePackingListPalletPackageLinesDto
                         {
                             PackingListID = input.Id,
+                            ProductionOrderID = item.ProductionOrderID,
+                            SalesOrderID = item.SalesOrderID,
+                            SalesOrderLineID = item.SalesOrderLineID,
                             NumberofPackage = item.NumberofPackage,
                             CustomerID = item.CustomerID,
                             OnePackageGrossKG = item.OnePackageGrossKG,

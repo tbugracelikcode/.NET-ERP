@@ -1169,4 +1169,95 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
     margin-bottom: var(--dxbl-treeview-item-spacing-y);
 }
 
+.dxbrv-tab-panel, .dxbrv-tabs {
+    z-index: 2;
+    position: absolute;
+    background-image: linear-gradient(135deg, rgb(168 20 20) 20%, #f82121 90%) !important;
+}
+
+.dxbrv-wrapper .dxrbv-viewbox .dxbl-tabs nav {
+    --dxbl-tabs-tab-selected-color: var(--bs-white, var(--white));
+    --dxbl-tabs-color: var(--bs-white, var(--white));
+    --dxbl-tabs-bottom-border-color: transparent;
+    --dxbl-tabs-tab-border-color: transparent;
+    --dxbl-tabs-separator-border-color: transparent;
+    --dxbl-tabs-bg: var(--bs-primary, var(--primary));
+    background-image: linear-gradient(135deg, rgb(168 20 20) 20%, #f82121 90%) !important;
+}
+
+.dxbrv-wrapper .dxrbv-viewbox .dxrbv-gridlayout-side-bar .tab-content {
+    height: 100%;
+    overflow: auto;
+    background-image: linear-gradient(135deg, #fff 20%, #aaa9a9 90%) !important;
+}
+
+.dxbl-image:not(.dxbl-image-fill) {
+    fill: #ff5555 !important;
+}
+
+.dxbl-checkbox {
+    --dxbl-checkbox-font-family: inherit;
+    --dxbl-checkbox-font-size: 0.875rem;
+    --dxbl-checkbox-line-height: 1.4285;
+    --dxbl-checkbox-border-width: 1px;
+    --dxbl-checkbox-border-style: solid;
+    --dxbl-checkbox-border-color: transparent;
+    --dxbl-checkbox-spacing: 0.5rem;
+    --dxbl-checkbox-disabled-opacity: 60%;
+    --dxbl-checkbox-check-element-size: 1.25rem;
+    --dxbl-checkbox-check-element-checked-color: #fff;
+    --dxbl-checkbox-check-element-checked-bg: #4d3030;
+    --dxbl-checkbox-indeterminate-element-disabled-bg: #fff;
+    --dxbl-checkbox-check-element-disabled-color: #fff;
+    --dxbl-checkbox-check-element-disabled-bg: unset;
+    --dxbl-checkbox-check-element-unchecked-bg: #fff;
+    --dxbl-checkbox-check-element-unchecked-hover-bg: #fff;
+    --dxbl-checkbox-check-element-unchecked-border-color: unset;
+    --dxbl-checkbox-check-element-unchecked-hover-border-color: unset;
+    --dxbl-checkbox-check-element-unchecked-border-width: 2px;
+    --dxbl-checkbox-switch-checked-bg: #553030;
+    --dxbl-checkbox-switch-unchecked-bg: unset;
+    --dxbl-checkbox-switch-unchecked-hover-bg: unset;
+    --dxbl-checkbox-switch-element-bg: #fff;
+    --dxbl-checkbox-switch-element-unchecked-bg: #fff;
+    --dxbl-checkbox-switch-element-disabled-bg: #fff;
+    --dxbl-checkbox-switch-width: 2.125rem;
+    --dxbl-checkbox-switch-height: 1rem;
+    --dxbl-checkbox-radio-bg: #fff;
+    --dxbl-checkbox-radio-hover-bg: #fff;
+    --dxbl-checkbox-radio-border-width: 2px;
+    --dxbl-checkbox-radio-checked-border-color: #8d3636;
+    --dxbl-checkbox-radio-unchecked-border-color: unset;
+    --dxbl-checkbox-radio-unchecked-hover-border-color: unset;
+    --dxbl-checkbox-radio-unchecked-check-bg: #fff;
+    --dxbl-checkbox-radio-size: 1.25rem;
+    --dxbl-checkbox-radio-check-bg: #8d3636;
+    --dxbl-checkbox-radio-check-size: 0.625rem;
+    --dxbl-checkbox-radio-check-readonly-bg: #fff;
+    --dxbl-checkbox-radio-readonly-alhpa: 60%;
+    --dxbl-checkbox-validation-valid-color: #28a745;
+    --dxbl-checkbox-validation-invalid-color: #dc3545;
+    --dxbl-checkbox-check-element-readonly-bg: #fff;
+    --dxbl-checkbox-check-element-readonly-border-color: unset;
+    --dxbl-checkbox-check-element-readonly-border-width: 2px;
+    --dxbl-checkbox-check-element-checked-hover-bg: #712b2b;
+    --dxbl-checkbox-switch-checked-hover-bg: #712b2b;
+    --dxbl-checkbox-radio-checked-hover-bg: #712b2b;
+    --dxbl-checkbox-radio-checked-hover-border-color: #712b2b;
+    --dxbl-checkbox-checked-focus-shadow-color: rgba(95, 54, 141, 0.5);
+    --dxbl-checkbox-checked-focus-shadow-spread: 0.125rem;
+    --dxbl-checkbox-checked-focus-shadow-blur: 0rem;
+    --dxbl-checkbox-unchecked-focus-shadow-color: rgba(95, 54, 141, 0.5);
+    --dxbl-checkbox-unchecked-focus-shadow-spread: 0.125rem;
+    --dxbl-checkbox-unchecked-focus-shadow-blur: 0rem;
+    display: flex;
+    border: var(--dxbl-checkbox-border-width) solid var(--dxbl-checkbox-border-color);
+}
+
+.dxbl-treeview .dxbl-treeview-item > .dxbl-treeview-item-content > .dxbl-treeview-item-container:not(.dxbl-disabled):not(:disabled).dxbl-active {
+    position: relative;
+    background-color: #3b3b3b !important;
+    color: var(--dxbl-treeview-item-selection-color);
+}
+
  
