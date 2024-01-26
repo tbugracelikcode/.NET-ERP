@@ -58,6 +58,10 @@ namespace TsiErp.Entities.Entities.Other.ByDateStockMovement.Dtos
         /// </summary>
         public decimal TotalGoodsIssue { get; set; }
         /// <summary>
+        ///  Stok ID
+        /// </summary>
+        public Guid ProductID { get; set; }
+        /// <summary>
         ///  Stok Kodu
         /// </summary>
         public string ProductCode { get; set; }
@@ -66,6 +70,10 @@ namespace TsiErp.Entities.Entities.Other.ByDateStockMovement.Dtos
         /// </summary>
         public string ProductName { get; set; }
         /// <summary>
+        ///  Şube ID
+        /// </summary>
+        public Guid BranchID { get; set; }
+        /// <summary>
         ///  Şube Kodu
         /// </summary>
         public string BranchCode { get; set; }
@@ -73,6 +81,10 @@ namespace TsiErp.Entities.Entities.Other.ByDateStockMovement.Dtos
         ///  Depo Kodu
         /// </summary>
         public string WarehouseCode { get; set; }
+        /// <summary>
+        ///  Depo ID
+        /// </summary>
+        public Guid WarehouseID { get; set; }
         /// <summary>
         ///  Stok Miktarı
         /// </summary>

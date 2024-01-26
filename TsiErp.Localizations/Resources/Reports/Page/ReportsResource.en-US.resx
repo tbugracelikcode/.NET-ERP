@@ -117,17 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ProductListCreateReport" xml:space="preserve">
+  <data name="CreateReport" xml:space="preserve">
     <value>Report</value>
   </data>
   <data name="ProductListProductGroupsFilterLabel" xml:space="preserve">
     <value>Product Group :</value>
-  </data>
-  <data name="ProductListProductGroupsMSSelectAllText" xml:space="preserve">
-    <value>Select All</value>
-  </data>
-  <data name="ProductListProductGroupsMSUnSelectAllText" xml:space="preserve">
-    <value>Unselect All</value>
   </data>
   <data name="ProductListProductSupplyFormsFilterLabel" xml:space="preserve">
     <value>Product Supply Forms :</value>
@@ -143,5 +137,11 @@
   </data>
   <data name="ProductListUIPreviousMenu" xml:space="preserve">
     <value>Stock Management &gt; Reports</value>
+  </data>
+  <data name="SelectAllText" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="UnSelectAllText" xml:space="preserve">
+    <value>Unselect All</value>
   </data>
 </root>

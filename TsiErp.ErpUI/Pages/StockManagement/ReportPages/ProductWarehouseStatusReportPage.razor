@@ -1,10 +1,11 @@
-﻿@page "/products-list-report"
+﻿@page "/products-warehouse-status-report"
 @layout MainLayout
 
-@inject IProductGroupsAppService ProductGroupsAppService
+@inject IProductsAppService ProductsAppService
 @inject IProductReportsAppService ProductReportsAppService
+@inject IWarehousesAppService WarehousesAppService
 @inject IStringLocalizer<ReportsResource> ReportLocalizer
-@inject IStringLocalizer<ProductsResource> ProductLocalizer 
+@inject IStringLocalizer<ProductsResource> ProductLocalizer
 
 <DevGridLayoutFilterRow ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
     <GridLayoutItems>
@@ -12,7 +13,7 @@
             <Template>
                 <SfCard class="TSIListPageTitleCard">
                     <CardContent>
-                        <TsiBreadCrumb PreviousMenus="@ReportLocalizer["ProductListUIPreviousMenu"]" CurrentMenu="@ReportLocalizer["ProductListUICurrentMenu"]" />
+                        <TsiBreadCrumb PreviousMenus="Stok Yönetimi > Raporlar" CurrentMenu="Malzeme/Depo Durum Raporu" />
                     </CardContent>
                     <CardFooter>
                     </CardFooter>
@@ -47,10 +48,10 @@
                                     <Template>
 
                                         <br />
-                                        <label class="TSIModalLabel"><strong>@ReportLocalizer["ProductListProductGroupsFilterLabel"] </strong></label><br />
+                                        <label class="TSIModalLabel"><strong>Stok Kartı : </strong></label><br />
 
-                                        <SfMultiSelect @bind-Value="@BindingProductGroups"
-                                                       DataSource="@ProductGoups"
+                                        <SfMultiSelect @bind-Value="@BindingProducts"
+                                                       DataSource="@Products"
                                                        AllowFiltering=true
                                                        Mode="VisualMode.CheckBox"
                                                        ShowSelectAll=true
@@ -58,6 +59,20 @@
                                                        UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
                                                        ShowDropDownIcon="true">
 
+                                            <MultiSelectTemplates TItem="ListProductsDto">
+                                                @* <HeaderTemplate>
+                                                    <span class='head'>
+                                                        <span class='name'>STOK KODU</span>
+                                                        <span class='city'>STOK ADI</span>
+                                                    </span>
+                                                </HeaderTemplate> *@
+                                                <ItemTemplate>
+                                                    <span class='item'>
+                                                        <span class='name'>@((context as ListProductsDto).Code)</span>
+                                                        <span class='city'>@((context as ListProductsDto).Name)</span>
+                                                    </span>
+                                                </ItemTemplate>
+                                            </MultiSelectTemplates>
                                             <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
                                         </SfMultiSelect>
 
@@ -67,7 +82,7 @@
                                 <DxGridLayoutItem Row="1" Column="1">
                                     <Template>
                                         <br />
-                                        <label class="TSIModalLabel"><strong>@ReportLocalizer["ProductListProductTypesFilterLabel"] </strong></label><br />
+                                        <label class="TSIModalLabel"><strong>Stok Türü : </strong></label><br />
 
                                         <SfMultiSelect @bind-Value="@BindingProductTypeEnumList"
                                                        DataSource="@ProductTypeEnumList"
@@ -87,9 +102,9 @@
                                 <DxGridLayoutItem Row="0" Column="3">
                                     <Template>
                                         <br />
-                                        <label class="TSIModalLabel"><strong>@ReportLocalizer["ProductListProductSupplyFormsFilterLabel"] </strong></label><br />
-                                        <SfMultiSelect @bind-Value="@BindingProductSupplyFormEnumList"
-                                                       DataSource="@ProductSupplyFormEnumList"
+                                        <label class="TSIModalLabel"><strong>Depo : </strong></label><br />
+                                        <SfMultiSelect @bind-Value="@BindingWarehouses"
+                                                       DataSource="@Warehouses"
                                                        AllowFiltering=true
                                                        Mode="VisualMode.CheckBox"
                                                        ShowSelectAll=true
@@ -97,8 +112,22 @@
                                                        UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
                                                        ShowDropDownIcon="true">
 
-                                            <MultiSelectFieldSettings Value="Value" Text="Text"></MultiSelectFieldSettings>
+                                            <MultiSelectFieldSettings Value="Id" Text="Name"></MultiSelectFieldSettings>
                                         </SfMultiSelect>
+                                    </Template>
+                                </DxGridLayoutItem>
+
+                                <DxGridLayoutItem Row="1" Column="3">
+                                    <Template>
+                                        <br />
+                                        <label class="TSIModalLabel"><strong>Tarih Aralığı : </strong></label><br />
+                                        <table>
+                                            <tr>
+                                                <td style="width:47%;"><SfDatePicker @bind-Value=StartDate></SfDatePicker></td>
+                                                <td style="width:6%;">-</td>
+                                                <td style="width:47%;"><SfDatePicker @bind-Value=EndDate></SfDatePicker></td>
+                                            </tr>
+                                        </table>
                                     </Template>
                                 </DxGridLayoutItem>
 
@@ -135,3 +164,40 @@
         </DxGridLayoutItem>
     </GridLayoutItems>
 </DevGridLayoutFilterRow>
+
+<style>
+    .head, .item {
+        display: table !important;
+        width: 100% !important;
+        margin: auto !important;
+        margin-top: -7% !important;
+    }
+
+    .head {
+        height: 40px !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+    }
+
+    .name,.city {
+        display: table-cell !important;
+        vertical-align: middle !important;
+        width: 50% !important;
+        padding-left: 11% !important;
+    }
+
+    .head .name {
+        text-indent: 16px !important;
+    }
+
+    .head .city {
+        text-indent: 10px !important;
+    }
+
+
+    .e-checkbox-wrapper, .e-css.e-checkbox-wrapper {
+        -webkit-tap-highlight-color: transparent;
+        float: none !important ;
+        padding-right: 5% !important;
+    }
+</style>

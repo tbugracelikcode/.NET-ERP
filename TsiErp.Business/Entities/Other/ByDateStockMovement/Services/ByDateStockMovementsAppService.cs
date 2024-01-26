@@ -123,21 +123,21 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
                .From(Tables.ByDateStockMovements).Select<ByDateStockMovements>(bd => new { bd.WarehouseID, bd.TotalWastage, bd.TotalSalesProposition, bd.TotalSalesOrder, bd.TotalPurchaseRequest, bd.TotalPurchaseOrder, bd.TotalProduction, bd.TotalGoodsReceipt, bd.TotalGoodsIssue, bd.TotalConsumption, bd.ProductID, bd.Id, bd.Date_, bd.DataOpenStatusUserId, bd.DataOpenStatus, bd.BranchID, bd.Amount })
                         .Join<Products>
                         (
-                            p => new { ProductCode = p.Code, ProductName = p.Name },
+                            p => new { ProductCode = p.Code, ProductName = p.Name, ProductID=p.Id },
                             nameof(ByDateStockMovements.ProductID),
                             nameof(Products.Id),
                             JoinType.Left
                         )
                          .Join<Branches>
                         (
-                            b => new { BranchCode = b.Code },
+                            b => new { BranchCode = b.Code, BranchID=b.Id },
                             nameof(ByDateStockMovements.BranchID),
                             nameof(Branches.Id),
                             JoinType.Left
                         )
                          .Join<Warehouses>
                         (
-                            w => new { WarehouseCode = w.Code },
+                            w => new { WarehouseCode = w.Code, WarehouseID=w.Id },
                             nameof(ByDateStockMovements.WarehouseID),
                             nameof(Warehouses.Id),
                             JoinType.Left

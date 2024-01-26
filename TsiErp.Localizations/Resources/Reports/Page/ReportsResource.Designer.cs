@@ -63,9 +63,9 @@ namespace TsiErp.Localizations.Resources.Reports.Page {
         /// <summary>
         ///   Looks up a localized string similar to Raporla.
         /// </summary>
-        public static string ProductListCreateReport {
+        public static string CreateReport {
             get {
-                return ResourceManager.GetString("ProductListCreateReport", resourceCulture);
+                return ResourceManager.GetString("CreateReport", resourceCulture);
             }
         }
         
@@ -75,24 +75,6 @@ namespace TsiErp.Localizations.Resources.Reports.Page {
         public static string ProductListProductGroupsFilterLabel {
             get {
                 return ResourceManager.GetString("ProductListProductGroupsFilterLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hepsini Seç.
-        /// </summary>
-        public static string ProductListProductGroupsMSSelectAllText {
-            get {
-                return ResourceManager.GetString("ProductListProductGroupsMSSelectAllText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Seçilenleri Kaldır.
-        /// </summary>
-        public static string ProductListProductGroupsMSUnSelectAllText {
-            get {
-                return ResourceManager.GetString("ProductListProductGroupsMSUnSelectAllText", resourceCulture);
             }
         }
         
@@ -138,6 +120,24 @@ namespace TsiErp.Localizations.Resources.Reports.Page {
         public static string ProductListUIPreviousMenu {
             get {
                 return ResourceManager.GetString("ProductListUIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hepsini Seç.
+        /// </summary>
+        public static string SelectAllText {
+            get {
+                return ResourceManager.GetString("SelectAllText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçilenleri Kaldır.
+        /// </summary>
+        public static string UnSelectAllText {
+            get {
+                return ResourceManager.GetString("UnSelectAllText", resourceCulture);
             }
         }
     }
