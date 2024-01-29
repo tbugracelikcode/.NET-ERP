@@ -3,7 +3,7 @@ using DevExpress.XtraReports.UI;
 using Microsoft.Extensions.Localization;
 using System.Linq.Dynamic.Core;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
-using TsiErp.Entities.Entities.StockManagement.Product.ReportDtos.ProductListReportDtos;
+using TsiErp.Entities.Entities.StockManagement.Product.ReportDtos.ProductWarehouseStatusReportDtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Reports.StockManagement;
@@ -15,9 +15,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ReportPages
         DxReportViewer reportViewer { get; set; }
         XtraReport Report { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime StartDate { get; set; } = new DateTime(DateTime.Now.Year, 1, 1);
 
-        public DateTime EndDate { get; set; }
+        public DateTime EndDate { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
         protected override async void OnInitialized()
         {
@@ -116,7 +116,32 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ReportPages
 
         private async void CreateReport()
         {
-            
+            if (BindingProducts == null)
+            {
+                BindingProducts = new List<Guid>();
+            }
+
+            if (BindingWarehouses == null)
+            {
+                BindingWarehouses = new List<Guid>();
+            }
+
+            if (BindingProductTypeEnumList == null)
+            {
+                BindingProductTypeEnumList = new List<ProductTypeEnumModel>();
+            }
+
+            ProductWarehouseStatusReportParametersDto filters = new ProductWarehouseStatusReportParametersDto();
+            filters.ProductTypes = BindingProductTypeEnumList.Select(t => t.Value).ToList();
+            filters.Warehouses = BindingWarehouses;
+            filters.StockCards = BindingProducts;
+            filters.StartDate = StartDate;
+            filters.EndDate = EndDate;
+
+            var report = (await ProductReportsAppService.GetProductWarehouseStatusReport(filters, ProductLocalizer)).ToList();
+            Report = new ProductWarehouseStatusReport();
+            Report.DataSource = report;
+
         }
 
         public void Dispose()

@@ -11,10 +11,9 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.ReportDtos.ProductWar
     {
         public List<Guid> StockCards { get; set; }
 
-        public List<Guid> Branches { get; set; }
-
         public List<Guid> Warehouses { get; set; }
 
+        public List<ProductTypeEnum> ProductTypes { get; set; }
 
         public DateTime? StartDate { get; set; }
 
@@ -23,8 +22,8 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.ReportDtos.ProductWar
         public ProductWarehouseStatusReportParametersDto()
         {
             StockCards = new List<Guid>();
-            Branches = new List<Guid>();
-            Warehouses = new List<Guid>(); 
+            Warehouses = new List<Guid>();
+            ProductTypes = new List<ProductTypeEnum>();
         }
 
     }

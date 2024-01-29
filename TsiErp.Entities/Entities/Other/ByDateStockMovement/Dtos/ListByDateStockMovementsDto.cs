@@ -82,6 +82,10 @@ namespace TsiErp.Entities.Entities.Other.ByDateStockMovement.Dtos
         /// </summary>
         public string WarehouseCode { get; set; }
         /// <summary>
+        ///  Depo Adı
+        /// </summary>
+        public string WarehouseName { get; set; }
+        /// <summary>
         ///  Depo ID
         /// </summary>
         public Guid WarehouseID { get; set; }

@@ -151,24 +151,24 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ReportPages
 
         private async void CreateReport()
         {
-            if(BindingProductGroups==null)
+            if (BindingProductGroups == null)
             {
                 BindingProductGroups = new List<Guid>();
             }
 
-            if(BindingProductTypeEnumList==null)
+            if (BindingProductTypeEnumList == null)
             {
                 BindingProductTypeEnumList = new List<ProductTypeEnumModel>();
             }
 
-            if(BindingProductSupplyFormEnumList == null)
+            if (BindingProductSupplyFormEnumList == null)
             {
                 BindingProductSupplyFormEnumList = new List<ProductSupplyFormEnumModel>();
             }
 
             ProductListReportParametersDto filters = new ProductListReportParametersDto();
             filters.ProductGroups = BindingProductGroups;
-            filters.ProductTypes = BindingProductTypeEnumList.Select(t=>t.Value).ToList();
+            filters.ProductTypes = BindingProductTypeEnumList.Select(t => t.Value).ToList();
             filters.ProductSupplyForms = BindingProductSupplyFormEnumList.Select(t => t.Value).ToList();
 
             var report = (await ProductReportsAppService.GetProductListReport(filters, ProductLocalizer)).ToList();

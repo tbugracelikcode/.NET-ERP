@@ -31,6 +31,8 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.ReportDtos.ProductWar
 
         public string WarehouseCode { get; set; }
 
+        public string WarehouseName { get; set; }
+
         /// <summary>
         /// Toplam Sarf
         /// </summary>

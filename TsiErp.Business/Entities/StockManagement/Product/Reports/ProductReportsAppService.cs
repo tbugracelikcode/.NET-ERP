@@ -58,7 +58,7 @@ namespace TsiErp.Business.Entities.StockManagement.Product.Reports
 
             foreach (var product in productList)
             {
-                if(product.ProductType>0)
+                if (product.ProductType > 0)
                 {
                     var locKey = loc[Enum.GetName(typeof(ProductTypeEnum), product.ProductType)];
 
@@ -92,7 +92,7 @@ namespace TsiErp.Business.Entities.StockManagement.Product.Reports
 
             if (filters.StartDate.HasValue && filters.EndDate.HasValue)
             {
-                lines = lines.Where(t => t.Date_ >= filters.StartDate.Value && filters.EndDate <= t.Date_).AsQueryable();
+                lines = lines.Where(t => t.Date_ >= filters.StartDate.Value && t.Date_ <= filters.EndDate).AsQueryable();
             }
 
             if (filters.Warehouses.Count > 0)
@@ -100,39 +100,58 @@ namespace TsiErp.Business.Entities.StockManagement.Product.Reports
                 lines = lines.Where(t => filters.Warehouses.Contains(t.WarehouseID)).AsQueryable();
             }
 
-            if (filters.Branches.Count > 0)
-            {
-                lines = lines.Where(t => filters.Branches.Contains(t.BranchID)).AsQueryable();
-            }
-
             if (filters.StockCards.Count > 0)
             {
                 lines = lines.Where(t => filters.StockCards.Contains(t.ProductID)).AsQueryable();
             }
 
-
             var lineList = lines.ToList();
 
-            var groupedList = lineList.GroupBy(t => t.ProductID).ToList();
+            var groupedList = lineList.GroupBy(t =>new { t.ProductID,t.WarehouseID }).ToList();
 
-            foreach (var line in groupedList)
+            foreach (var item in groupedList)
             {
-                
+                var productList = item.ToList();
+                var productId = item.Key.ProductID;
+                var warehouseId = item.Key.WarehouseID;
+                var currentProduct = products.FirstOrDefault(t => t.Id == productId);
 
+                if (currentProduct.ProductType > 0)
+                {
+                    var locKey = loc[Enum.GetName(typeof(ProductTypeEnum), currentProduct.ProductType)];
+
+                    ProductWarehouseStatusReportDto productLine = new ProductWarehouseStatusReportDto()
+                    {
+                        ProductCode = currentProduct.Code,
+                        ProductName = currentProduct.Name,
+                        ProductTypeName = loc[GetProductTypeEnumStringKey(locKey)],
+                        UnitSetCode = currentProduct.UnitSetCode
+                    };
+
+                    int lineNr = 1;
+                    foreach (var product in productList)
+                    {
+
+                        ProductWarehouseStatusLinesReportDto warehouseLine = new ProductWarehouseStatusLinesReportDto();
+                        warehouseLine.TotalGoodsIssue = 0;
+                        warehouseLine.Amount = product.Amount;
+                        warehouseLine.TotalGoodsReceipt = 0;
+                        warehouseLine.TotalProduction = 0;
+                        warehouseLine.TotalConsumption = 0;
+                        warehouseLine.TotalWastage = 0;
+                        warehouseLine.WarehouseCode = product.WarehouseCode;
+                        warehouseLine.WarehouseName = product.WarehouseName;
+                        warehouseLine.LineNr = lineNr;
+                        warehouseLine.LastTransactionDate = productList.Max(t => t.Date_);
+
+                        productLine.WarehousesLines.Add(warehouseLine);
+
+                        lineNr++;
+                    }
+
+                    reportDatasource.Add(productLine);
+                }
             }
-
-            //var product = products.FirstOrDefault(t => t.Id == line.ProductID);
-
-            //var locKey = loc[Enum.GetName(typeof(ProductTypeEnum), product.ProductType)];
-
-            //ProductWarehouseStatusReportDto productLine = new ProductWarehouseStatusReportDto()
-            //{
-            //    ProductCode = product.Code,
-            //    ProductName = product.Name,
-            //    ProductTypeName = loc[GetProductTypeEnumStringKey(locKey)],
-            //    UnitSetCode = product.UnitSetCode
-            //};
-
             return reportDatasource;
         }
         #endregion
