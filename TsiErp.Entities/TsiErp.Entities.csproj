@@ -18,8 +18,4 @@
     <ProjectReference Include="..\TSI.QueryBuilder\TSI.QueryBuilder.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\MachineAndWorkforceManagement\Station\ReportDtos\" />
-  </ItemGroup>
-
 </Project>

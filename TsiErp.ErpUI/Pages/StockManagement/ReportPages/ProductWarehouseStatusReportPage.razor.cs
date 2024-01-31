@@ -15,9 +15,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ReportPages
         DxReportViewer reportViewer { get; set; }
         XtraReport Report { get; set; }
 
-        public DateTime StartDate { get; set; } = new DateTime(DateTime.Now.Year, 1, 1);
+        public DateTime? StartDate { get; set; } 
 
-        public DateTime EndDate { get; set; } = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+        public DateTime? EndDate { get; set; } 
 
         protected override async void OnInitialized()
         {
