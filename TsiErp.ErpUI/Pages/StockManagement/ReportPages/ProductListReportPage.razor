@@ -54,8 +54,8 @@
                                                        AllowFiltering=true
                                                        Mode="VisualMode.CheckBox"
                                                        ShowSelectAll=true
-                                                       SelectAllText=@ReportLocalizer["ProductListProductGroupsMSSelectAllText"]
-                                                       UnSelectAllText=@ReportLocalizer["ProductListProductGroupsMSUnSelectAllText"]
+                                                       SelectAllText=@ReportLocalizer["SelectAllText"]
+                                                       UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
                                                        ShowDropDownIcon="true">
 
                                             <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
@@ -74,8 +74,8 @@
                                                        AllowFiltering=true
                                                        Mode="VisualMode.CheckBox"
                                                        ShowSelectAll=true
-                                                       SelectAllText=@ReportLocalizer["ProductListProductGroupsMSSelectAllText"]
-                                                       UnSelectAllText=@ReportLocalizer["ProductListProductGroupsMSUnSelectAllText"]
+                                                       SelectAllText=@ReportLocalizer["SelectAllText"]
+                                                       UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
                                                        ShowDropDownIcon="true">
 
                                             <MultiSelectFieldSettings Value="Value" Text="Text"></MultiSelectFieldSettings>
@@ -93,23 +93,27 @@
                                                        AllowFiltering=true
                                                        Mode="VisualMode.CheckBox"
                                                        ShowSelectAll=true
-                                                       SelectAllText=@ReportLocalizer["ProductListProductGroupsMSSelectAllText"]
-                                                       UnSelectAllText=@ReportLocalizer["ProductListProductGroupsMSUnSelectAllText"]
+                                                       SelectAllText=@ReportLocalizer["SelectAllText"]
+                                                       UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
                                                        ShowDropDownIcon="true">
 
                                             <MultiSelectFieldSettings Value="Value" Text="Text"></MultiSelectFieldSettings>
                                         </SfMultiSelect>
                                     </Template>
                                 </DxGridLayoutItem>
+
+                                <DxGridLayoutItem Row="0" Column="5">
+                                    <Template>
+                                        <br />
+                                        <br />
+                                        <SfButton CssClass="TSISaveButton" OnClick="CreateReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["CreateReport"]</SfButton>
+                                    </Template>
+                                </DxGridLayoutItem>
+
                             </Items>
                         </DxGridLayout>
                     </CardContent>
                     <CardFooter>
-                        <div style="float:right;margin-right:10px;">
-                            <SfButton CssClass="TSISaveButton" OnClick="CreateReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["ProductListCreateReport"]</SfButton>
-                            &nbsp;&nbsp;
-                            <SfButton CssClass="TSICancelButton" OnClick="ResetReport"><SfIcon Size="IconSize.Medium" Name="IconName.FilterClear"></SfIcon>&nbsp;@ReportLocalizer["ProductListResetReport"]</SfButton>
-                        </div>
                     </CardFooter>
                 </SfCard>
             </Template>
@@ -131,3 +135,40 @@
         </DxGridLayoutItem>
     </GridLayoutItems>
 </DevGridLayoutFilterRow>
+
+<style>
+    .head, .item {
+        display: table !important;
+        width: 100% !important;
+        margin: auto !important;
+        margin-top: -7% !important;
+    }
+
+    .head {
+        height: 40px !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+    }
+
+    .name, .city {
+        display: table-cell !important;
+        vertical-align: middle !important;
+        width: 50% !important;
+        padding-left: 11% !important;
+    }
+
+    .head .name {
+        text-indent: 16px !important;
+    }
+
+    .head .city {
+        text-indent: 10px !important;
+    }
+
+
+    .e-checkbox-wrapper, .e-css.e-checkbox-wrapper {
+        -webkit-tap-highlight-color: transparent;
+        float: none !important;
+        padding-right: 5% !important;
+    }
+</style>

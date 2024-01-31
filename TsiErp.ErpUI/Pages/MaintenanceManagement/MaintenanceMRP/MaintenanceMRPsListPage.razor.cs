@@ -414,7 +414,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
         public void StartDateValueChangeHandler(ChangedEventArgs<DateTime?> args)
         {
-            if(DataSource.TimeLeftforMaintenance != null)
+            if(DataSource.TimeLeftforMaintenance >0)
             {
                 switch(DataSource.TimeLeftforMaintenance)
                 {

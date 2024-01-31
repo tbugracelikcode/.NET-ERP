@@ -722,6 +722,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
         public override async void LineCalculate()
         {
             LineDataSource.LineAmount = LineDataSource.Quantity * LineDataSource.UnitPrice;
+
+
+            await Task.CompletedTask;
         }
 
         #endregion

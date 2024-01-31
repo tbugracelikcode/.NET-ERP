@@ -126,7 +126,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         #region Grid
 
         private SfGrid<SelectTechnicalDrawingsDto> _TechnicalDrawingGrid;
-        private SfGrid<SelectTechnicalDrawingsDto> _TechnicalDrawingChangeGrid;
+        //private SfGrid<SelectTechnicalDrawingsDto> _TechnicalDrawingChangeGrid;
         private SfGrid<SelectProductReferanceNumbersDto> _ProductReferanceNumberGrid;
         private SfGrid<SelectSalesPriceLinesDto> _SalesPriceLineGrid;
         private SfGrid<SelectPurchasePriceLinesDto> _PurchasePriceLineGrid;
@@ -174,7 +174,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         List<System.IO.FileInfo> uploadedfiles = new List<System.IO.FileInfo>();
 
-        bool disable;
+        //bool disable = new();
 
         bool ImagePreviewPopup = false;
 
@@ -469,7 +469,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
             foreach (var file in files)
             {
-                disable = true;
+                //disable = true;
 
                 string fileName = file.Name;
                 string rootPath = "UploadedFiles/TechnicalDrawings/" + productid + "-" + productcode + "/" + technicaldrawingid;
@@ -484,7 +484,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             HideTechnicalDrawingCrudPopup();
             HideTechnicalDrawingChangedCrudPopup();
 
-            disable = false;
+            //disable = false;
 
             files.Clear();
 
@@ -1410,8 +1410,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         #region Teknik Resim Cari Hesap Button Edit
 
-        SfTextBox TechDrawingCurrentAccountCardsCodeButtonEdit;
-        SfTextBox TechDrawingCurrentAccountCardsNameButtonEdit;
+        SfTextBox TechDrawingCurrentAccountCardsCodeButtonEdit = new();
+        SfTextBox TechDrawingCurrentAccountCardsNameButtonEdit = new();
         List<ListCurrentAccountCardsDto> TechDrawingCurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
         public async Task TechDrawingCurrentAccountCardsCodeOnCreateIcon()
         {

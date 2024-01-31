@@ -1,0 +1,216 @@
+﻿@page "/employee-list-report"
+@layout MainLayout
+
+@inject IDepartmentsAppService DepartmentsAppService
+@inject IEmployeeSenioritiesAppService EmployeeSenioritiesService
+@inject IEducationLevelScoresAppService EducationLevelScoresService
+@inject IEmployeeReportsAppService EmployeeReportsAppService
+
+
+@inject IStringLocalizer<ReportsResource> ReportLocalizer
+@inject IStringLocalizer<EmployeesResource> EmployeesLocalizer
+
+<DevGridLayoutFilterRow ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+    <GridLayoutItems>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIListPageTitleCard">
+                    <CardContent>
+                        <TsiBreadCrumb PreviousMenus="Makine & İş Gücü Yönetimi > Raporlar" CurrentMenu="Personel Listesi" />
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+        <DxGridLayoutItem Row="1" Column="0" ColumnSpan="1">
+            <Template>
+
+                <SfCard class="TSIReportFilterCard">
+
+                    <CardContent>
+
+                        <DxGridLayout CssClass="TSIGridLayout">
+                            <Rows>
+                                <DxGridLayoutRow Height="48%" />
+                                <DxGridLayoutRow Height="48%" />
+                            </Rows>
+                            <Columns>
+                                <DxGridLayoutColumn Width="2%" />
+                                <DxGridLayoutColumn Width="30%" />
+                                <DxGridLayoutColumn Width="4%" />
+                                <DxGridLayoutColumn Width="30%" />
+                                <DxGridLayoutColumn Width="4%" />
+                                <DxGridLayoutColumn Width="28%" />
+                                <DxGridLayoutColumn Width="2%" />
+                            </Columns>
+                            <Items>
+
+                                <DxGridLayoutItem Row="0" Column="1">
+                                    <Template>
+
+                                        <br />
+                                        <label class="TSIModalLabel"><strong>Departman : </strong></label><br />
+
+                                        <SfMultiSelect @bind-Value="@BindingDepartments"
+                                                       DataSource="@Departments"
+                                                       AllowFiltering=true
+                                                       Mode="VisualMode.CheckBox"
+                                                       ShowSelectAll=true
+                                                       SelectAllText=@ReportLocalizer["SelectAllText"]
+                                                       UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
+                                                       ShowDropDownIcon="true">
+
+                                            <MultiSelectTemplates TItem="ListDepartmentsDto">
+                                                <ItemTemplate>
+                                                    <span class='item'>
+                                                        <span class='name'>@((context as ListDepartmentsDto).Code)</span>
+                                                        <span class='city'>@((context as ListDepartmentsDto).Name)</span>
+                                                    </span>
+                                                </ItemTemplate>
+                                            </MultiSelectTemplates>
+                                            <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                        </SfMultiSelect>
+
+                                    </Template>
+                                </DxGridLayoutItem>
+
+                                <DxGridLayoutItem Row="1" Column="1">
+                                    <Template>
+                                        <br />
+                                        <label class="TSIModalLabel"><strong>Kıdem : </strong></label><br />
+
+                                        <SfMultiSelect @bind-Value="@BindingSeniorities"
+                                                       DataSource="@Seniorities"
+                                                       AllowFiltering=true
+                                                       Mode="VisualMode.CheckBox"
+                                                       ShowSelectAll=true
+                                                       SelectAllText=@ReportLocalizer["SelectAllText"]
+                                                       UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
+                                                       ShowDropDownIcon="true">
+
+                                            <MultiSelectTemplates TItem="ListEmployeeSenioritiesDto">
+                                                <ItemTemplate>
+                                                    <span class='item'>
+                                                        <span class='name'>@((context as ListEmployeeSenioritiesDto).Code)</span>
+                                                        <span class='city'>@((context as ListEmployeeSenioritiesDto).Name)</span>
+                                                    </span>
+                                                </ItemTemplate>
+                                            </MultiSelectTemplates>
+                                            <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                        </SfMultiSelect>
+
+                                    </Template>
+                                </DxGridLayoutItem>
+
+                                <DxGridLayoutItem Row="0" Column="3">
+                                    <Template>
+                                        <br />
+                                        <label class="TSIModalLabel"><strong>Eğitim Seviyesi : </strong></label><br />
+                                        <SfMultiSelect @bind-Value="@BindingEducationLevelScores"
+                                                       DataSource="@EducationLevelScores"
+                                                       AllowFiltering=true
+                                                       Mode="VisualMode.CheckBox"
+                                                       ShowSelectAll=true
+                                                       SelectAllText=@ReportLocalizer["SelectAllText"]
+                                                       UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
+                                                       ShowDropDownIcon="true">
+
+                                            <MultiSelectTemplates TItem="ListEducationLevelScoresDto">
+                                                <ItemTemplate>
+                                                    <span class='item'>
+                                                        <span class='name'>@((context as ListEducationLevelScoresDto).Code)</span>
+                                                        <span class='city'>@((context as ListEducationLevelScoresDto).Name)</span>
+                                                    </span>
+                                                </ItemTemplate>
+                                            </MultiSelectTemplates>
+                                            <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                        </SfMultiSelect>
+                                    </Template>
+                                </DxGridLayoutItem>
+
+                                <DxGridLayoutItem Row="1" Column="3">
+                                    <Template>
+                                        <br />
+                                        <label class="TSIModalLabel"><strong>İşe Başlama Tarih Aralığı : </strong></label><br />
+                                        <table>
+                                            <tr>
+                                                <td style="width:47%;"><SfDatePicker TValue="DateTime?" @bind-Value=StartDate></SfDatePicker></td>
+                                                <td style="width:6%;">-</td>
+                                                <td style="width:47%;"><SfDatePicker TValue="DateTime?" @bind-Value=EndDate></SfDatePicker></td>
+                                            </tr>
+                                        </table>
+                                    </Template>
+                                </DxGridLayoutItem>
+
+                                <DxGridLayoutItem Row="0" Column="5">
+                                    <Template>
+                                        <br />
+                                        <br />
+                                        <SfButton CssClass="TSISaveButton" OnClick="CreateReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["CreateReport"]</SfButton>
+                                    </Template>
+                                </DxGridLayoutItem>
+
+                            </Items>
+                        </DxGridLayout>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+
+        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIGridCards">
+
+                    <CardContent>
+                        <DxReportViewer @ref="reportViewer" Report="@Report">
+                        </DxReportViewer>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </GridLayoutItems>
+</DevGridLayoutFilterRow>
+
+<style>
+    .head, .item {
+        display: table !important;
+        width: 100% !important;
+        margin: auto !important;
+        margin-top: -7% !important;
+    }
+
+    .head {
+        height: 40px !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+    }
+
+    .name, .city {
+        display: table-cell !important;
+        vertical-align: middle !important;
+        width: 50% !important;
+        padding-left: 11% !important;
+    }
+
+    .head .name {
+        text-indent: 16px !important;
+    }
+
+    .head .city {
+        text-indent: 10px !important;
+    }
+
+
+    .e-checkbox-wrapper, .e-css.e-checkbox-wrapper {
+        -webkit-tap-highlight-color: transparent;
+        float: none !important;
+        padding-right: 5% !important;
+    }
+</style>

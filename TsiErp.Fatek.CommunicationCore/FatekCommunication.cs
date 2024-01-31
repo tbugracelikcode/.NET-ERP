@@ -135,7 +135,7 @@ namespace TsiErp.Fatek.CommunicationCore
                     System.Threading.Thread.Sleep(100);
                 } while (buffReceiver.Length < sizeOfMessageReceiver && (DateTime.Now.Subtract(startDateTime).TotalMilliseconds < objSerialPort.ReadTimeout));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //MessageBox.Show("Discrete PLC'ye yazılamadı. " + mType.ToString() + discreteNo.ToString(), "Dikkat", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -176,7 +176,7 @@ namespace TsiErp.Fatek.CommunicationCore
                     result.Add(!"0".Equals(item.ToString()) ? true : false);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //MessageBox.Show("Discrete PLC'den okunamadı. " + mType.ToString() + startNo.ToString(), "Dikkat", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -359,7 +359,7 @@ namespace TsiErp.Fatek.CommunicationCore
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //MessageBox.Show("Register PLC'den okunamadı. " + mType.ToString() + startRegister.ToString(), "Dikkat", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -431,7 +431,7 @@ namespace TsiErp.Fatek.CommunicationCore
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //MessageBox.Show("Register PLC'den okunamadı. " + mType.ToString() + startRegister.ToString(), "Dikkat", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -467,7 +467,7 @@ namespace TsiErp.Fatek.CommunicationCore
                 } while (buffReceiver.Length < sizeOfMessageReceiver && (DateTime.Now.Subtract(startDateTime).TotalMilliseconds < objSerialPort.ReadTimeout));
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //MessageBox.Show("Register PLC'ye yazılamadı. " + mType.ToString() + startRegister.ToString(), "Dikkat", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

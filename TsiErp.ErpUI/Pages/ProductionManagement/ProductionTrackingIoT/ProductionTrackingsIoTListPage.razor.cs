@@ -303,12 +303,12 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTrackingIoT
             LineCrudPopup = false;
         }
 
-        public void OnDateFocus()
+        public async void OnDateFocus()
         {
             if (DataSource.OperationStartDate == DateTime.MinValue || DataSource.OperationStartDate == null)
             {
                 _endDatePicker.Enabled = false;
-                ModalManager.WarningPopupAsync(L["UIConfirmationModalTitleBase"], L["UIWarningPopupMessageBase"]);
+                await ModalManager.WarningPopupAsync(L["UIConfirmationModalTitleBase"], L["UIWarningPopupMessageBase"]);
             }
         }
         public void OnDateChange()

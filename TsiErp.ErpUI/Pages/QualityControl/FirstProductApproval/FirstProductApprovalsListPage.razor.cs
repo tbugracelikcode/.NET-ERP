@@ -52,7 +52,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
         public string fileExtension = string.Empty;
         public string fileURL = string.Empty;
         bool image = false;
-        bool pdf = false;
+        //bool pdf = new();
 
         protected override async void OnInitialized()
         {
@@ -350,13 +350,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                     {
                         fileURL = OperationPictureDataSource.DrawingFilePath + OperationPictureDataSource.UploadedFileName;
                         image = true;
-                        pdf = false;
+                        //pdf = false;
                     }
                     else if (fileExtension == "pdf")
                     {
                         //fileURL = OperationPictureDataSource.DrawingDomain + OperationPictureDataSource.DrawingFilePath.Replace(@"\", "/") + OperationPictureDataSource.UploadedFileName;
                         fileURL = "wwwroot/" + OperationPictureDataSource.DrawingFilePath.Replace(@"\", "/") + OperationPictureDataSource.UploadedFileName;
-                        pdf = true;
+                        //pdf = true;
                         image = false;
                     }
 
@@ -373,7 +373,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
         public void HidePreviewPopup()
         {
             ImagePreviewPopup = false;
-            pdf = false;
+            //pdf = false;
             image = false;
             previewImagePopupTitle = string.Empty;
             fileExtension = string.Empty;

@@ -33,7 +33,7 @@
                         <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementReportsMenu)" Text=@L["StockManagementReportsMenu"] Name="StockManagementReportsMenu">
                             <Nodes>
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.ListofMaterialsChildMenu)" Text=@L["ListofMaterialsChildMenu"] Name="ListofMaterialsChildMenu" NavigateUrl="/products-list-report" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MaterialWarehouseStatusChildMenu)" Text=@L["MaterialWarehouseStatusChildMenu"] Name="MaterialWarehouseStatusChildMenu" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MaterialWarehouseStatusChildMenu)" Text=@L["MaterialWarehouseStatusChildMenu"] Name="MaterialWarehouseStatusChildMenu" NavigateUrl="/products-warehouse-status-report" />
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.InventoryListChildMenu)" Text=@L["InventoryListChildMenu"] Name="InventoryListChildMenu" />
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByProdGrpPerfAnalysisChildMenu)" Text=@L["ByProdGrpPerfAnalysisChildMenu"] Name="ByProdGrpPerfAnalysisChildMenu" />
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByProdGrpScrapAnalysisChildMenu)" Text=@L["ByProdGrpScrapAnalysisChildMenu"] Name="ByProdGrpScrapAnalysisChildMenu" />
@@ -171,8 +171,8 @@
                         </DxTreeViewNode>
                         <DxTreeViewNode Text=@L["MachWorkForceManagementReportsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text=@L["StationListChildMenu"] />
-                                <DxTreeViewNode Text=@L["EmployeeListChildMenu"] />
+                                <DxTreeViewNode Text=@L["StationListChildMenu"] NavigateUrl="/station-list-report"/>
+                                <DxTreeViewNode Text=@L["EmployeeListChildMenu"] NavigateUrl="/employee-list-report" />
                                 <DxTreeViewNode Text=@L["EmployeeScoreListChildMenu"] />
                                 <DxTreeViewNode Text=@L["StationCostListChildMenu"] />
                                 <DxTreeViewNode Text=@L["EmployeeProductivityChildMenu"] />
@@ -420,7 +420,7 @@
 
 @code {
     private bool collapsevisible = true;
-    private bool StockManagementParentMenuVisible = true;
+    //private bool StockManagementParentMenuVisible;
     private bool collapseparametersvisible = true;
     public bool SidebarToggle = true;
     public bool SidebarToggleFixed = true;
@@ -441,6 +441,10 @@
             //var node = treeView.GetNodeInfo(t => t.Name == "StockManagementParentMenu");
             //StockManagementParentMenuVisible = false;
             //await InvokeAsync(StateHasChanged);
+
+
+
+            await Task.CompletedTask;
         }
     }
 }

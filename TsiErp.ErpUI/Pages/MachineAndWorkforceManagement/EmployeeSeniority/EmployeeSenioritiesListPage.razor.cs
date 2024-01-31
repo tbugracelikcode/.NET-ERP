@@ -257,7 +257,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeSeniority
 
         #region Görev Puanlama Kod ButtonEdit
 
-        SfTextBox TaskScoringCodeButtonEdit;
+        SfTextBox TaskScoringCodeButtonEdit = new();
 
         public async Task TaskScoringCodeOnCreateIcon()
         {

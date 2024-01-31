@@ -117,17 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ProductListCreateReport" xml:space="preserve">
+  <data name="CreateReport" xml:space="preserve">
     <value>Raporla</value>
   </data>
   <data name="ProductListProductGroupsFilterLabel" xml:space="preserve">
     <value>Ürün Grubu :</value>
-  </data>
-  <data name="ProductListProductGroupsMSSelectAllText" xml:space="preserve">
-    <value>Hepsini Seç</value>
-  </data>
-  <data name="ProductListProductGroupsMSUnSelectAllText" xml:space="preserve">
-    <value>Seçilenleri Kaldır</value>
   </data>
   <data name="ProductListProductSupplyFormsFilterLabel" xml:space="preserve">
     <value>Temin Şekli :</value>
@@ -143,5 +137,11 @@
   </data>
   <data name="ProductListUIPreviousMenu" xml:space="preserve">
     <value>Stok Yönetimi &gt; Raporlar</value>
+  </data>
+  <data name="SelectAllText" xml:space="preserve">
+    <value>Hepsini Seç</value>
+  </data>
+  <data name="UnSelectAllText" xml:space="preserve">
+    <value>Seçilenleri Kaldır</value>
   </data>
 </root>

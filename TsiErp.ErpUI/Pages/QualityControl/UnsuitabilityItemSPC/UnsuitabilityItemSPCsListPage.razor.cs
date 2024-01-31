@@ -39,7 +39,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
-        private bool LineCrudPopup = false;
+        //bool LineCrudPopup = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -200,7 +200,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
                 case "new":
 
                     LineDataSource = new SelectUnsuitabilityItemSPCLinesDto();
-                    LineCrudPopup = true;
+                    //LineCrudPopup = true;
                     LineDataSource.LineNr = GridLineList.Count + 1;
                     await InvokeAsync(StateHasChanged);
 
@@ -208,7 +208,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
 
                 case "changed":
                     LineDataSource = args.RowInfo.RowData;
-                    LineCrudPopup = true;
+                    //LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -258,7 +258,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
 
         public void HideLinesPopup()
         {
-            LineCrudPopup = false;
+            //LineCrudPopup = false;
         }
 
         protected async Task OnLineSubmit()

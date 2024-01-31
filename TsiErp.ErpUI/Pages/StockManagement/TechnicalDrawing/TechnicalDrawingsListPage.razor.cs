@@ -35,7 +35,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
         bool UploadedFile = false;
 
-        bool disable;
+        //bool disable = new();
 
         bool ImagePreviewPopup = false;
 
@@ -244,8 +244,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
         #region Cari Hesap Button Edit
 
-        SfTextBox CurrentAccountCardsCodeButtonEdit;
-        SfTextBox CurrentAccountCardsNameButtonEdit;
+        SfTextBox CurrentAccountCardsCodeButtonEdit = new();
+        SfTextBox CurrentAccountCardsNameButtonEdit = new();
         bool SelectCurrentAccountCardsPopupVisible = false;
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
         public async Task CurrentAccountCardsCodeOnCreateIcon()
@@ -543,7 +543,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
             foreach (var file in files)
             {
-                disable = true;
+                //disable = true;
 
                 string fileName = file.Name;
                 string rootPath = "UploadedFiles/TechnicalDrawings/" + productid + "-" + productcode + "/" + technicaldrawingid;
@@ -557,7 +557,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
             HideEditPage();
             HideTechnicalDrawingChangedCrudPopup();
 
-            disable = false;
+            //disable = false;
 
             files.Clear();
 
