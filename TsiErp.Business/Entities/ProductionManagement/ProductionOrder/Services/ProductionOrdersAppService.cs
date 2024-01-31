@@ -418,6 +418,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
             }
         }
@@ -524,6 +525,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
             LogsAppService.InsertLogToDatabase(productionOrder, productionOrder, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductionOrdersDto>(productionOrder);
 
         }
@@ -616,6 +618,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
             var productionOrders = queryFactory.GetList<ListProductionOrdersDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListProductionOrdersDto>>(productionOrders);
 
         }
@@ -682,6 +685,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
             LogsAppService.InsertLogToDatabase(entity, productionOrders, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
 
         }
@@ -731,6 +735,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
             var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
 
         }

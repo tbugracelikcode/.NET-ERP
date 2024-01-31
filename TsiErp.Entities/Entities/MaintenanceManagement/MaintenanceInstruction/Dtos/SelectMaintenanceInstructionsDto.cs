@@ -21,15 +21,6 @@ namespace TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceInstruction.
         /// </summary>
         public string InstructionName { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// İstasyon ID
         /// </summary>
         public Guid? StationID { get; set; }

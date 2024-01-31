@@ -811,6 +811,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
             LogsAppService.InsertLogToDatabase(productionTrackings, productionTrackings, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductionTrackingsDto>(productionTrackings);
 
         }
@@ -861,6 +862,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
             var productionTrackings = queryFactory.GetList<ListProductionTrackingsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListProductionTrackingsDto>>(productionTrackings);
         }
 
@@ -1497,6 +1499,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             }).Where(new { Id = id }, false, false, "");
 
             var productionTrackingsDto = queryFactory.Update<SelectProductionTrackingsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductionTrackingsDto>(productionTrackingsDto);
 
         }

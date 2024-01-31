@@ -34,6 +34,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MaintenanceManag
 
             LogsAppService.InsertLogToDatabase(MaintenanceManagementParameter, MaintenanceManagementParameter, LoginedUserService.UserId, Tables.MaintenanceManagementParameters, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMaintenanceManagementParametersDto>(MaintenanceManagementParameter);
 
         }
@@ -46,6 +47,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MaintenanceManag
 
             var MaintenanceManagementParameters = queryFactory.GetList<ListMaintenanceManagementParametersDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListMaintenanceManagementParametersDto>>(MaintenanceManagementParameters);
 
         }
@@ -69,6 +71,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MaintenanceManag
             LogsAppService.InsertLogToDatabase(entity, MaintenanceManagementParameters, LoginedUserService.UserId, Tables.MaintenanceManagementParameters, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMaintenanceManagementParametersDto>(MaintenanceManagementParameters);
 
         }

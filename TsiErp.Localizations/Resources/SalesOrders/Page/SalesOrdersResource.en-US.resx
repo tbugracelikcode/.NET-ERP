@@ -276,6 +276,9 @@
   <data name="EnumInProduction" xml:space="preserve">
     <value>In Production</value>
   </data>
+  <data name="EnumTransfer" xml:space="preserve">
+    <value>Shipped</value>
+  </data>
   <data name="EnumWaiting" xml:space="preserve">
     <value>Waiting</value>
   </data>

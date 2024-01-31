@@ -48,15 +48,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
-        /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
         [NoDatabaseAction]
         public List<SelectBillsofMaterialLinesDto> SelectBillsofMaterialLines { get; set; }
         public SelectBillsofMaterialsDto()

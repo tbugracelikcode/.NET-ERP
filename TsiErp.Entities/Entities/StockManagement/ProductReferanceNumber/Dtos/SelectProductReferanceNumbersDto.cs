@@ -23,15 +23,6 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos
         /// </summary>
         public string ProductName { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// Cari ID
         /// </summary>
         public Guid? CurrentAccountCardID { get; set; }

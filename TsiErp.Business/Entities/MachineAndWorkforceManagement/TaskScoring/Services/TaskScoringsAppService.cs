@@ -68,6 +68,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.TaskScorings, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectTaskScoringsDto>(TaskScorings);
         }
 
@@ -82,6 +83,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TaskScorings, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectTaskScoringsDto>(TaskScorings);
         }
 
@@ -101,6 +103,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             LogsAppService.InsertLogToDatabase(EmployeeSeniority, EmployeeSeniority, LoginedUserService.UserId, Tables.TaskScorings, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectTaskScoringsDto>(EmployeeSeniority);
         }
 
@@ -118,6 +121,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                         ).Where(null, false, false, Tables.TaskScorings);
 
             var taskScorings = queryFactory.GetList<ListTaskScoringsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListTaskScoringsDto>>(taskScorings);
         }
 
@@ -164,6 +168,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             LogsAppService.InsertLogToDatabase(entity, taskScorings, LoginedUserService.UserId, Tables.TaskScorings, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectTaskScoringsDto>(taskScorings);
         }
 
@@ -197,6 +202,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             }).Where(new { Id = id }, false, false, "");
 
             var TaskScorings = queryFactory.Update<SelectTaskScoringsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectTaskScoringsDto>(TaskScorings);
         }
     }

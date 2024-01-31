@@ -37,15 +37,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// </summary>
         public string WorkOrderCode { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// Üretilen Miktar
         /// </summary>
         public decimal ProducedQuantity { get; set; }

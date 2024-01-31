@@ -19,15 +19,6 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventor
         /// </summary>
         public Guid? ProductID { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// Stok Kodu
         /// </summary>
         public string ProductCode { get; set; }

@@ -189,6 +189,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PackingLists, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPackingListsDto>(PackingList);
 
         }
@@ -226,6 +227,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
 
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PackingLists, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectPackingListsDto>(PackingList);
             }
         }
@@ -359,6 +361,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
 
             LogsAppService.InsertLogToDatabase(packingLists, packingLists, LoginedUserService.UserId, Tables.PackingLists, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPackingListsDto>(packingLists);
 
         }
@@ -395,6 +398,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                     .Where(null, false, false, Tables.PackingLists);
 
             var packingLists = queryFactory.GetList<ListPackingListsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPackingListsDto>>(packingLists);
 
         }
@@ -771,6 +775,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PackingLists, LogType.Update, billOfMaterial.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPackingListsDto>(billOfMaterial);
 
         }
@@ -820,6 +825,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
             }).Where(new { Id = id }, false, false, "");
 
             var PackingListsDto = queryFactory.Update<SelectPackingListsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPackingListsDto>(PackingListsDto);
 
 

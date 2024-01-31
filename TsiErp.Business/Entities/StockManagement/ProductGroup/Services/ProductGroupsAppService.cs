@@ -107,6 +107,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductGroups, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectProductGroupsDto>(productGroups);
             }
         }
@@ -124,6 +125,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
 
             LogsAppService.InsertLogToDatabase(productGroup, productGroup, LoginedUserService.UserId, Tables.ProductGroups, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductGroupsDto>(productGroup);
 
         }
@@ -134,6 +136,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
         {
             var query = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(null, true, true, "");
             var productGroups = queryFactory.GetList<ListProductGroupsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListProductGroupsDto>>(productGroups);
 
         }
@@ -179,6 +182,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
 
             LogsAppService.InsertLogToDatabase(entity, productGroups, LoginedUserService.UserId, Tables.ProductGroups, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductGroupsDto>(productGroups);
 
         }
@@ -208,6 +212,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
             }).Where(new { Id = id }, true, true, "");
 
             var productGroups = queryFactory.Update<SelectProductGroupsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductGroupsDto>(productGroups);
 
 

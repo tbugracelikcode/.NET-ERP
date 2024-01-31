@@ -28,15 +28,6 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dto
         /// </summary>
         public decimal SaleRate { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// Efektif Alış Kuru
         /// </summary>
         public decimal EffectiveBuyingRate { get; set; }

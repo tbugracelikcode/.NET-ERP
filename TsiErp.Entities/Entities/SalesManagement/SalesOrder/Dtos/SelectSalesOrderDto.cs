@@ -18,10 +18,6 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// </summary>
         public string FicheNo { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-        /// <summary>
         /// Müşteri Sipariş No
         /// </summary>
         public string CustomerOrderNr { get; set; }
@@ -29,10 +25,6 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// Müşterinin İstediği Tarih
         /// </summary>
         public DateTime CustomerRequestedDate { get; set; }
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
         /// <summary>
         /// Tarih
         /// </summary>

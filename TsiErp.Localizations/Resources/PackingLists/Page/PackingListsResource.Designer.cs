@@ -619,6 +619,24 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çeki listesi onaylanmıştır..
+        /// </summary>
+        public static string MessageApproveMessage {
+            get {
+                return ResourceManager.GetString("MessageApproveMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgilendirme.
+        /// </summary>
+        public static string MessageApproveTitle {
+            get {
+                return ResourceManager.GetString("MessageApproveTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçtiğiniz kayıt {0} tarafından kullanılmaktadır..
         /// </summary>
         public static string MessagePopupInformationDescriptionBase {
@@ -651,6 +669,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         public static string PackingListsContextAdd {
             get {
                 return ResourceManager.GetString("PackingListsContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çeki Listesini Onayla.
+        /// </summary>
+        public static string PackingListsContextApprove {
+            get {
+                return ResourceManager.GetString("PackingListsContextApprove", resourceCulture);
             }
         }
         

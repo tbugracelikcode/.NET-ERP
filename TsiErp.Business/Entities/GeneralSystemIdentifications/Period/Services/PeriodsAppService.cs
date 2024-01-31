@@ -74,6 +74,7 @@ namespace TsiErp.Business.Entities.Period.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Periods, LogType.Insert, periods.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPeriodsDto>(periods);
 
         }
@@ -105,6 +106,7 @@ namespace TsiErp.Business.Entities.Period.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Periods, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectPeriodsDto>(periods);
             }
         }
@@ -126,6 +128,7 @@ namespace TsiErp.Business.Entities.Period.Services
 
             LogsAppService.InsertLogToDatabase(period, period, LoginedUserService.UserId, Tables.Periods, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPeriodsDto>(period);
         }
 
@@ -147,6 +150,7 @@ namespace TsiErp.Business.Entities.Period.Services
 
             var periods = queryFactory.GetList<ListPeriodsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPeriodsDto>>(periods);
         }
 
@@ -193,6 +197,7 @@ namespace TsiErp.Business.Entities.Period.Services
 
             LogsAppService.InsertLogToDatabase(entity, periods, LoginedUserService.UserId, Tables.Periods, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
 
             return new SuccessDataResult<SelectPeriodsDto>(periods);
         }
@@ -224,6 +229,7 @@ namespace TsiErp.Business.Entities.Period.Services
 
             var periods = queryFactory.Update<SelectPeriodsDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPeriodsDto>(periods);
         }
     }

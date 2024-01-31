@@ -114,6 +114,7 @@ namespace TsiErp.Business.Entities.Station.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Stations, LogType.Insert, station.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStationsDto>(station);
         }
 
@@ -160,6 +161,7 @@ namespace TsiErp.Business.Entities.Station.Services
 
                     var station = queryFactory.Update<SelectStationsDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Stations, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectStationsDto>(station);
                 }
                 else
@@ -167,6 +169,7 @@ namespace TsiErp.Business.Entities.Station.Services
                     var queryLine = queryFactory.Query().From(Tables.StationInventories).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                     var stationInventories = queryFactory.Update<SelectStationInventoriesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StationInventories, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectStationInventoriesDto>(stationInventories);
                 }
             }
@@ -200,6 +203,7 @@ namespace TsiErp.Business.Entities.Station.Services
 
             LogsAppService.InsertLogToDatabase(stations, stations, LoginedUserService.UserId, Tables.Stations, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStationsDto>(stations);
         }
 
@@ -220,6 +224,7 @@ namespace TsiErp.Business.Entities.Station.Services
                     .Where(null, true, true, Tables.Stations);
 
             var stations = queryFactory.GetList<ListStationsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListStationsDto>>(stations);
         }
 
@@ -363,6 +368,7 @@ namespace TsiErp.Business.Entities.Station.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Stations, LogType.Update, station.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStationsDto>(station);
         }
 
@@ -406,6 +412,7 @@ namespace TsiErp.Business.Entities.Station.Services
             }).Where(new { Id = id }, true, true, "");
 
             var stationsDto = queryFactory.Update<SelectStationsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStationsDto>(stationsDto);
         }
     }

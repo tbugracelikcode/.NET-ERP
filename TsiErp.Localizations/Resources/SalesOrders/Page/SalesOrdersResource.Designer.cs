@@ -538,6 +538,15 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sevk Edildi.
+        /// </summary>
+        public static string EnumTransfer {
+            get {
+                return ResourceManager.GetString("EnumTransfer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Beklemede.
         /// </summary>
         public static string EnumWaiting {

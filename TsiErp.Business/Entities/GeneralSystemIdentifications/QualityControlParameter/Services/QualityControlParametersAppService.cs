@@ -34,6 +34,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.QualityControlPa
 
             LogsAppService.InsertLogToDatabase(QualityControlParameter, QualityControlParameter, LoginedUserService.UserId, Tables.QualityControlParameters, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectQualityControlParametersDto>(QualityControlParameter);
         }
 
@@ -45,6 +46,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.QualityControlPa
 
             var QualityControlParameters = queryFactory.GetList<ListQualityControlParametersDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListQualityControlParametersDto>>(QualityControlParameters);
         }
 
@@ -66,6 +68,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.QualityControlPa
 
             LogsAppService.InsertLogToDatabase(entity, QualityControlParameters, LoginedUserService.UserId, Tables.QualityControlParameters, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
 
             return new SuccessDataResult<SelectQualityControlParametersDto>(QualityControlParameters);
         }

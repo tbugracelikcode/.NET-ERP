@@ -113,6 +113,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Warehouses, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectWarehousesDto>(warehouses);
             }
         }
@@ -129,6 +130,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
 
             LogsAppService.InsertLogToDatabase(warehouse, warehouse, LoginedUserService.UserId, Tables.Warehouses, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectWarehousesDto>(warehouse);
 
         }
@@ -138,6 +140,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
         {
             var query = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(null, true, true, "");
             var warehouses = queryFactory.GetList<ListWarehousesDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListWarehousesDto>>(warehouses);
 
         }
@@ -183,6 +186,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
 
             LogsAppService.InsertLogToDatabase(entity, warehouses, LoginedUserService.UserId, Tables.Warehouses, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectWarehousesDto>(warehouses);
 
         }
@@ -212,6 +216,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
             }).Where(new { Id = id }, true, true, "");
 
             var warehouses = queryFactory.Update<SelectWarehousesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectWarehousesDto>(warehouses);
 
         }

@@ -190,6 +190,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StockFiches, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
             }
             else
@@ -222,6 +223,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StockFicheLines, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectStockFicheLinesDto>(stockFicheLines);
             }
 
@@ -299,6 +301,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
             LogsAppService.InsertLogToDatabase(stockFiches, stockFiches, LoginedUserService.UserId, Tables.StockFiches, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStockFichesDto>(stockFiches);
 
         }
@@ -334,6 +337,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     .Where(null, false, false, Tables.StockFiches);
 
             var stockFichesDto = queryFactory.GetList<ListStockFichesDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListStockFichesDto>>(stockFichesDto);
 
         }
@@ -552,6 +556,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
 
         }
@@ -592,6 +597,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             }).Where(new { Id = id }, false, false, "");
 
             var stockFichesDto = queryFactory.Update<SelectStockFichesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStockFichesDto>(stockFichesDto);
 
         }

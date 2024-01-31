@@ -27,6 +27,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
 
         public async Task<IDataResult<SelectSalesManagementParametersDto>> GetAsync(Guid id)
         {
+            await Task.CompletedTask;
             throw new NotImplementedException();
 
         }
@@ -45,6 +46,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesManagementParameters, LogType.Insert, SalesManagementParameter.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesManagementParametersDto>(SalesManagementParameter);
         }
 
@@ -69,6 +71,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
 
             LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.SalesManagementParameters, LogType.Get, result.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesManagementParametersDto>(result);
         }
 
@@ -92,6 +95,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
 
             LogsAppService.InsertLogToDatabase(entity, SalesManagementParameters, LoginedUserService.UserId, Tables.SalesManagementParameters, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesManagementParametersDto>(SalesManagementParameters);
         }
 

@@ -76,6 +76,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.EducationLevelScores, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
 
             return new SuccessDataResult<SelectEducationLevelScoresDto>(EducationLevelScores);
         }
@@ -106,6 +107,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EducationLevelScores, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectEducationLevelScoresDto>(EducationLevelScores);
             }
         }
@@ -123,6 +125,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
 
             LogsAppService.InsertLogToDatabase(EducationLevelScore, EducationLevelScore, LoginedUserService.UserId, Tables.EducationLevelScores, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEducationLevelScoresDto>(EducationLevelScore);
         }
 
@@ -132,6 +135,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
         {
             var query = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(null, false, false, "");
             var EducationLevelScores = queryFactory.GetList<ListEducationLevelScoresDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListEducationLevelScoresDto>>(EducationLevelScores);
         }
 
@@ -177,6 +181,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
 
             LogsAppService.InsertLogToDatabase(entity, EducationLevelScores, LoginedUserService.UserId, Tables.EducationLevelScores, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEducationLevelScoresDto>(EducationLevelScores);
         }
 
@@ -206,6 +211,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
             }).Where(new { Id = id }, false, false, "");
 
             var EducationLevelScores = queryFactory.Update<SelectEducationLevelScoresDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEducationLevelScoresDto>(EducationLevelScores);
         }
     }

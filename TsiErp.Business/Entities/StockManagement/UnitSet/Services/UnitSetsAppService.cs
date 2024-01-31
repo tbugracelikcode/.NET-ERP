@@ -116,6 +116,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.UnitSets, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectUnitSetsDto>(unitsets);
 
             }
@@ -133,6 +134,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
 
             LogsAppService.InsertLogToDatabase(unitset, unitset, LoginedUserService.UserId, Tables.UnitSets, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnitSetsDto>(unitset);
         }
 
@@ -141,6 +143,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
         {
             var query = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(null, true, true, "");
             var unitsets = queryFactory.GetList<ListUnitSetsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListUnitSetsDto>>(unitsets);
 
         }
@@ -188,6 +191,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
             LogsAppService.InsertLogToDatabase(entity, unitsets, LoginedUserService.UserId, Tables.UnitSets, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnitSetsDto>(unitsets);
 
         }
@@ -217,6 +221,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
 
             var unitsets = queryFactory.Update<SelectUnitSetsDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnitSetsDto>(unitsets);
 
 

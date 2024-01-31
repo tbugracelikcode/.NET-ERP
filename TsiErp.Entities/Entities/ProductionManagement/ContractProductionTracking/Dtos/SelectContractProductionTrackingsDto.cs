@@ -89,14 +89,5 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractProductionTracki
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
         public string WorkOrderCode { get; set; }
-        /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
     }
 }

@@ -20,15 +20,6 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchasePrice.Dtos
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// Başlangıç Tarihi
         /// </summary>
         public DateTime? StartDate { get; set; }

@@ -16,15 +16,6 @@ namespace TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }

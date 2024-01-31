@@ -44,6 +44,7 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationStockMovements, LogType.Insert, input.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationStockMovementsDto>(insertedEntity);
 
         }
@@ -56,6 +57,7 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationStockMovements, LogType.Update, input.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationStockMovementsDto>(updatedEntity);
 
         }
@@ -66,6 +68,7 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
 
             var entity = queryFactory.Get<SelectOperationStockMovementsDto>(query);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationStockMovementsDto>(entity);
 
         }
@@ -77,6 +80,7 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
         {
             var query = queryFactory.Query().From(Tables.OperationStockMovements).Select("*").Where(null, false, false, "");
             var entity = queryFactory.GetList<ListOperationStockMovementsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListOperationStockMovementsDto>>(entity);
 
         }

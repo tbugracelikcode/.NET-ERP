@@ -73,6 +73,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UserGroups, LogType.Insert, addedEntityId);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUserGroupsDto>(userGroups);
         }
 
@@ -85,6 +86,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.UserGroups, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUserGroupsDto>(userGroups);
         }
 
@@ -100,6 +102,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
 
             LogsAppService.InsertLogToDatabase(userGroup, userGroup, LoginedUserService.UserId, Tables.UserGroups, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUserGroupsDto>(userGroup);
 
         }
@@ -109,6 +112,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
         {
             var query = queryFactory.Query().From(Tables.UserGroups).Select("*").Where(null, true, true, "");
             var userGroups = queryFactory.GetList<ListUserGroupsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListUserGroupsDto>>(userGroups);
         }
 
@@ -153,6 +157,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
 
             LogsAppService.InsertLogToDatabase(entity, userGroups, LoginedUserService.UserId, Tables.UserGroups, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUserGroupsDto>(userGroups);
         }
 
@@ -181,6 +186,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
             }).Where(new { Id = id }, true, true, "");
 
             var userGroups = queryFactory.Update<SelectUserGroupsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUserGroupsDto>(userGroups);
         }
     }

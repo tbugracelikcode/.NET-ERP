@@ -303,6 +303,12 @@
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
   </data>
+  <data name="MessageApproveMessage" xml:space="preserve">
+    <value>The packing list approved.</value>
+  </data>
+  <data name="MessageApproveTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
   </data>
@@ -314,6 +320,9 @@
   </data>
   <data name="PackingListsContextAdd" xml:space="preserve">
     <value>Add</value>
+  </data>
+  <data name="PackingListsContextApprove" xml:space="preserve">
+    <value>Approve the Packing List</value>
   </data>
   <data name="PackingListsContextChange" xml:space="preserve">
     <value>Change</value>

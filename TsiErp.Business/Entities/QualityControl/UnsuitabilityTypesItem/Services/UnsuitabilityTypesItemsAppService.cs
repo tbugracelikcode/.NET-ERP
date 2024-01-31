@@ -75,6 +75,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UnsuitabilityTypesItems, LogType.Insert, unsuitabilityTypesItems.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnsuitabilityTypesItemsDto>(unsuitabilityTypesItems);
 
         }
@@ -121,6 +122,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
 
             LogsAppService.InsertLogToDatabase(entity, unsuitabilityTypesItems, LoginedUserService.UserId, Tables.UnsuitabilityTypesItems, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnsuitabilityTypesItemsDto>(unsuitabilityTypesItems);
 
         }
@@ -149,6 +151,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.UnsuitabilityTypesItems, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectUnsuitabilityTypesItemsDto>(unsuitabilityTypesItems);
             }
         }
@@ -165,6 +168,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
 
             LogsAppService.InsertLogToDatabase(unsuitabilityTypesItems, unsuitabilityTypesItems, LoginedUserService.UserId, Tables.UnsuitabilityTypesItems, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnsuitabilityTypesItemsDto>(unsuitabilityTypesItems);
 
         }
@@ -174,6 +178,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
         {
             var query = queryFactory.Query().From(Tables.UnsuitabilityTypesItems).Select("*").Where(null, true, true, "");
             var unsuitabilityTypesItems = queryFactory.GetList<ListUnsuitabilityTypesItemsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListUnsuitabilityTypesItemsDto>>(unsuitabilityTypesItems);
 
         }
@@ -204,6 +209,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
             }).Where(new { Id = id }, true, true, "");
 
             var unsuitabilityTypesItems = queryFactory.Update<SelectUnsuitabilityTypesItemsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnsuitabilityTypesItemsDto>(unsuitabilityTypesItems);
 
         }
@@ -220,6 +226,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
 
             LogsAppService.InsertLogToDatabase(unsuitabilityTypesItems, unsuitabilityTypesItems, LoginedUserService.UserId, Tables.UnsuitabilityTypesItems, LogType.Get, unsuitabilityTypesItems.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnsuitabilityTypesItemsDto>(unsuitabilityTypesItems);
 
         }

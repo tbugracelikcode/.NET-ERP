@@ -18,10 +18,6 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos
         /// </summary>
         public string FicheNo { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-        /// <summary>
         /// MRP ID
         /// </summary>
         public Guid? MRPID { get; set; }
@@ -29,11 +25,6 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos
         /// MRP Kodu
         /// </summary>
         public string MRPCode { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
         /// <summary>
         /// Tarih
         /// </summary>

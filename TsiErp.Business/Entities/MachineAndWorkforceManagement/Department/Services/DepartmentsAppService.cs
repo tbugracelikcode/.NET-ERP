@@ -78,6 +78,7 @@ namespace TsiErp.Business.Entities.Department.Services
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Departments, LogType.Insert, addedEntityId);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectDepartmentsDto>(departments);
         }
 
@@ -107,6 +108,7 @@ namespace TsiErp.Business.Entities.Department.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Departments, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectDepartmentsDto>(departments);
             }
         }
@@ -128,6 +130,7 @@ namespace TsiErp.Business.Entities.Department.Services
 
             LogsAppService.InsertLogToDatabase(department, department, LoginedUserService.UserId, Tables.Departments, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectDepartmentsDto>(department);
         }
 
@@ -145,6 +148,7 @@ namespace TsiErp.Business.Entities.Department.Services
                         )
                 .Where(null, true, true, Tables.Departments);
             var departments = queryFactory.GetList<ListDepartmentsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListDepartmentsDto>>(departments);
         }
 
@@ -190,6 +194,7 @@ namespace TsiErp.Business.Entities.Department.Services
 
             LogsAppService.InsertLogToDatabase(entity, departments, LoginedUserService.UserId, Tables.Departments, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectDepartmentsDto>(departments);
         }
 
@@ -219,6 +224,7 @@ namespace TsiErp.Business.Entities.Department.Services
             }).Where(new { Id = id }, true, true, "");
 
             var departments = queryFactory.Update<SelectDepartmentsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectDepartmentsDto>(departments);
         }
     }

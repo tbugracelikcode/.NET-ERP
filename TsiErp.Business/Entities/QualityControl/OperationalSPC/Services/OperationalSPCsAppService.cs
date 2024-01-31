@@ -133,6 +133,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationalSPCs, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationalSPCsDto>(OperationalSPC);
 
         }
@@ -179,6 +180,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
 
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationalSPCs, LogType.Delete, id);
 
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectOperationalSPCsDto>(OperationalSPC);
                 }
                 else
@@ -193,6 +195,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
 
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationalSPCLines, LogType.Delete, id);
 
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectOperationalSPCLinesDto>(OperationalSPCLines);
                 }
             }
@@ -234,6 +237,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
 
             LogsAppService.InsertLogToDatabase(OperationalSPCs, OperationalSPCs, LoginedUserService.UserId, Tables.OperationalSPCs, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationalSPCsDto>(OperationalSPCs);
 
         }
@@ -248,6 +252,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                     .Where(null, false, false, Tables.OperationalSPCs);
 
             var OperationalSPCs = queryFactory.GetList<ListOperationalSPCsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListOperationalSPCsDto>>(OperationalSPCs);
 
         }
@@ -405,6 +410,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.OperationalSPCs, LogType.Update, OperationalSPC.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationalSPCsDto>(OperationalSPC);
 
         }
@@ -435,6 +441,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
             }).Where(new { Id = id }, false, false, "");
 
             var OperationalSPCsDto = queryFactory.Update<SelectOperationalSPCsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationalSPCsDto>(OperationalSPCsDto);
 
 

@@ -75,6 +75,7 @@ namespace TsiErp.Business.Entities.Currency.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Currencies, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
 
             return new SuccessDataResult<SelectCurrenciesDto>(currencies);
 
@@ -115,6 +116,7 @@ namespace TsiErp.Business.Entities.Currency.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Currencies, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectCurrenciesDto>(currencies);
             }
         }
@@ -132,6 +134,7 @@ namespace TsiErp.Business.Entities.Currency.Services
 
             LogsAppService.InsertLogToDatabase(currency, currency, LoginedUserService.UserId, Tables.Currencies, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCurrenciesDto>(currency);
 
         }
@@ -142,6 +145,7 @@ namespace TsiErp.Business.Entities.Currency.Services
         {
             var query = queryFactory.Query().From(Tables.Currencies).Select("*").Where(null, true, true, "");
             var currencies = queryFactory.GetList<ListCurrenciesDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListCurrenciesDto>>(currencies);
 
         }
@@ -187,6 +191,7 @@ namespace TsiErp.Business.Entities.Currency.Services
 
             LogsAppService.InsertLogToDatabase(entity, currencies, LoginedUserService.UserId, Tables.Currencies, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCurrenciesDto>(currencies);
 
         }
@@ -216,6 +221,7 @@ namespace TsiErp.Business.Entities.Currency.Services
             }).Where(new { Id = id }, true, true, "");
 
             var currencies = queryFactory.Update<SelectCurrenciesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCurrenciesDto>(currencies);
 
         }

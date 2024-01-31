@@ -47,6 +47,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
 
             var ficheNumbers = queryFactory.Insert<SelectFicheNumbersDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectFicheNumbersDto>(ficheNumbers);
 
         }
@@ -65,6 +66,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
 
             var ficheNumbers = queryFactory.Get<SelectFicheNumbersDto>(query);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectFicheNumbersDto>(ficheNumbers);
 
         }
@@ -75,6 +77,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
 
             var ficheNumbers = queryFactory.GetList<ListFicheNumbersDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListFicheNumbersDto>>(ficheNumbers);
         }
 
@@ -96,6 +99,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
             var ficheNumbers = queryFactory.Update<SelectFicheNumbersDto>(query, "Id", true);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectFicheNumbersDto>(ficheNumbers);
         }
 

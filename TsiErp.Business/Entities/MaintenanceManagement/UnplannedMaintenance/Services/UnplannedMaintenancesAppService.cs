@@ -113,6 +113,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UnplannedMaintenances, LogType.Insert, maintenance.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnplannedMaintenancesDto>(maintenance);
         }
 
@@ -134,6 +135,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
 
                 var maintenance = queryFactory.Update<SelectUnplannedMaintenancesDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.UnplannedMaintenances, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectUnplannedMaintenancesDto>(maintenance);
             }
             else
@@ -141,6 +143,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                 var queryLine = queryFactory.Query().From(Tables.UnplannedMaintenanceLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                 var maintenanceLines = queryFactory.Update<SelectUnplannedMaintenanceLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.UnplannedMaintenanceLines, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectUnplannedMaintenanceLinesDto>(maintenanceLines);
             }
         }
@@ -195,6 +198,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
 
             LogsAppService.InsertLogToDatabase(maintenances, maintenances, LoginedUserService.UserId, Tables.UnplannedMaintenances, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnplannedMaintenancesDto>(maintenances);
         }
 
@@ -222,6 +226,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                     .Where(null, false, false, Tables.UnplannedMaintenances);
 
             var maintenances = queryFactory.GetList<ListUnplannedMaintenancesDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListUnplannedMaintenancesDto>>(maintenances);
         }
 
@@ -397,6 +402,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.UnplannedMaintenances, LogType.Update, maintenance.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnplannedMaintenancesDto>(maintenance);
         }
 
@@ -435,6 +441,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
             }).Where(new { Id = id }, false, false, "");
 
             var maintenancesDto = queryFactory.Update<SelectUnplannedMaintenancesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnplannedMaintenancesDto>(maintenancesDto);
         }
     }

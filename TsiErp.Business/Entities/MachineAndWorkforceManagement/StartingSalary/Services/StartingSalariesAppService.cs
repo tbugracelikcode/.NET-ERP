@@ -104,6 +104,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StartingSalaries, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStartingSalariesDto>(billOfMaterial);
 
         }
@@ -125,6 +126,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
 
                 var billOfMaterial = queryFactory.Update<SelectStartingSalariesDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StartingSalaries, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectStartingSalariesDto>(billOfMaterial);
             }
             else
@@ -132,6 +134,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                 var queryLine = queryFactory.Query().From(Tables.StartingSalaryLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                 var billOfMaterialLines = queryFactory.Update<SelectStartingSalaryLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StartingSalaryLines, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectStartingSalaryLinesDto>(billOfMaterialLines);
             }
 
@@ -169,6 +172,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
 
             LogsAppService.InsertLogToDatabase(StartingSalaries, StartingSalaries, LoginedUserService.UserId, Tables.StartingSalaries, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStartingSalariesDto>(StartingSalaries);
 
         }
@@ -182,6 +186,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                    .Select("*").Where(null, false, false, "");
 
             var StartingSalaries = queryFactory.GetList<ListStartingSalariesDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListStartingSalariesDto>>(StartingSalaries);
 
         }
@@ -315,6 +320,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.StartingSalaries, LogType.Update, billOfMaterial.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStartingSalariesDto>(billOfMaterial);
 
         }
@@ -344,6 +350,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
             }).Where(new { Id = id }, false, false, "");
 
             var StartingSalariesDto = queryFactory.Update<SelectStartingSalariesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStartingSalariesDto>(StartingSalariesDto);
 
 

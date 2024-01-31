@@ -75,6 +75,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.EmployeeSeniorities, LogType.Insert, addedEntityId);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeSenioritiesDto>(EmployeeSeniorities);
         }
 
@@ -109,6 +110,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EmployeeSeniorities, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectEmployeeSenioritiesDto>(EmployeeSeniorities);
             }
         }
@@ -126,6 +128,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             LogsAppService.InsertLogToDatabase(EmployeeSeniority, EmployeeSeniority, LoginedUserService.UserId, Tables.EmployeeSeniorities, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeSenioritiesDto>(EmployeeSeniority);
         }
 
@@ -135,6 +138,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         {
             var query = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("*").Where(null, false, false, "");
             var EmployeeSeniorities = queryFactory.GetList<ListEmployeeSenioritiesDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListEmployeeSenioritiesDto>>(EmployeeSeniorities);
         }
 
@@ -179,6 +183,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             LogsAppService.InsertLogToDatabase(entity, EmployeeSeniorities, LoginedUserService.UserId, Tables.EmployeeSeniorities, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeSenioritiesDto>(EmployeeSeniorities);
         }
 
@@ -207,6 +212,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             }).Where(new { Id = id }, false, false, "");
 
             var EmployeeSeniorities = queryFactory.Update<SelectEmployeeSenioritiesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeSenioritiesDto>(EmployeeSeniorities);
         }
     }

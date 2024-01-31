@@ -62,6 +62,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.EmployeeAnnualSeniorityDifferences, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeAnnualSeniorityDifferencesDto>(EmployeeAnnualSeniorityDifferences);
         }
 
@@ -76,6 +77,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EmployeeAnnualSeniorityDifferences, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeAnnualSeniorityDifferencesDto>(EmployeeAnnualSeniorityDifferences);
         }
 
@@ -95,6 +97,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             LogsAppService.InsertLogToDatabase(EmployeeSeniority, EmployeeSeniority, LoginedUserService.UserId, Tables.EmployeeAnnualSeniorityDifferences, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeAnnualSeniorityDifferencesDto>(EmployeeSeniority);
         }
 
@@ -112,6 +115,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                         ).Where(null, false, false, Tables.EmployeeAnnualSeniorityDifferences);
 
             var employeeAnnualSeniorityDifferences = queryFactory.GetList<ListEmployeeAnnualSeniorityDifferencesDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListEmployeeAnnualSeniorityDifferencesDto>>(employeeAnnualSeniorityDifferences);
         }
 
@@ -154,6 +158,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             LogsAppService.InsertLogToDatabase(entity, employeeAnnualSeniorityDifferences, LoginedUserService.UserId, Tables.EmployeeAnnualSeniorityDifferences, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeAnnualSeniorityDifferencesDto>(employeeAnnualSeniorityDifferences);
         }
 
@@ -183,6 +188,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             }).Where(new { Id = id }, false, false, "");
 
             var EmployeeAnnualSeniorityDifferences = queryFactory.Update<SelectEmployeeAnnualSeniorityDifferencesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeAnnualSeniorityDifferencesDto>(EmployeeAnnualSeniorityDifferences);
         }
     }

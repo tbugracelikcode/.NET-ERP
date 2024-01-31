@@ -174,6 +174,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractQualityPlans, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectContractQualityPlansDto>(ContractQualityPlan);
 
         }
@@ -216,6 +217,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 var ContractQualityPlan = queryFactory.Update<SelectContractQualityPlansDto>(deleteQuery, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractQualityPlans, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectContractQualityPlansDto>(ContractQualityPlan);
             }
         }
@@ -225,6 +227,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
             var queryLine = queryFactory.Query().From(Tables.ContractQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
             var ContractQualityPlanLines = queryFactory.Update<SelectContractQualityPlanLinesDto>(queryLine, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractQualityPlanLines, LogType.Delete, id);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectContractQualityPlanLinesDto>(ContractQualityPlanLines);
 
         }
@@ -234,6 +237,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
             var queryContractPicture = queryFactory.Query().From(Tables.ContractOperationPictures).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
             var contractPictures = queryFactory.Update<SelectContractOperationPicturesDto>(queryContractPicture, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractOperationPictures, LogType.Delete, id);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectContractOperationPicturesDto>(contractPictures);
 
         }
@@ -243,6 +247,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
             var queryContractOperation = queryFactory.Query().From(Tables.ContractQualityPlanOperations).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
             var contractOperations = queryFactory.Update<SelectContractQualityPlanOperationsDto>(queryContractOperation, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractQualityPlanOperations, LogType.Delete, id);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectContractQualityPlanOperationsDto>(contractOperations);
 
         }
@@ -343,6 +348,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
 
             LogsAppService.InsertLogToDatabase(contractQualityPlans, contractQualityPlans, LoginedUserService.UserId, Tables.ContractQualityPlans, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectContractQualityPlansDto>(contractQualityPlans);
 
         }
@@ -371,6 +377,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                     .Where(null, false, false, Tables.ContractQualityPlans);
 
             var contractQualityPlans = queryFactory.GetList<ListContractQualityPlansDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListContractQualityPlansDto>>(contractQualityPlans);
 
         }
@@ -616,6 +623,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.ContractQualityPlans, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectContractQualityPlansDto>(ContractQualityPlan);
 
         }
@@ -648,6 +656,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
             }).Where(new { Id = id }, false, false, "");
 
             var ContractQualityPlansDto = queryFactory.Update<SelectContractQualityPlansDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectContractQualityPlansDto>(ContractQualityPlansDto);
 
 

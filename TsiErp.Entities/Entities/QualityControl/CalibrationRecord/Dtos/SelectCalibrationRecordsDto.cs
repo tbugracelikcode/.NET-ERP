@@ -40,15 +40,6 @@ namespace TsiErp.Entities.Entities.QualityControl.CalibrationRecord.Dtos
         /// </summary>
         public string Result { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// CihazID
         /// </summary>
         public Guid EquipmentID { get; set; }

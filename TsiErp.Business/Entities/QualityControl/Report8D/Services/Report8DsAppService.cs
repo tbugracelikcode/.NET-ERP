@@ -270,6 +270,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Report8Ds, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectReport8DsDto>(Report8Ds);
         }
 
@@ -285,6 +286,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Report8Ds, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectReport8DsDto>(Report8Ds);
             }
         }
@@ -329,6 +331,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
             LogsAppService.InsertLogToDatabase(Report8D, Report8D, LoginedUserService.UserId, Tables.Report8Ds, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectReport8DsDto>(Report8D);
 
         }
@@ -373,6 +376,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
 
             var Report8D = queryFactory.GetList<ListReport8DsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListReport8DsDto>>(Report8D);
         }
 
@@ -610,6 +614,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
             LogsAppService.InsertLogToDatabase(entity, Report8Ds, LoginedUserService.UserId, Tables.Report8Ds, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectReport8DsDto>(Report8Ds);
         }
 
@@ -829,6 +834,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
             var Report8Ds = queryFactory.Update<SelectReport8DsDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectReport8DsDto>(Report8Ds);
 
         }

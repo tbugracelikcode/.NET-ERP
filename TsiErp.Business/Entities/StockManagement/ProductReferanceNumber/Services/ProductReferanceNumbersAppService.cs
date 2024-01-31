@@ -74,6 +74,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductReferanceNumbers, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductReferanceNumbersDto>(productReferanceNumbers);
 
         }
@@ -88,6 +89,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductReferanceNumbers, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductReferanceNumbersDto>(productReferanceNumbers);
 
         }
@@ -117,6 +119,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
             LogsAppService.InsertLogToDatabase(productReferanceNumber, productReferanceNumber, LoginedUserService.UserId, Tables.ProductReferanceNumbers, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductReferanceNumbersDto>(productReferanceNumber);
 
         }
@@ -146,6 +149,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
             var productReferanceNumbers = queryFactory.GetList<ListProductReferanceNumbersDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListProductReferanceNumbersDto>>(productReferanceNumbers);
 
         }
@@ -172,6 +176,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
             var productReferanceNumber = queryFactory.GetList<SelectProductReferanceNumbersDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectProductReferanceNumbersDto>>(productReferanceNumber);
 
         }
@@ -222,6 +227,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
             LogsAppService.InsertLogToDatabase(entity, productReferanceNumbers, LoginedUserService.UserId, Tables.ProductReferanceNumbers, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductReferanceNumbersDto>(productReferanceNumbers);
 
         }
@@ -256,6 +262,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
             var productReferanceNumbers = queryFactory.Update<SelectProductReferanceNumbersDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductReferanceNumbersDto>(productReferanceNumbers);
 
 

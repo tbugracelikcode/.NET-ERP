@@ -76,6 +76,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ControlConditions, LogType.Insert, controlConditions.Id);
 
+            await Task.CompletedTask;
 
             return new SuccessDataResult<SelectControlConditionsDto>(controlConditions);
 
@@ -90,6 +91,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ControlConditions, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectControlConditionsDto>(controlConditions);
 
         }
@@ -107,6 +109,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
             LogsAppService.InsertLogToDatabase(controlConditions, controlConditions, LoginedUserService.UserId, Tables.ControlConditions, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectControlConditionsDto>(controlConditions);
 
         }
@@ -117,6 +120,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
             var controlConditions = queryFactory.GetList<ListControlConditionsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListControlConditionsDto>>(controlConditions);
 
         }
@@ -163,6 +167,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
             LogsAppService.InsertLogToDatabase(entity, controlConditions, LoginedUserService.UserId, Tables.ControlConditions, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectControlConditionsDto>(controlConditions);
 
         }
@@ -194,6 +199,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
             var controlConditions = queryFactory.Update<SelectControlConditionsDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectControlConditionsDto>(controlConditions);
 
 

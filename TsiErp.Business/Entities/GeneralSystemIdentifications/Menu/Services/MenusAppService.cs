@@ -36,6 +36,7 @@ namespace TsiErp.Business.Entities.Menu.Services
 
             var menus = queryFactory.Insert<SelectMenusDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMenusDto>(menus);
 
         }
@@ -48,6 +49,7 @@ namespace TsiErp.Business.Entities.Menu.Services
 
             var menus = queryFactory.Update<SelectMenusDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMenusDto>(menus);
 
         }
@@ -59,10 +61,11 @@ namespace TsiErp.Business.Entities.Menu.Services
             new
             {
                 Id = id
-            }, false, false, "");
+            }, false, false, "").UseIsDelete(false);
 
             var menus = queryFactory.Get<SelectMenusDto>(query);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMenusDto>(menus);
 
         }
@@ -73,6 +76,7 @@ namespace TsiErp.Business.Entities.Menu.Services
         {
             var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(null, false, false, "").UseIsDelete(false);
             var menus = queryFactory.GetList<ListMenusDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListMenusDto>>(menus);
 
         }
@@ -93,11 +97,13 @@ namespace TsiErp.Business.Entities.Menu.Services
 
             var menus = queryFactory.Update<SelectMenusDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMenusDto>(menus);
         }
 
         public async Task<IDataResult<SelectMenusDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
+            await Task.CompletedTask;
             throw new NotImplementedException();
         }
     }

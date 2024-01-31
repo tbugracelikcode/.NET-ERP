@@ -49,15 +49,6 @@ namespace TsiErp.Entities.Entities.PlanningManagement.Calendar.Dtos
         /// Çalışılabilir Gün Sayısı
         /// </summary>
         public decimal AvailableDays { get; set; }
-        /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
         [NoDatabaseAction]
         public List<SelectCalendarLinesDto> SelectCalendarLinesDto { get; set; }
         [NoDatabaseAction]

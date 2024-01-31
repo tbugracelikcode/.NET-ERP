@@ -119,6 +119,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseQualityPlans, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseQualityPlansDto>(PurchaseQualityPlan);
 
         }
@@ -133,6 +134,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
             var PurchaseQualityPlan = queryFactory.Update<SelectPurchaseQualityPlansDto>(deleteQuery, "Id", true);
             var PurchaseQualityPlanLines = queryFactory.Update<SelectPurchaseQualityPlanLinesDto>(lineDeleteQuery, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseQualityPlans, LogType.Delete, id);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseQualityPlansDto>(PurchaseQualityPlan);
 
         }
@@ -142,6 +144,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
             var queryLine = queryFactory.Query().From(Tables.PurchaseQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
             var PurchaseQualityPlanLines = queryFactory.Update<SelectPurchaseQualityPlanLinesDto>(queryLine, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseQualityPlanLines, LogType.Delete, id);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseQualityPlanLinesDto>(PurchaseQualityPlanLines);
 
         }
@@ -216,6 +219,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
 
             LogsAppService.InsertLogToDatabase(purchaseQualityPlans, purchaseQualityPlans, LoginedUserService.UserId, Tables.PurchaseQualityPlans, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseQualityPlansDto>(purchaseQualityPlans);
 
         }
@@ -244,6 +248,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                     .Where(null, false, false, Tables.PurchaseQualityPlans);
 
             var purchaseQualityPlans = queryFactory.GetList<ListPurchaseQualityPlansDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPurchaseQualityPlansDto>>(purchaseQualityPlans);
 
         }
@@ -372,6 +377,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PurchaseQualityPlans, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseQualityPlansDto>(PurchaseQualityPlan);
 
         }
@@ -404,6 +410,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
             }).Where(new { Id = id }, false, false, "");
 
             var PurchaseQualityPlansDto = queryFactory.Update<SelectPurchaseQualityPlansDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseQualityPlansDto>(PurchaseQualityPlansDto);
 
         }

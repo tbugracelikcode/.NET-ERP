@@ -13,16 +13,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// <summary>
         /// Üretim Emri Fiş No
         /// </summary>
-        public string FicheNo { get; set; }
-        /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; } /// <summary>
+        public string FicheNo { get; set; } /// <summary>
                                                         /// Şube ID
                                                         /// </summary>
         public Guid? BranchID { get; set; }

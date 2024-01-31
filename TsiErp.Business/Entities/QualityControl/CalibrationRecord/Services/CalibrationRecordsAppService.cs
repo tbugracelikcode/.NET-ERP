@@ -79,6 +79,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CalibrationRecords, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCalibrationRecordsDto>(calibrationRecords);
 
         }
@@ -93,6 +94,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.CalibrationRecords, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCalibrationRecordsDto>(calibrationRecords);
 
         }
@@ -115,6 +117,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
             LogsAppService.InsertLogToDatabase(calibrationRecord, calibrationRecord, LoginedUserService.UserId, Tables.CalibrationRecords, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCalibrationRecordsDto>(calibrationRecord);
 
         }
@@ -137,6 +140,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
 
             var calibrationRecords = queryFactory.GetList<ListCalibrationRecordsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListCalibrationRecordsDto>>(calibrationRecords);
 
         }
@@ -189,6 +193,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
             LogsAppService.InsertLogToDatabase(entity, calibrationRecords, LoginedUserService.UserId, Tables.CalibrationRecords, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCalibrationRecordsDto>(calibrationRecords);
 
         }
@@ -223,6 +228,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
             var calibrationRecords = queryFactory.Update<SelectCalibrationRecordsDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCalibrationRecordsDto>(calibrationRecords);
 
 

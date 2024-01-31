@@ -6,12 +6,14 @@ using Syncfusion.Blazor.Lists;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using TsiErp.Business.Entities.PackageFiche.Services;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
@@ -184,6 +186,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsContextAdd"], Id = "new" }); break;
                             case "PackingListsContextChange":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsContextChange"], Id = "changed" }); break;
+                            case "PackingListsContextApprove":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsContextApprove"], Id = "approve" }); break;
                             case "PackingListsContextDelete":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsContextDelete"], Id = "delete" }); break;
                             case "PackingListsContextRefresh":
@@ -266,6 +270,28 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     GridLinePalletPackageList = DataSource.SelectPackingListPalletPackageLines;
 
                     ShowEditPage();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "approve":
+                    IsChanged = true;
+                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    GridLineCubageList = DataSource.SelectPackingListPalletCubageLines;
+                    GridLinePalletList = DataSource.SelectPackingListPalletLines;
+                    GridLinePalletPackageList = DataSource.SelectPackingListPalletPackageLines;
+
+                    foreach(var item in GridLinePalletPackageList)
+                    {
+                        var salesOrder = (await SalesOrdersAppService.GetAsync(item.SalesOrderID.GetValueOrDefault())).Data;
+                        var salesOrderLine = salesOrder.SelectSalesOrderLines.Where(t => t.Id == item.SalesOrderLineID.GetValueOrDefault()).FirstOrDefault();
+                        int lineIndex = salesOrder.SelectSalesOrderLines.IndexOf(salesOrderLine);
+                        salesOrder.SelectSalesOrderLines[lineIndex].SalesOrderLineStateEnum = SalesOrderLineStateEnum.SevkEdildi;
+
+                        var updateInput = ObjectMapper.Map<SelectSalesOrderDto, UpdateSalesOrderDto>(salesOrder);
+
+                        await SalesOrdersAppService.UpdateAsync(updateInput);
+                    }
+                    await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageApproveMessage"]);
                     await InvokeAsync(StateHasChanged);
                     break;
 

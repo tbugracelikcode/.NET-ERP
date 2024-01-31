@@ -64,6 +64,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.GeneralSkillRecordPriorities, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectGeneralSkillRecordPrioritiesDto>(GeneralSkillRecordPriorities);
         }
 
@@ -78,6 +79,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.GeneralSkillRecordPriorities, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectGeneralSkillRecordPrioritiesDto>(GeneralSkillRecordPriorities);
         }
 
@@ -97,6 +99,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             LogsAppService.InsertLogToDatabase(EmployeeSeniority, EmployeeSeniority, LoginedUserService.UserId, Tables.GeneralSkillRecordPriorities, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectGeneralSkillRecordPrioritiesDto>(EmployeeSeniority);
         }
 
@@ -114,6 +117,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                         ).Where(null, false, false, Tables.GeneralSkillRecordPriorities);
 
             var generalSkillRecordPriorities = queryFactory.GetList<ListGeneralSkillRecordPrioritiesDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListGeneralSkillRecordPrioritiesDto>>(generalSkillRecordPriorities);
         }
 
@@ -157,6 +161,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             LogsAppService.InsertLogToDatabase(entity, generalSkillRecordPriorities, LoginedUserService.UserId, Tables.GeneralSkillRecordPriorities, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectGeneralSkillRecordPrioritiesDto>(generalSkillRecordPriorities);
         }
 
@@ -187,6 +192,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             }).Where(new { Id = id }, false, false, "");
 
             var GeneralSkillRecordPriorities = queryFactory.Update<SelectGeneralSkillRecordPrioritiesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectGeneralSkillRecordPrioritiesDto>(GeneralSkillRecordPriorities);
         }
     }

@@ -74,6 +74,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StationGroups, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
 
         }
@@ -125,6 +126,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StationGroups, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
             }
         }
@@ -141,6 +143,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
 
             LogsAppService.InsertLogToDatabase(stationGroup, stationGroup, LoginedUserService.UserId, Tables.StationGroups, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStationGroupsDto>(stationGroup);
         }
 
@@ -149,6 +152,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
         {
             var query = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(null, true, true, "");
             var stationGroups = queryFactory.GetList<ListStationGroupsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListStationGroupsDto>>(stationGroups);
         }
 
@@ -194,6 +198,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
 
             LogsAppService.InsertLogToDatabase(entity, stationGroups, LoginedUserService.UserId, Tables.StationGroups, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
         }
 
@@ -223,6 +228,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
             }).Where(new { Id = id }, true, true, "");
 
             var stationGroups = queryFactory.Update<SelectStationGroupsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
         }
     }

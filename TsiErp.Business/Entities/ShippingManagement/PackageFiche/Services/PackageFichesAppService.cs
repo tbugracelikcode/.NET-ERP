@@ -109,6 +109,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PackageFiches, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPackageFichesDto>(packageFiche);
 
         }
@@ -130,6 +131,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
 
                 var packageFiche = queryFactory.Update<SelectPackageFichesDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PackageFiches, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectPackageFichesDto>(packageFiche);
             }
             else
@@ -137,6 +139,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                 var queryLine = queryFactory.Query().From(Tables.PackageFicheLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                 var packageFicheLines = queryFactory.Update<SelectPackageFicheLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PackageFicheLines, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectPackageFicheLinesDto>(packageFicheLines);
             }
 
@@ -200,6 +203,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
 
             LogsAppService.InsertLogToDatabase(packageFiches, packageFiches, LoginedUserService.UserId, Tables.PackageFiches, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPackageFichesDto>(packageFiches);
 
         }
@@ -235,6 +239,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                     .Where(null, false, false, Tables.PackageFiches);
 
             var packageFiches = queryFactory.GetList<ListPackageFichesDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPackageFichesDto>>(packageFiches);
 
         }
@@ -423,6 +428,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PackageFiches, LogType.Update, billOfMaterial.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPackageFichesDto>(billOfMaterial);
 
         }
@@ -459,6 +465,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
             }).Where(new { Id = id }, false, false, "");
 
             var PackageFichesDto = queryFactory.Update<SelectPackageFichesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPackageFichesDto>(PackageFichesDto);
 
 

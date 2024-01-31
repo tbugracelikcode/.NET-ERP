@@ -67,6 +67,7 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Serv
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationAdjustments, LogType.Insert, operationAdjustment.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationAdjustmentsDto>(operationAdjustment);
         }
 
@@ -104,6 +105,7 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Serv
 
             LogsAppService.InsertLogToDatabase(operationAdjustment, operationAdjustment, LoginedUserService.UserId, Tables.OperationAdjustments, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationAdjustmentsDto>(operationAdjustment);
         }
 
@@ -140,6 +142,7 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Serv
 
             var operationAdjustments = queryFactory.GetList<ListOperationAdjustmentsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListOperationAdjustmentsDto>>(operationAdjustments);
         }
 
@@ -150,6 +153,7 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Serv
 
             var operationAdjustment = queryFactory.Get<int>(query);
 
+            await Task.CompletedTask;
             return operationAdjustment;
         }
 

@@ -189,6 +189,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Calendars, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCalendarsDto>(calendar);
 
         }
@@ -210,6 +211,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
                 var calendar = queryFactory.Update<SelectCalendarsDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Calendars, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectCalendarsDto>(calendar);
             }
             else
@@ -217,6 +219,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 var queryLine = queryFactory.Query().From(Tables.CalendarLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                 var calendarLines = queryFactory.Update<SelectCalendarLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.CalendarLines, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectCalendarLinesDto>(calendarLines);
             }
         }
@@ -265,6 +268,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
             LogsAppService.InsertLogToDatabase(calendar, calendar, LoginedUserService.UserId, Tables.Calendars, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCalendarsDto>(calendar);
 
         }
@@ -273,6 +277,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
         {
             var query = queryFactory.Query().From(Tables.CalendarDays).Select("*").Where(new { CalendarID = calendarID }, false, false, "");
             var calendarDays = queryFactory.GetList<SelectCalendarDaysDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectCalendarDaysDto>>(calendarDays);
         }
 
@@ -295,6 +300,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                     ).Where(new { CalendarID = calendarID }, false, false, "");
             var calendarLines = queryFactory.GetList<ListCalendarLinesDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListCalendarLinesDto>>(calendarLines);
         }
 
@@ -303,6 +309,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
         {
             var query = queryFactory.Query().From(Tables.Calendars).Select("*").Where(null, false, false, "");
             var calendars = queryFactory.GetList<ListCalendarsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListCalendarsDto>>(calendars);
         }
 
@@ -513,6 +520,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Calendars, LogType.Update, input.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCalendarsDto>(calendar);
         }
 
@@ -545,6 +553,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             }).Where(new { Id = id }, false, false, "");
 
             var calendarsDto = queryFactory.Update<SelectCalendarsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCalendarsDto>(calendarsDto);
 
 

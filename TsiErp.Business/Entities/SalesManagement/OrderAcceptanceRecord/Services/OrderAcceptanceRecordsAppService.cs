@@ -120,6 +120,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OrderAcceptanceRecords, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOrderAcceptanceRecordsDto>(OrderAcceptanceRecord);
 
         }
@@ -141,6 +142,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
                 var OrderAcceptanceRecord = queryFactory.Update<SelectOrderAcceptanceRecordsDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OrderAcceptanceRecords, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectOrderAcceptanceRecordsDto>(OrderAcceptanceRecord);
             }
             else
@@ -148,6 +150,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 var queryLine = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                 var OrderAcceptanceRecordLines = queryFactory.Update<SelectOrderAcceptanceRecordLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OrderAcceptanceRecordLines, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectOrderAcceptanceRecordLinesDto>(OrderAcceptanceRecordLines);
             }
 
@@ -203,6 +206,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
             LogsAppService.InsertLogToDatabase(orderAcceptanceRecords, orderAcceptanceRecords, LoginedUserService.UserId, Tables.OrderAcceptanceRecords, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOrderAcceptanceRecordsDto>(orderAcceptanceRecords);
 
         }
@@ -232,6 +236,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
             var orderAcceptanceRecords = queryFactory.GetList<ListOrderAcceptanceRecordsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListOrderAcceptanceRecordsDto>>(orderAcceptanceRecords);
 
         }
@@ -420,6 +425,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.OrderAcceptanceRecords, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOrderAcceptanceRecordsDto>(OrderAcceptanceRecord);
 
         }
@@ -457,6 +463,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
             }).Where(new { Id = id }, false, false, "");
 
             var OrderAcceptanceRecordsDto = queryFactory.Update<SelectOrderAcceptanceRecordsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOrderAcceptanceRecordsDto>(OrderAcceptanceRecordsDto);
 
 

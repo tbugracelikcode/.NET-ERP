@@ -184,6 +184,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                     var templateOperation = queryFactory.Update<SelectTemplateOperationsDto>(deleteQuery, "Id", true);
 
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectTemplateOperationsDto>(templateOperation);
                 }
                 else
@@ -193,6 +194,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                     var templateOperationLines = queryFactory.Update<SelectTemplateOperationLinesDto>(queryLine, "Id", true);
 
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TemplateOperationLines, LogType.Delete, id);
+                    await Task.CompletedTask;
 
                     return new SuccessDataResult<SelectTemplateOperationLinesDto>(templateOperationLines);
                 }
@@ -297,6 +299,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
             LogsAppService.InsertLogToDatabase(templateOperations, templateOperations, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectTemplateOperationsDto>(templateOperations);
 
         }
@@ -337,6 +340,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             }
             #endregion
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListTemplateOperationsDto>>(templateOperations);
 
         }
@@ -553,6 +557,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectTemplateOperationsDto>(templateOperation);
 
         }
@@ -592,6 +597,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             }).Where(new { Id = id }, true, true, "");
 
             var templateOperationsDto = queryFactory.Update<SelectTemplateOperationsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectTemplateOperationsDto>(templateOperationsDto);
 
         }
@@ -684,6 +690,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 }
             }
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectTemplateOperationUnsuitabilityItemsDto>>(list);
 
         }

@@ -18,10 +18,6 @@ namespace TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos
         /// </summary>
         public DateTime? RevisionDate { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-        /// <summary>
         /// Cari Hesap ID
         /// </summary>
         public Guid? CustomerCurrentAccountCardID { get; set; }
@@ -29,11 +25,6 @@ namespace TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos
         /// Müşteri Kodu
         /// </summary>
         public string CustomerCode { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
         /// <summary>
         /// Çizen
         /// </summary>

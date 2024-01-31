@@ -14,15 +14,6 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.User.Dtos
         /// </summary>
         public string Code { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// Kullanıcı Adı
         /// </summary>
         public string UserName { get; set; }

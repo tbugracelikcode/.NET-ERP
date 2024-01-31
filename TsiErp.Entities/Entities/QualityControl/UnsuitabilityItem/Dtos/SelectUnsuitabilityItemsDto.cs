@@ -79,14 +79,5 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos
         /// Şiddet Kat Sayısı
         /// </summary>
         public int IntensityCoefficient { get; set; }
-        /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
     }
 }
