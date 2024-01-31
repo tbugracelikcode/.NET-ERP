@@ -105,7 +105,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Controllers\ReportControllers\StockManagement\" />
 		<Folder Include="wwwroot\ExportedGridFiles\" />
 	</ItemGroup>
 

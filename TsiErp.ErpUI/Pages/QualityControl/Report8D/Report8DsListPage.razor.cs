@@ -498,8 +498,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
         #region Stok Kartı Button Edit
 
-        SfTextBox ProductsCodeButtonEdit;
-        SfTextBox ProductsNameButtonEdit;
+        SfTextBox ProductsCodeButtonEdit = new();
+        SfTextBox ProductsNameButtonEdit = new();
         bool SelectProductsPopupVisible = false;
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
         public async Task ProductsCodeOnCreateIcon()
@@ -559,8 +559,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
         #region Müşteri ButtonEdit
 
-        SfTextBox CustomersCodeButtonEdit;
-        SfTextBox CustomersNameButtonEdit;
+        SfTextBox CustomersCodeButtonEdit = new();
+        SfTextBox CustomersNameButtonEdit = new();
         bool SelectCustomersPopupVisible = false;
         List<ListCurrentAccountCardsDto> CustomersList = new List<ListCurrentAccountCardsDto>();
 
@@ -623,9 +623,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
         #region Tedarikçi ButtonEdit
 
-        SfTextBox SuppliersCodeButtonEdit;
-        SfTextBox SuppliersNameButtonEdit;
-        bool SelectSuppliersPopupVisible = false;
+        SfTextBox SuppliersCodeButtonEdit = new();
+        SfTextBox SuppliersNameButtonEdit = new();
+        bool SelectSuppliersPopupVisible;
         List<ListCurrentAccountCardsDto> SuppliersList = new List<ListCurrentAccountCardsDto>();
 
         public async Task SuppliersCodeOnCreateIcon()

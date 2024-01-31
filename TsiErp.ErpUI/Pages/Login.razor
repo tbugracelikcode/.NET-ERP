@@ -131,8 +131,7 @@
 
     string User = string.Empty;
     string Password = string.Empty;
-    bool vispopup = false;
-    bool VisibleSpinner = false;
+    bool vispopup;
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
@@ -157,7 +156,6 @@
 
         if (loginnedUser != null)
         {
-            VisibleSpinner = true;
 
             //LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
 

@@ -78,7 +78,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
         #region Değişkenler
 
-        private bool isCell;
+        //private bool isCell;
         public bool chcTumu = true;
         public bool chcCalismaVar;
         public bool chcCalismaYok;
@@ -89,10 +89,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         public bool chcBakim;
         private bool StationsModalVisible = false;
         private bool LineModalVisible = false;
-        string cardbgcolor = "white";
+        //string cardbgcolor = "white";
         public DateTime officialHoliday = DateTime.Today;
         public DateTime CurrentDate = DateTime.Today;
-        int selection = 0;
+        //int selection = 0;
         public DateTime? selectedDate = null;
         public string selectedDateStr = string.Empty;
         public bool isAllStationsChecked = false;
@@ -444,6 +444,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             args.Cancel = true;
             selectedDate = args.StartTime;
             ShowStationsModal();
+
+
+            await Task.CompletedTask;
         }
 
 
@@ -1171,7 +1174,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         #region Bakım Periyodu ButtonEdit 
 
         SfTextBox MaintenancePeriodsButtonEdit;
-        bool SelectMaintenancePeriodsPopupVisible = false;
+        //bool SelectMaintenancePeriodsPopupVisible = new();
         List<ListMaintenancePeriodsDto> MaintenancePeriodsList = new List<ListMaintenancePeriodsDto>();
         public async Task MaintenancePeriodsOnCreateIcon()
         {
@@ -1181,7 +1184,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
         public async void MaintenancePeriodsButtonClickEvent()
         {
-            SelectMaintenancePeriodsPopupVisible = true;
+            //SelectMaintenancePeriodsPopupVisible = true;
             await GetMaintenancePeriodsList();
             await InvokeAsync(StateHasChanged);
         }
@@ -1204,7 +1207,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                 MaintenanceDataSource.PeriodID = selectedMaintenancePeriod.Id;
                 MaintenanceDataSource.PeriodName = selectedMaintenancePeriod.Name;
                 MaintenanceDataSource.PeriodTime = selectedMaintenancePeriod.PeriodTime;
-                SelectMaintenancePeriodsPopupVisible = false;
+                //SelectMaintenancePeriodsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
 
                 if (MaintenanceDataSource.PeriodID != null && MaintenanceDataSource.StationID != null)

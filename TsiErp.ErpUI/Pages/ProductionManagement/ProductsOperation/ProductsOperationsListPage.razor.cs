@@ -71,14 +71,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         #endregion
 
 
-        private bool StationLineCrudPopup = false;
+        bool StationLineCrudPopup;
 
-        private bool QualityPlanLineCrudPopup = false;
+        //bool QualityPlanLineCrudPopup = new();
 
-        private bool AmountsbyProductionOrdersPopup = false;
+        bool AmountsbyProductionOrdersPopup;
 
-
-        bool SelectCurrentAccountCardsPopupVisible = false;
+        bool SelectCurrentAccountCardsPopupVisible;
 
         protected override async void OnInitialized()
         {
@@ -559,7 +558,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
 
         public void HideQualityPlanLinesPopup()
         {
-            QualityPlanLineCrudPopup = false;
+            //QualityPlanLineCrudPopup = false;
         }
 
         public void HideAmountsbyProductionOrdersPopup()

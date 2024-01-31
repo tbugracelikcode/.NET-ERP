@@ -571,6 +571,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 default:
                     break;
             }
+
+
+            await Task.CompletedTask;
         }
 
         #endregion

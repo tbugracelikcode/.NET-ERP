@@ -62,7 +62,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
         bool UploadedFile = false;
 
-        bool disable;
+        //bool disable = new();
 
         bool ImagePreviewPopup = false;
 
@@ -696,7 +696,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
             HideOperationPicturesPopup();
 
-            disable = false;
+            //disable = false;
 
             uploadedfiles.Clear();
 
@@ -1044,7 +1044,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
         #region Kontrol Türü Button Edit
 
-        SfTextBox ControlTypesCodeButtonEdit;
+        SfTextBox ControlTypesCodeButtonEdit = new();
         SfTextBox ControlTypesNameButtonEdit;
         bool SelectControlTypesPopupVisible = false;
         List<ListControlTypesDto> ControlTypesList = new List<ListControlTypesDto>();
@@ -1099,8 +1099,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
         #region Kontrol Şartı Button Edit
 
-        SfTextBox ControlConditionsCodeButtonEdit;
-        SfTextBox ControlConditionsNameButtonEdit;
+        SfTextBox ControlConditionsCodeButtonEdit = new();
+        SfTextBox ControlConditionsNameButtonEdit = new();
         bool SelectControlConditionsPopupVisible = false;
         List<ListControlConditionsDto> ControlConditionsList = new List<ListControlConditionsDto>();
         public async Task ControlConditionsCodeOnCreateIcon()

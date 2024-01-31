@@ -340,7 +340,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
         #region Cari Hesap ButtonEdit
 
-        SfTextBox CurrentAccountCardsCustomerCodeButtonEdit;
+        SfTextBox CurrentAccountCardsCustomerCodeButtonEdit = new();
         bool SelectCurrentAccountCardsPopupVisible = false;
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
@@ -603,12 +603,12 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         }
 
 
-        public void OnDateFocus()
+        public async void OnDateFocus()
         {
             if (DataSource.OperationStartDate == DateTime.MinValue || DataSource.OperationStartDate == null)
             {
                 _endDatePicker.Enabled = false;
-                ModalManager.WarningPopupAsync(L["UIConfirmationModalTitleBase"], L["UIWarningPopupMessageBase"]);
+                await ModalManager.WarningPopupAsync(L["UIConfirmationModalTitleBase"], L["UIWarningPopupMessageBase"]);
             }
         }
         public void OnDateChange()

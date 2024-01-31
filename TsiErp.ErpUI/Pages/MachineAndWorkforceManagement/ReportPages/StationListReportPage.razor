@@ -1,0 +1,145 @@
+﻿@page "/station-list-report"
+@layout MainLayout
+
+@inject IStationsAppService StationsAppService
+@inject IStationGroupsAppService StationGroupsAppService
+@inject IStationReportsAppService StationReportsAppService
+
+
+@inject IStringLocalizer<ReportsResource> ReportLocalizer
+@inject IStringLocalizer<StationsResource> StationsLocalizer
+
+<DevGridLayoutFilterRow ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+    <GridLayoutItems>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIListPageTitleCard">
+                    <CardContent>
+                        <TsiBreadCrumb PreviousMenus="Makine & İş Gücü Yönetimi > Raporlar" CurrentMenu="İş İstasyonları Listesi" />
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+        <DxGridLayoutItem Row="1" Column="0" ColumnSpan="1">
+            <Template>
+
+                <SfCard class="TSIReportFilterCard">
+
+                    <CardContent>
+
+                        <DxGridLayout CssClass="TSIGridLayout">
+                            <Rows>
+                                <DxGridLayoutRow Height="48%" />
+                                <DxGridLayoutRow Height="2%" />
+                            </Rows>
+                            <Columns>
+                                <DxGridLayoutColumn Width="2%" />
+                                <DxGridLayoutColumn Width="30%" />
+                                <DxGridLayoutColumn Width="4%" />
+                                <DxGridLayoutColumn Width="30%" />
+                            </Columns>
+                            <Items>
+
+                                <DxGridLayoutItem Row="0" Column="1">
+                                    <Template>
+
+                                        <br />
+                                        <label class="TSIModalLabel"><strong>Departman : </strong></label><br />
+
+                                        <SfMultiSelect @bind-Value="@BindingStationGroups"
+                                                       DataSource="@StationGroups"
+                                                       AllowFiltering=true
+                                                       Mode="VisualMode.CheckBox"
+                                                       ShowSelectAll=true
+                                                       SelectAllText=@ReportLocalizer["SelectAllText"]
+                                                       UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
+                                                       ShowDropDownIcon="true">
+
+                                            <MultiSelectTemplates TItem="ListStationGroupsDto">
+                                                <ItemTemplate>
+                                                    <span class='item'>
+                                                        <span class='name'>@((context as ListStationGroupsDto).Code)</span>
+                                                        <span class='city'>@((context as ListStationGroupsDto).Name)</span>
+                                                    </span>
+                                                </ItemTemplate>
+                                            </MultiSelectTemplates>
+                                            <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                        </SfMultiSelect>
+
+                                    </Template>
+                                </DxGridLayoutItem>
+
+
+                                <DxGridLayoutItem Row="0" Column="3">
+                                    <Template>
+                                        <br />
+                                        <br />
+                                        <SfButton CssClass="TSISaveButton" OnClick="CreateReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["CreateReport"]</SfButton>
+                                    </Template>
+                                </DxGridLayoutItem>
+
+                            </Items>
+                        </DxGridLayout>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+
+        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIGridCards">
+
+                    <CardContent>
+                        <DxReportViewer @ref="reportViewer" Report="@Report">
+                        </DxReportViewer>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </GridLayoutItems>
+</DevGridLayoutFilterRow>
+
+<style>
+    .head, .item {
+        display: table !important;
+        width: 100% !important;
+        margin: auto !important;
+        margin-top: -7% !important;
+    }
+
+    .head {
+        height: 40px !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+    }
+
+    .name, .city {
+        display: table-cell !important;
+        vertical-align: middle !important;
+        width: 50% !important;
+        padding-left: 11% !important;
+    }
+
+    .head .name {
+        text-indent: 16px !important;
+    }
+
+    .head .city {
+        text-indent: 10px !important;
+    }
+
+
+    .e-checkbox-wrapper, .e-css.e-checkbox-wrapper {
+        -webkit-tap-highlight-color: transparent;
+        float: none !important;
+        padding-right: 5% !important;
+    }
+</style>

@@ -30,7 +30,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         [Inject]
         ModalManager ModalManager { get; set; }
 
-        SelectPalletRecordLinesDto LineDataSource;
+        SelectPalletRecordLinesDto LineDataSource = new();
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
@@ -455,8 +455,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         #region Stok Kartı Button Edit
 
-        SfTextBox ProductsCodeButtonEdit;
-        SfTextBox ProductsNameButtonEdit;
+        SfTextBox ProductsCodeButtonEdit = new();
+        SfTextBox ProductsNameButtonEdit = new();
         bool SelectProductsPopupVisible = false;
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
         public async Task ProductsCodeOnCreateIcon()

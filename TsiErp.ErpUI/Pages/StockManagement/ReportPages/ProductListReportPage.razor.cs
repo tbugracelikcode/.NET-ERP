@@ -1,4 +1,5 @@
 ﻿using DevExpress.Blazor.Reporting;
+using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using Microsoft.Extensions.Localization;
 using System.Linq.Dynamic.Core;
@@ -150,20 +151,30 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ReportPages
 
         private async void CreateReport()
         {
+            if (BindingProductGroups == null)
+            {
+                BindingProductGroups = new List<Guid>();
+            }
+
+            if (BindingProductTypeEnumList == null)
+            {
+                BindingProductTypeEnumList = new List<ProductTypeEnumModel>();
+            }
+
+            if (BindingProductSupplyFormEnumList == null)
+            {
+                BindingProductSupplyFormEnumList = new List<ProductSupplyFormEnumModel>();
+            }
+
             ProductListReportParametersDto filters = new ProductListReportParametersDto();
             filters.ProductGroups = BindingProductGroups;
-            filters.ProductTypes = BindingProductTypeEnumList.Select(t=>t.Value).ToList();
+            filters.ProductTypes = BindingProductTypeEnumList.Select(t => t.Value).ToList();
             filters.ProductSupplyForms = BindingProductSupplyFormEnumList.Select(t => t.Value).ToList();
 
-            var report = (await ProductReportsAppService.GetProductListReport(filters)).ToList();
+            var report = (await ProductReportsAppService.GetProductListReport(filters, ProductLocalizer)).ToList();
 
             Report = new ProductListReport();
             Report.DataSource = report;
-        }
-
-        private void ResetReport()
-        {
-
         }
 
         public void Dispose()

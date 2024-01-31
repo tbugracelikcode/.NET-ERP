@@ -16,6 +16,8 @@ namespace TsiErp.UretimEkranUI.Pages
             objFatekCommunication.SetItem(Fatek.CommunicationCore.Base.MemoryType.DR, 360, 6330);
             int a = objFatekCommunication.GetItem(Fatek.CommunicationCore.Base.MemoryType.DR, 360);
 
+            await Task.CompletedTask;
+
         }
     }
 }

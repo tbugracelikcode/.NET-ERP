@@ -131,12 +131,12 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractProductionTracking
             }
         }
         
-        public void OnDateFocus()
+        public async void OnDateFocus()
         {
             if (DataSource.OperationStartDate == DateTime.MinValue || DataSource.OperationStartDate == null)
             {
                 _endDatePicker.Enabled = false;
-                ModalManager.WarningPopupAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupDateBase"]);
+                await ModalManager.WarningPopupAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupDateBase"]);
             }
         }
         public void OnDateChange()
