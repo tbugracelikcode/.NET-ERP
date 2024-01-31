@@ -179,7 +179,7 @@ namespace TSI.QueryBuilder.BaseClasses
             }
         }
 
-        public IEnumerable<T>? GetList<T>(Query query)
+        public IEnumerable<T> GetList<T>(Query query)
         {
             try
             {
@@ -261,7 +261,7 @@ namespace TSI.QueryBuilder.BaseClasses
             }
         }
 
-        public IEnumerable<T>? ControlList<T>(Query query)
+        public IEnumerable<T> ControlList<T>(Query query)
         {
             try
             {
@@ -304,7 +304,7 @@ namespace TSI.QueryBuilder.BaseClasses
             }
         }
 
-        public IEnumerable<T>? GetArray<T>(Query query)
+        public IEnumerable<T> GetArray<T>(Query query)
         {
             try
             {

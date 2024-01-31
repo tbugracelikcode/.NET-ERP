@@ -821,6 +821,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 LineDataSource.WarehouseID = Guid.Empty;
                 LineDataSource.WarehouseCode = string.Empty;
             }
+
+            await Task.CompletedTask;
         }
 
         public async void LineWarehousesDoubleClickHandler(RecordDoubleClickEventArgs<ListWarehousesDto> args)
@@ -863,6 +865,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 LineDataSource.BranchID = Guid.Empty;
                 LineDataSource.BranchCode = string.Empty;
             }
+
+
+            await Task.CompletedTask;
         }
 
         public async void LineBranchesDoubleClickHandler(RecordDoubleClickEventArgs<ListBranchesDto> args)

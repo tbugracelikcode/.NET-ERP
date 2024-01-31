@@ -63,7 +63,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
         List<SelectContractTrackingFicheAmountEntryLinesDto> GridAmountEntryLineList = new List<SelectContractTrackingFicheAmountEntryLinesDto>();
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
-        private bool LineCrudPopup = false;
+        //private bool LineCrudPopup = new();
         private bool AmountEntryLineCrudPopup = false;
         private bool AmountEntryLinePopup = false;
 
@@ -265,14 +265,14 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                     {
 
                     };
-                    LineCrudPopup = true;
+                    //LineCrudPopup = true;
                     LineDataSource.LineNr = GridLineList.Count + 1;
                     await InvokeAsync(StateHasChanged);
                     break;
 
                 case "changed":
                     LineDataSource = args.RowInfo.RowData;
-                    LineCrudPopup = true;
+                    //LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -386,7 +386,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
 
         public void HideLinesPopup()
         {
-            LineCrudPopup = false;
+            //LineCrudPopup = false;
         }
 
         public void HideAmountEntryLinesPopup()

@@ -195,6 +195,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
                 Priority = GridLineList.Count + 1,
                 LineNr = GridLineList.Count + 1
             };
+
+
+            await Task.CompletedTask;
         }
 
         protected void CreateLineContextMenuItems()

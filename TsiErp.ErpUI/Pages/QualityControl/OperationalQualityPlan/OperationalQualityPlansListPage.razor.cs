@@ -815,8 +815,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         #region Kontrol Türü Button Edit
 
-        SfTextBox ControlTypesCodeButtonEdit;
-        SfTextBox ControlTypesNameButtonEdit;
+        SfTextBox ControlTypesCodeButtonEdit = new();
+        SfTextBox ControlTypesNameButtonEdit = new();
         bool SelectControlTypesPopupVisible = false;
         List<ListControlTypesDto> ControlTypesList = new List<ListControlTypesDto>();
         public async Task ControlTypesCodeOnCreateIcon()
@@ -870,8 +870,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         #region Kontrol Şartı Button Edit
 
-        SfTextBox ControlConditionsCodeButtonEdit;
-        SfTextBox ControlConditionsNameButtonEdit;
+        SfTextBox ControlConditionsCodeButtonEdit = new();
+        SfTextBox ControlConditionsNameButtonEdit = new();
         bool SelectControlConditionsPopupVisible = false;
         List<ListControlConditionsDto> ControlConditionsList = new List<ListControlConditionsDto>();
         public async Task ControlConditionsCodeOnCreateIcon()

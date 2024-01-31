@@ -573,7 +573,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         }
 
         #region Excel'den Aktarım
-        SfGrid<ExpandoObject> Grid;
+        //SfGrid<ExpandoObject> Grid;
         public DataTable table = new DataTable();
         private void OnChange(UploadChangeEventArgs args)
         {
@@ -701,8 +701,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         #region Cari Hesap ButtonEdit
 
-        SfTextBox CurrentAccountCardsCodeButtonEdit;
-        SfTextBox CurrentAccountCardsNameButtonEdit;
+        SfTextBox CurrentAccountCardsCodeButtonEdit= new();
+        SfTextBox CurrentAccountCardsNameButtonEdit = new();
         bool SelectCurrentAccountCardsPopupVisible = false;
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 

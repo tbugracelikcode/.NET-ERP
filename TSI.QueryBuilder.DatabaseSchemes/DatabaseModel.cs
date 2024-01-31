@@ -75,7 +75,7 @@ namespace TSI.QueryBuilder.DatabaseSchemes
                         server.ConnectionContext.CommitTransaction();
                         acceptChanges = true;
                     }
-                    catch (Exception exp)
+                    catch (Exception)
                     {
                         server.ConnectionContext.RollBackTransaction();
                         acceptChanges = false;
@@ -115,7 +115,7 @@ namespace TSI.QueryBuilder.DatabaseSchemes
 
                         acceptChanges = true;
                     }
-                    catch (Exception exp)
+                    catch (Exception)
                     {
                         server.ConnectionContext.RollBackTransaction();
                         acceptChanges = false;
@@ -155,7 +155,7 @@ namespace TSI.QueryBuilder.DatabaseSchemes
 
                         acceptChanges = true;
                     }
-                    catch (Exception exp)
+                    catch (Exception)
                     {
                         server.ConnectionContext.RollBackTransaction();
                         acceptChanges = false;
@@ -195,7 +195,7 @@ namespace TSI.QueryBuilder.DatabaseSchemes
 
                         acceptChanges = true;
                     }
-                    catch (Exception exp)
+                    catch (Exception)
                     {
                         server.ConnectionContext.RollBackTransaction();
                         acceptChanges = false;
@@ -231,7 +231,7 @@ namespace TSI.QueryBuilder.DatabaseSchemes
                         server.ConnectionContext.CommitTransaction();
                         acceptChanges = true;
                     }
-                    catch (Exception exp)
+                    catch (Exception)
                     {
                         server.ConnectionContext.RollBackTransaction();
                         acceptChanges = false;

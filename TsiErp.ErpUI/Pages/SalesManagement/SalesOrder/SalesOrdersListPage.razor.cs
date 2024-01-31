@@ -50,7 +50,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
         SelectSalesOrderLinesDto LineDataSource;
 
-        SelectBillsofMaterialsDto BoMDataSource;
+        //SelectBillsofMaterialsDto BoMDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> ProductionOrderGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -283,9 +283,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
         #region Cari Hesap ButtonEdit
 
-        SfTextBox CurrentAccountCardsCodeButtonEdit;
-        SfTextBox CurrentAccountCardsCustomerCodeButtonEdit;
-        SfTextBox CurrentAccountCardsNameButtonEdit;
+        SfTextBox CurrentAccountCardsCodeButtonEdit = new();
+        SfTextBox CurrentAccountCardsCustomerCodeButtonEdit = new();
+        SfTextBox CurrentAccountCardsNameButtonEdit = new();
         bool SelectCurrentAccountCardsPopupVisible = false;
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
@@ -490,13 +490,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
         #region Reçete Satırları Modalı İşlemleri
 
-        protected void CreateBoMLineContextMenuItems()
-        {
-            //if (BoMLineGridContextMenu.Count() == 0)
-            //{
-            //    BoMLineGridContextMenu.Add(new ContextMenuItemModel { Text = "Ürün Ağacı", Id = "productstree" });
-            //}
-        }
 
         public async void OnBoMLineContextMenuClick(ContextMenuClickEventArgs<ProductsTreeDto> args)
         {
@@ -509,6 +502,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             //    default:
             //        break;
             //}
+
+            await Task.CompletedTask;
         }
 
 
@@ -594,6 +589,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             //    default:
             //        break;
             //}
+
+
+
+            await Task.CompletedTask;
+
         }
 
 

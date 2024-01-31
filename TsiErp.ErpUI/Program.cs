@@ -49,10 +49,10 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     var supportedCultures = new List<CultureInfo>()
     {
                     new CultureInfo("en-US"),
-                    new CultureInfo("de"),
-                    new CultureInfo("fr"),
-                    new CultureInfo("ar"),
-                    new CultureInfo("zh"),
+                    //new CultureInfo("de"),
+                    //new CultureInfo("fr"),
+                    //new CultureInfo("ar"),
+                    //new CultureInfo("zh"),
                     new CultureInfo("tr"),
     };
 

@@ -420,7 +420,7 @@
 
 @code {
     private bool collapsevisible = true;
-    private bool StockManagementParentMenuVisible = true;
+    //private bool StockManagementParentMenuVisible;
     private bool collapseparametersvisible = true;
     public bool SidebarToggle = true;
     public bool SidebarToggleFixed = true;
@@ -441,6 +441,10 @@
             //var node = treeView.GetNodeInfo(t => t.Name == "StockManagementParentMenu");
             //StockManagementParentMenuVisible = false;
             //await InvokeAsync(StateHasChanged);
+
+
+
+            await Task.CompletedTask;
         }
     }
 }

@@ -55,8 +55,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
 
         #region Stok Kartı Button Edit
 
-        SfTextBox ProductsCodeButtonEdit;
-        SfTextBox ProductsNameButtonEdit;
+        SfTextBox ProductsCodeButtonEdit = new();
+        SfTextBox ProductsNameButtonEdit = new();
         bool SelectProductsPopupVisible = false;
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
         public async Task ProductsCodeOnCreateIcon()

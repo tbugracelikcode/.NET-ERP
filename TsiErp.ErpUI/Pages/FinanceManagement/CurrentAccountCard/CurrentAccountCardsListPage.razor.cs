@@ -21,7 +21,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CurrentAccountCard
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
-        SfComboBox<string, ListShippingAdressesDto> ShippingAdressesComboBox;
+        //SfComboBox<string, ListShippingAdressesDto> ShippingAdressesComboBox;
         List<ListShippingAdressesDto> ShippingAdressesList = new List<ListShippingAdressesDto>();
 
         #region Para Birimleri ButtonEdit

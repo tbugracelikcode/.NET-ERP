@@ -121,6 +121,8 @@ namespace TsiErp.ErpUI.Services
                 result = "Error";
             }
 
+            await Task.CompletedTask;
+
             return result;
         }
 
