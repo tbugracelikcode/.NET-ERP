@@ -108,6 +108,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Forecasts, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectForecastsDto>(forecast);
 
         }
@@ -129,6 +130,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
                 var forecast = queryFactory.Update<SelectForecastsDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Forecasts, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectForecastsDto>(forecast);
             }
             else
@@ -136,6 +138,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 var queryLine = queryFactory.Query().From(Tables.ForecastLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                 var forecastLines = queryFactory.Update<SelectForecastLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ForecastLines, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectForecastLinesDto>(forecastLines);
             }
 
@@ -191,6 +194,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
             LogsAppService.InsertLogToDatabase(forecasts, forecasts, LoginedUserService.UserId, Tables.Forecasts, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectForecastsDto>(forecasts);
 
         }
@@ -227,6 +231,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
             var forecasts = queryFactory.GetList<ListForecastsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListForecastsDto>>(forecasts);
 
         }
@@ -402,6 +407,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Forecasts, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectForecastsDto>(forecast);
 
         }
@@ -437,6 +443,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
             }).Where(new { Id = id }, false, false, "");
 
             var forecastsDto = queryFactory.Update<SelectForecastsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectForecastsDto>(forecastsDto);
 
 

@@ -304,6 +304,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractTrackingFiches, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectContractTrackingFichesDto>(ContractTrackingFiche);
 
         }
@@ -339,6 +340,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 var ContractTrackingFiche = queryFactory.Update<SelectContractTrackingFichesDto>(deleteQuery, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractTrackingFiches, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectContractTrackingFichesDto>(ContractTrackingFiche);
 
             }
@@ -351,6 +353,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
             var queryLine = queryFactory.Query().From(Tables.ContractTrackingFicheLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
             var ContractTrackingFicheLines = queryFactory.Update<SelectContractTrackingFicheLinesDto>(queryLine, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractTrackingFicheLines, LogType.Delete, id);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectContractTrackingFicheLinesDto>(ContractTrackingFicheLines);
 
 
@@ -363,6 +366,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
             var queryLine = queryFactory.Query().From(Tables.ContractTrackingFicheAmountEntryLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
             var ContractTrackingFicheAmountEntryLines = queryFactory.Update<SelectContractTrackingFicheAmountEntryLinesDto>(queryLine, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractTrackingFicheAmountEntryLines, LogType.Delete, id);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectContractTrackingFicheAmountEntryLinesDto>(ContractTrackingFicheAmountEntryLines);
 
 
@@ -463,6 +467,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
 
             LogsAppService.InsertLogToDatabase(contractTrackingFiches, contractTrackingFiches, LoginedUserService.UserId, Tables.ContractTrackingFiches, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectContractTrackingFichesDto>(contractTrackingFiches);
 
         }
@@ -512,6 +517,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                     .Where(null, false, false, Tables.ContractTrackingFiches);
 
             var contractTrackingFiches = queryFactory.GetList<ListContractTrackingFichesDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListContractTrackingFichesDto>>(contractTrackingFiches);
 
         }
@@ -816,6 +822,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.ContractTrackingFiches, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectContractTrackingFichesDto>(ContractTrackingFiche);
 
         }
@@ -852,6 +859,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
             }).Where(new { Id = id }, true, true, "");
 
             var ContractTrackingFichesDto = queryFactory.Update<SelectContractTrackingFichesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectContractTrackingFichesDto>(ContractTrackingFichesDto);
 
         }

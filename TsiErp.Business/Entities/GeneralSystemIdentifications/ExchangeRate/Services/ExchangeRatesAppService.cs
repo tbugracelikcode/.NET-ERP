@@ -57,6 +57,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ExchangeRates, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectExchangeRatesDto>(exchangeRates);
 
         }
@@ -71,6 +72,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ExchangeRates, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectExchangeRatesDto>(exchangeRates);
 
         }
@@ -93,6 +95,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
             LogsAppService.InsertLogToDatabase(exchangeRate, exchangeRate, LoginedUserService.UserId, Tables.ExchangeRates, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectExchangeRatesDto>(exchangeRate);
 
         }
@@ -115,6 +118,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
             var exchangeRates = queryFactory.GetList<ListExchangeRatesDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListExchangeRatesDto>>(exchangeRates);
         }
 
@@ -152,6 +156,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
             LogsAppService.InsertLogToDatabase(entity, exchangeRates, LoginedUserService.UserId, Tables.ExchangeRates, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectExchangeRatesDto>(exchangeRates);
 
         }
@@ -184,6 +189,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
             var exchangeRates = queryFactory.Update<SelectExchangeRatesDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectExchangeRatesDto>(exchangeRates);
 
         }

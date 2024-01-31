@@ -40,6 +40,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagemen
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.FinanceManagementParameters, LogType.Insert, FinanceManagementParameter.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectFinanceManagementParametersDto>(FinanceManagementParameter);
 
         }
@@ -65,6 +66,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagemen
 
             LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.FinanceManagementParameters, LogType.Get, result.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectFinanceManagementParametersDto>(result);
 
         }
@@ -87,6 +89,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagemen
 
             LogsAppService.InsertLogToDatabase(entity, FinanceManagementParameters, LoginedUserService.UserId, Tables.FinanceManagementParameters, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectFinanceManagementParametersDto>(FinanceManagementParameters);
 
         }
@@ -98,6 +101,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagemen
 
             var FinanceManagementParameters = queryFactory.GetList<ListFinanceManagementParametersDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListFinanceManagementParametersDto>>(FinanceManagementParameters);
 
         }

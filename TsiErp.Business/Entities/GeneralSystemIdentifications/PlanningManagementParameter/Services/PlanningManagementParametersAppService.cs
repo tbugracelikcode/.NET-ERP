@@ -38,11 +38,13 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Insert, PlanningManagementParameter.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPlanningManagementParametersDto>(PlanningManagementParameter);
         }
 
         public async Task<IDataResult<SelectPlanningManagementParametersDto>> GetAsync(Guid id)
         {
+            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 
@@ -54,6 +56,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
 
             var PlanningManagementParameters = queryFactory.GetList<ListPlanningManagementParametersDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPlanningManagementParametersDto>>(PlanningManagementParameters);
         }
 
@@ -78,6 +81,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
 
             LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Get, result.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPlanningManagementParametersDto>(result);
 
         }
@@ -102,6 +106,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
             LogsAppService.InsertLogToDatabase(entity, PlanningManagementParameters, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPlanningManagementParametersDto>(PlanningManagementParameters);
         }
 

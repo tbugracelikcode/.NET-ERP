@@ -29,15 +29,6 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos
         /// </summary>
         public string Department { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// TC Kimlik No
         /// </summary>
         public string IDnumber { get; set; }

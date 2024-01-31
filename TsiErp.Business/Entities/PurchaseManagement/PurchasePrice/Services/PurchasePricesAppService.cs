@@ -134,6 +134,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
 
                 var purchasePrice = queryFactory.Update<SelectPurchasePricesDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchasePrices, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectPurchasePricesDto>(purchasePrice);
             }
             else
@@ -141,6 +142,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 var queryLine = queryFactory.Query().From(Tables.PurchasePriceLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                 var billOfMaterialLines = queryFactory.Update<SelectPurchasePriceLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchasePriceLines, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectPurchasePriceLinesDto>(billOfMaterialLines);
             }
 
@@ -210,6 +212,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
 
             LogsAppService.InsertLogToDatabase(purchasePrices, purchasePrices, LoginedUserService.UserId, Tables.PurchasePrices, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchasePricesDto>(purchasePrices);
 
         }
@@ -252,6 +255,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                     .Where(null, true, true, Tables.PurchasePrices);
 
             var purchasePrices = queryFactory.GetList<ListPurchasePricesDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPurchasePricesDto>>(purchasePrices);
 
         }
@@ -454,6 +458,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PurchasePrices, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchasePricesDto>(purchasePrice);
 
         }
@@ -482,6 +487,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
 
             var purchasePriceLine = queryFactory.GetList<SelectPurchasePriceLinesDto>(queryLines).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectPurchasePriceLinesDto>>(purchasePriceLine);
 
         }
@@ -517,6 +523,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             }).Where(new { Id = id }, true, true, "");
 
             var purchasePricesDto = queryFactory.Update<SelectPurchasePricesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchasePricesDto>(purchasePricesDto);
 
         }

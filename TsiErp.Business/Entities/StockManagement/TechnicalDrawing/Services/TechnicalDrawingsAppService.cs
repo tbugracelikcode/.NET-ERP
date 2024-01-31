@@ -78,6 +78,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawings);
 
         }
@@ -108,6 +109,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawings);
             }
         }
@@ -137,6 +139,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
             LogsAppService.InsertLogToDatabase(technicalDrawing, technicalDrawing, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawing);
 
 
@@ -166,6 +169,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
             var technicalDrawings = queryFactory.GetList<ListTechnicalDrawingsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListTechnicalDrawingsDto>>(technicalDrawings);
 
         }
@@ -193,6 +197,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
             var technicalDrawings = queryFactory.GetList<SelectTechnicalDrawingsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectTechnicalDrawingsDto>>(technicalDrawings);
 
         }
@@ -247,6 +252,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
             LogsAppService.InsertLogToDatabase(entity, technicalDrawings, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawings);
 
         }
@@ -285,6 +291,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
             var technicalDrawings = queryFactory.Update<SelectTechnicalDrawingsDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawings);
 
 

@@ -151,6 +151,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.EmployeeScorings, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeScoringsDto>(employeeScoring);
 
         }
@@ -176,6 +177,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
 
                 var employeeScoring = queryFactory.Update<SelectEmployeeScoringsDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EmployeeScorings, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectEmployeeScoringsDto>(employeeScoring);
             }
             else
@@ -186,6 +188,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                 var employeeScoringLines = queryFactory.Update<SelectEmployeeScoringLinesDto>(queryLine, "Id", true);
                 var employeeScoringLinesLine = queryFactory.Update<SelectEmployeeOperationsDto>(lineLineDeleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EmployeeScoringLines, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectEmployeeScoringLinesDto>(employeeScoringLines);
             }
 
@@ -275,6 +278,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
 
             LogsAppService.InsertLogToDatabase(EmployeeScorings, EmployeeScorings, LoginedUserService.UserId, Tables.EmployeeScorings, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeScoringsDto>(EmployeeScorings);
 
         }
@@ -288,6 +292,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                    .Select("*").Where(null, false, false, "");
 
             var EmployeeScorings = queryFactory.GetList<ListEmployeeScoringsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListEmployeeScoringsDto>>(EmployeeScorings);
 
         }
@@ -563,6 +568,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.EmployeeScorings, LogType.Update, employeeScorings.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeScoringsDto>(employeeScorings);
 
         }
@@ -595,6 +601,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
             }).Where(new { Id = id }, false, false, "");
 
             var EmployeeScoringsDto = queryFactory.Update<SelectEmployeeScoringsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeScoringsDto>(EmployeeScoringsDto);
 
 

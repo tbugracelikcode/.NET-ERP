@@ -34,6 +34,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
 
             LogsAppService.InsertLogToDatabase(ProductionManagementParameter, ProductionManagementParameter, LoginedUserService.UserId, Tables.ProductionManagementParameters, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductionManagementParametersDto>(ProductionManagementParameter);
         }
 
@@ -45,6 +46,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
 
             var ProductionManagementParameters = queryFactory.GetList<ListProductionManagementParametersDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListProductionManagementParametersDto>>(ProductionManagementParameters);
         }
 
@@ -67,6 +69,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
             LogsAppService.InsertLogToDatabase(entity, ProductionManagementParameters, LoginedUserService.UserId, Tables.ProductionManagementParameters, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductionManagementParametersDto>(ProductionManagementParameters);
         }
 

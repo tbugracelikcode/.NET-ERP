@@ -97,6 +97,7 @@ namespace TsiErp.Business.Entities.Employee.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Employees, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeesDto>(employees);
         }
 
@@ -136,6 +137,7 @@ namespace TsiErp.Business.Entities.Employee.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Employees, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectEmployeesDto>(employees);
             }
         }
@@ -172,6 +174,7 @@ namespace TsiErp.Business.Entities.Employee.Services
 
             LogsAppService.InsertLogToDatabase(employee, employee, LoginedUserService.UserId, Tables.Employees, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeesDto>(employee);
         }
 
@@ -208,6 +211,7 @@ namespace TsiErp.Business.Entities.Employee.Services
 
             var employees = queryFactory.GetList<ListEmployeesDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListEmployeesDto>>(employees);
         }
 
@@ -272,6 +276,7 @@ namespace TsiErp.Business.Entities.Employee.Services
 
             LogsAppService.InsertLogToDatabase(entity, employees, LoginedUserService.UserId, Tables.Employees, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
 
             return new SuccessDataResult<SelectEmployeesDto>(employees);
         }
@@ -319,6 +324,7 @@ namespace TsiErp.Business.Entities.Employee.Services
 
             var employees = queryFactory.Update<SelectEmployeesDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeesDto>(employees);
         }
     }

@@ -277,6 +277,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.SalesOrders, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectSalesOrderDto>(salesOrder);
             }
             else
@@ -293,6 +294,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.SalesOrderLines, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectSalesOrderLinesDto>(salesOrderLines);
             }
 
@@ -391,6 +393,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
             LogsAppService.InsertLogToDatabase(salesOrders, salesOrders, LoginedUserService.UserId, Tables.SalesOrders, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesOrderDto>(salesOrders);
 
         }
@@ -447,7 +450,51 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     .Where(null, false, false, Tables.SalesOrders);
 
             var salesOrders = queryFactory.GetList<ListSalesOrderDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListSalesOrderDto>>(salesOrders);
+
+        }
+
+        public async Task<IDataResult<IList<SelectSalesOrderLinesDto>>> GetLineSelectListAsync()
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.SalesOrderLines)
+                   .Select<SalesOrderLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(SalesOrderLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(SalesOrderLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                        nameof(SalesOrderLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                      .Join<SalesPropositionLines>
+                    (
+                        spl => new { LikedPropositionLineID = spl.Id, LinkedSalesPropositionID = spl.SalesPropositionID },
+                        nameof(SalesOrderLines.LikedPropositionLineID),
+                        nameof(SalesPropositionLines.Id),
+                        JoinType.Left
+                    )
+                    //.Where(null, false, false, Tables.SalesOrderLines)
+                    .Where("SalesOrderLineStateEnum", "<>", 5, Tables.SalesOrderLines);
+
+            var salesOrderLines = queryFactory.GetList<SelectSalesOrderLinesDto>(query).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<SelectSalesOrderLinesDto>>(salesOrderLines);
 
         }
 
@@ -725,6 +772,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.SalesOrders, LogType.Update, salesOrder.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesOrderDto>(salesOrder);
 
         }
@@ -772,6 +820,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             }).Where(new { Id = id }, false, false, "");
 
             var salesOrdersDto = queryFactory.Update<SelectSalesOrderDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesOrderDto>(salesOrdersDto);
 
         }

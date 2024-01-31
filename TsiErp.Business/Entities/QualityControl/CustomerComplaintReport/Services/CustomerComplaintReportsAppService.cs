@@ -92,6 +92,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CustomerComplaintReports, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCustomerComplaintReportsDto>(CustomerComplaintReport);
 
         }
@@ -105,6 +106,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.CustomerComplaintReports, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCustomerComplaintReportsDto>(CustomerComplaintReport);
 
         }
@@ -130,6 +132,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
 
             LogsAppService.InsertLogToDatabase(CustomerComplaintReport, CustomerComplaintReport, LoginedUserService.UserId, Tables.CustomerComplaintReports, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCustomerComplaintReportsDto>(CustomerComplaintReport);
 
         }
@@ -155,6 +158,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
 
             var customerComplaintReports = queryFactory.GetList<ListCustomerComplaintReportsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListCustomerComplaintReportsDto>>(customerComplaintReports);
 
 
@@ -213,6 +217,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
             LogsAppService.InsertLogToDatabase(entity, CustomerComplaintReport, LoginedUserService.UserId, Tables.CustomerComplaintReports, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCustomerComplaintReportsDto>(CustomerComplaintReport);
 
         }
@@ -252,6 +257,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
 
             var CustomerComplaintReport = queryFactory.Update<SelectCustomerComplaintReportsDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCustomerComplaintReportsDto>(CustomerComplaintReport);
 
         }

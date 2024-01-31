@@ -174,6 +174,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.SalesPropositions, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectSalesPropositionsDto>(salesProposition);
             }
             else
@@ -190,6 +191,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.SalesPropositionLines, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectSalesPropositionLinesDto>(salesPropositionLines);
             }
 
@@ -280,6 +282,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
             LogsAppService.InsertLogToDatabase(salesPropositions, salesPropositions, LoginedUserService.UserId, Tables.SalesPropositions, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesPropositionsDto>(salesPropositions);
 
         }
@@ -336,6 +339,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                     .Where(null, false, false, Tables.SalesPropositions);
 
             var salesPropositions = queryFactory.GetList<ListSalesPropositionsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListSalesPropositionsDto>>(salesPropositions);
 
         }
@@ -606,6 +610,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.SalesPropositions, LogType.Update, salesProposition.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesPropositionsDto>(salesProposition);
 
         }
@@ -654,6 +659,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
             }).Where(new { Id = id }, false, false, "");
 
             var salesPropositionDto = queryFactory.Update<SelectSalesPropositionsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesPropositionsDto>(salesPropositionDto);
 
         }

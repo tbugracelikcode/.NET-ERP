@@ -69,6 +69,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StationInventories, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStationInventoriesDto>(stationInventories);
         }
 
@@ -82,6 +83,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StationInventories, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStationInventoriesDto>(stationInventories);
         }
 
@@ -103,6 +105,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
 
             LogsAppService.InsertLogToDatabase(stationInventory, stationInventory, LoginedUserService.UserId, Tables.StationInventories, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStationInventoriesDto>(stationInventory);
         }
 
@@ -123,6 +126,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
 
             var stationInventories = queryFactory.GetList<ListStationInventoriesDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListStationInventoriesDto>>(stationInventories);
 
         }
@@ -169,6 +173,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
 
             LogsAppService.InsertLogToDatabase(entity, stationInventories, LoginedUserService.UserId, Tables.StationInventories, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStationInventoriesDto>(stationInventories);
 
         }
@@ -199,6 +204,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
 
             var stationInventories = queryFactory.Update<SelectStationInventoriesDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStationInventoriesDto>(stationInventories);
         }
     }

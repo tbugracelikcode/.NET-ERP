@@ -178,6 +178,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
                 var purchaseRequest = queryFactory.Update<SelectPurchaseRequestsDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectPurchaseRequestsDto>(purchaseRequest);
             }
             else
@@ -193,6 +194,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 var purchaseRequestLines = queryFactory.Update<SelectPurchaseRequestLinesDto>(queryLine, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseRequestLines, LogType.Delete, id);
+                await Task.CompletedTask;
 
                 return new SuccessDataResult<SelectPurchaseRequestLinesDto>(purchaseRequestLines);
             }
@@ -285,6 +287,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
             LogsAppService.InsertLogToDatabase(purchaseRequests, purchaseRequests, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseRequestsDto>(purchaseRequests);
 
         }
@@ -342,6 +345,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     .Where(null, false, false, Tables.PurchaseRequests);
 
             var purchaseRequests = queryFactory.GetList<ListPurchaseRequestsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPurchaseRequestsDto>>(purchaseRequests);
 
         }
@@ -610,6 +614,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Update, purchaseRequest.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseRequestsDto>(purchaseRequest);
 
         }
@@ -659,6 +664,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
             }).Where(new { Id = id }, false, false, "");
 
             var purchaseRequestsDto = queryFactory.Update<SelectPurchaseRequestsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseRequestsDto>(purchaseRequestsDto);
 
 

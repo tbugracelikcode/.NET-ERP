@@ -8,6 +8,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.User;
@@ -23,6 +24,9 @@ namespace TsiErp.Business.Entities.User.Services
     public class UsersAppService : ApplicationService<UsersResource>, IUsersAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+
+
+        private readonly IUserPermissionsAppService _UserPermissionsAppService;
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
@@ -77,6 +81,9 @@ namespace TsiErp.Business.Entities.User.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Users, LogType.Insert, addedEntityId);
 
+            await _UserPermissionsAppService.AllPermissionsAddedUser(addedEntityId);
+
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUsersDto>(users);
 
         }
@@ -90,6 +97,7 @@ namespace TsiErp.Business.Entities.User.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Users, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUsersDto>(users);
         }
 
@@ -110,6 +118,7 @@ namespace TsiErp.Business.Entities.User.Services
 
             LogsAppService.InsertLogToDatabase(user, user, LoginedUserService.UserId, Tables.Users, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUsersDto>(user);
         }
 
@@ -121,6 +130,7 @@ namespace TsiErp.Business.Entities.User.Services
 
             LogsAppService.InsertLogToDatabase(user, user, LoginedUserService.UserId, Tables.Users, LogType.Get, user.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUsersDto>(user);
         }
 
@@ -140,6 +150,7 @@ namespace TsiErp.Business.Entities.User.Services
 
             var users = queryFactory.GetList<ListUsersDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListUsersDto>>(users);
 
         }
@@ -191,6 +202,7 @@ namespace TsiErp.Business.Entities.User.Services
             LogsAppService.InsertLogToDatabase(entity, users, LoginedUserService.UserId, Tables.Users, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUsersDto>(users);
         }
 
@@ -223,6 +235,7 @@ namespace TsiErp.Business.Entities.User.Services
 
             var users = queryFactory.Update<SelectUsersDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUsersDto>(users);
 
         }

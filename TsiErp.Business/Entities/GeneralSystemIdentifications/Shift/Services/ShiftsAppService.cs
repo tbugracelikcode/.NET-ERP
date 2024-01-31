@@ -103,6 +103,7 @@ namespace TsiErp.Business.Entities.Shift.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Shifts, LogType.Insert, shift.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectShiftsDto>(shift);
         }
 
@@ -141,6 +142,7 @@ namespace TsiErp.Business.Entities.Shift.Services
 
                     var shift = queryFactory.Update<SelectShiftsDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Shifts, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectShiftsDto>(shift);
                 }
                 else
@@ -148,6 +150,7 @@ namespace TsiErp.Business.Entities.Shift.Services
                     var queryLine = queryFactory.Query().From(Tables.ShiftLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                     var shiftLines = queryFactory.Update<SelectShiftLinesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ShiftLines, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectShiftLinesDto>(shiftLines);
                 }
             }
@@ -175,6 +178,7 @@ namespace TsiErp.Business.Entities.Shift.Services
 
             LogsAppService.InsertLogToDatabase(shifts, shifts, LoginedUserService.UserId, Tables.Shifts, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectShiftsDto>(shifts);
         }
 
@@ -188,6 +192,7 @@ namespace TsiErp.Business.Entities.Shift.Services
                     .Where(null, true, true, Tables.Shifts);
 
             var shifts = queryFactory.GetList<ListShiftsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListShiftsDto>>(shifts);
         }
 
@@ -313,6 +318,7 @@ namespace TsiErp.Business.Entities.Shift.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Shifts, LogType.Update, shift.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectShiftsDto>(shift);
         }
 
@@ -345,6 +351,7 @@ namespace TsiErp.Business.Entities.Shift.Services
             }).Where(new { Id = id }, true, true, "");
 
             var shiftsDto = queryFactory.Update<SelectShiftsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectShiftsDto>(shiftsDto);
 
         }

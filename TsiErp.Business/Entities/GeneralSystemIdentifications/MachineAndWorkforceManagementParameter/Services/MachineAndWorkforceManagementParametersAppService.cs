@@ -34,6 +34,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MachineAndWorkfo
 
             LogsAppService.InsertLogToDatabase(MachineAndWorkforceManagementParameter, MachineAndWorkforceManagementParameter, LoginedUserService.UserId, Tables.MachineAndWorkforceManagementParameters, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMachineAndWorkforceManagementParametersDto>(MachineAndWorkforceManagementParameter);
 
         }
@@ -46,6 +47,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MachineAndWorkfo
 
             var MachineAndWorkforceManagementParameters = queryFactory.GetList<ListMachineAndWorkforceManagementParametersDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListMachineAndWorkforceManagementParametersDto>>(MachineAndWorkforceManagementParameters);
         }
 
@@ -68,6 +70,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MachineAndWorkfo
             LogsAppService.InsertLogToDatabase(entity, MachineAndWorkforceManagementParameters, LoginedUserService.UserId, Tables.MachineAndWorkforceManagementParameters, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMachineAndWorkforceManagementParametersDto>(MachineAndWorkforceManagementParameters);
 
         }

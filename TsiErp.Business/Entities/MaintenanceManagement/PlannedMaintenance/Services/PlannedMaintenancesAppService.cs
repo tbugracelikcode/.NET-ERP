@@ -113,6 +113,7 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PlannedMaintenances, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPlannedMaintenancesDto>(maintenance);
         }
 
@@ -134,6 +135,7 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
 
                 var maintenance = queryFactory.Update<SelectPlannedMaintenancesDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PlannedMaintenances, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectPlannedMaintenancesDto>(maintenance);
             }
             else
@@ -141,6 +143,7 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
                 var queryLine = queryFactory.Query().From(Tables.PlannedMaintenanceLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                 var maintenanceLines = queryFactory.Update<SelectPlannedMaintenanceLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PlannedMaintenanceLines, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectPlannedMaintenanceLinesDto>(maintenanceLines);
             }
         }
@@ -195,6 +198,7 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
 
             LogsAppService.InsertLogToDatabase(maintenances, maintenances, LoginedUserService.UserId, Tables.PlannedMaintenances, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPlannedMaintenancesDto>(maintenances);
         }
 
@@ -222,6 +226,7 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
                     .Where(null, false, false, Tables.PlannedMaintenances);
 
             var maintenances = queryFactory.GetList<ListPlannedMaintenancesDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPlannedMaintenancesDto>>(maintenances);
         }
 
@@ -397,6 +402,7 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PlannedMaintenances, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPlannedMaintenancesDto>(maintenance);
         }
 
@@ -435,6 +441,7 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
             }).Where(new { Id = id }, false, false, "");
 
             var maintenancesDto = queryFactory.Update<SelectPlannedMaintenancesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPlannedMaintenancesDto>(maintenancesDto);
         }
     }

@@ -310,6 +310,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Delete, id);
 
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectPurchaseOrdersDto>(purchaseOrder);
                 }
                 else
@@ -326,6 +327,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseOrderLines, LogType.Delete, id);
 
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectPurchaseOrderLinesDto>(purchaseOrderLines);
                 }
             }
@@ -423,6 +425,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
             LogsAppService.InsertLogToDatabase(purchaseOrders, purchaseOrders, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseOrdersDto>(purchaseOrders);
 
         }
@@ -485,6 +488,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     .Where(null, false, false, Tables.PurchaseOrders);
 
             var purchaseOrders = queryFactory.GetList<ListPurchaseOrdersDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPurchaseOrdersDto>>(purchaseOrders);
 
         }
@@ -771,6 +775,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Update, purchaseOrder.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseOrdersDto>(purchaseOrder);
 
         }
@@ -819,6 +824,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             }).Where(new { Id = id }, false, false, "");
 
             var purchaseOrdersDto = queryFactory.Update<SelectPurchaseOrdersDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseOrdersDto>(purchaseOrdersDto);
 
 

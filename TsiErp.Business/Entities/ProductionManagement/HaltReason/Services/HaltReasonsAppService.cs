@@ -75,6 +75,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.HaltReasons, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectHaltReasonsDto>(haltReasons);
 
 
@@ -104,6 +105,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.HaltReasons, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectHaltReasonsDto>(haltReasons);
             }
         }
@@ -120,6 +122,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
 
             LogsAppService.InsertLogToDatabase(haltReason, haltReason, LoginedUserService.UserId, Tables.HaltReasons, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectHaltReasonsDto>(haltReason);
 
         }
@@ -129,6 +132,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
         {
             var query = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(null, false, false, "");
             var haltReasons = queryFactory.GetList<ListHaltReasonsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListHaltReasonsDto>>(haltReasons);
         }
 
@@ -175,6 +179,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
 
             LogsAppService.InsertLogToDatabase(entity, haltReasons, LoginedUserService.UserId, Tables.HaltReasons, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectHaltReasonsDto>(haltReasons);
 
 
@@ -209,6 +214,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
 
             var haltReasons = queryFactory.Update<SelectHaltReasonsDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectHaltReasonsDto>(haltReasons);
 
         }

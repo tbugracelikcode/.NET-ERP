@@ -93,6 +93,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationUnsuitabilityReports, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(operationUnsuitabilityReport);
 
         }
@@ -106,6 +107,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationUnsuitabilityReports, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(operationUnsuitabilityReport);
 
         }
@@ -151,6 +153,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
             LogsAppService.InsertLogToDatabase(operationUnsuitabilityReport, operationUnsuitabilityReport, LoginedUserService.UserId, Tables.OperationUnsuitabilityReports, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(operationUnsuitabilityReport);
 
 
@@ -196,6 +199,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
             var operationUnsuitabilityReports = queryFactory.GetList<ListOperationUnsuitabilityReportsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListOperationUnsuitabilityReportsDto>>(operationUnsuitabilityReports);
 
 
@@ -254,6 +258,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
             LogsAppService.InsertLogToDatabase(entity, operationUnsuitabilityReport, LoginedUserService.UserId, Tables.OperationUnsuitabilityReports, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(operationUnsuitabilityReport);
 
         }
@@ -293,6 +298,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
             var operationUnsuitabilityReport = queryFactory.Update<SelectOperationUnsuitabilityReportsDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(operationUnsuitabilityReport);
 
 

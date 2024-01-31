@@ -191,6 +191,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
                     var productsOperation = queryFactory.Update<SelectProductsOperationsDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductsOperations, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectProductsOperationsDto>(productsOperation);
                 }
                 else
@@ -198,6 +199,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                     var queryLine = queryFactory.Query().From(Tables.ProductsOperationLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                     var productsOperationLines = queryFactory.Update<SelectProductsOperationLinesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductsOperationLines, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectProductsOperationLinesDto>(productsOperationLines);
                 }
             }
@@ -274,6 +276,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
             LogsAppService.InsertLogToDatabase(productsOperations, productsOperations, LoginedUserService.UserId, Tables.ProductsOperations, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductsOperationsDto>(productsOperations);
 
         }
@@ -301,6 +304,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                     .Where(null, true, true, Tables.ProductsOperations);
 
             var productsOperations = queryFactory.GetList<ListProductsOperationsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListProductsOperationsDto>>(productsOperations);
 
         }
@@ -528,6 +532,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.ProductsOperations, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductsOperationsDto>(productsOperation);
 
         }
@@ -559,6 +564,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             }).Where(new { Id = id }, true, true, "");
 
             var productsOperationsDto = queryFactory.Update<SelectProductsOperationsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductsOperationsDto>(productsOperationsDto);
 
 

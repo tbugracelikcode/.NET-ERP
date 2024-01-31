@@ -113,6 +113,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesPrices, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesPricesDto>(salesPrice);
 
         }
@@ -135,6 +136,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
                 var salesPrice = queryFactory.Update<SelectSalesPricesDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.SalesPrices, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectSalesPricesDto>(salesPrice);
             }
             else
@@ -142,6 +144,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                 var queryLine = queryFactory.Query().From(Tables.SalesPriceLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                 var salesPriceLines = queryFactory.Update<SelectSalesPriceLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.SalesPriceLines, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectSalesPriceLinesDto>(salesPriceLines);
             }
 
@@ -211,6 +214,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
             LogsAppService.InsertLogToDatabase(salesPrices, salesPrices, LoginedUserService.UserId, Tables.SalesPrices, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesPricesDto>(salesPrices);
 
         }
@@ -253,6 +257,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                     .Where(null, true, true, Tables.SalesPrices);
 
             var salesPrices = queryFactory.GetList<ListSalesPricesDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListSalesPricesDto>>(salesPrices);
 
         }
@@ -455,6 +460,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.SalesPrices, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesPricesDto>(salesPrice);
 
         }
@@ -483,6 +489,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
             var salesPriceLine = queryFactory.GetList<SelectSalesPriceLinesDto>(queryLines).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectSalesPriceLinesDto>>(salesPriceLine);
 
         }
@@ -518,6 +525,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
             }).Where(new { Id = id }, true, true, "");
 
             var salesPricesDto = queryFactory.Update<SelectSalesPricesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesPricesDto>(salesPricesDto);
 
 

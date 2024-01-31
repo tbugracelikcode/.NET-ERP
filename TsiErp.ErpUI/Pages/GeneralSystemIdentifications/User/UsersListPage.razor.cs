@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.Navigations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
@@ -10,6 +11,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.User.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.ErpUI.Helpers;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 {
@@ -18,6 +20,24 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+        public List<UserMenuPermission> PermissionModalMenusList = new List<UserMenuPermission>();
+
+        public class UserMenuPermission
+        {
+            public string MenuName { get; set; }
+            public Guid MenuID { get; set; }
+            public Guid ParentID { get; set; }
+            public bool isPermitted { get; set; }
+            public bool HasChild { get; set; }
+            public bool Expanded { get; set; }
+        }
+
+        [Inject]
+        ModalManager ModalManager { get; set; }
+
+        public bool isPermissionModal = false;
+
+
         protected override async void OnInitialized()
         {
             BaseCrudService = UsersService;
@@ -66,6 +86,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                             GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserContextAdd"], Id = "new" }); break;
                         case "UserContextChange":
                             GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserContextChange"], Id = "changed" }); break;
+                        case "UserContextPermission":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserContextPermission"], Id = "permission" }); break;
                         case "UserContextDelete":
                             GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserContextDelete"], Id = "delete" }); break;
                         case "UserContextRefresh":
@@ -193,7 +215,99 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
         #endregion
 
+        public override async void OnContextMenuClick(ContextMenuClickEventArgs<ListUsersDto> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "new":
+                    await BeforeInsertAsync();
+                    break;
 
+                case "changed":
+                    IsChanged = true;
+                    SelectFirstDataRow = false;
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    ShowEditPage();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "permission":
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    var userPermissionList = (await UserPermissionsAppService.GetListAsyncByUserId(DataSource.Id)).Data.ToList();
+
+                    foreach (var permission in userPermissionList)
+                    {
+                        var menu = (await MenusAppService.GetAsync(permission.MenuId)).Data;
+
+                        if (menu.MenuName.Contains("Context"))
+                        {
+                            UserMenuPermission menuPermissionModel = new UserMenuPermission
+                            {
+                                isPermitted = permission.IsUserPermitted,
+                                MenuID = menu.Id,
+                                MenuName = L[menu.MenuName],
+                                ParentID = menu.ParentMenuId,
+                                Expanded = false,
+                                HasChild = false
+                            };
+                            PermissionModalMenusList.Add(menuPermissionModel);
+                        }
+                        else
+                        {
+                            UserMenuPermission menuPermissionModel = new UserMenuPermission
+                            {
+                                isPermitted = permission.IsUserPermitted,
+                                MenuID = menu.Id,
+                                MenuName = L[menu.MenuName],
+                                ParentID = menu.ParentMenuId,
+                                Expanded = false,
+                                HasChild = true
+                            };
+                            PermissionModalMenusList.Add(menuPermissionModel);
+                        }
+
+
+
+                    }
+
+
+
+                    isPermissionModal = true;
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "delete":
+
+                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+
+
+                    if (res == true)
+                    {
+                        SelectFirstDataRow = false;
+                        await DeleteAsync(args.RowInfo.RowData.Id);
+                        await GetListDataSourceAsync();
+                        await InvokeAsync(StateHasChanged);
+                    }
+
+                    break;
+
+                case "refresh":
+                    await GetListDataSourceAsync();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        public void HidePermissionModal()
+        {
+            PermissionModalMenusList.Clear();
+            isPermissionModal = false;
+        }
 
         #region Kod ButtonEdit
 

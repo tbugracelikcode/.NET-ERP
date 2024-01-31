@@ -28,6 +28,7 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProgVersionsDto>> CreateAsync(CreateProgVersionsDto input)
         {
+            await Task.CompletedTask;
             throw new NotImplementedException("Ekleme işlemi bu servis için yapılamaz.");
         }
 
@@ -51,6 +52,7 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
 
             LogsAppService.InsertLogToDatabase(version, version, LoginedUserService.UserId, Tables.ProgVersions, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProgVersionsDto>(version);
         }
 
@@ -81,6 +83,7 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
 
             LogsAppService.InsertLogToDatabase(entity, version, LoginedUserService.UserId, Tables.ProgVersions, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProgVersionsDto>(version);
         }
 
@@ -156,6 +159,7 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
                 }
             }
 
+            await Task.CompletedTask;
             return true;
         }
     }

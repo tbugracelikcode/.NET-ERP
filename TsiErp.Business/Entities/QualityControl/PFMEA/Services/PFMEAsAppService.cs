@@ -83,6 +83,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PFMEAs, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPFMEAsDto>(PFMEAs);
 
         }
@@ -97,6 +98,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PFMEAs, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPFMEAsDto>(PFMEAs);
 
         }
@@ -148,6 +150,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
 
             LogsAppService.InsertLogToDatabase(PFMEA, PFMEA, LoginedUserService.UserId, Tables.PFMEAs, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPFMEAsDto>(PFMEA);
 
         }
@@ -200,6 +203,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
 
             var pFMEAs = queryFactory.GetList<ListPFMEAsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPFMEAsDto>>(pFMEAs);
 
         }
@@ -258,6 +262,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
             LogsAppService.InsertLogToDatabase(entity, PFMEAs, LoginedUserService.UserId, Tables.PFMEAs, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPFMEAsDto>(PFMEAs);
 
         }
@@ -310,6 +315,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
 
             var PFMEAs = queryFactory.Update<SelectPFMEAsDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPFMEAsDto>(PFMEAs);
 
 

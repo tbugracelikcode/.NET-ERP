@@ -34,6 +34,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.GeneralParameter
 
             LogsAppService.InsertLogToDatabase(GeneralParameter, GeneralParameter, LoginedUserService.UserId, Tables.GeneralParameters, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectGeneralParametersDto>(GeneralParameter);
 
         }
@@ -46,6 +47,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.GeneralParameter
 
             var GeneralParameters = queryFactory.GetList<ListGeneralParametersDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListGeneralParametersDto>>(GeneralParameters);
 
         }
@@ -68,6 +70,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.GeneralParameter
             LogsAppService.InsertLogToDatabase(entity, GeneralParameters, LoginedUserService.UserId, Tables.GeneralParameters, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectGeneralParametersDto>(GeneralParameters);
 
         }

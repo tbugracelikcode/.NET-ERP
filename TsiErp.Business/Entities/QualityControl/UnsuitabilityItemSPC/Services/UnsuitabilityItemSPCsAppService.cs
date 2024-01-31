@@ -130,6 +130,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UnsuitabilityItemSPCs, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnsuitabilityItemSPCsDto>(UnsuitabilityItemSPC);
 
         }
@@ -154,6 +155,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                 var UnsuitabilityItemSPC = queryFactory.Update<SelectUnsuitabilityItemSPCsDto>(deleteQuery, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.UnsuitabilityItemSPCs, LogType.Delete, id);
+                await Task.CompletedTask;
 
                 return new SuccessDataResult<SelectUnsuitabilityItemSPCsDto>(UnsuitabilityItemSPC);
             }
@@ -168,6 +170,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                 var UnsuitabilityItemSPCLines = queryFactory.Update<SelectUnsuitabilityItemSPCLinesDto>(queryLine, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.UnsuitabilityItemSPCLines, LogType.Delete, id);
+                await Task.CompletedTask;
 
                 return new SuccessDataResult<SelectUnsuitabilityItemSPCLinesDto>(UnsuitabilityItemSPCLines);
             }
@@ -217,6 +220,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
 
             LogsAppService.InsertLogToDatabase(UnsuitabilityItemSPCs, UnsuitabilityItemSPCs, LoginedUserService.UserId, Tables.UnsuitabilityItemSPCs, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnsuitabilityItemSPCsDto>(UnsuitabilityItemSPCs);
 
         }
@@ -231,6 +235,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                     .Where(null, false, false, Tables.UnsuitabilityItemSPCs);
 
             var UnsuitabilityItemSPCs = queryFactory.GetList<ListUnsuitabilityItemSPCsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListUnsuitabilityItemSPCsDto>>(UnsuitabilityItemSPCs);
 
         }
@@ -385,6 +390,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.UnsuitabilityItemSPCs, LogType.Update, UnsuitabilityItemSPC.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnsuitabilityItemSPCsDto>(UnsuitabilityItemSPC);
 
         }
@@ -415,6 +421,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
             }).Where(new { Id = id }, false, false, "");
 
             var UnsuitabilityItemSPCsDto = queryFactory.Update<SelectUnsuitabilityItemSPCsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnsuitabilityItemSPCsDto>(UnsuitabilityItemSPCsDto);
 
 

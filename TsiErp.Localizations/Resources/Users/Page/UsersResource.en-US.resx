@@ -186,6 +186,9 @@
   <data name="PasswordLabel" xml:space="preserve">
     <value>Password:</value>
   </data>
+  <data name="PermissionModalTitle" xml:space="preserve">
+    <value>User Permissions</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -215,6 +218,9 @@
   </data>
   <data name="UserContextDelete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="UserContextPermission" xml:space="preserve">
+    <value>User Permissions</value>
   </data>
   <data name="UserContextRefresh" xml:space="preserve">
     <value>Refresh</value>

@@ -24,15 +24,6 @@ namespace TsiErp.Entities.Entities.QualityControl.EquipmentRecord.Dtos
         /// </summary>
         public string MeasuringAccuracy { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// Departman
         /// </summary>
         public string DepartmentName { get; set; }

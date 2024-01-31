@@ -20,15 +20,6 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos
         /// </summary>
         public bool IsActive { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// Kıdem ID
         /// </summary>
         public Guid? SeniorityID { get; set; }

@@ -76,6 +76,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Branches, LogType.Insert, branches.Id);
 
+            await Task.CompletedTask;
 
             return new SuccessDataResult<SelectBranchesDto>(branches);
 
@@ -117,6 +118,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Branches, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectBranchesDto>(branches);
             }
         }
@@ -134,6 +136,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
             LogsAppService.InsertLogToDatabase(branch, branch, LoginedUserService.UserId, Tables.Branches, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectBranchesDto>(branch);
 
         }
@@ -143,6 +146,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, true, "");
             var branches = queryFactory.GetList<ListBranchesDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListBranchesDto>>(branches);
 
         }
@@ -188,6 +192,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
             LogsAppService.InsertLogToDatabase(entity, branches, LoginedUserService.UserId, Tables.Branches, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectBranchesDto>(branches);
 
         }
@@ -218,6 +223,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             }).Where(new { Id = id }, true, true, "");
 
             var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectBranchesDto>(branches);
 
         }

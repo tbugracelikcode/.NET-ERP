@@ -158,6 +158,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
 
             LogsAppService.InsertLogToDatabase(logInput, logInput, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlan);
 
         }
@@ -193,6 +194,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
 
                 var operationalQualityPlan = queryFactory.Update<SelectOperationalQualityPlansDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlan);
             }
         }
@@ -205,6 +207,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationalQualityPlanLines, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationalQualityPlanLinesDto>(operationalQualityPlanLines);
 
         }
@@ -217,6 +220,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationPictures, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationPicturesDto>(operationPictures);
 
         }
@@ -310,6 +314,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
 
             LogsAppService.InsertLogToDatabase(operationalQualityPlans, operationalQualityPlans, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlans);
 
         }
@@ -338,6 +343,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                     .Where(null, false, false, Tables.OperationalQualityPlans);
 
             var operationalQualityPlans = queryFactory.GetList<ListOperationalQualityPlansDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListOperationalQualityPlansDto>>(operationalQualityPlans);
 
         }
@@ -532,6 +538,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlan);
 
         }
@@ -562,6 +569,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
             }).Where(new { Id = id }, false, false, "");
 
             var operationalQualityPlansDto = queryFactory.Update<SelectOperationalQualityPlansDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlansDto);
 
         }

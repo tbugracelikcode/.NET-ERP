@@ -87,6 +87,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.EquipmentRecords, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEquipmentRecordsDto>(equipmentRecords);
 
         }
@@ -119,6 +120,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EquipmentRecords, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectEquipmentRecordsDto>(equipmentRecords);
             }
         }
@@ -141,6 +143,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
             LogsAppService.InsertLogToDatabase(equipmentRecord, equipmentRecord, LoginedUserService.UserId, Tables.EquipmentRecords, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEquipmentRecordsDto>(equipmentRecord);
 
 
@@ -165,6 +168,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
             var equipmentRecords = queryFactory.GetList<ListEquipmentRecordsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListEquipmentRecordsDto>>(equipmentRecords);
 
         }
@@ -221,6 +225,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
             LogsAppService.InsertLogToDatabase(entity, equipmentRecords, LoginedUserService.UserId, Tables.EquipmentRecords, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
 
             return new SuccessDataResult<SelectEquipmentRecordsDto>(equipmentRecords);
 
@@ -261,6 +266,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
             var equipmentRecords = queryFactory.Update<SelectEquipmentRecordsDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEquipmentRecordsDto>(equipmentRecords);
 
 

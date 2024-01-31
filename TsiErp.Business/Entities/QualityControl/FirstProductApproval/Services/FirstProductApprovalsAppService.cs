@@ -138,6 +138,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
                 var billOfMaterial = queryFactory.Update<SelectFirstProductApprovalsDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.FirstProductApprovals, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectFirstProductApprovalsDto>(billOfMaterial);
             }
             else
@@ -145,6 +146,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 var queryLine = queryFactory.Query().From(Tables.FirstProductApprovalLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                 var billOfMaterialLines = queryFactory.Update<SelectFirstProductApprovalLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.FirstProductApprovalLines, LogType.Delete, id);
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectFirstProductApprovalLinesDto>(billOfMaterialLines);
             }
 
@@ -208,6 +210,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
             LogsAppService.InsertLogToDatabase(firstProductApprovals, firstProductApprovals, LoginedUserService.UserId, Tables.FirstProductApprovals, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectFirstProductApprovalsDto>(firstProductApprovals);
 
         }
@@ -266,6 +269,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                     .Where(null, false, false, Tables.FirstProductApprovals);
 
             var firstProductApprovals = queryFactory.GetList<ListFirstProductApprovalsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListFirstProductApprovalsDto>>(firstProductApprovals);
 
         }
@@ -430,6 +434,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.FirstProductApprovals, LogType.Update, FirstProductApproval.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectFirstProductApprovalsDto>(FirstProductApproval);
 
         }
@@ -468,6 +473,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
             }).Where(new { Id = id }, false, false, "");
 
             var FirstProductApprovalsDto = queryFactory.Update<SelectFirstProductApprovalsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectFirstProductApprovalsDto>(FirstProductApprovalsDto);
 
 

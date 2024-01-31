@@ -117,6 +117,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PalletRecords, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPalletRecordsDto>(PalletRecord);
 
         }
@@ -154,6 +155,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
 
                     var PalletRecord = queryFactory.Update<SelectPalletRecordsDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PalletRecords, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectPalletRecordsDto>(PalletRecord);
                 }
                 else
@@ -161,6 +163,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                     var queryLine = queryFactory.Query().From(Tables.PalletRecordLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                     var PalletRecordLines = queryFactory.Update<SelectPalletRecordLinesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PalletRecordLines, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectPalletRecordLinesDto>(PalletRecordLines);
                 }
             }
@@ -218,6 +221,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
 
             LogsAppService.InsertLogToDatabase(palletRecords, palletRecords, LoginedUserService.UserId, Tables.PalletRecords, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPalletRecordsDto>(palletRecords);
 
         }
@@ -246,6 +250,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                     .Where(null, false, false, Tables.PalletRecords);
 
             var palletRecords = queryFactory.GetList<ListPalletRecordsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPalletRecordsDto>>(palletRecords);
 
         }
@@ -421,6 +426,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PalletRecords, LogType.Update, billOfMaterial.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPalletRecordsDto>(billOfMaterial);
 
         }
@@ -457,6 +463,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             }).Where(new { Id = id }, false, false, "");
 
             var PalletRecordsDto = queryFactory.Update<SelectPalletRecordsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPalletRecordsDto>(PalletRecordsDto);
 
 

@@ -77,6 +77,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PaymentPlans, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPaymentPlansDto>(paymentPlans);
 
 
@@ -115,6 +116,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PaymentPlans, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectPaymentPlansDto>(paymentPlans);
             }
         }
@@ -132,6 +134,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
             LogsAppService.InsertLogToDatabase(paymentPlan, paymentPlan, LoginedUserService.UserId, Tables.PaymentPlans, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPaymentPlansDto>(paymentPlan);
 
         }
@@ -142,6 +145,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
         {
             var query = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(null, true, true, "");
             var paymentPlans = queryFactory.GetList<ListPaymentPlansDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPaymentPlansDto>>(paymentPlans);
 
         }
@@ -189,6 +193,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
             LogsAppService.InsertLogToDatabase(entity, paymentPlans, LoginedUserService.UserId, Tables.PaymentPlans, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPaymentPlansDto>(paymentPlans);
 
         }
@@ -220,6 +225,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
             }).Where(new { Id = id }, true, true, "");
 
             var paymentPlans = queryFactory.Update<SelectPaymentPlansDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPaymentPlansDto>(paymentPlans);
 
 

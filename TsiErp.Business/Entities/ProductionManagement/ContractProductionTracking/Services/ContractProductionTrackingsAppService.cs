@@ -71,7 +71,8 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractProductionTrackings, LogType.Insert, addedEntityId);
 
-                return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTrackings);
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTrackings);
             
         }
 
@@ -84,7 +85,8 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractProductionTrackings, LogType.Delete, id);
 
-                return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTrackings);
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTrackings);
             
         }
 
@@ -140,7 +142,8 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 
                 LogsAppService.InsertLogToDatabase(contractProductionTracking, contractProductionTracking, LoginedUserService.UserId, Tables.ContractProductionTrackings, LogType.Get, id);
 
-                return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTracking);
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTracking);
 
         }
 
@@ -195,7 +198,8 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 
 
                 var contractProductionTrackings = queryFactory.GetList<ListContractProductionTrackingsDto>(query).ToList();
-                return new SuccessDataResult<IList<ListContractProductionTrackingsDto>>(contractProductionTrackings);
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListContractProductionTrackingsDto>>(contractProductionTrackings);
             
         }
 
@@ -240,7 +244,8 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                 LogsAppService.InsertLogToDatabase(entity, contractProductionTrackings, LoginedUserService.UserId, Tables.ContractProductionTrackings, LogType.Update, entity.Id);
 
 
-                return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTrackings);
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTrackings);
             
         }
 
@@ -294,7 +299,8 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 
 
                 var contractProductionTrackings = queryFactory.GetList<SelectContractProductionTrackingsDto>(query).ToList();
-                return new SuccessDataResult<IList<SelectContractProductionTrackingsDto>>(contractProductionTrackings);
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<SelectContractProductionTrackingsDto>>(contractProductionTrackings);
             
         }
 
@@ -334,7 +340,8 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 
                 var contractProductionTrackings = queryFactory.Update<SelectContractProductionTrackingsDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTrackings);
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTrackings);
 
         }
     }

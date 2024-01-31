@@ -64,6 +64,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.GrandTotalStockMovements, LogType.Insert, grandTotalStockMovements.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(grandTotalStockMovements);
 
         }
@@ -78,6 +79,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.GrandTotalStockMovements, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(grandTotalStockMovements);
         }
 
@@ -113,6 +115,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
 
             LogsAppService.InsertLogToDatabase(grandTotalStockMovement, grandTotalStockMovement, LoginedUserService.UserId, Tables.GrandTotalStockMovements, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(grandTotalStockMovement);
         }
 
@@ -149,6 +152,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
 
             var grandTotalStockMovements = queryFactory.GetList<ListGrandTotalStockMovementsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListGrandTotalStockMovementsDto>>(grandTotalStockMovements);
 
         }
@@ -195,6 +199,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
             LogsAppService.InsertLogToDatabase(entity, grandTotalStockMovements, LoginedUserService.UserId, Tables.GrandTotalStockMovements, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(grandTotalStockMovements);
 
 

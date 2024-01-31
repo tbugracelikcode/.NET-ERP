@@ -127,6 +127,7 @@ namespace TsiErp.Business.Entities.MRP.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.MRPs, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMRPsDto>(MRP);
 
         }
@@ -163,6 +164,7 @@ namespace TsiErp.Business.Entities.MRP.Services
 
                     var MRP = queryFactory.Update<SelectMRPsDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MRPs, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectMRPsDto>(MRP);
                 }
                 else
@@ -170,6 +172,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                     var queryLine = queryFactory.Query().From(Tables.MRPLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                     var MRPLines = queryFactory.Update<SelectMRPLinesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MRPLines, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectMRPLinesDto>(MRPLines);
                 }
             }
@@ -249,6 +252,7 @@ namespace TsiErp.Business.Entities.MRP.Services
 
             LogsAppService.InsertLogToDatabase(MRP, MRP, LoginedUserService.UserId, Tables.MRPs, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMRPsDto>(MRP);
 
         }
@@ -266,6 +270,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                             JoinType.Left
                         ).Where(null, false, false, Tables.MRPs);
             var mRPs = queryFactory.GetList<ListMRPsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListMRPsDto>>(mRPs);
         }
 
@@ -458,6 +463,7 @@ namespace TsiErp.Business.Entities.MRP.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.MRPs, LogType.Update, input.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMRPsDto>(MRP);
 
         }
@@ -489,6 +495,7 @@ namespace TsiErp.Business.Entities.MRP.Services
             }).Where(new { Id = id }, false, false, "");
 
             var MRPsDto = queryFactory.Update<SelectMRPsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMRPsDto>(MRPsDto);
 
 

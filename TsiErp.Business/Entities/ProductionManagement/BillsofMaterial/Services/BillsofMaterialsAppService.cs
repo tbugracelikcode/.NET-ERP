@@ -110,6 +110,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectBillsofMaterialsDto>(billOfMaterial);
 
         }
@@ -146,6 +147,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
                     var billOfMaterial = queryFactory.Update<SelectBillsofMaterialsDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectBillsofMaterialsDto>(billOfMaterial);
                 }
                 else
@@ -153,6 +155,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     var queryLine = queryFactory.Query().From(Tables.BillsofMaterialLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                     var billOfMaterialLines = queryFactory.Update<SelectBillsofMaterialLinesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.BillsofMaterialLines, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectBillsofMaterialLinesDto>(billOfMaterialLines);
                 }
             }
@@ -216,6 +219,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
             LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
 
         }
@@ -278,6 +282,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
             LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, billsOfMaterials.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
 
         }
@@ -340,6 +345,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
             LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, billsOfMaterials.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
 
         }
@@ -368,6 +374,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     .Where(null, true, true, Tables.BillsofMaterials);
 
             var billsOfMaterials = queryFactory.GetList<ListBillsofMaterialsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListBillsofMaterialsDto>>(billsOfMaterials);
 
         }
@@ -548,6 +555,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Update, billOfMaterial.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectBillsofMaterialsDto>(billOfMaterial);
 
         }
@@ -579,6 +587,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             }).Where(new { Id = id }, true, true, "");
 
             var billsofMaterialsDto = queryFactory.Update<SelectBillsofMaterialsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectBillsofMaterialsDto>(billsofMaterialsDto);
 
 

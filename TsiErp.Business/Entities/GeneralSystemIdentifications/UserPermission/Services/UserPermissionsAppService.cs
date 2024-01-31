@@ -2,18 +2,18 @@
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Menu.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.User.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.User;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.SalesManagementParameter.Page;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission;
-using TSI.QueryBuilder.Constants.Join;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu;
 
 namespace TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.Services
 {
@@ -23,6 +23,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.S
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
+        private readonly IMenusAppService _MenusAppService;
         public UserPermissionsAppService(IStringLocalizer<SalesManagementParametersResource> l) : base(l)
         {
         }
@@ -44,6 +45,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.S
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UserPermissions, LogType.Insert, Guid.Empty);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUserPermissionsDto>();
         }
 
@@ -56,6 +58,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.S
 
             var permissions = queryFactory.GetList<SelectUserPermissionsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectUserPermissionsDto>>(permissions);
         }
 
@@ -76,9 +79,27 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.S
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UserPermissions, LogType.Update, Guid.Empty);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUserPermissionsDto>();
         }
 
+        public async Task AllPermissionsAddedUser(Guid userId)
+        {
+            var menusList = (await _MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+
+            foreach(var menu in menusList)
+            {
+                var query = queryFactory.Query().From(Tables.UserPermissions).Insert(new CreateUserPermissionsDto
+                {
+                    Id = GuidGenerator.CreateGuid(),
+                    IsUserPermitted = true,
+                    MenuId = menu.Id,
+                    UserId = userId
+                }).UseIsDelete(false);
+
+                var insertedPermission = queryFactory.Insert<SelectUserPermissionsDto>(query, "Id", true);
+            }
+        }
 
 
 
@@ -104,5 +125,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.S
         {
             throw new NotImplementedException();
         }
+
     }
 }

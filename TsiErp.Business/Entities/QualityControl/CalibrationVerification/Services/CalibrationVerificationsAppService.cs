@@ -80,6 +80,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CalibrationVerifications, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCalibrationVerificationsDto>(calibrationVerifications);
 
         }
@@ -94,6 +95,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.CalibrationVerifications, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCalibrationVerificationsDto>(calibrationVerifications);
 
         }
@@ -116,6 +118,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
 
             LogsAppService.InsertLogToDatabase(calibrationVerification, calibrationVerification, LoginedUserService.UserId, Tables.CalibrationVerifications, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCalibrationVerificationsDto>(calibrationVerification);
 
 
@@ -139,6 +142,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
 
 
             var calibrationVerifications = queryFactory.GetList<ListCalibrationVerificationsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListCalibrationVerificationsDto>>(calibrationVerifications);
 
         }
@@ -191,6 +195,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
             LogsAppService.InsertLogToDatabase(entity, calibrationVerifications, LoginedUserService.UserId, Tables.CalibrationVerifications, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCalibrationVerificationsDto>(calibrationVerifications);
 
         }
@@ -225,6 +230,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
 
             var calibrationVerifications = queryFactory.Update<SelectCalibrationVerificationsDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCalibrationVerificationsDto>(calibrationVerifications);
 
 

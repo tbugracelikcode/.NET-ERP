@@ -268,6 +268,15 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Yetkileri.
+        /// </summary>
+        public static string PermissionModalTitle {
+            get {
+                return ResourceManager.GetString("PermissionModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -354,6 +363,15 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         public static string UserContextDelete {
             get {
                 return ResourceManager.GetString("UserContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Yetkileri.
+        /// </summary>
+        public static string UserContextPermission {
+            get {
+                return ResourceManager.GetString("UserContextPermission", resourceCulture);
             }
         }
         

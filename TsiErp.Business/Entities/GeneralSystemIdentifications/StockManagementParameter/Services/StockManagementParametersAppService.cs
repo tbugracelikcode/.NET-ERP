@@ -27,6 +27,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
 
         public async Task<IDataResult<SelectStockManagementParametersDto>> GetAsync(Guid id)
         {
+            await Task.CompletedTask;
             throw new NotImplementedException();
 
         }
@@ -44,6 +45,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Insert, stockManagementParameter.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStockManagementParametersDto>(stockManagementParameter);
         }
 
@@ -68,6 +70,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
 
             LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Get, result.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStockManagementParametersDto>(result);
         }
 
@@ -90,6 +93,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
 
             LogsAppService.InsertLogToDatabase(entity, StockManagementParameters, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectStockManagementParametersDto>(StockManagementParameters);
         }
 

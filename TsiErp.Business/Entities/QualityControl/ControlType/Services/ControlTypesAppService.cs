@@ -88,6 +88,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ControlTypes, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectControlTypesDto>(controlTypes);
 
         }
@@ -105,6 +106,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
 
             LogsAppService.InsertLogToDatabase(controlTypes, controlTypes, LoginedUserService.UserId, Tables.ControlTypes, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectControlTypesDto>(controlTypes);
 
         }
@@ -115,6 +117,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
 
             var controlTypes = queryFactory.GetList<ListControlTypesDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListControlTypesDto>>(controlTypes);
 
         }
@@ -161,6 +164,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
 
             LogsAppService.InsertLogToDatabase(entity, controlTypes, LoginedUserService.UserId, Tables.ControlTypes, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectControlTypesDto>(controlTypes);
 
         }
@@ -192,6 +196,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
 
             var controlTypes = queryFactory.Update<SelectControlTypesDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectControlTypesDto>(controlTypes);
 
 

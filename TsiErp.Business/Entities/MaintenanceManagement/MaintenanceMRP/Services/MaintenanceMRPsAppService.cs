@@ -110,6 +110,7 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.MaintenanceMRPs, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMaintenanceMRPsDto>(maintenanceMRP);
         }
 
@@ -148,6 +149,7 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
 
                     var maintenanceMRP = queryFactory.Update<SelectMaintenanceMRPsDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MaintenanceMRPs, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectMaintenanceMRPsDto>(maintenanceMRP);
                 }
                 else
@@ -155,6 +157,7 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
                     var queryLine = queryFactory.Query().From(Tables.MaintenanceMRPLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                     var maintenanceMRPLines = queryFactory.Update<SelectMaintenanceMRPLinesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MaintenanceMRPLines, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectMaintenanceMRPLinesDto>(maintenanceMRPLines);
                 }
             }
@@ -207,6 +210,7 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
 
             LogsAppService.InsertLogToDatabase(maintenanceMRPs, maintenanceMRPs, LoginedUserService.UserId, Tables.MaintenanceMRPs, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMaintenanceMRPsDto>(maintenanceMRPs);
         }
 
@@ -218,6 +222,7 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
                    .From(Tables.MaintenanceMRPs).Select("*").Where(null, false, false, "");
 
             var maintenanceMRPs = queryFactory.GetList<ListMaintenanceMRPsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListMaintenanceMRPsDto>>(maintenanceMRPs);
         }
 
@@ -360,6 +365,7 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.MaintenanceMRPs, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMaintenanceMRPsDto>(maintenanceMRP);
         }
 
@@ -399,6 +405,7 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
 
             LogsAppService.InsertLogToDatabase(maintenanceMRPs, maintenanceMRPs, LoginedUserService.UserId, Tables.MaintenanceMRPs, LogType.Get, maintenanceMRPs.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMaintenanceMRPsDto>(maintenanceMRPs);
         }
 
@@ -430,6 +437,7 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
             }).Where(new { Id = id }, false, false, "");
 
             var maintenanceMRPsDto = queryFactory.Update<SelectMaintenanceMRPsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectMaintenanceMRPsDto>(maintenanceMRPsDto);
         }
     }

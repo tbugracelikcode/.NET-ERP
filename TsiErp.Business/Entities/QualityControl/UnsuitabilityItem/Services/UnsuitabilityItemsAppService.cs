@@ -84,6 +84,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UnsuitabilityItems, LogType.Insert, unsuitabilityItem.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnsuitabilityItemsDto>(unsuitabilityItem);
 
         }
@@ -113,6 +114,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.UnsuitabilityItems, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectUnsuitabilityItemsDto>(unsuitabilityItem);
             }
         }
@@ -141,6 +143,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
 
             LogsAppService.InsertLogToDatabase(unsuitabilityItem, unsuitabilityItem, LoginedUserService.UserId, Tables.UnsuitabilityItems, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnsuitabilityItemsDto>(unsuitabilityItem);
 
 
@@ -170,6 +173,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
             var unsuitabilityItems = queryFactory.GetList<ListUnsuitabilityItemsDto>(query).ToList();
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListUnsuitabilityItemsDto>>(unsuitabilityItems);
 
         }
@@ -227,6 +231,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
             LogsAppService.InsertLogToDatabase(entity, unsuitabilityItem, LoginedUserService.UserId, Tables.UnsuitabilityItems, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnsuitabilityItemsDto>(unsuitabilityItem);
 
         }
@@ -266,6 +271,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
 
             var unsuitabilityItem = queryFactory.Update<SelectUnsuitabilityItemsDto>(query, "Id", true);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectUnsuitabilityItemsDto>(unsuitabilityItem);
 
 

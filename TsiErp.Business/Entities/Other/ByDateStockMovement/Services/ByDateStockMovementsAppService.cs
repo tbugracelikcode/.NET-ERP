@@ -65,6 +65,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Insert, byDateStockMovements.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovements);
         }
 
@@ -78,6 +79,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Delete, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovements);
         }
 
@@ -112,6 +114,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
 
             LogsAppService.InsertLogToDatabase(byDateStockMovement, byDateStockMovement, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovement);
         }
 
@@ -145,6 +148,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
 
             var byDateStockMovements = queryFactory.GetList<ListByDateStockMovementsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListByDateStockMovementsDto>>(byDateStockMovements);
         }
 
@@ -188,7 +192,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
 
             LogsAppService.InsertLogToDatabase(entity, byDateStockMovements, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Update, entity.Id);
 
-
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovements);
         }
 

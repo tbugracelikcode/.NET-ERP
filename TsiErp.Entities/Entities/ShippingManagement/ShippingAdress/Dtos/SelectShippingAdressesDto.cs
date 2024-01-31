@@ -18,15 +18,6 @@ namespace TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// Müşteri Kartı ID
         /// </summary>
         public Guid? CustomerCardID { get; set; }

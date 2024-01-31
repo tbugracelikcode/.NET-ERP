@@ -34,6 +34,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ShippingManageme
 
             LogsAppService.InsertLogToDatabase(ShippingManagementParameter, ShippingManagementParameter, LoginedUserService.UserId, Tables.ShippingManagementParameters, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectShippingManagementParametersDto>(ShippingManagementParameter);
 
         }
@@ -46,6 +47,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ShippingManageme
 
             var ShippingManagementParameters = queryFactory.GetList<ListShippingManagementParametersDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListShippingManagementParametersDto>>(ShippingManagementParameters);
         }
 
@@ -68,6 +70,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ShippingManageme
             LogsAppService.InsertLogToDatabase(entity, ShippingManagementParameters, LoginedUserService.UserId, Tables.ShippingManagementParameters, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectShippingManagementParametersDto>(ShippingManagementParameters);
         }
 

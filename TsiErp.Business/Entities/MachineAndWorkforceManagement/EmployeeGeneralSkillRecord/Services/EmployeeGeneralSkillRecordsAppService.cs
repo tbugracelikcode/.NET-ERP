@@ -76,6 +76,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.EmployeeGeneralSkillRecords, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
 
             return new SuccessDataResult<SelectEmployeeGeneralSkillRecordsDto>(EmployeeGeneralSkillRecords);
         }
@@ -105,6 +106,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EmployeeGeneralSkillRecords, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectEmployeeGeneralSkillRecordsDto>(EmployeeGeneralSkillRecords);
             }
         }
@@ -122,6 +124,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
 
             LogsAppService.InsertLogToDatabase(EmployeeGeneralSkillRecord, EmployeeGeneralSkillRecord, LoginedUserService.UserId, Tables.EmployeeGeneralSkillRecords, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeGeneralSkillRecordsDto>(EmployeeGeneralSkillRecord);
         }
 
@@ -131,6 +134,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
         {
             var query = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select("*").Where(null, false, false, "");
             var EmployeeGeneralSkillRecords = queryFactory.GetList<ListEmployeeGeneralSkillRecordsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListEmployeeGeneralSkillRecordsDto>>(EmployeeGeneralSkillRecords);
         }
 
@@ -175,6 +179,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
 
             LogsAppService.InsertLogToDatabase(entity, EmployeeGeneralSkillRecords, LoginedUserService.UserId, Tables.EmployeeGeneralSkillRecords, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeGeneralSkillRecordsDto>(EmployeeGeneralSkillRecords);
         }
 
@@ -203,6 +208,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
             }).Where(new { Id = id }, false, false, "");
 
             var EmployeeGeneralSkillRecords = queryFactory.Update<SelectEmployeeGeneralSkillRecordsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectEmployeeGeneralSkillRecordsDto>(EmployeeGeneralSkillRecords);
         }
     }

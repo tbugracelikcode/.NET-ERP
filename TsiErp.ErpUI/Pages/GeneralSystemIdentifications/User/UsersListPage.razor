@@ -198,6 +198,48 @@ else
             <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
+
+     <DxPopup @bind-Visible="isPermissionModal"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["PermissionModalTitle"]"
+         Width="81%"
+         Height="74%"
+         MinWidth="1400px"
+         MinHeight="800px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
+                </Columns>
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>  
+                            <br />
+                             <SfTreeView TValue="UserMenuPermission" ShowCheckBox="true" AutoCheck="true">
+                                <TreeViewFieldsSettings TValue="UserMenuPermission" Id="MenuID" DataSource="@PermissionModalMenusList" Text="MenuName" ParentID="ParentID" IsChecked="IsUserPermitted" HasChildren="HasChild" Expanded="Expanded"></TreeViewFieldsSettings>
+                            </SfTreeView> 
+
+                        </Template>
+                    </DxGridLayoutItem> 
+
+                  
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HidePermissionModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
 }
 
 @if (SelectUserGroupPopupVisible)

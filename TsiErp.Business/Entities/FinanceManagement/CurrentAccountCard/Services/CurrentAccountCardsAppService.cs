@@ -113,6 +113,8 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Insert, addedEntityId);
 
+
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
 
 
@@ -174,6 +176,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Delete, id);
 
+                await Task.CompletedTask;
                 return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
             }
         }
@@ -197,6 +200,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 
             LogsAppService.InsertLogToDatabase(currentAccountCard, currentAccountCard, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCard);
 
 
@@ -220,6 +224,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 
             var currentAccountCards = queryFactory.GetList<ListCurrentAccountCardsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListCurrentAccountCardsDto>>(currentAccountCards);
 
         }
@@ -305,6 +310,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             LogsAppService.InsertLogToDatabase(entity, currentAccountCards, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Update, entity.Id);
 
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
 
         }
@@ -370,6 +376,8 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             }).Where(new { Id = id }, true, true, "");
 
             var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
+
+            await Task.CompletedTask;
 
             return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
 

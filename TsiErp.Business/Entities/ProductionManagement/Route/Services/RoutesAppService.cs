@@ -147,6 +147,7 @@ namespace TsiErp.Business.Entities.Route.Services
 
                     var route = queryFactory.Update<SelectRoutesDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Routes, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectRoutesDto>(route);
                 }
                 else
@@ -154,6 +155,7 @@ namespace TsiErp.Business.Entities.Route.Services
                     var queryLine = queryFactory.Query().From(Tables.RouteLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                     var routeLines = queryFactory.Update<SelectRouteLinesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.RouteLines, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectRouteLinesDto>(routeLines);
                 }
             }
@@ -202,6 +204,7 @@ namespace TsiErp.Business.Entities.Route.Services
 
             LogsAppService.InsertLogToDatabase(routes, routes, LoginedUserService.UserId, Tables.Routes, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectRoutesDto>(routes);
 
         }
@@ -224,6 +227,7 @@ namespace TsiErp.Business.Entities.Route.Services
 
             var routes = queryFactory.GetList<ListRoutesDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListRoutesDto>>(routes);
 
         }
@@ -383,6 +387,7 @@ namespace TsiErp.Business.Entities.Route.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Routes, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectRoutesDto>(route);
 
         }
@@ -404,6 +409,7 @@ namespace TsiErp.Business.Entities.Route.Services
 
             var productsOperations = queryFactory.GetList<ListProductsOperationsDto>(query).ToList();
 
+            await Task.CompletedTask;
             return new SuccessDataResult<List<ListProductsOperationsDto>>(productsOperations);
 
 
@@ -437,6 +443,7 @@ namespace TsiErp.Business.Entities.Route.Services
             }).Where(new { Id = id }, true, true, "");
 
             var routesDto = queryFactory.Update<SelectRoutesDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectRoutesDto>(routesDto);
 
 

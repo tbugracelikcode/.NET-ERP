@@ -126,6 +126,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ShipmentPlannings, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanning);
 
         }
@@ -162,6 +163,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
                     var ShipmentPlanning = queryFactory.Update<SelectShipmentPlanningsDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ShipmentPlannings, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanning);
                 }
                 else
@@ -169,6 +171,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                     var queryLine = queryFactory.Query().From(Tables.ShipmentPlanningLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
                     var ShipmentPlanningLines = queryFactory.Update<SelectShipmentPlanningLinesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ShipmentPlanningLines, LogType.Delete, id);
+                    await Task.CompletedTask;
                     return new SuccessDataResult<SelectShipmentPlanningLinesDto>(ShipmentPlanningLines);
                 }
             }
@@ -215,6 +218,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
             LogsAppService.InsertLogToDatabase(ShipmentPlanning, ShipmentPlanning, LoginedUserService.UserId, Tables.ShipmentPlannings, LogType.Get, id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanning);
 
         }
@@ -256,6 +260,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
             LogsAppService.InsertLogToDatabase(ShipmentPlanningLine, ShipmentPlanningLine, LoginedUserService.UserId, Tables.ShipmentPlanningLines, LogType.Get, ShipmentPlanningLine.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectShipmentPlanningLinesDto>(ShipmentPlanningLine);
 
         }
@@ -266,6 +271,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
         {
             var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(null, false, false, "");
             var ShipmentPlannings = queryFactory.GetList<ListShipmentPlanningsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<ListShipmentPlanningsDto>>(ShipmentPlannings);
         }
 
@@ -419,6 +425,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.ShipmentPlannings, LogType.Update, input.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanning);
 
         }
@@ -451,6 +458,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
             }).Where(new { Id = id }, false, false, "");
 
             var ShipmentPlanningsDto = queryFactory.Update<SelectShipmentPlanningsDto>(query, "Id", true);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanningsDto);
 
 

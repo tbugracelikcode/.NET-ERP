@@ -22,15 +22,6 @@ namespace TsiErp.Entities.Entities.MaintenanceManagement.UnplannedMaintenance.Dt
         /// </summary>
         public Guid? StationID { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// İstasyon Kodu
         /// </summary>
         public string StationCode { get; set; }

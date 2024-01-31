@@ -15,15 +15,6 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos
         /// </summary>
         public string FicheNo { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
-        /// <summary>
         /// Tarih
         /// </summary>
         public DateTime Date_ { get; set; }

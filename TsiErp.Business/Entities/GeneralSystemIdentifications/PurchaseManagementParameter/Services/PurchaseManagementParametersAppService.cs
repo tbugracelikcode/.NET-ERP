@@ -27,6 +27,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
 
         public async Task<IDataResult<SelectPurchaseManagementParametersDto>> GetAsync(Guid id)
         {
+            await Task.CompletedTask;
             throw new NotImplementedException();
 
         }
@@ -47,6 +48,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Insert, PurchaseManagementParameter.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseManagementParametersDto>(PurchaseManagementParameter);
         }
 
@@ -71,6 +73,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
 
             LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Get, result.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseManagementParametersDto>(result);
         }
 
@@ -96,6 +99,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
 
             LogsAppService.InsertLogToDatabase(entity, PurchaseManagementParameters, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Update, entity.Id);
 
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseManagementParametersDto>(PurchaseManagementParameters);
         }
 

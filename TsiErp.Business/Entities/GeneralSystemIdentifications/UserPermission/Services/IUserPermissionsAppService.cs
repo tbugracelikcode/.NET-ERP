@@ -13,5 +13,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.S
     public interface IUserPermissionsAppService : ICrudAppService<SelectUserPermissionsDto, ListUserPermissionsDto, CreateUserPermissionsDto, UpdateUserPermissionsDto, ListUserPermissionsParameterDto>
     {
         Task<IDataResult<IList<SelectUserPermissionsDto>>> GetListAsyncByUserId(Guid userId);
+
+        Task AllPermissionsAddedUser(Guid userId);
     }
 }
