@@ -313,7 +313,7 @@ namespace TsiErp.Business.Entities.Product.Services
 
 
             LogsAppService.InsertLogToDatabase(entity, products, LoginedUserService.UserId, Tables.Products, LogType.Update, entity.Id);
-
+            await Task.CompletedTask;
 
             return new SuccessDataResult<SelectProductsDto>(products);
 

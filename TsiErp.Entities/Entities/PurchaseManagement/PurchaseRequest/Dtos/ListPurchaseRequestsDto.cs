@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine.Dtos;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos
@@ -87,6 +89,11 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos
         /// Depo Adı
         /// </summary>
         public string WarehouseName { get; set; }
+
+        /// <summary>
+        /// Cari Hesap Kartı ID
+        /// </summary>
+        public Guid? CurrentAccountCardID { get; set; }
         /// <summary>
         /// Cari Kodu
         /// </summary>
@@ -132,5 +139,14 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos
         /// Üretim Emri Fiş No
         /// </summary>
         public string ProductionOrderFicheNo { get; set; }
+
+
+        [NoDatabaseAction]
+        public List<SelectPurchaseRequestLinesDto> SelectPurchaseRequestLines { get; set; }
+
+        public ListPurchaseRequestsDto()
+        {
+            SelectPurchaseRequestLines = new List<SelectPurchaseRequestLinesDto>();
+        }
     }
 }

@@ -119,6 +119,8 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
 
             var SalesManagementParameters = queryFactory.GetList<ListSalesManagementParametersDto>(query).ToList();
 
+            await Task.CompletedTask;
+
             return new SuccessDataResult<IList<ListSalesManagementParametersDto>>(SalesManagementParameters);
         }
 
