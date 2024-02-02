@@ -14,6 +14,7 @@
 @inject IFicheNumbersAppService FicheNumbersAppService
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
+@* @inject BaseModalComponent BaseModalComponent *@
 
 @if (!base.IsLoaded)
 {
@@ -204,9 +205,9 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="@L["PermissionModalTitle"]"
-         Width="81%"
+         Width="40%"
          Height="74%"
-         MinWidth="1400px"
+         MinWidth="700px"
          MinHeight="800px"
          HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -224,9 +225,13 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>  
                             <br />
-                             <SfTreeView TValue="UserMenuPermission" ShowCheckBox="true" AutoCheck="true">
-                                <TreeViewFieldsSettings TValue="UserMenuPermission" Id="MenuID" DataSource="@PermissionModalMenusList" Text="MenuName" ParentID="ParentID" IsChecked="IsUserPermitted" HasChildren="HasChild" Expanded="Expanded"></TreeViewFieldsSettings>
+                            <div class="TSIScrollablePermissionModal">
+                                <SfTreeView TValue="UserMenuPermission" ShowCheckBox="true" AutoCheck="true">
+                                    <TreeViewFieldsSettings TValue="UserMenuPermission" Id="MenuID" DataSource="@PermissionModalMenusList" Text="MenuName" ParentID="ParentID" IsChecked="isPermitted" HasChildren="HasChild" Expanded="Expanded" ></TreeViewFieldsSettings>
+                                    <TreeViewEvents TValue="UserMenuPermission" NodeChecking="NodeCheckedHandler"></TreeViewEvents>
                             </SfTreeView> 
+                            </div>
+                             
 
                         </Template>
                     </DxGridLayoutItem> 

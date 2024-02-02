@@ -242,8 +242,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
         {
             BaseCrudService = ForecastsAppService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -253,6 +251,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
         }
 

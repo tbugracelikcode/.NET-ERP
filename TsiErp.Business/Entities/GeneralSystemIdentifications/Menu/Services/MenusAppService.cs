@@ -81,6 +81,15 @@ namespace TsiErp.Business.Entities.Menu.Services
 
         }
 
+        public async Task<IDataResult<IList<SelectMenusDto>>> GetListbyParentIDAsync(Guid parentID)
+        {
+            var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(new { ParentMenuId = parentID }, false, false, "").UseIsDelete(false);
+            var menus = queryFactory.GetList<SelectMenusDto>(query).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<SelectMenusDto>>(menus);
+
+        }
+
 
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMenusDto>> UpdateAsync(UpdateMenusDto input)

@@ -97,11 +97,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
             BaseCrudService = ContractQualityPlansAppService;
             _L = L;
 
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
-            CreateContractOperationContextMenuItems();
-            //CreateOperationPictureContextMenuItems();
-
             #region Context Menü Yetkilendirmesi
 
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
@@ -110,6 +105,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
+            CreateContractOperationContextMenuItems();
+            //CreateOperationPictureContextMenuItems();
 
         }
 

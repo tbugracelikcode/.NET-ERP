@@ -475,6 +475,24 @@ namespace TsiErp.Localizations.Resources.StartingSalaries.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz satır kalıcı olarak silinecektir..
+        /// </summary>
+        public static string UILineDeleteConfirmation {
+            get {
+                return ResourceManager.GetString("UILineDeleteConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dikkat.
+        /// </summary>
+        public static string UILineDeleteContextAttentionTitle {
+            get {
+                return ResourceManager.GetString("UILineDeleteContextAttentionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Makine &amp; İş Gücü Yönetimi &gt; Ana Kayıtlar.
         /// </summary>
         public static string UIPreviousMenu {

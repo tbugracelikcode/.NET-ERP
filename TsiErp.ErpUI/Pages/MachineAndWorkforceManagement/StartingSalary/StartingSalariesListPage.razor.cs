@@ -35,8 +35,6 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StartingSalary
         {
             BaseCrudService = StartingSalariesAppService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -46,6 +44,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StartingSalary
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
         }
 

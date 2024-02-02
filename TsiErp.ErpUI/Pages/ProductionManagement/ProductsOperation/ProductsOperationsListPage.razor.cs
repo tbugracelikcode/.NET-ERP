@@ -81,9 +81,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
 
         protected override async void OnInitialized()
         {
-            CreateMainContextMenuItems();
-            CreateStationLineContextMenuItems();
-            CreateContractOfProductsOperationsContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -93,6 +90,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateStationLineContextMenuItems();
+            CreateContractOfProductsOperationsContextMenuItems();
 
             BaseCrudService = ProductsOperationsAppService;
             _L = L;

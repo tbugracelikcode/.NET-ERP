@@ -59,9 +59,6 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
         {
             BaseCrudService = EmployeeScoringsService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
-            CreateLinesLineContextMenuItems();
             #region Context Menü Yetkilendirmesi
 
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
@@ -70,6 +67,9 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
+            CreateLinesLineContextMenuItems();
 
         }
 

@@ -73,10 +73,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
         {
             BaseCrudService = PackingListsAppService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreatePalletContextMenuItems();
-            CreatePalletPackageContextMenuItems();
-            CreatePalletSelectionContextMenuItems();
             #region Context Menü Yetkilendirmesi
 
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
@@ -85,6 +81,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreatePalletContextMenuItems();
+            CreatePalletPackageContextMenuItems();
+            CreatePalletSelectionContextMenuItems();
 
         }
 

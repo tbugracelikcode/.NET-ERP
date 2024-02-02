@@ -109,12 +109,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             BaseCrudService = CalendarsService;
             _L = L;
-            GetYearsList();
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
-            CreateDayContextMenuItems();
-            CreateLineMaintenaceInfosContextMenuItems();
-            CreateLineMaintenaceInfosLineContextMenuItems();
             FinalDataSource = DataSourceEvent;
 
             #region Context Menü Yetkilendirmesi
@@ -125,6 +119,12 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            GetYearsList();
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
+            CreateDayContextMenuItems();
+            CreateLineMaintenaceInfosContextMenuItems();
+            CreateLineMaintenaceInfosLineContextMenuItems();
             base.OnInitialized();
 
         }

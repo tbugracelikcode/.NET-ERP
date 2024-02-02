@@ -408,6 +408,12 @@
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Personel Puanlama Kayıtları</value>
   </data>
+  <data name="UILineDeleteConfirmation" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UILineDeleteContextAttentionTitle" xml:space="preserve">
+    <value>Dikkat</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Makine &amp; İş Gücü Yönetimi Yönetimi &gt; Hareketler</value>
   </data>

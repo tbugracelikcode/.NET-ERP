@@ -39,7 +39,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
         {
             BaseCrudService = RoutesAppService;
             _L = L;
-            CreateMainContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -49,6 +48,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
 
         }
 

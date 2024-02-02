@@ -71,9 +71,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
         {
             BaseCrudService = ContractTrackingFichesAppService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateAmountEntryLineContextMenuItems();
-            //CreateLineContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -83,6 +80,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateAmountEntryLineContextMenuItems();
+            //CreateLineContextMenuItems();
 
         }
 

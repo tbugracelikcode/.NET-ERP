@@ -41,8 +41,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
         {
             BaseCrudService = ShiftsAppService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -52,6 +50,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
         }
 

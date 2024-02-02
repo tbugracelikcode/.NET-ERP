@@ -408,6 +408,12 @@
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Employee Scoring Records</value>
   </data>
+  <data name="UILineDeleteConfirmation" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UILineDeleteContextAttentionTitle" xml:space="preserve">
+    <value>Attention</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Machinery and Workforce Management Management &gt; Transactions</value>
   </data>

@@ -475,9 +475,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             BaseCrudService = PurchaseRequestsAppService;
             _L = L;
 
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
-            CreateConvertToOrderContextMenuItems();
 
             futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
 
@@ -489,6 +486,9 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
+            CreateConvertToOrderContextMenuItems();
 
         }
 

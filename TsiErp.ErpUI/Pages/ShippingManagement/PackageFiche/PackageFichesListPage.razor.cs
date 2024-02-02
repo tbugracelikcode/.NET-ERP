@@ -41,7 +41,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
         {
             BaseCrudService = PackageFichesAppService;
             _L = L;
-            CreateMainContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -51,6 +50,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
 
         }
 

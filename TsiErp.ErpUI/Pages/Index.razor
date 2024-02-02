@@ -1,6 +1,8 @@
 ﻿@page "/home"
 @layout MainLayout
 
+@inject IStringLocalizer<IndexResource> L 
+
 @inject IShipmentPlanningsAppService ShipmentPlanningsAppService
 @inject ISalesOrdersAppService SalesOrdersAppService
 @inject IProductGroupsAppService ProductGroupsAppService
@@ -30,12 +32,12 @@
 
                             <DashboardLayoutPanel SizeX="2" SizeY="2" Row="0" Column="0">
                                 <HeaderTemplate>
-                                    <div>En Yakın Yükleme Planı</div>
+                                    <div>@L["ClosestLoadingPanelTitle"]</div>
                                 </HeaderTemplate>
                                 <ContentTemplate>
 
                                     <span class="e-icons plan"></span>
-                                    <div class="card-content text">Planlanan: @PlannedQuantity</div>
+                                    <div class="card-content text">@L["Planned"] @PlannedQuantity</div>
                                     <SfAccumulationChart Theme="@Theme" Height="100%" Width="100%" EnableSmartLabels="true" SelectionMode="AccumulationSelectionMode.Point">
                                         <AccumulationChartCenter X="50%" Y="45%"></AccumulationChartCenter>
                                         <AccumulationChartTooltipSettings Enable="true"></AccumulationChartTooltipSettings>
@@ -53,7 +55,7 @@
 
                             <DashboardLayoutPanel SizeX="4" SizeY="2" Row="0" Column="3">
                                 <HeaderTemplate>
-                                    <div>Sevk Edilmeyen Ürün Grupları</div>
+                                    <div>@L["NotShippedPanelTitle"]</div>
                                 </HeaderTemplate>
                                 <ContentTemplate>
                                     <SfChart Theme="@Theme" Height="100%" Width="100%">
@@ -88,8 +90,8 @@
                                                     <div>
                                                         <table class="TSIIndexChartTooltip">
 
-                                                            <tr><th colspan="4" style="font-weight:bold"><center>Miktar Detayları</center></th></tr>
-                                                            <tr> <td><strong>Sipariş No</strong></td> <td><strong>Cari Hesap</strong></td> <td><strong>İstenilen Tarih</strong> </td> <td><strong>Miktar</strong></td></tr>
+                                                            <tr><th colspan="4" style="font-weight:bold"><center>@L["NotShippedTooltipTitle"]</center></th></tr>
+                                                            <tr> <td><strong>@L["NotShippedTooltipDetailTitle1"]</strong></td> <td><strong>@L["NotShippedTooltipDetailTitle2"]</strong></td> <td><strong>@L["NotShippedTooltipDetailTitle3"]</strong> </td> <td><strong>@L["NotShippedTooltipDetailTitle4"]</strong></td></tr>
                                                             @foreach (var detail in NotShippedProductGroupsTooltipList)
                                                             {
                                                                 if (detail.ProductGroupName == data.X.ToString())
@@ -129,7 +131,7 @@
 
                             <DashboardLayoutPanel SizeX="6" SizeY="2" Row="2" Column="0">
                                 <HeaderTemplate>
-                                    <div>Aylara Göre Sipariş Sayıları</div>
+                                    <div>@L["OrdersbyMonthsPanelTitle"]</div>
                                 </HeaderTemplate>
                                 <ContentTemplate>
                                     <SfChart>
@@ -226,13 +228,13 @@
         ShipmentData shipmentDataShipment = new ShipmentData
             {
                 Count = ShipmentQuantity,
-                QuantityType = "Paketlenmiş Miktar",
+                QuantityType = L["ClosestShipmentPackaged"],
                 Percentage = (ShipmentQuantity / PlannedQuantity) * 100
             };
         ShipmentData shipmentDataRest = new ShipmentData
             {
                 Count = RestQuantity,
-                QuantityType = "Kalan Miktar",
+                QuantityType = L["ClosestShipmentRemaining"],
                 Percentage = (RestQuantity / PlannedQuantity) * 100
             };
 
@@ -294,20 +296,19 @@
 
             switch (monthOrder.Month)
             {
-                case 1: monthName = "Month1"; break;
-                case 2: monthName = "Month2"; break;
-                case 3: monthName = "Month3"; break;
-                case 4: monthName = "Month4"; break;
-                case 5: monthName = "Month5"; break;
-                case 6: monthName = "Month6"; break;
-                case 7: monthName = "Month7"; break;
-                case 8: monthName = "Month8"; break;
-                case 9: monthName = "Month9"; break;
-                case 10: monthName = "Month10"; break;
-                case 11: monthName = "Month11"; break;
-                case 12:
-                    monthName = "Month12"; break;
-                defaukt: break;
+                case 1: monthName = L["Month1"]; break;
+                case 2: monthName = L["Month2"]; break;
+                case 3: monthName = L["Month3"]; break;
+                case 4: monthName = L["Month4"]; break;
+                case 5: monthName = L["Month5"]; break;
+                case 6: monthName = L["Month6"]; break;
+                case 7: monthName = L["Month7"]; break;
+                case 8: monthName = L["Month8"]; break;
+                case 9: monthName = L["Month9"]; break;
+                case 10: monthName = L["Month10"]; break;
+                case 11: monthName = L["Month11"]; break;
+                case 12:monthName =L[ "Month12"]; break;
+                default: break;
             }
 
             OrdersbyMonths ordersbyMonthsModel = new OrdersbyMonths

@@ -61,8 +61,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         {
             BaseCrudService = PalletRecordsAppService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
             #region Context Menü Yetkilendirmesi
 
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
@@ -71,6 +69,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
         }
 

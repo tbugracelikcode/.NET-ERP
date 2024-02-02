@@ -44,9 +44,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
         {
             BaseCrudService = ShipmentPlanningsService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
-            CreateProductionOrderContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -56,6 +53,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
+            CreateProductionOrderContextMenuItems();
 
         }
 
