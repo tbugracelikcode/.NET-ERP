@@ -310,7 +310,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
             var menu = (await MenusAppService.GetAsync(menuID)).Data;
 
-            if (!menu.MenuName.Contains("Context")) //Context menu dışındaki child menü içeren tüm menüler için permission update işlemi
+            if (!menu.MenuName.Contains("Context")) //Context menu dışında, child menü içeren tüm menüler için permission update işlemi
             {
                 var permission = (await UserPermissionsAppService.GetListAsyncByUserId(userID)).Data.Where(t => t.MenuId == menuID).FirstOrDefault();
 
