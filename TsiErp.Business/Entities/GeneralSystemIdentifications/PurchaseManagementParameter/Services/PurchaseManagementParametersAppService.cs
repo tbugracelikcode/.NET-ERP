@@ -123,6 +123,8 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
 
             var PurchaseManagementParameters = queryFactory.GetList<ListPurchaseManagementParametersDto>(query).ToList();
 
+            await Task.CompletedTask;
+
             return new SuccessDataResult<IList<ListPurchaseManagementParametersDto>>(PurchaseManagementParameters);
         }
 

@@ -24,6 +24,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagemen
 
         public async Task<IDataResult<SelectFinanceManagementParametersDto>> GetAsync(Guid id)
         {
+            await Task.CompletedTask;
             throw new NotImplementedException();
 
         }

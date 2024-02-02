@@ -24,8 +24,9 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.S
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private readonly IMenusAppService _MenusAppService;
-        public UserPermissionsAppService(IStringLocalizer<SalesManagementParametersResource> l) : base(l)
+        public UserPermissionsAppService(IStringLocalizer<SalesManagementParametersResource> l, IMenusAppService menusAppService) : base(l)
         {
+            _MenusAppService = menusAppService;
         }
 
         public async Task<IDataResult<SelectUserPermissionsDto>> CreateAsync(CreateUserPermissionsDto input)

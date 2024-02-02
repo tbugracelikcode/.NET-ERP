@@ -11,9 +11,9 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.ReportDtos
     {
         public List<Guid> Products { get; set; }
 
-        public List<Guid> CurrentAcounts { get; set; }
+        public List<Guid> CurrentAccounts { get; set; }
 
-        public List<PurchaseRequestStateEnum> PurchaseRequestStates { get; set; }
+        public List<PurchaseRequestLineStateEnum> PurchaseRequestLineState { get; set; }
 
         public DateTime? StartDate { get; set; }
 
@@ -22,8 +22,8 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.ReportDtos
         public PurchaseRequestListReportParameterDto()
         {
             Products = new List<Guid>();
-            CurrentAcounts = new List<Guid>();
-            PurchaseRequestStates = new List<PurchaseRequestStateEnum>();
+            CurrentAccounts = new List<Guid>();
+            PurchaseRequestLineState = new List<PurchaseRequestLineStateEnum>();
         }
     }
 }

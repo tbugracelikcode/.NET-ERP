@@ -239,6 +239,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
             var queryLine = queryFactory.Query().From(Tables.PackingListPalletCubageLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
             var PackingListLines = queryFactory.Update<SelectPackingListPalletCubageLinesDto>(queryLine, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PackingListPalletCubageLines, LogType.Delete, id);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPackingListPalletCubageLinesDto>(PackingListLines);
 
         }
@@ -248,6 +249,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
             var queryLine = queryFactory.Query().From(Tables.PackingListPalletLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
             var PackingListLines = queryFactory.Update<SelectPackingListPalletLinesDto>(queryLine, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PackingListPalletLines, LogType.Delete, id);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPackingListPalletLinesDto>(PackingListLines);
 
         }
@@ -257,6 +259,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
             var queryLine = queryFactory.Query().From(Tables.PackingListPalletPackageLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
             var PackingListLines = queryFactory.Update<SelectPackingListPalletPackageLinesDto>(queryLine, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PackingListPalletPackageLines, LogType.Delete, id);
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectPackingListPalletPackageLinesDto>(PackingListLines);
 
         }
