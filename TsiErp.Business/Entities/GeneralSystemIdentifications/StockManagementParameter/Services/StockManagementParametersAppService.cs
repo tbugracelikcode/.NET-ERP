@@ -116,6 +116,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
             var query = queryFactory.Query().From(Tables.StockManagementParameters).Select("*").UseIsDelete(false);
 
             var StockManagementParameters = queryFactory.GetList<ListStockManagementParametersDto>(query).ToList();
+            await Task.CompletedTask;
 
             return new SuccessDataResult<IList<ListStockManagementParametersDto>>(StockManagementParameters);
         }

@@ -157,7 +157,7 @@
 
     #region Dashboard Değişkenleri
 
-    SfDashboardLayout? dashboardObject;
+    SfDashboardLayout dashboardObject;
     double[] CellSpacing = new double[] { 5, 5 };
     int Columns = 6;
     double Ratio = 100 / 85;
@@ -307,7 +307,7 @@
                 case 11: monthName = "Month11"; break;
                 case 12:
                     monthName = "Month12"; break;
-                defaukt: break;
+                default: break;
             }
 
             OrdersbyMonths ordersbyMonthsModel = new OrdersbyMonths

@@ -475,9 +475,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             BaseCrudService = PurchaseRequestsAppService;
             _L = L;
 
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
-            CreateConvertToOrderContextMenuItems();
 
             futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
 
@@ -490,6 +487,9 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
             #endregion
 
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
+            CreateConvertToOrderContextMenuItems();
         }
 
         #region Satın Almayı Talebe Dönüştürme Modalı İşlemleri

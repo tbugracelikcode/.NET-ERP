@@ -30,9 +30,10 @@ namespace TsiErp.Business.Entities.User.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public UsersAppService(IStringLocalizer<UsersResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public UsersAppService(IStringLocalizer<UsersResource> l, IFicheNumbersAppService ficheNumbersAppService, IUserPermissionsAppService userPermissionsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _UserPermissionsAppService = userPermissionsAppService;
         }
 
         [ValidationAspect(typeof(CreateUsersValidator), Priority = 1)]

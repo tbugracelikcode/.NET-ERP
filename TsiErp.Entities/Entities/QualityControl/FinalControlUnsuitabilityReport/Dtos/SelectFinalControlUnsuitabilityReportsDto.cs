@@ -22,15 +22,7 @@ namespace TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityRepor
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
-        /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
-
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
+        
         /// <summary>
         /// Parti No
         /// </summary>

@@ -21,10 +21,7 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
-        /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
+       
 
         /// <summary>
         /// Hata Başlığı ID
@@ -34,10 +31,6 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// Uygunsuzluk Başlığı Adı
         /// </summary>
         public string UnsuitabilityItemsName { get; set; }
-        /// <summary>
-        /// Data Concurrency UserID
-        /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
         /// <summary>
         /// Uygunsuzluk İş Emri Oluşacak
         /// </summary>
