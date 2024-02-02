@@ -39,8 +39,6 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
         {
             BaseCrudService = MaintenanceInstructionsAppService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -50,6 +48,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
         }
 

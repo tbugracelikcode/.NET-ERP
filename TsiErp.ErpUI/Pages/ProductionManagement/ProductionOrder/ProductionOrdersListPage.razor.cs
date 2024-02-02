@@ -42,7 +42,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         protected override async void OnInitialized()
         {
             BaseCrudService = ProductionOrdersAppService;
-            CreateMainContextMenuItems();
             _L = L;
 
 
@@ -58,6 +57,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
 
         }
 

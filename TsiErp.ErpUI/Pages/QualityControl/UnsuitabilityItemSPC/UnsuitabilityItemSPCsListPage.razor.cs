@@ -45,8 +45,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
         {
             BaseCrudService = UnsuitabilityItemSPCsService;
             _L = L;
-            CreateMainContextMenuItems();
-            //CreateLineContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -56,6 +54,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            //CreateLineContextMenuItems();
 
         }
 

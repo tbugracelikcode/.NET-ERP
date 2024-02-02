@@ -394,8 +394,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             BaseCrudService = StockFichesAppService;
             _L = L;
 
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -405,6 +403,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
             futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
         }

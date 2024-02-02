@@ -255,6 +255,12 @@
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Başlangıç Maaşları</value>
   </data>
+  <data name="UILineDeleteConfirmation" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UILineDeleteContextAttentionTitle" xml:space="preserve">
+    <value>Dikkat</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Makine &amp; İş Gücü Yönetimi &gt; Ana Kayıtlar</value>
   </data>

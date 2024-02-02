@@ -45,8 +45,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
             BaseCrudService = PurchaseQualityPlansAppService;
             _L = L;
 
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -56,6 +54,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
         }
 

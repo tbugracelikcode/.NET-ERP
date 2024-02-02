@@ -131,8 +131,6 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
             BaseCrudService = StationsService;
             _L = L;
 
-            CreateLineContextMenuItems();
-            CreateMainContextMenuItems();
             #region Context Menü Yetkilendirmesi
 
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
@@ -141,6 +139,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateLineContextMenuItems();
+            CreateMainContextMenuItems();
 
 
         }

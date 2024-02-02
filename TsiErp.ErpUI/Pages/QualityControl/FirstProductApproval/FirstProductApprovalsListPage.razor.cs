@@ -58,8 +58,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
         {
             BaseCrudService = FirstProductApprovalsAppService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
             #region Context Menü Yetkilendirmesi
 
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
@@ -68,6 +66,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
             StartTimer();
         }

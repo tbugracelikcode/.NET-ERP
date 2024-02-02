@@ -297,8 +297,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesPrice
         {
             BaseCrudService = SalesPricesAppService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -308,6 +306,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesPrice
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
         }
 

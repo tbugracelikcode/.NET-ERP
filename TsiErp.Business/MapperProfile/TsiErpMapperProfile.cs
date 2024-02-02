@@ -41,6 +41,8 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.User;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.User.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore;
@@ -804,6 +806,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectUsersDto, CreateUsersDto>();
             CreateMap<UpdateUsersDto, Users>();
             CreateMap<SelectUsersDto, UpdateUsersDto>();
+
+            CreateMap<UserPermissions, SelectUserPermissionsDto>();
+            CreateMap<UserPermissions, ListUserPermissionsDto>();
+            CreateMap<CreateUserPermissionsDto, UserPermissions>();
+            CreateMap<SelectUserPermissionsDto, CreateUserPermissionsDto>();
+            CreateMap<UpdateUserPermissionsDto, UserPermissions>();
+            CreateMap<SelectUserPermissionsDto, UpdateUserPermissionsDto>();
 
 
             CreateMap<FinalControlUnsuitabilityReports, SelectFinalControlUnsuitabilityReportsDto>();

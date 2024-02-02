@@ -788,9 +788,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             BaseCrudService = PurchaseOrdersAppService;
             _L = L;
 
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
-            CreateStockReceiptFishesContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -801,6 +798,9 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
             #endregion
 
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
+            CreateStockReceiptFishesContextMenuItems();
             futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
         }
 

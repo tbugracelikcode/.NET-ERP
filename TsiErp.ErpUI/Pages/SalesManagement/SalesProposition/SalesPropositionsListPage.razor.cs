@@ -450,9 +450,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
 
         protected override async void OnInitialized()
         {
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
-            CreateConvertToOrderContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -462,6 +459,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
+            CreateConvertToOrderContextMenuItems();
 
             BaseCrudService = SalesPropositionsAppService;
             _L = L;

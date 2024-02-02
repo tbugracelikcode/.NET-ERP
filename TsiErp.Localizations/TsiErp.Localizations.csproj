@@ -186,6 +186,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>HaltReasonsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Index\Page\IndexResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IndexResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\MachineAndWorkforceManagementParameter\Page\MachineAndWorkforceManagementParametersResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -697,6 +702,10 @@
     <EmbeddedResource Update="Resources\HaltReasons\Page\HaltReasonsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>HaltReasonsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Index\Page\IndexResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IndexResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\MachineAndWorkforceManagementParameter\Page\MachineAndWorkforceManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

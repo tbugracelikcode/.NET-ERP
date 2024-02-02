@@ -81,8 +81,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
         {
             BaseCrudService = BillsofMaterialsAppService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -92,6 +90,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
         }
 

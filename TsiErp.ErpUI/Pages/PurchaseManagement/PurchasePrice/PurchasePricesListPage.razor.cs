@@ -282,8 +282,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
         {
             BaseCrudService = PurchasePricesAppService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -293,6 +291,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
         }
 

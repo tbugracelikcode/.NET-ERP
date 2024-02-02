@@ -65,8 +65,6 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.PlannedMaintenance
         {
             BaseCrudService = PlannedMaintenancesAppService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -76,6 +74,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.PlannedMaintenance
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
         }
 
         #region Planlı Bakımlar Satır Modalı İşlemleri

@@ -1365,11 +1365,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             BaseCrudService = ProductService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateTechnicalDrawingContextMenuItems();
-            CreateProductReferanceNumberContextMenuItems();
-            CreateBillsofMaterialsContextMenuItems();
-            CreateRoutesContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -1379,6 +1374,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateTechnicalDrawingContextMenuItems();
+            CreateProductReferanceNumberContextMenuItems();
+            CreateBillsofMaterialsContextMenuItems();
+            CreateRoutesContextMenuItems();
 
 
         }

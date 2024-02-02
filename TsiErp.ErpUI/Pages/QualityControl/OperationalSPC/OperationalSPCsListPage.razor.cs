@@ -50,8 +50,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
         {
             BaseCrudService = OperationalSPCsService;
             _L = L;
-            CreateMainContextMenuItems();
-            //CreateLineContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -61,6 +59,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            //CreateLineContextMenuItems();
 
         }
 

@@ -486,6 +486,9 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
+            CreateConvertToOrderContextMenuItems();
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();

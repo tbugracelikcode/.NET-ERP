@@ -470,10 +470,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             BaseCrudService = SalesOrdersAppService;
             _L = L;
 
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
-            CreateProductionOrderContextMenuItems();
-
             #region Context Menü Yetkilendirmesi
 
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
@@ -482,6 +478,10 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
+            CreateProductionOrderContextMenuItems();
 
             await GetProductsList();
 

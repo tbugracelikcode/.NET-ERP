@@ -70,8 +70,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
         {
             BaseCrudService = MRPsService;
             _L = L;
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
 
             var purchaseParameter = (await PurchaseManagementParametersAppService.GetPurchaseManagementParametersAsync()).Data;
             MRPPurchaseTransaction = (await PlanningManagementParametersAppService.GetPlanningManagementParametersAsync()).Data.MRPPurchaseTransaction;
@@ -86,6 +84,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
         }
 
