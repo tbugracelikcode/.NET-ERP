@@ -138,6 +138,12 @@
   <data name="ProductListUIPreviousMenu" xml:space="preserve">
     <value>Stock Management &gt; Reports</value>
   </data>
+  <data name="ReportMessageTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="ReportRecordNotFound" xml:space="preserve">
+    <value>No records found to report.</value>
+  </data>
   <data name="SelectAllText" xml:space="preserve">
     <value>Select All</value>
   </data>

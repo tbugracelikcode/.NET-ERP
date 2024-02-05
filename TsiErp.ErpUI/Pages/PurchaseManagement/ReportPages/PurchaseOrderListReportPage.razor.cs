@@ -1,5 +1,6 @@
 ﻿using DevExpress.Blazor.Reporting;
 using DevExpress.XtraReports.UI;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using System.Linq.Dynamic.Core;
 using TsiErp.Business.Entities.PurchaseManagement.PurchaseOrder.Reports;
@@ -8,11 +9,15 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.ReportDtos.Purch
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Reports.PurchaseManagement;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PurchaseManagement.ReportPages
 {
     public partial class PurchaseOrderListReportPage : IDisposable
     {
+        [Inject]
+        ModalManager ModalManager { get; set; }
+
         DxReportViewer reportViewer { get; set; }
         XtraReport Report { get; set; }
 
@@ -132,8 +137,16 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.ReportPages
             filters.EndDate = EndDate;
 
             var report = (await PurchaseOrderReportsAppService.GetPurchaseOrderListReport(filters, ReportLocalizer, ProductLocalizer)).ToList();
-            Report = new PurchaseOrderListReport();
-            Report.DataSource = report;
+
+            if (report.Count > 0)
+            {
+                Report = new PurchaseOrderListReport();
+                Report.DataSource = report;
+            }
+            else
+            {
+                await ModalManager.MessagePopupAsync(ReportLocalizer["ReportMessageTitle"], ReportLocalizer["ReportRecordNotFound"]);
+            }
         }
 
         public void Dispose()
