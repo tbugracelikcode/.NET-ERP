@@ -26,6 +26,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
         #region Stock Parameters
 
         bool futureDateParameter;
+        bool autoCostParameter;
 
         #endregion
 
@@ -394,7 +395,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             BaseCrudService = StockFichesAppService;
             _L = L;
 
-
             #region Context Menü Yetkilendirmesi
 
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
@@ -406,7 +406,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
-            futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
+            var stockParameterDataSource = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data;
+
+            futureDateParameter = stockParameterDataSource.FutureDateParameter;
+            autoCostParameter = stockParameterDataSource.AutoCostParameter;
         }
 
         #region Stok Fişleri Satır Modalı İşlemleri

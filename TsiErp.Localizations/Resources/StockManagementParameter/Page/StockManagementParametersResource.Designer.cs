@@ -62,6 +62,15 @@ namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çıkış fişlerinde otomatik maliyet hesaplansın..
+        /// </summary>
+        public static string AutoCostParameterLabel {
+            get {
+                return ResourceManager.GetString("AutoCostParameterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {

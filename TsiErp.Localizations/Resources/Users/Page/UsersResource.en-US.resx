@@ -1299,6 +1299,9 @@
   <data name="PermissionModalTitle" xml:space="preserve">
     <value>User Permissions</value>
   </data>
+  <data name="PermissionsLoadingMessage" xml:space="preserve">
+    <value>Permissions are Loading...</value>
+  </data>
   <data name="PFMEAChildMenu" xml:space="preserve">
     <value>P-FMEA</value>
   </data>

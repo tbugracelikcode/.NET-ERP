@@ -37,7 +37,8 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
             var query = queryFactory.Query().From(Tables.StockManagementParameters).Insert(new CreateStockManagementParametersDto
             {
                 Id = GuidGenerator.CreateGuid(),
-                FutureDateParameter = input.FutureDateParameter
+                FutureDateParameter = input.FutureDateParameter,
+                AutoCostParameter = input.AutoCostParameter,
             }).UseIsDelete(false); ;
 
 
@@ -85,6 +86,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
             var query = queryFactory.Query().From(Tables.StockManagementParameters).Update(new UpdateStockManagementParametersDto
             {
                 FutureDateParameter = input.FutureDateParameter,
+                AutoCostParameter = input.AutoCostParameter,
                 Id = input.Id
             }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
 

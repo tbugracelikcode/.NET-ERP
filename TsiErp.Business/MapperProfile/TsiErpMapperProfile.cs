@@ -255,6 +255,8 @@ using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductCost;
+using TsiErp.Entities.Entities.StockManagement.ProductCost.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber;
@@ -282,6 +284,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectUnitSetsDto, CreateUnitSetsDto>();
             CreateMap<UpdateUnitSetsDto, UnitSets>();
             CreateMap<SelectUnitSetsDto, UpdateUnitSetsDto>();
+
+            CreateMap<ProductCosts, SelectProductCostsDto>();
+            CreateMap<ProductCosts, ListProductCostsDto>();
+            CreateMap<CreateProductCostsDto, ProductCosts>();
+            CreateMap<SelectProductCostsDto, CreateProductCostsDto>();
+            CreateMap<UpdateProductCostsDto, ProductCosts>();
+            CreateMap<SelectProductCostsDto, UpdateProductCostsDto>();
 
             CreateMap<EmployeeSeniorities, SelectEmployeeSenioritiesDto>();
             CreateMap<EmployeeSeniorities, ListEmployeeSenioritiesDto>();

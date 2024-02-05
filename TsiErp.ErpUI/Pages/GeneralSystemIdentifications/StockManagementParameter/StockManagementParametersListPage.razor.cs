@@ -22,6 +22,11 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.StockManagementParamet
             DataSource.FutureDateParameter = args.Checked;
         }
 
+        private void AutoCostChange(ChangeEventArgs<bool> args)
+        {
+            DataSource.AutoCostParameter = args.Checked;
+        }
+
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
             GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockManagementParameterContextAdd"], Id = "new" });

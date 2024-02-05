@@ -11,6 +11,10 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementP
         /// </summary>
         public bool FutureDateParameter { get; set; }
         /// <summary>
+        /// Otomatik Maliyet Parametresi
+        /// </summary>
+        public bool AutoCostParameter { get; set; }
+        /// <summary>
         /// Id
         /// </summary>
         public Guid Id { get; set; }

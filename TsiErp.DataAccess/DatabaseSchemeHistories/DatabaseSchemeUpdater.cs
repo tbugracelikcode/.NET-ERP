@@ -147,6 +147,7 @@ using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine;
+using TsiErp.Entities.Entities.StockManagement.ProductCost;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -5128,6 +5129,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 ShipmentPlanningLinesTable.Create();
+            }
+            #endregion
+
+            #region ProductCosts Table Created
+            Table ProductCostsTable = model.CreateTable(Tables.ProductCosts);
+
+            if (ProductCostsTable != null)
+            {
+                var properties = (typeof(ProductCosts)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ProductCostsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ProductCostsTable, "PK_" + ProductCostsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ProductCostsTable.Indexes.Add(pkIndex);
+                    }
+
+                    ProductCostsTable.Columns.Add(column);
+                }
+
+                ProductCostsTable.Create();
             }
             #endregion
 
