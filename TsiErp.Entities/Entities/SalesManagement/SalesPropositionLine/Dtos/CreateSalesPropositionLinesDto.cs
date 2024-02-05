@@ -78,5 +78,26 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine.Dtos
         /// Kur Turarı
         /// </summary>
         public decimal ExchangeRate { get; set; }
+
+        /// <summary>
+        /// Tarih
+        /// </summary>
+        public DateTime Date_ { get; set; }
+
+        /// <summary>
+        /// Şube ID
+        /// </summary>
+        public Guid BranchID { get; set; }
+
+        /// <summary>
+        /// Depo ID
+        /// </summary>
+        public Guid WarehouseID { get; set; }
+
+
+        /// <summary>
+        /// Cari Hesap Kartı ID
+        /// </summary>
+        public Guid CurrentAccountCardID { get; set; }
     }
 }

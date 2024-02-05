@@ -42,19 +42,15 @@
 @using TsiErp.Entities.TableConstant
 @using TsiErp.Entities.CalendarColorConstant
 @using TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.Services
-
 @using Syncfusion.Blazor.Schedule
-
 @using TsiErp.Business.Entities.GrandTotalStockMovement.Services
 @using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos
-
 @using TsiErp.Business.Entities.BillsofMaterial.Services
 @using TsiErp.Business.Entities.UnitSet.Services;
 @using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial
 @using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos
 @using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine
 @using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos
-
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring.Dtos
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoringLine.Dtos
@@ -63,51 +59,40 @@
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeOperation.Dtos
 @using TsiErp.Business.Entities.EmployeeScoring.Services
 @using TsiErp.Localizations.Resources.EmployeeScorings.Page
-
 @using TsiErp.Localizations.Resources.Index.Page
-
 @using TsiErp.Entities.Entities.QualityControl.PFMEA
 @using TsiErp.Entities.Entities.QualityControl.PFMEA.Dtos
 @using TsiErp.Business.Entities.PFMEA.Services
 @using TsiErp.Localizations.Resources.PFMEAs.Page
-
 @using TsiErp.Localizations.Resources.MaintenanceMaterialPurchaseTrackings.Page
-
 @using TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport
 @using TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport.Dtos
 @using TsiErp.Business.Entities.CustomerComplaintReport.Services
 @using TsiErp.Localizations.Resources.CustomerComplaintReports.Page
-
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority.Dtos
 @using TsiErp.Business.Entities.EmployeeSeniority.Services
 @using TsiErp.Localizations.Resources.EmployeeSeniorities.Page
-
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeAnnualSeniorityDifference
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeAnnualSeniorityDifference.Dtos
 @using TsiErp.Business.Entities.EmployeeAnnualSeniorityDifference.Services
 @using TsiErp.Localizations.Resources.EmployeeAnnualSeniorityDifferences.Page
-
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.GeneralSkillRecordPriority
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.GeneralSkillRecordPriority.Dtos
 @using TsiErp.Business.Entities.MachineAndWorkforceManagement.GeneralSkillRecordPriority.Services
 @using TsiErp.Localizations.Resources.GeneralSkillRecordPriorities.Page
-
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.TaskScoring
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.TaskScoring.Dtos
 @using TsiErp.Business.Entities.MachineAndWorkforceManagement.TaskScoring.Services
 @using TsiErp.Localizations.Resources.TaskScorings.Page
-
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore.Dtos
 @using TsiErp.Business.Entities.MachineAndWorkforceManagement.EducationLevelScore.Services
 @using TsiErp.Localizations.Resources.EducationLevelScores.Page
-
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkillRecord
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkillRecord.Dtos
 @using TsiErp.Business.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkillRecord.Services
 @using TsiErp.Localizations.Resources.EmployeeGeneralSkillRecords.Page
-
 @using TsiErp.Entities.Entities.ShippingManagement.PackingList
 @using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos
 @using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLine.Dtos
@@ -118,35 +103,30 @@
 @using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine
 @using TsiErp.Business.Entities.PackingList.Services
 @using TsiErp.Localizations.Resources.PackingLists.Page
-
 @using TsiErp.Entities.Entities.QualityControl.FirstProductApproval
 @using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos
 @using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos
 @using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine
 @using TsiErp.Business.Entities.FirstProductApproval.Services
 @using TsiErp.Localizations.Resources.FirstProductApprovals.Page
-
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalary
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalary.Dtos
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalaryLine.Dtos
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalaryLine
 @using TsiErp.Business.Entities.MachineAndWorkforceManagement.StartingSalary.Services
 @using TsiErp.Localizations.Resources.StartingSalaries.Page
-
 @using TsiErp.Entities.Entities.ShippingManagement.PackageFiche
 @using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos
 @using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos
 @using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine
 @using TsiErp.Business.Entities.PackageFiche.Services
 @using TsiErp.Localizations.Resources.PackageFiches.Page
-
 @using TsiErp.Entities.Entities.ShippingManagement.PalletRecord
 @using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos
 @using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos
 @using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine
 @using TsiErp.Business.Entities.PalletRecord.Services
 @using TsiErp.Localizations.Resources.PalletRecords.Page
-
 @using TsiErp.Business.Entities.OperationalSPC.Services
 @using TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
 @using TsiErp.Entities.Entities.QualityControl.OperationalSPC
@@ -166,12 +146,10 @@
 @using TsiErp.Business.Entities.Product.Services
 @using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos
 @using TsiErp.Localizations.Resources.BillsofMaterials.Page
-
 @using TsiErp.Business.Entities.Branch.Services
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos
 @using TsiErp.Localizations.Resources.Branches.Page
-
 @using TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Services
 @using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan
 @using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos
@@ -180,21 +158,18 @@
 @using TsiErp.Entities.Entities.QualityControl.OperationPicture
 @using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos
 @using TsiErp.Localizations.Resources.OperationalQualityPlans.Page
-
 @using TsiErp.Business.Entities.PlanningManagement.MRP.Services
 @using TsiErp.Entities.Entities.PlanningManagement.MRP
 @using TsiErp.Entities.Entities.PlanningManagement.MRPLine
 @using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
 @using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos
 @using TsiErp.Localizations.Resources.MRPs.Page
-
 @using TsiErp.Business.Entities.PlanningManagement.ShipmentPlanning.Services
 @using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning
 @using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine
 @using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos
 @using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos
 @using TsiErp.Localizations.Resources.ShipmentPlannings.Page
-
 @using TsiErp.Business.Entities.QualityControl.ContractQualityPlan.Services
 @using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan
 @using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan.Dtos
@@ -205,19 +180,16 @@
 @using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation
 @using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation.Dtos
 @using TsiErp.Localizations.Resources.ContractQualityPlans.Page
-
 @using TsiErp.Business.Entities.Report8D.Services
 @using TsiErp.Entities.Entities.QualityControl.Report8D
 @using TsiErp.Entities.Entities.QualityControl.Report8D.Dtos
 @using TsiErp.Localizations.Resources.Report8Ds.Page
-
 @using TsiErp.Business.Entities.QualityControl.PurchaseQualityPlan.Services
 @using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan
 @using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos
 @using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine
 @using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine.Dtos
 @using TsiErp.Localizations.Resources.PurchaseQualityPlans.Page
-
 @using TsiErp.Business.Entities.ContractTrackingFiche.Services
 @using TsiErp.Business.Entities.ProductionManagement.ContractTrackingFiche.Validations
 @using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche
@@ -227,31 +199,26 @@
 @using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine
 @using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos
 @using TsiErp.Localizations.Resources.ContractTrackingFiches.Page
-
 @using TsiErp.Entities.Entities.PlanningManagement.Calendar
 @using TsiErp.Entities.Entities.PlanningManagement.CalendarDay.Dtos
 @using TsiErp.Entities.Entities.PlanningManagement.CalendarLine
 @using TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos
 @using TsiErp.ErpUI.Helpers
-
 @using TsiErp.Entities.Entities.PlanningManagement.Calendar.Dtos
 @using TsiErp.Business.Entities.Calendar.Services
 @using TsiErp.Business.Entities.Station.Services
 @using TsiErp.Business.Entities.Shift.Services
 @using TsiErp.Localizations.Resources.Calendars.Page
-
 @using TsiErp.Business.Entities.CalibrationRecord.Services
 @using TsiErp.Business.Entities.EquipmentRecord.Services
 @using TsiErp.Entities.Entities.QualityControl.CalibrationRecord
 @using TsiErp.Entities.Entities.QualityControl.CalibrationRecord.Dtos
 @using TsiErp.Entities.Entities.QualityControl.EquipmentRecord.Dtos
 @using TsiErp.Localizations.Resources.CalibrationRecords.Page
-
 @using TsiErp.Business.Entities.CalibrationVerification.Services
 @using TsiErp.Entities.Entities.QualityControl.CalibrationVerification
 @using TsiErp.Entities.Entities.QualityControl.CalibrationVerification.Dtos
 @using TsiErp.Localizations.Resources.CalibrationVerifications.Page
-
 @using TsiErp.Localizations.Resources.ContractProductionTrackings.Page
 @using TsiErp.Business.Entities.CurrentAccountCard.Services
 @using TsiErp.Business.Entities.Employee.Services
@@ -265,79 +232,55 @@
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos
-
 @using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos
 @using TsiErp.Business.Entities.Currency.Services
 @using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos
 @using TsiErp.Business.Entities.ShippingAdress.Services
 @using TsiErp.Localizations.Resources.CurrentAccountCards.Page
-
-
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee
 @using TsiErp.Localizations.Resources.Employees.Page
-
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos
 @using TsiErp.Business.Entities.Department.Services
-
-
 @using TsiErp.Business.Entities.PurchasePrice.Services
 @using TsiErp.Business.Entities.Warehouse.Services
 @using TsiErp.Entities.Entities.PurchaseManagement.PurchasePrice.Dtos
 @using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos
 @using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos
 @using TsiErp.Localizations.Resources.PurchasePrices.Page
-
-
-
 @using TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
 @using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport
 @using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos
 @using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
 @using TsiErp.Business.Entities.PurchaseOrder.Services
 @using TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page
-
-
 @using TsiErp.Business.Entities.TechnicalDrawing.Services
 @using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing
 @using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos
 @using TsiErp.Localizations.Resources.TechnicalDrawings.Page
-
-
-
 @using TsiErp.Entities.Entities.QualityControl.EquipmentRecord
 @using TsiErp.Localizations.Resources.EquipmentRecords.Page
-
-
 @using TsiErp.Business.Entities.ExchangeRate.Services
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos
 @using TsiErp.Localizations.Resources.ExchangeRates.Page
-
 @using TsiErp.Localizations.Resources.Forecasts.Page
 @using TsiErp.Business.Entities.Forecast.Services
 @using TsiErp.Business.Entities.Period.Services
 @using TsiErp.Entities.Entities.SalesManagement.Forecast.Dtos
 @using TsiErp.Entities.Entities.SalesManagement.ForecastLine.Dtos
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period.Dtos
-
 @using TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page
 @using TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 @using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos
 @using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dtos
 @using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord
 @using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine
-
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency
 @using TsiErp.Localizations.Resources.Currencies.Page
-
-
 @using TsiErp.Entities.Entities.ProductionManagement.HaltReason
 @using TsiErp.Localizations.Resources.HaltReasons.Page
-
-
 @using TsiErp.Localizations.Resources.MaintenanceInstructions.Page
-
 @using TsiErp.Business.Entities.MaintenancePeriod.Services
 @using TsiErp.Business.Entities.MaintenanceInstruction.Services
 @using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos
@@ -345,17 +288,13 @@
 @using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceInstructionLine.Dtos
 @using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod
 @using TsiErp.Localizations.Resources.MaintenancePeriods.Page
-
-
 @using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP.Dtos
 @using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine.Dtos
 @using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP
 @using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine
 @using TsiErp.Business.Entities.MaintenanceMRP.Services
 @using TsiErp.Localizations.Resources.MaintenanceMRPs.Page
-
 @using TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page
-
 @using TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 @using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport
 @using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos
@@ -366,27 +305,18 @@
 @using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos
 @using TsiErp.Business.Entities.ProductsOperation.Services
 @using TsiErp.Localizations.Resources.ProductionOrders.Page
-
 @using TsiErp.Localizations.Resources.PaymentPlans.Page
-
 @using TsiErp.Business.Entities.PaymentPlan.Services
 @using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan
 @using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos
-
 @using TsiErp.Localizations.Resources.Periods.Page
-
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period
-
-
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department
 @using TsiErp.Localizations.Resources.Departments.Page
-
 @using TsiErp.Business.Entities.PlannedMaintenance.Services
 @using TsiErp.Entities.Entities.MaintenanceManagement.PlannedMaintenance.Dtos
 @using TsiErp.Entities.Entities.MaintenanceManagement.PlannedMaintenanceLine.Dtos
 @using TsiErp.Localizations.Resources.PlannedMaintenances.Page
-
-
 @using TsiErp.Entities.Entities.StockManagement.Product
 @using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos
 @using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos
@@ -399,29 +329,20 @@
 @using TsiErp.Business.Entities.SalesPrice.Services
 @using TsiErp.Business.Entities.Route.Services
 @using TsiErp.Localizations.Resources.Products.Page
-
-
 @using TsiErp.Entities.Entities.StockManagement.ProductGroup
 @using TsiErp.Localizations.Resources.ProductGroups.Page
-
-
-
 @using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber
 @using TsiErp.Localizations.Resources.ProductReferanceNumbers.Page
 @using TsiErp.Localizations.Resources.Warehouses.Page
 @using TsiErp.Localizations.Resources.UserGroups.Page
 @using TsiErp.Localizations.Resources.Users.Page
-
 @using TsiErp.Business.Entities.SalesProposition.Services
 @using TsiErp.Localizations.Resources.WorkOrders.Page
-
 @using TsiErp.Business.Entities.StockFiche.Services 
 @using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos 
 @using TsiErp.Localizations.Resources.StockFiche
-
 @using TsiErp.Business.Entities.UserGroup.Services
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup.Dtos
-
 @using TsiErp.Business.Entities.User.Services
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.User.Dtos
 @using TsiErp.Business.Entities.UnplannedMaintenance.Services
@@ -433,159 +354,112 @@
 @using TsiErp.Business.Entities.PurchaseRequest.Services
 @using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos
 @using TsiErp.Localizations.Resources.PurchaseRequests.Page
-
 @using TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos
 @using TsiErp.Localizations.Resources.SalesPropositions.Page
 @using TsiErp.Localizations.Resources.UnitSets.Page
-
 @using TsiErp.Business.Entities.TemplateOperation.Services
 @using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos
 @using TsiErp.Localizations.Resources.TemplateOperations.Page
 @using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine.Dtos
-
-
-
 @using TsiErp.Business.Entities.StationInventory.Services
 @using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory.Dtos
 @using TsiErp.Localizations.Resources.Stations.Page
 @using TsiErp.Localizations.Resources.Shifts.Page
-
 @using TsiErp.Localizations.Resources.SalesPrices.Page
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos
 @using TsiErp.Localizations.Resources.ShippingAdresses.Page
-
 @using TsiErp.Localizations.Resources.StationGroups.Page
 @using TsiErp.Localizations.Resources.Routes.Page
 @using TsiErp.Localizations.Resources.ProductsOperations.Page
 @using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos
 @using TsiErp.Localizations.Resources.PurchaseOrders.Page
 @using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
-
 @using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos
 @using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
 @using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine.Dtos
 @using TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine.Dtos
 @using TsiErp.Entities.Entities.MaintenanceManagement.UnplannedMaintenanceLine.Dtos
-
-
 @using TsiErp.Business.Entities.ProductionTracking.Services
 @using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
 @using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine.Dtos
 @using TsiErp.Localizations.Resources.ProductionTrackings.Page
-
 @using TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page
 @using TsiErp.Localizations.Resources.UnsuitabilityItems.Page
 @using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos
 @using TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Services
-
-
 @using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos
-
 @using TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
 @using TsiErp.Localizations.Resources.NavbarMenus.Page
-
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.FinanceManagementParameter
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.FinanceManagementParameter.Dtos
 @using TsiErp.Localizations.Resources.FinanceManagementParameter.Page
 @using TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagementParameter.Services
-
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.GeneralParameter
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.GeneralParameter.Dtos
 @using TsiErp.Localizations.Resources.GeneralParameter.Page
 @using TsiErp.Business.Entities.GeneralSystemIdentifications.GeneralParameter.Services
-
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.MachineAndWorkforceManagementParameter
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.MachineAndWorkforceManagementParameter.Dtos
 @using TsiErp.Localizations.Resources.MachineAndWorkforceManagementParameter.Page
 @using TsiErp.Business.Entities.GeneralSystemIdentifications.MachineAndWorkforceManagementParameter.Services
-
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.MaintenanceManagementParameter
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.MaintenanceManagementParameter.Dtos
 @using TsiErp.Localizations.Resources.MaintenanceManagementParameter.Page
 @using TsiErp.Business.Entities.GeneralSystemIdentifications.MaintenanceManagementParameter.Services
-
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter.Dtos
 @using TsiErp.Localizations.Resources.PlanningManagementParameter.Page
 @using TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManagementParameter.Services
-
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter.Dtos
 @using TsiErp.Localizations.Resources.ProductionManagementParameter.Page
 @using TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManagementParameter.Services
-
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Dtos
 @using TsiErp.Localizations.Resources.PurchaseManagementParameter.Page
 @using TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Services
-
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.QualityControlParameter
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.QualityControlParameter.Dtos
 @using TsiErp.Localizations.Resources.QualityControlParameter.Page
 @using TsiErp.Business.Entities.GeneralSystemIdentifications.QualityControlParameter.Services
-
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter.Dtos
 @using TsiErp.Localizations.Resources.SalesManagementParameter.Page
 @using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services
-
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShippingManagementParameter
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShippingManagementParameter.Dtos
 @using TsiErp.Localizations.Resources.ShippingManagementParameter.Page
 @using TsiErp.Business.Entities.GeneralSystemIdentifications.ShippingManagementParameter.Services
-
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementParameter
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementParameter.Dtos
 @using TsiErp.Localizations.Resources.StockManagementParameter.Page
 @using TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementParameter.Services
-
-
 @using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabilityItem.Dtos
-
 @using TsiErp.Localizations.Resources.ContractUnsuitabilityReports.Page
 @using TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
 @using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport
 @using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos
-
-
 @using TsiErp.Business.Entities.QualityControl.ControlType.Services
 @using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos
 @using TsiErp.Localizations.Resources.ControlTypes.Page
-
-
 @using TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 @using TsiErp.Entities.Entities.QualityControl.ControlCondition.Dtos
 @using TsiErp.Localizations.Resources.ControlConditions.Page
-
-
 @using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation.Dtos
-
 @using TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.Services
-
 @using TsiErp.Business.Entities.Menu.Services
-
 @using System.Timers
 @using TsiErp.DataAccess.Services.Login
-
-
 @using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber.Dtos
 @using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos
-
 @using Tsi.Core.Utilities.Guids
-
 @using TsiErp.Localizations.Resources.Reports.Page
-
 @using TsiErp.Business.Entities.StockManagement.Product.Reports
-
 @using DevExpress.Blazor.Reporting
 @using DevExpress.XtraReports.UI
-
-
 @using TsiErp.Business.Entities.MachineAndWorkforceManagement.Employee.Reports
-
 @using TsiErp.Business.Entities.MachineAndWorkforceManagement.Station.Reports
-
 @using TsiErp.Business.Entities.PurchaseManagement.PurchaseRequest.Reports
-
 @using TsiErp.Business.Entities.PurchaseManagement.PurchaseOrder.Reports
+@using TsiErp.Business.Entities.SalesManagement.SalesProposition.Reports
