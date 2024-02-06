@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
+namespace TsiErp.Localizations.Resources.ProductCosts.Page {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class StockManagementParametersResource {
+    public class ProductCostsResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal StockManagementParametersResource() {
+        internal ProductCostsResource() {
         }
         
         /// <summary>
@@ -39,8 +39,7 @@ namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TsiErp.Localizations.Resources.StockManagementParameter.Page.StockManagementParam" +
-                            "etersResource", typeof(StockManagementParametersResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TsiErp.Localizations.Resources.ProductCosts.Page.ProductCostsResource", typeof(ProductCostsResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -62,29 +61,11 @@ namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Çıkış fişlerinde otomatik maliyet hesaplansın..
-        /// </summary>
-        public static string AutoCostParameterLabel {
-            get {
-                return ResourceManager.GetString("AutoCostParameterLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
             get {
                 return ResourceManager.GetString("CloseButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
-        /// </summary>
-        public static string CodeControlManager {
-            get {
-                return ResourceManager.GetString("CodeControlManager", resourceCulture);
             }
         }
         
@@ -125,6 +106,15 @@ namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ürün Maliyet Tablosu.
+        /// </summary>
+        public static string EditModalTitle {
+            get {
+                return ResourceManager.GetString("EditModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
@@ -134,11 +124,20 @@ namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stok fişlerinde ileri tarihli kayıt yapılsın..
+        ///   Looks up a localized string similar to UrunMaliyetTablosu.
         /// </summary>
-        public static string FutureDateParameterLabel {
+        public static string ExportFileName {
             get {
-                return ResourceManager.GetString("FutureDateParameterLabel", resourceCulture);
+                return ResourceManager.GetString("ExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Maliyet Tablosu.
+        /// </summary>
+        public static string ExportTitle {
+            get {
+                return ResourceManager.GetString("ExportTitle", resourceCulture);
             }
         }
         
@@ -179,6 +178,42 @@ namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductCostsContextAdd {
+            get {
+                return ResourceManager.GetString("ProductCostsContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductCostsContextChange {
+            get {
+                return ResourceManager.GetString("ProductCostsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductCostsContextDelete {
+            get {
+                return ResourceManager.GetString("ProductCostsContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductCostsContextRefresh {
+            get {
+                return ResourceManager.GetString("ProductCostsContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -188,52 +223,7 @@ namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string StockManagementParameterContextAdd {
-            get {
-                return ResourceManager.GetString("StockManagementParameterContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string StockManagementParameterContextChange {
-            get {
-                return ResourceManager.GetString("StockManagementParameterContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string StockManagementParameterContextDelete {
-            get {
-                return ResourceManager.GetString("StockManagementParameterContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string StockManagementParameterContextRefresh {
-            get {
-                return ResourceManager.GetString("StockManagementParameterContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Stok Yönetimi Parametreleri.
-        /// </summary>
-        public static string UICurrentMenu {
-            get {
-                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Genel Sistem Tanımlamaları &gt; Genel Sistem Parametreleri.
+        ///   Looks up a localized string similar to Stok Yönetimi &gt; Hareketler.
         /// </summary>
         public static string UIPreviousMenu {
             get {
@@ -242,11 +232,11 @@ namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
+        ///   Looks up a localized string similar to Lütfen ürün seçiniz..
         /// </summary>
-        public static string UpdateControlManager {
+        public static string ValidatorProductID {
             get {
-                return ResourceManager.GetString("UpdateControlManager", resourceCulture);
+                return ResourceManager.GetString("ValidatorProductID", resourceCulture);
             }
         }
     }

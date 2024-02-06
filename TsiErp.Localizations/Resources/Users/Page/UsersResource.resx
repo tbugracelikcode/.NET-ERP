@@ -1284,6 +1284,9 @@
   <data name="PermissionModalTitle" xml:space="preserve">
     <value>Kullanıcı Yetkileri</value>
   </data>
+  <data name="PermissionsLoadingMessage" xml:space="preserve">
+    <value>Yetkiler Yükleniyor...</value>
+  </data>
   <data name="PFMEAChildMenu" xml:space="preserve">
     <value>P-FMEA</value>
   </data>

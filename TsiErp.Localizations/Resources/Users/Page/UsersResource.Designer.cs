@@ -3562,6 +3562,15 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yetkiler Yükleniyor....
+        /// </summary>
+        public static string PermissionsLoadingMessage {
+            get {
+                return ResourceManager.GetString("PermissionsLoadingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to P-FMEA.
         /// </summary>
         public static string PFMEAChildMenu {

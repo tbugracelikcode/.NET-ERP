@@ -301,6 +301,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PlanningManagementParametersResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ProductCosts\Page\ProductCostsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProductCostsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\ProductGroups\Page\ProductGroupsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -809,6 +814,10 @@
     <EmbeddedResource Update="Resources\PlanningManagementParameter\Page\PlanningManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PlanningManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductCosts\Page\ProductCostsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductCostsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\ProductGroups\Page\ProductGroupsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

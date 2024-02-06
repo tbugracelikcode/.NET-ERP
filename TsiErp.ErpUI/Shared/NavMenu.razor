@@ -28,6 +28,7 @@
                         <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementTransactionsMenu)" Text=@L["StockManagementTransactionsMenu"] Name="StockManagementTransactionsMenu">
                             <Nodes>
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockFichesChildMenu)" Text=@L["StockFichesChildMenu"] Name="StockFichesChildMenu" NavigateUrl="/stock-fiches" />
+                                <DxTreeViewNode Text=@L["ProductCostsChildMenu"] NavigateUrl="/product-costs" />
                             </Nodes>
                         </DxTreeViewNode>
                         <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementReportsMenu)" Text=@L["StockManagementReportsMenu"] Name="StockManagementReportsMenu">

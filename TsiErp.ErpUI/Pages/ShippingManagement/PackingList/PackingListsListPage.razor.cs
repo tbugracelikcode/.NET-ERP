@@ -67,6 +67,12 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
         List<ListPalletRecordsDto> PalletRecordsList = new List<ListPalletRecordsDto>();
         List<PalletSelectionModal> PalletSelectionList = new List<PalletSelectionModal>();
 
+        #region Stock Parameters
+
+        bool autoCostParameter;
+
+        #endregion
+
         public bool ShowPalletsModal = false;
 
         protected override async void OnInitialized()
@@ -85,6 +91,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             CreatePalletContextMenuItems();
             CreatePalletPackageContextMenuItems();
             CreatePalletSelectionContextMenuItems();
+
+            autoCostParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.AutoCostParameter;
 
         }
 

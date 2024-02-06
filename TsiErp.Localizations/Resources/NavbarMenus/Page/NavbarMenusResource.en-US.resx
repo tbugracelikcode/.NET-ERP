@@ -405,6 +405,9 @@
   <data name="ProdTrackingsChildMenu" xml:space="preserve">
     <value>Manuel</value>
   </data>
+  <data name="ProductCostsChildMenu" xml:space="preserve">
+    <value>Product Costs</value>
+  </data>
   <data name="ProductGroupsChildMenu" xml:space="preserve">
     <value>Product Groups</value>
   </data>

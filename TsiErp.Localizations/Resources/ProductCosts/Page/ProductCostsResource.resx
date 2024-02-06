@@ -117,14 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AutoCostParameterLabel" xml:space="preserve">
-    <value>Çıkış fişlerinde otomatik maliyet hesaplansın.</value>
-  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
-  </data>
-  <data name="CodeControlManager" xml:space="preserve">
-    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -138,11 +132,17 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Ürün Maliyet Tablosu</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
-  <data name="FutureDateParameterLabel" xml:space="preserve">
-    <value>Stok fişlerinde ileri tarihli kayıt yapılsın.</value>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>UrunMaliyetTablosu</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Ürün Maliyet Tablosu</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -156,28 +156,25 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="ProductCostsContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProductCostsContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ProductCostsContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProductCostsContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
-  <data name="StockManagementParameterContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="StockManagementParameterContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="StockManagementParameterContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="StockManagementParameterContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
-  <data name="UICurrentMenu" xml:space="preserve">
-    <value>Stok Yönetimi Parametreleri</value>
-  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Genel Sistem Tanımlamaları &gt; Genel Sistem Parametreleri</value>
+    <value>Stok Yönetimi &gt; Hareketler</value>
   </data>
-  <data name="UpdateControlManager" xml:space="preserve">
-    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Lütfen ürün seçiniz.</value>
   </data>
 </root>

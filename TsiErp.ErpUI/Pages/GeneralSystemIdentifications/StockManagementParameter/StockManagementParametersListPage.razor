@@ -44,6 +44,23 @@ else
                                 <td style="width: 70%; text-align: left;height: 80px; padding-top: 1%;">
                                         <SfSwitch  ValueChange="StockFichesChange" @bind-Checked="DataSource.FutureDateParameter" TChecked="bool"></SfSwitch>
 
+                                    
+                                </td>
+
+
+                            </tr>
+
+                             <tr>
+                                <td style="width: 30%; text-align: left;height: 80px; padding-left: 2%;">
+
+                                        <label class="TSIEditFormLabel">• @L["AutoCostParameterLabel"]  </label><br />
+                                    
+
+                                </td>
+
+                                <td style="width: 70%; text-align: left;height: 80px; padding-top: 1%;">
+                                        <SfSwitch  ValueChange="AutoCostChange" @bind-Checked="DataSource.AutoCostParameter" TChecked="bool"></SfSwitch>
+
                                         <SfButton CssClass="TSISaveButton" OnClick="OnClick"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
                                     
                                 </td>
