@@ -138,6 +138,12 @@
   <data name="ProductListUIPreviousMenu" xml:space="preserve">
     <value>Stok Yönetimi &gt; Raporlar</value>
   </data>
+  <data name="ReportMessageTitle" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
+  <data name="ReportRecordNotFound" xml:space="preserve">
+    <value>Raporlanacak kayıt bulunamadı.</value>
+  </data>
   <data name="SelectAllText" xml:space="preserve">
     <value>Hepsini Seç</value>
   </data>

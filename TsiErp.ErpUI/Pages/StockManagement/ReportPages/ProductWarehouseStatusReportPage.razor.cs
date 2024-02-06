@@ -1,5 +1,6 @@
 ﻿using DevExpress.Blazor.Reporting;
 using DevExpress.XtraReports.UI;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using System.Linq.Dynamic.Core;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
@@ -7,11 +8,15 @@ using TsiErp.Entities.Entities.StockManagement.Product.ReportDtos.ProductWarehou
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Reports.StockManagement;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.StockManagement.ReportPages
 {
     public partial class ProductWarehouseStatusReportPage : IDisposable
     {
+        [Inject]
+        ModalManager ModalManager { get; set; }
+
         DxReportViewer reportViewer { get; set; }
         XtraReport Report { get; set; }
 
@@ -139,9 +144,18 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ReportPages
             filters.EndDate = EndDate;
 
             var report = (await ProductReportsAppService.GetProductWarehouseStatusReport(filters, ProductLocalizer)).ToList();
-            Report = new ProductWarehouseStatusReport();
-            Report.DataSource = report;
 
+            if (report.Count > 0)
+            {
+                Report = new ProductWarehouseStatusReport();
+                Report.DataSource = report;
+            }
+            else
+            {
+                Report = new ProductWarehouseStatusReport();
+                Report.DataSource = null;
+                await ModalManager.MessagePopupAsync(ReportLocalizer["ReportMessageTitle"], ReportLocalizer["ReportRecordNotFound"]);
+            }
         }
 
         public void Dispose()

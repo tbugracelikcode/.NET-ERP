@@ -1,5 +1,6 @@
 ﻿using DevExpress.Blazor.Reporting;
 using DevExpress.XtraReports.UI;
+using Microsoft.AspNetCore.Components;
 using TsiErp.Business.Entities.Department.Services;
 using TsiErp.Business.Entities.MachineAndWorkforceManagement.Employee.Reports;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
@@ -8,11 +9,16 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.ReportDtos
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.ReportDtos.StationsListReportDtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.ErpUI.Reports.MachineAndWorkforceManagement;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.ReportPages
 {
     public partial class StationListReportPage : IDisposable
     {
+
+        [Inject]
+        ModalManager ModalManager { get; set; }
+
         DxReportViewer reportViewer { get; set; }
         XtraReport Report { get; set; }
 
@@ -44,8 +50,18 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.ReportPages
             filters.StationGroups = BindingStationGroups;
 
             var report = (await StationReportsAppService.GetStationListReport(filters, StationsLocalizer)).ToList();
-            Report = new StationListReport();
-            Report.DataSource = report;
+
+            if (report.Count > 0)
+            {
+                Report = new StationListReport();
+                Report.DataSource = report;
+            }
+            else
+            {
+                Report = new StationListReport();
+                Report.DataSource = null;
+                await ModalManager.MessagePopupAsync(ReportLocalizer["ReportMessageTitle"], ReportLocalizer["ReportRecordNotFound"]);
+            }
         }
 
         public void Dispose()

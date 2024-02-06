@@ -3,23 +3,18 @@ using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using System.Linq.Dynamic.Core;
-using TsiErp.Business.Entities.Product.Services;
-using TsiErp.Business.Entities.StockManagement.Product.Reports;
+using TsiErp.Business.Entities.PurchaseManagement.PurchaseOrder.Reports;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
-using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.ReportDtos.PurchaseRequestListReportDtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.ReportDtos.PurchaseOrderListReportDtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
-using TsiErp.Entities.Entities.StockManagement.Product.ReportDtos.ProductWarehouseStatusReportDtos;
 using TsiErp.Entities.Enums;
-using TsiErp.ErpUI.Pages.StockManagement.ReportPages;
 using TsiErp.ErpUI.Reports.PurchaseManagement;
-using TsiErp.ErpUI.Reports.StockManagement;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PurchaseManagement.ReportPages
 {
-    public partial class PurchaseRequestListReportPage : IDisposable
+    public partial class PurchaseOrderListReportPage : IDisposable
     {
-
         [Inject]
         ModalManager ModalManager { get; set; }
 
@@ -30,13 +25,13 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.ReportPages
 
         public DateTime? EndDate { get; set; }
 
-
         protected override async void OnInitialized()
         {
             await GetProducts();
             await GetCurrentAccountCards();
-            GetPurchaseRequestLineStateEnums();
+            GetPurchaseOrderLineStateEnums();
         }
+
 
         #region Products
 
@@ -62,36 +57,35 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.ReportPages
 
         #endregion
 
+        #region Purchase Order Line State
 
-        #region Purchase Request Line State
+        List<PurchaseOrderLineStateEnumModel> PurchaseOrderLineStateEnumList = new List<PurchaseOrderLineStateEnumModel>();
+        List<PurchaseOrderLineStateEnumModel> BindingPurchaseOrderLineStateEnumList = new List<PurchaseOrderLineStateEnumModel>();
 
-        List<PurchaseRequestLineStateEnumModel> PurchaseRequestLineStateEnumList = new List<PurchaseRequestLineStateEnumModel>();
-        List<PurchaseRequestLineStateEnumModel> BindingPurchaseRequestLineStateEnumList = new List<PurchaseRequestLineStateEnumModel>();
-
-        private void GetPurchaseRequestLineStateEnums()
+        private void GetPurchaseOrderLineStateEnums()
         {
-            var enumList = Enum.GetValues(typeof(PurchaseRequestLineStateEnum)).ToDynamicList<PurchaseRequestLineStateEnum>();
+            var enumList = Enum.GetValues(typeof(PurchaseOrderLineStateEnum)).ToDynamicList<PurchaseOrderLineStateEnum>();
 
             foreach (var item in enumList)
             {
-                var locKey = PurchaseRequestsLocalizer[Enum.GetName(typeof(PurchaseRequestLineStateEnum), item)];
+                var locKey = PurchaseOrdersLocalizer[Enum.GetName(typeof(PurchaseOrderLineStateEnum), item)];
 
-                var locString = GetPurchaseRequestLineStateEnumStringKey(locKey);
+                var locString = GetPurchaseOrderLineStateEnumStringKey(locKey);
 
-                int purchaseRequestLineStateInt = Convert.ToInt32(locString.Split('-')[0]);
+                int purchaseOrderLineStateInt = Convert.ToInt32(locString.Split('-')[0]);
 
-                string text = PurchaseRequestsLocalizer.GetString(locString.Split('-')[1]);
+                string text = PurchaseOrdersLocalizer.GetString(locString.Split('-')[1]);
 
-                PurchaseRequestLineStateEnumList.Add(new PurchaseRequestLineStateEnumModel
+                PurchaseOrderLineStateEnumList.Add(new PurchaseOrderLineStateEnumModel
                 {
-                    PurchaseRequestLineStateInt = purchaseRequestLineStateInt,
+                    PurchaseOrderLineStateInt = purchaseOrderLineStateInt,
                     Text = text,
                     Value = item
                 });
             }
         }
 
-        public static string GetPurchaseRequestLineStateEnumStringKey(LocalizedString stateString)
+        public static string GetPurchaseOrderLineStateEnumStringKey(LocalizedString stateString)
         {
             string result = "";
 
@@ -103,8 +97,14 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.ReportPages
                 case "Onaylandı":
                     result = "2-EnumApproved";
                     break;
-                case "SatinAlma":
-                    result = "3-EnumPurchase";
+                case "Tamamlandi":
+                    result = "3-EnumCompleted";
+                    break;
+                case "Iptal":
+                    result = "4-EnumCancel";
+                    break;
+                case "KismiTamamlandi":
+                    result = "5-EnumInPartialCompleted";
                     break;
             }
 
@@ -124,28 +124,28 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.ReportPages
                 BindingCurrentAccountCards = new List<Guid>();
             }
 
-            if (BindingPurchaseRequestLineStateEnumList == null)
+            if (BindingPurchaseOrderLineStateEnumList == null)
             {
-                BindingPurchaseRequestLineStateEnumList = new List<PurchaseRequestLineStateEnumModel>();
+                BindingPurchaseOrderLineStateEnumList = new List<PurchaseOrderLineStateEnumModel>();
             }
 
-            PurchaseRequestListReportParameterDto filters = new PurchaseRequestListReportParameterDto();
-            filters.PurchaseRequestLineState = BindingPurchaseRequestLineStateEnumList.Select(t => t.Value).ToList();
+            PurchaseOrderListReportParameterDto filters = new PurchaseOrderListReportParameterDto();
+            filters.PurchaseOrderLineState = BindingPurchaseOrderLineStateEnumList.Select(t => t.Value).ToList();
             filters.Products = BindingProducts;
             filters.CurrentAccounts = BindingCurrentAccountCards;
             filters.StartDate = StartDate;
             filters.EndDate = EndDate;
 
-            var report = (await PurchaseRequestReportsAppService.GetPurchaseRequestListReport(filters,ReportLocalizer ,ProductLocalizer)).ToList();
+            var report = (await PurchaseOrderReportsAppService.GetPurchaseOrderListReport(filters, ReportLocalizer, ProductLocalizer)).ToList();
 
             if (report.Count > 0)
             {
-                Report = new PurchaseRequsetListReport();
+                Report = new PurchaseOrderListReport();
                 Report.DataSource = report;
             }
             else
             {
-                Report = new PurchaseRequsetListReport();
+                Report = new PurchaseOrderListReport();
                 Report.DataSource = null;
                 await ModalManager.MessagePopupAsync(ReportLocalizer["ReportMessageTitle"], ReportLocalizer["ReportRecordNotFound"]);
             }
@@ -158,13 +158,12 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.ReportPages
         }
     }
 
-    public class PurchaseRequestLineStateEnumModel
+    public class PurchaseOrderLineStateEnumModel
     {
-        public PurchaseRequestLineStateEnum Value { get; set; }
+        public PurchaseOrderLineStateEnum Value { get; set; }
 
         public string Text { get; set; }
 
-        public int PurchaseRequestLineStateInt { get; set; }
+        public int PurchaseOrderLineStateInt { get; set; }
     }
-
 }

@@ -146,6 +146,10 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     ProductID = item.ProductID.GetValueOrDefault(),
                     Quantity = item.Quantity,
                     UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                    BranchID = input.BranchID.GetValueOrDefault(),
+                    CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                    WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                    Date_ = input.Date_
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -253,6 +257,10 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     ProductID = item.ProductID,
                     Quantity = item.Quantity,
                     UnitSetID = item.UnitSetID,
+                    BranchID = input.BranchID.GetValueOrDefault(),
+                    CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                    WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                    Date_ = input.Date_
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -415,6 +423,26 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
                         nameof(PurchaseOrderLines.PaymentPlanID),
                         nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    ).Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(PurchaseOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(PurchaseOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(PurchaseOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
                     .Where(new { PurchaseOrderID = id }, false, false, Tables.PurchaseOrderLines);
@@ -579,6 +607,26 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(PaymentPlans.Id),
                         "PaymentPlanLine",
                         JoinType.Left
+                    ).Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(PurchaseOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(PurchaseOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(PurchaseOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
                     )
                     .Where(new { PurchaseOrderID = input.Id }, false, false, Tables.PurchaseOrderLines);
 
@@ -717,6 +765,10 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         ProductID = item.ProductID.GetValueOrDefault(),
                         Quantity = item.Quantity,
                         UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                        BranchID = input.BranchID.GetValueOrDefault(),
+                        CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                        WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                        Date_ = input.Date_
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -762,6 +814,10 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             ProductID = item.ProductID.GetValueOrDefault(),
                             Quantity = item.Quantity,
                             UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                            BranchID = input.BranchID.GetValueOrDefault(),
+                            CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                            WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                            Date_ = input.Date_
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -820,7 +876,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 Id = entity.Id,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
-                LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                LastModifierId = entity.LastModifierId.GetValueOrDefault()
             }).Where(new { Id = id }, false, false, "");
 
             var purchaseOrdersDto = queryFactory.Update<SelectPurchaseOrdersDto>(query, "Id", true);
@@ -828,6 +884,61 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             return new SuccessDataResult<SelectPurchaseOrdersDto>(purchaseOrdersDto);
 
 
+        }
+
+        public async Task<IDataResult<IList<SelectPurchaseOrderLinesDto>>> GetLineListAsync()
+        {
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.PurchaseOrderLines)
+                   .Select<PurchaseOrderLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(PurchaseOrderLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(PurchaseOrderLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        ppl => new { PaymentPlanID = ppl.Id, PaymentPlanName = ppl.Name },
+                        nameof(PurchaseOrderLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(PurchaseOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(PurchaseOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(PurchaseOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Where(null, false, false, Tables.PurchaseOrderLines);
+
+            var purchaseOrderLine = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<List<SelectPurchaseOrderLinesDto>>(purchaseOrderLine);
         }
     }
 }

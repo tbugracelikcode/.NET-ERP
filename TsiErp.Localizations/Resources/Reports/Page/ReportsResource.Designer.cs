@@ -124,6 +124,24 @@ namespace TsiErp.Localizations.Resources.Reports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string ReportMessageTitle {
+            get {
+                return ResourceManager.GetString("ReportMessageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raporlanacak kayıt bulunamadı..
+        /// </summary>
+        public static string ReportRecordNotFound {
+            get {
+                return ResourceManager.GetString("ReportRecordNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hepsini Seç.
         /// </summary>
         public static string SelectAllText {
