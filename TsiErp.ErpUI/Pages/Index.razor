@@ -129,7 +129,20 @@
                                 </ContentTemplate>
                             </DashboardLayoutPanel>
 
-                            <DashboardLayoutPanel SizeX="6" SizeY="2" Row="2" Column="0">
+                             <DashboardLayoutPanel SizeX="6" SizeY="2" Row="2" Column="0">
+                                <HeaderTemplate>
+                                    <div>Açık Siparişlerin Bakiyeleri</div>
+                                </HeaderTemplate>
+                                <ContentTemplate>
+
+                                    <table>
+                                        <tr><th>Sipariş No</th><th>Yükleme Tarihi</th><th>Miktar</th><th>Bakiye</th><th>Sevk Oranı</th></tr>
+                                    </table>
+                                   
+                                </ContentTemplate>
+                            </DashboardLayoutPanel>
+
+                            <DashboardLayoutPanel SizeX="6" SizeY="2" Row="4" Column="0">
                                 <HeaderTemplate>
                                     <div>@L["OrdersbyMonthsPanelTitle"]</div>
                                 </HeaderTemplate>

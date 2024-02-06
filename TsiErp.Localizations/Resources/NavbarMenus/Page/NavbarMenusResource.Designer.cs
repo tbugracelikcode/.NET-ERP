@@ -925,6 +925,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ürün Maliyet Tablosu.
+        /// </summary>
+        public static string ProductCostsChildMenu {
+            get {
+                return ResourceManager.GetString("ProductCostsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Grupları.
         /// </summary>
         public static string ProductGroupsChildMenu {
