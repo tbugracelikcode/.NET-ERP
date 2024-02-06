@@ -1,14 +1,11 @@
-﻿@page "/purchase-request-list-report"
+﻿@page "/sales-proposition-list-report"
 @layout MainLayout
 
 @inject IProductsAppService ProductsAppService
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
-@inject IPurchaseRequestReportsAppService PurchaseRequestReportsAppService
+@inject ISalesPropositionReportsAppService SalesPropositionReportsAppService
 @inject IStringLocalizer<ReportsResource> ReportLocalizer
-@inject IStringLocalizer<ProductsResource> ProductLocalizer
-
-@inject IStringLocalizer<PurchaseRequestsResource> PurchaseRequestsLocalizer
-
+@inject IStringLocalizer<SalesPropositionsResource> SalesPropositionsLocalizer
 
 <DevGridLayoutFilterRow ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
     <GridLayoutItems>
@@ -16,7 +13,7 @@
             <Template>
                 <SfCard class="TSIListPageTitleCard">
                     <CardContent>
-                        <TsiBreadCrumb PreviousMenus="Satın Alma Yönetimi > Raporlar" CurrentMenu="Satın Alma Talep Fiş Listesi" />
+                        <TsiBreadCrumb PreviousMenus="Satın Alma Yönetimi > Raporlar" CurrentMenu="Satın Alma Siparişleri Listesi" />
                     </CardContent>
                     <CardFooter>
                     </CardFooter>
@@ -80,8 +77,8 @@
                                         <br />
                                         <label class="TSIModalLabel"><strong>Durum : </strong></label><br />
 
-                                        <SfMultiSelect @bind-Value="@BindingPurchaseRequestLineStateEnumList"
-                                                       DataSource="@PurchaseRequestLineStateEnumList"
+                                        <SfMultiSelect @bind-Value="@BindingSalesPropositionLineStateEnumList"
+                                                       DataSource="@SalesPropositionLineStateEnumList"
                                                        AllowFiltering=true
                                                        Mode="VisualMode.CheckBox"
                                                        ShowSelectAll=true
@@ -99,7 +96,7 @@
                                     <Template>
                                         <br />
                                         <label class="TSIModalLabel"><strong>Cari Hesap : </strong></label><br />
-                                         <SfMultiSelect @bind-Value="@BindingCurrentAccountCards"
+                                        <SfMultiSelect @bind-Value="@BindingCurrentAccountCards"
                                                        DataSource="@CurrentAccountCards"
                                                        AllowFiltering=true
                                                        Mode="VisualMode.CheckBox"

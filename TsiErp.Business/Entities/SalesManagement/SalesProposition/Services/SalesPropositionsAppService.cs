@@ -16,6 +16,7 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesProposition;
 using TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos;
@@ -136,6 +137,10 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                     ProductID = item.ProductID.GetValueOrDefault(),
                     Quantity = item.Quantity,
                     UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                    BranchID = input.BranchID.GetValueOrDefault(),
+                    CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                    WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                    Date_ = input.Date_
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -272,6 +277,27 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                         ppl => new { PaymentPlanID = ppl.Id, PaymentPlanName = ppl.Name },
                         nameof(SalesPropositionLines.PaymentPlanID),
                         nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesPropositionLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(SalesPropositionLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(SalesPropositionLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
                     .Where(new { SalesPropositionID = id }, false, false, Tables.SalesPropositionLines);
@@ -423,6 +449,27 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                         nameof(PaymentPlans.Id),
                         JoinType.Left
                     )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesPropositionLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(SalesPropositionLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(SalesPropositionLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
                     .Where(new { SalesPropositionID = input.Id }, false, false, Tables.SalesPropositionLines);
 
             var salesPropositionLine = queryFactory.GetList<SelectSalesPropositionLinesDto>(queryLines).ToList();
@@ -556,6 +603,10 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                         ProductID = item.ProductID.GetValueOrDefault(),
                         Quantity = item.Quantity,
                         UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                        BranchID = input.BranchID.GetValueOrDefault(),
+                        CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                        Date_ = input.Date_,
+                        WarehouseID = input.WarehouseID.GetValueOrDefault()
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -597,6 +648,10 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                             ProductID = item.ProductID.GetValueOrDefault(),
                             Quantity = item.Quantity,
                             UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                            BranchID = input.BranchID.GetValueOrDefault(),
+                            CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                            Date_ = input.Date_,
+                            WarehouseID = input.WarehouseID.GetValueOrDefault()
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -740,6 +795,10 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                             ProductID = line.ProductID.GetValueOrDefault(),
                             Quantity = line.Quantity,
                             UnitSetID = line.UnitSetID.GetValueOrDefault(),
+                            BranchID = line.BranchID,
+                            CurrentAccountCardID = line.CurrentAccountCardID,
+                            Date_ = line.Date_,
+                            WarehouseID = line.WarehouseID
                         }).Where(new { Id = line.Id }, false, false, "");
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
 
@@ -748,6 +807,61 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
                 var salesProposition = queryFactory.Update<SelectSalesPropositionsDto>(query, "Id", true);
             }
+        }
+
+        public async Task<IDataResult<IList<SelectSalesPropositionLinesDto>>> GetLineListAsync()
+        {
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.SalesPropositionLines)
+                   .Select<SalesPropositionLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(SalesPropositionLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(SalesPropositionLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        ppl => new { PaymentPlanID = ppl.Id, PaymentPlanName = ppl.Name },
+                        nameof(SalesPropositionLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesPropositionLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(SalesPropositionLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(SalesPropositionLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Where(null, false, false, Tables.SalesPropositionLines);
+
+            var salesPropositionLine = queryFactory.GetList<SelectSalesPropositionLinesDto>(queryLines).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<List<SelectSalesPropositionLinesDto>>(salesPropositionLine);
         }
     }
 

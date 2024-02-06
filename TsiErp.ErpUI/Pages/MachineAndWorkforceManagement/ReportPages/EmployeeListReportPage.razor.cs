@@ -1,15 +1,20 @@
 ﻿using DevExpress.Blazor.Reporting;
 using DevExpress.XtraReports.UI;
+using Microsoft.AspNetCore.Components;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.ReportDtos.EmployeeListReportDtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority.Dtos;
 using TsiErp.ErpUI.Reports.MachineAndWorkforceManagement;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.ReportPages
 {
     public partial class EmployeeListReportPage : IDisposable
     {
+
+        [Inject]
+        ModalManager ModalManager { get; set; }
 
         DxReportViewer reportViewer { get; set; }
         XtraReport Report { get; set; }
@@ -88,8 +93,18 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.ReportPages
             filters.HiringEndDate = EndDate;
 
             var report = (await EmployeeReportsAppService.GetEmployeeListReport(filters, EmployeesLocalizer)).ToList();
-            Report = new EmployeeListReport();
-            Report.DataSource = report;
+
+            if (report.Count > 0)
+            {
+                Report = new EmployeeListReport();
+                Report.DataSource = report;
+            }
+            else
+            {
+                Report = new EmployeeListReport();
+                Report.DataSource = null;
+                await ModalManager.MessagePopupAsync(ReportLocalizer["ReportMessageTitle"], ReportLocalizer["ReportRecordNotFound"]);
+            }
         }
 
         public void Dispose()
