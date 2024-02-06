@@ -145,6 +145,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.ReportPages
             }
             else
             {
+                Report = new PurchaseRequsetListReport();
+                Report.DataSource = null;
                 await ModalManager.MessagePopupAsync(ReportLocalizer["ReportMessageTitle"], ReportLocalizer["ReportRecordNotFound"]);
             }
         }

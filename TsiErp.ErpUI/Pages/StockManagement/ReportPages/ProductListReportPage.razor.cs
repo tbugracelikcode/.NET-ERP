@@ -185,6 +185,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ReportPages
             }
             else
             {
+                Report = new ProductListReport();
+                Report.DataSource = null;
                 await ModalManager.MessagePopupAsync(ReportLocalizer["ReportMessageTitle"], ReportLocalizer["ReportRecordNotFound"]);
             }
         }

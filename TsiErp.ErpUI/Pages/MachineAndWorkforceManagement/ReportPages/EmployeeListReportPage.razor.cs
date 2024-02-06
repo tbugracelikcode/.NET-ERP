@@ -101,6 +101,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.ReportPages
             }
             else
             {
+                Report = new EmployeeListReport();
+                Report.DataSource = null;
                 await ModalManager.MessagePopupAsync(ReportLocalizer["ReportMessageTitle"], ReportLocalizer["ReportRecordNotFound"]);
             }
         }

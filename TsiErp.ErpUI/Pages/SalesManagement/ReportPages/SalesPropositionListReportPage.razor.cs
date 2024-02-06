@@ -138,6 +138,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.ReportPages
             }
             else
             {
+                Report = new SalesPropositionListReport();
+                Report.DataSource = null;
                 await ModalManager.MessagePopupAsync(ReportLocalizer["ReportMessageTitle"], ReportLocalizer["ReportRecordNotFound"]);
             }
         }
