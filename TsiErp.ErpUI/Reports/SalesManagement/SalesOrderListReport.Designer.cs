@@ -1,6 +1,6 @@
 ﻿namespace TsiErp.ErpUI.Reports.SalesManagement
 {
-    partial class SalesPropositionListReport
+    partial class SalesOrderListReport
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesPropositionListReport));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SalesOrderListReport));
             DevExpress.XtraReports.UI.XRSummary xrSummary1 = new DevExpress.XtraReports.UI.XRSummary();
             DevExpress.XtraReports.UI.XRSummary xrSummary2 = new DevExpress.XtraReports.UI.XRSummary();
             DevExpress.XtraReports.UI.XRSummary xrSummary3 = new DevExpress.XtraReports.UI.XRSummary();
@@ -150,7 +150,7 @@
             this.xrLabel1.SizeF = new System.Drawing.SizeF(312.2222F, 62.22219F);
             this.xrLabel1.StylePriority.UseFont = false;
             this.xrLabel1.StylePriority.UseTextAlignment = false;
-            this.xrLabel1.Text = "VERİLEN TEKLİF LİSTESİ";
+            this.xrLabel1.Text = "SATIŞ SİPARİŞLERİ LİSTESİ";
             this.xrLabel1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopCenter;
             // 
             // xrLabel2
@@ -253,7 +253,7 @@
             this.xrTableCell11.StylePriority.UseBackColor = false;
             this.xrTableCell11.StylePriority.UseFont = false;
             this.xrTableCell11.StylePriority.UseTextAlignment = false;
-            this.xrTableCell11.Text = "TEKLİF NO";
+            this.xrTableCell11.Text = "SİPARİŞ NO";
             this.xrTableCell11.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.xrTableCell11.Weight = 0.66596091935244706D;
             // 
@@ -266,7 +266,7 @@
             this.xrTableCell12.StylePriority.UseBackColor = false;
             this.xrTableCell12.StylePriority.UseFont = false;
             this.xrTableCell12.StylePriority.UseTextAlignment = false;
-            this.xrTableCell12.Text = "TEKLİF TARİHİ";
+            this.xrTableCell12.Text = "SİPARİŞ TARİHİ";
             this.xrTableCell12.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.xrTableCell12.Weight = 0.84582782331402762D;
             // 
@@ -450,7 +450,7 @@
             this.DetailReport.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
             this.Detail1,
             this.GroupFooter1});
-            this.DetailReport.DataMember = "SalesPropositionLines";
+            this.DetailReport.DataMember = "SalesOrderLines";
             this.DetailReport.DataSource = this.objectDataSource1;
             this.DetailReport.Level = 0;
             this.DetailReport.Name = "DetailReport";
@@ -664,10 +664,10 @@
             // 
             // objectDataSource1
             // 
-            this.objectDataSource1.DataSource = typeof(global::TsiErp.Entities.Entities.SalesManagement.SalesProposition.ReportDtos.SalesPropositionListReportDto);
+            this.objectDataSource1.DataSource = typeof(global::TsiErp.Entities.Entities.SalesManagement.SalesOrder.ReportDtos.SalesOrderListReportDto);
             this.objectDataSource1.Name = "objectDataSource1";
             // 
-            // SalesPropositionListReport
+            // SalesOrderListReport
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
             this.TopMargin,
