@@ -298,26 +298,8 @@ else
         </DxPopup>
     }
    
-@if (isLoadingPermissions)
-{
-      <DxPopup @bind-Visible="isLoadingPermissions"
-         ShowFooter="true"
-         ShowHeader="false"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         Width="23%"
-         Height="19%"
-         MinWidth="400px"
-         MinHeight="200px">
-            <BodyTemplate>
+   
 
-            <center style="vertical-align: middle;margin-top: 20%;"><strong>@L["PermissionsLoadingMessage"]</strong></center>
-
-            </BodyTemplate>
-            <FooterContentTemplate>
-            </FooterContentTemplate>
-        </DxPopup>
-}
 
 
               

@@ -18,6 +18,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.ErpUI.Helpers;
+using TsiErp.ErpUI.Shared;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using ChangeEventArgs = Microsoft.AspNetCore.Components.ChangeEventArgs;
 using IResult = Tsi.Core.Utilities.Results.IResult;
@@ -46,6 +47,9 @@ namespace TsiErp.ErpUI.Pages.Base
 
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        [CascadingParameter]
+        public MainLayout Layout { get; set; }
 
         [Inject]
         IJSRuntime JsRuntime { get; set; }
@@ -264,6 +268,7 @@ namespace TsiErp.ErpUI.Pages.Base
 
         protected virtual async Task OnSubmit()
         {
+            Layout.LoadingSpinnerVisible = true;
             TGetOutputDto result;
 
             if (DataSource.Id == Guid.Empty)
@@ -303,6 +308,9 @@ namespace TsiErp.ErpUI.Pages.Base
                 SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
             else
                 SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+
+            Layout.LoadingSpinnerVisible = false;
         }
 
         public virtual void HideEditPage()

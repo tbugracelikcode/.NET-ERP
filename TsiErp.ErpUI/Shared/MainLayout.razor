@@ -10,7 +10,7 @@
 @using TsiErp.Business.Entities.ProgVersion.Services;
 @using TsiErp.DataAccess.DatabaseSchemeHistories;
 @*@implements IAsyncDisposable*@
-
+<CascadingValue Value="this">
 <PageTitle>TSI ERP</PageTitle>
 <SfSidebar ID="Sidebar" ZIndex="0" Type="SidebarType.Push" Width="360px" CloseOnDocumentClick="false" EnableGestures="false" EnableDock="false" Animate="false" @ref="Sidebar" IsOpen="true">
     <div class="sidebar" style="position:fixed;z-index:1200">
@@ -115,7 +115,29 @@
 
     </div>
 </div>
+
+@if (LoadingSpinnerVisible)
+{
+    <div class="Loading-Background">
+        <div class="TSISpinner"></div>
+    </div>
+}
+</CascadingValue>
+
 <style>
+
+    .Loading-Background{
+        position: fixed;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 1000%;
+    z-index: 100;
+    background: rgba(0,0,0,0.8);
+    padding-top: 24%;
+    padding-left: 47%;
+    }
     img {
         border-radius: 10%;
         width: 71px;
@@ -288,6 +310,12 @@
     private ErrorBoundary errorBoundary;
     SfSidebar Sidebar;
     private MarkupString HtmlMessage { get; set; }
+    private bool loadingSpinnerVisible;
+    public bool LoadingSpinnerVisible
+    {
+        get => loadingSpinnerVisible;
+        set { loadingSpinnerVisible = value; InvokeAsync(() => StateHasChanged()); }
+    }
 
     protected async override void OnInitialized()
     {
