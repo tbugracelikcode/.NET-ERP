@@ -27,6 +27,11 @@
     overflow-y:auto;
 }
 
+.TSIScrollableIndexPanel {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
 .TSIReportViewer{
     width:100%;
 }
@@ -1310,6 +1315,12 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
 .e-treeview .e-list-item.e-active.e-hover > .e-fullrow {
     background-color: #700303;
     border-color: #f46767;
+}
+
+.dxbl-modal > .dxbl-modal-root > .dxbl-popup > .dxbl-modal-content .dxbl-popup-header > .dxbl-modal-header .dxbl-popup-header-button > svg.dxbl-image, .dxbl-modal > .dxbl-modal-root > .dxbl-popup > .dxbl-modal-content > .dxbl-modal-header .dxbl-popup-header-button > svg.dxbl-image {
+    color: var(--dxbl-popup-header-btn-color,var(--dxbl-image-color,currentcolor));
+    opacity: var(--dxbl-popup-header-btn-color,var(--dxbl-image-color,70%));
+    fill: white !important;
 }
 
 

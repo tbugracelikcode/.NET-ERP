@@ -71,6 +71,15 @@ namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Eldekilerin Ortalaması.
+        /// </summary>
+        public static string AverageCombo {
+            get {
+                return ResourceManager.GetString("AverageCombo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -85,6 +94,15 @@ namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
         public static string CodeControlManager {
             get {
                 return ResourceManager.GetString("CodeControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maliyet hesaplama yöntemi :.
+        /// </summary>
+        public static string CostCalculationMethodLabel {
+            get {
+                return ResourceManager.GetString("CostCalculationMethodLabel", resourceCulture);
             }
         }
         
@@ -134,11 +152,29 @@ namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FIFO.
+        /// </summary>
+        public static string FIFOCombo {
+            get {
+                return ResourceManager.GetString("FIFOCombo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok fişlerinde ileri tarihli kayıt yapılsın..
         /// </summary>
         public static string FutureDateParameterLabel {
             get {
                 return ResourceManager.GetString("FutureDateParameterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LIFO.
+        /// </summary>
+        public static string LIFOCombo {
+            get {
+                return ResourceManager.GetString("LIFOCombo", resourceCulture);
             }
         }
         

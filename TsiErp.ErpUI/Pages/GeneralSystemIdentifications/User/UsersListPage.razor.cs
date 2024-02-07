@@ -21,7 +21,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
         public List<UserMenuPermission> PermissionModalMenusList = new List<UserMenuPermission>();
-
+        public List<Guid> ChangedPermissionsList = new List<Guid>();
         public class UserMenuPermission
         {
             public string MenuName { get; set; }
@@ -211,8 +211,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
                 case "permission":
 
-                    //ShowLoadingPermisssionsModal();
-                    //await InvokeAsync(StateHasChanged);
+                    ShowLoadingPermisssionsModal();
 
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -279,10 +278,10 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
                     isPermissionModal = true;
 
-                    //if (isPermissionModal)
-                    //{
-                    //    isLoadingPermissions = false;
-                    //}
+                    if (isPermissionModal)
+                    {
+                        HideLoadingPermisssionsModal();
+                    }
 
 
                     await InvokeAsync(StateHasChanged);
@@ -324,64 +323,83 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
             isLoadingPermissions = true;
         }
 
-        public async void NodeCheckedHandler(NodeCheckEventArgs args)
+        public void HideLoadingPermisssionsModal()
         {
-            var menuID = new Guid(args.NodeData.Id);
-            var userID = DataSource.Id;
+            isLoadingPermissions = false;
+        }
 
-            var menu = (await MenusAppService.GetAsync(menuID)).Data;
+        public void NodeCheckedHandler(NodeCheckEventArgs args)
+        {
+            ShowLoadingPermisssionsModal();
 
-            if (!menu.MenuName.Contains("Context")) //Context menu dışında, child menü içeren tüm menüler için permission update işlemi
+            var item = PermissionModalMenusList.Where(t => t.MenuID == args.NodeData.Id).FirstOrDefault();
+
+            int indexItem = PermissionModalMenusList.IndexOf(item);
+
+            PermissionModalMenusList[indexItem].isPermitted = args.NodeData.IsChecked == "false" ? true : false;
+
+            ChangedPermissionsList.Add(new Guid(item.MenuID));
+
+
+            if (!item.MenuName.Contains("Context")) //Context menu dışında, child menü içeren tüm menüler için permission update işlemi
             {
-                var permission = (await UserPermissionsAppService.GetListAsyncByUserId(userID)).Data.Where(t => t.MenuId == menuID).FirstOrDefault();
 
-                permission.IsUserPermitted = args.NodeData.IsChecked == "false" ? true : false;
+                var updatedChilds = PermissionModalMenusList.Where(t => t.ParentID == args.NodeData.Id).ToList();
 
-                var updateInput = ObjectMapper.Map<SelectUserPermissionsDto, UpdateUserPermissionsDto>(permission);
-
-                updateInput.SelectUserPermissionsList = new List<SelectUserPermissionsDto>();
-
-                updateInput.SelectUserPermissionsList.Add(permission);
-
-                await UserPermissionsAppService.UpdateAsync(updateInput);
-
-                var childMenus = (await MenusAppService.GetListbyParentIDAsync(menuID)).Data.ToList();
-
-                if (childMenus != null && childMenus.Count > 0)
+                if (updatedChilds != null && updatedChilds.Count > 0)
                 {
-                    foreach (var childmenu in childMenus)
+                    foreach (var child in updatedChilds)
                     {
-                        var permissionChild = (await UserPermissionsAppService.GetListAsyncByUserId(userID)).Data.Where(t => t.MenuId == childmenu.Id).FirstOrDefault();
+                        int indexChild = PermissionModalMenusList.IndexOf(child);
 
-                        permissionChild.IsUserPermitted = permission.IsUserPermitted;
+                        PermissionModalMenusList[indexChild].isPermitted = PermissionModalMenusList[indexItem].isPermitted;
 
-                        var updateInputChild = ObjectMapper.Map<SelectUserPermissionsDto, UpdateUserPermissionsDto>(permissionChild);
-
-                        updateInputChild.SelectUserPermissionsList = new List<SelectUserPermissionsDto>();
-
-                        updateInputChild.SelectUserPermissionsList.Add(permissionChild);
-
-                        await UserPermissionsAppService.UpdateAsync(updateInputChild);
-
+                        ChangedPermissionsList.Add(new Guid(child.MenuID));
                     }
                 }
+
+
             }
             else // Context menüler için permission update işlemi
             {
-                var permission = (await UserPermissionsAppService.GetListAsyncByUserId(userID)).Data.Where(t => t.MenuId == menuID).FirstOrDefault();
+                var itemContext = PermissionModalMenusList.Where(t => t.MenuID == args.NodeData.Id).FirstOrDefault();
 
-                permission.IsUserPermitted = args.NodeData.IsChecked == "false" ? true : false;
+                int indexItemContext = PermissionModalMenusList.IndexOf(itemContext);
 
-                var updateInput = ObjectMapper.Map<SelectUserPermissionsDto, UpdateUserPermissionsDto>(permission);
+                PermissionModalMenusList[indexItemContext].isPermitted = args.NodeData.IsChecked == "false" ? true : false;
 
-                updateInput.SelectUserPermissionsList = new List<SelectUserPermissionsDto>();
-
-                updateInput.SelectUserPermissionsList.Add(permission);
-
-                await UserPermissionsAppService.UpdateAsync(updateInput);
+                ChangedPermissionsList.Add(new Guid(itemContext.MenuID));
             }
 
+            HideLoadingPermisssionsModal();
+        }
 
+        public async void OnPermissionsSubmit()
+        {
+            ShowLoadingPermisssionsModal();
+
+            foreach(var changedPermissionMenuID in ChangedPermissionsList)
+            {
+                var permission = (await UserPermissionsAppService.GetListAsyncByUserId(DataSource.Id)).Data.Where(t => t.MenuId == changedPermissionMenuID).FirstOrDefault();
+
+                if(permission != null && permission.Id != Guid.Empty)
+                {
+                    bool permissionStatus = PermissionModalMenusList.Where(t => t.MenuID == changedPermissionMenuID.ToString()).Select(t => t.isPermitted).FirstOrDefault();
+
+                    permission.IsUserPermitted = permissionStatus;
+
+                    var updatedPermission = ObjectMapper.Map<SelectUserPermissionsDto, UpdateUserPermissionsDto>(permission);
+
+                    updatedPermission.SelectUserPermissionsList = new List<SelectUserPermissionsDto>();
+
+                    updatedPermission.SelectUserPermissionsList.Add(permission) ;
+
+                    await UserPermissionsAppService.UpdateAsync(updatedPermission) ;
+                }
+            }
+
+            HidePermissionModal();
+            HideLoadingPermisssionsModal();
         }
 
         #region Kod ButtonEdit

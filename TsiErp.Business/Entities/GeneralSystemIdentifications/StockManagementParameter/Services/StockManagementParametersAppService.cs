@@ -39,6 +39,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
                 Id = GuidGenerator.CreateGuid(),
                 FutureDateParameter = input.FutureDateParameter,
                 AutoCostParameter = input.AutoCostParameter,
+                 CostCalculationMethod = input.CostCalculationMethod,
             }).UseIsDelete(false); ;
 
 
@@ -87,6 +88,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
             {
                 FutureDateParameter = input.FutureDateParameter,
                 AutoCostParameter = input.AutoCostParameter,
+                CostCalculationMethod = input.CostCalculationMethod,
                 Id = input.Id
             }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
 

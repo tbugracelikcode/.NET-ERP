@@ -1,13 +1,14 @@
 ﻿@page "/home"
 @layout MainLayout
 
-@inject IStringLocalizer<IndexResource> L 
+@inject IStringLocalizer<IndexResource> L
 
 @inject IShipmentPlanningsAppService ShipmentPlanningsAppService
 @inject ISalesOrdersAppService SalesOrdersAppService
 @inject IProductGroupsAppService ProductGroupsAppService
 @inject IProductsAppService ProductsAppService
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
+@inject IPackingListsAppService PackingListsAppService
 
 <div class="control-section">
     <div class="col-lg-12 col-sm-12 col-md-12" id="sidebar-section">
@@ -27,7 +28,7 @@
         <div id="target">
             <div class="sidebar-content">
                 <div class="dashboardParent">
-                    <SfDashboardLayout @ref="dashboardObject" Columns="6" CellSpacing="@(new double[]{10 ,10 })"  AllowDragging="false" AllowFloating="false">
+                    <SfDashboardLayout @ref="dashboardObject" Columns="6" CellSpacing="@(new double[]{10 ,10 })" AllowDragging="false" AllowFloating="false">
                         <DashboardLayoutPanels>
 
                             <DashboardLayoutPanel SizeX="2" SizeY="2" Row="0" Column="0">
@@ -129,16 +130,61 @@
                                 </ContentTemplate>
                             </DashboardLayoutPanel>
 
-                             <DashboardLayoutPanel SizeX="6" SizeY="2" Row="2" Column="0">
+                            <DashboardLayoutPanel SizeX="6" SizeY="2" Row="2" Column="0">
                                 <HeaderTemplate>
-                                    <div>Açık Siparişlerin Bakiyeleri</div>
+                                    <div>@L["OpenOrderBalancePanelTitle"]</div>
                                 </HeaderTemplate>
                                 <ContentTemplate>
 
-                                    <table>
-                                        <tr><th>Sipariş No</th><th>Yükleme Tarihi</th><th>Miktar</th><th>Bakiye</th><th>Sevk Oranı</th></tr>
-                                    </table>
-                                   
+                                    <div class="TSIScrollableIndexPanel">
+                                        <table style="font-size: 16px;">
+                                            <tr style="text-align: center;">
+                                                <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderNo"]</strong></th>
+                                                <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderLoadingDate"]</strong></th>
+                                                <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderAmount"]</strong></th>
+                                                <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderBalance"]</strong></th>
+                                                <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderRate"]</strong></th>
+                                            </tr>
+                                            @foreach (var item in OpenOrderBalancesList)
+
+                                            {
+                                                <tr><td>@item.OrderNo</td><td>@item.ShippingDate.ToShortDateString()</td><td>@item.Amount</td><td>@item.Balance</td>
+                                                    @if(item.ShippingRate < 30 && item.ShippingRate != 0){
+                                                         <td><table>
+                                                        <tr>
+                                                                <td style="width:@item.ShippingRate%; background-color: #37b727;"></td>
+                                                                <td >% @item.ShippingRate</td>
+                                                        </tr>
+                                                            </table></td>
+                                                    }
+                                                    else if (item.ShippingRate == 0)
+                                                    {
+                                                         <td><table>
+                                                        <tr>
+                                                                <td >% @item.ShippingRate</td>
+                                                        </tr>
+                                                            </table></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:@item.ShippingRate%; background-color: #37b727;">% @item.ShippingRate</td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    }
+                                                   
+                                                  
+                                                </tr>
+                                            }
+                                        </table>
+                                    </div>
+
+
+
                                 </ContentTemplate>
                             </DashboardLayoutPanel>
 
@@ -187,6 +233,9 @@
     public List<NotShippedProductGroups> NotShippedProductGroupsList = new List<NotShippedProductGroups>();
     public List<NotShippedProductGroupsTooltip> NotShippedProductGroupsTooltipList = new List<NotShippedProductGroupsTooltip>();
     public List<OrdersbyMonths> OrdersbyMonthsList = new List<OrdersbyMonths>();
+    public List<SelectSalesOrderLinesDto> SalesOrderLinesList = new List<SelectSalesOrderLinesDto>();
+    public List<SelectPackingListPalletPackageLinesDto> PackingListPackageLineList = new List<SelectPackingListPalletPackageLinesDto>();
+    public List<OpenOrderBalances> OpenOrderBalancesList = new List<OpenOrderBalances>();
 
     int PlannedQuantity = 0;
     int ShipmentQuantity = 0;
@@ -222,11 +271,19 @@
         public string MonthName { get; set; }
     }
 
+    public class OpenOrderBalances
+    {
+        public string OrderNo { get; set; }
+        public DateTime ShippingDate { get; set; }
+        public int Amount { get; set; }
+        public int Balance { get; set; }
+        public decimal ShippingRate { get; set; }
+    }
+
 
 
     protected override async Task OnInitializedAsync()
     {
-
         #region En Yakın Tarihli Yükleme
 
         var shipmentPlanningListDto = (await ShipmentPlanningsAppService.GetListAsync(new ListShipmentPlanningsParameterDto())).Data.ToList();
@@ -320,7 +377,7 @@
                 case 9: monthName = L["Month9"]; break;
                 case 10: monthName = L["Month10"]; break;
                 case 11: monthName = L["Month11"]; break;
-                case 12:monthName =L[ "Month12"]; break;
+                case 12: monthName = L["Month12"]; break;
                 default: break;
             }
 
@@ -335,6 +392,41 @@
 
         #endregion
 
+
+        #region Açık Sipariş Bakiyeleri
+
+        SalesOrderLinesList = (await SalesOrdersAppService.GetLineSelectListAsync()).Data.ToList();
+
+        PackingListPackageLineList = (await PackingListsAppService.GetLinePalletPackageListAsync()).Data.ToList();
+
+        foreach (var package in PackingListPackageLineList)
+        {
+            var salesOrderLine = SalesOrderLinesList.Where(t => t.Id == package.SalesOrderLineID).FirstOrDefault();
+
+            if (salesOrderLine != null && salesOrderLine.Id != Guid.Empty && salesOrderLine.Quantity - package.TotalAmount > 0) //Satır varsa ve bakiye 0'dan büyükse (açık sipariş senaryosu)
+            {
+                var salesOrder = (await SalesOrdersAppService.GetAsync(salesOrderLine.SalesOrderID)).Data;
+
+                var packingList = (await PackingListsAppService.GetAsync(package.PackingListID)).Data;
+
+                OpenOrderBalances openOrderBalanceModel = new OpenOrderBalances
+                    {
+                        OrderNo = salesOrder.FicheNo,
+                        ShippingDate = packingList.LoadingDate.GetValueOrDefault(),
+                        Amount = (int)salesOrderLine.Quantity,
+                        Balance = (int)salesOrderLine.Quantity - (int)package.TotalAmount,
+                        ShippingRate = (((int)salesOrderLine.Quantity - (int)package.TotalAmount) / (int)salesOrderLine.Quantity) * 100
+                    };
+
+                    OpenOrderBalancesList.Add(openOrderBalanceModel);
+            }
+        }
+
+        OpenOrderBalancesList = OpenOrderBalancesList.OrderBy(t=>t.ShippingDate).ToList();
+        
+
+        #endregion
+
     }
 }
 
@@ -342,6 +434,10 @@
     .sidebar-content {
         padding: 10px;
         width: calc(100% - 60px);
+    }
+
+    td, th {
+        border-bottom: 1px solid black;
     }
 
     #pie, #colChart, #visitorsChart, #pieChart {
@@ -693,6 +789,8 @@
         z-index: 99;
     }
 </style>
+
+
 
 
 

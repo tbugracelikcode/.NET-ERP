@@ -180,6 +180,24 @@
   <data name="NotShippedTooltipTitle" xml:space="preserve">
     <value>Miktar Detayları</value>
   </data>
+  <data name="OpenOrderAmount" xml:space="preserve">
+    <value>Miktar</value>
+  </data>
+  <data name="OpenOrderBalance" xml:space="preserve">
+    <value>Bakiye</value>
+  </data>
+  <data name="OpenOrderBalancePanelTitle" xml:space="preserve">
+    <value>Açık Siparişlerin Bakiyeleri</value>
+  </data>
+  <data name="OpenOrderLoadingDate" xml:space="preserve">
+    <value>Yükleme Tarihi</value>
+  </data>
+  <data name="OpenOrderNo" xml:space="preserve">
+    <value>Sipariş No</value>
+  </data>
+  <data name="OpenOrderRate" xml:space="preserve">
+    <value>Sevk Oranı</value>
+  </data>
   <data name="OrdersbyMonthsPanelTitle" xml:space="preserve">
     <value>Aylara Göre Sipariş Sayıları</value>
   </data>

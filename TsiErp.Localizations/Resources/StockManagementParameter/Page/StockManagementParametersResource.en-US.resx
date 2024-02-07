@@ -120,11 +120,17 @@
   <data name="AutoCostParameterLabel" xml:space="preserve">
     <value>Automatic cost calculation on stock output fiches.</value>
   </data>
+  <data name="AverageCombo" xml:space="preserve">
+    <value>Average of Holdings</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CostCalculationMethodLabel" xml:space="preserve">
+    <value>Cost calculation method:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -141,8 +147,14 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="FIFOCombo" xml:space="preserve">
+    <value>FIFO</value>
+  </data>
   <data name="FutureDateParameterLabel" xml:space="preserve">
     <value>Post-dated recording can be made in the stock fiches.</value>
+  </data>
+  <data name="LIFOCombo" xml:space="preserve">
+    <value>LIFO</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
