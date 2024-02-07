@@ -250,6 +250,60 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Miktar.
+        /// </summary>
+        public static string OpenOrderAmount {
+            get {
+                return ResourceManager.GetString("OpenOrderAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bakiye.
+        /// </summary>
+        public static string OpenOrderBalance {
+            get {
+                return ResourceManager.GetString("OpenOrderBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Açık Siparişlerin Bakiyeleri.
+        /// </summary>
+        public static string OpenOrderBalancePanelTitle {
+            get {
+                return ResourceManager.GetString("OpenOrderBalancePanelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yükleme Tarihi.
+        /// </summary>
+        public static string OpenOrderLoadingDate {
+            get {
+                return ResourceManager.GetString("OpenOrderLoadingDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sipariş No.
+        /// </summary>
+        public static string OpenOrderNo {
+            get {
+                return ResourceManager.GetString("OpenOrderNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sevk Oranı.
+        /// </summary>
+        public static string OpenOrderRate {
+            get {
+                return ResourceManager.GetString("OpenOrderRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aylara Göre Sipariş Sayıları.
         /// </summary>
         public static string OrdersbyMonthsPanelTitle {

@@ -22,5 +22,10 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementP
         /// Otomatik Maliyet Parametresi
         /// </summary>
         public bool AutoCostParameter { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Maliyet Hesaplama Yöntemi
+        /// </summary>
+        public int CostCalculationMethod { get; set; }
     }
 }

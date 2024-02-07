@@ -180,6 +180,24 @@
   <data name="NotShippedTooltipTitle" xml:space="preserve">
     <value>Amount Details</value>
   </data>
+  <data name="OpenOrderAmount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="OpenOrderBalance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="OpenOrderBalancePanelTitle" xml:space="preserve">
+    <value>Balances of Open Orders</value>
+  </data>
+  <data name="OpenOrderLoadingDate" xml:space="preserve">
+    <value>Shipping Date</value>
+  </data>
+  <data name="OpenOrderNo" xml:space="preserve">
+    <value>Order No</value>
+  </data>
+  <data name="OpenOrderRate" xml:space="preserve">
+    <value>Shipment Rate</value>
+  </data>
   <data name="OrdersbyMonthsPanelTitle" xml:space="preserve">
     <value>Number of Orders by Months</value>
   </data>

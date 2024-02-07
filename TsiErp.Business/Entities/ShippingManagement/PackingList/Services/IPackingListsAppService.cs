@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Utilities.Results;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine.Dtos;
 
 namespace TsiErp.Business.Entities.PackingList.Services
 {
@@ -9,5 +10,6 @@ namespace TsiErp.Business.Entities.PackingList.Services
         Task<IResult> DeleteLineCubageAsync(Guid id);
         Task<IResult> DeleteLinePalletAsync(Guid id);
         Task<IResult> DeleteLinePalletPackageAsync(Guid id);
+        Task<IDataResult<IList<SelectPackingListPalletPackageLinesDto>>> GetLinePalletPackageListAsync();
     }
 }

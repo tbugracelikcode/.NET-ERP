@@ -50,6 +50,25 @@ else
 
                             </tr>
 
+                              <tr>
+                                <td style="width: 30%; text-align: left;height: 80px; padding-left: 2%;">
+
+                                        <label class="TSIEditFormLabel">• @L["CostCalculationMethodLabel"]  </label><br />
+                                    
+
+                                </td>
+
+                                <td style="width: 70%; text-align: left;height: 80px; padding-top: 1%;">
+                                        <SfComboBox TValue="string" TItem="CostCalculationMethodComboBox" DataSource="@_costCalculationMethodComboBox">
+                                                            <ComboBoxEvents TItem="CostCalculationMethodComboBox" TValue="string" ValueChange="@CostCalculationMethodComboBoxValueChangeHandler"></ComboBoxEvents>
+                                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                        </SfComboBox>
+                                    
+                                </td>
+
+
+                            </tr>
+
                              <tr>
                                 <td style="width: 30%; text-align: left;height: 80px; padding-left: 2%;">
 

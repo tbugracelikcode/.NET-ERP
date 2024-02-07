@@ -120,11 +120,17 @@
   <data name="AutoCostParameterLabel" xml:space="preserve">
     <value>Çıkış fişlerinde otomatik maliyet hesaplansın.</value>
   </data>
+  <data name="AverageCombo" xml:space="preserve">
+    <value>Eldekilerin Ortalaması</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CostCalculationMethodLabel" xml:space="preserve">
+    <value>Maliyet hesaplama yöntemi :</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -141,8 +147,14 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
+  <data name="FIFOCombo" xml:space="preserve">
+    <value>FIFO</value>
+  </data>
   <data name="FutureDateParameterLabel" xml:space="preserve">
     <value>Stok fişlerinde ileri tarihli kayıt yapılsın.</value>
+  </data>
+  <data name="LIFOCombo" xml:space="preserve">
+    <value>LIFO</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>

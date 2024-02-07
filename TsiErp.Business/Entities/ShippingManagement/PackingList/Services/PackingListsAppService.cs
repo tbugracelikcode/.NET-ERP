@@ -406,6 +406,35 @@ namespace TsiErp.Business.Entities.PackingList.Services
 
         }
 
+        public async Task<IDataResult<IList<SelectPackingListPalletPackageLinesDto>>> GetLinePalletPackageListAsync()
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.PackingListPalletPackageLines)
+                   .Select<PackingListPalletPackageLines>(null)
+                    .Join<Products>
+                    (
+                        pr => new { ProductName = pr.Name, ProductID = pr.Id, ProductCode = pr.Code },
+                        nameof(PackingListPalletPackageLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                     .Join<CurrentAccountCards>
+                    (
+                        pr => new { CustomerID = pr.Id, CustomerCode = pr.CustomerCode },
+                        nameof(PackingListPalletPackageLines.CustomerID),
+                        nameof(CurrentAccountCards.Id),
+                         "PalletPackageCustomer",
+                        JoinType.Left
+                    )
+                    .Where(null, false, false, Tables.PackingListPalletPackageLines);
+
+            var packingListPalletPackageLines = queryFactory.GetList<SelectPackingListPalletPackageLinesDto>(query).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<SelectPackingListPalletPackageLinesDto>>(packingListPalletPackageLines);
+
+        }
+
         [ValidationAspect(typeof(UpdatePackingListsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPackingListsDto>> UpdateAsync(UpdatePackingListsDto input)
