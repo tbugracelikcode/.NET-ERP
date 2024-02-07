@@ -133,7 +133,7 @@
     <value>Raporu Sıfırla</value>
   </data>
   <data name="ProductListUICurrentMenu" xml:space="preserve">
-    <value>Stok Listesi</value>
+    <value>Malzeme Listesi</value>
   </data>
   <data name="ProductListUIPreviousMenu" xml:space="preserve">
     <value>Stok Yönetimi &gt; Raporlar</value>

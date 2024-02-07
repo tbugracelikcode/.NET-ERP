@@ -1,11 +1,11 @@
-﻿@page "/sales-proposition-list-report"
+﻿@page "/sales-order-list-report"
 @layout MainLayout
 
 @inject IProductsAppService ProductsAppService
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
-@inject ISalesPropositionReportsAppService SalesPropositionReportsAppService
+@inject ISalesOrderReportsAppService SalesOrderReportsAppService
 @inject IStringLocalizer<ReportsResource> ReportLocalizer
-@inject IStringLocalizer<SalesPropositionsResource> SalesPropositionsLocalizer
+@inject IStringLocalizer<SalesOrdersResource> SalesOrdersLocalizer
 
 <DevGridLayoutFilterRow ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
     <GridLayoutItems>
@@ -13,7 +13,7 @@
             <Template>
                 <SfCard class="TSIListPageTitleCard">
                     <CardContent>
-                        <TsiBreadCrumb PreviousMenus="Satış Yönetimi > Raporlar" CurrentMenu="Verilen Teklif Listesi" />
+                        <TsiBreadCrumb PreviousMenus="Satış Yönetimi > Raporlar" CurrentMenu="Satış Siparişleri Listesi" />
                     </CardContent>
                     <CardFooter>
                     </CardFooter>
@@ -77,8 +77,8 @@
                                         <br />
                                         <label class="TSIModalLabel"><strong>Durum : </strong></label><br />
 
-                                        <SfMultiSelect @bind-Value="@BindingSalesPropositionLineStateEnumList"
-                                                       DataSource="@SalesPropositionLineStateEnumList"
+                                        <SfMultiSelect @bind-Value="@BindingSalesOrderLineStateEnumList"
+                                                       DataSource="@SalesOrderLineStateEnumList"
                                                        AllowFiltering=true
                                                        Mode="VisualMode.CheckBox"
                                                        ShowSelectAll=true

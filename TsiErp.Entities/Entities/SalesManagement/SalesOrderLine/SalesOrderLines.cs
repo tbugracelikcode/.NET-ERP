@@ -97,5 +97,29 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrderLine
         /// Üretim Emri Oluşturulma Tarihi
         /// </summary>
         public DateTime? WorkOrderCreationDate { get; set; }
+
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Tarih
+        /// </summary>
+        public DateTime Date_ { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Şube ID
+        /// </summary>
+        public Guid BranchID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Depo ID
+        /// </summary>
+        public Guid WarehouseID { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Cari Hesap Kartı ID
+        /// </summary>
+        public Guid CurrentAccountCardID { get; set; }
     }
 }
