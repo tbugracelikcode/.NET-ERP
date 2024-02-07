@@ -113,5 +113,54 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos
         /// Üretim Emri Oluşturulma Tarihi
         /// </summary>
         public DateTime? WorkOrderCreationDate { get; set; }
+
+        /// <summary>
+        /// Tarih
+        /// </summary>
+        public DateTime Date_ { get; set; }
+
+        /// <summary>
+        /// Şube ID
+        /// </summary>
+        public Guid BranchID { get; set; }
+
+        /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string BranchCode { get; set; }
+        /// <summary>
+        /// Şube Adı
+        /// </summary>
+        public string BranchName { get; set; }
+
+        /// <summary>
+        /// Depo ID
+        /// </summary>
+        public Guid WarehouseID { get; set; }
+
+
+        /// <summary>
+        /// Depo Kodu
+        /// </summary>
+        public string WarehouseCode { get; set; }
+        /// <summary>
+        /// Depo Adı
+        /// </summary>
+        public string WarehouseName { get; set; }
+
+
+        /// <summary>
+        /// Cari Hesap Kartı ID
+        /// </summary>
+        public Guid CurrentAccountCardID { get; set; }
+
+        /// <summary>
+        /// Cari Kodu
+        /// </summary>
+        public string CurrentAccountCardCode { get; set; }
+        /// <summary>
+        /// Cari Ünvan
+        /// </summary>
+        public string CurrentAccountCardName { get; set; }
     }
 }

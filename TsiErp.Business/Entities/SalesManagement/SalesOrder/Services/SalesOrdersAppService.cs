@@ -138,6 +138,10 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     ProductID = item.ProductID,
                     Quantity = item.Quantity,
                     UnitSetID = item.UnitSetID,
+                    BranchID = input.BranchID.GetValueOrDefault(),
+                    CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                    WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                    Date_ = input.Date_
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -240,6 +244,10 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     ProductID = item.ProductID,
                     Quantity = item.Quantity,
                     UnitSetID = item.UnitSetID,
+                    BranchID = input.BranchID.GetValueOrDefault(),
+                    CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                    WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                    Date_ = input.Date_
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -384,7 +392,27 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         nameof(SalesPropositionLines.Id),
                         JoinType.Left
                     )
-
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(SalesOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(SalesOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
                     .Where(new { SalesOrderID = id }, false, false, Tables.SalesOrderLines);
 
             var salesOrderLine = queryFactory.GetList<SelectSalesOrderLinesDto>(queryLines).ToList();
@@ -489,6 +517,27 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         nameof(SalesPropositionLines.Id),
                         JoinType.Left
                     )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(SalesOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(SalesOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
                     //.Where(null, false, false, Tables.SalesOrderLines)
                     .Where("SalesOrderLineStateEnum", "<>", 5, Tables.SalesOrderLines);
 
@@ -582,6 +631,27 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         spl => new { LikedPropositionLineID = spl.Id, LinkedSalesPropositionID = spl.SalesPropositionID },
                         nameof(SalesOrderLines.LikedPropositionLineID),
                         nameof(SalesPropositionLines.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(SalesOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(SalesOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
                     .Where(new { SalesOrderID = input.Id }, false, false, Tables.SalesOrderLines);
@@ -717,6 +787,10 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         ProductID = item.ProductID,
                         Quantity = item.Quantity,
                         UnitSetID = item.UnitSetID,
+                        BranchID = input.BranchID,
+                        CurrentAccountCardID = input.CurrentAccountCardID,
+                        Date_ = input.Date_,
+                        WarehouseID = input.WarehouseID
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -759,6 +833,10 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                             ProductID = item.ProductID.GetValueOrDefault(),
                             Quantity = item.Quantity,
                             UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                            BranchID = input.BranchID,
+                            CurrentAccountCardID = input.CurrentAccountCardID,
+                            Date_ = input.Date_,
+                            WarehouseID = input.WarehouseID
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;

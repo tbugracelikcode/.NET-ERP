@@ -106,7 +106,7 @@ namespace TsiErp.Localizations.Resources.Reports.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stok Listesi.
+        ///   Looks up a localized string similar to Malzeme Listesi.
         /// </summary>
         public static string ProductListUICurrentMenu {
             get {
