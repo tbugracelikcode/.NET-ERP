@@ -87,5 +87,15 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
         /// Fiş Türü
         /// </summary>
         public StockFicheTypeEnum FicheType { get; set; }
+
+        /// <summary>
+        /// Tarih
+        /// </summary>
+        public DateTime Date_ { get; set; }
+
+        /// <summary>
+        /// Çıkış Birim Maliyeti
+        /// </summary>
+        public decimal UnitOutputCost { get; set; }
     }
 }

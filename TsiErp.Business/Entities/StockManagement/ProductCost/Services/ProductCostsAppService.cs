@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
+using System.Data.Common;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -9,6 +10,8 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Product.Services;
+using TsiErp.Business.Entities.StockFiche.Services;
 using TsiErp.Business.Entities.StockManagement.ProductCostCost.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
@@ -27,11 +30,8 @@ namespace TsiErp.Business.Entities.ProductCost.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
-
-        public ProductCostsAppService(IStringLocalizer<ProductCostsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public ProductCostsAppService(IStringLocalizer<ProductCostsResource> l) : base(l)
         {
-            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateProductCostsValidator), Priority = 1)]
@@ -41,25 +41,43 @@ namespace TsiErp.Business.Entities.ProductCost.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
-
             var query = queryFactory.Query().From(Tables.ProductCosts).Insert(new CreateProductCostsDto
             {
                 Id = addedEntityId,
                 EndDate = input.EndDate,
-                IsValid = input.IsValid,
+                IsValid = true,
                 ProductID = input.ProductID,
                 StartDate = input.StartDate,
-                UnitCost = input.UnitCost,
+                UnitCost = input.UnitCost
             });
+
+            var costList = (await GetListByProductIdAsync(input.ProductID.GetValueOrDefault())).Data.ToList();
+
+            foreach (var cost in costList)
+            {
+                UpdateProductCostsDto costsDto = new UpdateProductCostsDto
+                {
+                    Id = cost.Id,
+                    EndDate = cost.EndDate,
+                    IsValid = false,
+                    ProductID = cost.ProductID,
+                    StartDate = cost.StartDate,
+                    UnitCost = cost.UnitCost
+                };
+
+                var updatedCostLine = (await UpdateAsync(costsDto)).Data;
+            }
+
 
             var ProductCosts = queryFactory.Insert<SelectProductCostsDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductCosts, LogType.Insert, addedEntityId);
 
+            await Task.CompletedTask;
+
             return new SuccessDataResult<SelectProductCostsDto>(ProductCosts);
 
         }
-
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
@@ -74,7 +92,6 @@ namespace TsiErp.Business.Entities.ProductCost.Services
             return new SuccessDataResult<SelectProductCostsDto>(ProductCosts);
 
         }
-
 
         public async Task<IDataResult<SelectProductCostsDto>> GetAsync(Guid id)
         {
@@ -99,7 +116,6 @@ namespace TsiErp.Business.Entities.ProductCost.Services
 
         }
 
-
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductCostsDto>>> GetListAsync(ListProductCostsParameterDto input)
         {
@@ -121,6 +137,24 @@ namespace TsiErp.Business.Entities.ProductCost.Services
 
         }
 
+        public async Task<IDataResult<IList<ListProductCostsDto>>> GetListByProductIdAsync(Guid productId)
+        {
+            var query = queryFactory
+               .Query()
+               .From(Tables.ProductCosts).Select<ProductCosts>(null)
+                        .Join<Products>
+                        (
+                            u => new { ProductCode = u.Code, ProductID = u.Id, ProductName = u.Name },
+                            nameof(ProductCosts.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        ).Where(new { ProductID = productId }, false, false, Tables.ProductCosts);
+
+            var productCosts = queryFactory.GetList<ListProductCostsDto>(query).ToList();
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListProductCostsDto>>(productCosts);
+        }
 
         [ValidationAspect(typeof(UpdateProductCostsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
@@ -129,13 +163,11 @@ namespace TsiErp.Business.Entities.ProductCost.Services
             var entityQuery = queryFactory.Query().From(Tables.ProductCosts).Select("*").Where(new { Id = input.Id }, false, false, "");
             var entity = queryFactory.Get<ProductCosts>(entityQuery);
 
-
-
             var query = queryFactory.Query().From(Tables.ProductCosts).Update(new UpdateProductCostsDto
             {
                 Id = input.Id,
                 EndDate = input.EndDate,
-                IsValid = input.IsValid,
+                IsValid = true,
                 StartDate = input.StartDate,
                 UnitCost = input.UnitCost,
                 ProductID = input.ProductID,
@@ -151,12 +183,17 @@ namespace TsiErp.Business.Entities.ProductCost.Services
 
         }
 
+        
+
         #region Unused Methods
 
         public Task<IDataResult<SelectProductCostsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
             throw new NotImplementedException();
         }
+
+
+
 
         #endregion
     }
