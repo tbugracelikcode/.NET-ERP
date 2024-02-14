@@ -75,5 +75,19 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine
         /// Üretim Tarihi Referansı
         /// </summary>
         public string ProductionDateReferance { get; set; }
+
+
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Tarih
+        /// </summary>
+        public DateTime Date_ { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Çıkış Birim Maliyeti
+        /// </summary>
+        public decimal UnitOutputCost { get; set; }
     }
 }

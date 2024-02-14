@@ -218,58 +218,103 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
                     Layout.LoadingSpinnerVisible = true;
 
-                    foreach (var permission in userPermissionList)
-                    {
-                        var menu = (await MenusAppService.GetAsync(permission.MenuId)).Data;
 
-                        if (menu != null && menu.Id != Guid.Empty)
-                        {
-                            if (menu.MenuName.Contains("Context"))
-                            {
-                                UserMenuPermission menuPermissionModel = new UserMenuPermission
-                                {
-                                    isPermitted = permission.IsUserPermitted,
-                                    PermissionID = permission.Id,
-                                    MenuID = menu.Id.ToString(),
-                                    MenuName = L[menu.MenuName],
-                                    ParentID = menu.ParentMenuId.ToString(),
-                                    Expanded = false,
-                                    HasChild = false
-                                };
-                                PermissionModalMenusList.Add(menuPermissionModel);
-                            }
-                            else
-                            {
-                                if (menu.MenuName.Contains("Parent"))
-                                {
-                                    UserMenuPermission menuPermissionModel = new UserMenuPermission
-                                    {
-                                        isPermitted = permission.IsUserPermitted,
-                                        PermissionID = permission.Id,
-                                        MenuID = menu.Id.ToString(),
-                                        MenuName = L[menu.MenuName],
-                                        Expanded = false,
-                                        HasChild = true
-                                    };
-                                    PermissionModalMenusList.Add(menuPermissionModel);
-                                }
-                                else
-                                {
-                                    UserMenuPermission menuPermissionModel = new UserMenuPermission
-                                    {
-                                        isPermitted = permission.IsUserPermitted,
-                                        PermissionID = permission.Id,
-                                        MenuID = menu.Id.ToString(),
-                                        MenuName = L[menu.MenuName],
-                                        ParentID = menu.ParentMenuId.ToString(),
-                                        Expanded = false,
-                                        HasChild = true
-                                    };
-                                    PermissionModalMenusList.Add(menuPermissionModel);
-                                }
-                            }
-                        }
-                    }
+                    var parentList = userPermissionList.Where(t => t.MenuName.Contains("Parent")).Select(t => new UserMenuPermission
+                    {
+                        Expanded = false,
+                        HasChild = true,
+                        isPermitted = t.IsUserPermitted,
+                        MenuID = t.MenuId.ToString(),
+                        MenuName = L[t.MenuName],
+                        PermissionID = t.Id
+                    }).ToList();
+
+                    PermissionModalMenusList.AddRange(parentList);
+
+                    var subParentList = userPermissionList.Where(t => !t.MenuName.Contains("Context") && !t.MenuName.Contains("Parent")).Select(t => new UserMenuPermission
+                    {
+                        isPermitted = t.IsUserPermitted,
+                        PermissionID = t.Id,
+                        MenuID = t.MenuId.ToString(),
+                        MenuName = L[t.MenuName],
+                        Expanded = false,
+                        HasChild = true,
+                        ParentID = t.ParentID.ToString()
+                    }).ToList();
+
+                    PermissionModalMenusList.AddRange(subParentList);
+
+                    var contextList = userPermissionList.Where(t => t.MenuName.Contains("Context")).Select(t => new UserMenuPermission
+                    {
+                        Expanded = false,
+                        HasChild = false,
+                        isPermitted = t.IsUserPermitted,
+                        MenuID = t.MenuId.ToString(),
+                        MenuName = L[t.MenuName],
+                        PermissionID = t.Id,
+                        ParentID = t.ParentID.ToString()
+                    }).ToList();
+
+                    PermissionModalMenusList.AddRange(contextList);
+
+
+                    //foreach (var permission in userPermissionList)
+                    //{
+                    //    var menu = (await MenusAppService.GetAsync(permission.MenuId)).Data;
+
+                    //    if (menu != null && menu.Id != Guid.Empty)
+                    //    {
+
+                    //        if (menu.MenuName.Contains("Context"))
+                    //        {
+                    //            UserMenuPermission menuPermissionModel = new UserMenuPermission
+                    //            {
+                    //                isPermitted = permission.IsUserPermitted,
+                    //                PermissionID = permission.Id,
+                    //                MenuID = menu.Id.ToString(),
+                    //                MenuName = L[menu.MenuName],
+                    //                ParentID = menu.ParentMenuId.ToString(),
+                    //                Expanded = false,
+                    //                HasChild = false
+                    //            };
+                    //            PermissionModalMenusList.Add(menuPermissionModel);
+                    //        }
+                    //        else
+                    //        {
+
+                    //            if (menu.MenuName.Contains("Parent"))
+                    //            {
+                    //                UserMenuPermission menuPermissionModel = new UserMenuPermission
+                    //                {
+                    //                    isPermitted = permission.IsUserPermitted,
+                    //                    PermissionID = permission.Id,
+                    //                    MenuID = menu.Id.ToString(),
+                    //                    MenuName = L[menu.MenuName],
+                    //                    Expanded = false,
+                    //                    HasChild = true
+                    //                };
+                    //                PermissionModalMenusList.Add(menuPermissionModel);
+                    //            }
+                    //            else
+                    //            {
+                    //                UserMenuPermission menuPermissionModel = new UserMenuPermission
+                    //                {
+                    //                    isPermitted = permission.IsUserPermitted,
+                    //                    PermissionID = permission.Id,
+                    //                    MenuID = menu.Id.ToString(),
+                    //                    MenuName = L[menu.MenuName],
+                    //                    ParentID = menu.ParentMenuId.ToString(),
+                    //                    Expanded = false,
+                    //                    HasChild = true
+                    //                };
+                    //                PermissionModalMenusList.Add(menuPermissionModel);
+                    //            }
+
+                    //        }
+                    //    }
+
+
+                    //}
 
                     isPermissionModal = true;
 
@@ -375,7 +420,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
             {
                 var permission = (await UserPermissionsAppService.GetListAsyncByUserId(DataSource.Id)).Data.Where(t => t.MenuId == changedPermissionMenuID).FirstOrDefault();
 
-                if(permission != null && permission.Id != Guid.Empty)
+                if (permission != null && permission.Id != Guid.Empty)
                 {
                     bool permissionStatus = PermissionModalMenusList.Where(t => t.MenuID == changedPermissionMenuID.ToString()).Select(t => t.isPermitted).FirstOrDefault();
 
@@ -385,9 +430,9 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
                     updatedPermission.SelectUserPermissionsList = new List<SelectUserPermissionsDto>();
 
-                    updatedPermission.SelectUserPermissionsList.Add(permission) ;
+                    updatedPermission.SelectUserPermissionsList.Add(permission);
 
-                    await UserPermissionsAppService.UpdateAsync(updatedPermission) ;
+                    await UserPermissionsAppService.UpdateAsync(updatedPermission);
                 }
             }
 

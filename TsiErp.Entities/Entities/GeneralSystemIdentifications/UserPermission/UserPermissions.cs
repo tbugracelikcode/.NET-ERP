@@ -34,5 +34,7 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission
         /// Kullanıcı Yetkisi
         /// </summary>
         public bool IsUserPermitted { get; set; }
+
+
     }
 }

@@ -4,11 +4,14 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementParameter.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.ProductCost.Services;
 using TsiErp.Business.Entities.StockFiche.Validations;
 using TsiErp.Business.Entities.StockMovement;
 using TsiErp.DataAccess.Services.Login;
@@ -35,9 +38,12 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public StockFichesAppService(IStringLocalizer<StockFichesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        private IStockManagementParametersAppService StockManagementParametersAppService { get; set; }
+
+        public StockFichesAppService(IStringLocalizer<StockFichesResource> l, IFicheNumbersAppService ficheNumbersAppService, IStockManagementParametersAppService stockManagementParametersAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            StockManagementParametersAppService = stockManagementParametersAppService;
         }
 
         [ValidationAspect(typeof(CreateStockFichesValidatorDto), Priority = 1)]
@@ -69,6 +75,11 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     case 51: input.InputOutputCode = 1; break;
                 }
             }
+
+            var stockParameterDataSource = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data;
+
+            bool autoCostParameter = stockParameterDataSource.AutoCostParameter;
+            int costCalculateType = stockParameterDataSource.CostCalculationMethod;
 
 
             var query = queryFactory.Query().From(Tables.StockFiches).Insert(new CreateStockFichesDto
@@ -102,6 +113,28 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
             foreach (var item in input.SelectStockFicheLines)
             {
+                decimal productCost = 0;
+
+                if (item.FicheType == StockFicheTypeEnum.FireFisi || item.FicheType == StockFicheTypeEnum.SarfFisi || item.FicheType == StockFicheTypeEnum.StokCikisFisi)
+                {
+                    if (autoCostParameter)
+                    {
+                        if (costCalculateType == 1)
+                        {
+                            var outputList = (await GetOutputList(item.ProductID.GetValueOrDefault())).ToList();
+                            outputList.Add(item);
+                            productCost = (await CalculateProductFIFOCostAsync(item.ProductID.GetValueOrDefault(), outputList));
+                        }
+
+                        if (costCalculateType == 2)
+                        {
+                            var outputList = (await GetOutputList(item.ProductID.GetValueOrDefault())).ToList();
+                            outputList.Add(item);
+                            productCost = (await CalculateProductLIFOCostAsync(item.ProductID.GetValueOrDefault(), outputList));
+                        }
+                    }
+                }
+
                 var queryLine = queryFactory.Query().From(Tables.StockFicheLines).Insert(new CreateStockFicheLinesDto
                 {
                     StockFicheID = addedEntityId,
@@ -125,13 +158,18 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     FicheType = (int)item.FicheType,
                     LineAmount = item.LineAmount,
                     LineDescription = item.LineDescription,
-                    UnitPrice = item.UnitPrice
+                    UnitPrice = item.UnitPrice,
+                    Date_ = input.Date_,
+                    UnitOutputCost = productCost
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
             }
 
+
+
             var stockFiche = queryFactory.Insert<SelectStockFichesDto>(query, "Id", true);
+
 
             #region Stock Movement Service
 
@@ -467,10 +505,38 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
             }).Where(new { Id = input.Id }, false, false, "");
 
+            var stockParameterDataSource = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data;
+
+            bool autoCostParameter = stockParameterDataSource.AutoCostParameter;
+            int costCalculateType = stockParameterDataSource.CostCalculationMethod;
+
             foreach (var item in input.SelectStockFicheLines)
             {
                 if (item.Id == Guid.Empty)
                 {
+
+                    decimal productCost = 0;
+
+                    if (item.FicheType == StockFicheTypeEnum.FireFisi || item.FicheType == StockFicheTypeEnum.SarfFisi || item.FicheType == StockFicheTypeEnum.StokCikisFisi)
+                    {
+                        if (autoCostParameter)
+                        {
+                            if (costCalculateType == 1)
+                            {
+                                var outputList = (await GetOutputList(item.ProductID.GetValueOrDefault())).ToList();
+                                outputList.Add(item);
+                                productCost = (await CalculateProductFIFOCostAsync(item.ProductID.GetValueOrDefault(), outputList));
+                            }
+
+                            if (costCalculateType == 2)
+                            {
+                                var outputList = (await GetOutputList(item.ProductID.GetValueOrDefault())).ToList();
+                                outputList.Add(item);
+                                productCost = (await CalculateProductLIFOCostAsync(item.ProductID.GetValueOrDefault(), outputList));
+                            }
+                        }
+                    }
+
                     var queryLine = queryFactory.Query().From(Tables.StockFicheLines).Insert(new CreateStockFicheLinesDto
                     {
                         CreationTime = DateTime.Now,
@@ -494,13 +560,38 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         LineAmount = item.LineAmount,
                         LineDescription = item.LineDescription,
                         StockFicheID = input.Id,
-                        UnitPrice = item.UnitPrice
+                        UnitPrice = item.UnitPrice,
+                        Date_ = input.Date_,
+                        UnitOutputCost = productCost
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
                 }
                 else
                 {
+
+                    decimal productCost = 0;
+
+                    if (item.FicheType == StockFicheTypeEnum.FireFisi || item.FicheType == StockFicheTypeEnum.SarfFisi || item.FicheType == StockFicheTypeEnum.StokCikisFisi)
+                    {
+                        if (autoCostParameter)
+                        {
+                            if (costCalculateType == 1)
+                            {
+                                var outputList = (await GetOutputList(item.ProductID.GetValueOrDefault())).ToList();
+                                outputList.Add(item);
+                                productCost = (await CalculateProductFIFOCostAsync(item.ProductID.GetValueOrDefault(), outputList));
+                            }
+
+                            if (costCalculateType == 2)
+                            {
+                                var outputList = (await GetOutputList(item.ProductID.GetValueOrDefault())).ToList();
+                                outputList.Add(item);
+                                productCost = (await CalculateProductLIFOCostAsync(item.ProductID.GetValueOrDefault(), outputList));
+                            }
+                        }
+                    }
+
                     var lineGetQuery = queryFactory.Query().From(Tables.StockFicheLines).Select("*").Where(new { Id = item.Id }, false, false, "");
 
                     var line = queryFactory.Get<SelectStockFicheLinesDto>(lineGetQuery);
@@ -530,7 +621,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             FicheType = (int)item.FicheType,
                             LineAmount = item.LineAmount,
                             LineDescription = item.LineDescription,
-                            UnitPrice = item.UnitPrice
+                            UnitPrice = item.UnitPrice,
+                            Date_ = input.Date_,
+                            UnitOutputCost = productCost
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -600,6 +693,166 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             await Task.CompletedTask;
             return new SuccessDataResult<SelectStockFichesDto>(stockFichesDto);
 
+        }
+
+        public async Task<List<SelectStockFicheLinesDto>> GetInputList(Guid productId, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            string resultQuery = "SELECT * FROM " + Tables.StockFicheLines;
+
+            string where = " ProductID='" + productId + "' and FicheType In (" + 13 + "," + 50 + ")";
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                where = where + " and (Date_>='" + startDate + "' and '" + endDate + "'<=Date_) ";
+            }
+
+            Query query = new Query();
+            query.Sql = resultQuery;
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = false;
+            var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(query).ToList();
+            await Task.CompletedTask;
+
+            return stockFicheLine;
+        }
+
+        public async Task<List<SelectStockFicheLinesDto>> GetOutputList(Guid productId, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            string resultQuery = "SELECT * FROM " + Tables.StockFicheLines;
+
+            string where = " ProductID='" + productId + "' and FicheType In (" + 11 + "," + 12 + "," + 51 + ")";
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                where = where + " and (Date_>='" + startDate + "' and '" + endDate + "'<=Date_) ";
+            }
+
+            Query query = new Query();
+            query.Sql = resultQuery;
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = false;
+            var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(query).ToList();
+            await Task.CompletedTask;
+
+            return stockFicheLine;
+        }
+
+        public async Task<decimal> CalculateProductFIFOCostAsync(Guid productId, List<SelectStockFicheLinesDto> outputList)
+        {
+            decimal productCost = 0;
+            var inputList = (await GetInputList(productId)).OrderBy(t => t.Date_).ToList();
+            //var outputList = (await GetOutputList(productId)).OrderBy(t => t.Date_).ToList();
+
+            decimal inputBalance = 0m;
+
+            for (int c = 0; c < outputList.Count; c++)
+            {
+                decimal output = outputList[c].Quantity;
+                decimal outputSum = output;
+
+                productCost = 0;
+
+                for (int g = 0; g < inputList.Count; g++)
+                {
+                    decimal input = inputBalance;
+
+                    if (input == 0)
+                    {
+                        input = inputList[g].Quantity;
+                    }
+
+                    if (input == 0)
+                    {
+                        inputBalance = 0;
+                        inputList.RemoveAt(g);
+                        g--;
+                        continue;
+                    }
+
+                    if (input >= output)
+                    {
+                        decimal unitprice = inputList[g].UnitPrice;
+                        productCost = (productCost + (output * unitprice));
+                        productCost = productCost / outputSum;
+                        input = input - output;
+                        inputBalance = input;
+
+
+                        break;
+                    }
+                    else
+                    {
+                        decimal unitprice = inputList[g].UnitPrice;
+                        output = output - input;
+                        productCost = (productCost + (input * unitprice));
+                        inputBalance = 0;
+
+                        inputList.RemoveAt(g);
+                        g--;
+                    }
+                }
+            }
+
+            return productCost;
+        }
+
+        public async Task<decimal> CalculateProductLIFOCostAsync(Guid productId, List<SelectStockFicheLinesDto> outputList)
+        {
+            decimal productCost = 0;
+            var inputList = (await GetInputList(productId)).OrderByDescending(t => t.Date_).ToList();
+            //var outputList = (await GetOutputList(productId)).OrderBy(t => t.Date_).ToList();
+
+            decimal inputBalance = 0m;
+
+            for (int c = 0; c < outputList.Count; c++)
+            {
+                decimal output = outputList[c].Quantity;
+                decimal outputSum = output;
+
+                productCost = 0;
+
+                for (int g = 0; g < inputList.Count; g++)
+                {
+                    decimal input = inputBalance;
+
+                    if (input == 0)
+                    {
+                        input = inputList[g].Quantity;
+                    }
+
+                    if (input == 0)
+                    {
+                        inputBalance = 0;
+                        inputList.RemoveAt(g);
+                        g--;
+                        continue;
+                    }
+
+                    if (input >= output)
+                    {
+                        decimal unitprice = inputList[g].UnitPrice;
+                        productCost = (productCost + (output * unitprice));
+                        productCost = productCost / outputSum;
+                        input = input - output;
+                        inputBalance = input;
+
+
+                        break;
+                    }
+                    else
+                    {
+                        decimal unitprice = inputList[g].UnitPrice;
+                        output = output - input;
+                        productCost = (productCost + (input * unitprice));
+                        inputBalance = 0;
+
+                        inputList.RemoveAt(g);
+                        g--;
+                    }
+                }
+            }
+
+            return productCost;
         }
     }
 }

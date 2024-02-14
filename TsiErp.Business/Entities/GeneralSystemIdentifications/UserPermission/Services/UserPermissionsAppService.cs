@@ -54,7 +54,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.S
         {
             var query = queryFactory.Query().From(Tables.UserPermissions).Select<UserPermissions>(null)
                 .Join<Users>(u => new { UserName = u.UserName }, nameof(UserPermissions.UserId), nameof(Users.Id), JoinType.Left)
-                .Join<Menus>(u => new { MenuName = u.MenuName }, nameof(UserPermissions.MenuId), nameof(Menus.Id), JoinType.Left)
+                .Join<Menus>(u => new { MenuName = u.MenuName, ParentID=u.ParentMenuId }, nameof(UserPermissions.MenuId), nameof(Menus.Id), JoinType.Left)
                 .Where("UserId", "=", userId, "").UseIsDelete(false);
 
             var permissions = queryFactory.GetList<SelectUserPermissionsDto>(query).ToList();
@@ -88,7 +88,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.S
         {
             var menusList = (await _MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
 
-            foreach(var menu in menusList)
+            foreach (var menu in menusList)
             {
                 var query = queryFactory.Query().From(Tables.UserPermissions).Insert(new CreateUserPermissionsDto
                 {
