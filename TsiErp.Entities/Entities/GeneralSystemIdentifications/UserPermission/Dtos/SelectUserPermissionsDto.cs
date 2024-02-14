@@ -39,5 +39,10 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.D
         /// Kullanıcı Yetkisi
         /// </summary>
         public bool IsUserPermitted { get; set; }
+
+        /// <summary>
+        /// Menu Parent Id
+        /// </summary>
+        public Guid ParentID { get; set; }
     }
 }
