@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DevExpress.Blazor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Grids;
@@ -11,6 +12,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.User.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.ErpUI.Helpers;
+using TsiErp.ErpUI.Shared;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
@@ -22,6 +24,9 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
         public List<UserMenuPermission> PermissionModalMenusList = new List<UserMenuPermission>();
         public List<Guid> ChangedPermissionsList = new List<Guid>();
+
+        DxTreeView treeview;
+
         public class UserMenuPermission
         {
             public string MenuName { get; set; }
@@ -37,10 +42,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
         ModalManager ModalManager { get; set; }
 
         public bool isPermissionModal = false;
-
-        public bool isLoadingPermissions = false;
-
-
 
         protected override async void OnInitialized()
         {
@@ -211,12 +212,11 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
                 case "permission":
 
-                    ShowLoadingPermisssionsModal();
-
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     var userPermissionList = (await UserPermissionsAppService.GetListAsyncByUserId(DataSource.Id)).Data.ToList();
 
+                    Layout.LoadingSpinnerVisible = true;
 
 
                     var parentList = userPermissionList.Where(t => t.MenuName.Contains("Parent")).Select(t => new UserMenuPermission
@@ -318,10 +318,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
                     isPermissionModal = true;
 
-                    if (isPermissionModal)
-                    {
-                        HideLoadingPermisssionsModal();
-                    }
+                    Layout.LoadingSpinnerVisible = false;
 
 
                     await InvokeAsync(StateHasChanged);
@@ -358,19 +355,11 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
             isPermissionModal = false;
         }
 
-        public void ShowLoadingPermisssionsModal()
-        {
-            isLoadingPermissions = true;
-        }
+   
 
-        public void HideLoadingPermisssionsModal()
+        public void NodeCheckingHandler(NodeCheckEventArgs args)
         {
-            isLoadingPermissions = false;
-        }
-
-        public void NodeCheckedHandler(NodeCheckEventArgs args)
-        {
-            ShowLoadingPermisssionsModal();
+            //Layout.LoadingSpinnerVisible = true;
 
             var item = PermissionModalMenusList.Where(t => t.MenuID == args.NodeData.Id).FirstOrDefault();
 
@@ -411,12 +400,21 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                 ChangedPermissionsList.Add(new Guid(itemContext.MenuID));
             }
 
-            HideLoadingPermisssionsModal();
+
+        }
+
+      
+
+        public void NodeCheckedHandler(NodeCheckEventArgs args)
+        {
+           
+            //Layout.LoadingSpinnerVisible = false;
+
         }
 
         public async void OnPermissionsSubmit()
         {
-            ShowLoadingPermisssionsModal();
+            //Layout.LoadingSpinnerVisible = true;
 
             foreach (var changedPermissionMenuID in ChangedPermissionsList)
             {
@@ -439,7 +437,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
             }
 
             HidePermissionModal();
-            HideLoadingPermisssionsModal();
+            //Layout.LoadingSpinnerVisible = false;
         }
 
         #region Kod ButtonEdit

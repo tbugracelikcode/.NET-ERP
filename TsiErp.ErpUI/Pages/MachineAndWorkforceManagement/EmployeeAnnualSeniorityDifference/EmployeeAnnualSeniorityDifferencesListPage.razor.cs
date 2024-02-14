@@ -51,10 +51,6 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeAnnualSeniori
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeAnnualSeniorityDifferencesContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeAnnualSeniorityDifferencesContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeAnnualSeniorityDifferencesContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeAnnualSeniorityDifferencesContextRefresh"], Id = "refresh" });
 
             foreach (var context in contextsList)
             {

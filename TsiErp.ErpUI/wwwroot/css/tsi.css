@@ -1,6 +1,26 @@
 ﻿
 /* ----------------------------------------------------------------TSI CUSTOM CLASSES----------------------------------------------------------------*/
 
+.TSISpinner {
+    border: 16px solid silver;
+    border-top: 16px solid #dd1d1d;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 700ms linear infinite;
+    position: absolute;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
 .TSIGridCards {
     border: 1px solid #d6d5d5;
     background-color: #fff;
@@ -1321,6 +1341,13 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
     color: var(--dxbl-popup-header-btn-color,var(--dxbl-image-color,currentcolor));
     opacity: var(--dxbl-popup-header-btn-color,var(--dxbl-image-color,70%));
     fill: white !important;
+}
+
+.dxbl-popup-cell {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99 !important;
 }
 
 

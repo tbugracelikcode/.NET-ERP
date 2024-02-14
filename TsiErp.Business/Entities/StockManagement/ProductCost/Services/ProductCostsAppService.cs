@@ -45,7 +45,10 @@ namespace TsiErp.Business.Entities.ProductCost.Services
             {
                 Id = addedEntityId,
                 EndDate = input.EndDate,
-                IsValid = true,
+                BillCost = input.BillCost,
+                Overheads = input.Overheads,
+                ProductionCost = input.ProductionCost,
+                UnsuitabilityCost = input.UnsuitabilityCost,
                 ProductID = input.ProductID,
                 StartDate = input.StartDate,
                 UnitCost = input.UnitCost
@@ -167,7 +170,10 @@ namespace TsiErp.Business.Entities.ProductCost.Services
             {
                 Id = input.Id,
                 EndDate = input.EndDate,
-                IsValid = true,
+                BillCost = input.BillCost,
+                Overheads = input.Overheads,
+                ProductionCost = input.ProductionCost,
+                UnsuitabilityCost = input.UnsuitabilityCost,
                 StartDate = input.StartDate,
                 UnitCost = input.UnitCost,
                 ProductID = input.ProductID,

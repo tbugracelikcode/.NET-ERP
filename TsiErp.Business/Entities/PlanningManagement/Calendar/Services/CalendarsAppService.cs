@@ -185,7 +185,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
             var calendar = queryFactory.Insert<SelectCalendarsDto>(query, "Id", true);
 
-            await FicheNumbersAppService.UpdateFicheNumberAsync("CalendarMenu", input.Code);
+            await FicheNumbersAppService.UpdateFicheNumberAsync("CalendarChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Calendars, LogType.Insert, addedEntityId);
 

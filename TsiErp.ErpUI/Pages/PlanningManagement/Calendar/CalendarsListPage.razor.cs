@@ -114,7 +114,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             #region Context Menü Yetkilendirmesi
 
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
-            var parentMenu = MenusList.Where(t => t.MenuName == "CalendarMenu").Select(t => t.Id).FirstOrDefault();
+            var parentMenu = MenusList.Where(t => t.MenuName == "CalendarChildMenu").Select(t => t.Id).FirstOrDefault();
             contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
@@ -371,7 +371,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             DataSource = new SelectCalendarsDto()
             {
                 IsPlanned = true,
-                Code = FicheNumbersAppService.GetFicheNumberAsync("CalendarMenu")
+                Code = FicheNumbersAppService.GetFicheNumberAsync("CalendarChildMenu")
             };
 
             DataSource.SelectCalendarDaysDto = GridDaysList;
@@ -1160,7 +1160,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
         public async void CodeButtonClickEvent()
         {
-            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("CalendarMenu");
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("CalendarChildMenu");
             await InvokeAsync(StateHasChanged);
         }
 
