@@ -2,7 +2,7 @@
 @layout MainLayout
 
 
-@inject IStringLocalizer<UsersResource> L 
+@inject IStringLocalizer<UsersResource> L
 
 @inherits BaseListPage<SelectUsersDto, ListUsersDto, CreateUsersDto, UpdateUsersDto, ListUsersParameterDto>
 
@@ -40,11 +40,11 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="_grid"   ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu" Toolbar=@GridToolbarItems>
+                            <SfGrid ID="Grid" @ref="_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                    AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu" Toolbar=@GridToolbarItems>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                    <GridEvents   ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListUsersDto"></GridEvents>
+                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListUsersDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
@@ -68,17 +68,17 @@ else
 
 
     <DxPopup @bind-Visible="base.EditPageVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EditModalTitle"]"
-         Width="56%"
-         Height="52%"
-         MinWidth="990px"
-         MinHeight="560px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="56%"
+             Height="52%"
+             MinWidth="990px"
+             MinHeight="560px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
         <BodyTemplate>
 
             <DxGridLayout CssClass="TSIGridLayout">
@@ -108,7 +108,7 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["UserNameLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.UserName" ></SfTextBox>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.UserName"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -158,10 +158,10 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>@L["EmailLabel"] </strong></label>
-                                                            <SfTextBox Type="InputType.Email"  @bind-Value="DataSource.Email" CssClass="TSITxtBox">
-                                                                 
+                                                            <SfTextBox Type="InputType.Email" @bind-Value="DataSource.Email" CssClass="TSITxtBox">
+
                                                             </SfTextBox>
-                                                           
+
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -176,7 +176,7 @@ else
                                                     <DxGridLayoutItem Row="1" Column="1">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["GroupNameLabel"] </strong></label><br />
-                                                                <SfTextBox @ref="@UserGroupButtonEdit" Created="@UserGroupOnCreateIcon" @bind-Value="DataSource.GroupName" ShowClearButton=true ValueChange="UserGroupOnValueChange"></SfTextBox>
+                                                            <SfTextBox @ref="@UserGroupButtonEdit" Created="@UserGroupOnCreateIcon" @bind-Value="DataSource.GroupName" ShowClearButton=true ValueChange="UserGroupOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
                                                 </Items>
@@ -200,16 +200,16 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
-     <DxPopup @bind-Visible="isPermissionModal"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["PermissionModalTitle"]"
-         Width="40%"
-         Height="74%"
-         MinWidth="700px"
-         MinHeight="800px"
-         HeaderCssClass="HeaderTitleCss">
+    <DxPopup @bind-Visible="isPermissionModal"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["PermissionModalTitle"]"
+             Width="80%"
+             Height="74%"
+             MinWidth="1400px"
+             MinHeight="800px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DxGridLayout CssClass="TSIGridLayout">
@@ -218,25 +218,36 @@ else
                 </Rows>
                 <Columns>
                     <DxGridLayoutColumn Width="2%" />
-                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="48%" />
+                    <DxGridLayoutColumn Width="48%" />
                     <DxGridLayoutColumn Width="2%" />
                 </Columns>
                 <Items>
                     <DxGridLayoutItem Row="0" Column="1">
-                        <Template>  
+                        <Template>
                             <br />
                             <div class="TSIScrollablePermissionModal">
                                 <SfTreeView TValue="UserMenuPermission" ShowCheckBox="true" AutoCheck="true">
-                                    <TreeViewFieldsSettings TValue="UserMenuPermission" Id="MenuID" DataSource="@PermissionModalMenusList" Text="MenuName" ParentID="ParentID" IsChecked="isPermitted" HasChildren="HasChild" Expanded="Expanded" ></TreeViewFieldsSettings>
-                                    <TreeViewEvents TValue="UserMenuPermission" NodeChecking="NodeCheckedHandler"></TreeViewEvents>
-                            </SfTreeView> 
+                                    <TreeViewFieldsSettings TValue="UserMenuPermission" Id="MenuID" DataSource="@PermissionModalMenusList" Text="MenuName" ParentID="ParentID" IsChecked="isPermitted" HasChildren="HasChild" Expanded="Expanded"></TreeViewFieldsSettings>
+                                    <TreeViewEvents TValue="UserMenuPermission" NodeChecked="NodeCheckedHandler" NodeChecking="NodeCheckingHandler"></TreeViewEvents>
+                                </SfTreeView> 
                             </div>
-                             
+
 
                         </Template>
-                    </DxGridLayoutItem> 
+                    </DxGridLayoutItem>
 
-                  
+                    <DxGridLayoutItem Row="0" Column="2">
+                        <Template>
+                            <br />
+                            <div class="TSIScrollablePermissionModal">
+
+                            </div>
+
+
+                        </Template>
+                    </DxGridLayoutItem>
+
                 </Items>
             </DxGridLayout>
         </BodyTemplate>
@@ -248,58 +259,57 @@ else
 }
 
 @if (SelectUserGroupPopupVisible)
-    {
-        <DxPopup @bind-Visible="SelectUserGroupPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["UserGroupModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
-            <BodyTemplate>
+{
+    <DxPopup @bind-Visible="SelectUserGroupPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["UserGroupModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
 
-                <DevGridLayout ColumnCount="1" RowCount="1">
-                    <GridLayoutItems>
-                       
-                        <DxGridLayoutItem Row="1" Column="1">
-                            <Template>
-                                <SfCard class="TSIWorkUserGroupPopUpCard">
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
 
-                                    <CardContent>
-                                        <SfGrid ID="GroupGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UserGroupList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
-                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIWorkUserGroupPopUpCard">
 
-                                            <GridEvents OnRecordDoubleClick="@UserGroupDoubleClickHandler" TValue="ListUserGroupsDto"></GridEvents>
-                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                            <GridPageSettings PageSizes="true"></GridPageSettings>
-                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                            <GridColumns>
-                                                <GridColumn Field=@nameof(ListUserGroupsDto.Code) HeaderText="@L["UserGroupModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                <GridColumn Field=@nameof(ListUserGroupsDto.Name) HeaderText="@L["UserGroupModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            </GridColumns>
-                                        </SfGrid>
-                                    </CardContent>
-                                    <CardFooter>
-                                    </CardFooter>
-                                </SfCard>
-                            </Template>
-                        </DxGridLayoutItem>
-                    </GridLayoutItems>
-                </DevGridLayout>
+                                <CardContent>
+                                    <SfGrid ID="GroupGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UserGroupList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-            </BodyTemplate>
-            <FooterContentTemplate>
-            </FooterContentTemplate>
-        </DxPopup>
-    }
-   
-   
+                                        <GridEvents OnRecordDoubleClick="@UserGroupDoubleClickHandler" TValue="ListUserGroupsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListUserGroupsDto.Code) HeaderText="@L["UserGroupModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListUserGroupsDto.Name) HeaderText="@L["UserGroupModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
 
 
 
-              
+
+

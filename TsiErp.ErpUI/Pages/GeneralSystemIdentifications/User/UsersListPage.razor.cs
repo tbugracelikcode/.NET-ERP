@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DevExpress.Blazor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Grids;
@@ -23,6 +24,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
         public List<UserMenuPermission> PermissionModalMenusList = new List<UserMenuPermission>();
         public List<Guid> ChangedPermissionsList = new List<Guid>();
+
+        DxTreeView treeview;
 
         public class UserMenuPermission
         {
@@ -209,13 +212,11 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
                 case "permission":
 
-
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     var userPermissionList = (await UserPermissionsAppService.GetListAsyncByUserId(DataSource.Id)).Data.ToList();
 
                     Layout.LoadingSpinnerVisible = true;
-
 
                     foreach (var permission in userPermissionList)
                     {
@@ -223,7 +224,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
                         if (menu != null && menu.Id != Guid.Empty)
                         {
-
                             if (menu.MenuName.Contains("Context"))
                             {
                                 UserMenuPermission menuPermissionModel = new UserMenuPermission
@@ -240,7 +240,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                             }
                             else
                             {
-
                                 if (menu.MenuName.Contains("Parent"))
                                 {
                                     UserMenuPermission menuPermissionModel = new UserMenuPermission
@@ -268,11 +267,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                                     };
                                     PermissionModalMenusList.Add(menuPermissionModel);
                                 }
-
                             }
                         }
-
-
                     }
 
                     isPermissionModal = true;
@@ -316,9 +312,9 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
    
 
-        public void NodeCheckedHandler(NodeCheckEventArgs args)
+        public void NodeCheckingHandler(NodeCheckEventArgs args)
         {
-            Layout.LoadingSpinnerVisible = true;
+            //Layout.LoadingSpinnerVisible = true;
 
             var item = PermissionModalMenusList.Where(t => t.MenuID == args.NodeData.Id).FirstOrDefault();
 
@@ -359,13 +355,21 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                 ChangedPermissionsList.Add(new Guid(itemContext.MenuID));
             }
 
-            Layout.LoadingSpinnerVisible = false;
+
+        }
+
+      
+
+        public void NodeCheckedHandler(NodeCheckEventArgs args)
+        {
+           
+            //Layout.LoadingSpinnerVisible = false;
 
         }
 
         public async void OnPermissionsSubmit()
         {
-            Layout.LoadingSpinnerVisible = true;
+            //Layout.LoadingSpinnerVisible = true;
 
             foreach (var changedPermissionMenuID in ChangedPermissionsList)
             {
@@ -388,7 +392,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
             }
 
             HidePermissionModal();
-            Layout.LoadingSpinnerVisible = false;
+            //Layout.LoadingSpinnerVisible = false;
         }
 
         #region Kod ButtonEdit

@@ -35,10 +35,25 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductCost
         /// Birim Maliyet
         /// </summary>
         public decimal UnitCost { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
-        /// Geçerlilik
+        /// Reçete Maliyeti
         /// </summary>
-        public bool IsValid { get; set; }
+        public decimal BillCost { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Üretim Maliyeti
+        /// </summary>
+        public decimal ProductionCost { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Genel Giderler
+        /// </summary>
+        public decimal Overheads { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Uygunsuzluk Maliyeti
+        /// </summary>
+        public decimal UnsuitabilityCost { get; set; }
     }
 }

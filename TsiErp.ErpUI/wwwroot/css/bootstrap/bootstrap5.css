@@ -8254,7 +8254,7 @@ input.e-input::-webkit-input-placeholder {
     text-overflow: ellipsis;
     vertical-align: middle;
     white-space: nowrap;
-    width: 100%;
+    width: 150% !important;
     font-weight: 500;
 }
 

@@ -489,10 +489,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             CreateConvertToOrderContextMenuItems();
-
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
-            CreateConvertToOrderContextMenuItems();
         }
 
         #region Satın Almayı Talebe Dönüştürme Modalı İşlemleri

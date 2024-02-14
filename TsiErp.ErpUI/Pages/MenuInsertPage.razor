@@ -1,4 +1,5 @@
 ﻿@page "/insert-menu"
+@using TsiErp.Business.Extensions.ObjectMapping;
 @layout MainLayout
 
 
@@ -6,6 +7,8 @@
 
 @inject IMenusAppService Service
 @inject IFicheNumbersAppService FicheNumbersAppService
+@inject IUserPermissionsAppService UserPermissionsAppService
+@inject IUsersAppService UsersAppService
 
 
 <div>
@@ -29,6 +32,13 @@
     <br />
 
     <SfSwitch @bind-Checked="IsFicheNumberInsert"></SfSwitch>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <SfButton CssClass="TSISaveButton" OnClick="GiveAllPermisionstoAdmin"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon> Admini Yetkilendir</SfButton>
 
     <br />
     <br />
@@ -103,6 +113,31 @@
     {
 
     }
+
+    public async void GiveAllPermisionstoAdmin()
+    {
+        var menusList = (await Service.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+
+        var adminId = (await UsersAppService.GetListAsync(new ListUsersParameterDto())).Data.Where(t => t.UserName == "Admin" && t.NameSurname == "Admin").Select(t => t.Id).First();
+
+        foreach (var menu in menusList)
+        {
+            SelectUserPermissionsDto permission = new SelectUserPermissionsDto
+                {
+                    IsUserPermitted = true,
+                    MenuId = menu.Id,
+                    UserId = adminId,
+                };
+
+            var createdPermission = ObjectMapper.Map<SelectUserPermissionsDto, CreateUserPermissionsDto>(permission);
+
+            createdPermission.SelectUserPermissionsList = new List<SelectUserPermissionsDto>();
+
+            createdPermission.SelectUserPermissionsList.Add(permission);
+
+            await UserPermissionsAppService.CreateAsync(createdPermission);
+        }
+     }
 
     public class ComboData
     {

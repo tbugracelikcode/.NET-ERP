@@ -46,7 +46,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
         {
             BaseCrudService = TemplateOperationsAppService;
             _L = L;
-            CreateMainContextMenuItems();
 
             #region Context Menü Yetkilendirmesi
 
@@ -57,6 +56,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
 
             #endregion
             CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
         }
 

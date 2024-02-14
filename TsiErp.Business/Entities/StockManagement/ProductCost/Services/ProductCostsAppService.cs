@@ -46,7 +46,10 @@ namespace TsiErp.Business.Entities.ProductCost.Services
             {
                 Id = addedEntityId,
                 EndDate = input.EndDate,
-                IsValid = input.IsValid,
+                BillCost = input.BillCost,
+                Overheads = input.Overheads,
+                ProductionCost = input.ProductionCost,
+                UnsuitabilityCost = input.UnsuitabilityCost,
                 ProductID = input.ProductID,
                 StartDate = input.StartDate,
                 UnitCost = input.UnitCost,
@@ -55,7 +58,7 @@ namespace TsiErp.Business.Entities.ProductCost.Services
             var ProductCosts = queryFactory.Insert<SelectProductCostsDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductCosts, LogType.Insert, addedEntityId);
-
+            await Task.CompletedTask;
             return new SuccessDataResult<SelectProductCostsDto>(ProductCosts);
 
         }
@@ -135,7 +138,10 @@ namespace TsiErp.Business.Entities.ProductCost.Services
             {
                 Id = input.Id,
                 EndDate = input.EndDate,
-                IsValid = input.IsValid,
+                BillCost = input.BillCost,
+                Overheads = input.Overheads,
+                ProductionCost = input.ProductionCost,
+                UnsuitabilityCost = input.UnsuitabilityCost,
                 StartDate = input.StartDate,
                 UnitCost = input.UnitCost,
                 ProductID = input.ProductID,

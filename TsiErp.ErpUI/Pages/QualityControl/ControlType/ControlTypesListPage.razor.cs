@@ -56,10 +56,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ControlType
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlTypeContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlTypeContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlTypeContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlTypeContextRefresh"], Id = "refresh" });
 
             foreach (var context in contextsList)
             {
