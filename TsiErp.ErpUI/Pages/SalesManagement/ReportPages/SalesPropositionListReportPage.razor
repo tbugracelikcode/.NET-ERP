@@ -61,8 +61,8 @@
                                             <MultiSelectTemplates TItem="ListProductsDto">
                                                 <ItemTemplate>
                                                     <span class='item'>
-                                                        <span class='name'>@((context as ListProductsDto).Code)</span>
-                                                        <span class='city'>@((context as ListProductsDto).Name)</span>
+                                                        <span style="padding-left: 7% !important;">@((context as ListProductsDto).Code)</span>
+                                                        <span style="padding-left: 5% !important;font-size:14px !important">@((context as ListProductsDto).Name)</span>
                                                     </span>
                                                 </ItemTemplate>
                                             </MultiSelectTemplates>
@@ -109,8 +109,8 @@
                                             <MultiSelectTemplates TItem="ListCurrentAccountCardsDto">
                                                 <ItemTemplate>
                                                     <span class='item'>
-                                                        <span class='name'>@((context as ListCurrentAccountCardsDto).Code)</span>
-                                                        <span class='city'>@((context as ListCurrentAccountCardsDto).Name)</span>
+                                                          <span style="padding-left: 7% !important;">@((context as ListCurrentAccountCardsDto).Code)</span>
+                                                        <span style="padding-left: 2% !important; font-size:13px !important">@((context as ListCurrentAccountCardsDto).Name)</span>
                                                     </span>
                                                 </ItemTemplate>
                                             </MultiSelectTemplates>
@@ -133,7 +133,7 @@
                                     </Template>
                                 </DxGridLayoutItem>
 
-                                <DxGridLayoutItem Row="0" Column="5">
+                                <DxGridLayoutItem Row="1" Column="5">
                                     <Template>
                                         <br />
                                         <br />

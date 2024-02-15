@@ -62,7 +62,6 @@ namespace TsiErp.Business.Entities.ProductCost.Services
                 {
                     Id = cost.Id,
                     EndDate = cost.EndDate,
-                    IsValid = false,
                     ProductID = cost.ProductID,
                     StartDate = cost.StartDate,
                     UnitCost = cost.UnitCost

@@ -43,262 +43,262 @@
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text=@L["FinanceManagementParentMenu"] IconCssClass="fa fa-euro-sign">
+                <DxTreeViewNode Visible="@(NavBarPermissionsModel.FinanceManagementParentMenu)" Text=@L["FinanceManagementParentMenu"] IconCssClass="fa fa-euro-sign">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["FinanceManagementMainRecordsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.FinanceManagementMainRecordsMenu)" Text=@L["FinanceManagementMainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/current-account-cards" Text=@L["CurrentAccountsChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/payment-plans" Text=@L["PaymentPlansChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.CurrentAccountsChildMenu)" NavigateUrl="/current-account-cards" Text=@L["CurrentAccountsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PaymentPlansChildMenu)" NavigateUrl="/payment-plans" Text=@L["PaymentPlansChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text=@L["PurchaseManagementParentMenu"] IconCssClass="fa fa-euro-sign">
+                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseManagementParentMenu)" Text=@L["PurchaseManagementParentMenu"] IconCssClass="fa fa-euro-sign">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["PurchaseManagementMainRecordsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseManagementMainRecordsMenu)" Text=@L["PurchaseManagementMainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/purchase-prices" Text=@L["PurchasePricesChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchasePricesChildMenu)" NavigateUrl="/purchase-prices" Text=@L["PurchasePricesChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["PurchaseManagementTransactionsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseManagementTransactionsMenu)" Text=@L["PurchaseManagementTransactionsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/purchase-requests" Text=@L["PurchaseRequestsChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/purchase-orders" Text=@L["PurchaseOrdersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseRequestsChildMenu)" NavigateUrl="/purchase-requests" Text=@L["PurchaseRequestsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseOrdersChildMenu)" NavigateUrl="/purchase-orders" Text=@L["PurchaseOrdersChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["PurchaseManagementReportsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseManagementReportsMenu)" Text=@L["PurchaseManagementReportsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text=@L["PurchaseRequestFicheListChildMenu"] NavigateUrl="/purchase-request-list-report" />
-                                <DxTreeViewNode Text=@L["PurchaseOrderFicheListChildMenu"] NavigateUrl="/purchase-order-list-report"/>
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseRequestFicheListChildMenu)" Text=@L["PurchaseRequestFicheListChildMenu"] NavigateUrl="/purchase-request-list-report" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseOrderFicheListChildMenu)" Text=@L["PurchaseOrderFicheListChildMenu"] NavigateUrl="/purchase-order-list-report" />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text=@L["SalesManagementParentMenu"] IconCssClass="fa fa-euro-sign">
+                <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesManagementParentMenu)" Text=@L["SalesManagementParentMenu"] IconCssClass="fa fa-euro-sign">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["SalesManagementMainRecordsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesManagementMainRecordsMenu)" Text=@L["SalesManagementMainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/sales-prices" Text=@L["SalesPricesChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesPricesChildMenu)" NavigateUrl="/sales-prices" Text=@L["SalesPricesChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["SalesManagementTransactionsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesManagementTransactionsMenu)" Text=@L["SalesManagementTransactionsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/sales-propositions" Text=@L["SalesPropositionsChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/sales-orders" Text=@L["SalesOrdersChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/forecasts" Text=@L["ForecastsChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/order-acceptance-records" Text=@L["OrderAcceptanceRecordsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesPropositionsChildMenu)" NavigateUrl="/sales-propositions" Text=@L["SalesPropositionsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesOrdersChildMenu)" NavigateUrl="/sales-orders" Text=@L["SalesOrdersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ForecastsChildMenu)" NavigateUrl="/forecasts" Text=@L["ForecastsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.OrderAcceptanceRecordsChildMenu)" NavigateUrl="/order-acceptance-records" Text=@L["OrderAcceptanceRecordsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["CostMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.CostMenu)" Text=@L["CostMenu"]> 
                             <Nodes>
-                                <DxTreeViewNode Text=@L["CPRChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.CPRChildMenu)" Text=@L["CPRChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["SalesManagementReportsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesManagementReportsMenu)" Text=@L["SalesManagementReportsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text=@L["SalesPropositionFicheListChildMenu"] NavigateUrl="/sales-proposition-list-report" />
-                                <DxTreeViewNode Text=@L["SalesOrderFicheListChildMenu"] NavigateUrl="/sales-order-list-report" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesPropositionFicheListChildMenu)" Text=@L["SalesPropositionFicheListChildMenu"] NavigateUrl="/sales-proposition-list-report" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesOrderFicheListChildMenu)" Text=@L["SalesOrderFicheListChildMenu"] NavigateUrl="/sales-order-list-report" />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text=@L["PlanningParentMenu"] IconCssClass="fa fa-list">
+                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PlanningParentMenu)" Text=@L["PlanningParentMenu"] IconCssClass="fa fa-list">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["ProductionPlanningMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionPlanningMenu)" Text=@L["ProductionPlanningMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/mrp" Text=@L["MRPChildMenu"] />
-                                <DxTreeViewNode Text=@L["MRPIIChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MRPChildMenu)" NavigateUrl="/mrp" Text=@L["MRPChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MRPIIChildMenu)" Text=@L["MRPIIChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["CalendarMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.CalendarMenu)" Text=@L["CalendarMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/calendars" Text=@L["CalendarChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.CalendarChildMenu)" NavigateUrl="/calendars" Text=@L["CalendarChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
 
-                        <DxTreeViewNode NavigateUrl="/shipment-planning-lists" Text=@L["ShipmentPlanningChildMenu"] />
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShipmentPlanningChildMenu)" NavigateUrl="/shipment-planning-lists" Text=@L["ShipmentPlanningChildMenu"] />
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text=@L["ShipmentParentMenu"] IconCssClass="fa fa-truck">
+                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShipmentParentMenu)" Text=@L["ShipmentParentMenu"] IconCssClass="fa fa-truck">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["ShipmentManagementMainRecordsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShipmentManagementMainRecordsMenu)" Text=@L["ShipmentManagementMainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/shipping-adresses" Text=@L["ShippingAdressesChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShippingAdressesChildMenu)" NavigateUrl="/shipping-adresses" Text=@L["ShippingAdressesChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["ShipmentManagementTransactionsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShipmentManagementTransactionsMenu)" Text=@L["ShipmentManagementTransactionsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/package-fiches" Text=@L["PackageFichesChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/pallet-records" Text=@L["PalletRecordsChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/packing-lists" Text=@L["PackingListsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PackageFichesChildMenu)" NavigateUrl="/package-fiches" Text=@L["PackageFichesChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PalletRecordsChildMenu)" NavigateUrl="/pallet-records" Text=@L["PalletRecordsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PackingListsChildMenu)" NavigateUrl="/packing-lists" Text=@L["PackingListsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["ShipmentManagementReportsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShipmentManagementReportsMenu)" Text=@L["ShipmentManagementReportsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text=@L["PackageFichesListChildMenu"] />
-                                <DxTreeViewNode Text=@L["PalletRecordsListChildMenu"] />
-                                <DxTreeViewNode Text=@L["PackingListChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PackageFichesListChildMenu)" Text=@L["PackageFichesListChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PalletRecordsListChildMenu)" Text=@L["PalletRecordsListChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PackingListChildMenu)" Text=@L["PackingListChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text=@L["MachWorkForceManagementParentMenu"] IconCssClass="fa fa-users">
+                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MachWorkForceManagementParentMenu)" Text=@L["MachWorkForceManagementParentMenu"] IconCssClass="fa fa-users">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["MachWorkForceManagementMainRecordsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.MachWorkForceManagementMainRecordsMenu)" Text=@L["MachWorkForceManagementMainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/station-groups" Text=@L["StationGroupChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/stations" Text=@L["StationsChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/employees" Text=@L["EmployeesChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/departments" Text=@L["DepartmentsChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/employee-seniorities" Text=@L["EmployeeSenioritiesChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/employee-annual-seniority-differences" Text=@L["EmployeeAnnualSeniorityDifferencesChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/education-level-scores" Text=@L["EducationLevelScoresChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/employee-general-skill-records" Text=@L["EmployeeGeneralSkillRecordsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StationGroupChildMenu)" NavigateUrl="/station-groups" Text=@L["StationGroupChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StationsChildMenu)" NavigateUrl="/stations" Text=@L["StationsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeesChildMenu)" NavigateUrl="/employees" Text=@L["EmployeesChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.DepartmentsChildMenu)" NavigateUrl="/departments" Text=@L["DepartmentsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeeSenioritiesChildMenu)" NavigateUrl="/employee-seniorities" Text=@L["EmployeeSenioritiesChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeeAnnualSeniorityDifferencesChildMenu)" NavigateUrl="/employee-annual-seniority-differences" Text=@L["EmployeeAnnualSeniorityDifferencesChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EducationLevelScoresChildMenu)" NavigateUrl="/education-level-scores" Text=@L["EducationLevelScoresChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeeGeneralSkillRecordsChildMenu)" NavigateUrl="/employee-general-skill-records" Text=@L["EmployeeGeneralSkillRecordsChildMenu"] />
                                @*  <DxTreeViewNode NavigateUrl="/task-scorings" Text=@L["TaskScoringsChildMenu"] /> *@
-                                <DxTreeViewNode NavigateUrl="/general-skill-record-priorities" Text=@L["GeneralSkillRecordPrioritiesChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/starting-salaries" Text=@L["StartingSalariesChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.GeneralSkillRecordPrioritiesChildMenu)" NavigateUrl="/general-skill-record-priorities" Text=@L["GeneralSkillRecordPrioritiesChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StartingSalariesChildMenu)" NavigateUrl="/starting-salaries" Text=@L["StartingSalariesChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["MachWorkForceManagementTransactionsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.MachWorkForceManagementTransactionsMenu)" Text=@L["MachWorkForceManagementTransactionsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/employee-scorings" Text=@L["EmployeeScoreChildMenu"] />
-                                <DxTreeViewNode Text=@L["StationCostChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeeScoreChildMenu)" NavigateUrl="/employee-scorings" Text=@L["EmployeeScoreChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StationCostChildMenu)" Text=@L["StationCostChildMenu"] /> 
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["MachWorkForceManagementReportsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.MachWorkForceManagementReportsMenu)" Text=@L["MachWorkForceManagementReportsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text=@L["StationListChildMenu"] NavigateUrl="/station-list-report"/>
-                                <DxTreeViewNode Text=@L["EmployeeListChildMenu"] NavigateUrl="/employee-list-report" />
-                                <DxTreeViewNode Text=@L["EmployeeScoreListChildMenu"] />
-                                <DxTreeViewNode Text=@L["StationCostListChildMenu"] />
-                                <DxTreeViewNode Text=@L["EmployeeProductivityChildMenu"] />
-                                <DxTreeViewNode Text=@L["ByHaltEmpProductivityChildMenu"] />
-                                <DxTreeViewNode Text=@L["ByHaltStationChildMenu"] />
-                                <DxTreeViewNode Text=@L["ByHaltStationPerfChildMenu"] />
-                                <DxTreeViewNode Text=@L["ByEmpStationProductivityChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StationListChildMenu)" Text=@L["StationListChildMenu"] NavigateUrl="/station-list-report"/>
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeeListChildMenu)" Text=@L["EmployeeListChildMenu"] NavigateUrl="/employee-list-report" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeeScoreListChildMenu)" Text=@L["EmployeeScoreListChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StationCostListChildMenu)" Text=@L["StationCostListChildMenu"] /> 
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeeProductivityChildMenu)" Text=@L["EmployeeProductivityChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByHaltEmpProductivityChildMenu)" Text=@L["ByHaltEmpProductivityChildMenu"] /> 
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByHaltStationChildMenu)" Text=@L["ByHaltStationChildMenu"] /> 
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByHaltStationPerfChildMenu)" Text=@L["ByHaltStationPerfChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByEmpStationProductivityChildMenu)" Text=@L["ByEmpStationProductivityChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text=@L["ProductionManagementParentMenu"] IconCssClass="fa fa-industry">
+                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionManagementParentMenu)" Text=@L["ProductionManagementParentMenu"] IconCssClass="fa fa-industry">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["ProductionManagementMainRecordsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionManagementMainRecordsMenu)" Text=@L["ProductionManagementMainRecordsMenu"]>
                             <Nodes>
 
-                                <DxTreeViewNode Text=@L["OperationsMenu"]>
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.OperationsMenu)" Text=@L["OperationsMenu"]>
                                     <Nodes>
-                                        <DxTreeViewNode NavigateUrl="/template-operations" Text=@L["TempOperationsChildMenu"] />
-                                        <DxTreeViewNode NavigateUrl="/products-operations" Text=@L["ProdOperationsChildMenu"] />
+                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.TempOperationsChildMenu)" NavigateUrl="/template-operations" Text=@L["TempOperationsChildMenu"] />
+                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProdOperationsChildMenu)" NavigateUrl="/products-operations" Text=@L["ProdOperationsChildMenu"] />
                                     </Nodes>
                                 </DxTreeViewNode>
-                                <DxTreeViewNode NavigateUrl="/bills-of-materials" Text=@L["BOMChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/routes" Text=@L["RoutesChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/halt-reasons" Text=@L["HaltReasonsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.BOMChildMenu)" NavigateUrl="/bills-of-materials" Text=@L["BOMChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.RoutesChildMenu)" NavigateUrl="/routes" Text=@L["RoutesChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.HaltReasonsChildMenu)" NavigateUrl="/halt-reasons" Text=@L["HaltReasonsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
 
-                        <DxTreeViewNode Text=@L["ProductionManagementTransactionsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionManagementTransactionsMenu)" Text=@L["ProductionManagementTransactionsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/production-orders" Text=@L["ProductionOrdersChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/contract-tracking-fiches" Text=@L["ContractTrackingFichesChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/work-orders" Text=@L["WorkOrdersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionOrdersChildMenu)" NavigateUrl="/production-orders" Text=@L["ProductionOrdersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ContractTrackingFichesChildMenu)" NavigateUrl="/contract-tracking-fiches" Text=@L["ContractTrackingFichesChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.WorkOrdersChildMenu)" NavigateUrl="/work-orders" Text=@L["WorkOrdersChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["ProductionTrackingRecordsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionTrackingRecordsMenu)" Text=@L["ProductionTrackingRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/production-tracking" Text=@L["ProdTrackingsChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/production-tracking-iot" Text=@L["IoTProdTrackingsChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/contract-production-tracking" Text=@L["ContractProdTrackingsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProdTrackingsChildMenu)" NavigateUrl="/production-tracking" Text=@L["ProdTrackingsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.IoTProdTrackingsChildMenu)" NavigateUrl="/production-tracking-iot" Text=@L["IoTProdTrackingsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ContractProdTrackingsChildMenu)" NavigateUrl="/contract-production-tracking" Text=@L["ContractProdTrackingsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["ProductionManagementReportsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionManagementReportsMenu)" Text=@L["ProductionManagementReportsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text=@L["GeneralOEEChildMenu"] />
-                                <DxTreeViewNode Text=@L["StationOEEChildMenu"] />
-                                <DxTreeViewNode Text=@L["ProdTrackingListChildMenu"] />
-                                <DxTreeViewNode Text=@L["WorkOrderListChildMenu"] />
-                                <DxTreeViewNode Text=@L["ProductionOrderListChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.GeneralOEEChildMenu)" Text=@L["GeneralOEEChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StationOEEChildMenu)" Text=@L["StationOEEChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProdTrackingListChildMenu)" Text=@L["ProdTrackingListChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.WorkOrderListChildMenu)" Text=@L["WorkOrderListChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionOrderListChildMenu)" Text=@L["ProductionOrderListChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text=@L["MaintenanceManagementParentMenu"] IconCssClass="fa fa-euro-sign">
+                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MaintenanceManagementParentMenu)" Text=@L["MaintenanceManagementParentMenu"] IconCssClass="fa fa-euro-sign">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["MaintenanceManagementMainRecordsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.MaintenanceManagementMainRecordsMenu)" Text=@L["MaintenanceManagementMainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/maintenance-periods" Text=@L["MainPeriodsChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/maintenance-instructions" Text=@L["MainInstructionsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MainPeriodsChildMenu)" NavigateUrl="/maintenance-periods" Text=@L["MainPeriodsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MainInstructionsChildMenu)" NavigateUrl="/maintenance-instructions" Text=@L["MainInstructionsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["MaintenanceManagementTransactionsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.MaintenanceManagementTransactionsMenu)" Text=@L["MaintenanceManagementTransactionsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/planned-maintenances" Text=@L["PlannedMainChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/unplanned-maintenances" Text=@L["UnplannedMainChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/maintenance-mrps" Text=@L["MainMatReqPlanningChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/maintenance-material-purchase-trackings" Text=@L["MainMatPurchaseTrackingChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PlannedMainChildMenu)" NavigateUrl="/planned-maintenances" Text=@L["PlannedMainChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnplannedMainChildMenu)" NavigateUrl="/unplanned-maintenances" Text=@L["UnplannedMainChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MainMatReqPlanningChildMenu)" NavigateUrl="/maintenance-mrps" Text=@L["MainMatReqPlanningChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MainMatPurchaseTrackingChildMenu)" NavigateUrl="/maintenance-material-purchase-trackings" Text=@L["MainMatPurchaseTrackingChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text=@L["QualityControlParentMenu"] IconCssClass="fa fa-clipboard">
+                <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlParentMenu)" Text=@L["QualityControlParentMenu"] IconCssClass="fa fa-clipboard">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["QualityControlMainRecordsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlMainRecordsMenu)" Text=@L["QualityControlMainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text=@L["UnsTypesItemsChildMenu"] NavigateUrl="/unsuitability-types-items" />
-                                <DxTreeViewNode Text=@L["ControlTypesChildMenu"] NavigateUrl="/control-types" />
-                                <DxTreeViewNode Text=@L["ControlConditionsChildMenu"] NavigateUrl="/control-conditions" />
-                                <DxTreeViewNode Text=@L["UnsItemsChildMenu"] NavigateUrl="/unsuitability-items" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnsTypesItemsChildMenu)" Text=@L["UnsTypesItemsChildMenu"] NavigateUrl="/unsuitability-types-items" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ControlTypesChildMenu)" Text=@L["ControlTypesChildMenu"] NavigateUrl="/control-types" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ControlConditionsChildMenu)" Text=@L["ControlConditionsChildMenu"] NavigateUrl="/control-conditions" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnsItemsChildMenu)" Text=@L["UnsItemsChildMenu"] NavigateUrl="/unsuitability-items" />
                                 
 
                                 @*  <DxTreeViewNode Text=@L["EquipmentManagementMenu"]>
                                 <Nodes> *@
-                                <DxTreeViewNode NavigateUrl="/equipment-records" Text=@L["EquipmentRecordsChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EquipmentRecordsChildMenu)" NavigateUrl="/equipment-records" Text=@L["EquipmentRecordsChildMenu"] />
                                 @*  </Nodes>
                                 </DxTreeViewNode> *@
 
                             </Nodes>
                         </DxTreeViewNode>
 
-                        <DxTreeViewNode Text=@L["QualityPlansMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityPlansMenu)" Text=@L["QualityPlansMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/operational-quality-plans" Text=@L["OperationalQualityPlansChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/contract-quality-plans" Text=@L["ContractQualityPlansChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/purchase-quality-plans" Text=@L["PurchaseQualityPlansChildMenu"] />
-                                <DxTreeViewNode Text=@L["FinalControlPlans"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.OperationalQualityPlansChildMenu)" NavigateUrl="/operational-quality-plans" Text=@L["OperationalQualityPlansChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ContractQualityPlansChildMenu)" NavigateUrl="/contract-quality-plans" Text=@L["ContractQualityPlansChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseQualityPlansChildMenu)" NavigateUrl="/purchase-quality-plans" Text=@L["PurchaseQualityPlansChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.FinalControlPlans)" Text=@L["FinalControlPlans"] />
                             </Nodes>
                         </DxTreeViewNode>
 
-                        <DxTreeViewNode Text=@L["QualityControlTransactionsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlTransactionsMenu)" Text=@L["QualityControlTransactionsMenu"]>
                             <Nodes>
                                 
-                                <DxTreeViewNode NavigateUrl="/first-product-approvals" Text=@L["FirstProductApprovalChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.FirstProductApprovalChildMenu)" NavigateUrl="/first-product-approvals" Text=@L["FirstProductApprovalChildMenu"] />
 
-                                <DxTreeViewNode Text=@L["UnsRecordsMenu"]>
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnsRecordsMenu)" Text=@L["UnsRecordsMenu"]>
                                     <Nodes>
-                                        <DxTreeViewNode NavigateUrl="/purchase-unsuitability-reports" Text=@L["PurchUnsRecordsChildMenu"] />
+                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchUnsRecordsChildMenu)" NavigateUrl="/purchase-unsuitability-reports" Text=@L["PurchUnsRecordsChildMenu"] />
                                         @* <DxTreeViewNode Text=@L["ProdOrderRecordsChildMenu"] /> *@
-                                        <DxTreeViewNode NavigateUrl="/operation-unsuitability-reports" Text=@L["OprUnsRecordsChildMenu"] />
+                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.OprUnsRecordsChildMenu)" NavigateUrl="/operation-unsuitability-reports" Text=@L["OprUnsRecordsChildMenu"] />
                                         @* <DxTreeViewNode Text=@L["FinalControlUnsRecordsChildMenu"] />*@
-                                        <DxTreeViewNode NavigateUrl="/contract-unsuitability-reports" Text=@L["ContUnsRecordsChildMenu"] />
-                                         <DxTreeViewNode NavigateUrl="/customer-complaint-reports" Text=@L["CustCompRecordsChildMenu"] />
+                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ContUnsRecordsChildMenu)" NavigateUrl="/contract-unsuitability-reports" Text=@L["ContUnsRecordsChildMenu"] />
+                                         <DxTreeViewNode Visible="@(NavBarPermissionsModel.CustCompRecordsChildMenu)" NavigateUrl="/customer-complaint-reports" Text=@L["CustCompRecordsChildMenu"] />
 
                                     </Nodes>
                                 </DxTreeViewNode>
 
                                 @* <DxTreeViewNode Text=@L["MidControlRecordsChildMenu"] />
                                 <DxTreeViewNode Text=@L["FinalControlRecordsChildMenu"] /> *@
-                                <DxTreeViewNode Text=@L["EquipmentOperationsMenu"]>
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EquipmentOperationsMenu)" Text=@L["EquipmentOperationsMenu"]>
                                     <Nodes>
-                                        <DxTreeViewNode NavigateUrl="/calibration-records" Text=@L["CalRecordsChildMenu"] />
-                                        <DxTreeViewNode NavigateUrl="/calibration-verifications" Text=@L["CalVerificationsChildMenu"] />
+                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.CalRecordsChildMenu)" NavigateUrl="/calibration-records" Text=@L["CalRecordsChildMenu"] />
+                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.CalVerificationsChildMenu)" NavigateUrl="/calibration-verifications" Text=@L["CalVerificationsChildMenu"] />
                                     </Nodes>
                                 </DxTreeViewNode>
 
@@ -314,26 +314,26 @@
                             </Nodes>
                         </DxTreeViewNode>
 
-                        <DxTreeViewNode Text=@L["QualityControlSPCMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlSPCMenu)" Text=@L["QualityControlSPCMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/operational-spc" Text=@L["OperationalSPCChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/unsuitability-item-spc" Text=@L["UnsuitabilityItemSPSChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.OperationalSPCChildMenu)" NavigateUrl="/operational-spc" Text=@L["OperationalSPCChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnsuitabilityItemSPSChildMenu)" NavigateUrl="/unsuitability-item-spc" Text=@L["UnsuitabilityItemSPSChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
 
-                        <DxTreeViewNode Text=@L["QualityControlFMEAMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlFMEAMenu)" Text=@L["QualityControlFMEAMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/p-fmea" Text=@L["PFMEAChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PFMEAChildMenu)" NavigateUrl="/p-fmea" Text=@L["PFMEAChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
 
-                        <DxTreeViewNode Text=@L["QualityControlAnalysisMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlAnalysisMenu)" Text=@L["QualityControlAnalysisMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text=@L["QualityControlSPCAnalysisMenu"]>
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlSPCAnalysisMenu)" Text=@L["QualityControlSPCAnalysisMenu"]>
                                     <Nodes>
 
-                                        <DxTreeViewNode NavigateUrl="/operational-spc-comparing" Text=@L["OperationalSPCComparingChildMenu"] />
-                                        <DxTreeViewNode NavigateUrl="/unsuitability-item-spc-comparing" Text=@L["UnsuitabilityItemSPSComparingChildMenu"] />
+                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.OperationalSPCComparingChildMenu)" NavigateUrl="/operational-spc-comparing" Text=@L["OperationalSPCComparingChildMenu"] />
+                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnsuitabilityItemSPSComparingChildMenu)" NavigateUrl="/unsuitability-item-spc-comparing" Text=@L["UnsuitabilityItemSPSComparingChildMenu"] />
 
                                     </Nodes>
                                 </DxTreeViewNode>
@@ -341,33 +341,33 @@
                             </Nodes>
                         </DxTreeViewNode>
 
-                        <DxTreeViewNode NavigateUrl="/report-8d" Text=@L["Report8DChildMenu"] />
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.Report8DChildMenu)" NavigateUrl="/report-8d" Text=@L["Report8DChildMenu"] />
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text=@L["GeneralSystemIdentificationsParentMenu"] IconCssClass="fa fa-newspaper">
+                <DxTreeViewNode Visible="@(NavBarPermissionsModel.GeneralSystemIdentificationsParentMenu)" Text=@L["GeneralSystemIdentificationsParentMenu"] IconCssClass="fa fa-newspaper">
                     <Nodes>
-                        <DxTreeViewNode NavigateUrl="/periods" Text=@L["PeriodsChildMenu"] />
-                        <DxTreeViewNode NavigateUrl="/branches" Text=@L["BranchesChildMenu"] />
-                        <DxTreeViewNode NavigateUrl="/currencies" Text=@L["CurrenciesChildMenu"] />
-                        <DxTreeViewNode NavigateUrl="/exchange-rates" Text=@L["ExRatesChildMenu"] />
-                        <DxTreeViewNode NavigateUrl="/shifts" Text=@L["ShiftsChildMenu"] />
-                        <DxTreeViewNode NavigateUrl="/users" Text=@L["UsersChildMenu"] />
-                        <DxTreeViewNode NavigateUrl="/user-groups" Text=@L["UserGrpChildMenu"] />
-                        <DxTreeViewNode NavigateUrl="" Text=@L["RoleDefinitionsChildMenu"] />
-                        <DxTreeViewNode Visible="@collapseparametersvisible" Text=@L["GeneralSystemParametersParentMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.PeriodsChildMenu)" NavigateUrl="/periods" Text=@L["PeriodsChildMenu"] />
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.BranchesChildMenu)" NavigateUrl="/branches" Text=@L["BranchesChildMenu"] />
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.CurrenciesChildMenu)" NavigateUrl="/currencies" Text=@L["CurrenciesChildMenu"] />
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ExRatesChildMenu)" NavigateUrl="/exchange-rates" Text=@L["ExRatesChildMenu"] />
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShiftsChildMenu)" NavigateUrl="/shifts" Text=@L["ShiftsChildMenu"] />
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.UsersChildMenu)" NavigateUrl="/users" Text=@L["UsersChildMenu"] />
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.UserGrpChildMenu)" NavigateUrl="/user-groups" Text=@L["UserGrpChildMenu"] />
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.RoleDefinitionsChildMenu)" NavigateUrl="" Text=@L["RoleDefinitionsChildMenu"] />
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.GeneralSystemParametersParentMenu)" Text=@L["GeneralSystemParametersParentMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/finance-management-parameters" Text=@L["FinanceManagementParametersChildMenu"] />
-                                <DxTreeViewNode Text=@L["MachineAndWorkforceManagementParametersChildMenu"] />
-                                <DxTreeViewNode Text=@L["MaintenanceManagementParametersChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/planning-management-parameters" Text=@L["PlanningManagementParametersChildMenu"] />
-                                <DxTreeViewNode Text=@L["ProductionManagementParametersChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/purchase-management-parameters" Text=@L["PurchaseManagementParametersChildMenu"] />
-                                <DxTreeViewNode Text=@L["QualityControlParametersChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/sales-management-parameters" Text=@L["SalesManagementParametersChildMenu"] />
-                                <DxTreeViewNode Text=@L["ShippingManagementParametersChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/stock-management-parameters" Text=@L["StockManagementParametersChildMenu"] />
-                                <DxTreeViewNode Text=@L["GeneralParametersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.FinanceManagementParametersChildMenu)" NavigateUrl="/finance-management-parameters" Text=@L["FinanceManagementParametersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MachineAndWorkforceManagementParametersChildMenu)" Text=@L["MachineAndWorkforceManagementParametersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MaintenanceManagementParametersChildMenu)" Text=@L["MaintenanceManagementParametersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PlanningManagementParametersChildMenu)" NavigateUrl="/planning-management-parameters" Text=@L["PlanningManagementParametersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionManagementParametersChildMenu)" Text=@L["ProductionManagementParametersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseManagementParametersChildMenu)" NavigateUrl="/purchase-management-parameters" Text=@L["PurchaseManagementParametersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlParametersChildMenu)" Text=@L["QualityControlParametersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesManagementParametersChildMenu)" NavigateUrl="/sales-management-parameters" Text=@L["SalesManagementParametersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShippingManagementParametersChildMenu)" Text=@L["ShippingManagementParametersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementParametersChildMenu)" NavigateUrl="/stock-management-parameters" Text=@L["StockManagementParametersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.GeneralParametersChildMenu)" Text=@L["GeneralParametersChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                         <DxTreeViewNode NavigateUrl="/insert-menu" Text="Menü Ekle" />
