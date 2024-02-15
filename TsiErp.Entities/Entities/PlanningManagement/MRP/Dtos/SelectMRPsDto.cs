@@ -27,6 +27,10 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos
         /// </summary>
         public bool IsMaintenanceMRP { get; set; }
         /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceID { get; set; }
+        /// <summary>
         /// Bakım MRP ID
         /// </summary>
         public Guid? MaintenanceMRPID { get; set; }

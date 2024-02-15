@@ -90,6 +90,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                     CustomerReferanceNo = item.CustomerReferanceNo,
                     DefinedUnitPrice = item.DefinedUnitPrice,
                     Description_ = item.Description_,
+                    PurchaseSupplyDate = item.PurchaseSupplyDate,
                     LineAmount = item.LineAmount,
                     MinOrderAmount = item.MinOrderAmount,
                     OrderAmount = item.OrderAmount,
@@ -322,7 +323,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
             var query = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Update(new UpdateOrderAcceptanceRecordsDto
             {
-               
+
                 CurrentAccountCardID = input.CurrentAccountCardID,
                 ConfirmedLoadingDate = input.ConfirmedLoadingDate,
                 CurrenyID = input.CurrenyID,
@@ -364,6 +365,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         ProductReferanceNumberID = item.ProductReferanceNumberID,
                         UnitSetID = item.UnitSetID,
                         OrderAcceptanceRecordID = input.Id,
+                        PurchaseSupplyDate = item.PurchaseSupplyDate,
                         CreationTime = DateTime.Now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
@@ -398,6 +400,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             LineAmount = item.LineAmount,
                             MinOrderAmount = item.MinOrderAmount,
                             OrderAmount = item.OrderAmount,
+                            PurchaseSupplyDate = item.PurchaseSupplyDate,
                             OrderUnitPrice = item.OrderUnitPrice,
                             ProductReferanceNumberID = item.ProductReferanceNumberID,
                             UnitSetID = item.UnitSetID,
@@ -438,7 +441,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
             var query = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Update(new UpdateOrderAcceptanceRecordsDto
             {
-                
+
                 CurrentAccountCardID = entity.CurrentAccountCardID,
                 ConfirmedLoadingDate = entity.ConfirmedLoadingDate,
                 CurrenyID = entity.CurrenyID,

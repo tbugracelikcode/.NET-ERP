@@ -83,6 +83,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
+                OrderAcceptanceID = input.OrderAcceptanceID.GetValueOrDefault(),
                 MaintenanceMRPID = input.MaintenanceMRPID,
                 GrossAmount = input.GrossAmount,
                 LinkedPurchaseRequestID = Guid.Empty,
@@ -123,6 +124,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     LineAmount = item.LineAmount,
                     LineDescription = item.LineDescription,
                     LineTotalAmount = item.LineTotalAmount,
+                    OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
+                    OrderAcceptanceLineID = item.OrderAcceptanceLineID.GetValueOrDefault(),
                     LinkedPurchaseRequestID = Guid.Empty,
                     PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
                     ProductionOrderID = Guid.Empty,
@@ -284,8 +287,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             DeleteControl.ControlList.Add("OrderID", new List<string>
             {
                 Tables.PurchaseUnsuitabilityReports
-            });            
-            
+            });
+
             DeleteControl.ControlList.Add("PurchaseOrderID", new List<string>
             {
                 Tables.StockFiches,
@@ -699,6 +702,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
+                OrderAcceptanceID = input.OrderAcceptanceID.GetValueOrDefault(),
                 MRPID = input.MRPID,
                 MaintenanceMRPID = input.MaintenanceMRPID.GetValueOrDefault(),
                 ExchangeRate = input.ExchangeRate,
@@ -742,6 +746,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         LineAmount = item.LineAmount,
                         LineDescription = item.LineDescription,
                         LineTotalAmount = item.LineTotalAmount,
+                        OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
+                        OrderAcceptanceLineID = item.OrderAcceptanceLineID.GetValueOrDefault(),
                         LinkedPurchaseRequestID = item.LinkedPurchaseRequestID.GetValueOrDefault(),
                         PaymentPlanID = item.PaymentPlanID,
                         ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
@@ -790,6 +796,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             LikedPurchaseRequestLineID = item.LikedPurchaseRequestLineID.GetValueOrDefault(),
                             LineAmount = item.LineAmount,
                             LineDescription = item.LineDescription,
+                            OrderAcceptanceLineID = item.OrderAcceptanceLineID.GetValueOrDefault(),
+                            OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
                             LineTotalAmount = item.LineTotalAmount,
                             LinkedPurchaseRequestID = item.LinkedPurchaseRequestID.GetValueOrDefault(),
                             PaymentPlanID = item.PaymentPlanID,
@@ -851,6 +859,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 Date_ = entity.Date_,
                 Description_ = entity.Description_,
                 ExchangeRate = entity.ExchangeRate,
+                OrderAcceptanceID = entity.OrderAcceptanceID.GetValueOrDefault(),
                 GrossAmount = entity.GrossAmount,
                 MaintenanceMRPID = entity.MaintenanceMRPID,
                 MRPID = entity.MRPID,

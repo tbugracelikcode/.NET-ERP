@@ -80,5 +80,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Satın Alma Temin Tarihi
+        /// </summary>
+        public DateTime? PurchaseSupplyDate { get; set; }
     }
 }

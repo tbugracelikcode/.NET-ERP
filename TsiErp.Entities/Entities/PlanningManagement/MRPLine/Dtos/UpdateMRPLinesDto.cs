@@ -60,5 +60,13 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
         /// İhtiyaç Miktar
         /// </summary>
         public int RequirementAmount { get; set; }
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceID { get; set; }
+        /// <summary>
+        /// Sipariş Kabul Satır ID
+        /// </summary>
+        public Guid? OrderAcceptanceLineID { get; set; }
     }
 }

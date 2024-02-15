@@ -40,5 +40,10 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRP
         /// Bakım MRP ID
         /// </summary>
         public Guid? MaintenanceMRPID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceID { get; set; }
     }
 }

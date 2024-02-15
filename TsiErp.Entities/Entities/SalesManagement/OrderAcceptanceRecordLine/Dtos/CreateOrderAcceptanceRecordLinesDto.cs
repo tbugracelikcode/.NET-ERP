@@ -19,6 +19,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dto
         /// </summary>
         public int LineNr { get; set; }
         /// <summary>
+        /// Satın Alma Temin Tarihi
+        /// </summary>
+        public DateTime? PurchaseSupplyDate { get; set; }
+        /// <summary>
         /// Stok ID
         /// </summary>
         public Guid? ProductID { get; set; }
