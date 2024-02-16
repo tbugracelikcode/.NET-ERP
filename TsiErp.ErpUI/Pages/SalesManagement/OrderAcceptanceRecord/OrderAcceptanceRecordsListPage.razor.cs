@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DevExpress.XtraRichEdit.Model;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
@@ -7,13 +8,20 @@ using System.Data;
 using System.Dynamic;
 using System.Linq;
 using Tsi.Core.Utilities.Guids;
+using TsiErp.Business.Entities.Branch.Services;
 using TsiErp.Business.Entities.Forecast.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.SalesOrder.Services;
+using TsiErp.Business.Entities.Warehouse.Services;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.Forecast.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
@@ -25,6 +33,7 @@ using TsiErp.Entities.Entities.SalesManagement.SalesPriceLine;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
+using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -38,10 +47,14 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
+        private SfGrid<SelectMRPLinesDto> _MRPLineGrid;
+        private SfGrid<ListSalesOrderDto> _MRPOrdersGrid;
+
         VirtualLineModel VirtualLineDataSource;
 
         [Inject]
         ModalManager ModalManager { get; set; }
+        public List<ContextMenuItemModel> MRPLineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
@@ -49,7 +62,28 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
 
+        List<ListSalesOrderDto> SalesOrdersList = new List<ListSalesOrderDto>();
+
+        public List<SelectMRPLinesDto> MRPLinesList = new List<SelectMRPLinesDto>();
+
+        SelectMRPsDto MRPDataSource;
+        SelectMRPLinesDto MRPLineDataSource;
+
+        public bool MRPCrudModalVisible = false;
+        public bool MRPLineCrudPopup = false;
+
         private bool VirtualLineCrudPopup = false;
+
+        #region Planning Parameters
+
+        Guid? BranchIDParameter;
+        Guid? WarehouseIDParameter;
+        Guid? BranchIDButtonEdit;
+        Guid? WarehouseIDButtonEdit;
+        string WarehouseCodeButtonEdit;
+        string BranchCodeButtonEdit;
+
+        #endregion
 
         public class VirtualLineModel
         {
@@ -79,6 +113,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             BaseCrudService = OrderAcceptanceRecordsAppService;
             _L = L;
 
+
+            var purchaseParameter = (await PurchaseManagementParametersAppService.GetPurchaseManagementParametersAsync()).Data;
+            BranchIDParameter = purchaseParameter.BranchID;
+            WarehouseIDParameter = purchaseParameter.WarehouseID;
+
             #region Context Menü Yetkilendirmesi
 
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
@@ -89,6 +128,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             #endregion
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+            CreateMRPLineContextMenuItems();
 
         }
 
@@ -162,10 +202,24 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextDelete"], Id = "delete" }); break;
                             case "OrderAcceptanceRecordsContextRefresh":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextRefresh"], Id = "refresh" }); break;
+                            case "OrderAcceptanceRecordsContextMRP":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextMRP"], Id = "mrp" }); break;
                             default: break;
                         }
                     }
                 }
+            }
+        }
+
+        protected void CreateMRPLineContextMenuItems()
+        {
+            if (MRPLineGridContextMenu.Count() == 0)
+            {
+                MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextDoNotCalculate"], Id = "dontcalculate" });
+                MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextStockUsage"], Id = "stockusage" });
+                MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextChange"], Id = "changed" });
+                MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextRefresh"], Id = "refresh" });
+
             }
         }
 
@@ -200,6 +254,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                 case "changed":
                     IsChanged = true;
                     DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    GridVirtualLineList.Clear();
 
                     var productList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
 
@@ -379,6 +435,79 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     await InvokeAsync(StateHasChanged);
                     break;
 
+                case "mrp":
+
+                    DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    var lineList = DataSource.SelectOrderAcceptanceRecordLines;
+
+                    SelectMRPsDto mRPsDto = new SelectMRPsDto
+                    {
+
+                        Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu"),
+                        Date_ = DataSource.Date_,
+                        IsMaintenanceMRP = false,
+                        MaintenanceMRPID = Guid.Empty,
+                        OrderAcceptanceID = DataSource.Id,
+                        MaintenanceMRPCode = string.Empty,
+                    };
+
+                    MRPDataSource = mRPsDto;
+
+                    var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
+                    var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
+
+                    foreach (var line in lineList)
+                    {
+                        var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(line.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.ToList();
+
+                        foreach (var bomline in bomLineList)
+                        {
+                            var product = (await ProductsAppService.GetAsync(bomline.ProductID.GetValueOrDefault())).Data;
+
+                            if (product.SupplyForm == Entities.Enums.ProductSupplyFormEnum.Satınalma && product != null && product.Id != Guid.Empty)
+                            {
+                                int calculatedAmount = Convert.ToInt32(bomline.Quantity);
+
+                                decimal amountofProduct = (await GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Data.Where(t => t.ProductID == bomline.ProductID).Select(t => t.Amount).Sum();
+
+                                SelectMRPLinesDto mrpLineModel = new SelectMRPLinesDto
+                                {
+                                    Amount = calculatedAmount,
+                                    isCalculated = true,
+                                    isPurchase = false,
+                                    ProductID = bomline.ProductID.GetValueOrDefault(),
+                                    ProductCode = bomline.ProductCode,
+                                    ProductName = bomline.ProductName,
+                                    SalesOrderID = Guid.Empty,
+                                    UnitSetID = bomline.UnitSetID,
+                                    LineNr = MRPLinesList.Count + 1,
+                                    UnitSetCode = bomline.UnitSetCode,
+                                    AmountOfStock = amountofProduct,
+                                    RequirementAmount = Math.Abs(Convert.ToInt32(amountofProduct) - calculatedAmount),
+                                    SalesOrderLineID = Guid.Empty,
+                                    SalesOrderFicheNo = string.Empty,
+                                    BranchID = branch.Id,
+                                    WarehouseID = warehouse.Id,
+                                    BranchCode = branch.Code,
+                                    WarehouseCode = warehouse.Code,
+                                    OrderAcceptanceID = DataSource.Id,
+                                    OrderAcceptanceLineID = line.Id
+                                };
+
+                                MRPLinesList.Add(mrpLineModel);
+
+                            }
+                        }
+                    }
+
+                    MRPDataSource.SelectMRPLines = MRPLinesList;
+
+                    MRPCrudModalVisible = true;
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
                 default:
                     break;
             }
@@ -457,9 +586,80 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             }
         }
 
+        public async void OnMRPListContextMenuClick(ContextMenuClickEventArgs<SelectMRPLinesDto> args)
+        {
+            switch (args.Item.Id)
+            {
+
+
+                case "dontcalculate":
+                    var line = args.RowInfo.RowData;
+                    var selectedIndex = MRPLinesList.FindIndex(t => t.SalesOrderID == line.SalesOrderID && t.ProductID == line.ProductID);
+                    if (selectedIndex >= 0)
+                    {
+                        MRPLinesList[selectedIndex].isCalculated = false;
+                    }
+
+                    await _MRPLineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+
+                case "stockusage":
+                    var selectedline = args.RowInfo.RowData;
+                    var Index = MRPLinesList.FindIndex(t => t.SalesOrderID == selectedline.SalesOrderID && t.ProductID == selectedline.ProductID);
+                    if (Index >= 0)
+                    {
+                        MRPLinesList[Index].isStockUsage = !selectedline.isStockUsage;
+
+                        if (MRPLinesList[Index].isStockUsage)
+                        {
+                            MRPLinesList[Index].RequirementAmount = MRPLinesList[Index].Amount - Convert.ToInt32(MRPLinesList[Index].AmountOfStock);
+                            if (0 > MRPLinesList[Index].RequirementAmount)
+                            {
+                                MRPLinesList[Index].RequirementAmount = 0;
+                            }
+                        }
+
+                        else
+                        {
+                            MRPLinesList[Index].RequirementAmount = MRPLinesList[Index].Amount;
+                        }
+                    }
+
+                    await _MRPLineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "changed":
+                    MRPLineDataSource = args.RowInfo.RowData;
+                    MRPLineCrudPopup = true;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "refresh":
+                    await _MRPLineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         public void HideLinesPopup()
         {
             VirtualLineCrudPopup = false;
+        }
+
+        public void HideMRPLinesPopup()
+        {
+            MRPLineCrudPopup = false;
+        }
+
+        public void HideMRPPopup()
+        {
+            MRPCrudModalVisible = false;
         }
 
         protected async Task OnLineSubmit()
@@ -492,6 +692,56 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             }
             await _VirtualLineGrid.Refresh();
             HideLinesPopup();
+            await InvokeAsync(StateHasChanged);
+
+        }
+
+        protected async Task OnMRPLineSubmit()
+        {
+
+            if (MRPLineDataSource.Id == Guid.Empty)
+            {
+                if (MRPDataSource.SelectMRPLines.Contains(MRPLineDataSource))
+                {
+                    int selectedLineIndex = MRPDataSource.SelectMRPLines.FindIndex(t => t.LineNr == MRPLineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        MRPDataSource.SelectMRPLines[selectedLineIndex] = MRPLineDataSource;
+                    }
+                }
+                else
+                {
+                    MRPDataSource.SelectMRPLines.Add(MRPLineDataSource);
+                }
+            }
+            else
+            {
+                int selectedLineIndex = MRPDataSource.SelectMRPLines.FindIndex(t => t.Id == MRPLineDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    MRPDataSource.SelectMRPLines[selectedLineIndex] = MRPLineDataSource;
+                }
+            }
+
+            MRPLinesList = MRPDataSource.SelectMRPLines;
+            await _MRPLineGrid.Refresh();
+
+            HideMRPLinesPopup();
+            await InvokeAsync(StateHasChanged);
+
+
+        }
+
+        public async void OnMRPSubmit()
+        {
+            var createdMRPEntity = ObjectMapper.Map<SelectMRPsDto, CreateMRPsDto>(MRPDataSource);
+
+            await MRPsService.CreateAsync(createdMRPEntity);
+
+            MRPCrudModalVisible = false;
+
             await InvokeAsync(StateHasChanged);
 
         }
@@ -538,21 +788,28 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             {
                 var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductCode == VirtualLineDataSource.ProductCode && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).FirstOrDefault();
 
-                var tempProductList = ProductsList.Where(t => t.Code == VirtualLineDataSource.ProductCode).ToList();
+                if (productRefNo != null)
+                {
+                    var tempProductList = ProductsList.Where(t => t.Code == VirtualLineDataSource.ProductCode).ToList();
 
-                VirtualLineDataSource.OrderReferanceNo = productRefNo.OrderReferanceNo;
-                VirtualLineDataSource.CustomerReferanceNo = productRefNo.CustomerReferanceNo;
-                VirtualLineDataSource.CustomerBarcodeNo = productRefNo.CustomerBarcodeNo;
-                VirtualLineDataSource.MinOrderAmount = productRefNo.MinOrderAmount;
-                VirtualLineDataSource.UnitSetCode = tempProductList.Select(t => t.UnitSetCode).FirstOrDefault();
-                VirtualLineDataSource.UnitSetID = tempProductList.Select(t => t.UnitSetID).FirstOrDefault();
-                VirtualLineDataSource.ProductID = tempProductList.Select(t => t.Id).FirstOrDefault();
-                VirtualLineDataSource.ProductReferanceNumberID = productRefNo.Id;
+                    VirtualLineDataSource.OrderReferanceNo = productRefNo.OrderReferanceNo;
+                    VirtualLineDataSource.CustomerReferanceNo = productRefNo.CustomerReferanceNo;
+                    VirtualLineDataSource.CustomerBarcodeNo = productRefNo.CustomerBarcodeNo;
+                    VirtualLineDataSource.MinOrderAmount = productRefNo.MinOrderAmount;
+                    VirtualLineDataSource.UnitSetCode = tempProductList.Select(t => t.UnitSetCode).FirstOrDefault();
+                    VirtualLineDataSource.UnitSetID = tempProductList.Select(t => t.UnitSetID).FirstOrDefault();
+                    VirtualLineDataSource.ProductID = tempProductList.Select(t => t.Id).FirstOrDefault();
+                    VirtualLineDataSource.ProductReferanceNumberID = productRefNo.Id;
 
-                var salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.StartDate <= DataSource.Date_ && t.EndDate >= DataSource.Date_ && t.CurrentAccountCardID == DataSource.CurrentAccountCardID && t.IsActive == true && t.IsApproved == true).Select(t => t.Id).FirstOrDefault();
-                var salesPriceLine = (await SalesPricesAppService.GetAsync(salesPriceID)).Data.SelectSalesPriceLines.Where(t => t.ProductCode == VirtualLineDataSource.ProductCode).FirstOrDefault();
+                    var salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.StartDate <= DataSource.Date_ && t.EndDate >= DataSource.Date_ && t.CurrentAccountCardID == DataSource.CurrentAccountCardID && t.IsActive == true && t.IsApproved == true).Select(t => t.Id).FirstOrDefault();
 
-                VirtualLineDataSource.DefinedUnitPrice = salesPriceLine.Price;
+                    if (salesPriceID != Guid.Empty)
+                    {
+                        var salesPriceLine = (await SalesPricesAppService.GetAsync(salesPriceID)).Data.SelectSalesPriceLines.Where(t => t.ProductCode == VirtualLineDataSource.ProductCode).FirstOrDefault();
+
+                        VirtualLineDataSource.DefinedUnitPrice = salesPriceLine.Price;
+                    }
+                }
             }
 
             else
@@ -701,7 +958,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         #region Cari Hesap ButtonEdit
 
-        SfTextBox CurrentAccountCardsCodeButtonEdit= new();
+        SfTextBox CurrentAccountCardsCodeButtonEdit = new();
         SfTextBox CurrentAccountCardsNameButtonEdit = new();
         bool SelectCurrentAccountCardsPopupVisible = false;
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
@@ -778,6 +1035,233 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("OrderAcceptanceRecordsChildMenu");
             await InvokeAsync(StateHasChanged);
         }
+
+        SfTextBox MRPCodeButtonEdit;
+
+        public async Task MRPCodeOnCreateIcon()
+        {
+            var MRPCodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, MRPCodeButtonClickEvent);
+            await MRPCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", MRPCodesButtonClick } });
+        }
+
+        public async void MRPCodeButtonClickEvent()
+        {
+            MRPDataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
+
+        #region MRP Crud ButtonEdits
+
+        #region Depo ButtonEdit (Tüm LineList)
+
+        SfTextBox WarehousesButtonEdit;
+        bool SelectWarehousesPopupVisible = false;
+        List<ListWarehousesDto> WarehousesList = new List<ListWarehousesDto>();
+
+        public async Task WarehousesOnCreateIcon()
+        {
+            var WarehousesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, WarehousesButtonClickEvent);
+            await WarehousesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", WarehousesButtonClick } });
+        }
+
+        public async void WarehousesButtonClickEvent()
+        {
+            SelectWarehousesPopupVisible = true;
+            WarehousesList = (await WarehousesAppService.GetListAsync(new ListWarehousesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void WarehousesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                WarehouseIDButtonEdit = Guid.Empty;
+                WarehouseCodeButtonEdit = string.Empty;
+
+
+
+                var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
+
+                foreach (var item in MRPLinesList)
+                {
+                    item.WarehouseID = warehouse.Id;
+                    item.WarehouseCode = warehouse.Code;
+                }
+                await _MRPLineGrid.Refresh();
+            }
+        }
+
+        public async void WarehousesDoubleClickHandler(RecordDoubleClickEventArgs<ListWarehousesDto> args)
+        {
+            var selectedWarehouse = args.RowData;
+
+            if (selectedWarehouse != null)
+            {
+                WarehouseIDButtonEdit = selectedWarehouse.Id;
+                WarehouseCodeButtonEdit = selectedWarehouse.Code;
+                SelectWarehousesPopupVisible = false;
+
+                foreach (var item in MRPLinesList)
+                {
+                    item.WarehouseID = WarehouseIDButtonEdit;
+                    item.WarehouseCode = WarehouseCodeButtonEdit;
+                }
+
+                await _MRPLineGrid.Refresh();
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Şube ButtonEdit (Tüm LineList)
+
+        SfTextBox BranchesButtonEdit;
+        bool SelectBranchesPopupVisible = false;
+        List<ListBranchesDto> BranchesList = new List<ListBranchesDto>();
+
+        public async Task BranchesOnCreateIcon()
+        {
+            var BranchesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, BranchesButtonClickEvent);
+            await BranchesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", BranchesButtonClick } });
+        }
+
+        public async void BranchesButtonClickEvent()
+        {
+            SelectBranchesPopupVisible = true;
+            BranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void BranchesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                BranchIDButtonEdit = Guid.Empty;
+                BranchCodeButtonEdit = string.Empty;
+
+                var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
+
+                foreach (var item in MRPLinesList)
+                {
+                    item.BranchID = branch.Id;
+                    item.BranchCode = branch.Code;
+                }
+                await _MRPLineGrid.Refresh();
+            }
+        }
+
+        public async void BranchesDoubleClickHandler(RecordDoubleClickEventArgs<ListBranchesDto> args)
+        {
+            var selectedBranch = args.RowData;
+
+            if (selectedBranch != null)
+            {
+                BranchIDButtonEdit = selectedBranch.Id;
+                BranchCodeButtonEdit = selectedBranch.Code;
+
+                foreach (var item in MRPLinesList)
+                {
+                    item.BranchID = BranchIDButtonEdit;
+                    item.BranchCode = BranchCodeButtonEdit;
+                }
+
+                await _MRPLineGrid.Refresh();
+                SelectBranchesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Depo ButtonEdit
+
+        SfTextBox LineWarehousesButtonEdit;
+        bool SelectLineWarehousesPopupVisible = false;
+        List<ListWarehousesDto> LineWarehousesList = new List<ListWarehousesDto>();
+
+        public async Task LineWarehousesOnCreateIcon()
+        {
+            var LineWarehousesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, LineWarehousesButtonClickEvent);
+            await LineWarehousesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", LineWarehousesButtonClick } });
+        }
+
+        public async void LineWarehousesButtonClickEvent()
+        {
+            SelectLineWarehousesPopupVisible = true;
+            LineWarehousesList = (await WarehousesAppService.GetListAsync(new ListWarehousesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void LineWarehousesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                MRPLineDataSource.WarehouseID = Guid.Empty;
+                MRPLineDataSource.WarehouseCode = string.Empty;
+            }
+
+            await Task.CompletedTask;
+        }
+
+        public async void LineWarehousesDoubleClickHandler(RecordDoubleClickEventArgs<ListWarehousesDto> args)
+        {
+            var selectedWarehouse = args.RowData;
+
+            if (selectedWarehouse != null)
+            {
+                MRPLineDataSource.WarehouseID = selectedWarehouse.Id;
+                MRPLineDataSource.WarehouseCode = selectedWarehouse.Code;
+                SelectLineWarehousesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Şube ButtonEdit 
+
+        SfTextBox LineBranchesButtonEdit;
+        bool SelectLineBranchesPopupVisible = false;
+        List<ListBranchesDto> LineBranchesList = new List<ListBranchesDto>();
+
+        public async Task LineBranchesOnCreateIcon()
+        {
+            var LineBranchesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, LineBranchesButtonClickEvent);
+            await LineBranchesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", LineBranchesButtonClick } });
+        }
+
+        public async void LineBranchesButtonClickEvent()
+        {
+            SelectLineBranchesPopupVisible = true;
+            LineBranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void LineBranchesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                MRPLineDataSource.BranchID = Guid.Empty;
+                MRPLineDataSource.BranchCode = string.Empty;
+            }
+
+
+            await Task.CompletedTask;
+        }
+
+        public async void LineBranchesDoubleClickHandler(RecordDoubleClickEventArgs<ListBranchesDto> args)
+        {
+            var selectedBranch = args.RowData;
+
+            if (selectedBranch != null)
+            {
+                MRPLineDataSource.BranchID = selectedBranch.Id;
+                MRPLineDataSource.BranchCode = selectedBranch.Code;
+                SelectLineBranchesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
         #endregion
 
         public void Dispose()

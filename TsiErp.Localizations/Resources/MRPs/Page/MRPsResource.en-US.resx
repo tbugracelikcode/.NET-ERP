@@ -202,7 +202,7 @@
     <value>PURCHASE REQUIREMENT AMOUNT</value>
   </data>
   <data name="LineGridSalesOrderFicheNo" xml:space="preserve">
-    <value>ORDER FICHE NR</value>
+    <value>ORDER FICHE NO</value>
   </data>
   <data name="LineGridSalesOrderisCalculated" xml:space="preserve">
     <value>WILL BE CALCULATED</value>

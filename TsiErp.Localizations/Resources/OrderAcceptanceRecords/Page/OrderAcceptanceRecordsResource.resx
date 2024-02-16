@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BranchesPopupGridCode" xml:space="preserve">
+    <value>ŞUBE KODU</value>
+  </data>
+  <data name="BranchesPopupGridName" xml:space="preserve">
+    <value>ŞUBE ADI</value>
+  </data>
+  <data name="BranchModalTitle" xml:space="preserve">
+    <value>Şubeler</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -285,6 +294,90 @@
   <data name="MinOrderAmountLineLabel" xml:space="preserve">
     <value>Min. Sipariş Miktarı:</value>
   </data>
+  <data name="MRPBranchCodeButtonEditLabel" xml:space="preserve">
+    <value>Şube Kodu:</value>
+  </data>
+  <data name="MRPCodeLabel" xml:space="preserve">
+    <value>MRP Kodu:</value>
+  </data>
+  <data name="MRPDate_Label" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
+  <data name="MRPDescription_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="MRPIsMaintenanceMRPLabel" xml:space="preserve">
+    <value>Bakım Malzeme İhtiyaç Planlaması:</value>
+  </data>
+  <data name="MRPLineBranchCodeButtonEditLabel" xml:space="preserve">
+    <value>Şube Kodu:</value>
+  </data>
+  <data name="MRPLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="MRPLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="MRPLineContextDeleteOrderLines" xml:space="preserve">
+    <value>Sipariş Satırlarını Sil</value>
+  </data>
+  <data name="MRPLineContextDoNotCalculate" xml:space="preserve">
+    <value>Hesaplamadan Kaldır</value>
+  </data>
+  <data name="MRPLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="MRPLineContextStockUsage" xml:space="preserve">
+    <value>Stoktan Kullan</value>
+  </data>
+  <data name="MRPLineGridAmount" xml:space="preserve">
+    <value>PLANLANAN İHTİYAÇ MİKTARI</value>
+  </data>
+  <data name="MRPLineGridAmountOfStock" xml:space="preserve">
+    <value>STOK TOPLAMI</value>
+  </data>
+  <data name="MRPLineGridBranchCode" xml:space="preserve">
+    <value>ŞUBE</value>
+  </data>
+  <data name="MRPLineGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="MRPLineGridRequirementAmount" xml:space="preserve">
+    <value>SATIN ALMA İHTİYAÇ MİKTARI</value>
+  </data>
+  <data name="MRPLineGridSalesOrderFicheNo" xml:space="preserve">
+    <value>SİPARİŞ FİŞ NO</value>
+  </data>
+  <data name="MRPLineGridSalesOrderisCalculated" xml:space="preserve">
+    <value>HESAPLANACAK</value>
+  </data>
+  <data name="MRPLineGridSalesOrderisPurchase" xml:space="preserve">
+    <value>SATIN ALMAYA DÖNÜŞTÜ</value>
+  </data>
+  <data name="MRPLineGridUnitSetCode" xml:space="preserve">
+    <value>BİRİM SETİ</value>
+  </data>
+  <data name="MRPLineGridWarehouseCode" xml:space="preserve">
+    <value>DEPO</value>
+  </data>
+  <data name="MRPLineModalTitle" xml:space="preserve">
+    <value>Malzeme İhtiyaç Planlaması (MRP) Satırları</value>
+  </data>
+  <data name="MRPLineWarehouseCodeButtonEditLabel" xml:space="preserve">
+    <value>Depo Kodu:</value>
+  </data>
+  <data name="MRPModalTitle" xml:space="preserve">
+    <value>Malzeme İhtiyaç Planlaması (MRP)</value>
+  </data>
+  <data name="MRPOrderGridFicheNo" xml:space="preserve">
+    <value>SİPARİŞ NO</value>
+  </data>
+  <data name="MRPState_Label" xml:space="preserve">
+    <value>Durum:</value>
+  </data>
+  <data name="MRPWarehouseCodeButtonEditLabel" xml:space="preserve">
+    <value>Depo Kodu:</value>
+  </data>
   <data name="OrderAcceptanceRecordLineContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -308,6 +401,9 @@
   </data>
   <data name="OrderAcceptanceRecordsContextDelete" xml:space="preserve">
     <value>Sil</value>
+  </data>
+  <data name="OrderAcceptanceRecordsContextMRP" xml:space="preserve">
+    <value>Malzeme İhtiyaç Listesi</value>
   </data>
   <data name="OrderAcceptanceRecordsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
@@ -377,5 +473,14 @@
   </data>
   <data name="ValidatorCurrentAccountCardID" xml:space="preserve">
     <value>Lütfen cari hesap seçiniz.</value>
+  </data>
+  <data name="WarehouseModalTitle" xml:space="preserve">
+    <value>Depo Kartları</value>
+  </data>
+  <data name="WarehousesPopupGridCode" xml:space="preserve">
+    <value>DEPO KODU</value>
+  </data>
+  <data name="WarehousesPopupGridName" xml:space="preserve">
+    <value>DEPO ADI</value>
   </data>
 </root>

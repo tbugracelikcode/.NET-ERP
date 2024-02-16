@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.OrderAcceptanceRecord.Services;
 using TsiErp.Business.Entities.PurchaseOrder.Validations;
 using TsiErp.Business.Entities.PurchaseRequest.Services;
 using TsiErp.Business.Entities.StockMovement;
@@ -40,14 +41,16 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
 
         private readonly IPurchaseRequestsAppService _PurchaseRequestsAppService;
+        private readonly IOrderAcceptanceRecordsAppService _OrderAcceptanceRecordsAppService;
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
 
-        public PurchaseOrdersAppService(IStringLocalizer<PurchaseOrdersResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public PurchaseOrdersAppService(IStringLocalizer<PurchaseOrdersResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService, IFicheNumbersAppService ficheNumbersAppService, IOrderAcceptanceRecordsAppService orderAcceptanceRecordsAppService) : base(l)
         {
             _PurchaseRequestsAppService = PurchaseRequestsAppService;
             FicheNumbersAppService = ficheNumbersAppService;
+            _OrderAcceptanceRecordsAppService = orderAcceptanceRecordsAppService;
         }
 
         [ValidationAspect(typeof(CreatePurchaseOrdersValidator), Priority = 1)]
@@ -156,6 +159,14 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+
+                if(item.OrderAcceptanceID != null && item.OrderAcceptanceID != Guid.Empty) // Sipariş kabul kaydının temin tarihini güncelleme
+                {
+                    if(item.OrderAcceptanceLineID != null && item.OrderAcceptanceLineID != Guid.Empty)
+                    {
+                        await _OrderAcceptanceRecordsAppService.UpdateLineAsync(item.OrderAcceptanceLineID.GetValueOrDefault(), item.SupplyDate.GetValueOrDefault());
+                    }
+                }
             }
 
             var purchaseOrder = queryFactory.Insert<SelectPurchaseOrdersDto>(query, "Id", true);
