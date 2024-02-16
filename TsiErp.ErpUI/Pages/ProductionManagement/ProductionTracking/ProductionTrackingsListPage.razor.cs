@@ -236,6 +236,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                 DataSource.WorkOrderCode = string.Empty;
                 DataSource.CurrentAccountCardID = Guid.Empty;
                 DataSource.CustomerCode = string.Empty;
+                DataSource.ProductID = Guid.Empty;
+                DataSource.ProductionOrderID = Guid.Empty;
+                DataSource.ProductsOperationID = Guid.Empty;
             }
         }
 
@@ -256,6 +259,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                         DataSource.WorkOrderID = selectedWorkOrder.Id;
                         DataSource.CurrentAccountCardID = selectedWorkOrder.CurrentAccountCardID;
                         DataSource.PlannedQuantity = selectedWorkOrder.PlannedQuantity;
+                        DataSource.ProductID = selectedWorkOrder.ProductID.GetValueOrDefault();
+                        DataSource.ProductionOrderID = selectedWorkOrder.ProductionOrderID.GetValueOrDefault();
+                        DataSource.ProductsOperationID = selectedWorkOrder.ProductsOperationID.GetValueOrDefault();
 
                         OperationLineList = (await ProductsOperationsAppService.GetAsync(selectedWorkOrder.ProductsOperationID.GetValueOrDefault())).Data.SelectProductsOperationLines.ToList();
 
@@ -263,6 +269,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
                         DataSource.WorkOrderCode = selectedWorkOrder.WorkOrderNo;
                         SelectWorkOrdersPopupVisible = false;
+
+                        
                     }
                     else
                     {

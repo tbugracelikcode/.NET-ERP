@@ -101,6 +101,36 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// </summary>
         public Guid ShiftID { get; set; }
 
+        /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid ProductID { get; set; }
+
+        /// <summary>
+        /// Stok Kodu
+        /// </summary>
+        public string ProductCode { get; set; }
+
+        /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid ProductionOrderID { get; set; }
+
+        /// <summary>
+        /// Üretim Emri Numarası
+        /// </summary>
+        public string ProductionOrderCode { get; set; }
+
+        /// <summary>
+        /// Ürüne Özel Operasyon ID
+        /// </summary>
+        public Guid ProductsOperationID { get; set; }
+
+        /// <summary>
+        /// Operasyon Adı
+        /// </summary>
+        public string ProductOperationName { get; set; }
+
         [NoDatabaseAction]
 
         public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLines { get; set; }
