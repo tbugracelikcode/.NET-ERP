@@ -20,6 +20,7 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.Route;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesProposition;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.TableConstant;
@@ -88,6 +89,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
+                OrderID = input.OrderID
             });
 
             var workOrders = queryFactory.Insert<SelectWorkOrdersDto>(query, "Id", true);
@@ -199,11 +201,17 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                             nameof(Products.Id),
                             JoinType.Left
                         )
-                           .Join<CurrentAccountCards>
+                         .Join<CurrentAccountCards>
                         (
                             ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
                             nameof(WorkOrders.CurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        ).Join<SalesOrders>
+                        (
+                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id },
+                            nameof(WorkOrders.OrderID),
+                            nameof(SalesOrders.Id),
                             JoinType.Left
                         )
                         .Where(new { Id = id }, false, false, Tables.WorkOrders);
@@ -339,7 +347,8 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = DateTime.Now,
-                LastModifierId = LoginedUserService.UserId
+                LastModifierId = LoginedUserService.UserId,
+                OrderID = input.OrderID
             }).Where(new { Id = input.Id }, false, false, "");
 
             var workOrders = queryFactory.Update<SelectWorkOrdersDto>(query, "Id", true);
@@ -387,7 +396,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 Id = id,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
-
+                OrderID = entity.OrderID
             }).Where(new { Id = id }, false, false, "");
 
             var workOrders = queryFactory.Update<SelectWorkOrdersDto>(query, "Id", true);
