@@ -14,6 +14,8 @@ using TsiErp.Business.Entities.FirstProductApproval.Services;
 using TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Services;
 using TsiErp.Business.Entities.OperationalQualityPlan.Services;
 using TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.Services;
+using TsiErp.Business.Entities.Menu.Services;
 #if WINDOWS
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -102,6 +104,8 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<IFicheNumbersAppService, FicheNumbersAppService>();
             builder.Services.AddScoped<IOperationalQualityPlansAppService, OperationalQualityPlansAppService>();
             builder.Services.AddScoped<IOperationAdjustmentsAppService, OperationAdjustmentsAppService>();
+            builder.Services.AddScoped<IUserPermissionsAppService, UserPermissionsAppService>();
+            builder.Services.AddScoped<IMenusAppService, MenusAppService>();
 
 
 

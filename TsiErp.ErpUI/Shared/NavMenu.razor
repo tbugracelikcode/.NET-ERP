@@ -210,6 +210,7 @@
                                 <DxTreeViewNode NavigateUrl="/work-orders" Text=@L["WorkOrdersChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
+
                         <DxTreeViewNode Text=@L["ProductionTrackingRecordsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/production-tracking" Text=@L["ProdTrackingsChildMenu"] />
@@ -217,11 +218,12 @@
                                 <DxTreeViewNode NavigateUrl="/contract-production-tracking" Text=@L["ContractProdTrackingsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
+
                         <DxTreeViewNode Text=@L["ProductionManagementReportsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["GeneralOEEChildMenu"] />
                                 <DxTreeViewNode Text=@L["StationOEEChildMenu"] />
-                                <DxTreeViewNode Text=@L["ProdTrackingListChildMenu"] />
+                                <DxTreeViewNode Text=@L["ProdTrackingListChildMenu"] NavigateUrl="/production-tracking-list-report" />
                                 <DxTreeViewNode Text=@L["WorkOrderListChildMenu"] />
                                 <DxTreeViewNode Text=@L["ProductionOrderListChildMenu"] />
                             </Nodes>

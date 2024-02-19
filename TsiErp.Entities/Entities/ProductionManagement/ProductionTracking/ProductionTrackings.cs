@@ -109,5 +109,23 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking
         /// </summary>
         public string Description_ { get; set; }
 
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid ProductID { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid ProductionOrderID { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Ürüne Özel Operasyon ID
+        /// </summary>
+        public Guid ProductsOperationID { get; set; }
+
     }
 }
