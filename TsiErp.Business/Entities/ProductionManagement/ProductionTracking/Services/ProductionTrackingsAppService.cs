@@ -20,13 +20,16 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason;
 using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ProductionTrackings.Page;
@@ -126,6 +129,9 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
+                ProductID = input.ProductID,
+                ProductionOrderID = input.ProductionOrderID,
+                ProductsOperationID = input.ProductsOperationID
             });
 
             #region Halt Lines
@@ -788,6 +794,27 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
+                    .Join<Products>
+                    (
+                        e => new { ProductID = e.Id, ProductCode = e.Code },
+                        nameof(ProductionTrackings.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductionOrders>
+                    (
+                        e => new { ProductionOrderID = e.Id, ProductionOrderCode = e.FicheNo },
+                        nameof(ProductionTrackings.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductsOperations>
+                    (
+                        e => new { ProductsOperationID = e.Id, ProductOperationName = e.Name },
+                        nameof(ProductionTrackings.ProductsOperationID),
+                        nameof(ProductsOperations.Id),
+                        JoinType.Left
+                    )
                     .Where(new { Id = id }, false, false, Tables.ProductionTrackings);
 
             var productionTrackings = queryFactory.Get<SelectProductionTrackingsDto>(query);
@@ -858,6 +885,27 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
+                    .Join<Products>
+                    (
+                        e => new { ProductID = e.Id, ProductCode = e.Code },
+                        nameof(ProductionTrackings.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductionOrders>
+                    (
+                        e => new { ProductionOrderID = e.Id, ProductionOrderCode = e.FicheNo },
+                        nameof(ProductionTrackings.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductsOperations>
+                    (
+                        e => new { ProductsOperationID = e.Id, ProductOperationName = e.Name },
+                        nameof(ProductionTrackings.ProductsOperationID),
+                        nameof(ProductsOperations.Id),
+                        JoinType.Left
+                    )
                     .Where(null, false, false, Tables.ProductionTrackings);
 
             var productionTrackings = queryFactory.GetList<ListProductionTrackingsDto>(query).ToList();
@@ -914,6 +962,27 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                         e => new { CurrentAccountCardID = e.Id, CustomerCode = e.CustomerCode },
                         nameof(ProductionTrackings.CurrentAccountCardID),
                         nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Join<Products>
+                    (
+                        e => new { ProductID = e.Id, ProductCode = e.Code },
+                        nameof(ProductionTrackings.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductionOrders>
+                    (
+                        e => new { ProductionOrderID = e.Id, ProductionOrderCode = e.FicheNo },
+                        nameof(ProductionTrackings.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductsOperations>
+                    (
+                        e => new { ProductsOperationID = e.Id, ProductOperationName = e.Name },
+                        nameof(ProductionTrackings.ProductsOperationID),
+                        nameof(ProductsOperations.Id),
                         JoinType.Left
                     )
                     .Where(new { Id = input.Id }, false, false, Tables.ProductionTrackings);
@@ -1035,6 +1104,9 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = DateTime.Now,
                 LastModifierId = LoginedUserService.UserId,
+                ProductID = input.ProductID,
+                ProductionOrderID = input.ProductionOrderID,
+                ProductsOperationID = input.ProductsOperationID
             }).Where(new { Id = input.Id }, false, false, "");
 
             if (input.SelectProductionTrackingHaltLinesDto != null)
@@ -1496,6 +1568,9 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                ProductID = entity.ProductID,
+                ProductionOrderID = entity.ProductionOrderID,
+                ProductsOperationID = entity.ProductsOperationID
             }).Where(new { Id = id }, false, false, "");
 
             var productionTrackingsDto = queryFactory.Update<SelectProductionTrackingsDto>(query, "Id", true);
