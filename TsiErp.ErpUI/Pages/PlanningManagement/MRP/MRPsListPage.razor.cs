@@ -243,6 +243,13 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                 {
                                     var product = (await ProductsAppService.GetAsync(data.ProductID.GetValueOrDefault())).Data;
 
+                                    DateTime? supplyDate = null;
+
+                                    if(data.RequirementAmount== 0)
+                                    {
+                                        supplyDate = DateTime.Today;
+                                    }
+
                                     SelectPurchaseOrderLinesDto purchaseOrderLineModel = new SelectPurchaseOrderLinesDto
                                     {
                                         DiscountAmount = 0,
@@ -254,6 +261,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                         LineDescription = string.Empty,
                                         LineTotalAmount = 0,
                                         LinkedPurchaseRequestID = Guid.Empty,
+                                        OrderAcceptanceID = data.OrderAcceptanceID.GetValueOrDefault(),
+                                        OrderAcceptanceLineID = data.OrderAcceptanceLineID.GetValueOrDefault(),
                                         WorkOrderCreationDate = null,
                                         VATrate = 0,
                                         VATamount = 0,
@@ -270,6 +279,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                         ProductCode = product.Code,
                                         PaymentPlanID = Guid.Empty,
                                         PaymentPlanName = string.Empty,
+                                        SupplyDate = supplyDate
                                     };
 
                                     BranchIDData = data.BranchID;
@@ -286,6 +296,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                     TotalVatExcludedAmount = 0,
                                     CurrencyID = Guid.Empty,
                                     MRPID = DataSource.Id,
+                                    OrderAcceptanceID = DataSource.OrderAcceptanceID.GetValueOrDefault(),
                                     CurrentAccountCardID = Guid.Empty,
                                     ShippingAdressID = Guid.Empty,
                                     TotalDiscountAmount = 0,
@@ -562,46 +573,47 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                     foreach (var orderline in salesOrderLineList)
                     {
-                        var product = (await ProductsAppService.GetAsync(orderline.ProductID.GetValueOrDefault())).Data;
-
-                        //if (product.SupplyForm == Entities.Enums.ProductSupplyFormEnum.Satınalma)
-                        //{
                         var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(orderline.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.ToList();
-
-
 
                         foreach (var bomline in bomLineList)
                         {
-                            int calculatedAmount = Convert.ToInt32(orderline.Quantity * bomline.Quantity);
 
-                            decimal amountofProduct = (await GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Data.Where(t => t.ProductID == bomline.ProductID).Select(t => t.Amount).Sum();
+                            var product = (await ProductsAppService.GetAsync(bomline.ProductID.GetValueOrDefault())).Data;
 
-                            SelectMRPLinesDto mrpLineModel = new SelectMRPLinesDto
+                            if (product.SupplyForm == Entities.Enums.ProductSupplyFormEnum.Satınalma)
                             {
-                                Amount = calculatedAmount,
-                                isCalculated = true,
-                                isPurchase = false,
-                                ProductID = bomline.ProductID.GetValueOrDefault(),
-                                MRPID = DataSource.Id,
-                                ProductCode = bomline.ProductCode,
-                                ProductName = bomline.ProductName,
-                                SalesOrderID = selectedRow.Id,
-                                UnitSetID = bomline.UnitSetID,
-                                LineNr = GridLineList.Count + 1,
-                                UnitSetCode = bomline.UnitSetCode,
-                                AmountOfStock = amountofProduct,
-                                RequirementAmount = Math.Abs(Convert.ToInt32(amountofProduct) - calculatedAmount),
-                                SalesOrderLineID = orderline.Id,
-                                SalesOrderFicheNo = selectedRow.FicheNo,
-                                BranchID = branch.Id,
-                                WarehouseID = warehouse.Id,
-                                BranchCode = branch.Code,
-                                WarehouseCode = warehouse.Code,
-                            };
+                                int calculatedAmount = Convert.ToInt32(orderline.Quantity * bomline.Quantity);
 
-                            GridLineList.Add(mrpLineModel);
+                                decimal amountofProduct = (await GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Data.Where(t => t.ProductID == bomline.ProductID).Select(t => t.Amount).Sum();
+
+                                SelectMRPLinesDto mrpLineModel = new SelectMRPLinesDto
+                                {
+                                    Amount = calculatedAmount,
+                                    isCalculated = true,
+                                    isPurchase = false,
+                                    ProductID = bomline.ProductID.GetValueOrDefault(),
+                                    MRPID = DataSource.Id,
+                                    ProductCode = bomline.ProductCode,
+                                    ProductName = bomline.ProductName,
+                                    SalesOrderID = selectedRow.Id,
+                                    UnitSetID = bomline.UnitSetID,
+                                    LineNr = GridLineList.Count + 1,
+                                    UnitSetCode = bomline.UnitSetCode,
+                                    AmountOfStock = amountofProduct,
+                                    RequirementAmount = Math.Abs(Convert.ToInt32(amountofProduct) - calculatedAmount),
+                                    SalesOrderLineID = orderline.Id,
+                                    SalesOrderFicheNo = selectedRow.FicheNo,
+                                    BranchID = branch.Id,
+                                    WarehouseID = warehouse.Id,
+                                    BranchCode = branch.Code,
+                                    WarehouseCode = warehouse.Code,
+                                };
+
+                                GridLineList.Add(mrpLineModel);
+                            }
+
                         }
-                        //}
+
                     }
 
                 }

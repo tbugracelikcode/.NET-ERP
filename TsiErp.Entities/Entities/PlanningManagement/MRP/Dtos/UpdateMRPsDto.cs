@@ -30,6 +30,10 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos
         /// Bakım MRP ID
         /// </summary>
         public Guid? MaintenanceMRPID { get; set; }
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceID { get; set; }
 
         [NoDatabaseAction]
         public List<SelectMRPLinesDto> SelectMRPLines { get; set; }

@@ -148,6 +148,7 @@ using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine;
 using TsiErp.Entities.Entities.StockManagement.ProductCost;
+using TsiErp.Entities.Entities.PlanningManagement.StationOccupancy;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -5164,6 +5165,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 ProductCostsTable.Create();
+            }
+            #endregion
+
+            #region StationOccupancies Table Created
+            Table StationOccupanciesTable = model.CreateTable(Tables.StationOccupancies);
+
+            if (StationOccupanciesTable != null)
+            {
+                var properties = (typeof(StationOccupancies)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(StationOccupanciesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(StationOccupanciesTable, "PK_" + StationOccupanciesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        StationOccupanciesTable.Indexes.Add(pkIndex);
+                    }
+
+                    StationOccupanciesTable.Columns.Add(column);
+                }
+
+                StationOccupanciesTable.Create();
             }
             #endregion
 

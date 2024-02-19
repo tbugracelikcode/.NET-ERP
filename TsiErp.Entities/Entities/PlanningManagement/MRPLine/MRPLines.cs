@@ -80,5 +80,15 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine
         /// Depo ID
         /// </summary>
         public Guid WarehouseID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Sipariş Kabul Satır ID
+        /// </summary>
+        public Guid? OrderAcceptanceLineID { get; set; }
     }
 }

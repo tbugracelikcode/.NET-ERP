@@ -1,5 +1,4 @@
 ﻿using Tsi.Core.Entities.Auditing;
-using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
 {
@@ -61,5 +60,13 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
         /// Depo ID
         /// </summary>
         public Guid? WarehouseID { get; set; }
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceID { get; set; }
+        /// <summary>
+        /// Sipariş Kabul Satır ID
+        /// </summary>
+        public Guid? OrderAcceptanceLineID { get; set; }
     }
 }

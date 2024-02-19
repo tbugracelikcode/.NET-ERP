@@ -134,5 +134,9 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
         /// Sevkiyat Adresi Açıklaması
         /// </summary>
         public string ShippingAdressName { get; set; }
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceID { get; set; }
     }
 }

@@ -111,6 +111,8 @@ using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.StationOccupancy;
+using TsiErp.Entities.Entities.PlanningManagement.StationOccupancy.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine;
@@ -405,6 +407,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectCurrenciesDto, CreateCurrenciesDto>();
             CreateMap<UpdateCurrenciesDto, Currencies>();
             CreateMap<SelectCurrenciesDto, UpdateCurrenciesDto>();
+
+            CreateMap<StationOccupancies, SelectStationOccupanciesDto>();
+            CreateMap<StationOccupancies, ListStationOccupanciesDto>();
+            CreateMap<CreateStationOccupanciesDto, StationOccupancies>();
+            CreateMap<SelectStationOccupanciesDto, CreateStationOccupanciesDto>();
+            CreateMap<UpdateStationOccupanciesDto, StationOccupancies>();
+            CreateMap<SelectStationOccupanciesDto, UpdateStationOccupanciesDto>();
 
             CreateMap<CurrentAccountCards, SelectCurrentAccountCardsDto>();
             CreateMap<CurrentAccountCards, ListCurrentAccountCardsDto>();

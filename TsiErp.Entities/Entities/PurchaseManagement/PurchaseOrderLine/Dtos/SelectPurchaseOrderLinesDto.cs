@@ -172,5 +172,13 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
         /// Cari Ünvan
         /// </summary>
         public string CurrentAccountCardName { get; set; }
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceID { get; set; }
+        /// <summary>
+        /// Sipariş Kabul Satır ID
+        /// </summary>
+        public Guid? OrderAcceptanceLineID { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -90,6 +91,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                     CustomerReferanceNo = item.CustomerReferanceNo,
                     DefinedUnitPrice = item.DefinedUnitPrice,
                     Description_ = item.Description_,
+                    PurchaseSupplyDate = item.PurchaseSupplyDate,
                     LineAmount = item.LineAmount,
                     MinOrderAmount = item.MinOrderAmount,
                     OrderAmount = item.OrderAmount,
@@ -322,7 +324,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
             var query = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Update(new UpdateOrderAcceptanceRecordsDto
             {
-               
+
                 CurrentAccountCardID = input.CurrentAccountCardID,
                 ConfirmedLoadingDate = input.ConfirmedLoadingDate,
                 CurrenyID = input.CurrenyID,
@@ -364,6 +366,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         ProductReferanceNumberID = item.ProductReferanceNumberID,
                         UnitSetID = item.UnitSetID,
                         OrderAcceptanceRecordID = input.Id,
+                        PurchaseSupplyDate = item.PurchaseSupplyDate,
                         CreationTime = DateTime.Now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
@@ -398,6 +401,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             LineAmount = item.LineAmount,
                             MinOrderAmount = item.MinOrderAmount,
                             OrderAmount = item.OrderAmount,
+                            PurchaseSupplyDate = item.PurchaseSupplyDate,
                             OrderUnitPrice = item.OrderUnitPrice,
                             ProductReferanceNumberID = item.ProductReferanceNumberID,
                             UnitSetID = item.UnitSetID,
@@ -438,7 +442,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
             var query = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Update(new UpdateOrderAcceptanceRecordsDto
             {
-                
+
                 CurrentAccountCardID = entity.CurrentAccountCardID,
                 ConfirmedLoadingDate = entity.ConfirmedLoadingDate,
                 CurrenyID = entity.CurrenyID,
@@ -467,6 +471,65 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
             return new SuccessDataResult<SelectOrderAcceptanceRecordsDto>(OrderAcceptanceRecordsDto);
 
 
+        }
+
+        public async Task<IDataResult<SelectOrderAcceptanceRecordLinesDto>> UpdateLineAsync(Guid lineID, DateTime supplyDate)
+        {
+            var entityLineQuery = queryFactory
+                   .Query()
+                   .From(Tables.OrderAcceptanceRecordLines)
+                     .Select<OrderAcceptanceRecordLines>(null)
+                  .Join<Products>
+                    (
+                        pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
+                        nameof(OrderAcceptanceRecordLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductReferanceNumbers>
+                    (
+                        pr => new { ProductReferanceNumberID = pr.Id, OrderReferanceNo = pr.OrderReferanceNo, CustomerReferanceNo = pr.CustomerReferanceNo, CustomerBarcodeNo = pr.CustomerBarcodeNo, MinOrderAmount = pr.MinOrderAmount },
+                        nameof(OrderAcceptanceRecordLines.ProductReferanceNumberID),
+                        nameof(ProductReferanceNumbers.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Id = lineID }, false, false, Tables.OrderAcceptanceRecordLines);
+
+            var entityLine = queryFactory.Get<SelectOrderAcceptanceRecordLinesDto>(entityLineQuery);
+
+            var query = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Update(new UpdateOrderAcceptanceRecordLinesDto
+            {
+                OrderReferanceNo = entityLine.OrderReferanceNo,
+                CustomerBarcodeNo = entityLine.CustomerBarcodeNo,
+                CustomerReferanceNo = entityLine.CustomerReferanceNo,
+                DefinedUnitPrice = entityLine.DefinedUnitPrice,
+                Description_ = entityLine.Description_,
+                LineAmount = entityLine.LineAmount,
+                MinOrderAmount = entityLine.MinOrderAmount,
+                OrderAmount = entityLine.OrderAmount,
+                PurchaseSupplyDate = supplyDate,
+                OrderUnitPrice = entityLine.OrderUnitPrice,
+                ProductReferanceNumberID = entityLine.ProductReferanceNumberID,
+                UnitSetID = entityLine.UnitSetID,
+                OrderAcceptanceRecordID = entityLine.Id,
+                CreationTime = entityLine.CreationTime,
+                CreatorId = entityLine.CreatorId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entityLine.DeleterId.GetValueOrDefault(),
+                DeletionTime = entityLine.DeletionTime.GetValueOrDefault(),
+                Id = entityLine.Id,
+                IsDeleted = entityLine.IsDeleted,
+                LastModificationTime = DateTime.Now,
+                LastModifierId = LoginedUserService.UserId,
+                LineNr = entityLine.LineNr,
+                ProductID = entityLine.ProductID,
+            }).Where(new { Id = lineID }, false, false, "");
+
+            var OrderAcceptanceRecordLine = queryFactory.Update<SelectOrderAcceptanceRecordLinesDto>(query, "Id", true);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectOrderAcceptanceRecordLinesDto>(OrderAcceptanceRecordLine);
         }
     }
 }

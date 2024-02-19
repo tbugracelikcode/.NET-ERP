@@ -20,6 +20,12 @@
 @inject IProductsAppService ProductsAppService
 @inject ISalesOrdersAppService SalesOrdersAppService
 @inject IUserPermissionsAppService UserPermissionsAppService
+@inject IBillsofMaterialsAppService BillsofMaterialsAppService
+@inject IGrandTotalStockMovementsAppService GrandTotalStockMovementsAppService
+@inject IPurchaseManagementParametersAppService PurchaseManagementParametersAppService
+@inject IBranchesAppService BranchesAppService
+@inject IWarehousesAppService WarehousesAppService
+@inject IMRPsAppService MRPsService
 @inject IMenusAppService MenusAppService
 
 @if (!base.IsLoaded)
@@ -383,6 +389,221 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
+    <DxPopup @bind-Visible="MRPCrudModalVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["MRPModalTitle"]"
+             Width="87%"
+             Height="83%"
+             MinWidth="1500px"
+             MinHeight="900px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="50%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="15%" />
+                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="45%" />
+                    <DxGridLayoutColumn Width="24%" />
+                    <DxGridLayoutColumn Width="5%" />
+                </Columns>
+
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["MRPCodeLabel"] </strong></label>
+
+                            <SfTextBox @ref="@MRPCodeButtonEdit" Created="@MRPCodeOnCreateIcon" @bind-Value="MRPDataSource.Code" ShowClearButton=true></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3" RowSpan="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["MRPDescription_Label"] </strong></label>
+                            <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="MRPDataSource.Description_"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["MRPDate_Label"] </strong></label><br />
+                            <SfDatePicker @bind-Value="MRPDataSource.Date_"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["MRPState_Label"] </strong></label><br />
+                            <SfTextBox @bind-Value="MRPDataSource.State_" CssClass="TSITxtBox"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="3" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["MRPBranchCodeButtonEditLabel"] </strong></label><br />
+                             <SfTextBox @ref="@BranchesButtonEdit" Created="@BranchesOnCreateIcon" @bind-Value="BranchCodeButtonEdit" ShowClearButton=true ValueChange="BranchesOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="4" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["MRPWarehouseCodeButtonEditLabel"] </strong></label><br />
+                            <SfTextBox @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="WarehouseCodeButtonEdit" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="4" Column="3">
+                        <Template>
+                            <center>
+                                <label class="TSIModalLabel"><strong>@L["MRPIsMaintenanceMRPLabel"] </strong></label><br />
+                            <SfSwitch Disabled=true  @bind-Checked="MRPDataSource.IsMaintenanceMRP" ></SfSwitch></center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="5" Column="1">
+                        <Template>
+                            <SfGrid  ID="OrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@SalesOrdersList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListSalesOrderDto.FicheNo) Context="OrdersContext" HeaderText="@L["MRPOrderGridFicheNo"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="5" Column="2">
+                        <Template>
+                            <table style="height:100%">
+                                <tr style="height:45%">
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr style="vertical-align:central; height:10%">
+                                    <td>
+                                        <SfButton CssClass="TSISaveButton" Disabled=true><SfIcon Size="IconSize.Medium" Name="IconName.ArrowRight"></SfIcon></SfButton>
+                                    </td>
+                                </tr>
+                                <tr style="height:45%">
+                                    <td>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="5" Column="3" ColumnSpan="2">
+                        <Template>
+                            <SfGrid @ref=_MRPLineGrid ID="MRPLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@MRPLinesList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MRPLineGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnMRPListContextMenuClick" TValue="SelectMRPLinesDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.isCalculated) DisplayAsCheckBox="true" HeaderText="@L["MRPLineGridSalesOrderisCalculated"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.isPurchase) DisplayAsCheckBox="true" HeaderText="@L["MRPLineGridSalesOrderisPurchase"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.SalesOrderFicheNo) HeaderText="@L["MRPLineGridSalesOrderFicheNo"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.ProductCode) HeaderText="@L["MRPLineGridProductCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.UnitSetCode) HeaderText="@L["MRPLineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                      
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.BranchCode) HeaderText="@L["MRPLineGridBranchCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.WarehouseCode) HeaderText="@L["MRPLineGridWarehouseCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.AmountOfStock) HeaderText="@L["MRPLineGridAmountOfStock"]" TextAlign="TextAlign.Center" Width="280" Format="N2"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.Amount) Type="ColumnType.Number" HeaderText="@L["MRPLineGridAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.RequirementAmount) Type="ColumnType.Number" HeaderText="@L["MRPLineGridRequirementAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                </GridColumns>
+                            </SfGrid> 
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnMRPSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideMRPPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+
+    <DxPopup @bind-Visible="MRPLineCrudPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["MRPLineModalTitle"]"
+             Width="42%"
+             Height="26%"
+             MinWidth="720px"
+             MinHeight="200px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["MRPLineBranchCodeButtonEditLabel"] </strong></label>
+                            <SfTextBox @ref="@LineBranchesButtonEdit" Created="@LineBranchesOnCreateIcon" @bind-Value="MRPLineDataSource.BranchCode" ShowClearButton=true ValueChange="LineBranchesOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["MRPLineWarehouseCodeButtonEditLabel"] </strong></label>
+                            <SfTextBox @ref="@LineWarehousesButtonEdit" Created="@LineWarehousesOnCreateIcon" @bind-Value="MRPLineDataSource.WarehouseCode" ShowClearButton=true ValueChange="LineWarehousesOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                   
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnMRPLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideMRPLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
 
 }
 
@@ -423,6 +644,210 @@ else
                                             <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Email) HeaderText="@L["CurrentAccountPopupGridEmail"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
 
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectWarehousesPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectWarehousesPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["WarehouseModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="WarehouseGrid1" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@WarehousesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@WarehousesDoubleClickHandler" TValue="ListWarehousesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListWarehousesDto.Code) HeaderText="@L["WarehousesPopupGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWarehousesDto.Name) HeaderText="@L["WarehousesPopupGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectBranchesPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectBranchesPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["BranchModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="BranchGrid1" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@BranchesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@BranchesDoubleClickHandler" TValue="ListBranchesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListBranchesDto.Code) HeaderText="@L["BranchesPopupGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListBranchesDto.Name) HeaderText="@L["BranchesPopupGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectLineWarehousesPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectLineWarehousesPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["WarehouseModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="WarehouseGrid2" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@LineWarehousesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@LineWarehousesDoubleClickHandler" TValue="ListWarehousesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListWarehousesDto.Code) HeaderText="@L["WarehousesPopupGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWarehousesDto.Name) HeaderText="@L["WarehousesPopupGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectLineBranchesPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectLineBranchesPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["BranchModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="BranchGrid2" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@LineBranchesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@LineBranchesDoubleClickHandler" TValue="ListBranchesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListBranchesDto.Code) HeaderText="@L["BranchesPopupGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListBranchesDto.Name) HeaderText="@L["BranchesPopupGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                        </GridColumns>
                                     </SfGrid>
                                 </CardContent>
                                 <CardFooter>

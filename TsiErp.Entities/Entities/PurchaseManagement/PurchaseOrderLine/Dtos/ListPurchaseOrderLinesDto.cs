@@ -95,5 +95,13 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
         /// Temin Tarihi
         /// </summary>
         public DateTime? SupplyDate { get; set; }
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceID { get; set; }
+        /// <summary>
+        /// Sipariş Kabul Satır ID
+        /// </summary>
+        public Guid? OrderAcceptanceLineID { get; set; }
     }
 }
