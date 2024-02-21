@@ -58,5 +58,9 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos
         /// Üretim Emri Oluşturulma Tarihi
         /// </summary>
         public DateTime WorkOrderCreationDate { get; set; }
+        /// <summary>
+        /// Satın Alma Temin Tarihi
+        /// </summary>
+        public DateTime? PurchaseSupplyDate { get; set; }
     }
 }

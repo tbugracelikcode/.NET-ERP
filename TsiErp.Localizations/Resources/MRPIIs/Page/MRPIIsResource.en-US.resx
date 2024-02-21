@@ -118,78 +118,78 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CloseButton" xml:space="preserve">
-    <value>Kapat</value>
+    <value>Close</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
-    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+    <value>There is a record with the same code.</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
-    <value>Silmek istediğinize emin misiniz ?</value>
+    <value>Are you sure you want to delete?</value>
   </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
-    <value>Onay</value>
+    <value>Confirmation</value>
   </data>
   <data name="DeleteControlManager" xml:space="preserve">
-    <value>Hareket gören kayıtlar silinemez.</value>
+    <value>Records with transaction cannot be deleted.</value>
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
-    <value>Kayıt başarıyla silindi.</value>
+    <value>The record deleted successfully.</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Production Resource Planning (MRPII)</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Hata</value>
+    <value>Error</value>
+  </data>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>MRPII</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Production Resource Planning (MRPII)</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
-    <value>Lütfen Bekleyin..</value>
+    <value>Please wait..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
-    <value>Kayıtlar Yükleniyor..</value>
+    <value>The records are loading..</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
-    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
+    <value>The record you selected is using by {0}.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
-    <value>Bilgi</value>
+    <value>Information</value>
   </data>
-  <data name="MRPIISourceModuleLabel" xml:space="preserve">
-    <value>MRPII'nin hesaplama kaynak modülünü seçin.</value>
+  <data name="MRPIIsContextAdd" xml:space="preserve">
+    <value>Add</value>
   </data>
-  <data name="MRPPurchaseTransactionLabel" xml:space="preserve">
-    <value>Malzeme İhtiyaç Planlaması'nın (MRP) satın alma sürecinin başlayacağı hareket türünü seçin.</value>
+  <data name="MRPIIsContextChange" xml:space="preserve">
+    <value>Change</value>
   </data>
-  <data name="OrderAcceptance" xml:space="preserve">
-    <value>Sipariş Kabul Kayıtları</value>
+  <data name="MRPIIsContextDelete" xml:space="preserve">
+    <value>Delete</value>
   </data>
-  <data name="PlanningManagementParameterContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="PlanningManagementParameterContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="PlanningManagementParameterContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="PlanningManagementParameterContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
-  <data name="PurchaseOrder" xml:space="preserve">
-    <value>Satınalma Siparişi</value>
-  </data>
-  <data name="PurchaseRequest" xml:space="preserve">
-    <value>Satınalma Talep</value>
-  </data>
-  <data name="SalesOrder" xml:space="preserve">
-    <value>Satış Siparişleri</value>
+  <data name="MRPIIsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
-    <value>Kaydet</value>
+    <value>Save</value>
   </data>
-  <data name="UICurrentMenu" xml:space="preserve">
-    <value>Planlama Yönetimi Parametreleri</value>
+  <data name="SelectAllText" xml:space="preserve">
+    <value>Select All</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Genel Sistem Tanımlamaları &gt; Genel Sistem Parametreleri</value>
+    <value>Planning &gt; Production Planning</value>
+  </data>
+  <data name="UnSelectAllText" xml:space="preserve">
+    <value>Unselect All</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
-    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+    <value>There is a record with the same code.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the MRP II code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>MRP II code cannot exceed 17 characters.</value>
   </data>
 </root>

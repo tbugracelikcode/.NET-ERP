@@ -221,6 +221,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MaintenancePeriodsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\MRPIIs\Page\MRPIIsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MRPIIsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\MRPs\Page\MRPsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -743,6 +748,10 @@
     <EmbeddedResource Update="Resources\MaintenancePeriods\Page\MaintenancePeriodsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MaintenancePeriodsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\MRPIIs\Page\MRPIIsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MRPIIsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\MRPs\Page\MRPsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

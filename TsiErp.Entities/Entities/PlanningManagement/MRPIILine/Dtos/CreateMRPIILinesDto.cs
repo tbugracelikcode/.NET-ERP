@@ -1,4 +1,5 @@
 ﻿using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.PlanningManagement.MRPIILine.Dtos
 {
@@ -32,5 +33,14 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPIILine.Dtos
         /// Stok ID
         /// </summary>
         public Guid? LinkedProductID { get; set; }
+
+        /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid? SalesOrderID { get; set; }
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceID { get; set; }
     }
 }

@@ -396,6 +396,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                 LineDataSource.ProductID = Guid.Empty;
                 LineDataSource.ProductCode = string.Empty;
                 LineDataSource.ProductName = string.Empty;
+                LineDataSource.ProductSupplyType = 0;
                 LineDataSource.UnitSetCode = string.Empty;
                 LineDataSource.MaterialType = 0;
                 LineDataSource.UnitSetID = Guid.Empty;
@@ -414,6 +415,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                 LineDataSource.UnitSetID = selectedProduct.UnitSetID;
                 LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
                 LineDataSource.MaterialType = selectedProduct.ProductType;
+                LineDataSource.ProductSupplyType = (int)selectedProduct.SupplyForm;
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

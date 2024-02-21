@@ -412,7 +412,15 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                     await SalesOrdersAppService.CreateAsync(createdSalesOrderEntity);
 
+                    DataSource.OrderAcceptanceRecordState = Entities.Enums.OrderAcceptanceRecordStateEnum.SiparisOlusturuldu;
+
+                    var updatedDataSource = ObjectMapper.Map<SelectOrderAcceptanceRecordsDto, UpdateOrderAcceptanceRecordsDto>(DataSource);
+
+                    await OrderAcceptanceRecordsAppService.UpdateAsync(updatedDataSource);
+
                     await ModalManager.MessagePopupAsync(L["UIConvertOrderTitle"], L["UIConvertOrderMessage"]);
+
+                    await GetListDataSourceAsync();
 
                     await InvokeAsync(StateHasChanged);
 

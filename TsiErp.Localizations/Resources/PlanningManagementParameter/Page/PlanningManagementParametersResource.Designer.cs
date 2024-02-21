@@ -161,11 +161,29 @@ namespace TsiErp.Localizations.Resources.PlanningManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MRPII&apos;nin hesaplama kaynak modülünü seçin..
+        /// </summary>
+        public static string MRPIISourceModuleLabel {
+            get {
+                return ResourceManager.GetString("MRPIISourceModuleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Malzeme İhtiyaç Planlaması&apos;nın (MRP) satın alma sürecinin başlayacağı hareket türünü seçin..
         /// </summary>
         public static string MRPPurchaseTransactionLabel {
             get {
                 return ResourceManager.GetString("MRPPurchaseTransactionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sipariş Kabul Kayıtları.
+        /// </summary>
+        public static string OrderAcceptance {
+            get {
+                return ResourceManager.GetString("OrderAcceptance", resourceCulture);
             }
         }
         
@@ -220,6 +238,15 @@ namespace TsiErp.Localizations.Resources.PlanningManagementParameter.Page {
         public static string PurchaseRequest {
             get {
                 return ResourceManager.GetString("PurchaseRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satış Siparişleri.
+        /// </summary>
+        public static string SalesOrder {
+            get {
+                return ResourceManager.GetString("SalesOrder", resourceCulture);
             }
         }
         

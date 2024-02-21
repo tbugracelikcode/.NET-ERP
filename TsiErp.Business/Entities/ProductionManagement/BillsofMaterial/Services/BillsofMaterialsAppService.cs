@@ -166,7 +166,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.BillsofMaterials)
-                   .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
+                   .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
                         pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
@@ -188,7 +188,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.BillsofMaterialLines)
-                   .Select<BillsofMaterialLines>(b => new { b.Id, b.BoMID, b.FinishedProductID, b.MaterialType, b.ProductID, b.UnitSetID, b.Quantity, b._Description, b.LineNr, b.Size, b.CreatorId, b.CreationTime, b.LastModifierId, b.LastModificationTime, b.DeleterId, b.DeletionTime, b.IsDeleted, b.DataOpenStatus, b.DataOpenStatusUserId })
+                   .Select<BillsofMaterialLines>(null)
                    .Join<Products>
                     (
                         p => new { FinishedProductCode = p.Code },
@@ -198,7 +198,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     )
                    .Join<Products>
                     (
-                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, ProductSupplyType = p.SupplyForm },
                         nameof(BillsofMaterialLines.ProductID),
                         nameof(Products.Id),
                         "ProductLine",
@@ -229,7 +229,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.BillsofMaterials)
-                   .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
+                   .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
                         pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
@@ -251,7 +251,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.BillsofMaterialLines)
-                   .Select<BillsofMaterialLines>(b => new { b.Id, b.BoMID, b.FinishedProductID, b.MaterialType, b.ProductID, b.UnitSetID, b.Quantity, b._Description, b.LineNr, b.Size, b.CreatorId, b.CreationTime, b.LastModifierId, b.LastModificationTime, b.DeleterId, b.DeletionTime, b.IsDeleted, b.DataOpenStatus, b.DataOpenStatusUserId })
+                   .Select<BillsofMaterialLines>(null)
                    .Join<Products>
                     (
                         p => new { FinishedProductCode = p.Code },
@@ -261,7 +261,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     )
                    .Join<Products>
                     (
-                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, ProductSupplyType = p.SupplyForm },
                         nameof(BillsofMaterialLines.ProductID),
                         nameof(Products.Id),
                         "ProductLine",
@@ -292,7 +292,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.BillsofMaterials)
-                   .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
+                   .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
                         pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
@@ -314,7 +314,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.BillsofMaterialLines)
-                   .Select<BillsofMaterialLines>(b => new { b.Id, b.BoMID, b.FinishedProductID, b.MaterialType, b.ProductID, b.UnitSetID, b.Quantity, b._Description, b.LineNr, b.Size, b.CreatorId, b.CreationTime, b.LastModifierId, b.LastModificationTime, b.DeleterId, b.DeletionTime, b.IsDeleted, b.DataOpenStatus, b.DataOpenStatusUserId })
+                   .Select<BillsofMaterialLines>(null)
                    .Join<Products>
                     (
                         p => new { FinishedProductCode = p.Code },
@@ -324,7 +324,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     )
                    .Join<Products>
                     (
-                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, ProductSupplyType = p.SupplyForm },
                         nameof(BillsofMaterialLines.ProductID),
                         nameof(Products.Id),
                         "ProductLine",
@@ -386,7 +386,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             var entityQuery = queryFactory
                    .Query()
                    .From(Tables.BillsofMaterials)
-                   .Select("*")
+                   .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
                         pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
@@ -408,7 +408,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.BillsofMaterialLines)
-                   .Select<BillsofMaterialLines>(b => new { b.BoMID, b.FinishedProductID, b.MaterialType, b.Quantity, b._Description, b.LineNr, b.Size })
+                   .Select<BillsofMaterialLines>(null)
                    .Join<Products>
                     (
                         p => new { FinishedProductCode = p.Code },
@@ -418,7 +418,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     )
                    .Join<Products>
                     (
-                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, ProductSupplyType = p.SupplyForm },
                         nameof(BillsofMaterialLines.ProductID),
                         nameof(Products.Id),
                         "ProductLine",
@@ -441,7 +441,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             var listQuery = queryFactory
                            .Query()
                            .From(Tables.BillsofMaterials)
-                           .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
+                           .Select<BillsofMaterials>(null)
                            .Join<Products>
                             (
                                 pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },

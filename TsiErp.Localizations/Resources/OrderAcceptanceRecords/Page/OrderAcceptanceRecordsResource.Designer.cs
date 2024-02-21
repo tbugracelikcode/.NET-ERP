@@ -377,6 +377,15 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sipariş Oluşturuldu.
+        /// </summary>
+        public static string EnumOrderCreated {
+            get {
+                return ResourceManager.GetString("EnumOrderCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Beklemede.
         /// </summary>
         public static string EnumPending {

@@ -17,5 +17,9 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManageme
         /// MRP Satınalma Sürecinin Başlangıç Parametresi
         /// </summary>
         public int MRPPurchaseTransaction { get; set; }
+        /// <summary>
+        /// MRPII Kaynak Modül Parametresi
+        /// </summary>
+        public int MRPIISourceModule { get; set; }
     }
 }

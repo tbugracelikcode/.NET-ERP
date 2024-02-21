@@ -40,6 +40,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos
         /// </summary>
         public string ProductName { get; set; }
         /// <summary>
+        /// Ürün Temin Şekli
+        /// </summary>
+        public int ProductSupplyType { get; set; }
+        /// <summary>
         /// Miktar
         /// </summary>
         public decimal Quantity { get; set; }

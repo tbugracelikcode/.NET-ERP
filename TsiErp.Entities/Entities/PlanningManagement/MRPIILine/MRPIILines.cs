@@ -45,5 +45,15 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPIILine
         /// Stok ID
         /// </summary>
         public Guid LinkedProductID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid? SalesOrderID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceID { get; set; }
     }
 }

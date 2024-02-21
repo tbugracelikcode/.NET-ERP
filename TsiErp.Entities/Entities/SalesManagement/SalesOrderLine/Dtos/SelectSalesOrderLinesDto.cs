@@ -162,5 +162,9 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos
         /// Cari Ünvan
         /// </summary>
         public string CurrentAccountCardName { get; set; }
+        /// <summary>
+        /// Satın Alma Temin Tarihi
+        /// </summary>
+        public DateTime? PurchaseSupplyDate { get; set; }
     }
 }

@@ -112,5 +112,9 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos
         /// Cari Hesap Kartı ID
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
+        /// <summary>
+        /// Satın Alma Temin Tarihi
+        /// </summary>
+        public DateTime? PurchaseSupplyDate { get; set; }
     }
 }
