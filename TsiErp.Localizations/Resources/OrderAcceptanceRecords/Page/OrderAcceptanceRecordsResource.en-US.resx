@@ -222,6 +222,9 @@
   <data name="EnumOrderApproval" xml:space="preserve">
     <value>Order / Price Confirmation Given</value>
   </data>
+  <data name="EnumOrderCreated" xml:space="preserve">
+    <value>Order Created</value>
+  </data>
   <data name="EnumPending" xml:space="preserve">
     <value>Pending</value>
   </data>

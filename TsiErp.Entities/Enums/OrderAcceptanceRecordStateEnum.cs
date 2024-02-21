@@ -15,5 +15,7 @@ namespace TsiErp.Entities.Enums
         TeknikOnayVerildi = 1,
         [Display(Name = "EnumOrderApproval")]
         SiparisFiyatOnayiVerildi = 2,
+        [Display(Name = "EnumOrderCreated")]
+        SiparisOlusturuldu = 3,
     }
 }

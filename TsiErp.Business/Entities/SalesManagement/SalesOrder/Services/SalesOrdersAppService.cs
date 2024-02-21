@@ -120,6 +120,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     LineDescription = item.LineDescription,
                     LineTotalAmount = item.LineTotalAmount,
                     PaymentPlanID = item.PaymentPlanID,
+                    PurchaseSupplyDate = item.PurchaseSupplyDate,
                     UnitPrice = item.UnitPrice,
                     VATamount = item.VATamount,
                     VATrate = item.VATrate,
@@ -224,6 +225,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     ExchangeRate = item.ExchangeRate,
                     LineAmount = item.LineAmount,
                     LineDescription = item.LineDescription,
+                    PurchaseSupplyDate = item.PurchaseSupplyDate,
                     LineTotalAmount = item.LineTotalAmount,
                     PaymentPlanID = item.PaymentPlanID,
                     UnitPrice = item.UnitPrice,
@@ -604,7 +606,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             var queryLines = queryFactory
                    .Query()
                     .From(Tables.SalesOrderLines)
-                   .Select<SalesOrderLines>(sol => new { sol.WorkOrderCreationDate, sol.VATrate, sol.VATamount, sol.UnitSetID, sol.UnitPrice, sol.Quantity, sol.SalesOrderLineStateEnum, sol.SalesOrderID, sol.ProductID, sol.PaymentPlanID, sol.LikedPropositionLineID, sol.LineTotalAmount, sol.Id, sol.ExchangeRate, sol.DiscountRate, sol.DiscountAmount, sol.DataOpenStatusUserId, sol.DataOpenStatus })
+                   .Select<SalesOrderLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -767,6 +769,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         ExchangeRate = item.ExchangeRate,
                         LineAmount = item.LineAmount,
                         LineDescription = item.LineDescription,
+                        PurchaseSupplyDate = item.PurchaseSupplyDate,
                         LineTotalAmount = item.LineTotalAmount,
                         PaymentPlanID = item.PaymentPlanID,
                         UnitPrice = item.UnitPrice,
@@ -813,6 +816,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                             ExchangeRate = item.ExchangeRate,
                             LineAmount = item.LineAmount,
                             LineDescription = item.LineDescription,
+                            PurchaseSupplyDate = item.PurchaseSupplyDate,
                             LineTotalAmount = item.LineTotalAmount,
                             PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
                             UnitPrice = item.UnitPrice,

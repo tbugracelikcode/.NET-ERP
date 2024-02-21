@@ -30,6 +30,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
             {
                 Id = GuidGenerator.CreateGuid(),
                 FutureDateParameter = input.FutureDateParameter,
+                 MRPIISourceModule = input.MRPIISourceModule,
                 MRPPurchaseTransaction = input.MRPPurchaseTransaction
             }).UseIsDelete(false); 
 
@@ -96,6 +97,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
             var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Update(new UpdatePlanningManagementParametersDto
             {
                 FutureDateParameter = input.FutureDateParameter,
+                 MRPIISourceModule = input.MRPIISourceModule,
                  MRPPurchaseTransaction = input.MRPPurchaseTransaction,
                 Id = input.Id
             }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);

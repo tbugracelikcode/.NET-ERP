@@ -1,0 +1,342 @@
+﻿@page "/mrpII"
+@layout MainLayout
+
+
+
+@inherits BaseListPage<SelectMRPIIsDto, ListMRPIIsDto, CreateMRPIIsDto, UpdateMRPIIsDto, ListMRPIIsParameterDto>
+@inject IStringLocalizer<MRPIIsResource> L
+
+
+@inject IMRPIIsAppService MRPIIsService
+@inject IProductsAppService ProductsAppService
+@inject IUserPermissionsAppService UserPermissionsAppService
+@inject IMenusAppService MenusAppService
+@inject ISalesOrdersAppService SalesOrdersAppService
+@inject IOrderAcceptanceRecordsAppService OrderAcceptanceRecordsAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
+@inject IPlanningManagementParametersAppService PlanningManagementParametersAppService
+@inject IBillsofMaterialsAppService BillsofMaterialsAppService
+
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+        <GridLayoutItems>
+            <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+
+            <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIGridCards">
+
+                        <CardContent>
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+
+                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListMRPIIsDto"></GridEvents>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListMRPIIsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListMRPIIsDto.CalculationDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["CalculationDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListMRPIIsDto.Description_) HeaderText="@L["Description_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                </GridColumns>
+                            </SfGrid>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
+
+    <DxPopup @bind-Visible="base.EditPageVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="81%"
+             Height="65%"
+             MinWidth="1378px"
+             MinHeight="700px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="17%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="60%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                </Columns>
+
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["CalculationDateLabel"] </strong></label>
+
+                            <SfDatePicker @bind-Value="DataSource.CalculationDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="5" RowSpan="2">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label>
+                            <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.Description_"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            @if(MRPIISourceModule == 1)
+                            {
+                                <label class="TSIModalLabel"><strong>@L["OrderAcceptancesLabel"] </strong></label><br />
+
+                             <SfMultiSelect @bind-Value="@BindingOrderAcceptances"
+                                                       DataSource="@OrderAcceptances"
+                                                       AllowFiltering=true
+                                                       Mode="VisualMode.CheckBox"
+                                                       ShowSelectAll=true
+                                                       SelectAllText=@L["SelectAllText"]
+                                                       UnSelectAllText=@L["UnSelectAllText"]
+                                                       ShowDropDownIcon="true">
+
+                                    <MultiSelectTemplates TItem="ListOrderAcceptanceRecordsDto" Context="orderAcceptanceContext">
+                                                <ItemTemplate>
+                                                    <span class='item'>
+                                                        <span style="padding-left: 10% !important;">@((orderAcceptanceContext as ListOrderAcceptanceRecordsDto).Code)</span>
+                                                    </span>
+                                                </ItemTemplate>
+                                            </MultiSelectTemplates>
+                                            <MultiSelectFieldSettings Text="Code" Value="Id"></MultiSelectFieldSettings>
+                                        </SfMultiSelect>
+                            }
+                            else if (MRPIISourceModule == 2)
+                            {
+                                <label class="TSIModalLabel"><strong>@L["SalesOrdersLabel"] </strong></label><br />
+
+                             <SfMultiSelect @bind-Value="@BindingSalesOrders"
+                                                       DataSource="@SalesOrders"
+                                                       AllowFiltering=true
+                                                       Mode="VisualMode.CheckBox"
+                                                       ShowSelectAll=true
+                                                       SelectAllText=@L["SelectAllText"]
+                                                       UnSelectAllText=@L["UnSelectAllText"]
+                                                       ShowDropDownIcon="true">
+
+                                            <MultiSelectTemplates TItem="ListSalesOrderDto" Context="salesOrdersContext">
+                                                <ItemTemplate>
+                                                    <span class='item'>
+                                                        <span style="padding-left: 10% !important;">@((salesOrdersContext as ListSalesOrderDto).FicheNo)</span>
+                                                    </span>
+                                                </ItemTemplate>
+                                            </MultiSelectTemplates>
+                                            <MultiSelectFieldSettings Text="FicheNo" Value="Id"></MultiSelectFieldSettings>
+                                        </SfMultiSelect>
+                            }
+                            
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <br />
+                             <SfButton CssClass="TSISaveButton" OnClick="BringLinesButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["BringLinesButton"]</SfButton>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
+                        <Template>
+                            <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectMRPIILinesDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectMRPIILinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPIILinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPIILinesDto.EstimatedPurchaseSupplyDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridEstimatedPurchaseSupplyDate"]" TextAlign="TextAlign.Center" Width="300" Context="LineContext">
+                                        <Template>
+                                            @{
+                                                var estimatedPurchaseSupplyDate = (LineContext as SelectMRPIILinesDto).EstimatedPurchaseSupplyDate.ToShortDateString();
+                                            }
+                                            @estimatedPurchaseSupplyDate
+
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPIILinesDto.EstimatedProductionStartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridEstimatedProductionStartDate"]" TextAlign="TextAlign.Center" Width="300" Context="LineContext">
+                                        <Template>
+                                            @{
+                                                var estimatedProductionStartDate = (LineContext as SelectMRPIILinesDto).EstimatedProductionStartDate.ToShortDateString();
+                                            }
+                                            @estimatedProductionStartDate
+
+                                        </Template>
+                                    </GridColumn>
+                                   
+                                  <GridColumn Field=@nameof(SelectMRPIILinesDto.EstimatedProductionEndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridEstimatedProductionEndDate"]" TextAlign="TextAlign.Center" Width="300" Context="LineContext">
+                                        <Template>
+                                            @{
+                                                var estimatedProductionEndDate = (LineContext as SelectMRPIILinesDto).EstimatedProductionEndDate.ToShortDateString();
+                                            }
+                                        @estimatedProductionEndDate
+
+                                        </Template>
+                                    </GridColumn>
+                                   
+                                    <GridColumn Field=@nameof(SelectMRPIILinesDto.LinkedProductCode) HeaderText="@L["LineGridLinkedProductCode"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+
+                                    @if(MRPIISourceModule == 1)
+                                    {
+                                         <GridColumn Field=@nameof(SelectMRPIILinesDto.OrderAcceptanceNo) HeaderText="@L["LineGridOrderAcceptanceNo"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                    }
+                                    else if(MRPIISourceModule == 2)
+                                    {
+                                        <GridColumn Field=@nameof(SelectMRPIILinesDto.SalesOrderNo) HeaderText="@L["LineGridSalesOrderNo"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                    }
+                                </GridColumns>
+
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+
+   @*  <DxPopup @bind-Visible="LineCrudPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["LineModalTitle"]"
+             Width="42%"
+             Height="26%"
+             MinWidth="720px"
+             MinHeight="200px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1" ColumnSpan="3">
+                        <Template>
+                            <label class="TSIModalLabel">
+                                <strong> @L["LineDescription_Label"] </strong>
+                            </label>
+                            <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="LineDataSource.LineDescription_" ShowClearButton=true></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup> *@
+
+}
+
+<style>
+    .head, .item {
+        display: table !important;
+        width: 100% !important;
+        margin: auto !important;
+        margin-top: -7% !important;
+    }
+
+    .head {
+        height: 40px !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+    }
+
+    .name, .city {
+        display: table-cell !important;
+        vertical-align: middle !important;
+        width: 50% !important;
+        padding-left: 11% !important;
+    }
+
+    .head .name {
+        text-indent: 16px !important;
+    }
+
+    .head .city {
+        text-indent: 10px !important;
+    }
+
+
+    .e-checkbox-wrapper, .e-css.e-checkbox-wrapper {
+        -webkit-tap-highlight-color: transparent;
+        float: none !important;
+        padding-right: 5% !important;
+    }
+</style>

@@ -222,6 +222,9 @@
   <data name="EnumOrderApproval" xml:space="preserve">
     <value>Sipariş / Fiyat Onayı Verildi</value>
   </data>
+  <data name="EnumOrderCreated" xml:space="preserve">
+    <value>Sipariş Oluşturuldu</value>
+  </data>
   <data name="EnumPending" xml:space="preserve">
     <value>Beklemede</value>
   </data>

@@ -20,6 +20,10 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PlanningManagementPara
             {
                 item.Text = L[item.Text];
             }
+            foreach (var item in _mrpIISourceModuleComboBox)
+            {
+                item.Text = L[item.Text];
+            }
         }
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
@@ -33,6 +37,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PlanningManagementPara
         #region ComboBox İşlemleri
 
         public class MRPPurchaseComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        public class MRPIISourceModule
         {
             public string ID { get; set; }
             public string Text { get; set; }
@@ -57,6 +67,32 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PlanningManagementPara
 
                     case "salesrequest":
                         DataSource.MRPPurchaseTransaction = 2;
+                        break;
+
+                    default: break;
+                }
+            }
+        }
+
+        List<MRPIISourceModule> _mrpIISourceModuleComboBox = new List<MRPIISourceModule>
+        {
+            new MRPIISourceModule(){ID = "orderacceptance", Text="OrderAcceptance"},
+            new MRPIISourceModule(){ID = "salesorder", Text="SalesOrder"},
+        };
+
+        private void MRPIISourceModuleComboBoxValueChangeHandler(ChangeEventArgs<string, MRPIISourceModule> args)
+        {
+            if (args.ItemData != null)
+            {
+
+                switch (args.ItemData.ID)
+                {
+                    case "orderacceptance":
+                        DataSource.MRPIISourceModule = 1;
+                        break;
+
+                    case "salesorder":
+                        DataSource.MRPIISourceModule = 2;
                         break;
 
                     default: break;

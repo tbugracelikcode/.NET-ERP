@@ -117,11 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BringLinesButton" xml:space="preserve">
+    <value>Satırları Getir</value>
+  </data>
+  <data name="CalculationDate" xml:space="preserve">
+    <value>HESAPLAMA TARİHİ</value>
+  </data>
+  <data name="CalculationDateLabel" xml:space="preserve">
+    <value>Hesaplama Tarihi:</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>MRP II KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>MRP II Kodu:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -135,8 +150,47 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Description_" xml:space="preserve">
+    <value>AÇIKLAMA</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Üretim Kaynak Planlaması (MRPII)</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>MRPII</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Üretim Kaynak Planlaması (MRPII)</value>
+  </data>
+  <data name="LineGridEstimatedProductionEndDate" xml:space="preserve">
+    <value>TAHMİNİ ÜRETİM BİTİŞ TARİHİ</value>
+  </data>
+  <data name="LineGridEstimatedProductionStartDate" xml:space="preserve">
+    <value>TAHMİNİ ÜRETİM BAŞLANGIÇ TARİHİ</value>
+  </data>
+  <data name="LineGridEstimatedPurchaseSupplyDate" xml:space="preserve">
+    <value>TAHMİNİ SATIN ALMA TEMİN TARİHİ</value>
+  </data>
+  <data name="LineGridLinkedProductCode" xml:space="preserve">
+    <value>BAĞLI OLDUĞU ÜRÜN</value>
+  </data>
+  <data name="LineGridOrderAcceptanceNo" xml:space="preserve">
+    <value>SİPARİŞ KABUL NO</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="LineGridProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="LineGridSalesOrderNo" xml:space="preserve">
+    <value>SİPARİŞ NO</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -150,46 +204,49 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
-  <data name="MRPIISourceModuleLabel" xml:space="preserve">
-    <value>MRPII'nin hesaplama kaynak modülünü seçin.</value>
-  </data>
-  <data name="MRPPurchaseTransactionLabel" xml:space="preserve">
-    <value>Malzeme İhtiyaç Planlaması'nın (MRP) satın alma sürecinin başlayacağı hareket türünü seçin.</value>
-  </data>
-  <data name="OrderAcceptance" xml:space="preserve">
-    <value>Sipariş Kabul Kayıtları</value>
-  </data>
-  <data name="PlanningManagementParameterContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="PlanningManagementParameterContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="PlanningManagementParameterContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="PlanningManagementParameterContextRefresh" xml:space="preserve">
+  <data name="MRPIILineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
-  <data name="PurchaseOrder" xml:space="preserve">
-    <value>Satınalma Siparişi</value>
+  <data name="MRPIIsContextAdd" xml:space="preserve">
+    <value>Ekle</value>
   </data>
-  <data name="PurchaseRequest" xml:space="preserve">
-    <value>Satınalma Talep</value>
+  <data name="MRPIIsContextChange" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
-  <data name="SalesOrder" xml:space="preserve">
-    <value>Satış Siparişleri</value>
+  <data name="MRPIIsContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="MRPIIsContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="OrderAcceptancesLabel" xml:space="preserve">
+    <value>Sipariş Kabul Kayıtları:</value>
+  </data>
+  <data name="SalesOrdersLabel" xml:space="preserve">
+    <value>Satış Siparişleri:</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="SelectAllText" xml:space="preserve">
+    <value>Hepsini Seç</value>
+  </data>
   <data name="UICurrentMenu" xml:space="preserve">
-    <value>Planlama Yönetimi Parametreleri</value>
+    <value>Üretim Kaynak Planlaması (MRPII)</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Genel Sistem Tanımlamaları &gt; Genel Sistem Parametreleri</value>
+    <value>Planlama &gt; Üretim Planlama</value>
+  </data>
+  <data name="UnSelectAllText" xml:space="preserve">
+    <value>Seçilenleri Kaldır</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen MRPII kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>MRPII kodu 17 karakterden fazla olamaz.</value>
   </data>
 </root>

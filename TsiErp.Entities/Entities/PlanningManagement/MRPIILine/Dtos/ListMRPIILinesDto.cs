@@ -48,5 +48,22 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPIILine.Dtos
         /// Bağlı Olduğu Stok Açıklaması
         /// </summary>
         public string LinkedProductName { get; set; }
+
+        /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid? SalesOrderID { get; set; }
+        /// <summary>
+        /// Satış Sipariş No
+        /// </summary>
+        public string SalesOrderNo { get; set; }
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceID { get; set; }
+        /// <summary>
+        /// Sipariş Kabul No
+        /// </summary>
+        public string OrderAcceptanceNo { get; set; }
     }
 }

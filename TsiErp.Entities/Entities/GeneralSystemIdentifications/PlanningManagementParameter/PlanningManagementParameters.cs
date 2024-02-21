@@ -22,5 +22,10 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManageme
         /// MRP Satınalma Sürecinin Başlangıç Parametresi
         /// </summary>
         public int MRPPurchaseTransaction { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// MRPII Kaynak Modül Parametresi
+        /// </summary>
+        public int MRPIISourceModule { get; set; }
     }
 }
