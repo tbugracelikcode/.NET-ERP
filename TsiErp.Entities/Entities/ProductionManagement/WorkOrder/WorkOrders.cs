@@ -107,5 +107,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
 
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Sipariş ID
+        /// </summary>
+        public Guid OrderID { get; set; }
+
     }
 }

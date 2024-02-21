@@ -25,13 +25,11 @@ namespace TsiErp.Business.Entities.ProductionManagement.ProductionTracking.Repor
 
         private readonly IProductsAppService _productsAppService;
 
-        private readonly IProductionOrdersAppService _productionOrdersAppService;
 
-        public ProductionTrackingReportsAppService(IProductionTrackingsAppService productionTrackingsAppService, IProductsAppService productsAppService, IProductionOrdersAppService productionOrdersAppService)
+        public ProductionTrackingReportsAppService(IProductionTrackingsAppService productionTrackingsAppService, IProductsAppService productsAppService)
         {
             _productionTrackingsAppService = productionTrackingsAppService;
             _productsAppService = productsAppService;
-            _productionOrdersAppService = productionOrdersAppService;
         }
 
         public async Task<List<ProductionTrackingListReportDto>> GetProductionTrackingListReport(ProductionTrackingListReportParametersDto filters)
@@ -72,7 +70,6 @@ namespace TsiErp.Business.Entities.ProductionManagement.ProductionTracking.Repor
             {
                 var productionTrackingList = item.ToList();
                 var productId = item.Key.ProductID;
-                var productionOrderId = item.Key.ProductionOrderID;
 
                 var currentProduct = products.FirstOrDefault(t => t.Id == productId);
 

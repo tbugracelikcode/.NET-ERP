@@ -1,22 +1,23 @@
-﻿@page "/production-tracking-list-report"
+﻿@page "/work-order-list-report"
+@using TsiErp.Business.Entities.ProductionManagement.WorkOrder.Reports;
 @layout MainLayout
 
-@inject IProductionTrackingReportsAppService ProductionTrackingReportsAppService
+@inject IWorkOrderReportsAppService WorkOrderReportsAppService
 @inject IProductsAppService ProductsAppService
-@inject IEmployeesAppService EmployeesAppService
 @inject IStationsAppService StationsAppService
+@inject ISalesOrdersAppService SalesOrdersAppService
 @inject IProductionOrdersAppService ProductionOrdersAppService
 
 @inject IStringLocalizer<ReportsResource> ReportLocalizer
 
 
-<DevGridLayoutFilterRow ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+    <DevGridLayoutFilterRow ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
     <GridLayoutItems>
         <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
             <Template>
                 <SfCard class="TSIListPageTitleCard">
                     <CardContent>
-                        <TsiBreadCrumb PreviousMenus="Üretim Yönetimi > Raporlar" CurrentMenu="Üretim Takip Kayıtları Listesi" />
+                        <TsiBreadCrumb PreviousMenus="Üretim Yönetimi > Raporlar" CurrentMenu="İş Emirleri Listesi" />
                     </CardContent>
                     <CardFooter>
                     </CardFooter>
@@ -76,6 +77,79 @@
                                     </Template>
                                 </DxGridLayoutItem>
 
+
+                                <DxGridLayoutItem Row="0" Column="3">
+                                    <Template>
+                                        <br />
+                                        <label class="TSIModalLabel"><strong>İş İstasyonu : </strong></label><br />
+                                        <SfMultiSelect @bind-Value="@BindingStations"
+                                                       DataSource="@Stations"
+                                                       AllowFiltering=true
+                                                       Mode="VisualMode.CheckBox"
+                                                       ShowSelectAll=true
+                                                       SelectAllText=@ReportLocalizer["SelectAllText"]
+                                                       UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
+                                                       ShowDropDownIcon="true">
+
+                                            <MultiSelectTemplates TItem="ListStationsDto">
+                                                <ItemTemplate>
+                                                    <span class='item'>
+                                                        <span style="padding-left: 7% !important;">@((context as ListStationsDto).Code)</span>
+                                                        <span style="padding-left: 5% !important;font-size:14px !important">@((context as ListStationsDto).Name)</span>
+                                                    </span>
+                                                </ItemTemplate>
+                                            </MultiSelectTemplates>
+                                            <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                        </SfMultiSelect>
+                                    </Template>
+                                </DxGridLayoutItem>
+
+                                
+                                <DxGridLayoutItem Row="0" Column="5">
+                                    <Template>
+                                        <br />
+                                        <label class="TSIModalLabel"><strong>İş Emri Durumu : </strong></label><br />
+                                        <SfMultiSelect @bind-Value="@BindingWorkOrderStateEnumList"
+                                                       DataSource="@WorkOrderStateEnumList"
+                                                       AllowFiltering=true
+                                                       Mode="VisualMode.CheckBox"
+                                                       ShowSelectAll=true
+                                                       SelectAllText=@ReportLocalizer["SelectAllText"]
+                                                       UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
+                                                       ShowDropDownIcon="true">
+
+                                            <MultiSelectFieldSettings Value="Value" Text="Text"></MultiSelectFieldSettings>
+                                        </SfMultiSelect>
+                                    </Template>
+                                </DxGridLayoutItem>
+
+                                <DxGridLayoutItem Row="1" Column="3">
+                                    <Template>
+                                        <br />
+                                        <label class="TSIModalLabel"><strong>Satış Siparişi : </strong></label><br />
+                                        <SfMultiSelect @bind-Value="@BindingSalesOrders"
+                                                       DataSource="@SalesOrders"
+                                                       AllowFiltering=true
+                                                       Mode="VisualMode.CheckBox"
+                                                       ShowSelectAll=true
+                                                       SelectAllText=@ReportLocalizer["SelectAllText"]
+                                                       UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
+                                                       ShowDropDownIcon="true">
+
+                                            <MultiSelectTemplates TItem="ListSalesOrderDto">
+                                                <ItemTemplate>
+                                                    <span class='item'>
+                                                        <span style="padding-left: 7% !important;">@((context as ListSalesOrderDto).FicheNo) </span> 
+                                                        <span style="padding-left: 5% !important;font-size:14px !important">@((context as ListSalesOrderDto).CustomerOrderNr)</span>
+                                                        <span style="padding-left: 5% !important;font-size:14px !important">@((context as ListSalesOrderDto).CurrentAccountCardName)</span>
+                                                    </span>
+                                                </ItemTemplate>
+                                            </MultiSelectTemplates>
+                                            <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                        </SfMultiSelect>
+                                    </Template>
+                                </DxGridLayoutItem>
+
                                 <DxGridLayoutItem Row="1" Column="1">
                                     <Template>
                                         <br />
@@ -105,59 +179,7 @@
                                     </Template>
                                 </DxGridLayoutItem>
 
-                                <DxGridLayoutItem Row="0" Column="3">
-                                    <Template>
-                                        <br />
-                                        <label class="TSIModalLabel"><strong>İş İstasyonu : </strong></label><br />
-                                        <SfMultiSelect @bind-Value="@BindingStations"
-                                                       DataSource="@Stations"
-                                                       AllowFiltering=true
-                                                       Mode="VisualMode.CheckBox"
-                                                       ShowSelectAll=true
-                                                       SelectAllText=@ReportLocalizer["SelectAllText"]
-                                                       UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
-                                                       ShowDropDownIcon="true">
-
-                                            <MultiSelectTemplates TItem="ListStationsDto">
-                                                <ItemTemplate>
-                                                    <span class='item'>
-                                                        <span style="padding-left: 7% !important;">@((context as ListStationsDto).Code)</span>
-                                                        <span style="padding-left: 5% !important;font-size:14px !important">@((context as ListStationsDto).Name)</span>
-                                                    </span>
-                                                </ItemTemplate>
-                                            </MultiSelectTemplates>
-                                            <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
-                                        </SfMultiSelect>
-                                    </Template>
-                                </DxGridLayoutItem>
-
-                                <DxGridLayoutItem Row="1" Column="3">
-                                    <Template>
-                                        <br />
-                                        <label class="TSIModalLabel"><strong>Personel : </strong></label><br />
-                                        <SfMultiSelect @bind-Value="@BindingEmployees"
-                                                       DataSource="@Employees"
-                                                       AllowFiltering=true
-                                                       Mode="VisualMode.CheckBox"
-                                                       ShowSelectAll=true
-                                                       SelectAllText=@ReportLocalizer["SelectAllText"]
-                                                       UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
-                                                       ShowDropDownIcon="true">
-
-                                            <MultiSelectTemplates TItem="ListEmployeesDto">
-                                                <ItemTemplate>
-                                                    <span class='item'>
-                                                        <span style="padding-left: 7% !important;">@((context as ListEmployeesDto).Code) </span> 
-                                                        <span style="padding-left: 5% !important;font-size:14px !important">@((context as ListEmployeesDto).Name + " " + (context as ListEmployeesDto).Surname)</span>
-                                                    </span>
-                                                </ItemTemplate>
-                                            </MultiSelectTemplates>
-                                            <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
-                                        </SfMultiSelect>
-                                    </Template>
-                                </DxGridLayoutItem>
-
-                                <DxGridLayoutItem Row="0" Column="5">
+                                <DxGridLayoutItem Row="1" Column="5">
                                     <Template>
                                         <br />
                                         <br />
@@ -190,9 +212,6 @@
         </DxGridLayoutItem>
     </GridLayoutItems>
 </DevGridLayoutFilterRow>
-
-
-
 
 
 <style>
