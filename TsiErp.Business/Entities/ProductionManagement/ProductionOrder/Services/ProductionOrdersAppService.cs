@@ -167,7 +167,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                     ProductsOperationID = item.ProductsOperationID,
                     StationGroupID = stationGroupId,
                     WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
-                    Id = GuidGenerator.CreateGuid()
+                    Id = GuidGenerator.CreateGuid(),
+                    OrderID = input.OrderID.GetValueOrDefault()
                 };
 
                 var workOrderQuery = queryFactory.Query().From(Tables.WorkOrders).Insert(workOrder);
@@ -283,7 +284,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             ProductsOperationID = route.ProductsOperationID,
                             StationGroupID = stationGroupId,
                             WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
-                            Id = GuidGenerator.CreateGuid()
+                            Id = GuidGenerator.CreateGuid(),
+                             OrderID=input.OrderID.GetValueOrDefault()
                         };
 
                         var workOrderQuery = queryFactory.Query().From(Tables.WorkOrders).Insert(workOrder);
@@ -340,8 +342,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 OrderID = input.OrderID,
                 OrderLineID = input.OrderLineID,
                 PlannedQuantity = input.PlannedQuantity,
-                 BranchID = input.BranchID,
-                  WarehouseID = input.WarehouseID,
+                BranchID = input.BranchID,
+                WarehouseID = input.WarehouseID,
                 ProducedQuantity = input.ProducedQuantity,
                 ProductionOrderState = input.ProductionOrderState,
                 ProductTreeID = input.ProductTreeID,

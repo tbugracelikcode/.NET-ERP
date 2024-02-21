@@ -89,5 +89,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// Cari ID
         /// </summary>
         public Guid? CurrentAccountCardID { get; set; }
+
+        /// <summary>
+        /// Sipariş ID
+        /// </summary>
+        public Guid OrderID { get; set; }
     }
 }
