@@ -85,7 +85,20 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ReportPages
                 BindingProducts = new List<Guid>();
             }
 
+            if (BindingProductionOrders == null)
+            {
+                BindingProductionOrders = new List<Guid>();
+            }
 
+            if (BindingStations == null)
+            {
+                BindingStations = new List<Guid>();
+            }
+
+            if (BindingEmployees == null)
+            {
+                BindingEmployees = new List<Guid>();
+            }
 
             ProductionTrackingListReportParametersDto filters = new ProductionTrackingListReportParametersDto();
             filters.Products = BindingProducts;

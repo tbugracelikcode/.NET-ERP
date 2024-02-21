@@ -128,5 +128,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// Cari Hesap Ünvanı
         /// </summary>
         public string CurrentAccountCardName { get; set; }
+
+
+        /// <summary>
+        /// Sipariş ID
+        /// </summary>
+        public Guid OrderID { get; set; }
     }
 }

@@ -232,7 +232,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.WorkOrders).Select<WorkOrders>(wo => new { wo.WorkOrderState, wo.WorkOrderNo, wo.StationID, wo.StationGroupID, wo.RouteID, wo.PropositionID, wo.ProductsOperationID, wo.ProductionOrderID, wo.ProductID, wo.ProducedQuantity, wo.PlannedQuantity, wo.OperationTime, wo.OccuredStartDate, wo.OccuredFinishDate, wo.LinkedWorkOrderID, wo.LineNr, wo.IsCancel, wo.Id, wo.DataOpenStatusUserId, wo.DataOpenStatus, wo.CurrentAccountCardID, wo.AdjustmentAndControlTime })
+               .From(Tables.WorkOrders).Select<WorkOrders>(wo => new { wo.WorkOrderState, wo.WorkOrderNo, wo.StationID, wo.StationGroupID, wo.RouteID, wo.PropositionID, wo.ProductsOperationID, wo.ProductionOrderID, wo.ProductID, wo.ProducedQuantity, wo.PlannedQuantity, wo.OperationTime, wo.OccuredStartDate, wo.OccuredFinishDate, wo.LinkedWorkOrderID, wo.LineNr, wo.IsCancel, wo.Id, wo.DataOpenStatusUserId, wo.DataOpenStatus, wo.CurrentAccountCardID, wo.AdjustmentAndControlTime,wo.OrderID })
                         .Join<ProductionOrders>
                         (
                             po => new { ProductionOrderFicheNo = po.FicheNo },
