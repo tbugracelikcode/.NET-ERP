@@ -22,6 +22,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.Forecast.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
@@ -469,47 +470,26 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     {
                         var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(line.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.ToList();
 
-                        foreach (var bomline in bomLineList)
+                        decimal amountofProduct = (await GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Data.Where(t => t.ProductID == line.ProductID).Select(t => t.Amount).Sum();
+
+                         CreateMRPLine(branch, warehouse, line, bomLineList, amountofProduct);
+
+                        foreach (var bomLine in bomLineList)
                         {
-                            var product = (await ProductsAppService.GetAsync(bomline.ProductID.GetValueOrDefault())).Data;
-
-                            if (product.SupplyForm == Entities.Enums.ProductSupplyFormEnum.Satınalma && product != null && product.Id != Guid.Empty)
+                            if (bomLine.ProductSupplyType == 2)
                             {
-                                int calculatedAmount = Convert.ToInt32(bomline.Quantity);
+                                var bomLineList2 = (await BillsofMaterialsAppService.GetbyProductIDAsync(bomLine.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.ToList();
 
-                                decimal amountofProduct = (await GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Data.Where(t => t.ProductID == bomline.ProductID).Select(t => t.Amount).Sum();
+                                decimal amountofProduct2 = (await GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Data.Where(t => t.ProductID == bomLine.ProductID).Select(t => t.Amount).Sum();
 
-                                SelectMRPLinesDto mrpLineModel = new SelectMRPLinesDto
-                                {
-                                    Amount = calculatedAmount,
-                                    isCalculated = true,
-                                    isPurchase = false,
-                                    ProductID = bomline.ProductID.GetValueOrDefault(),
-                                    ProductCode = bomline.ProductCode,
-                                    ProductName = bomline.ProductName,
-                                    SalesOrderID = Guid.Empty,
-                                    UnitSetID = bomline.UnitSetID,
-                                    LineNr = MRPLinesList.Count + 1,
-                                    UnitSetCode = bomline.UnitSetCode,
-                                    AmountOfStock = amountofProduct,
-                                    RequirementAmount = Math.Abs(Convert.ToInt32(amountofProduct) - calculatedAmount),
-                                    SalesOrderLineID = Guid.Empty,
-                                    SalesOrderFicheNo = string.Empty,
-                                    BranchID = branch.Id,
-                                    WarehouseID = warehouse.Id,
-                                    BranchCode = branch.Code,
-                                    WarehouseCode = warehouse.Code,
-                                    OrderAcceptanceID = DataSource.Id,
-                                    OrderAcceptanceLineID = line.Id
-                                };
-
-                                MRPLinesList.Add(mrpLineModel);
-
+                                CreateMRPLine(branch, warehouse, line, bomLineList2, amountofProduct2);
                             }
                         }
                     }
 
                     MRPDataSource.SelectMRPLines = MRPLinesList;
+
+
 
                     MRPCrudModalVisible = true;
 
@@ -518,6 +498,56 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                 default:
                     break;
+            }
+        }
+
+        private void CreateMRPLine(SelectBranchesDto branch, SelectWarehousesDto warehouse, SelectOrderAcceptanceRecordLinesDto line, List<SelectBillsofMaterialLinesDto> bomLineList,decimal amountofProduct)
+        {
+            foreach (var bomline in bomLineList)
+            {
+                if (bomline.ProductSupplyType == 1)
+                {
+                    #region Mamül Reçete satırdaki Temin Şekli Satınalma
+                    int calculatedAmount = Convert.ToInt32(bomline.Quantity);
+
+                   
+
+                    SelectMRPLinesDto mrpLineModel = new SelectMRPLinesDto
+                    {
+                        Amount = calculatedAmount,
+                        isCalculated = true,
+                        isPurchase = false,
+                        ProductID = bomline.ProductID.GetValueOrDefault(),
+                        ProductCode = bomline.ProductCode,
+                        ProductName = bomline.ProductName,
+                        SalesOrderID = Guid.Empty,
+                        UnitSetID = bomline.UnitSetID,
+                        LineNr = MRPLinesList.Count + 1,
+                        UnitSetCode = bomline.UnitSetCode,
+                        AmountOfStock = amountofProduct,
+                        RequirementAmount = Math.Abs(Convert.ToInt32(amountofProduct) - calculatedAmount),
+                        SalesOrderLineID = Guid.Empty,
+                        SalesOrderFicheNo = string.Empty,
+                        BranchID = branch.Id,
+                        WarehouseID = warehouse.Id,
+                        BranchCode = branch.Code,
+                        WarehouseCode = warehouse.Code,
+                        OrderAcceptanceID = DataSource.Id,
+                        OrderAcceptanceLineID = line.Id
+                    };
+
+                    MRPLinesList.Add(mrpLineModel);
+                    #endregion
+
+                }
+                //else if(bomline.ProductSupplyType == 2)  yarı mamülün yarı mamülü (yavuz'un fantezisi)
+                //{
+                //    var bomLineList2 = (BillsofMaterialsAppService.GetbyProductIDAsync(bomline.ProductID.GetValueOrDefault())).Result.Data.SelectBillsofMaterialLines.ToList();
+
+                //    decimal amountofProduct2 = ( GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Result.Data.Where(t => t.ProductID == bomline.ProductID).Select(t => t.Amount).Sum();
+
+                //    CreateMRPLine(branch, warehouse, line, bomLineList2, amountofProduct2);
+                //}
             }
         }
 
