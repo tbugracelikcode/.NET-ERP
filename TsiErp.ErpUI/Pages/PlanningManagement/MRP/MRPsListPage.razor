@@ -230,6 +230,7 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.isCalculated) DisplayAsCheckBox="true" HeaderText="@L["LineGridSalesOrderisCalculated"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.isPurchase) DisplayAsCheckBox="true" HeaderText="@L["LineGridSalesOrderisPurchase"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.isStockUsage) DisplayAsCheckBox="true" HeaderText="@L["LineGridSalesOrderisStockUsage"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.SalesOrderFicheNo) HeaderText="@L["LineGridSalesOrderFicheNo"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
@@ -238,8 +239,8 @@ else
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.WarehouseCode) HeaderText="@L["LineGridWarehouseCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
 
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.AmountOfStock) HeaderText="@L["LineGridAmountOfStock"]" TextAlign="TextAlign.Center" Width="280" Format="N2"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectMRPLinesDto.Amount) Type="ColumnType.Number" HeaderText="@L["LineGridAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectMRPLinesDto.RequirementAmount) Type="ColumnType.Number" HeaderText="@L["LineGridRequirementAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.Amount) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.RequirementAmount) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridRequirementAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>

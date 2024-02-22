@@ -357,6 +357,9 @@
   <data name="MRPLineGridSalesOrderisPurchase" xml:space="preserve">
     <value>CONVERTED TO PURCHASE</value>
   </data>
+  <data name="MRPLineGridSalesOrderisStockUsage" xml:space="preserve">
+    <value>STOCK USAGE</value>
+  </data>
   <data name="MRPLineGridUnitSetCode" xml:space="preserve">
     <value>UNIT SET</value>
   </data>
@@ -408,8 +411,14 @@
   <data name="OrderAcceptanceRecordsContextMRP" xml:space="preserve">
     <value>Material Requirement List</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextOrderApproval" xml:space="preserve">
+    <value>Order Price Approval</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="OrderAcceptanceRecordsContextTechnicalApproval" xml:space="preserve">
+    <value>Technical Approval</value>
   </data>
   <data name="OrderAcceptanceRecordState" xml:space="preserve">
     <value>STATUS</value>
@@ -459,8 +468,32 @@
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Order Acceptance Records</value>
   </data>
+  <data name="UILineIncludeEmptyProductMessage" xml:space="preserve">
+    <value>There are products in the lines that do not have product records.</value>
+  </data>
+  <data name="UILineIncludeEmptyProductTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIOrderCreatedMessage" xml:space="preserve">
+    <value>Technical approval cannot be given to records for which orders have been created.</value>
+  </data>
+  <data name="UIOrderCreatedMessage2" xml:space="preserve">
+    <value>Order price confirmation cannot be given to records for which orders have been created.</value>
+  </data>
+  <data name="UIOrderCreatedMessage3" xml:space="preserve">
+    <value>Records that have been ordered cannot be put on hold.</value>
+  </data>
+  <data name="UIOrderCreatedTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sales Management &gt; Transactions</value>
+  </data>
+  <data name="UIWarningSalesPriceMessage" xml:space="preserve">
+    <value>There is no sales price line record for the product.</value>
+  </data>
+  <data name="UIWarningSalesPriceTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UnitSetCodeLineLabel" xml:space="preserve">
     <value>Unit Set:</value>

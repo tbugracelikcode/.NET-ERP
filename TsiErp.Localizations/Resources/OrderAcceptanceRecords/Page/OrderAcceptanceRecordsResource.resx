@@ -357,6 +357,9 @@
   <data name="MRPLineGridSalesOrderisPurchase" xml:space="preserve">
     <value>SATIN ALMAYA DÖNÜŞTÜ</value>
   </data>
+  <data name="MRPLineGridSalesOrderisStockUsage" xml:space="preserve">
+    <value>STOKTAN KULLANILACAK</value>
+  </data>
   <data name="MRPLineGridUnitSetCode" xml:space="preserve">
     <value>BİRİM SETİ</value>
   </data>
@@ -408,8 +411,14 @@
   <data name="OrderAcceptanceRecordsContextMRP" xml:space="preserve">
     <value>Malzeme İhtiyaç Listesi</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextOrderApproval" xml:space="preserve">
+    <value>Sipariş Fiyat Onayı </value>
+  </data>
   <data name="OrderAcceptanceRecordsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="OrderAcceptanceRecordsContextTechnicalApproval" xml:space="preserve">
+    <value>Teknik Onay </value>
   </data>
   <data name="OrderAcceptanceRecordState" xml:space="preserve">
     <value>DURUM</value>
@@ -459,8 +468,32 @@
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Sipariş Onay Kayıtları</value>
   </data>
+  <data name="UILineIncludeEmptyProductMessage" xml:space="preserve">
+    <value>Satırlarda stok kartı kaydı olmayan ürünler mevcut.</value>
+  </data>
+  <data name="UILineIncludeEmptyProductTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIOrderCreatedMessage" xml:space="preserve">
+    <value>Siparişi oluşturulmuş olan kayıtlara teknik onay verilemez.</value>
+  </data>
+  <data name="UIOrderCreatedMessage2" xml:space="preserve">
+    <value>Siparişi oluşturulmuş olan kayıtlara sipariş fiyat onayı verilemez.</value>
+  </data>
+  <data name="UIOrderCreatedMessage3" xml:space="preserve">
+    <value>Siparişi oluşturulmuş olan kayıtlar beklemeye alınamaz.</value>
+  </data>
+  <data name="UIOrderCreatedTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Satış Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="UIWarningSalesPriceMessage" xml:space="preserve">
+    <value>Ürünün satış fiyatı satır kaydı bulunmamaktadır.</value>
+  </data>
+  <data name="UIWarningSalesPriceTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UnitSetCodeLineLabel" xml:space="preserve">
     <value>Birim Seti:</value>

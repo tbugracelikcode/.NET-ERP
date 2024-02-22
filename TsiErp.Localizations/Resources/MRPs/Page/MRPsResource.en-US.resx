@@ -210,6 +210,9 @@
   <data name="LineGridSalesOrderisPurchase" xml:space="preserve">
     <value>CONVERTED TO PURCHASE</value>
   </data>
+  <data name="LineGridSalesOrderisStockUsage" xml:space="preserve">
+    <value>STOCK USAGE</value>
+  </data>
   <data name="LineGridUnitSetCode" xml:space="preserve">
     <value>UNIT SET</value>
   </data>

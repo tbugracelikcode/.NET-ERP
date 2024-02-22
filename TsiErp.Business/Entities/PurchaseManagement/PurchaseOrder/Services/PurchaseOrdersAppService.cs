@@ -14,6 +14,7 @@ using TsiErp.Business.Entities.PurchaseOrder.Validations;
 using TsiErp.Business.Entities.PurchaseRequest.Services;
 using TsiErp.Business.Entities.StockMovement;
 using TsiErp.Business.Extensions.DeleteControlExtension;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
@@ -24,6 +25,7 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
@@ -114,6 +116,17 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
             });
+
+            if(input.OrderAcceptanceID != null && input.OrderAcceptanceID != Guid.Empty)
+            {
+                var OrderAcceptance = (await _OrderAcceptanceRecordsAppService.GetAsync(input.OrderAcceptanceID.GetValueOrDefault())).Data;
+
+                OrderAcceptance.OrderAcceptanceRecordState = TsiErp.Entities.Enums.OrderAcceptanceRecordStateEnum.SiparisOlusturuldu;
+
+                var updatedEntity = ObjectMapper.Map<SelectOrderAcceptanceRecordsDto, UpdateOrderAcceptanceRecordsDto>(OrderAcceptance);
+
+                await _OrderAcceptanceRecordsAppService.UpdateAsync(updatedEntity);
+            }
 
             foreach (var item in input.SelectPurchaseOrderLinesDto)
             {
@@ -789,6 +802,14 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+
+                    if (item.OrderAcceptanceID != null && item.OrderAcceptanceID != Guid.Empty) // Sipariş kabul kaydının temin tarihini güncelleme
+                    {
+                        if (item.OrderAcceptanceLineID != null && item.OrderAcceptanceLineID != Guid.Empty)
+                        {
+                            await _OrderAcceptanceRecordsAppService.UpdateLineAsync(item.OrderAcceptanceLineID.GetValueOrDefault(), item.SupplyDate.GetValueOrDefault());
+                        }
+                    }
                 }
                 else
                 {
@@ -840,6 +861,14 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+
+                        if (item.OrderAcceptanceID != null && item.OrderAcceptanceID != Guid.Empty) // Sipariş kabul kaydının temin tarihini güncelleme
+                        {
+                            if (item.OrderAcceptanceLineID != null && item.OrderAcceptanceLineID != Guid.Empty)
+                            {
+                                await _OrderAcceptanceRecordsAppService.UpdateLineAsync(item.OrderAcceptanceLineID.GetValueOrDefault(), item.SupplyDate.GetValueOrDefault());
+                            }
+                        }
                     }
                 }
             }

@@ -47,7 +47,7 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
         /// <summary>
         /// Miktar
         /// </summary>
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
         /// <summary>
         /// Satır No
         /// </summary>
@@ -79,7 +79,7 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
         /// <summary>
         /// İhtiyaç Miktar
         /// </summary>
-        public int RequirementAmount { get; set; }
+        public decimal RequirementAmount { get; set; }
         /// <summary>
         /// Sipariş Kabul ID
         /// </summary>
