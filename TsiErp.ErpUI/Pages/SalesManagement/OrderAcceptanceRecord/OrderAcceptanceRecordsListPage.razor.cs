@@ -205,6 +205,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextRefresh"], Id = "refresh" }); break;
                             case "OrderAcceptanceRecordsContextMRP":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextMRP"], Id = "mrp" }); break;
+                            case "OrderAcceptanceRecordsContextTechnicalApproval":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextTechnicalApproval"], Id = "techapproval" }); break;
+                            case "OrderAcceptanceRecordsContextOrderApproval":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextOrderApproval"], Id = "orderapproval" }); break;
+                            case "OrderAcceptanceRecordsContextPending":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextPending"], Id = "pending" }); break;
                             default: break;
                         }
                     }
@@ -321,6 +327,144 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
 
                     ShowEditPage();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "techapproval":
+                    DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    var lineList = DataSource.SelectOrderAcceptanceRecordLines;
+
+                    bool isEmptyProduct = false;
+
+                    foreach (var line in lineList)
+                    {
+                        var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
+
+                        if (product == null || product.Id == Guid.Empty)
+                        {
+                            isEmptyProduct = true;
+                            break;
+                        }
+                    }
+
+                    if (!isEmptyProduct)
+                    {
+                        if (DataSource.OrderAcceptanceRecordState != Entities.Enums.OrderAcceptanceRecordStateEnum.SiparisOlusturuldu)
+                        {
+                            DataSource.OrderAcceptanceRecordState = Entities.Enums.OrderAcceptanceRecordStateEnum.TeknikOnayVerildi;
+
+                            var updatedEntity = ObjectMapper.Map<SelectOrderAcceptanceRecordsDto, UpdateOrderAcceptanceRecordsDto>(DataSource);
+
+                            await OrderAcceptanceRecordsAppService.UpdateAsync(updatedEntity);
+
+                            await GetListDataSourceAsync();
+
+                            await _grid.Refresh();
+                        }
+                        else
+                        {
+                            await ModalManager.WarningPopupAsync("UIOrderCreatedTitle", "UIOrderCreatedMessage");
+                        }
+                    }
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync("UILineIncludeEmptyProductTitle", "UILineIncludeEmptyProductMessage");
+                    }
+
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "orderapproval":
+                    DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    var lineList2 = DataSource.SelectOrderAcceptanceRecordLines;
+
+                    bool isEmptyProduct2 = false;
+
+                    foreach (var line in lineList2)
+                    {
+                        var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
+
+                        if (product == null || product.Id == Guid.Empty)
+                        {
+                            isEmptyProduct2 = true;
+                            break;
+                        }
+                    }
+
+                    if (!isEmptyProduct2)
+                    {
+                        if (DataSource.OrderAcceptanceRecordState != Entities.Enums.OrderAcceptanceRecordStateEnum.SiparisOlusturuldu)
+                        {
+                            DataSource.OrderAcceptanceRecordState = Entities.Enums.OrderAcceptanceRecordStateEnum.SiparisFiyatOnayiVerildi;
+
+                            var updatedEntity = ObjectMapper.Map<SelectOrderAcceptanceRecordsDto, UpdateOrderAcceptanceRecordsDto>(DataSource);
+
+                            await OrderAcceptanceRecordsAppService.UpdateAsync(updatedEntity);
+
+                            await GetListDataSourceAsync();
+
+                            await _grid.Refresh();
+                        }
+                        else
+                        {
+                            await ModalManager.WarningPopupAsync("UIOrderCreatedTitle", "UIOrderCreatedMessage2");
+                        }
+                    }
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync("UILineIncludeEmptyProductTitle", "UILineIncludeEmptyProductMessage");
+                    }
+
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "pending":
+                    DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    var lineList3 = DataSource.SelectOrderAcceptanceRecordLines;
+
+                    bool isEmptyProduct3 = false;
+
+                    foreach (var line in lineList3)
+                    {
+                        var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
+
+                        if (product == null || product.Id == Guid.Empty)
+                        {
+                            isEmptyProduct2 = true;
+                            break;
+                        }
+                    }
+
+                    if (!isEmptyProduct3)
+                    {
+                        if (DataSource.OrderAcceptanceRecordState != Entities.Enums.OrderAcceptanceRecordStateEnum.SiparisOlusturuldu)
+                        {
+                            DataSource.OrderAcceptanceRecordState = Entities.Enums.OrderAcceptanceRecordStateEnum.Beklemede;
+
+                            var updatedEntity = ObjectMapper.Map<SelectOrderAcceptanceRecordsDto, UpdateOrderAcceptanceRecordsDto>(DataSource);
+
+                            await OrderAcceptanceRecordsAppService.UpdateAsync(updatedEntity);
+
+                            await GetListDataSourceAsync();
+
+                            await _grid.Refresh();
+                        }
+                        else
+                        {
+                            await ModalManager.WarningPopupAsync("UIOrderCreatedTitle", "UIOrderCreatedMessage3");
+                        }
+                    }
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync("UILineIncludeEmptyProductTitle", "UILineIncludeEmptyProductMessage");
+                    }
+
+
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -448,7 +592,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                     DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    var lineList = DataSource.SelectOrderAcceptanceRecordLines;
+                    MRPLinesList.Clear();
+
+                    var LineList = DataSource.SelectOrderAcceptanceRecordLines;
 
                     SelectMRPsDto mRPsDto = new SelectMRPsDto
                     {
@@ -466,13 +612,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
                     var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
 
-                    foreach (var line in lineList)
+                    foreach (var line in LineList)
                     {
                         var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(line.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.ToList();
 
                         decimal amountofProduct = (await GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Data.Where(t => t.ProductID == line.ProductID).Select(t => t.Amount).Sum();
 
-                         CreateMRPLine(branch, warehouse, line, bomLineList, amountofProduct);
+                        CreateMRPLine(branch, warehouse, line, bomLineList, amountofProduct);
 
                         foreach (var bomLine in bomLineList)
                         {
@@ -501,7 +647,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             }
         }
 
-        private void CreateMRPLine(SelectBranchesDto branch, SelectWarehousesDto warehouse, SelectOrderAcceptanceRecordLinesDto line, List<SelectBillsofMaterialLinesDto> bomLineList,decimal amountofProduct)
+        private void CreateMRPLine(SelectBranchesDto branch, SelectWarehousesDto warehouse, SelectOrderAcceptanceRecordLinesDto line, List<SelectBillsofMaterialLinesDto> bomLineList, decimal amountofProduct)
         {
             foreach (var bomline in bomLineList)
             {
@@ -510,7 +656,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     #region Mamül Reçete satırdaki Temin Şekli Satınalma
                     int calculatedAmount = Convert.ToInt32(bomline.Quantity);
 
-                   
 
                     SelectMRPLinesDto mrpLineModel = new SelectMRPLinesDto
                     {
@@ -525,7 +670,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         LineNr = MRPLinesList.Count + 1,
                         UnitSetCode = bomline.UnitSetCode,
                         AmountOfStock = amountofProduct,
-                        RequirementAmount = Math.Abs(Convert.ToInt32(amountofProduct) - calculatedAmount),
+                        RequirementAmount = calculatedAmount,
                         SalesOrderLineID = Guid.Empty,
                         SalesOrderFicheNo = string.Empty,
                         BranchID = branch.Id,
@@ -533,6 +678,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         BranchCode = branch.Code,
                         WarehouseCode = warehouse.Code,
                         OrderAcceptanceID = DataSource.Id,
+                        isStockUsage = false,
                         OrderAcceptanceLineID = line.Id
                     };
 
@@ -934,30 +1080,41 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                 {
                     var salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.StartDate <= DataSource.Date_ && t.EndDate >= DataSource.Date_ && t.CurrentAccountCardID == DataSource.CurrentAccountCardID && t.IsActive == true && t.IsApproved == true).Select(t => t.Id).FirstOrDefault();
                     var salesPriceLine = (await SalesPricesAppService.GetAsync(salesPriceID)).Data.SelectSalesPriceLines.Where(t => t.ProductCode == product.Code).FirstOrDefault();
-                    var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductCode == product.Code && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).FirstOrDefault();
+                    
 
-                    VirtualLineModel virtualModel = new VirtualLineModel
+                    if(salesPriceLine != null && salesPriceLine.Id != Guid.Empty)
                     {
-                        CustomerBarcodeNo = customerBarcodeNo,
-                        ProductCode = product.Code,
-                        ProductName = product.Name,
-                        ProductID = product.Id,
-                        CustomerReferanceNo = customerReferanceNo,
-                        DefinedUnitPrice = salesPriceLine.Price,
-                        Description_ = string.Empty,
-                        IsProductExists = true,
-                        LineAmount = lineAmount,
-                        LineNr = GridVirtualLineList.Count + 1,
-                        MinOrderAmount = productRefNo.MinOrderAmount,
-                        OrderAmount = orderAmount,
-                        OrderReferanceNo = orderReferanceNo,
-                        OrderUnitPrice = orderUnitPrice,
-                        ProductReferanceNumberID = productRefNo.Id,
-                        UnitSetID = product.UnitSetID,
-                        UnitSetCode = product.UnitSetCode,
-                    };
+                        var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductCode == product.Code && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).FirstOrDefault();
 
-                    GridVirtualLineList.Add(virtualModel);
+                        VirtualLineModel virtualModel = new VirtualLineModel
+                        {
+                            CustomerBarcodeNo = customerBarcodeNo,
+                            ProductCode = product.Code,
+                            ProductName = product.Name,
+                            ProductID = product.Id,
+                            CustomerReferanceNo = customerReferanceNo,
+                            DefinedUnitPrice = salesPriceLine.Price,
+                            Description_ = string.Empty,
+                            IsProductExists = true,
+                            LineAmount = lineAmount,
+                            LineNr = GridVirtualLineList.Count + 1,
+                            MinOrderAmount = productRefNo.MinOrderAmount,
+                            OrderAmount = orderAmount,
+                            OrderReferanceNo = orderReferanceNo,
+                            OrderUnitPrice = orderUnitPrice,
+                            ProductReferanceNumberID = productRefNo.Id,
+                            UnitSetID = product.UnitSetID,
+                            UnitSetCode = product.UnitSetCode,
+                        };
+
+                        GridVirtualLineList.Add(virtualModel);
+                    }
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync("UIWarningSalesPriceTitle", "UIWarningSalesPriceMessage");
+                    }
+
+                    
                 }
                 else if (product == null && productCode != string.Empty)
                 {

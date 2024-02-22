@@ -340,6 +340,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to STOKTAN KULLANILACAK.
+        /// </summary>
+        public static string LineGridSalesOrderisStockUsage {
+            get {
+                return ResourceManager.GetString("LineGridSalesOrderisStockUsage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BİRİM SETİ.
         /// </summary>
         public static string LineGridUnitSetCode {

@@ -782,6 +782,15 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to STOKTAN KULLANILACAK.
+        /// </summary>
+        public static string MRPLineGridSalesOrderisStockUsage {
+            get {
+                return ResourceManager.GetString("MRPLineGridSalesOrderisStockUsage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BİRİM SETİ.
         /// </summary>
         public static string MRPLineGridUnitSetCode {
@@ -935,11 +944,29 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sipariş Fiyat Onayı .
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextOrderApproval {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextOrderApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string OrderAcceptanceRecordsContextRefresh {
             get {
                 return ResourceManager.GetString("OrderAcceptanceRecordsContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teknik Onay .
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextTechnicalApproval {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextTechnicalApproval", resourceCulture);
             }
         }
         
@@ -1088,11 +1115,83 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satırlarda stok kartı kaydı olmayan ürünler mevcut..
+        /// </summary>
+        public static string UILineIncludeEmptyProductMessage {
+            get {
+                return ResourceManager.GetString("UILineIncludeEmptyProductMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UILineIncludeEmptyProductTitle {
+            get {
+                return ResourceManager.GetString("UILineIncludeEmptyProductTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Siparişi oluşturulmuş olan kayıtlara teknik onay verilemez..
+        /// </summary>
+        public static string UIOrderCreatedMessage {
+            get {
+                return ResourceManager.GetString("UIOrderCreatedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Siparişi oluşturulmuş olan kayıtlara sipariş fiyat onayı verilemez..
+        /// </summary>
+        public static string UIOrderCreatedMessage2 {
+            get {
+                return ResourceManager.GetString("UIOrderCreatedMessage2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Siparişi oluşturulmuş olan kayıtlar beklemeye alınamaz..
+        /// </summary>
+        public static string UIOrderCreatedMessage3 {
+            get {
+                return ResourceManager.GetString("UIOrderCreatedMessage3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIOrderCreatedTitle {
+            get {
+                return ResourceManager.GetString("UIOrderCreatedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Yönetimi &gt; Hareketler.
         /// </summary>
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürünün satış fiyatı satır kaydı bulunmamaktadır..
+        /// </summary>
+        public static string UIWarningSalesPriceMessage {
+            get {
+                return ResourceManager.GetString("UIWarningSalesPriceMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningSalesPriceTitle {
+            get {
+                return ResourceManager.GetString("UIWarningSalesPriceTitle", resourceCulture);
             }
         }
         

@@ -80,6 +80,7 @@ else
                                                     case OrderAcceptanceRecordStateEnum.Beklemede: statusStr = L["EnumPending"]; break;
                                                     case OrderAcceptanceRecordStateEnum.TeknikOnayVerildi: statusStr = L["EnumTechnicalApproval"]; break;
                                                     case OrderAcceptanceRecordStateEnum.SiparisFiyatOnayiVerildi: statusStr = L["EnumOrderApproval"]; break;
+                                                    case OrderAcceptanceRecordStateEnum.SiparisOlusturuldu: statusStr = L["EnumOrderCreated"]; break;
                                                     default: break;
                                                 }
                                             }
@@ -524,6 +525,7 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.isCalculated) DisplayAsCheckBox="true" HeaderText="@L["MRPLineGridSalesOrderisCalculated"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.isPurchase) DisplayAsCheckBox="true" HeaderText="@L["MRPLineGridSalesOrderisPurchase"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.isStockUsage) DisplayAsCheckBox="true" HeaderText="@L["MRPLineGridSalesOrderisStockUsage"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.SalesOrderFicheNo) HeaderText="@L["MRPLineGridSalesOrderFicheNo"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.ProductCode) HeaderText="@L["MRPLineGridProductCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.UnitSetCode) HeaderText="@L["MRPLineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
@@ -532,8 +534,8 @@ else
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.WarehouseCode) HeaderText="@L["MRPLineGridWarehouseCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
 
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.AmountOfStock) HeaderText="@L["MRPLineGridAmountOfStock"]" TextAlign="TextAlign.Center" Width="280" Format="N2"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectMRPLinesDto.Amount) Type="ColumnType.Number" HeaderText="@L["MRPLineGridAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectMRPLinesDto.RequirementAmount) Type="ColumnType.Number" HeaderText="@L["MRPLineGridRequirementAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.Amount) Format="N2" Type="ColumnType.Number" HeaderText="@L["MRPLineGridAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.RequirementAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["MRPLineGridRequirementAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                 </GridColumns>
                             </SfGrid> 
                         </Template>

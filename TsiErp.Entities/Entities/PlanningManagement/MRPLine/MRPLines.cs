@@ -25,11 +25,11 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine
         /// Satış Siparişi Satış ID
         /// </summary>
         public Guid SalesOrderLineID { get; set; }
-        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Int)]
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Miktar
         /// </summary>
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
         /// <summary>
         /// Satır No
@@ -50,11 +50,11 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine
         /// Durum
         /// </summary>
         public string State_ { get; set; }
-        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Int)]
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// İhtiyaç Miktar
         /// </summary>
-        public int RequirementAmount { get; set; }
+        public decimal RequirementAmount { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// Hesaplanacak

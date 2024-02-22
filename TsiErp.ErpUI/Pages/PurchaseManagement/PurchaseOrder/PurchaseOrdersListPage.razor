@@ -66,6 +66,25 @@ else
                                     <GridColumn Field=@nameof(ListPurchaseOrdersDto.MRPCode) Type="ColumnType.Number" HeaderText="@L["MRPCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchaseOrdersDto.BranchCode) HeaderText="@L["BranchCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchaseOrdersDto.WarehouseCode) HeaderText="@L["WarehouseCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchaseOrdersDto.PurchaseOrderState) HeaderText="@L["PurchaseOrderState"]" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                var purchaseOrderState = (context as ListPurchaseOrdersDto).PurchaseOrderState;
+                                                string purchaseOrderStateStr = string.Empty;
+
+                                                switch(purchaseOrderState)
+                                                {
+                                                    case PurchaseOrderStateEnum.Iptal: purchaseOrderStateStr = L["EnumCancel"]; break; 
+                                                    case PurchaseOrderStateEnum.Beklemede: purchaseOrderStateStr = L["EnumWaiting"]; break; 
+                                                    case PurchaseOrderStateEnum.Onaylandı: purchaseOrderStateStr = L["EnumApproved"] ;break; 
+                                                    case PurchaseOrderStateEnum.Tamamlandi: purchaseOrderStateStr = L["EnumCompleted"]; break; 
+                                                    case PurchaseOrderStateEnum.KismiTamamlandi: purchaseOrderStateStr = L["EnumInPartialCompleted"]; break; 
+                                                    default: break;
+                                                }
+                                            }
+                                            @purchaseOrderStateStr
+                                        </Template>
+                                    </GridColumn>
 
 
                                 </GridColumns>

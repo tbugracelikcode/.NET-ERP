@@ -210,6 +210,9 @@
   <data name="LineGridSalesOrderisPurchase" xml:space="preserve">
     <value>SATIN ALMAYA DÖNÜŞTÜ</value>
   </data>
+  <data name="LineGridSalesOrderisStockUsage" xml:space="preserve">
+    <value>STOKTAN KULLANILACAK</value>
+  </data>
   <data name="LineGridUnitSetCode" xml:space="preserve">
     <value>BİRİM SETİ</value>
   </data>

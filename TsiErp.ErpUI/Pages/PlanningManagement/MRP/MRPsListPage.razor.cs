@@ -241,11 +241,12 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                             {
                                 foreach (var data in item.Data)
                                 {
+
                                     var product = (await ProductsAppService.GetAsync(data.ProductID.GetValueOrDefault())).Data;
 
                                     DateTime? supplyDate = null;
 
-                                    if(data.RequirementAmount== 0)
+                                    if (data.RequirementAmount == 0)
                                     {
                                         supplyDate = DateTime.Today;
                                     }
@@ -285,6 +286,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                     BranchIDData = data.BranchID;
                                     WarehouseIDData = data.WarehouseID;
                                     purchaseOrderLineList.Add(purchaseOrderLineModel);
+
+
                                 }
 
                                 CreatePurchaseOrdersDto purchaseOrderModel = new CreatePurchaseOrdersDto
