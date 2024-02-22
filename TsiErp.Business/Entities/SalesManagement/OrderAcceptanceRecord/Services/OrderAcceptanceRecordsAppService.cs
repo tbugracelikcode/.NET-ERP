@@ -511,7 +511,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 OrderUnitPrice = entityLine.OrderUnitPrice,
                 ProductReferanceNumberID = entityLine.ProductReferanceNumberID,
                 UnitSetID = entityLine.UnitSetID,
-                OrderAcceptanceRecordID = entityLine.Id,
+                OrderAcceptanceRecordID = entityLine.OrderAcceptanceRecordID,
                 CreationTime = entityLine.CreationTime,
                 CreatorId = entityLine.CreatorId,
                 DataOpenStatus = false,
