@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddSelectectedSalesOrdersButton" xml:space="preserve">
+    <value>Add Selected Orders</value>
+  </data>
   <data name="AddSelectedOrdersButton" xml:space="preserve">
     <value>Add Selected Orders</value>
   </data>
@@ -300,8 +303,14 @@
   <data name="SalesOrderPopupGridFicheNo" xml:space="preserve">
     <value>FICHE NR</value>
   </data>
+  <data name="SalesOrdersListLabel" xml:space="preserve">
+    <value>Sales Orders:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="SelectAllText" xml:space="preserve">
+    <value>Select All</value>
   </data>
   <data name="State_" xml:space="preserve">
     <value>STATE</value>
@@ -320,6 +329,9 @@
   </data>
   <data name="UIWarningConvertPurchaseTitle" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="UnSelectAllText" xml:space="preserve">
+    <value>Unselect All</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

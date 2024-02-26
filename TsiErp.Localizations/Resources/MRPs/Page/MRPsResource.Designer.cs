@@ -63,6 +63,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         /// <summary>
         ///   Looks up a localized string similar to Seçilen Siparişleri Ekle.
         /// </summary>
+        public static string AddSelectectedSalesOrdersButton {
+            get {
+                return ResourceManager.GetString("AddSelectectedSalesOrdersButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçilen Siparişleri Ekle.
+        /// </summary>
         public static string AddSelectedOrdersButton {
             get {
                 return ResourceManager.GetString("AddSelectedOrdersButton", resourceCulture);
@@ -610,11 +619,29 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satış Siparişleri:.
+        /// </summary>
+        public static string SalesOrdersListLabel {
+            get {
+                return ResourceManager.GetString("SalesOrdersListLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hepsini Seç.
+        /// </summary>
+        public static string SelectAllText {
+            get {
+                return ResourceManager.GetString("SelectAllText", resourceCulture);
             }
         }
         
@@ -669,6 +696,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         public static string UIWarningConvertPurchaseTitle {
             get {
                 return ResourceManager.GetString("UIWarningConvertPurchaseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçilenleri Kaldır.
+        /// </summary>
+        public static string UnSelectAllText {
+            get {
+                return ResourceManager.GetString("UnSelectAllText", resourceCulture);
             }
         }
         
