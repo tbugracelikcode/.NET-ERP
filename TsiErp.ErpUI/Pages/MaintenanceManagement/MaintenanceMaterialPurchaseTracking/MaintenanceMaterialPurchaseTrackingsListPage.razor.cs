@@ -90,7 +90,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
                         foreach (var line in PurchaseOrderLinesList)
                         {
 
-                            int requirementAmount = (await MRPsAppService.GetAsync(item.MRPID.GetValueOrDefault())).Data.SelectMRPLines.Where(t => t.ProductID == line.ProductID).Select(t => t.RequirementAmount).Sum();
+                            decimal requirementAmount = (await MRPsAppService.GetAsync(item.MRPID.GetValueOrDefault())).Data.SelectMRPLines.Where(t => t.ProductID == line.ProductID).Select(t => t.RequirementAmount).Sum();
 
                             string stateLine = string.Empty;
 
@@ -114,7 +114,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
                                 SupplyDate = line.SupplyDate,
                                 SupplyStatus = stateLine,
                                 PurchaseOrderNo = item.FicheNo,
-                                RequirementAmount = requirementAmount
+                                RequirementAmount = (int)requirementAmount
                             };
 
                             ListDataSource.Add(gridModel);
@@ -143,7 +143,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
                         foreach (var line in PurchaseOrderLinesList)
                         {
 
-                            int requirementAmount = (await MRPsAppService.GetAsync(item.MRPID.GetValueOrDefault())).Data.SelectMRPLines.Where(t => t.ProductID == line.ProductID).Select(t => t.RequirementAmount).Sum();
+                            decimal requirementAmount = (await MRPsAppService.GetAsync(item.MRPID.GetValueOrDefault())).Data.SelectMRPLines.Where(t => t.ProductID == line.ProductID).Select(t => t.RequirementAmount).Sum();
 
                             string stateLine = string.Empty;
 
@@ -167,7 +167,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
                                 SupplyDate = line.SupplyDate,
                                 SupplyStatus = stateLine,
                                 PurchaseOrderNo = item.FicheNo,
-                                RequirementAmount = requirementAmount
+                                RequirementAmount = (int)requirementAmount
                             };
 
                             ListDataSource.Add(gridModel);
