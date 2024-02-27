@@ -114,7 +114,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
                                 SupplyDate = line.SupplyDate,
                                 SupplyStatus = stateLine,
                                 PurchaseOrderNo = item.FicheNo,
-                                RequirementAmount = requirementAmount
+                                RequirementAmount = (int)requirementAmount
                             };
 
                             ListDataSource.Add(gridModel);
@@ -167,7 +167,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
                                 SupplyDate = line.SupplyDate,
                                 SupplyStatus = stateLine,
                                 PurchaseOrderNo = item.FicheNo,
-                                RequirementAmount = requirementAmount
+                                RequirementAmount = (int)requirementAmount
                             };
 
                             ListDataSource.Add(gridModel);

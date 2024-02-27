@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddSelectectedSalesOrdersButton" xml:space="preserve">
+    <value>Seçilen Siparişleri Ekle</value>
+  </data>
   <data name="AddSelectedOrdersButton" xml:space="preserve">
     <value>Seçilen Siparişleri Ekle</value>
   </data>
@@ -300,8 +303,14 @@
   <data name="SalesOrderPopupGridFicheNo" xml:space="preserve">
     <value>FİŞ NO</value>
   </data>
+  <data name="SalesOrdersListLabel" xml:space="preserve">
+    <value>Satış Siparişleri:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="SelectAllText" xml:space="preserve">
+    <value>Hepsini Seç</value>
   </data>
   <data name="State_" xml:space="preserve">
     <value>DURUM</value>
@@ -320,6 +329,9 @@
   </data>
   <data name="UIWarningConvertPurchaseTitle" xml:space="preserve">
     <value>Uyarı</value>
+  </data>
+  <data name="UnSelectAllText" xml:space="preserve">
+    <value>Seçilenleri Kaldır</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

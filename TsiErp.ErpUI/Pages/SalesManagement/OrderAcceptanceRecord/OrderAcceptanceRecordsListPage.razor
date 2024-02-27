@@ -477,43 +477,10 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="5" Column="1">
-                        <Template>
-                            <SfGrid  ID="OrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@SalesOrdersList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
-                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
-                                <GridColumns>
-                                    <GridColumn Field=@nameof(ListSalesOrderDto.FicheNo) Context="OrdersContext" HeaderText="@L["MRPOrderGridFicheNo"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
-                                </GridColumns>
-                            </SfGrid>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="5" Column="2">
-                        <Template>
-                            <table style="height:100%">
-                                <tr style="height:45%">
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr style="vertical-align:central; height:10%">
-                                    <td>
-                                        <SfButton CssClass="TSISaveButton" Disabled=true><SfIcon Size="IconSize.Medium" Name="IconName.ArrowRight"></SfIcon></SfButton>
-                                    </td>
-                                </tr>
-                                <tr style="height:45%">
-                                    <td>
-                                    </td>
-                                </tr>
-
-                            </table>
-                        </Template>
-                    </DxGridLayoutItem>
+                   
 
 
-                    <DxGridLayoutItem Row="5" Column="3" ColumnSpan="2">
+                    <DxGridLayoutItem Row="5" Column="1" ColumnSpan="4">
                         <Template>
                             <SfGrid @ref=_MRPLineGrid ID="MRPLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@MRPLinesList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MRPLineGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnMRPListContextMenuClick" TValue="SelectMRPLinesDto"></GridEvents>

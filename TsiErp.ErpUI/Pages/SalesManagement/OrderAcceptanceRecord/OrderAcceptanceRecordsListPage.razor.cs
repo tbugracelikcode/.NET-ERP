@@ -49,7 +49,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         private SfGrid<SelectMRPLinesDto> _MRPLineGrid;
-        private SfGrid<ListSalesOrderDto> _MRPOrdersGrid;
 
         VirtualLineModel VirtualLineDataSource;
 
@@ -1011,6 +1010,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         private void OrderValueChangeHandler(ChangeEventArgs<decimal> args)
         {
             VirtualLineDataSource.LineAmount = VirtualLineDataSource.OrderAmount * VirtualLineDataSource.OrderUnitPrice;
+        }
+
+        private async Task GetSalesOrdersList()
+        {
+            SalesOrdersList = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.ToList();
         }
 
         #region Excel'den Aktarım

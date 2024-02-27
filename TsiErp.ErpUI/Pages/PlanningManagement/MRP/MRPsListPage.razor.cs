@@ -30,13 +30,13 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.DataAccess.Services.Login;
+using DevExpress.XtraRichEdit.Model;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 {
     public partial class MRPsListPage : IDisposable
     {
         private SfGrid<SelectMRPLinesDto> _LineGrid;
-        private SfGrid<ListSalesOrderDto> _OrdersGrid;
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
@@ -86,6 +86,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             #endregion
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+
 
         }
 
@@ -199,13 +200,27 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             {
                 case "new":
                     await BeforeInsertAsync();
+                    BindingSalesOrders.Clear();
                     break;
 
                 case "changed":
                     IsChanged = true;
-                    await GetSalesOrdersList();
+                    BindingSalesOrders.Clear();
                     DataSource = (await MRPsService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectMRPLines;
+
+                    SalesOrdersList.Clear();
+
+                    var salesOrdersList = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.ToList();
+
+                    foreach(var salesOrder in salesOrdersList)
+                    {
+                        if(!GridLineList.Any(t=>t.SalesOrderID.GetValueOrDefault() == salesOrder.Id))
+                        {
+                            SalesOrdersList.Add(salesOrder);
+                        }
+                    }
+
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
@@ -553,28 +568,19 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             LineCrudPopup = false;
         }
 
-        public async void ArrowRightBtnClicked()
+        public async void AddSelectedSalesOrderButtonClicked()
         {
+            var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
+            var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
 
-            if (SalesOrdersList.Count != 0)
+            foreach (var orderId in BindingSalesOrders)
             {
-                ListSalesOrderDto selectedRow = new ListSalesOrderDto();
-                List<SelectSalesOrderLinesDto> salesOrderLineList = new List<SelectSalesOrderLinesDto>();
-
-                if (_OrdersGrid.SelectedRecords.Count > 0)
+                if(!GridLineList.Any(t=>t.SalesOrderID.GetValueOrDefault() == orderId))
                 {
-                    selectedRow = _OrdersGrid.SelectedRecords[0];
+                    var salesOrder = (await SalesOrdersAppService.GetAsync(orderId)).Data;
+                    var salesOrderLineList = salesOrder.SelectSalesOrderLines.ToList();
 
-                    if (selectedRow.Id != Guid.Empty)
-                    {
-                        salesOrderLineList = (await SalesOrdersAppService.GetAsync(selectedRow.Id)).Data.SelectSalesOrderLines.ToList();
-                    }
-
-                    var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
-                    var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
-
-
-                    foreach (var orderline in salesOrderLineList)
+                    foreach(var orderline in salesOrderLineList)
                     {
                         var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(orderline.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.ToList();
 
@@ -598,14 +604,14 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                     MRPID = DataSource.Id,
                                     ProductCode = bomline.ProductCode,
                                     ProductName = bomline.ProductName,
-                                    SalesOrderID = selectedRow.Id,
+                                    SalesOrderID = orderId,
                                     UnitSetID = bomline.UnitSetID,
                                     LineNr = GridLineList.Count + 1,
                                     UnitSetCode = bomline.UnitSetCode,
                                     AmountOfStock = amountofProduct,
                                     RequirementAmount = Math.Abs(Convert.ToInt32(amountofProduct) - calculatedAmount),
                                     SalesOrderLineID = orderline.Id,
-                                    SalesOrderFicheNo = selectedRow.FicheNo,
+                                    SalesOrderFicheNo = salesOrder.FicheNo,
                                     BranchID = branch.Id,
                                     WarehouseID = warehouse.Id,
                                     BranchCode = branch.Code,
@@ -616,21 +622,25 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                             }
 
                         }
-
                     }
 
+                    await _LineGrid.Refresh();
                 }
-                await _LineGrid.Refresh();
-                await _OrdersGrid.Refresh();
-                await InvokeAsync(StateHasChanged);
             }
-
         }
+
+        
+
+        #region SalesOrders
+
+        List<Guid> BindingSalesOrders = new List<Guid>();
 
         private async Task GetSalesOrdersList()
         {
             SalesOrdersList = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.ToList();
         }
+
+        #endregion
 
 
         protected async Task OnLineSubmit()

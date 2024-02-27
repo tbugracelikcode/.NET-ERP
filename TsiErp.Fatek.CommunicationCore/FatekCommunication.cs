@@ -83,16 +83,17 @@ namespace TsiErp.Fatek.CommunicationCore
 
         public bool GetDis(MemoryType mType, int startRegister)
         {
-            try
-            {
-                bool[] result = ReadDiscretes(1, (ushort)1, mType, (ushort)startRegister, DataType.BOOL);
-                return Convert.ToBoolean(result[0]);
-            }
-            catch (Exception)
-            {
-                bool[] result = ReadDiscretes(1, (ushort)1, mType, (ushort)startRegister, DataType.BOOL);
-                return Convert.ToBoolean(result[0]);
-            }
+            //try
+            //{
+            //    bool[] result = ReadDiscretes(1, (ushort)1, mType, (ushort)startRegister, DataType.BOOL);
+            //    return Convert.ToBoolean(result[0]);
+            //}
+            //catch (Exception)
+            //{
+            //    bool[] result = ReadDiscretes(1, (ushort)1, mType, (ushort)startRegister, DataType.BOOL);
+            //    return Convert.ToBoolean(result[0]);
+            //}
+            return true;
 
         }
 
