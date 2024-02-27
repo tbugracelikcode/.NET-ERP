@@ -121,6 +121,10 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
         /// <summary>
         /// Stok Miktarı
         /// </summary>
-        public decimal AmountOfStock { get; set; }
+        public decimal Amount { get; set; }
+        /// <summary>
+        /// Rezerve Miktarı
+        /// </summary>
+        public decimal TotalReserved { get; set; }
     }
 }

@@ -185,7 +185,6 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
                   null
                 , t => t.Amount
                 , Tables.GrandTotalStockMovements
-                , nameof(SelectMRPLinesDto.AmountOfStock)
                 , true
                 , nameof(GrandTotalStockMovements.ProductID) + "=" + Tables.MaintenanceMRPLines + "." + nameof(MaintenanceMRPLines.ProductID))
                    .Join<Products>

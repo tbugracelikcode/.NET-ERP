@@ -61,6 +61,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to REZERVE MİKTARI.
+        /// </summary>
+        public static string AmountOfReserved {
+            get {
+                return ResourceManager.GetString("AmountOfReserved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STOK MİKTARI.
         /// </summary>
         public static string AmountOfStock {

@@ -64,7 +64,8 @@ else
                                     <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListProductsDto.AmountOfStock) HeaderText="@L["AmountOfStock"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.Amount) HeaderText="@L["AmountOfStock"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.TotalReserved) HeaderText="@L["AmountOfReserved"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.UnitSetCode) HeaderText="@L["UnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.SupplyForm) HeaderText="@L["SupplyForm"]" TextAlign="TextAlign.Center" Width="120">
                                         <Template>

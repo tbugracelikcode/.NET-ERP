@@ -97,5 +97,13 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
         /// Çıkış Birim Maliyeti
         /// </summary>
         public decimal UnitOutputCost { get; set; }
+        /// <summary>
+        /// MRP ID
+        /// </summary>
+        public Guid? MRPID { get; set; }
+        /// <summary>
+        /// MRP Satır ID
+        /// </summary>
+        public Guid? MRPLineID { get; set; }
     }
 }

@@ -73,6 +73,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     case 13: input.InputOutputCode = 0; break;
                     case 50: input.InputOutputCode = 0; break;
                     case 51: input.InputOutputCode = 1; break;
+                    case 55: input.InputOutputCode = 1; break;
                 }
             }
 
@@ -115,7 +116,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             {
                 decimal productCost = 0;
 
-                if (item.FicheType == StockFicheTypeEnum.FireFisi || item.FicheType == StockFicheTypeEnum.SarfFisi || item.FicheType == StockFicheTypeEnum.StokCikisFisi)
+                if (item.FicheType == StockFicheTypeEnum.FireFisi || item.FicheType == StockFicheTypeEnum.SarfFisi || item.FicheType == StockFicheTypeEnum.StokCikisFisi || item.FicheType == StockFicheTypeEnum.StokRezerveFisi)
                 {
                     if (autoCostParameter)
                     {
@@ -140,8 +141,10 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     StockFicheID = addedEntityId,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
-                    PurchaseOrderID = Guid.Empty,
-                    PurchaseOrderLineID = Guid.Empty,
+                    PurchaseOrderID = item.PurchaseOrderID.GetValueOrDefault(),
+                    PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
+                    MRPID = item.MRPID.GetValueOrDefault(),
+                    MRPLineID = item.MRPID.GetValueOrDefault(),
                     DataOpenStatus = false,
                     ProductionDateReferance = item.ProductionDateReferance,
                     DataOpenStatusUserId = Guid.Empty,
@@ -180,6 +183,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 case 13: StockMovementsService.InsertTotalProductions(input); ; break;
                 case 50: StockMovementsService.InsertTotalGoods(input); ; break;
                 case 51: StockMovementsService.InsertTotalGoodIssues(input); ; break;
+                case 55: StockMovementsService.InsertTotalReserveds(input); ; break;
                 case 25: StockMovementsService.InsertTotalWarehouseShippings(input); break;
             }
 
@@ -214,6 +218,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     case StockFicheTypeEnum.StokGirisFisi: StockMovementsService.DeleteTotalGoods(StockFiches); ; break;
                     case StockFicheTypeEnum.StokCikisFisi: StockMovementsService.DeleteTotalGoodIssues(StockFiches); ; break;
                     case StockFicheTypeEnum.DepoSevkFisi: StockMovementsService.DeleteTotalWarehouseShippings(StockFiches); break;
+                    case StockFicheTypeEnum.StokRezerveFisi: StockMovementsService.DeleteTotalReserveds(StockFiches); break;
                 }
 
                 #endregion
@@ -251,6 +256,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     case StockFicheTypeEnum.StokGirisFisi: StockMovementsService.DeleteTotalGoodLines(stockFichesLineGet); ; break;
                     case StockFicheTypeEnum.StokCikisFisi: StockMovementsService.DeleteTotalGoodIssueLines(stockFichesLineGet); ; break;
                     case StockFicheTypeEnum.DepoSevkFisi: StockMovementsService.DeleteTotalWarehouseShippingLines(stockFichesLineGet); break;
+                    case StockFicheTypeEnum.StokRezerveFisi: StockMovementsService.DeleteTotalReservedLines(stockFichesLineGet); break;
                 }
 
                 #endregion
@@ -472,6 +478,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     case 13: input.InputOutputCode = 0; break;
                     case 50: input.InputOutputCode = 0; break;
                     case 51: input.InputOutputCode = 1; break;
+                    case 55: input.InputOutputCode = 1; break;
                 }
             }
 
@@ -517,7 +524,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                     decimal productCost = 0;
 
-                    if (item.FicheType == StockFicheTypeEnum.FireFisi || item.FicheType == StockFicheTypeEnum.SarfFisi || item.FicheType == StockFicheTypeEnum.StokCikisFisi)
+                    if (item.FicheType == StockFicheTypeEnum.FireFisi || item.FicheType == StockFicheTypeEnum.SarfFisi || item.FicheType == StockFicheTypeEnum.StokCikisFisi || item.FicheType == StockFicheTypeEnum.StokRezerveFisi)
                     {
                         if (autoCostParameter)
                         {
@@ -545,6 +552,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         DataOpenStatusUserId = Guid.Empty,
                         PurchaseOrderID = item.PurchaseOrderID.GetValueOrDefault(),
                         PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
+                        MRPID = item.MRPID.GetValueOrDefault(),
+                        MRPLineID = item.MRPID.GetValueOrDefault(),
                         DeleterId = Guid.Empty,
                         DeletionTime = null,
                         Id = GuidGenerator.CreateGuid(),
@@ -572,7 +581,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                     decimal productCost = 0;
 
-                    if (item.FicheType == StockFicheTypeEnum.FireFisi || item.FicheType == StockFicheTypeEnum.SarfFisi || item.FicheType == StockFicheTypeEnum.StokCikisFisi)
+                    if (item.FicheType == StockFicheTypeEnum.FireFisi || item.FicheType == StockFicheTypeEnum.SarfFisi || item.FicheType == StockFicheTypeEnum.StokCikisFisi || item.FicheType == StockFicheTypeEnum.StokRezerveFisi)
                     {
                         if (autoCostParameter)
                         {
@@ -604,6 +613,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             CreationTime = line.CreationTime,
                             PurchaseOrderID = item.PurchaseOrderID.GetValueOrDefault(),
                             PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
+                            MRPID = item.MRPID.GetValueOrDefault(),
+                            MRPLineID = item.MRPID.GetValueOrDefault(),
                             CreatorId = line.CreatorId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -643,6 +654,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 case 50: StockMovementsService.UpdateTotalGoods(entity, input); break;
                 case 51: StockMovementsService.UpdateTotalGoodIssues(entity, input); break;
                 case 25: StockMovementsService.UpdateTotalWarehouseShippings(entity, input); break;
+                case 55: StockMovementsService.UpdateTotalReserveds(entity, input); break;
             }
 
             #endregion

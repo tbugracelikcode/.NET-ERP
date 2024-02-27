@@ -186,7 +186,7 @@ namespace TsiErp.Business.Entities.Product.Services
         public async Task<IDataResult<SelectProductsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
-                    .Query().From(Tables.Products).Select<Products>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.UnitSetID, p.CoatingWeight, p.Confirmation, p.EnglishDefinition, p.ExportCatNo, p.FeatureSetID, p.GTIP, p.ManufacturerCode, p.OemRefNo, p.OemRefNo2, p.OemRefNo3, p.TechnicalConfirmation, p.SupplyForm, p.SawWastage, p.SaleVAT, p.PurchaseVAT, p.ProductType, p.ProductSize, p.ProductGrpID, p.ProductDescription, p.PlannedWastage })
+                    .Query().From(Tables.Products).Select<Products>(null)
                         .Join<UnitSets>
                         (
                             u => new { UnitSet = u.Code, UnitSetID = u.Id },
@@ -223,9 +223,8 @@ namespace TsiErp.Business.Entities.Product.Services
               .Select<Products, GrandTotalStockMovements>
               (
                   null
-                , t => t.Amount
+                , t => new { t.Amount, t.TotalReserved }
                 , Tables.GrandTotalStockMovements
-                , nameof(ListProductsDto.AmountOfStock)
                 , true
                 , nameof(GrandTotalStockMovements.ProductID) + "=" + Tables.Products + "." + nameof(Products.Id))
                    .Join<UnitSets>

@@ -204,6 +204,9 @@
   <data name="LineGridRequirementAmount" xml:space="preserve">
     <value>PURCHASE REQUIREMENT AMOUNT</value>
   </data>
+  <data name="LineGridReservedAmount" xml:space="preserve">
+    <value>RESERVED AMOUNT</value>
+  </data>
   <data name="LineGridSalesOrderFicheNo" xml:space="preserve">
     <value>ORDER FICHE NO</value>
   </data>
@@ -273,6 +276,9 @@
   <data name="MRPLineContextStockUsage" xml:space="preserve">
     <value>Use From Stock</value>
   </data>
+  <data name="MRPLineContextSupplier" xml:space="preserve">
+    <value>Select a Supplier</value>
+  </data>
   <data name="MultiDeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Order lines going to be deleted, do you confirm?</value>
   </data>
@@ -317,6 +323,21 @@
   </data>
   <data name="State_Label" xml:space="preserve">
     <value>State:</value>
+  </data>
+  <data name="SupplierModalTitle" xml:space="preserve">
+    <value>Suppliers</value>
+  </data>
+  <data name="SupplierPopupGridCurrentAccountName" xml:space="preserve">
+    <value>SUPPLIER NAME</value>
+  </data>
+  <data name="SupplierPopupGridCurrenyCode" xml:space="preserve">
+    <value>CURRENCY</value>
+  </data>
+  <data name="SupplierPopupGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="SupplierPopupGridUnitPrice" xml:space="preserve">
+    <value>UNIT PRICE</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Material Requirement Planning (MRP)</value>

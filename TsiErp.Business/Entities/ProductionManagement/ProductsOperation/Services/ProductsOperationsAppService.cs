@@ -287,7 +287,9 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ProductsOperations)
-                   .Select<ProductsOperations, OperationStockMovements>(null, t => t.TotalAmount, Tables.OperationStockMovements, nameof(ListProductsOperationsDto.TotalAmount), true, nameof(OperationStockMovements.OperationID) + "=" + Tables.ProductsOperations + "." + nameof(ProductsOperations.Id))
+                   .Select<ProductsOperations, OperationStockMovements>(
+                null, 
+                t => t.TotalAmount, Tables.OperationStockMovements, true, nameof(OperationStockMovements.OperationID) + "=" + Tables.ProductsOperations + "." + nameof(ProductsOperations.Id))
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },

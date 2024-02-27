@@ -97,5 +97,37 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
         /// Sipariş Kabul Satır ID
         /// </summary>
         public Guid? OrderAcceptanceLineID { get; set; }
+        /// <summary>
+        /// Cari ID
+        /// </summary>
+        public Guid? CurrentAccountCardID { get; set; }
+        /// <summary>
+        /// Cari Kod
+        /// </summary>
+        public string CurrentAccountCardCode { get; set; }
+        /// <summary>
+        /// Cari Ünvan
+        /// </summary>
+        public string CurrentAccountCardName { get; set; }
+        /// <summary>
+        /// Birim Fiyat
+        /// </summary>
+        public decimal UnitPrice { get; set; }
+        /// <summary>
+        /// Temin Tarihi
+        /// </summary>
+        public DateTime SupplyDate { get; set; }
+        /// <summary>
+        /// Para Birimi ID
+        /// </summary>
+        public Guid? CurrencyID { get; set; }
+        /// <summary>
+        /// Para Birimi Kodu
+        /// </summary>
+        public string CurrencyCode { get; set; }
+        /// <summary>
+        /// Rezerve Miktarı
+        /// </summary>
+        public decimal ReservedAmount { get; set; }
     }
 }

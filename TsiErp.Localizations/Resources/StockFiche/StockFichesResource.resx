@@ -180,6 +180,9 @@
   <data name="EnumProductionIncome" xml:space="preserve">
     <value>Üretimden Giriş Fişi</value>
   </data>
+  <data name="EnumReserved" xml:space="preserve">
+    <value>Stok Rezerve Fişi</value>
+  </data>
   <data name="EnumStockIncome" xml:space="preserve">
     <value>Stok Giriş Fişi</value>
   </data>

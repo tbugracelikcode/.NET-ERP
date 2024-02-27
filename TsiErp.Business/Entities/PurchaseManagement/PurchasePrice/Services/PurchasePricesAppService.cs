@@ -204,6 +204,15 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         nameof(Currencies.Id),
                         JoinType.Left
                     )
+
+                    .Join<CurrentAccountCards>
+                    (
+                        cr => new { CurrentAccountCardID = cr.Id, CurrentAccountCardName = cr.Name },
+                        nameof(PurchasePriceLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        "CurrentAccountCardLine",
+                        JoinType.Left
+                    )
                     .Where(new { PurchasePriceID = id }, false, false, Tables.PurchasePriceLines);
 
             var purchasePriceLine = queryFactory.GetList<SelectPurchasePriceLinesDto>(queryLines).ToList();
@@ -468,7 +477,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.PurchasePriceLines)
-                   .Select<PurchasePriceLines>(ppl => new { ppl.StartDate, ppl.PurchasePriceID, ppl.ProductID, ppl.Price, ppl.Linenr, ppl.Id, ppl.EndDate, ppl.DataOpenStatusUserId, ppl.DataOpenStatus, ppl.CurrentAccountCardID, ppl.CurrencyID })
+                   .Select<PurchasePriceLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -481,6 +490,13 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         cr => new { CurrencyID = cr.Id, CurrencyCode = cr.Code },
                         nameof(PurchasePriceLines.CurrencyID),
                         nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        cr => new { CurrentAccountCardID = cr.Id, CurrentAccountCardName = cr.Name },
+                        nameof(PurchasePriceLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
                     .Where(new { ProductID = productId }, false, false, Tables.PurchasePriceLines);

@@ -13,7 +13,9 @@ using TsiErp.Business.Entities.PlanningManagement.MRP.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRP.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.PlanningManagement.MRP;
@@ -102,6 +104,11 @@ namespace TsiErp.Business.Entities.MRP.Services
                     Amount = item.Amount,
                     ProductID = item.ProductID,
                     RequirementAmount = item.RequirementAmount,
+                    CurrencyID = item.CurrencyID,
+                    CurrentAccountCardID = item.CurrentAccountCardID,
+                    ReservedAmount = item.ReservedAmount,
+                    SupplyDate = item.SupplyDate,
+                    UnitPrice = item.UnitPrice,
                     BranchID = item.BranchID,
                     WarehouseID = item.WarehouseID,
                     isStockUsage = item.isStockUsage,
@@ -202,7 +209,6 @@ namespace TsiErp.Business.Entities.MRP.Services
                   null
                 , t => t.Amount
                 , Tables.GrandTotalStockMovements
-                , nameof(SelectMRPLinesDto.AmountOfStock)
                 , true
                 , nameof(GrandTotalStockMovements.ProductID) + "=" + Tables.MRPLines + "." + nameof(MRPLines.ProductID))
                    .Join<Products>
@@ -219,11 +225,25 @@ namespace TsiErp.Business.Entities.MRP.Services
                         nameof(Warehouses.Id),
                         JoinType.Left
                     )
+                     .Join<CurrentAccountCards>
+                    (
+                        s => new { CurrentAccountCardID = s.Id, CurrentAccountCardCode = s.Code, CurrentAccountCardName = s.Name },
+                        nameof(MRPLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
                      .Join<Branches>
                     (
                         s => new { BranchID = s.Id, BranchCode = s.Code },
                         nameof(MRPLines.BranchID),
                         nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Currencies>
+                    (
+                        s => new { CurrencyID = s.Id, CurrencyCode = s.Code },
+                        nameof(MRPLines.CurrencyID),
+                        nameof(Currencies.Id),
                         JoinType.Left
                     )
                    .Join<UnitSets>
@@ -281,7 +301,7 @@ namespace TsiErp.Business.Entities.MRP.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMRPsDto>> UpdateAsync(UpdateMRPsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(mi => new { mi.Code, mi.Id, mi.DataOpenStatus, mi.Date_, mi.DataOpenStatusUserId, mi.State_, mi.MaintenanceMRPID, mi.IsMaintenanceMRP, mi.IsDeleted, mi.Description_, mi.DeleterId })
+            var entityQuery = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(null)
                 .Join<MaintenanceMRPs>
                         (
                             pr => new { MaintenanceMRPCode = pr.Code, MaintenanceMRPID = pr.Id },
@@ -404,6 +424,11 @@ namespace TsiErp.Business.Entities.MRP.Services
                         OrderAcceptanceLineID = item.OrderAcceptanceLineID.GetValueOrDefault(),
                         BranchID = item.BranchID,
                         isStockUsage = item.isStockUsage,
+                        CurrencyID = item.CurrencyID,
+                        CurrentAccountCardID = item.CurrentAccountCardID,
+                        ReservedAmount = item.ReservedAmount,
+                        SupplyDate = item.SupplyDate,
+                        UnitPrice = item.UnitPrice,
                         ProductID = item.ProductID,
                         RequirementAmount = item.RequirementAmount,
                         SalesOrderID = item.SalesOrderID,
@@ -444,6 +469,11 @@ namespace TsiErp.Business.Entities.MRP.Services
                             isPurchase = item.isPurchase,
                             BranchID = item.BranchID,
                             WarehouseID = item.WarehouseID,
+                            CurrencyID = item.CurrencyID,
+                            CurrentAccountCardID = item.CurrentAccountCardID,
+                            ReservedAmount = item.ReservedAmount,
+                            SupplyDate = item.SupplyDate,
+                            UnitPrice = item.UnitPrice,
                             ProductID = item.ProductID,
                             RequirementAmount = item.RequirementAmount,
                             SalesOrderID = item.SalesOrderID,
