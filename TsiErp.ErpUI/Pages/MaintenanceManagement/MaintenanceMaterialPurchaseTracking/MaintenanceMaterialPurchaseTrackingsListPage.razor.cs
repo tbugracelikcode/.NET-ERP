@@ -25,8 +25,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
             public string PurchaseCurrentAccountName { get; set; }
             public string ProductCode { get; set; }
             public string ProductName { get; set; }
-            public int RequirementAmount { get; set; }
-            public int OrderAmount { get; set; }
+            public decimal RequirementAmount { get; set; }
+            public decimal OrderAmount { get; set; }
             public string SupplyStatus { get; set; }
             public DateTime? SupplyDate { get; set; }
 
@@ -90,7 +90,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
                         foreach (var line in PurchaseOrderLinesList)
                         {
 
-                            int requirementAmount = (await MRPsAppService.GetAsync(item.MRPID.GetValueOrDefault())).Data.SelectMRPLines.Where(t => t.ProductID == line.ProductID).Select(t => t.RequirementAmount).Sum();
+                            decimal requirementAmount = (await MRPsAppService.GetAsync(item.MRPID.GetValueOrDefault())).Data.SelectMRPLines.Where(t => t.ProductID == line.ProductID).Select(t => t.RequirementAmount).Sum();
 
                             string stateLine = string.Empty;
 
@@ -143,7 +143,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
                         foreach (var line in PurchaseOrderLinesList)
                         {
 
-                            int requirementAmount = (await MRPsAppService.GetAsync(item.MRPID.GetValueOrDefault())).Data.SelectMRPLines.Where(t => t.ProductID == line.ProductID).Select(t => t.RequirementAmount).Sum();
+                            decimal requirementAmount = (await MRPsAppService.GetAsync(item.MRPID.GetValueOrDefault())).Data.SelectMRPLines.Where(t => t.ProductID == line.ProductID).Select(t => t.RequirementAmount).Sum();
 
                             string stateLine = string.Empty;
 

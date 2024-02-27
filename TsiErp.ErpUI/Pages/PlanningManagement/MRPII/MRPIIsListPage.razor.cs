@@ -347,7 +347,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
 
                                     if (bomLineList != null && bomLineList.Count > 0)
                                     {
-                                        DateTime? biggestDate = null;
 
                                         foreach (var bomLine in bomLineList)
                                         {
@@ -373,18 +372,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
                                             };
 
                                             GridLineList.Add(mrpIILineModel2);
-
-                                            if(mrpIILineModel2.EstimatedPurchaseSupplyDate > biggestDate)
-                                            {
-                                                biggestDate = mrpIILineModel2.EstimatedPurchaseSupplyDate;
-
-                                                int indexFinishedProduct = GridLineList.IndexOf(mrpIILineModel1);
-
-                                                GridLineList[indexFinishedProduct].EstimatedProductionStartDate = biggestDate.GetValueOrDefault();
-
-                                                GridLineList[indexFinishedProduct].EstimatedPurchaseSupplyDate = biggestDate.GetValueOrDefault();
-                                            }
-
 
                                         }
                                     }
