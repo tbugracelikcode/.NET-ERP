@@ -243,13 +243,22 @@
   <data name="StartingSalaryLinesContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="UIConfirmationPopupLineMessage" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The record will be deleted permanently.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase1" xml:space="preserve">
+    <value>Are you sure you want to delete?</value>
   </data>
   <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
     <value>The line will be deleted permanently.</value>
   </data>
   <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase1" xml:space="preserve">
     <value>Confirmation</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">

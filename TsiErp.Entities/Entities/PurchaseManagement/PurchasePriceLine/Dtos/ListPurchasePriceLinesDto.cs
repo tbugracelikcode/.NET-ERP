@@ -37,5 +37,9 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos
         /// Bitiş Tarihi
         /// </summary>
         public DateTime? EndDate { get; set; }
+        /// <summary>
+        /// Temin Tarih Günü
+        /// </summary>
+        public int SupplyDateDay { get; set; }
     }
 }

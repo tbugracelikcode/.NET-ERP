@@ -421,6 +421,15 @@ namespace TsiErp.Localizations.Resources.PurchasePrices.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SATIN ALMA TEMİN TARİHİ.
+        /// </summary>
+        public static string LineGridSupplyDateDay {
+            get {
+                return ResourceManager.GetString("LineGridSupplyDateDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
@@ -624,6 +633,15 @@ namespace TsiErp.Localizations.Resources.PurchasePrices.Page {
         public static string StartDateLabel {
             get {
                 return ResourceManager.GetString("StartDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Temin Tarihi:.
+        /// </summary>
+        public static string SupplyDateDayLineLabel {
+            get {
+                return ResourceManager.GetString("SupplyDateDayLineLabel", resourceCulture);
             }
         }
         

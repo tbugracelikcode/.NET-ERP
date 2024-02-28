@@ -243,13 +243,22 @@
   <data name="StartingSalaryLinesContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="UIConfirmationPopupLineMessage" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>Kayıt kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase1" xml:space="preserve">
+    <value>Silmek istediğinize emin misiniz ?</value>
   </data>
   <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
     <value>Satır kalıcı olarak silinecektir.</value>
   </data>
   <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Onay</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase1" xml:space="preserve">
     <value>Onay</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">

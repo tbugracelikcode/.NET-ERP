@@ -925,6 +925,33 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz satır kalıcı olarak silinecektir..
+        /// </summary>
+        public static string UIConfirmationPopupLineMessage {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupLineMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
+        /// </summary>
+        public static string UIConfirmationPopupMessageBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupMessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string UIConfirmationPopupTitleBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personel Puanlama Kayıtları.
         /// </summary>
         public static string UICurrentMenu {

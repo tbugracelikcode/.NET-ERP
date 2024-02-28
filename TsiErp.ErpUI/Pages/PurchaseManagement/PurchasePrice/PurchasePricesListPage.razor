@@ -205,6 +205,7 @@ else
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.Price) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridPrice"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridStartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridEndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.SupplyDateDay) Type="ColumnType.Number" HeaderText="@L["LineGridSupplyDateDay"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -270,6 +271,13 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["CurrencyCodeLineLabel"] </strong></label><br />
                             <SfTextBox @bind-Value="LineDataSource.CurrencyCode" CssClass="TSITxtBox" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["SupplyDateDayLineLabel"] </strong></label>
+                            <SfNumericTextBox @bind-Value="LineDataSource.SupplyDateDay" TValue="int" Min="0"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

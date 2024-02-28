@@ -520,6 +520,24 @@ namespace TsiErp.Localizations.Resources.MaintenanceMRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz satır kalıcı olarak silinecektir..
+        /// </summary>
+        public static string UIConfirmationModalLineMessageBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationModalLineMessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string UIConfirmationModalTitleBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationModalTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bakım Malzemesi İhtiyaç Planlaması.
         /// </summary>
         public static string UICurrentMenu {

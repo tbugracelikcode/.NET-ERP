@@ -46,5 +46,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine
         /// Bitiş Tarihi
         /// </summary>
         public DateTime? EndDate { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Temin Tarih Günü
+        /// </summary>
+        public int SupplyDateDay { get; set; }
     }
 }

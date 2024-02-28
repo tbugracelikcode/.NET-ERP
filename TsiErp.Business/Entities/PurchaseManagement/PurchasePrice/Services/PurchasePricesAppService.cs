@@ -87,6 +87,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                     EndDate = item.EndDate,
                     CurrentAccountCardID = item.CurrentAccountCardID,
                     CurrencyID = item.CurrencyID,
+                    SupplyDateDay = item.SupplyDateDay,
                     Linenr = item.Linenr,
                     Price = item.Price,
                     PurchasePriceID = addedEntityId,
@@ -153,7 +154,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PurchasePrices)
-                   .Select<PurchasePrices>(pp => new { pp.WarehouseID, pp.StartDate, pp.Name, pp.IsApproved, pp.IsActive, pp.Id, pp.EndDate, pp.DataOpenStatusUserId, pp.DataOpenStatus, pp.CurrentAccountCardID, pp.CurrencyID, pp.Code, pp.BranchID })
+                   .Select<PurchasePrices>(null)
                    .Join<Currencies>
                     (
                         c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
@@ -189,7 +190,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.PurchasePriceLines)
-                   .Select<PurchasePriceLines>(ppl => new { ppl.StartDate, ppl.PurchasePriceID, ppl.ProductID, ppl.Price, ppl.Linenr, ppl.Id, ppl.EndDate, ppl.DataOpenStatusUserId, ppl.DataOpenStatus, ppl.CurrentAccountCardID, ppl.CurrencyID })
+                   .Select<PurchasePriceLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -232,7 +233,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.PurchasePrices)
-                   .Select<PurchasePrices>(pp => new { pp.WarehouseID, pp.StartDate, pp.Name, pp.IsApproved, pp.IsActive, pp.Id, pp.EndDate, pp.DataOpenStatusUserId, pp.DataOpenStatus, pp.CurrentAccountCardID, pp.CurrencyID, pp.Code, pp.BranchID })
+                   .Select<PurchasePrices>(null)
                    .Join<Currencies>
                     (
                         c => new { CurrencyCode = c.Code },
@@ -312,7 +313,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.PurchasePriceLines)
-                   .Select<PurchasePriceLines>(ppl => new { ppl.StartDate, ppl.PurchasePriceID, ppl.ProductID, ppl.Price, ppl.Linenr, ppl.Id, ppl.EndDate, ppl.DataOpenStatusUserId, ppl.DataOpenStatus, ppl.CurrentAccountCardID, ppl.CurrencyID })
+                   .Select<PurchasePriceLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -337,7 +338,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             var listQuery = queryFactory
                            .Query()
                             .From(Tables.PurchasePrices)
-                   .Select<PurchasePrices>(pp => new { pp.WarehouseID, pp.StartDate, pp.Name, pp.IsApproved, pp.IsActive, pp.Id, pp.EndDate, pp.DataOpenStatusUserId, pp.DataOpenStatus, pp.CurrentAccountCardID, pp.CurrencyID, pp.Code, pp.BranchID })
+                   .Select<PurchasePrices>(null)
                    .Join<Currencies>
                     (
                         c => new { CurrencyCode = c.Code },
@@ -411,6 +412,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         CurrentAccountCardID = item.CurrentAccountCardID,
                         CurrencyID = item.CurrencyID,
                         Linenr = item.Linenr,
+                        SupplyDateDay = item.SupplyDateDay,
                         Price = item.Price,
                         PurchasePriceID = input.Id,
                         CreationTime = DateTime.Now,
@@ -441,6 +443,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                             StartDate = item.StartDate,
                             ProductID = item.ProductID,
                             EndDate = item.EndDate,
+                            SupplyDateDay = item.SupplyDateDay,
                             CurrentAccountCardID = item.CurrentAccountCardID,
                             CurrencyID = item.CurrencyID,
                             Linenr = item.Linenr,
