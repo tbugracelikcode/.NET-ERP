@@ -91,7 +91,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPlanningManagementParametersDto>> UpdateAsync(UpdatePlanningManagementParametersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
             var entity = queryFactory.Get<PlanningManagementParameters>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Update(new UpdatePlanningManagementParametersDto
