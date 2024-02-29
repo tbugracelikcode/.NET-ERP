@@ -60,8 +60,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         List<VirtualLineModel> GridVirtualLineList = new List<VirtualLineModel>();
 
-        List<ListProductsDto> ProductsList = new List<ListProductsDto>();
-
         List<ListSalesOrderDto> SalesOrdersList = new List<ListSalesOrderDto>();
 
         public List<SelectMRPLinesDto> MRPLinesList = new List<SelectMRPLinesDto>();
@@ -668,6 +666,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         UnitSetID = bomline.UnitSetID,
                         LineNr = MRPLinesList.Count + 1,
                         UnitSetCode = bomline.UnitSetCode,
+                        SupplyDate = DateTime.Today,
+                        UnitPrice = 0,
+                        State_ = string.Empty,
+                        ReservedAmount = 0,
+                        CurrentAccountCardID = Guid.Empty,
+                        CurrentAccountCardCode = string.Empty,
+                        CurrentAccountCardName = string.Empty,
                         AmountOfStock = amountofProduct,
                         RequirementAmount = calculatedAmount,
                         SalesOrderLineID = Guid.Empty,
@@ -965,48 +970,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             return base.OnSubmit();
         }
 
-        private async void ProductCodeValueChangeHandler(Microsoft.AspNetCore.Components.ChangeEventArgs args)
-        {
-            if (ProductsList.Any(t => t.Code == VirtualLineDataSource.ProductCode))
-            {
-                var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductCode == VirtualLineDataSource.ProductCode && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).FirstOrDefault();
-
-                if (productRefNo != null)
-                {
-                    var tempProductList = ProductsList.Where(t => t.Code == VirtualLineDataSource.ProductCode).ToList();
-
-                    VirtualLineDataSource.OrderReferanceNo = productRefNo.OrderReferanceNo;
-                    VirtualLineDataSource.CustomerReferanceNo = productRefNo.CustomerReferanceNo;
-                    VirtualLineDataSource.CustomerBarcodeNo = productRefNo.CustomerBarcodeNo;
-                    VirtualLineDataSource.MinOrderAmount = productRefNo.MinOrderAmount;
-                    VirtualLineDataSource.UnitSetCode = tempProductList.Select(t => t.UnitSetCode).FirstOrDefault();
-                    VirtualLineDataSource.UnitSetID = tempProductList.Select(t => t.UnitSetID).FirstOrDefault();
-                    VirtualLineDataSource.ProductID = tempProductList.Select(t => t.Id).FirstOrDefault();
-                    VirtualLineDataSource.ProductReferanceNumberID = productRefNo.Id;
-
-                    var salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.StartDate <= DataSource.Date_ && t.EndDate >= DataSource.Date_ && t.CurrentAccountCardID == DataSource.CurrentAccountCardID && t.IsActive == true && t.IsApproved == true).Select(t => t.Id).FirstOrDefault();
-
-                    if (salesPriceID != Guid.Empty)
-                    {
-                        var salesPriceLine = (await SalesPricesAppService.GetAsync(salesPriceID)).Data.SelectSalesPriceLines.Where(t => t.ProductCode == VirtualLineDataSource.ProductCode).FirstOrDefault();
-
-                        VirtualLineDataSource.DefinedUnitPrice = salesPriceLine.Price;
-                    }
-                }
-            }
-
-            else
-            {
-                VirtualLineDataSource.OrderReferanceNo = string.Empty;
-                VirtualLineDataSource.CustomerReferanceNo = string.Empty;
-                VirtualLineDataSource.CustomerBarcodeNo = string.Empty;
-                VirtualLineDataSource.MinOrderAmount = 0;
-                VirtualLineDataSource.UnitSetCode = string.Empty;
-                VirtualLineDataSource.UnitSetID = Guid.Empty;
-                VirtualLineDataSource.DefinedUnitPrice = 0;
-            }
-        }
-
         private void OrderValueChangeHandler(ChangeEventArgs<decimal> args)
         {
             VirtualLineDataSource.LineAmount = VirtualLineDataSource.OrderAmount * VirtualLineDataSource.OrderUnitPrice;
@@ -1084,9 +1047,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                 {
                     var salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.StartDate <= DataSource.Date_ && t.EndDate >= DataSource.Date_ && t.CurrentAccountCardID == DataSource.CurrentAccountCardID && t.IsActive == true && t.IsApproved == true).Select(t => t.Id).FirstOrDefault();
                     var salesPriceLine = (await SalesPricesAppService.GetAsync(salesPriceID)).Data.SelectSalesPriceLines.Where(t => t.ProductCode == product.Code).FirstOrDefault();
-                    
 
-                    if(salesPriceLine != null && salesPriceLine.Id != Guid.Empty)
+
+                    if (salesPriceLine != null && salesPriceLine.Id != Guid.Empty)
                     {
                         var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductCode == product.Code && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).FirstOrDefault();
 
@@ -1118,7 +1081,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         await ModalManager.WarningPopupAsync("UIWarningSalesPriceTitle", "UIWarningSalesPriceMessage");
                     }
 
-                    
+
                 }
                 else if (product == null && productCode != string.Empty)
                 {
@@ -1152,6 +1115,106 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         }
 
         #endregion
+
+        #endregion
+
+        #region Stok Kartı Button Edit
+
+        SfTextBox ProductsCodeButtonEdit;
+        SfTextBox ProductsNameButtonEdit;
+        bool SelectProductsPopupVisible = false;
+        List<ListProductsDto> ProductsList = new List<ListProductsDto>();
+
+        private async Task GetProductsList()
+        {
+            ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
+        }
+
+        public async Task ProductsCodeOnCreateIcon()
+        {
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsCodeButtonClickEvent);
+            await ProductsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
+        }
+
+        public async void ProductsCodeButtonClickEvent()
+        {
+            SelectProductsPopupVisible = true;
+            await GetProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task ProductsNameOnCreateIcon()
+        {
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsNameButtonClickEvent);
+            await ProductsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
+        }
+
+        public async void ProductsNameButtonClickEvent()
+        {
+            SelectProductsPopupVisible = true;
+            await GetProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void ProductsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                VirtualLineDataSource.ProductID = Guid.Empty;
+                VirtualLineDataSource.ProductCode = string.Empty;
+                VirtualLineDataSource.ProductName = string.Empty;
+                VirtualLineDataSource.OrderReferanceNo = string.Empty;
+                VirtualLineDataSource.CustomerReferanceNo = string.Empty;
+                VirtualLineDataSource.CustomerBarcodeNo = string.Empty;
+                VirtualLineDataSource.MinOrderAmount = 0;
+                VirtualLineDataSource.UnitSetCode = string.Empty;
+                VirtualLineDataSource.UnitSetID = Guid.Empty;
+                VirtualLineDataSource.DefinedUnitPrice = 0;
+            }
+        }
+
+        public async void ProductsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsDto> args)
+        {
+            var selectedProduct = args.RowData;
+
+            if (selectedProduct != null)
+            {
+                VirtualLineDataSource.ProductID = selectedProduct.Id;
+                VirtualLineDataSource.ProductCode = selectedProduct.Code;
+                VirtualLineDataSource.ProductName = selectedProduct.Name;
+
+                var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductCode == VirtualLineDataSource.ProductCode && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).FirstOrDefault();
+
+                if (productRefNo != null)
+                {
+                    var tempProductList = ProductsList.Where(t => t.Code == VirtualLineDataSource.ProductCode).ToList();
+
+                    VirtualLineDataSource.OrderReferanceNo = productRefNo.OrderReferanceNo;
+                    VirtualLineDataSource.CustomerReferanceNo = productRefNo.CustomerReferanceNo;
+                    VirtualLineDataSource.CustomerBarcodeNo = productRefNo.CustomerBarcodeNo;
+                    VirtualLineDataSource.MinOrderAmount = productRefNo.MinOrderAmount;
+                    VirtualLineDataSource.UnitSetCode = tempProductList.Select(t => t.UnitSetCode).FirstOrDefault();
+                    VirtualLineDataSource.UnitSetID = tempProductList.Select(t => t.UnitSetID).FirstOrDefault();
+                    VirtualLineDataSource.ProductID = tempProductList.Select(t => t.Id).FirstOrDefault();
+                    VirtualLineDataSource.ProductReferanceNumberID = productRefNo.Id;
+
+                    var salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.StartDate <= DataSource.Date_ && t.EndDate >= DataSource.Date_ && t.CurrentAccountCardID == DataSource.CurrentAccountCardID && t.IsActive == true && t.IsApproved == true).Select(t => t.Id).FirstOrDefault();
+
+                    if (salesPriceID != Guid.Empty)
+                    {
+                        var salesPriceLine = (await SalesPricesAppService.GetAsync(salesPriceID)).Data.SelectSalesPriceLines.Where(t => t.ProductCode == VirtualLineDataSource.ProductCode).FirstOrDefault();
+
+                        if (salesPriceLine != null && salesPriceLine.Id != Guid.Empty)
+                        {
+                            VirtualLineDataSource.DefinedUnitPrice = salesPriceLine.Price;
+                        }
+
+                    }
+                }
+
+                SelectProductsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
 
         #endregion
 

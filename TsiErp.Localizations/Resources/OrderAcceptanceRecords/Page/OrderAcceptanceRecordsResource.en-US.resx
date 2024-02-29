@@ -441,6 +441,15 @@
   <data name="ProductionOrderLoadingDateLabel" xml:space="preserve">
     <value>Production Order Loading Date:</value>
   </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Products</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>

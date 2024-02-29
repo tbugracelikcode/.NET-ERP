@@ -339,6 +339,12 @@
   <data name="SupplierPopupGridUnitPrice" xml:space="preserve">
     <value>BİRİM FİYAT</value>
   </data>
+  <data name="UIConvertPurchaseMessage" xml:space="preserve">
+    <value>Seçtiğiniz malzeme ihtiyaç planlaması kaydı, satın almaya dönüşecektir.</value>
+  </data>
+  <data name="UIConvertPurchaseTitle" xml:space="preserve">
+    <value>Onay</value>
+  </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Malzeme İhtiyaç Planlaması (MRP)</value>
   </data>

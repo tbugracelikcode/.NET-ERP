@@ -727,6 +727,24 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz malzeme ihtiyaç planlaması kaydı, satın almaya dönüşecektir..
+        /// </summary>
+        public static string UIConvertPurchaseMessage {
+            get {
+                return ResourceManager.GetString("UIConvertPurchaseMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string UIConvertPurchaseTitle {
+            get {
+                return ResourceManager.GetString("UIConvertPurchaseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Malzeme İhtiyaç Planlaması (MRP).
         /// </summary>
         public static string UICurrentMenu {
