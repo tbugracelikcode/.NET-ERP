@@ -168,6 +168,15 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
+                     <DxGridLayoutItem Row="4" Column="4">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ReferanceDateLabel"] </strong></label><br />
+                            <SfDatePicker TValue="DateTime" @bind-Value="DataSource.ReferanceDate">
+                                <DatePickerEvents TValue="DateTime" ValueChange="ReferanceDateValueChangeHandler"></DatePickerEvents>
+                            </SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="5" Column="1" ColumnSpan="2">
                         <Template>
                              <label class="TSIModalLabel"><strong>@L["SalesOrdersListLabel"] </strong></label><br />
@@ -229,6 +238,7 @@ else
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.UnitPrice) Type="ColumnType.Number" Format="N2" HeaderText="@L["SupplierPopupGridUnitPrice"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                             <GridColumn Field=@nameof(SelectMRPLinesDto.CurrentAccountCardName) HeaderText="@L["SupplierPopupGridCurrentAccountName"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.CurrencyCode) HeaderText="@L["SupplierPopupGridCurrenyCode"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.SupplyDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridSupplyDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>

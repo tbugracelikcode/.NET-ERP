@@ -219,6 +219,9 @@
   <data name="LineGridSalesOrderisStockUsage" xml:space="preserve">
     <value>STOCK USAGE</value>
   </data>
+  <data name="LineGridSupplyDate" xml:space="preserve">
+    <value>SUPPLY DATE</value>
+  </data>
   <data name="LineGridUnitSetCode" xml:space="preserve">
     <value>UNIT SET</value>
   </data>
@@ -293,6 +296,9 @@
   </data>
   <data name="PlaceholderSalesOrders" xml:space="preserve">
     <value>Select orders.</value>
+  </data>
+  <data name="ReferanceDateLabel" xml:space="preserve">
+    <value>Referance Date:</value>
   </data>
   <data name="SalesOrderModalTitle" xml:space="preserve">
     <value>Sales Orders</value>

@@ -37,6 +37,7 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using DevExpress.XtraCharts.Native;
+using Syncfusion.Blazor.Calendars;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 {
@@ -77,6 +78,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             public Guid? CurrenyID { get; set; }
 
             public string CurrenyCode { get; set; }
+
+            public int SupplyDate { get; set; }
         }
 
         #region Planning Parameters
@@ -129,6 +132,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 Date_ = DateTime.Today,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu"),
                 MaintenanceMRPID = Guid.Empty,
+                ReferanceDate = DateTime.Today,
                 IsMaintenanceMRP = false
             };
             await GetSalesOrdersList();
@@ -696,7 +700,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                     CurrenyCode = data.CurrencyCode,
                                     CurrenyID = data.CurrencyID,
                                     ProductCode = data.ProductCode,
-                                    UnitPrice = data.Price
+                                    UnitPrice = data.Price,
+                                    SupplyDate = data.SupplyDateDay
                                 };
 
                                 SupplierSelectionList.Add(supplierSelectionModel);
@@ -737,9 +742,24 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 LineDataSource.CurrentAccountCardID = selectedSupplier.CurrentAccountID;
                 LineDataSource.CurrentAccountCardName = selectedSupplier.CurrentAccountName;
                 LineDataSource.UnitPrice = selectedSupplier.UnitPrice;
+                LineDataSource.SupplyDate = LineDataSource.SupplyDate.AddDays(selectedSupplier.SupplyDate);
                 HideSupplierSelectionPopup();
                 await _LineGrid.Refresh();
                 await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        public void ReferanceDateValueChangeHandler(ChangedEventArgs<DateTime> args)
+        {
+            if(GridLineList != null && GridLineList.Count > 0)
+            {
+                foreach(var line in GridLineList)
+                {
+                    int index = GridLineList.IndexOf(line);
+                    GridLineList[index].SupplyDate = args.Value;
+                }
+
+                _LineGrid.Refresh();
             }
         }
 

@@ -367,6 +367,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TEMİN TARİHİ.
+        /// </summary>
+        public static string LineGridSupplyDate {
+            get {
+                return ResourceManager.GetString("LineGridSupplyDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BİRİM SETİ.
         /// </summary>
         public static string LineGridUnitSetCode {
@@ -588,6 +597,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         public static string PlaceholderSalesOrders {
             get {
                 return ResourceManager.GetString("PlaceholderSalesOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Referans Tarihi:.
+        /// </summary>
+        public static string ReferanceDateLabel {
+            get {
+                return ResourceManager.GetString("ReferanceDateLabel", resourceCulture);
             }
         }
         

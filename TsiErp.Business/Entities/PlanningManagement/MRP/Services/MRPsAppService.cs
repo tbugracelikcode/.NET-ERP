@@ -73,6 +73,7 @@ namespace TsiErp.Business.Entities.MRP.Services
             {
                 Date_ = input.Date_,
                 IsMaintenanceMRP = input.IsMaintenanceMRP,
+                ReferanceDate = input.ReferanceDate,
                 MaintenanceMRPID = input.MaintenanceMRPID,
                 Description_ = input.Description_,
                 State_ = input.State_,
@@ -392,6 +393,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 Date_ = input.Date_,
                 MaintenanceMRPID = input.MaintenanceMRPID,
                 IsMaintenanceMRP = input.IsMaintenanceMRP,
+                ReferanceDate = input.ReferanceDate,
                 Description_ = input.Description_,
                 State_ = input.State_,
                 Code = input.Code,
@@ -517,6 +519,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 State_ = entity.State_,
                 IsMaintenanceMRP = entity.IsMaintenanceMRP,
                 MaintenanceMRPID = entity.MaintenanceMRPID,
+                ReferanceDate = entity.ReferanceDate,
                 Date_ = entity.Date_,
                 OrderAcceptanceID = entity.OrderAcceptanceID.GetValueOrDefault(),
                 Description_ = entity.Description_,

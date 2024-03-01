@@ -38,6 +38,10 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos
         /// Bakım MRP Kodu
         /// </summary>
         public string MaintenanceMRPCode { get; set; }
+        /// <summary>
+        /// Referans Tarihi
+        /// </summary>
+        public DateTime ReferanceDate { get; set; }
 
         [NoDatabaseAction]
         public List<SelectMRPLinesDto> SelectMRPLines { get; set; }

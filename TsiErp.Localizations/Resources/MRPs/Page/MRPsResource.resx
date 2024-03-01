@@ -219,6 +219,9 @@
   <data name="LineGridSalesOrderisStockUsage" xml:space="preserve">
     <value>STOKTAN KULLANILACAK</value>
   </data>
+  <data name="LineGridSupplyDate" xml:space="preserve">
+    <value>TEMİN TARİHİ</value>
+  </data>
   <data name="LineGridUnitSetCode" xml:space="preserve">
     <value>BİRİM SETİ</value>
   </data>
@@ -293,6 +296,9 @@
   </data>
   <data name="PlaceholderSalesOrders" xml:space="preserve">
     <value>Sipariş seçiniz.</value>
+  </data>
+  <data name="ReferanceDateLabel" xml:space="preserve">
+    <value>Referans Tarihi:</value>
   </data>
   <data name="SalesOrderModalTitle" xml:space="preserve">
     <value>Satış Siparişleri</value>
