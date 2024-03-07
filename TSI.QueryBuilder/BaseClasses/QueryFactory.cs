@@ -179,6 +179,59 @@ namespace TSI.QueryBuilder.BaseClasses
             }
         }
 
+        public T GetSQLDate<T>(Query query)
+        {
+            try
+            {
+                ConnectToDatabase();
+
+
+                var command = Connection.CreateCommand();
+
+                command.CommandTimeout = CommandTimeOut;
+
+                if (command != null)
+                {
+                    command.CommandText = query.Sql;
+
+                    if (query.IsMapQuery)
+                    {
+                        query.SqlResult = command.ExecuteReader().DataReaderMapToGet<T>();
+                    }
+                    else
+                    {
+                        query.SqlResult = command.ExecuteScalar();
+                    }
+
+
+                    query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
+
+                    return (T)query.SqlResult;
+                }
+                else
+                {
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
+
+                    return default(T);
+                }
+            }
+            catch (Exception exp)
+            {
+                Connection.Close();
+                Connection.Dispose();
+                GC.Collect();
+
+                var error = ErrorException.ThrowException(exp);
+                return default(T);
+            }
+        }
+
         public IEnumerable<T> GetList<T>(Query query)
         {
             try

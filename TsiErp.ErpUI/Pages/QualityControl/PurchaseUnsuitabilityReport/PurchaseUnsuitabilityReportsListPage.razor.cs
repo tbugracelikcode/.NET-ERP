@@ -113,7 +113,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
         {
             DataSource = new SelectPurchaseUnsuitabilityReportsDto()
             {
-                Date_ = DateTime.Today,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchUnsRecordsChildMenu")
             };
 

@@ -20,6 +20,7 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using Castle.Core.Resource;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 
 namespace TsiErp.Business.Entities.Report8D.Services
 {
@@ -29,10 +30,12 @@ namespace TsiErp.Business.Entities.Report8D.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public Report8DsAppService(IStringLocalizer<Report8DsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public Report8DsAppService(IStringLocalizer<Report8DsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
 
@@ -252,7 +255,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
                 TopicTitle = input.TopicTitle,
                 UpdateRequiredUntilDate = input.UpdateRequiredUntilDate,
 
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -604,7 +607,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, false, false, "");
 

@@ -66,7 +66,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
             DataSource = new SelectShipmentPlanningsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ShipmentPlanningChildMenu"),
-                ShipmentPlanningDate=DateTime.Today
+                ShipmentPlanningDate= GetSQLDateAppService.GetDateFromSQL()
             };
 
             DataSource.SelectShipmentPlanningLines = new List<SelectShipmentPlanningLinesDto>();

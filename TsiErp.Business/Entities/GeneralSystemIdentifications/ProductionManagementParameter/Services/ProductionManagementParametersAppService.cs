@@ -5,6 +5,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter.Dtos;
@@ -17,9 +18,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
     public class ProductionManagementParametersAppService : ApplicationService<ProductionManagementParametersResource>, IProductionManagementParametersAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ProductionManagementParametersAppService(IStringLocalizer<ProductionManagementParametersResource> l) : base(l)
+        public ProductionManagementParametersAppService(IStringLocalizer<ProductionManagementParametersResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public async Task<IDataResult<SelectProductionManagementParametersDto>> GetAsync(Guid id)

@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.QualityControl.FirstProductApproval.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
@@ -28,13 +29,15 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
     {
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
 
-        public FirstProductApprovalsAppService(IStringLocalizer<FirstProductApprovalsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public FirstProductApprovalsAppService(IStringLocalizer<FirstProductApprovalsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
 
@@ -67,7 +70,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 ProductID = input.ProductID,
                 Code = input.Code,
                 Description_ = input.Description_,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = input.CreatorId != Guid.Empty ? input.CreatorId : LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -95,7 +98,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                     UpperTolerance = item.UpperTolerance,
                     LineNr = item.LineNr,
                     FirstProductApprovalID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = item.CreatorId != Guid.Empty ? item.CreatorId : LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -359,7 +362,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 AdjustmentUserID = input.AdjustmentUserID.GetValueOrDefault(),
                 IsApproval = input.IsApproval,
@@ -381,7 +384,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         UpperTolerance = item.UpperTolerance,
                         LineNr = item.LineNr,
                         FirstProductApprovalID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -421,7 +424,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                         }).Where(new { Id = line.Id }, false, false, "");
 

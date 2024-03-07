@@ -13,6 +13,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementPa
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PurchaseManagementParameter.Page;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 
 namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Services
 {
@@ -20,9 +21,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
     public class PurchaseManagementParametersAppService : ApplicationService<PurchaseManagementParametersResource>, IPurchaseManagementParametersAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public PurchaseManagementParametersAppService(IStringLocalizer<PurchaseManagementParametersResource> l) : base(l)
+        public PurchaseManagementParametersAppService(IStringLocalizer<PurchaseManagementParametersResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public async Task<IDataResult<SelectPurchaseManagementParametersDto>> GetAsync(Guid id)

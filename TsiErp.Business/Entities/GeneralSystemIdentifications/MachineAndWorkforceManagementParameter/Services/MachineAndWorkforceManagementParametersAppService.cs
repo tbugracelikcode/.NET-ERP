@@ -5,6 +5,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.MachineAndWorkforceManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.MachineAndWorkforceManagementParameter.Dtos;
@@ -17,9 +18,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MachineAndWorkfo
     public class MachineAndWorkforceManagementParametersAppService : ApplicationService<MachineAndWorkforceManagementParametersResource>, IMachineAndWorkforceManagementParametersAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public MachineAndWorkforceManagementParametersAppService(IStringLocalizer<MachineAndWorkforceManagementParametersResource> l) : base(l)
+        public MachineAndWorkforceManagementParametersAppService(IStringLocalizer<MachineAndWorkforceManagementParametersResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public async Task<IDataResult<SelectMachineAndWorkforceManagementParametersDto>> GetAsync(Guid id)

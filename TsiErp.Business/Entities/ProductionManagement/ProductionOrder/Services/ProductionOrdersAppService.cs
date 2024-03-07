@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.BillsofMaterial.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Entities.ProductionOrder.Validations;
 using TsiErp.Business.Entities.ProductsOperation.Services;
@@ -45,6 +46,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
         private IRoutesAppService RoutesAppService { get; set; }
 
@@ -56,13 +58,14 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         private IProductsAppService ProductsAppService { get; set; }
 
-        public ProductionOrdersAppService(IStringLocalizer<ProductionOrdersResource> l, IFicheNumbersAppService ficheNumbersAppService, IRoutesAppService routesAppService, IProductsOperationsAppService productsOperationsAppService, IStationsAppService stationsAppService, IBillsofMaterialsAppService billsofMaterialsAppService, IProductsAppService productsAppService) : base(l)
+        public ProductionOrdersAppService(IStringLocalizer<ProductionOrdersResource> l, IFicheNumbersAppService ficheNumbersAppService, IRoutesAppService routesAppService, IProductsOperationsAppService productsOperationsAppService, IStationsAppService stationsAppService, IBillsofMaterialsAppService billsofMaterialsAppService, IProductsAppService productsAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             RoutesAppService = routesAppService;
             ProductsOperationsAppService = productsOperationsAppService;
             StationsAppService = stationsAppService;
             BillsofMaterialsAppService = billsofMaterialsAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
             ProductsAppService = productsAppService;
         }
 
@@ -111,7 +114,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 Id = addedEntityId,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -141,7 +144,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 {
                     CurrentAccountCardID = input.CurrentAccountID.GetValueOrDefault(),
                     IsCancel = false,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -210,7 +213,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         CustomerOrderNo = input.CustomerOrderNo,
                         Date_ = DateTime.Today,
                         Description_ = "",
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -258,7 +261,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         {
                             CurrentAccountCardID = input.CurrentAccountID.GetValueOrDefault(),
                             IsCancel = false,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -356,7 +359,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 Id = addedEntityId,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -677,7 +680,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, false, false, "");
 

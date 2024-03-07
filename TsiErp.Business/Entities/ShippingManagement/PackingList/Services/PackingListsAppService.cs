@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.ShippingManagement.PackingList.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
@@ -33,10 +34,12 @@ namespace TsiErp.Business.Entities.PackingList.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public PackingListsAppService(IStringLocalizer<PackingListsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public PackingListsAppService(IStringLocalizer<PackingListsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreatePackingListsValidator), Priority = 1)]
@@ -84,7 +87,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                 VehiclePlateNumber1 = input.VehiclePlateNumber1,
                 ShippingOfficial = input.ShippingOfficial,
                 Code = input.Code,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -106,7 +109,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                     Load_ = item.Load_,
                     Width_ = item.Width_,
                     PackingListID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -132,7 +135,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                     NumberofPackage = item.NumberofPackage,
                     PalletID = item.PalletID,
                     PackingListID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -167,7 +170,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                     TotalNetKG = item.TotalNetKG,
                     NumberofPackage = item.NumberofPackage,
                     PackingListID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -596,7 +599,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, false, false, "");
 
@@ -614,7 +617,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         NumberofPallet = item.NumberofPallet,
                         Load_ = item.Load_,
                         Width_ = item.Width_,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -653,7 +656,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                         }).Where(new { Id = line.Id }, false, false, "");
@@ -674,7 +677,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         LastPackageNo = item.LastPackageNo,
                         NumberofPackage = item.NumberofPackage,
                         PalletID = item.PalletID,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -712,7 +715,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                         }).Where(new { Id = line.Id }, false, false, "");
@@ -743,7 +746,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         TotalAmount = item.TotalAmount,
                         TotalGrossKG = item.TotalGrossKG,
                         TotalNetKG = item.TotalNetKG,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -791,7 +794,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                         }).Where(new { Id = line.Id }, false, false, "");

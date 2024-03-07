@@ -461,6 +461,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>StationsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\StockAdresses\Page\StockAdressesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StockAdressesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\StockColumns\Page\StockColumnsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StockColumnsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\StockFiche\StockFichesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -470,6 +480,21 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>StockManagementParametersResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\StockNumbers\Page\StockNumbersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StockNumbersResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\StockSections\Page\StockSectionsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StockSectionsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\StockShelfs\Page\StockShelfsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StockShelfsResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\TaskScorings\Page\TaskScoringsResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -1000,6 +1025,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StationsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\StockAdresses\Page\StockAdressesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StockAdressesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\StockColumns\Page\StockColumnsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StockColumnsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\StockFiche\StockFichesResource.en-US.resx">
       <Generator></Generator>
     </EmbeddedResource>
@@ -1010,6 +1043,18 @@
     <EmbeddedResource Update="Resources\StockManagementParameter\Page\StockManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StockManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\StockNumbers\Page\StockNumbersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StockNumbersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\StockSections\Page\StockSectionsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StockSectionsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\StockShelfs\Page\StockShelfsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StockShelfsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\TaskScorings\Page\TaskScoringsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -13,6 +13,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementParam
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementParameter.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.StockManagementParameter.Page;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 
 namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementParameter.Services
 {
@@ -20,9 +21,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
     public class StockManagementParametersAppService : ApplicationService<StockManagementParametersResource>, IStockManagementParametersAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public StockManagementParametersAppService(IStringLocalizer<StockManagementParametersResource> l) : base(l)
+        public StockManagementParametersAppService(IStringLocalizer<StockManagementParametersResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public async Task<IDataResult<SelectStockManagementParametersDto>> GetAsync(Guid id)

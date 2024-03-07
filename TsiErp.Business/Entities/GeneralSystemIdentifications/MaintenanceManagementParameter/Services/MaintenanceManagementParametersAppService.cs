@@ -5,6 +5,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.MaintenanceManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.MaintenanceManagementParameter.Dtos;
@@ -17,9 +18,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MaintenanceManag
     public class MaintenanceManagementParametersAppService : ApplicationService<MaintenanceManagementParametersResource>, IMaintenanceManagementParametersAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public MaintenanceManagementParametersAppService(IStringLocalizer<MaintenanceManagementParametersResource> l) : base(l)
+        public MaintenanceManagementParametersAppService(IStringLocalizer<MaintenanceManagementParametersResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public async Task<IDataResult<SelectMaintenanceManagementParametersDto>> GetAsync(Guid id)

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Tsi.Core.Utilities.Guids;
 using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Entities.Entities.Other.Logging;
 using TsiErp.Entities.Entities.Other.Logging.Dtos;
 using TsiErp.Entities.TableConstant;
@@ -15,6 +16,7 @@ namespace TsiErp.Business.Entities.Logging.Services
         static QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         public static IGuidGenerator GuidGenerator { get; set; } = new SequentialGuidGenerator();
+        private static IGetSQLDateAppService _GetSQLDateAppService;
 
         public static Logs InsertLogToDatabase(object before, object after, Guid userId, string logLevel, LogType logType, Guid recordId)
         {
@@ -28,7 +30,7 @@ namespace TsiErp.Business.Entities.Logging.Services
                     {
                         AfterValues = JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
                         BeforeValues = JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                        Date_ = DateTime.Now,
+                        Date_ = _GetSQLDateAppService.GetDateFromSQL(),
                         Id = GuidGenerator.CreateGuid(),
                         LogLevel_ = logLevel,
                         MethodName_ = LogType.Insert.GetType().GetEnumName(LogType.Insert),
@@ -53,7 +55,7 @@ namespace TsiErp.Business.Entities.Logging.Services
                     {
                         AfterValues = JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
                         BeforeValues = JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                        Date_ = DateTime.Now,
+                        Date_ = _GetSQLDateAppService.GetDateFromSQL(),
                         Id = GuidGenerator.CreateGuid(),
                         LogLevel_ = logLevel,
                         MethodName_ = LogType.Update.GetType().GetEnumName(LogType.Update),
@@ -72,7 +74,7 @@ namespace TsiErp.Business.Entities.Logging.Services
                     {
                         AfterValues = recordId,
                         BeforeValues = recordId,
-                        Date_ = DateTime.Now,
+                        Date_ = _GetSQLDateAppService.GetDateFromSQL(),
                         Id = GuidGenerator.CreateGuid(),
                         LogLevel_ = logLevel,
                         MethodName_ = LogType.Delete.GetType().GetEnumName(LogType.Delete),
@@ -92,7 +94,7 @@ namespace TsiErp.Business.Entities.Logging.Services
                     {
                         AfterValues = JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
                         BeforeValues = JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                        Date_ = DateTime.Now,
+                        Date_ = _GetSQLDateAppService.GetDateFromSQL(),
                         Id = GuidGenerator.CreateGuid(),
                         LogLevel_ = logLevel,
                         MethodName_ = LogType.Get.GetType().GetEnumName(LogType.Get),

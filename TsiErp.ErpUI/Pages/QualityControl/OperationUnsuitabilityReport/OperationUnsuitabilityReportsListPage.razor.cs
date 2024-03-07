@@ -87,7 +87,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
         {
             DataSource = new SelectOperationUnsuitabilityReportsDto()
             {
-                Date_ = DateTime.Today,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("OprUnsRecordsChildMenu")
             };
 

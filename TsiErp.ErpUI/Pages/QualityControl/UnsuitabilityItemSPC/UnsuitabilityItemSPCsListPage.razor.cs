@@ -65,9 +65,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
         {
             DataSource = new SelectUnsuitabilityItemSPCsDto()
             {
-                Date_ = DateTime.Today,
-                MeasurementEndDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 1, 1).AddDays(-1),
-                MeasurementStartDate = DateTime.Today,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                MeasurementEndDate = new DateTime(GetSQLDateAppService.GetDateFromSQL().Year, GetSQLDateAppService.GetDateFromSQL().Month + 1, 1).AddDays(-1),
+                MeasurementStartDate = GetSQLDateAppService.GetDateFromSQL(),
                 Code = FicheNumbersAppService.GetFicheNumberAsync("UnsuitabilityItemSPSChildMenu")
             };
 

@@ -138,7 +138,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         private void Remove(SelectOperationPicturesDto file)
         {
             OperationPictureDataSource = new SelectOperationPicturesDto {
-            CreationDate_ = DateTime.Today};
+            CreationDate_ = GetSQLDateAppService.GetDateFromSQL()};
             InvokeAsync(() => StateHasChanged());
         }
 

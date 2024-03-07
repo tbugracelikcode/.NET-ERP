@@ -11,6 +11,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CurrentAccountCard.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement.Dtos;
@@ -26,9 +27,11 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
     {
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public OperationStockMovementsAppService(IStringLocalizer<OperationStockMovementsResources> l) : base(l)
+        public OperationStockMovementsAppService(IStringLocalizer<OperationStockMovementsResources> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public async Task<IDataResult<SelectOperationStockMovementsDto>> CreateAsync(CreateOperationStockMovementsDto input)

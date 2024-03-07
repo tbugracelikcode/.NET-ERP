@@ -453,6 +453,9 @@
   <data name="ProductContextSalesPrices" xml:space="preserve">
     <value>Satış Fiyatları</value>
   </data>
+  <data name="ProductContextStockAddress" xml:space="preserve">
+    <value>Stok Adresi</value>
+  </data>
   <data name="ProductContextStockAmounts" xml:space="preserve">
     <value>Depo Toplamları</value>
   </data>
@@ -629,6 +632,18 @@
   </data>
   <data name="SawWastageLabel" xml:space="preserve">
     <value>Testere Fire:</value>
+  </data>
+  <data name="StockAddressesCode" xml:space="preserve">
+    <value>STOK ADRES KODU</value>
+  </data>
+  <data name="StockAddressesPopup" xml:space="preserve">
+    <value>Stok Adresleri</value>
+  </data>
+  <data name="StockAddressesProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="StockAddressesProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
   </data>
   <data name="StockAmountsGridAmount" xml:space="preserve">
     <value>NET TOPLAM</value>

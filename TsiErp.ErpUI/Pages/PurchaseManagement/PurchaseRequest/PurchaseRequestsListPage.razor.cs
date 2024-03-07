@@ -763,8 +763,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
         {
             DataSource = new SelectPurchaseRequestsDto()
             {
-                Date_ = DateTime.Today,
-                ValidityDate_ = DateTime.Today.AddDays(15),
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                ValidityDate_ = GetSQLDateAppService.GetDateFromSQL().AddDays(15),
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseRequestsChildMenu")
             };
 

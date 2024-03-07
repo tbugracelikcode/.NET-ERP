@@ -8,6 +8,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ExchangeRate.Validations;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate;
@@ -21,9 +22,11 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
     public class ExchangeRatesAppService : ApplicationService<ExchangeRatesResource>, IExchangeRatesAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ExchangeRatesAppService(IStringLocalizer<ExchangeRatesResource> l) : base(l)
+        public ExchangeRatesAppService(IStringLocalizer<ExchangeRatesResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateExchangeRatesValidator), Priority = 1)]
@@ -35,7 +38,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
             var query = queryFactory.Query().From(Tables.ExchangeRates).Insert(new CreateExchangeRatesDto
             {
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -146,7 +149,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, false, false, "");
 

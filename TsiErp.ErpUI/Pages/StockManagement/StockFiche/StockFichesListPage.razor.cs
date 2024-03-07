@@ -397,10 +397,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
             #region Context Menü Yetkilendirmesi
 
-            //MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
-            //var parentMenu = MenusList.Where(t => t.MenuName == "StockFichesChildMenu").Select(t => t.Id).FirstOrDefault();
-            //contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
-            //UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "StockFichesChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
 

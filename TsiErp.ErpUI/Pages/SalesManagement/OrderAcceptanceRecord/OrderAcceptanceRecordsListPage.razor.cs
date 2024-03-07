@@ -159,10 +159,10 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         {
             DataSource = new SelectOrderAcceptanceRecordsDto()
             {
-                Date_ = DateTime.Today,
-                ConfirmedLoadingDate = DateTime.Today,
-                CustomerRequestedDate = DateTime.Today,
-                ProductionOrderLoadingDate = DateTime.Today,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                ConfirmedLoadingDate = GetSQLDateAppService.GetDateFromSQL(),
+                CustomerRequestedDate = GetSQLDateAppService.GetDateFromSQL(),
+                ProductionOrderLoadingDate = GetSQLDateAppService.GetDateFromSQL(),
                 OrderAcceptanceRecordState = Entities.Enums.OrderAcceptanceRecordStateEnum.Beklemede,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("OrderAcceptanceRecordsChildMenu")
 
@@ -503,7 +503,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         CurrentAccountCardID = DataSource.CurrentAccountCardID,
                         CustomerRequestedDate = DataSource.CustomerRequestedDate,
                         CustomerOrderNr = string.Empty,
-                        Date_ = DateTime.Today,
+                        Date_ = GetSQLDateAppService.GetDateFromSQL(),
                         Description_ = string.Empty,
                         FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesOrdersChildMenu"),
                         WorkOrderCreationDate = null,
@@ -624,7 +624,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu"),
                         Date_ = DataSource.Date_,
                         IsMaintenanceMRP = false,
-                        ReferanceDate = DateTime.Today,
+                        ReferanceDate = GetSQLDateAppService.GetDateFromSQL(),
                         MaintenanceMRPID = Guid.Empty,
                         OrderAcceptanceID = DataSource.Id,
                         MaintenanceMRPCode = string.Empty,
@@ -692,7 +692,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         UnitSetID = bomline.UnitSetID,
                         LineNr = MRPLinesList.Count + 1,
                         UnitSetCode = bomline.UnitSetCode,
-                        SupplyDate = DateTime.Today,
+                        SupplyDate = GetSQLDateAppService.GetDateFromSQL(),
                         UnitPrice = 0,
                         State_ = string.Empty,
                         ReservedAmount = 0,

@@ -9,6 +9,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ContractProductionTracking.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift;
@@ -27,9 +28,11 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
     public class ContractProductionTrackingsAppService : ApplicationService<ContractProductionTrackingsResource>, IContractProductionTrackingsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ContractProductionTrackingsAppService(IStringLocalizer<ContractProductionTrackingsResource> l) : base(l)
+        public ContractProductionTrackingsAppService(IStringLocalizer<ContractProductionTrackingsResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateContractProductionTrackingsValidator), Priority = 1)]
@@ -54,7 +57,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                     ShiftID = input.ShiftID,
                     StationID = input.StationID,
                     WorkOrderID = input.WorkOrderID,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -234,7 +237,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
                     DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     LastModifierId = LoginedUserService.UserId
                 }).Where(new { Id = input.Id }, false, false, "");
 

@@ -77,7 +77,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
             DataSource = new SelectMRPIIsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("MRPIIChildMenu"),
-                CalculationDate = DateTime.Today
+                CalculationDate = GetSQLDateAppService.GetDateFromSQL()
             };
 
             DataSource.SelectMRPIILines = new List<SelectMRPIILinesDto>();

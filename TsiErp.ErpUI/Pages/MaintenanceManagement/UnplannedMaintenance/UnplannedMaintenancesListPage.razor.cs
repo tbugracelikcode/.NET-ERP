@@ -82,9 +82,9 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
         {
             DataSource = new SelectUnplannedMaintenancesDto()
             {
-                StartDate = DateTime.Today,
-                UnplannedDate = DateTime.Today,
-                CompletionDate = DateTime.Today,
+                StartDate = GetSQLDateAppService.GetDateFromSQL(),
+                UnplannedDate = GetSQLDateAppService.GetDateFromSQL(),
+                CompletionDate = GetSQLDateAppService.GetDateFromSQL(),
                 RegistrationNo = FicheNumbersAppService.GetFicheNumberAsync("UnplannedMainChildMenu")
             };
 

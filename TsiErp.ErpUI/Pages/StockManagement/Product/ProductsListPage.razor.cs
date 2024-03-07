@@ -24,6 +24,7 @@ using TsiErp.Entities.Entities.SalesManagement.SalesPriceLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Enums;
@@ -111,6 +112,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         public List<ListGrandTotalStockMovementsDto> StockAmountsList = new List<ListGrandTotalStockMovementsDto>();
 
+        public List<ListStockAddressesDto> StockAddressesList = new List<ListStockAddressesDto>();
+
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
 
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -167,6 +170,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         public bool isYM = false;
         public bool isMM = false;
         public bool isTM = false;
+
+        public bool StockAddressPopupVisible = false;
 
         List<string> Drawers = new List<string>();
 
@@ -281,6 +286,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextDelete"], Id = "delete" }); break;
                             case "ProductContextRefresh":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextRefresh"], Id = "refresh" }); break;
+                            case "ProductContextStockAddress":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextStockAddress"], Id = "stockaddress" }); break;
                             default: break;
                         }
                     }
@@ -297,7 +304,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 ProductID = DataSource.Id,
                 ProductCode = DataSource.Code,
                 ProductName = DataSource.Name,
-                RevisionDate = DateTime.Today
+                RevisionDate = GetSQLDateAppService.GetDateFromSQL()
             };
 
             Drawers = TechnicalDrawingsList.Select(t => t.Drawer).Distinct().ToList();
@@ -1110,6 +1117,16 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         #endregion
 
+        #region Stok Adresleri Modalı İşlemler
+
+        public void HideStockAddressButtonClicked()
+        {
+            StockAddressesList.Clear();
+            StockAddressPopupVisible = false;
+        }
+
+        #endregion
+
         public override async void OnContextMenuClick(ContextMenuClickEventArgs<ListProductsDto> args)
         {
             switch (args.Item.Id)
@@ -1264,6 +1281,17 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                     await InvokeAsync(StateHasChanged);
 
+                    break;
+
+                case "stockaddress":
+
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    StockAddressesList = (await StockAddressesService.GetListAsync(new ListStockAddressesParameterDto())).Data.Where(t=>t.ProductID == DataSource.Id).ToList();
+
+                    StockAddressPopupVisible = true;
+
+                    await InvokeAsync(StateHasChanged);
+
 
                     break;
 
@@ -1354,6 +1382,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
 
         }
+
+        
 
         protected override Task BeforeInsertAsync()
         {

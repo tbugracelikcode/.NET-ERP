@@ -9,13 +9,17 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Product.Validations;
+using TsiErp.Business.Entities.SalesProposition.Services;
+using TsiErp.Business.Entities.StockAddress.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup;
+using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Products.Page;
@@ -28,10 +32,15 @@ namespace TsiErp.Business.Entities.Product.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ProductsAppService(IStringLocalizer<ProductsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        private readonly IStockAddressesAppService _stockAddressesAppService;
+
+        public ProductsAppService(IStringLocalizer<ProductsResource> l, IFicheNumbersAppService ficheNumbersAppService, IStockAddressesAppService stockAddressesAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _stockAddressesAppService = stockAddressesAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateProductsValidator), Priority = 1)]
@@ -79,7 +88,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 SupplyForm = input.SupplyForm,
                 TechnicalConfirmation = input.TechnicalConfirmation,
                 UnitSetID = input.UnitSetID,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -119,6 +128,7 @@ namespace TsiErp.Business.Entities.Product.Services
             {
                 Tables.BillsofMaterialLines,
                 Tables.ByDateStockMovements,
+                Tables.StockAddresses,
                 Tables.ContractProductionTrackings,
                 Tables.ContractQualityPlanLines,
                 Tables.ContractQualityPlans,
@@ -173,6 +183,16 @@ namespace TsiErp.Business.Entities.Product.Services
                 var products = queryFactory.Update<SelectProductsDto>(query, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Products, LogType.Delete, id);
+
+                var stockAddressList = (await _stockAddressesAppService.GetListAsync(new ListStockAddressesParameterDto())).Data.Where(t => t.ProductID == id).ToList();
+
+                if(stockAddressList != null && stockAddressList.Count > 0)
+                {
+                    foreach(var stockAddress in stockAddressList)
+                    {
+                        await _stockAddressesAppService.DeleteAsync(stockAddress.Id);
+                    }
+                }
 
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectProductsDto>(products);
@@ -301,7 +321,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, true, true, "");
 

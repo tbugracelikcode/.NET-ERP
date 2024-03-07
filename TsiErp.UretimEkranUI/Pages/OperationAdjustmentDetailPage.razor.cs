@@ -122,7 +122,7 @@ namespace TsiErp.UretimEkranUI.Pages
                 {
                     AdjustmentUserComponenetEnabled = false;
                     SendQualityControlApprovalButtonDisabled = false;
-                    Adjustment.AdjustmentDate = DateTime.Today;
+                    Adjustment.AdjustmentDate = GetSQLDateAppService.GetDateFromSQL();
 
                     AdjustmentTimer = new System.Timers.Timer(1000);
                     AdjustmentTimer.Elapsed += SettingsTimedEvent;
@@ -187,7 +187,7 @@ namespace TsiErp.UretimEkranUI.Pages
             AdjustmentTimer.Enabled = false;
             StartAdjustmenButtonDisabled = true;
 
-            AppService.CurrentOperation.QualitControlApprovalDate = DateTime.Today;
+            AppService.CurrentOperation.QualitControlApprovalDate = GetSQLDateAppService.GetDateFromSQL();
             QualityControlApprovalTimer = new System.Timers.Timer(1000);
             QualityControlApprovalTimer.Elapsed += QualityControlApprovalTimedEvent;
             QualityControlApprovalTimer.Enabled = true;

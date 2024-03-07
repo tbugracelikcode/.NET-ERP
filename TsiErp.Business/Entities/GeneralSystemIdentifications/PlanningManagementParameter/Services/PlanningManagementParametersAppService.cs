@@ -5,6 +5,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.FinanceManagementParameter.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter;
@@ -19,9 +20,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
     public class PlanningManagementParametersAppService : ApplicationService<PlanningManagementParametersResource>, IPlanningManagementParametersAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public PlanningManagementParametersAppService(IStringLocalizer<PlanningManagementParametersResource> l) : base(l)
+        public PlanningManagementParametersAppService(IStringLocalizer<PlanningManagementParametersResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public async Task<IDataResult<SelectPlanningManagementParametersDto>> CreateAsync(CreatePlanningManagementParametersDto input)

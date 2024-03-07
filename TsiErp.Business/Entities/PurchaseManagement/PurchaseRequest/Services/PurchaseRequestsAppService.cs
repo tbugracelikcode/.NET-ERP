@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.PurchaseRequest.Validations;
 using TsiErp.Business.Entities.StockMovement;
 using TsiErp.DataAccess.Services.Login;
@@ -38,12 +39,14 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
 
 
-        public PurchaseRequestsAppService(IStringLocalizer<PurchaseRequestsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public PurchaseRequestsAppService(IStringLocalizer<PurchaseRequestsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreatePurchaseRequestsValidator), Priority = 1)]
@@ -64,7 +67,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
-            string now = DateTime.Now.ToString();
+            string now = _GetSQLDateAppService.GetDateFromSQL().ToString();
 
             string[] timeSplit = now.Split(" ");
 
@@ -96,7 +99,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 TotalVatExcludedAmount = input.TotalVatExcludedAmount,
                 ValidityDate_ = input.ValidityDate_,
                 WarehouseID = input.WarehouseID,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -126,7 +129,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     VATamount = item.VATamount,
                     VATrate = item.VATrate,
                     PurchaseRequestID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -566,7 +569,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, false, false, "");
 
@@ -590,7 +593,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         VATamount = item.VATamount,
                         VATrate = item.VATrate,
                         PurchaseRequestID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -644,7 +647,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID,
@@ -762,7 +765,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     Id = entity.Id,
                     IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     LastModifierId = LoginedUserService.UserId,
                 }).Where(new { Id = entity.Id }, false, false, "");
 
@@ -778,7 +781,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             LineAmount = line.LineAmount,
                             LineDescription = line.LineDescription,
                             LineTotalAmount = line.LineTotalAmount,
-                            OrderConversionDate = DateTime.Now,
+                            OrderConversionDate = _GetSQLDateAppService.GetDateFromSQL(),
                             PaymentPlanID = line.PaymentPlanID,
                             ProductionOrderID = line.ProductionOrderID,
                             PurchaseRequestLineState = (int)lineState,
@@ -794,7 +797,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = line.Id,
                             IsDeleted = false,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = line.LineNr,
                             ProductID = line.ProductID,

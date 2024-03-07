@@ -20,6 +20,7 @@ using TsiErp.Entities.Entities.QualityControl.OperationalSPC;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 
 namespace TsiErp.Business.Entities.PFMEA.Services
 {
@@ -27,9 +28,11 @@ namespace TsiErp.Business.Entities.PFMEA.Services
     public class PFMEAsAppService : ApplicationService<PFMEAsResource>, IPFMEAsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public PFMEAsAppService(IStringLocalizer<PFMEAsResource> l) : base(l)
+        public PFMEAsAppService(IStringLocalizer<PFMEAsResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
 
@@ -66,7 +69,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
                 SecondOperationalSPCID = input.SecondOperationalSPCID,
                 State = input.State,
                 TargetEndDate = input.TargetEndDate,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -252,7 +255,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, false, false, "");
 

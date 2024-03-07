@@ -11,6 +11,7 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.MachineAndWorkforceManagement.StartingSalary.Services;
 using TsiErp.Business.Entities.MachineAndWorkforceManagement.StartingSalary.Validations;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority;
@@ -30,10 +31,12 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public StartingSalariesAppService(IStringLocalizer<StartingSalariesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public StartingSalariesAppService(IStringLocalizer<StartingSalariesResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateStartingSalariesValidator), Priority = 1)]
@@ -59,7 +62,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                 Code = input.Code,
                 Year_ = input.Year_,
                 Description_ = input.Description_,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -77,7 +80,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                 var queryLine = queryFactory.Query().From(Tables.StartingSalaryLines).Insert(new CreateStartingSalaryLinesDto
                 {
                     StartingSalaryID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -250,7 +253,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
             }).Where(new { Id = input.Id }, false, false, "");
@@ -262,7 +265,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                     var queryLine = queryFactory.Query().From(Tables.StartingSalaryLines).Insert(new CreateStartingSalaryLinesDto
                     {
                         StartingSalaryID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -301,7 +304,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             Difference = item.Difference,

@@ -171,5 +171,10 @@
         public static bool ShippingManagementParametersChildMenu { get; set; } = true;
         public static bool StockManagementParametersChildMenu { get; set; } = true;
         public static bool GeneralParametersChildMenu { get; set; } = true;
+        public static bool StockColumnsChildMenu { get; set; } = true;
+        public static bool StockNumbersChildMenu { get; set; } = true;
+        public static bool StockSectionsChildMenu { get; set; } = true;
+        public static bool StockShelfsChildMenu { get; set; } = true;
+        public static bool StockAddressesChildMenu { get; set; } = true;
     }
 }

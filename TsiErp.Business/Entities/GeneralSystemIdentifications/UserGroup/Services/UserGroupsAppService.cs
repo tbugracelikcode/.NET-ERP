@@ -8,6 +8,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup.Dtos;
@@ -21,12 +22,14 @@ namespace TsiErp.Business.Entities.UserGroup.Services
     public class UserGroupsAppService : ApplicationService<UserGroupsResource>, IUserGroupsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public UserGroupsAppService(IStringLocalizer<UserGroupsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public UserGroupsAppService(IStringLocalizer<UserGroupsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateUserGroupsValidator), Priority = 1)]
@@ -54,7 +57,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
                 Name = input.Name,
                 IsActive = true,
                 Id = addedEntityId,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -149,7 +152,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, true, true, "");
 

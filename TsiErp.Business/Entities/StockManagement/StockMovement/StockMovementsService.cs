@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Utilities.Guids;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
@@ -43,6 +44,7 @@ namespace TsiErp.Business.Entities.StockMovement
         static QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         public static IGuidGenerator GuidGenerator { get; set; } = new SequentialGuidGenerator();
+        private static IGetSQLDateAppService _GetSQLDateAppService;
 
         #region Purchase Requests
 
@@ -76,7 +78,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalWastage = 0,
                         WarehouseID = createdEntity.WarehouseID,
                         BranchID = createdEntity.BranchID,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -119,7 +121,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityByDate.DeleterId.Value,
                         DeletionTime = entityByDate.DeletionTime.Value,
                         IsDeleted = entityByDate.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -155,7 +157,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalWastage = 0,
                         WarehouseID = createdEntity.WarehouseID,
                         BranchID = createdEntity.BranchID,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -197,7 +199,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityGrandTotal.DeleterId.Value,
                         DeletionTime = entityGrandTotal.DeletionTime.Value,
                         IsDeleted = entityGrandTotal.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         BranchID = createdEntity.BranchID,
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -260,7 +262,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDateDecreasing.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
 
@@ -284,7 +286,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = currentEntity.WarehouseID,
                             BranchID = currentEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -335,7 +337,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -372,7 +374,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -424,7 +426,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = previousEntity.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
@@ -449,7 +451,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = currentEntity.WarehouseID,
                             BranchID = currentEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -498,7 +500,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -535,7 +537,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -633,7 +635,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entityByDate.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -672,7 +674,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entityGrandTotal.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 BranchID = entityGrandTotal.BranchID,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -759,7 +761,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityByDate.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -801,7 +803,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityGrandTotal.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         BranchID = entityGrandTotal.BranchID,
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -850,7 +852,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalWastage = 0,
                         WarehouseID = createdEntity.WarehouseID,
                         BranchID = createdEntity.BranchID,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -892,7 +894,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityByDate.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -927,7 +929,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalWastage = 0,
                         WarehouseID = createdEntity.WarehouseID,
                         BranchID = createdEntity.BranchID,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -969,7 +971,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityGrandTotal.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         BranchID = createdEntity.BranchID,
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -1031,7 +1033,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDateDecreasing.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
 
@@ -1055,7 +1057,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = currentEntity.WarehouseID,
                             BranchID = currentEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -1105,7 +1107,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -1142,7 +1144,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -1194,7 +1196,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = previousEntity.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
@@ -1219,7 +1221,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = currentEntity.WarehouseID,
                             BranchID = currentEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -1268,7 +1270,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -1306,7 +1308,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -1410,7 +1412,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entityByDate.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -1449,7 +1451,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entityGrandTotal.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 BranchID = entityGrandTotal.BranchID,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -1535,7 +1537,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityByDate.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -1577,7 +1579,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityGrandTotal.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         BranchID = entityGrandTotal.BranchID,
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -1626,7 +1628,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalWastage = 0,
                         WarehouseID = createdEntity.WarehouseID,
                         BranchID = createdEntity.BranchID,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -1669,7 +1671,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityByDate.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -1705,7 +1707,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalWastage = 0,
                         WarehouseID = createdEntity.WarehouseID,
                         BranchID = createdEntity.BranchID,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -1747,7 +1749,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityGrandTotal.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         BranchID = createdEntity.BranchID,
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -1809,7 +1811,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDateDecreasing.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
 
@@ -1833,7 +1835,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = currentEntity.WarehouseID,
                             BranchID = currentEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -1884,7 +1886,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -1921,7 +1923,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -1973,7 +1975,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = previousEntity.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
@@ -1998,7 +2000,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = currentEntity.WarehouseID,
                             BranchID = currentEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -2047,7 +2049,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -2084,7 +2086,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -2188,7 +2190,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entityByDate.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -2227,7 +2229,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entityGrandTotal.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 BranchID = entityGrandTotal.BranchID,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -2313,7 +2315,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityByDate.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -2355,7 +2357,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityGrandTotal.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         BranchID = entityGrandTotal.BranchID,
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -2404,7 +2406,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = createdEntity.WarehouseID,
                             BranchID = createdEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -2446,7 +2448,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -2482,7 +2484,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = createdEntity.WarehouseID,
                             BranchID = createdEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -2524,7 +2526,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = createdEntity.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -2586,7 +2588,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDateDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
 
@@ -2610,7 +2612,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = 0,
                                 WarehouseID = currentEntity.WarehouseID,
                                 BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -2661,7 +2663,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -2699,7 +2701,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -2751,7 +2753,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = previousEntity.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
@@ -2776,7 +2778,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = 0,
                                 WarehouseID = currentEntity.WarehouseID,
                                 BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -2825,7 +2827,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = entityGrandTotal.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -2862,7 +2864,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = entityGrandTotal.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -2966,7 +2968,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                     DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entityByDate.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     LastModifierId = LoginedUserService.UserId
                 }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -3005,7 +3007,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                     DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entityGrandTotal.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     BranchID = entityGrandTotal.BranchID,
                     LastModifierId = LoginedUserService.UserId
                 }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -3099,7 +3101,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.Value,
                             DeletionTime = entityByDate.DeletionTime.Value,
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -3141,7 +3143,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -3190,7 +3192,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = createdEntity.WarehouseID,
                             BranchID = createdEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -3233,7 +3235,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -3269,7 +3271,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = createdEntity.WarehouseID,
                             BranchID = createdEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -3311,7 +3313,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = createdEntity.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -3373,7 +3375,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDateDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
 
@@ -3397,7 +3399,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = 0,
                                 WarehouseID = currentEntity.WarehouseID,
                                 BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -3448,7 +3450,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -3485,7 +3487,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -3537,7 +3539,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = previousEntity.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
@@ -3562,7 +3564,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = 0,
                                 WarehouseID = currentEntity.WarehouseID,
                                 BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -3611,7 +3613,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = entityGrandTotal.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -3648,7 +3650,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = entityGrandTotal.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -3724,7 +3726,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                     DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entityByDate.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     LastModifierId = LoginedUserService.UserId
                 }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -3763,7 +3765,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                     DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entityGrandTotal.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     BranchID = entityGrandTotal.BranchID,
                     LastModifierId = LoginedUserService.UserId
                 }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -3843,7 +3845,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -3885,7 +3887,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -3936,7 +3938,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = line.Quantity,
                             WarehouseID = createdEntity.WarehouseID,
                             BranchID = createdEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -3979,7 +3981,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -4015,7 +4017,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = line.Quantity,
                             WarehouseID = createdEntity.WarehouseID,
                             BranchID = createdEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -4057,7 +4059,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = createdEntity.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -4120,7 +4122,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDateDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
 
@@ -4144,7 +4146,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = line.Quantity,
                                 WarehouseID = currentEntity.WarehouseID,
                                 BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -4195,7 +4197,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -4232,7 +4234,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -4284,7 +4286,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = previousEntity.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
@@ -4309,7 +4311,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = line.Quantity,
                                 WarehouseID = currentEntity.WarehouseID,
                                 BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -4358,7 +4360,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = entityGrandTotal.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -4395,7 +4397,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = entityGrandTotal.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -4471,7 +4473,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                     DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entityByDate.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     LastModifierId = LoginedUserService.UserId
                 }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -4510,7 +4512,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                     DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entityGrandTotal.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     BranchID = entityGrandTotal.BranchID,
                     LastModifierId = LoginedUserService.UserId
                 }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -4590,7 +4592,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -4632,7 +4634,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -4684,7 +4686,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalWastage = 0,
                         WarehouseID = createdEntity.WarehouseID,
                         BranchID = createdEntity.BranchID,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -4726,7 +4728,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityGrandTotal.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         BranchID = createdEntity.BranchID,
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -4789,7 +4791,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = previousEntity.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
@@ -4814,7 +4816,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = currentEntity.WarehouseID,
                             BranchID = currentEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -4863,7 +4865,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -4900,7 +4902,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -4975,7 +4977,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entityGrandTotal.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 BranchID = entityGrandTotal.BranchID,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -5052,7 +5054,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityGrandTotal.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         BranchID = entityGrandTotal.BranchID,
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -5101,7 +5103,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = createdEntity.WarehouseID,
                             BranchID = createdEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -5144,7 +5146,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -5180,7 +5182,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = createdEntity.WarehouseID,
                             BranchID = createdEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -5222,7 +5224,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = createdEntity.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -5285,7 +5287,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDateDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
 
@@ -5309,7 +5311,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = 0,
                                 WarehouseID = currentEntity.WarehouseID,
                                 BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -5360,7 +5362,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -5398,7 +5400,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -5450,7 +5452,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = previousEntity.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
@@ -5475,7 +5477,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = 0,
                                 WarehouseID = currentEntity.WarehouseID,
                                 BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -5524,7 +5526,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = entityGrandTotal.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -5562,7 +5564,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = entityGrandTotal.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -5638,7 +5640,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                     DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entityByDate.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     LastModifierId = LoginedUserService.UserId
                 }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -5677,7 +5679,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                     DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entityGrandTotal.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     BranchID = entityGrandTotal.BranchID,
                     LastModifierId = LoginedUserService.UserId
                 }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -5757,7 +5759,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -5799,7 +5801,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -5847,7 +5849,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = createdEntity.WarehouseID,
                             BranchID = createdEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -5890,7 +5892,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -5926,7 +5928,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = createdEntity.WarehouseID,
                             BranchID = createdEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -5968,7 +5970,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = createdEntity.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -6031,7 +6033,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDateDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
 
@@ -6055,7 +6057,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = 0,
                                 WarehouseID = currentEntity.WarehouseID,
                                 BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -6106,7 +6108,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -6144,7 +6146,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -6196,7 +6198,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = previousEntity.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
@@ -6221,7 +6223,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = 0,
                                 WarehouseID = currentEntity.WarehouseID,
                                 BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -6270,7 +6272,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = entityGrandTotal.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -6308,7 +6310,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = entityGrandTotal.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -6386,7 +6388,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                     DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entityByDate.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     LastModifierId = LoginedUserService.UserId
                 }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -6425,7 +6427,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                     DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entityGrandTotal.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     BranchID = entityGrandTotal.BranchID,
                     LastModifierId = LoginedUserService.UserId
                 }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -6505,7 +6507,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -6547,7 +6549,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -6593,7 +6595,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = createdEntity.WarehouseID,
                             BranchID = createdEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -6633,7 +6635,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -6667,7 +6669,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalWastage = 0,
                             WarehouseID = createdEntity.WarehouseID,
                             BranchID = createdEntity.BranchID,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -6707,7 +6709,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = createdEntity.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -6770,7 +6772,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDateDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
 
@@ -6794,7 +6796,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = 0,
                                 WarehouseID = currentEntity.WarehouseID,
                                 BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -6845,7 +6847,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -6883,7 +6885,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -6935,7 +6937,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = previousEntity.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
@@ -6960,7 +6962,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = 0,
                                 WarehouseID = currentEntity.WarehouseID,
                                 BranchID = currentEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -7009,7 +7011,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = entityGrandTotal.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -7047,7 +7049,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = entityGrandTotal.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -7123,7 +7125,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                     DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entityByDate.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     LastModifierId = LoginedUserService.UserId
                 }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -7162,7 +7164,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                     DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entityGrandTotal.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     BranchID = entityGrandTotal.BranchID,
                     LastModifierId = LoginedUserService.UserId
                 }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -7242,7 +7244,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -7284,7 +7286,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             BranchID = entityGrandTotal.BranchID,
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -7334,7 +7336,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = 0,
                                 WarehouseID = createdEntity.WarehouseID,
                                 BranchID = createdEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -7369,7 +7371,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = 0,
                                 WarehouseID = createdEntity.WarehouseID,
                                 BranchID = createdEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -7416,7 +7418,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -7451,7 +7453,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -7491,7 +7493,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = 0,
                                 WarehouseID = createdEntity.WarehouseID,
                                 BranchID = createdEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -7526,7 +7528,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalWastage = 0,
                                 WarehouseID = createdEntity.WarehouseID,
                                 BranchID = createdEntity.BranchID,
-                                CreationTime = DateTime.Now,
+                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -7572,7 +7574,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = createdEntity.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -7608,7 +7610,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = createdEntity.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -7675,7 +7677,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
                                     DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
                                     IsDeleted = entityByDateDecreasing.IsDeleted,
-                                    LastModificationTime = DateTime.Now,
+                                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     LastModifierId = LoginedUserService.UserId
                                 }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
 
@@ -7699,7 +7701,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     TotalWastage = 0,
                                     WarehouseID = currentEntity.WarehouseID,
                                     BranchID = currentEntity.BranchID,
-                                    CreationTime = DateTime.Now,
+                                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     CreatorId = LoginedUserService.UserId,
                                     DataOpenStatus = false,
                                     DataOpenStatusUserId = Guid.Empty,
@@ -7751,7 +7753,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     DeleterId = entityByDateDecreasing.DeleterId.GetValueOrDefault(),
                                     DeletionTime = entityByDateDecreasing.DeletionTime.GetValueOrDefault(),
                                     IsDeleted = entityByDateDecreasing.IsDeleted,
-                                    LastModificationTime = DateTime.Now,
+                                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     LastModifierId = LoginedUserService.UserId
                                 }).Where(new { Id = entityByDateDecreasing.Id }, false, false, "");
 
@@ -7775,7 +7777,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     TotalWastage = 0,
                                     WarehouseID = currentEntity.WarehouseID,
                                     BranchID = currentEntity.BranchID,
-                                    CreationTime = DateTime.Now,
+                                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     CreatorId = LoginedUserService.UserId,
                                     DataOpenStatus = false,
                                     DataOpenStatusUserId = Guid.Empty,
@@ -7830,7 +7832,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                     DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                     IsDeleted = entityByDate.IsDeleted,
-                                    LastModificationTime = DateTime.Now,
+                                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     LastModifierId = LoginedUserService.UserId
                                 }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -7868,7 +7870,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                     DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                     IsDeleted = entityByDate.IsDeleted,
-                                    LastModificationTime = DateTime.Now,
+                                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     LastModifierId = LoginedUserService.UserId
                                 }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -7908,7 +7910,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                     DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                     IsDeleted = entityByDate.IsDeleted,
-                                    LastModificationTime = DateTime.Now,
+                                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     LastModifierId = LoginedUserService.UserId
                                 }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -7946,7 +7948,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                     DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                     IsDeleted = entityByDate.IsDeleted,
-                                    LastModificationTime = DateTime.Now,
+                                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     LastModifierId = LoginedUserService.UserId
                                 }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -8003,7 +8005,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
                                     DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
                                     IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                                    LastModificationTime = DateTime.Now,
+                                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     BranchID = previousEntity.BranchID,
                                     LastModifierId = LoginedUserService.UserId
                                 }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
@@ -8028,7 +8030,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     TotalWastage = 0,
                                     WarehouseID = currentEntity.WarehouseID,
                                     BranchID = currentEntity.BranchID,
-                                    CreationTime = DateTime.Now,
+                                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     CreatorId = LoginedUserService.UserId,
                                     DataOpenStatus = false,
                                     DataOpenStatusUserId = Guid.Empty,
@@ -8079,7 +8081,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     DeleterId = entityGrandTotalDecreasing.DeleterId.GetValueOrDefault(),
                                     DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
                                     IsDeleted = entityGrandTotalDecreasing.IsDeleted,
-                                    LastModificationTime = DateTime.Now,
+                                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     BranchID = previousEntity.BranchID,
                                     LastModifierId = LoginedUserService.UserId
                                 }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
@@ -8104,7 +8106,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     TotalWastage = 0,
                                     WarehouseID = currentEntity.WarehouseID,
                                     BranchID = currentEntity.BranchID,
-                                    CreationTime = DateTime.Now,
+                                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     CreatorId = LoginedUserService.UserId,
                                     DataOpenStatus = false,
                                     DataOpenStatusUserId = Guid.Empty,
@@ -8157,7 +8159,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                     DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                     IsDeleted = entityGrandTotal.IsDeleted,
-                                    LastModificationTime = DateTime.Now,
+                                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     BranchID = entityGrandTotal.BranchID,
                                     LastModifierId = LoginedUserService.UserId
                                 }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -8195,7 +8197,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                     DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                     IsDeleted = entityGrandTotal.IsDeleted,
-                                    LastModificationTime = DateTime.Now,
+                                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     BranchID = entityGrandTotal.BranchID,
                                     LastModifierId = LoginedUserService.UserId
                                 }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -8235,7 +8237,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                     DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                     IsDeleted = entityGrandTotal.IsDeleted,
-                                    LastModificationTime = DateTime.Now,
+                                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     BranchID = entityGrandTotal.BranchID,
                                     LastModifierId = LoginedUserService.UserId
                                 }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -8273,7 +8275,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                     DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                     DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                     IsDeleted = entityGrandTotal.IsDeleted,
-                                    LastModificationTime = DateTime.Now,
+                                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     BranchID = entityGrandTotal.BranchID,
                                     LastModifierId = LoginedUserService.UserId
                                 }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -8352,7 +8354,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityByDate.DeleterId.Value,
                         DeletionTime = entityByDate.DeletionTime.Value,
                         IsDeleted = entityByDate.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -8387,7 +8389,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityByDate.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -8429,7 +8431,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityGrandTotal.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         BranchID = entityGrandTotal.BranchID,
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -8464,7 +8466,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                         DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityGrandTotal.IsDeleted,
-                        LastModificationTime = DateTime.Now,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         BranchID = entityGrandTotal.BranchID,
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -8545,7 +8547,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -8580,7 +8582,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityByDate.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityByDate.Id }, false, false, "");
 
@@ -8626,7 +8628,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = entityGrandTotal.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
@@ -8661,7 +8663,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeleterId = entityGrandTotal.DeleterId.GetValueOrDefault(),
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 BranchID = entityGrandTotal.BranchID,
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");

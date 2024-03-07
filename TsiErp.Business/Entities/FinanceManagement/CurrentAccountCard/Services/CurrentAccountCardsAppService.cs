@@ -11,6 +11,8 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CurrentAccountCard.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.OrderAcceptanceRecord.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
@@ -27,10 +29,12 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public CurrentAccountCardsAppService(IStringLocalizer<CurrentAccountCardsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public CurrentAccountCardsAppService(IStringLocalizer<CurrentAccountCardsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateCurrentAccountCardsValidator), Priority = 1)]
@@ -91,7 +95,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 Tel2 = input.Tel2,
                 Type_ = input.Type_,
                 Web = input.Web,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -298,7 +302,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 ContractDailyWorkingCapacity = input.ContractDailyWorkingCapacity,
                 NumberOfStations = input.NumberOfStations

@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Calendar.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
@@ -29,10 +30,12 @@ namespace TsiErp.Business.Entities.Calendar.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public CalendarsAppService(IStringLocalizer<CalendarsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public CalendarsAppService(IStringLocalizer<CalendarsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
@@ -62,7 +65,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             var query = queryFactory.Query().From(Tables.Calendars).Insert(new CreateCalendarsDto
             {
                 Code = input.Code,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -87,7 +90,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 var queryLine = queryFactory.Query().From(Tables.CalendarLines).Insert(new CreateCalendarLinesDto
                 {
                     CalendarID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     WorkStatus = item.WorkStatus,
                     DataOpenStatus = false,
@@ -114,7 +117,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
             #region Renkli Takvim Oluşturma
 
-            int thisYear = DateTime.Now.Year;
+            int thisYear = _GetSQLDateAppService.GetDateFromSQL().Year;
             DateTime startDate = new DateTime(thisYear, 1, 1);
             DateTime endDate = new DateTime(thisYear, 12, 31);
             int numberofDays = 0;
@@ -165,7 +168,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 var queryDay = queryFactory.Query().From(Tables.CalendarDays).Insert(new CreateCalendarDaysDto
                 {
                     CalendarID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -381,7 +384,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
                 _Description = input._Description,
@@ -399,7 +402,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                     var queryLine = queryFactory.Query().From(Tables.CalendarLines).Insert(new CreateCalendarLinesDto
                     {
                         CalendarID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -444,7 +447,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                             MaintenanceType = line.MaintenanceType,
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             AvailableTime = item.AvailableTime,
                             Date_ = item.Date_,
@@ -468,7 +471,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                     var queryDay = queryFactory.Query().From(Tables.CalendarDays).Insert(new CreateCalendarDaysDto
                     {
                         CalendarID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -504,7 +507,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                             DeletionTime = day.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             Date_ = item.Date_,
                             ColorCode = item.ColorCode,

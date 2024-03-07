@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.Services;
 using TsiErp.Business.Entities.ProductionOrder.Services;
 using TsiErp.Business.Entities.ProductionTracking.Validations;
@@ -41,6 +42,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
         private IOperationStockMovementsAppService OperationStockMovementsAppService { get; set; }
 
@@ -49,12 +51,13 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
         private IProductionOrdersAppService ProductionOrdersAppService { get; set; }
 
 
-        public ProductionTrackingsAppService(IStringLocalizer<ProductionTrackingsResource> l, IFicheNumbersAppService ficheNumbersAppService, IOperationStockMovementsAppService operationStockMovementsAppService, IWorkOrdersAppService workOrdersAppService, IProductionOrdersAppService productionOrdersAppService) : base(l)
+        public ProductionTrackingsAppService(IStringLocalizer<ProductionTrackingsResource> l, IFicheNumbersAppService ficheNumbersAppService, IOperationStockMovementsAppService operationStockMovementsAppService, IWorkOrdersAppService workOrdersAppService, IProductionOrdersAppService productionOrdersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             OperationStockMovementsAppService = operationStockMovementsAppService;
             WorkOrdersAppService = workOrdersAppService;
             ProductionOrdersAppService = productionOrdersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateProductionTrackingsValidator), Priority = 1)]
@@ -119,7 +122,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 StationID = input.StationID,
                 WorkOrderID = input.WorkOrderID.GetValueOrDefault(),
                 Code = input.Code,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -142,7 +145,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     HaltID = item.HaltID,
                     HaltTime = item.HaltTime,
                     ProductionTrackingID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -262,7 +265,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
                                 Id = productionOrder.Id,
                                 IsDeleted = productionOrder.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId,
                                 LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
                                 LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
@@ -309,7 +312,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
                                 Id = productionOrder.Id,
                                 IsDeleted = productionOrder.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId,
                                 LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
                                 LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
@@ -366,7 +369,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
                                 Id = productionOrder.Id,
                                 IsDeleted = productionOrder.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId,
                                 LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
                                 LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
@@ -417,7 +420,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
                                 Id = productionOrder.Id,
                                 IsDeleted = productionOrder.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId,
                                 LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
                                 LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
@@ -455,7 +458,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     DeletionTime = workOrder.DeletionTime,
                     IsCancel = workOrder.IsCancel,
                     IsDeleted = workOrder.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     LastModifierId = LoginedUserService.UserId,
                     LineNr = workOrder.LineNr,
                     LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),
@@ -591,7 +594,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             DeletionTime = workOrder.DeletionTime,
                             IsCancel = workOrder.IsCancel,
                             IsDeleted = workOrder.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = workOrder.LineNr,
                             LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),
@@ -632,7 +635,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
                             Id = productionOrder.Id,
                             IsDeleted = productionOrder.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
                             LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
@@ -669,7 +672,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             DeletionTime = workOrder.DeletionTime,
                             IsCancel = workOrder.IsCancel,
                             IsDeleted = workOrder.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = workOrder.LineNr,
                             LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),
@@ -710,7 +713,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
                             Id = productionOrder.Id,
                             IsDeleted = productionOrder.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
                             LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
@@ -1102,7 +1105,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 ProductID = input.ProductID,
                 ProductionOrderID = input.ProductionOrderID,
@@ -1121,7 +1124,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             HaltTime = item.HaltTime,
                             LastModifierId = Guid.Empty,
                             ProductionTrackingID = input.Id,
-                            CreationTime = DateTime.Now,
+                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -1155,7 +1158,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 DeletionTime = line.DeletionTime.GetValueOrDefault(),
                                 Id = item.Id,
                                 IsDeleted = item.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId,
                             }).Where(new { Id = line.Id }, false, false, "");
 
@@ -1302,7 +1305,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
                                 Id = productionOrder.Id,
                                 IsDeleted = productionOrder.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId,
                                 LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
                                 LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
@@ -1351,7 +1354,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
                                 Id = productionOrder.Id,
                                 IsDeleted = productionOrder.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId,
                                 LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
                                 LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
@@ -1408,7 +1411,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
                                 Id = productionOrder.Id,
                                 IsDeleted = productionOrder.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId,
                                 LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
                                 LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
@@ -1459,7 +1462,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
                                 Id = productionOrder.Id,
                                 IsDeleted = productionOrder.IsDeleted,
-                                LastModificationTime = DateTime.Now,
+                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId,
                                 LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
                                 LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
@@ -1497,7 +1500,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     DeletionTime = workOrder.DeletionTime,
                     IsCancel = workOrder.IsCancel,
                     IsDeleted = workOrder.IsDeleted,
-                    LastModificationTime = DateTime.Now,
+                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     LastModifierId = LoginedUserService.UserId,
                     LineNr = workOrder.LineNr,
                     LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),

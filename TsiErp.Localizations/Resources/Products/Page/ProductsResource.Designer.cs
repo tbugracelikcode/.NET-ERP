@@ -1069,6 +1069,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok Adresi.
+        /// </summary>
+        public static string ProductContextStockAddress {
+            get {
+                return ResourceManager.GetString("ProductContextStockAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Depo Toplamları.
         /// </summary>
         public static string ProductContextStockAmounts {
@@ -1596,6 +1605,42 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string SawWastageLabel {
             get {
                 return ResourceManager.GetString("SawWastageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK ADRES KODU.
+        /// </summary>
+        public static string StockAddressesCode {
+            get {
+                return ResourceManager.GetString("StockAddressesCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Adresleri.
+        /// </summary>
+        public static string StockAddressesPopup {
+            get {
+                return ResourceManager.GetString("StockAddressesPopup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string StockAddressesProductCode {
+            get {
+                return ResourceManager.GetString("StockAddressesProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK AÇIKLAMASI.
+        /// </summary>
+        public static string StockAddressesProductName {
+            get {
+                return ResourceManager.GetString("StockAddressesProductName", resourceCulture);
             }
         }
         

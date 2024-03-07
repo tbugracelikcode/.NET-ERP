@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.QualityControl.ContractQualityPlan.Services;
 using TsiErp.Business.Entities.QualityControl.ContractQualityPlan.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
@@ -37,10 +38,12 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ContractQualityPlansAppService(IStringLocalizer<ContractQualityPlansResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public ContractQualityPlansAppService(IStringLocalizer<ContractQualityPlansResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateContractQualityPlansValidatorDto), Priority = 1)]
@@ -63,7 +66,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
 
             var query = queryFactory.Query().From(Tables.ContractQualityPlans).Insert(new CreateContractQualityPlansDto
             {
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -86,7 +89,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 var queryLine = queryFactory.Query().From(Tables.ContractQualityPlanLines).Insert(new CreateContractQualityPlanLinesDto
                 {
                     ContractQualityPlanID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -123,7 +126,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 var queryPicture = queryFactory.Query().From(Tables.ContractOperationPictures).Insert(new CreateContractOperationPicturesDto
                 {
                     ContractQualityPlanID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -135,7 +138,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
                     Approver = item.Approver,
-                    CreationDate_ = DateTime.Now,
+                    CreationDate_ = _GetSQLDateAppService.GetDateFromSQL(),
                     Description_ = item.Description_,
                     Drawer = item.Drawer,
                     IsApproved = item.IsApproved,
@@ -150,7 +153,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 var queryOperation = queryFactory.Query().From(Tables.ContractQualityPlanOperations).Insert(new CreateContractQualityPlanOperationsDto
                 {
                     ContractQualityPlanID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -410,7 +413,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 Description_ = input.Description_,
                 DocumentNumber = input.DocumentNumber,
                 ProductID = input.ProductID,
@@ -427,7 +430,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                     var queryLine = queryFactory.Query().From(Tables.ContractQualityPlanLines).Insert(new CreateContractQualityPlanLinesDto
                     {
                         ContractQualityPlanID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -476,7 +479,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID,
@@ -508,7 +511,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                     var queryOperaionPicture = queryFactory.Query().From(Tables.ContractOperationPictures).Insert(new CreateContractOperationPicturesDto
                     {
                         ContractQualityPlanID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -547,7 +550,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                             DeletionTime = operationPicture.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             Approver = item.Approver,
@@ -572,7 +575,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                     {
                         ContractQualityPlanID = input.Id,
                         OperationID = item.OperationID,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -607,7 +610,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                             DeletionTime = contractOperation.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                         }).Where(new { Id = contractOperation.Id }, false, false, "");

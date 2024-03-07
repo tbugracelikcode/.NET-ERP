@@ -8,6 +8,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GrandTotalStockMovement.Validations;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
@@ -23,9 +24,11 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
     public class GrandTotalStockMovementsAppService : ApplicationService<GrandTotalStockMovementsResource>, IGrandTotalStockMovementsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public GrandTotalStockMovementsAppService(IStringLocalizer<GrandTotalStockMovementsResource> l) : base(l)
+        public GrandTotalStockMovementsAppService(IStringLocalizer<GrandTotalStockMovementsResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateGrandTotalStockMovementsValidator), Priority = 1)]
@@ -48,7 +51,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                 TotalWastage = input.TotalWastage,
                 WarehouseID = input.WarehouseID,
                 BranchID = input.BranchID,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -188,7 +191,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 BranchID = input.BranchID,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, false, false, "");

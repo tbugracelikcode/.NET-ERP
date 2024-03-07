@@ -129,10 +129,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
             DataSource = new SelectMRPsDto()
             {
-                Date_ = DateTime.Today,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu"),
                 MaintenanceMRPID = Guid.Empty,
-                ReferanceDate = DateTime.Today,
+                ReferanceDate = GetSQLDateAppService.GetDateFromSQL(),
                 IsMaintenanceMRP = false
             };
             await GetSalesOrdersList();
@@ -302,7 +302,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                                         if (data.RequirementAmount == 0)
                                         {
-                                            supplyDate = DateTime.Today;
+                                            supplyDate = GetSQLDateAppService.GetDateFromSQL();
                                         }
 
                                         SelectPurchaseOrderLinesDto purchaseOrderLineModel = new SelectPurchaseOrderLinesDto
@@ -339,7 +339,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                                         SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
                                         {
-                                            Date_ = DateTime.Today,
+                                            Date_ = GetSQLDateAppService.GetDateFromSQL(),
                                             FicheType = Entities.Enums.StockFicheTypeEnum.StokRezerveFisi,
                                             LineNr = stockFicheLineList.Count + 1,
                                             UnitSetID = data.UnitSetID,
@@ -385,7 +385,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                         SpecialCode = string.Empty,
                                         PurchaseOrderState = 1,
                                         ProductionOrderID = Guid.Empty,
-                                        Date_ = DateTime.Today,
+                                        Date_ = GetSQLDateAppService.GetDateFromSQL(),
                                         Description_ = string.Empty,
                                         GrossAmount = 0,
                                         PaymentPlanID = Guid.Empty,
@@ -403,7 +403,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                     {
                                         BranchID = BranchIDData,
                                         WarehouseID = WarehouseIDData,
-                                        Date_ = DateTime.Today,
+                                        Date_ = GetSQLDateAppService.GetDateFromSQL(),
                                         Description_ = string.Empty,
                                         FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
                                         ExchangeRate = 0,
@@ -487,7 +487,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                         CurrencyID = Guid.Empty,
                                         MRPID = DataSource.Id,
                                         CurrentAccountCardID = Guid.Empty,
-                                        ValidityDate_ = DateTime.Today,
+                                        ValidityDate_ = GetSQLDateAppService.GetDateFromSQL(),
                                         RevisionTime = string.Empty,
                                         RevisionDate = null,
                                         PurchaseRequestState = 1,
@@ -497,7 +497,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                         Time_ = string.Empty,
                                         SpecialCode = string.Empty,
                                         ProductionOrderID = Guid.Empty,
-                                        Date_ = DateTime.Today,
+                                        Date_ = GetSQLDateAppService.GetDateFromSQL(),
                                         Description_ = string.Empty,
                                         GrossAmount = 0,
                                         PaymentPlanID = Guid.Empty,

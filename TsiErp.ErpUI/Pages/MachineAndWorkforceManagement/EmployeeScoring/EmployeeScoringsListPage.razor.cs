@@ -80,10 +80,10 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
             DataSource = new SelectEmployeeScoringsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("EmployeeScoreChildMenu"),
-                Year_ = DateTime.Today.Year,
-                Month_ = DateTime.Today.Month,
-                StartDate = DateTime.Today.Date,
-                EndDate = DateTime.Today.Date,
+                Year_ = GetSQLDateAppService.GetDateFromSQL().Year,
+                Month_ = GetSQLDateAppService.GetDateFromSQL().Month,
+                StartDate = GetSQLDateAppService.GetDateFromSQL().Date,
+                EndDate = GetSQLDateAppService.GetDateFromSQL().Date,
                 ScoringState = EmployeeScoringsStateEnum.Taslak
             };
 
@@ -490,8 +490,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                     OfficialSeniorityName = DepartmentDataSource.SeniorityName,
                     SeniorityID = employee.SeniorityID.GetValueOrDefault(),
                     SeniorityName = DepartmentDataSource.SeniorityName,
-                    TodaysDate = DateTime.Today,
-                    SeniorityValue = Convert.ToDecimal(DateTime.Today.Subtract(employee.HiringDate).TotalDays) / 365,
+                    TodaysDate = GetSQLDateAppService.GetDateFromSQL(),
+                    SeniorityValue = Convert.ToDecimal(GetSQLDateAppService.GetDateFromSQL().Subtract(employee.HiringDate).TotalDays) / 365,
                     EducationLevelID = employee.EducationLevelID.GetValueOrDefault(),
                     EducationLevelName = employee.EducationLevelName,
                     AbsencePeriod = 0,

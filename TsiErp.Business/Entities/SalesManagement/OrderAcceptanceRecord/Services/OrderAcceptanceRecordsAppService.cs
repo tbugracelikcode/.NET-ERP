@@ -10,6 +10,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.SalesManagement.OrderAcceptanceRecord.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
@@ -31,12 +32,14 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
     public class OrderAcceptanceRecordsAppService : ApplicationService<OrderAcceptanceRecordsResource>, IOrderAcceptanceRecordsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public OrderAcceptanceRecordsAppService(IStringLocalizer<OrderAcceptanceRecordsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public OrderAcceptanceRecordsAppService(IStringLocalizer<OrderAcceptanceRecordsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateOrderAcceptanceRecordsValidator), Priority = 1)]
@@ -70,7 +73,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 OrderAcceptanceRecordState = input.OrderAcceptanceRecordState,
                 ProductionOrderLoadingDate = input.ProductionOrderLoadingDate,
                 Code = input.Code,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -99,7 +102,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                     ProductReferanceNumberID = item.ProductReferanceNumberID,
                     UnitSetID = item.UnitSetID,
                     OrderAcceptanceRecordID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -344,7 +347,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, false, false, "");
 
@@ -367,7 +370,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         UnitSetID = item.UnitSetID,
                         OrderAcceptanceRecordID = input.Id,
                         PurchaseSupplyDate = item.PurchaseSupplyDate,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -414,7 +417,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID,
@@ -520,7 +523,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 DeletionTime = entityLine.DeletionTime.GetValueOrDefault(),
                 Id = entityLine.Id,
                 IsDeleted = entityLine.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 LineNr = entityLine.LineNr,
                 ProductID = entityLine.ProductID,
