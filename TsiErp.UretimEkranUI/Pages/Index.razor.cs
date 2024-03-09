@@ -1,55 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Components;
 using System.Timers;
-using TsiErp.Fatek.CommunicationCore;
-using TsiErp.Fatek.CommunicationCore.Base;
+using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.UretimEkranUI.Models;
 using TsiErp.UretimEkranUI.Services;
+using TsiErp.UretimEkranUI.Shared;
 
 namespace TsiErp.UretimEkranUI.Pages
 {
     public partial class Index : IDisposable
     {
+
         protected override async void OnInitialized()
         {
-            FatekCommunication objFatekCommunication = new FatekCommunication("COM1", 9600, Parity.Even, 7, StopBits.One);
-            bool isConnect = objFatekCommunication.Connect();
-            AppService.FatekCommunication = objFatekCommunication;
+            ParameterControl();
 
-            if (isConnect)
+            #region Yarım kalan operasyon kontrol
+            var workOrderControl = (await OperationDetailLocalDbService.GetListAsync()).ToList();
+
+            if (workOrderControl.Count > 0)
             {
-                SetPLCTime();
-
-                // Uygulama ayağa kalktığı anda boşta bekleme sayacı PLC tarafından start ediliyor. Operasyon dışındaki duruş süresini yakalamak için kullanılıyor.DR550 saymaya başladı.
-                objFatekCommunication.SetDis(MemoryType.M, 14, RunningCode.Set);
-
-                ParameterControl();
-
-                #region Yarım kalan operasyon kontrol
-                var workOrderControl = (await OperationDetailLocalDbService.GetListAsync()).ToList();
-
-                if (workOrderControl.Count > 0)
-                {
-                    AppService.CurrentOperation = await OperationDetailLocalDbService.GetAsync(workOrderControl[0].Id);
-                    NavigationManager.NavigateTo("/work-order-detail");
-                }
-                #endregion
+                NavMenu menu = (NavMenu)mss["NavMenu"];
+                menu.ChangeWorkOrderMenuEnabled(false);
+                menu.ChangeLogoutMenuEnabled(false);
+                menu.ChangeMainPageMenuEnabled(false);
+                AppService.CurrentOperation = await OperationDetailLocalDbService.GetAsync(workOrderControl[0].Id);
             }
+            #endregion
+
+            StartSystemIdleTimer();
         }
 
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if (firstRender)
-            {
-                HaltReasonTimer = new System.Timers.Timer(1000);
-                HaltReasonTimer.Elapsed += HaltReasonTimerTimedEvent;
-                HaltReasonTimer.Enabled = true;
-            }
-        }
 
         private async void ParameterControl()
         {
@@ -59,7 +39,7 @@ namespace TsiErp.UretimEkranUI.Pages
             {
                 var createdParameter = new ParametersTable
                 {
-                    HaltTriggerSecond = 0,
+                    HaltTriggerSecond = 120000,
                     IsLoadcell = false,
                     MidControlPeriod = 0,
                     StationID = Guid.Empty
@@ -78,69 +58,190 @@ namespace TsiErp.UretimEkranUI.Pages
             else
             {
                 AppService.ProgramParameters = await ParametersTableLocalDbService.GetAsync(parameterId);
-
-                // PLC'ye boşta bekleme parametresi tanımlanıyor.
-                AppService.FatekCommunication.SetItem(MemoryType.R, 1000, AppService.ProgramParameters.HaltTriggerSecond);
             }
         }
 
-        private async void SetPLCTime()
+
+        private async void GoToCurrentWorkOrder()
         {
-            var currentDate = (await OperationDetailLocalDbService.GetCurrentTimeStamp());
-
-            string[] TarihveSaat = currentDate.ToString().Split(' ');
-            string[] Tarih = TarihveSaat[0].Split('-');
-            int TarihGun = Convert.ToInt32(Tarih[2]);
-            int TarihAY = Convert.ToInt32(Tarih[1]);
-            int TarihYIL = Convert.ToInt32(Tarih[0].Substring(2, 2));
-
-            string[] Zaman = TarihveSaat[1].Split(':');
-            int Saat = Convert.ToInt32(Zaman[0]);
-            int Dakika = Convert.ToInt32(Zaman[1]);
-            int Saniye = Convert.ToInt32(Zaman[2]);
-
-            AppService.FatekCommunication.SetItem(MemoryType.D, 2, TarihGun);
-            AppService.FatekCommunication.SetItem(MemoryType.D, 1, TarihAY);
-            AppService.FatekCommunication.SetItem(MemoryType.D, 0, TarihYIL);
-
-            AppService.FatekCommunication.SetItem(MemoryType.D, 3, Saat);
-            AppService.FatekCommunication.SetItem(MemoryType.D, 4, Dakika);
-            AppService.FatekCommunication.SetItem(MemoryType.D, 5, Saniye);
-
-            AppService.FatekCommunication.SetDis(MemoryType.M, 1952, RunningCode.Set);
+            Navigation.NavigateTo("/work-order-detail");
+            await Task.CompletedTask;
         }
 
-        #region Duruş Kontrol Timer
-
-        System.Timers.Timer HaltReasonTimer;
-
-        public bool HaltReasonModalVisible { get; set; } = false;
-
-        private void HaltReasonTimerTimedEvent(object source, ElapsedEventArgs e)
+        private async void ShowModal()
         {
-            if (Convert.ToBoolean(AppService.FatekCommunication.GetDis(MemoryType.M, 16)) == true)
+            HaltReasonModalVisible = true;
+            await InvokeAsync(StateHasChanged);
+            await Task.CompletedTask;
+        }
+
+        #region Halt Reasons
+
+        public bool HaltReasonModalVisible { get; set; }
+
+        public bool EndHaltReasonButtonDisable { get; set; } = true;
+
+        List<ListHaltReasonsDto> HaltReasonsList = new List<ListHaltReasonsDto>();
+
+        ListHaltReasonsDto SelectedHaltReason = new ListHaltReasonsDto();
+
+        private async Task GetHaltReasonsIsOperator()
+        {
+            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsOperator == true).ToList();
+
+            await Task.CompletedTask;
+        }
+
+        private async Task GetHaltReasonsIsMachine()
+        {
+            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsMachine == true).ToList();
+
+            await Task.CompletedTask;
+        }
+
+        private async Task GetHaltReasonsIsManagement()
+        {
+            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsManagement == true).ToList();
+
+            await Task.CompletedTask;
+        }
+
+        private async void OnSelectHaltReason(ListHaltReasonsDto haltReason)
+        {
+            if (!string.IsNullOrEmpty(haltReason.Name))
             {
-                if (!HaltReasonModalVisible)
-                {
-                    HaltReasonModalVisible = true;
-                    //Duruş bilgisi modalı çıkacak. DR600 deki değer okunacak. Bu değer duruş süresi bilgisidir. Duruş bilgisi modal kapandıktan sonra HaltReasonModalVisible false yapılacak. DR600 0 set edilecek.
-                }
-
+                SelectedHaltReason = haltReason;
+                EndHaltReasonButtonDisable = false;
+                await InvokeAsync(() => StateHasChanged());
             }
+            else
+            {
+                EndHaltReasonButtonDisable = true;
+                await InvokeAsync(() => StateHasChanged());
+            }
+        }
+
+        #region Halt Reason Timer
+
+        public int TotalHaltReasonTime { get; set; }
+
+        public string HaltReasonTime { get; set; } = "0:0:0";
+
+        System.Timers.Timer _haltReasonTimer = new System.Timers.Timer(1000);
+
+        DateTime HaltReasonStartTime = DateTime.Now;
+
+        void StartHaltReasonTimer()
+        {
+            HaltReasonStartTime = DateTime.Now;
+            _haltReasonTimer = new System.Timers.Timer(1000);
+            _haltReasonTimer.Elapsed += HaltReasonOnTimedEvent;
+            _haltReasonTimer.AutoReset = true;
+            _haltReasonTimer.Enabled = true;
+        }
+
+        private void HaltReasonOnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            TotalHaltReasonTime++;
+
+            TimeSpan time = TimeSpan.FromSeconds(TotalHaltReasonTime);
+
+            HaltReasonTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                 time.Hours,
+                 time.Minutes,
+                 time.Seconds);
 
             InvokeAsync(StateHasChanged);
         }
 
         #endregion
 
+        private async void EndHaltReasonButtonClick()
+        {
+            _haltReasonTimer.Enabled = false;
+            _haltReasonTimer.Stop();
+            StartSystemIdleTimer();
+
+            var haltReason = new OperationHaltReasonsTable
+            {
+                EmployeeID = AppService.EmployeeID,
+                HaltReasonID = SelectedHaltReason.Id,
+                StationID = AppService.ProgramParameters.StationID,
+                TotalHaltReasonTime = TotalHaltReasonTime,
+                WorkOrderID = AppService.CurrentOperation.WorkOrderID
+            };
+
+            await OperationHaltReasonsTableLocalDbService.InsertAsync(haltReason);
+
+            TotalHaltReasonTime = 0; 
+            
+            HaltReasonTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                 0,
+                 0,
+                 0);
+            SelectedHaltReason = new ListHaltReasonsDto();
+            TotalSystemIdleTime = 0;
+            SystemIdleTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                 0,
+                 0,
+                 0);
+
+            HaltReasonModalVisible = false;
+            
+        }
+
+        #endregion
+
+        #region System Idle Time
+
+        public int TotalSystemIdleTime { get; set; }
+
+        public string SystemIdleTime { get; set; } = "00:00:00";
+
+        System.Timers.Timer _systemIdleTimer = new System.Timers.Timer(1000);
+
+        DateTime SystemIdleStartTime = DateTime.Now;
+
+        void StartSystemIdleTimer()
+        {
+            SystemIdleStartTime = DateTime.Now;
+            _systemIdleTimer = new System.Timers.Timer(1000);
+            _systemIdleTimer.Elapsed += SystemIdleOnTimedEvent;
+            _systemIdleTimer.AutoReset = true;
+            _systemIdleTimer.Enabled = true;
+        }
+
+        private void SystemIdleOnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            TotalSystemIdleTime++;
+
+            TimeSpan time = TimeSpan.FromSeconds(TotalSystemIdleTime);
+
+            SystemIdleTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                 time.Hours,
+                 time.Minutes,
+                 time.Seconds);
+
+            if (time.Minutes == (((AppService.ProgramParameters.HaltTriggerSecond) / 1000) / 60))
+            {
+                HaltReasonModalVisible = true;
+                StartHaltReasonTimer();
+                _systemIdleTimer.Stop();
+                _systemIdleTimer.Enabled = false;
+                InvokeAsync(StateHasChanged);
+
+            }
+
+            InvokeAsync(StateHasChanged);
+        }
+
+
+        #endregion
+
+
         public void Dispose()
         {
-            if (HaltReasonTimer != null)
-            {
-                HaltReasonTimer.Enabled = false;
-                HaltReasonTimer.Stop();
-                HaltReasonTimer.Dispose();
-            }
+
         }
     }
 }

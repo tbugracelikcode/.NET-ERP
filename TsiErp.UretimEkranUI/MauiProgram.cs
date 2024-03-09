@@ -1,25 +1,21 @@
 ﻿using Blazored.Modal;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.LifecycleEvents;
 using Syncfusion.Blazor;
-using System.Reflection;
-using TsiErp.Business;
 using TsiErp.Business.Entities.Employee.Services;
+using TsiErp.Business.Entities.FirstProductApproval.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.Services;
+using TsiErp.Business.Entities.HaltReason.Services;
+using TsiErp.Business.Entities.Menu.Services;
+using TsiErp.Business.Entities.OperationalQualityPlan.Services;
+using TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Services;
+using TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Services;
 using TsiErp.Business.Entities.User.Services;
 using TsiErp.Business.Entities.WorkOrder.Services;
 using TsiErp.UretimEkranUI.Services;
 using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
-using TsiErp.Business.Entities.FirstProductApproval.Services;
-using TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Services;
-using TsiErp.Business.Entities.OperationalQualityPlan.Services;
-using TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Services;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.Services;
-using TsiErp.Business.Entities.Menu.Services;
+using TsiErp.UretimEkranUI.Utilities.NavigationUtilities;
 #if WINDOWS
-using Microsoft.UI;
-using Microsoft.UI.Windowing;
-using Windows.Graphics;
 #endif
 
 namespace TsiErp.UretimEkranUI
@@ -95,8 +91,11 @@ namespace TsiErp.UretimEkranUI
             //builder.Services.AddSingleton<LocalDbService>();
             builder.Services.AddSingleton<OperationDetailLocalDbService>();
             builder.Services.AddSingleton<ParametersTableLocalDbService>();
+            builder.Services.AddSingleton<OperationHaltReasonsTableLocalDbService>();
             builder.Services.AddScoped<ModalManager>();
+            builder.Services.AddScoped<Navigation>();
             builder.Services.AddScoped<AppService>();
+            builder.Services.AddScoped<NavMenuService>();
             builder.Services.AddScoped<IFicheNumbersAppService, FicheNumbersAppService>();
             builder.Services.AddScoped<IUsersAppService, UsersAppService>();
             builder.Services.AddScoped<IWorkOrdersAppService, WorkOrdersAppService>();
@@ -107,6 +106,7 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<IOperationAdjustmentsAppService, OperationAdjustmentsAppService>();
             builder.Services.AddScoped<IUserPermissionsAppService, UserPermissionsAppService>();
             builder.Services.AddScoped<IMenusAppService, MenusAppService>();
+            builder.Services.AddScoped<IHaltReasonsAppService, HaltReasonsAppService>();
 
 
 

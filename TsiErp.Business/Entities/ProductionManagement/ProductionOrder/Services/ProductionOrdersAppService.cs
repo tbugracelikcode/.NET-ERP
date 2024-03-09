@@ -119,7 +119,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 DeletionTime = null,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
-                IsDeleted = false
+                IsDeleted = false,
+                BranchID = input.BranchID.GetValueOrDefault(),
+                WarehouseID = input.WarehouseID.GetValueOrDefault()
             });
 
             await FicheNumbersAppService.UpdateFicheNumberAsync("ProductionOrdersChildMenu", input.FicheNo);
@@ -230,7 +232,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         PropositionLineID = input.PropositionLineID.GetValueOrDefault(),
                         BOMID = lineBom.Id,
                         RouteID = lineProductProductionRoute.Id,
-                        Id = GuidGenerator.CreateGuid()
+                        Id = GuidGenerator.CreateGuid(),
+                        BranchID = input.BranchID.GetValueOrDefault(),
+                        WarehouseID = input.WarehouseID.GetValueOrDefault()
                     };
 
                     var procutionOrderBomLineQuery = queryFactory.Query().From(Tables.ProductionOrders).Insert(procutionOrderBomLine);
@@ -285,7 +289,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             StationGroupID = stationGroupId,
                             WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
                             Id = GuidGenerator.CreateGuid(),
-                             OrderID=input.OrderID.GetValueOrDefault()
+                            OrderID = input.OrderID.GetValueOrDefault()
                         };
 
                         var workOrderQuery = queryFactory.Query().From(Tables.WorkOrders).Insert(workOrder);

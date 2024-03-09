@@ -157,6 +157,7 @@
 		<PackageReference Include="Syncfusion.Blazor.PdfViewerServer.Windows" Version="23.1.43" />
 		<PackageReference Include="Syncfusion.Blazor.Cards" Version="23.1.43" />
 		<PackageReference Include="System.IO.Ports" Version="7.0.0" />
+		<PackageReference Include="DevExpress.Blazor" Version="23.2.3" />
     </ItemGroup>
 
     <ItemGroup>
@@ -164,7 +165,6 @@
       <ProjectReference Include="..\TSI.QueryBuilder\TSI.QueryBuilder.csproj" />
       <ProjectReference Include="..\TsiErp.Business\TsiErp.Business.csproj" />
       <ProjectReference Include="..\TsiErp.Entities\TsiErp.Entities.csproj" />
-      <ProjectReference Include="..\TsiErp.Fatek.CommunicationCore\TsiErp.Fatek.CommunicationCore.csproj" />
       <ProjectReference Include="..\TsiErp.Localizations\TsiErp.Localizations.csproj" />
     </ItemGroup>
 

@@ -541,7 +541,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                     ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductOrderContextTree"], Id = "productstree" });
                 }
 
-              
+
             }
         }
 
@@ -642,7 +642,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     IsDeleted = false,
-                    RouteID = productProductionRoute.Id
+                    RouteID = productProductionRoute.Id,
+                    BranchID = DataSource.BranchID,
+                    WarehouseID = DataSource.WarehouseID
                 };
 
                 var insertedProductionOrder = (await ProductionOrdersAppService.ConverttoProductionOrder(producionOrder)).Data;

@@ -27,6 +27,9 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+
+        var a = System.Globalization.CultureInfo.CurrentCulture;
+
         switch (System.Globalization.CultureInfo.CurrentCulture.Name)
         {
             case "en-US":
