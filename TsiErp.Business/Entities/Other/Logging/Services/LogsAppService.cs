@@ -16,7 +16,7 @@ namespace TsiErp.Business.Entities.Logging.Services
         static QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         public static IGuidGenerator GuidGenerator { get; set; } = new SequentialGuidGenerator();
-        private static IGetSQLDateAppService _GetSQLDateAppService;
+        private static IGetSQLDateAppService _GetSQLDateAppService { get; set; } = new GetSQLDateAppService();
 
         public static Logs InsertLogToDatabase(object before, object after, Guid userId, string logLevel, LogType logType, Guid recordId)
         {
