@@ -268,7 +268,7 @@ namespace TsiErp.ErpUI.Pages.Base
 
         protected virtual async Task OnSubmit()
         {
-            Layout.LoadingSpinnerVisible = true;
+            //Layout.LoadingSpinnerVisible = true;
             TGetOutputDto result;
 
             if (DataSource.Id == Guid.Empty)
@@ -310,7 +310,7 @@ namespace TsiErp.ErpUI.Pages.Base
                 SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
 
 
-            Layout.LoadingSpinnerVisible = false;
+            //Layout.LoadingSpinnerVisible = false;
         }
 
         public virtual void HideEditPage()

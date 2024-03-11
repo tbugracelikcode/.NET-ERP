@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>STOK ADRES KODU</value>
+  </data>
+  <data name="CodeControlManager" xml:space="preserve">
+    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Stok Adres Kodu:</value>
+  </data>
+  <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
+    <value>Silmek istediğinize emin misiniz ?</value>
+  </data>
+  <data name="DeleteConfirmationTitleBase" xml:space="preserve">
+    <value>Onay</value>
+  </data>
+  <data name="DeleteControlManager" xml:space="preserve">
+    <value>Hareket gören kayıtlar silinemez.</value>
+  </data>
+  <data name="DeleteSuccessMessage" xml:space="preserve">
+    <value>Kayıt başarıyla silindi.</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Stok Adres Satırları</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Stok Adresleri</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Hata</value>
+  </data>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>StokAdresleri</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Stok Adresleri</value>
+  </data>
+  <data name="LineGridStockColumnName" xml:space="preserve">
+    <value>STOK SÜTUN</value>
+  </data>
+  <data name="LineGridStockNumberName" xml:space="preserve">
+    <value>STOK NO</value>
+  </data>
+  <data name="LineGridStockSectionName" xml:space="preserve">
+    <value>STOK BÖLÜM</value>
+  </data>
+  <data name="LineGridStockShelfName" xml:space="preserve">
+    <value>STOK RAF</value>
+  </data>
+  <data name="LoadingCaption" xml:space="preserve">
+    <value>Lütfen Bekleyin..</value>
+  </data>
+  <data name="LoadingText" xml:space="preserve">
+    <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
+    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
+  </data>
+  <data name="MessagePopupInformationTitleBase" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="StockAddressesContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="StockAddressesContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="StockAddressesContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="StockAddressesContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="StockAddressesLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="StockAddressesLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="StockAddressesLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="StockAddressesLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="StockColumnModalGridCode" xml:space="preserve">
+    <value>STOK SÜTUN KODU</value>
+  </data>
+  <data name="StockColumnModalGridName" xml:space="preserve">
+    <value>STOK SÜTUN ADI</value>
+  </data>
+  <data name="StockColumnModalTitle" xml:space="preserve">
+    <value>Stok Sütunları</value>
+  </data>
+  <data name="StockColumnNameLineLabel" xml:space="preserve">
+    <value>Stok Sütunu:</value>
+  </data>
+  <data name="StockNumberModalGridCode" xml:space="preserve">
+    <value>STOK NUMARA KODU</value>
+  </data>
+  <data name="StockNumberModalGridName" xml:space="preserve">
+    <value>STOK NUMARA ADI</value>
+  </data>
+  <data name="StockNumberModalTitle" xml:space="preserve">
+    <value>Stok Numaraları</value>
+  </data>
+  <data name="StockNumberNameLineLabel" xml:space="preserve">
+    <value>Stok Numarası:</value>
+  </data>
+  <data name="StockSectionModalGridCode" xml:space="preserve">
+    <value>STOK BÖLÜM KODU</value>
+  </data>
+  <data name="StockSectionModalGridName" xml:space="preserve">
+    <value>STOK BÖLÜM ADI</value>
+  </data>
+  <data name="StockSectionModalTitle" xml:space="preserve">
+    <value>Stok Bölümleri</value>
+  </data>
+  <data name="StockSectionNameLineLabel" xml:space="preserve">
+    <value>Stok Bölümü:</value>
+  </data>
+  <data name="StockShelfModalGridCode" xml:space="preserve">
+    <value>STOK RAF KODU</value>
+  </data>
+  <data name="StockShelfModalGridName" xml:space="preserve">
+    <value>STOK RAF ADI</value>
+  </data>
+  <data name="StockShelfModalTitle" xml:space="preserve">
+    <value>Stok Rafları</value>
+  </data>
+  <data name="StockShelfNameLineLabel" xml:space="preserve">
+    <value>Stok Rafı:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satır, kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Onay</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Stok Adresleri</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Stok Yönetimi &gt; Ana Kayıtlar</value>
+  </data>
+  <data name="UpdateControlManager" xml:space="preserve">
+    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen stok adres kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Stok adres kodu 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Lütfen ürün seçin.</value>
+  </data>
+</root>

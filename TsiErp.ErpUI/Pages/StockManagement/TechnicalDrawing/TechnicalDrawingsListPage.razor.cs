@@ -72,7 +72,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
             DataSource = new SelectTechnicalDrawingsDto()
             {
-                RevisionDate = DateTime.Today,
+                RevisionDate = GetSQLDateAppService.GetDateFromSQL(),
                  
             };
 

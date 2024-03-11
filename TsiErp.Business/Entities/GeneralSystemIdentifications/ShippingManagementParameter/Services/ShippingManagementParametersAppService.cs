@@ -5,6 +5,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShippingManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShippingManagementParameter.Dtos;
@@ -17,9 +18,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ShippingManageme
     public class ShippingManagementParametersAppService : ApplicationService<ShippingManagementParametersResource>, IShippingManagementParametersAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ShippingManagementParametersAppService(IStringLocalizer<ShippingManagementParametersResource> l) : base(l)
+        public ShippingManagementParametersAppService(IStringLocalizer<ShippingManagementParametersResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public async Task<IDataResult<SelectShippingManagementParametersDto>> GetAsync(Guid id)

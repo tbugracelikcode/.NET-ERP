@@ -333,6 +333,9 @@
   <data name="MRPLineContextStockUsage" xml:space="preserve">
     <value>Stoktan Kullan</value>
   </data>
+  <data name="MRPLineContextSupplier" xml:space="preserve">
+    <value>Tedarikçi Seç</value>
+  </data>
   <data name="MRPLineGridAmount" xml:space="preserve">
     <value>PLANLANAN İHTİYAÇ MİKTARI</value>
   </data>
@@ -348,6 +351,9 @@
   <data name="MRPLineGridRequirementAmount" xml:space="preserve">
     <value>SATIN ALMA İHTİYAÇ MİKTARI</value>
   </data>
+  <data name="MRPLineGridReservedAmount" xml:space="preserve">
+    <value>REZERVE MİKTARI</value>
+  </data>
   <data name="MRPLineGridSalesOrderFicheNo" xml:space="preserve">
     <value>SİPARİŞ FİŞ NO</value>
   </data>
@@ -359,6 +365,9 @@
   </data>
   <data name="MRPLineGridSalesOrderisStockUsage" xml:space="preserve">
     <value>STOKTAN KULLANILACAK</value>
+  </data>
+  <data name="MRPLineGridSupplyDate" xml:space="preserve">
+    <value>TEMİN TARİHİ</value>
   </data>
   <data name="MRPLineGridUnitSetCode" xml:space="preserve">
     <value>BİRİM SETİ</value>
@@ -377,6 +386,9 @@
   </data>
   <data name="MRPOrderGridFicheNo" xml:space="preserve">
     <value>SİPARİŞ NO</value>
+  </data>
+  <data name="MRPReferanceDateLabel" xml:space="preserve">
+    <value>Referans Tarihi:</value>
   </data>
   <data name="MRPState_Label" xml:space="preserve">
     <value>Durum:</value>
@@ -414,6 +426,9 @@
   <data name="OrderAcceptanceRecordsContextOrderApproval" xml:space="preserve">
     <value>Sipariş Fiyat Onayı </value>
   </data>
+  <data name="OrderAcceptanceRecordsContextPending" xml:space="preserve">
+    <value>Beklemeye Al</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
@@ -441,8 +456,35 @@
   <data name="ProductionOrderLoadingDateLabel" xml:space="preserve">
     <value>Üretim Emri Yükleme Tarihi:</value>
   </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="SupplierModalTitle" xml:space="preserve">
+    <value>Tedarikçiler</value>
+  </data>
+  <data name="SupplierPopupGridCurrentAccountName" xml:space="preserve">
+    <value>TEDARİKÇİ</value>
+  </data>
+  <data name="SupplierPopupGridCurrenyCode" xml:space="preserve">
+    <value>PARA BİRİMİ</value>
+  </data>
+  <data name="SupplierPopupGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="SupplierPopupGridSupplyDate" xml:space="preserve">
+    <value>TEMİN TARİH GÜNÜ</value>
+  </data>
+  <data name="SupplierPopupGridUnitPrice" xml:space="preserve">
+    <value>BİRİM FİYAT</value>
   </data>
   <data name="UIConfirmationPopupLineMessage" xml:space="preserve">
     <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>

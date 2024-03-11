@@ -13,6 +13,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParam
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.SalesManagementParameter.Page;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 
 namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services
 {
@@ -20,9 +21,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
     public class SalesManagementParametersAppService : ApplicationService<SalesManagementParametersResource>, ISalesManagementParametersAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public SalesManagementParametersAppService(IStringLocalizer<SalesManagementParametersResource> l) : base(l)
+        public SalesManagementParametersAppService(IStringLocalizer<SalesManagementParametersResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public async Task<IDataResult<SelectSalesManagementParametersDto>> GetAsync(Guid id)

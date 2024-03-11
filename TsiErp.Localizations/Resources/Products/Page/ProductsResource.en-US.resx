@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AmountOfReserved" xml:space="preserve">
+    <value>RESERVED AMOUNT</value>
+  </data>
   <data name="AmountOfStock" xml:space="preserve">
     <value>AMOUNT OF STOCK</value>
   </data>
@@ -450,6 +453,9 @@
   <data name="ProductContextSalesPrices" xml:space="preserve">
     <value>Sales Prices</value>
   </data>
+  <data name="ProductContextStockAddress" xml:space="preserve">
+    <value>Stock Address</value>
+  </data>
   <data name="ProductContextStockAmounts" xml:space="preserve">
     <value>Stock Amounts</value>
   </data>
@@ -626,6 +632,18 @@
   </data>
   <data name="SawWastageLabel" xml:space="preserve">
     <value>Saw Wastage:</value>
+  </data>
+  <data name="StockAddressesCode" xml:space="preserve">
+    <value>STOCK ADDRESS CODE</value>
+  </data>
+  <data name="StockAddressesPopup" xml:space="preserve">
+    <value>Stock Addresses</value>
+  </data>
+  <data name="StockAddressesProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="StockAddressesProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
   </data>
   <data name="StockAmountsGridAmount" xml:space="preserve">
     <value>NET TOTAL</value>

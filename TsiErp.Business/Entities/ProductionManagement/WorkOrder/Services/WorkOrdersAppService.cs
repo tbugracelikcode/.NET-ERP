@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.WorkOrder.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
@@ -33,10 +34,12 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public WorkOrdersAppService(IStringLocalizer<WorkOrdersResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public WorkOrdersAppService(IStringLocalizer<WorkOrdersResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateWorkOrdersValidator), Priority = 1)]
@@ -79,7 +82,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 StationID = input.StationID,
                 WorkOrderNo = input.WorkOrderNo,
                 WorkOrderState = input.WorkOrderState,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -346,7 +349,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 OrderID = input.OrderID
             }).Where(new { Id = input.Id }, false, false, "");

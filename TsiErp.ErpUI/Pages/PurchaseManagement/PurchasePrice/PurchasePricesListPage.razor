@@ -169,8 +169,9 @@ else
 
                       <DxGridLayoutItem Row="2" Column="5">
                         <Template>
+                            <center>
                             <label class="TSIModalLabel"><strong>@L["IsApprovedLabel"] </strong></label><br />
-                            <SfSwitch @bind-Checked="DataSource.IsApproved"></SfSwitch>
+                            <SfSwitch @bind-Checked="DataSource.IsApproved"></SfSwitch></center>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -201,9 +202,10 @@ else
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.CurrencyCode) HeaderText="@L["LineGridCurrencyCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.Price) Type="ColumnType.Number" HeaderText="@L["LineGridPrice"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.Price) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridPrice"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridStartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridEndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.SupplyDateDay) Type="ColumnType.Number" HeaderText="@L["LineGridSupplyDateDay"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -269,6 +271,13 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["CurrencyCodeLineLabel"] </strong></label><br />
                             <SfTextBox @bind-Value="LineDataSource.CurrencyCode" CssClass="TSITxtBox" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["SupplyDateDayLineLabel"] </strong></label>
+                            <SfNumericTextBox @bind-Value="LineDataSource.SupplyDateDay" TValue="int" Min="0"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

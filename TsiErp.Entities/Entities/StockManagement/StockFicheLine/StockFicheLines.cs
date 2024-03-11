@@ -89,5 +89,15 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine
         /// Çıkış Birim Maliyeti
         /// </summary>
         public decimal UnitOutputCost { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// MRP ID
+        /// </summary>
+        public Guid MRPID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// MRP Satır ID
+        /// </summary>
+        public Guid MRPLineID { get; set; }
     }
 }

@@ -146,7 +146,7 @@ namespace TSI.QueryBuilder
         }
 
 
-        public Query Select<T1, T2>(Expression<Func<T1, object>> t1Expression, Expression<Func<T2, object>> sumColumnExpression, string sumTable, string sumColumnAlias, bool IsNullChechk, string sumQueryWhere)
+        public Query Select<T1, T2>(Expression<Func<T1, object>> t1Expression, Expression<Func<T2, object>> sumColumnExpression, string sumTable,  bool IsNullChechk, string sumQueryWhere)
         {
             string query = "";
 
@@ -196,10 +196,27 @@ namespace TSI.QueryBuilder
 
             #region Sum Column Expression
 
+            List<string> sumColumnNames = new List<string>();
+
             var sumColumnVisitor = new PropertyVisitor();
             sumColumnVisitor.Visit(sumColumnExpression.Body);
             var sumColumnMembers = sumColumnVisitor.Path;
-            var sumColumnName = sumColumnMembers[0].Name;
+
+            if(sumColumnMembers.Count==1)
+            {
+                sumColumnNames.Add(sumColumnMembers[0].Name);
+            }
+
+            if (sumColumnMembers.Count > 1)
+            {
+
+                foreach (var item in sumColumnMembers)
+                {
+                    sumColumnNames.Add(item.Name);
+                }
+                
+            }
+
 
             #endregion
 
@@ -235,23 +252,54 @@ namespace TSI.QueryBuilder
                 Columns = Columns + "," + columns;
             }
 
-            if (!string.IsNullOrEmpty(sumColumnName))
+            if (sumColumnNames.Count==1)
             {
                 string sumQuery = "";
 
                 if (IsNullChechk)
                 {
-                    sumQuery = "ISNULL((SELECT SUM(" + sumColumnName + ") FROM " + sumTable + " where " + sumQueryWhere + "),0)" + " as " + sumColumnAlias;
+                    sumQuery = "ISNULL((SELECT SUM(" + sumColumnNames[0] + ") FROM " + sumTable + " where " + sumQueryWhere + "),0)" + " as " + sumColumnNames[0];
                 }
                 else
                 {
-                    sumQuery = "(SELECT SUM(" + sumColumnName + ") FROM " + sumTable + " where " + sumQueryWhere + ")" + " as " + sumColumnAlias;
+                    sumQuery = "(SELECT SUM(" + sumColumnNames[0] + ") FROM " + sumTable + " where " + sumQueryWhere + ")" + " as " + sumColumnNames[0];
                 }
 
                 Columns = Columns + "," + sumQuery;
             }
 
+            if (sumColumnNames.Count > 1)
+            {
+                string sumQuery = "";
 
+                for (int i = 0; i < sumColumnNames.Count; i++)
+                {
+                    if(i==0)
+                    {
+                        if (IsNullChechk)
+                        {
+                            sumQuery = "ISNULL((SELECT SUM(" + sumColumnNames[i] + ") FROM " + sumTable + " where " + sumQueryWhere + "),0)" + " as " + sumColumnNames[i];
+                        }
+                        else
+                        {
+                            sumQuery = "(SELECT SUM(" + sumColumnNames[i] + ") FROM " + sumTable + " where " + sumQueryWhere + ")" + " as " + sumColumnNames[i];
+                        }
+                    }
+                    else
+                    {
+                        if (IsNullChechk)
+                        {
+                            sumQuery = sumQuery + ", " + "ISNULL((SELECT SUM(" + sumColumnNames[i] + ") FROM " + sumTable + " where " + sumQueryWhere + "),0)" + " as " + sumColumnNames[i];
+                        }
+                        else
+                        {
+                            sumQuery = sumQuery + ", " + "(SELECT SUM(" + sumColumnNames[i] + ") FROM " + sumTable + " where " + sumQueryWhere + ")" + " as " + sumColumnNames[i];
+                        }
+                    }
+                }           
+
+                Columns = Columns + "," + sumQuery;
+            }
 
             query = "select " + Columns + " from " + TableName + " as " + TableName;
 

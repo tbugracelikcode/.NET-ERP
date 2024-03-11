@@ -43,10 +43,11 @@ else
                             </tr>
                             <tr>
                                  <td style="width: 30%; text-align: left;height: 80px; padding-top: 1%;">
-                                      <SfComboBox TValue="string" TItem="MRPPurchaseComboBox" DataSource="@_mrpPurchaseComboBox">
+                                      <SfComboBox TValue="string" Index="DataSource.MRPPurchaseTransaction-1" TItem="MRPPurchaseComboBox" DataSource="@_mrpPurchaseComboBox">
                                             <ComboBoxEvents TItem="MRPPurchaseComboBox" TValue="string" ValueChange="@MRPPurchaseComboBoxValueChangeHandler"></ComboBoxEvents>
                                     <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                                 </SfComboBox>
+
                                     
                                 </td>
                                  <td style="width: 70%; text-align: left;height: 80px; padding-top: 1%;">
@@ -65,7 +66,7 @@ else
                             </tr>
                             <tr>
                                  <td style="width: 30%; text-align: left;height: 80px; padding-top: 1%;">
-                                      <SfComboBox TValue="string" TItem="MRPIISourceModule" DataSource="@_mrpIISourceModuleComboBox">
+                                      <SfComboBox TValue="string" Index="DataSource.MRPIISourceModule-1" TItem="MRPIISourceModule" DataSource="@_mrpIISourceModuleComboBox">
                                             <ComboBoxEvents TItem="MRPIISourceModule" TValue="string" ValueChange="@MRPIISourceModuleComboBoxValueChangeHandler"></ComboBoxEvents>
                                     <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                                 </SfComboBox>

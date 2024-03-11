@@ -270,6 +270,12 @@
   <data name="TimeLeftforMaintenanceLabel" xml:space="preserve">
     <value>Time Left for Maintenance:</value>
   </data>
+  <data name="UIConfirmationModalLineMessageBase" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationModalTitleBase" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Maintenance Material Requirements Planning</value>
   </data>

@@ -120,7 +120,7 @@
                             <Template>
                                 <center>
                                     <label class="TSIModalLabel"><strong>@L["IsMachineLabel"] </strong></label><br />
-                                    <SfSwitch @bind-Checked="DataSource.IsMachine"></SfSwitch>
+                                    <SfSwitch Disabled="isMachineDisabled" TChecked="bool" ValueChange="IsMachineSwitchValueChange" @bind-Checked="DataSource.IsMachine"></SfSwitch>
                                 </center>
                             </Template>
                         </DxGridLayoutItem>
@@ -128,7 +128,7 @@
                             <Template>
                                 <center>
                                     <label class="TSIModalLabel"><strong>@L["IsOperatorLabel"] </strong></label><br />
-                                    <SfSwitch @bind-Checked="DataSource.IsOperator"></SfSwitch>
+                                    <SfSwitch Disabled="isOperatorDisabled" TChecked="bool" ValueChange="IsOperatorSwitchValueChange" @bind-Checked="DataSource.IsOperator"></SfSwitch>
                                 </center>
                             </Template>
                         </DxGridLayoutItem>
@@ -136,7 +136,7 @@
                             <Template>
                                 <center>
                                     <label class="TSIModalLabel"><strong>@L["IsManagementLabel"] </strong></label><br />
-                                    <SfSwitch @bind-Checked="DataSource.IsManagement"></SfSwitch>
+                                    <SfSwitch Disabled="isManagementDisabled" TChecked="bool" ValueChange="IsManagementSwitchValueChange" @bind-Checked="DataSource.IsManagement"></SfSwitch>
                                 </center>
                             </Template>
                         </DxGridLayoutItem>

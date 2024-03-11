@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.OperationalSPC.Validations;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.PurchaseRequest.Services;
 using TsiErp.Business.Entities.StockMovement;
 using TsiErp.Business.Extensions.DeleteControlExtension;
@@ -39,14 +40,16 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
         private readonly IPurchaseRequestsAppService _PurchaseRequestsAppService;
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
 
-        public OperationalSPCsAppService(IStringLocalizer<OperationalSPCsResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public OperationalSPCsAppService(IStringLocalizer<OperationalSPCsResource> l, IGetSQLDateAppService getSQLDateAppService, IPurchaseRequestsAppService PurchaseRequestsAppService, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
             _PurchaseRequestsAppService = PurchaseRequestsAppService;
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateOperationalSPCsValidator), Priority = 1)]
@@ -67,7 +70,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
-            string now = DateTime.Now.ToString();
+            string now = _GetSQLDateAppService.GetDateFromSQL().ToString();
 
             string[] timeSplit = now.Split(" ");
 
@@ -80,7 +83,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                 Description_ = input.Description_,
                 MeasurementEndDate = input.MeasurementEndDate,
                 MeasurementStartDate = input.MeasurementStartDate,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -112,7 +115,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                     UnsuitableOperationRate = item.UnsuitableOperationRate,
                     WorkCenterID = item.WorkCenterID,
                     OperationalSPCID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -323,7 +326,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, false, false, "");
 
@@ -349,7 +352,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                         UnsuitableOperationRate = item.UnsuitableOperationRate,
                         WorkCenterID = item.WorkCenterID,
                         OperationalSPCID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -397,7 +400,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                         }).Where(new { Id = line.Id }, false, false, "");
 

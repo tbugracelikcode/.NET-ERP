@@ -11,6 +11,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagementParameter.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
@@ -29,9 +30,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
     {
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public FicheNumbersAppService(IStringLocalizer<FicheNumbersResource> l) : base(l)
+        public FicheNumbersAppService(IStringLocalizer<FicheNumbersResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public async Task<IDataResult<SelectFicheNumbersDto>> CreateAsync(CreateFicheNumbersDto input)

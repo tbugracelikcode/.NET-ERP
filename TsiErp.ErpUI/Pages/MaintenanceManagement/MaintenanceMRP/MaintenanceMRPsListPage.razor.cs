@@ -75,10 +75,10 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
             DataSource = new SelectMaintenanceMRPsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("MainMatReqPlanningChildMenu"),
-                Date_ = DateTime.Today,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 TimeLeftforMaintenance = 0,
-                FilterEndDate = DateTime.Today,
-                FilterStartDate = DateTime.Today,
+                FilterEndDate = GetSQLDateAppService.GetDateFromSQL(),
+                FilterStartDate = GetSQLDateAppService.GetDateFromSQL(),
             };
 
             DataSource.SelectMaintenanceMRPLines = new List<SelectMaintenanceMRPLinesDto>();
@@ -255,7 +255,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                             isCalculated = true,
                             isPurchase = false,
                             isStockUsage = false,
-                            CreationTime = DateTime.Now,
+                            CreationTime = GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -278,7 +278,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                         MaintenanceMRPID = DataSource.Id,
                         IsMaintenanceMRP = true,
                         Description_ = string.Empty,
-                        Date_ = DateTime.Today,
+                        Date_ = GetSQLDateAppService.GetDateFromSQL(),
                         CreationTime = DateTime.Now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,

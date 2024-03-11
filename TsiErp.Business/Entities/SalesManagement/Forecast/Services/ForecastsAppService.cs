@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Forecast.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
@@ -30,10 +31,12 @@ namespace TsiErp.Business.Entities.Forecast.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ForecastsAppService(IStringLocalizer<ForecastsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public ForecastsAppService(IStringLocalizer<ForecastsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateForecastsValidatorDto), Priority = 1)]
@@ -57,7 +60,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
             var query = queryFactory.Query().From(Tables.Forecasts).Insert(new CreateForecastsDto
             {
                 BranchID = input.BranchID,
-                CreationDate_ = DateTime.Now,
+                CreationDate_ = _GetSQLDateAppService.GetDateFromSQL(),
                 CurrentAccountCardID = input.CurrentAccountCardID,
                 Description_ = input.Description_,
                 LineNumber = input.LineNumber,
@@ -66,7 +69,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 ValidityStartDate = input.ValidityStartDate,
                 Total = input.Total,
                 Code = input.Code,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -85,7 +88,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                     Amount = item.Amount,
                     CustomerProductCode = item.CustomerProductCode,
                     ForecastID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -342,7 +345,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, false, false, "");
 
@@ -355,7 +358,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                         Amount = item.Amount,
                         CustomerProductCode = item.CustomerProductCode,
                         ForecastID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -392,7 +395,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID,

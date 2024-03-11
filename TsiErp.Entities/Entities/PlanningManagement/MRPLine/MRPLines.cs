@@ -90,5 +90,30 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine
         /// Sipariş Kabul Satır ID
         /// </summary>
         public Guid? OrderAcceptanceLineID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Cari ID
+        /// </summary>
+        public Guid CurrentAccountCardID { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Birim Fiyat
+        /// </summary>
+        public decimal UnitPrice { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Temin Tarihi
+        /// </summary>
+        public DateTime SupplyDate { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Para Birimi ID
+        /// </summary>
+        public Guid CurrencyID { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Rezerve Miktarı
+        /// </summary>
+        public decimal ReservedAmount { get; set; }
     }
 }

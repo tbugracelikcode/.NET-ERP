@@ -91,8 +91,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
         {
             DataSource = new SelectContractTrackingFichesDto()
             {
-                FicheDate_ = DateTime.Today,
-                EstimatedDate_ = DateTime.Today,
+                FicheDate_ = GetSQLDateAppService.GetDateFromSQL(),
+                EstimatedDate_ = GetSQLDateAppService.GetDateFromSQL(),
                 FicheNr = FicheNumbersAppService.GetFicheNumberAsync("ContractTrackingFichesChildMenu")
             };
 
@@ -327,7 +327,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                 case "new":
                     AmountEntryLineDataSource = new SelectContractTrackingFicheAmountEntryLinesDto
                     {
-                        Date_ = DateTime.Today
+                        Date_ = GetSQLDateAppService.GetDateFromSQL()
                     };
                     AmountEntryLineCrudPopup = true;
                     AmountEntryLineDataSource.LineNr = GridAmountEntryLineList.Count + 1;

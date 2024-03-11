@@ -267,10 +267,22 @@ using TsiErp.Entities.Entities.StockManagement.ProductGroup;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockAddress;
+using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockAddressLine;
+using TsiErp.Entities.Entities.StockManagement.StockAddressLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockColumn;
+using TsiErp.Entities.Entities.StockManagement.StockColumn.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFiche;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockNumber;
+using TsiErp.Entities.Entities.StockManagement.StockNumber.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockSection;
+using TsiErp.Entities.Entities.StockManagement.StockSection.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockShelf;
+using TsiErp.Entities.Entities.StockManagement.StockShelf.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
@@ -290,6 +302,34 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectUnitSetsDto, CreateUnitSetsDto>();
             CreateMap<UpdateUnitSetsDto, UnitSets>();
             CreateMap<SelectUnitSetsDto, UpdateUnitSetsDto>();
+
+            CreateMap<StockColumns, SelectStockColumnsDto>();
+            CreateMap<StockColumns, ListStockColumnsDto>();
+            CreateMap<CreateStockColumnsDto, StockColumns>();
+            CreateMap<SelectStockColumnsDto, CreateStockColumnsDto>();
+            CreateMap<UpdateStockColumnsDto, StockColumns>();
+            CreateMap<SelectStockColumnsDto, UpdateStockColumnsDto>();
+
+            CreateMap<StockNumbers, SelectStockNumbersDto>();
+            CreateMap<StockNumbers, ListStockNumbersDto>();
+            CreateMap<CreateStockNumbersDto, StockNumbers>();
+            CreateMap<SelectStockNumbersDto, CreateStockNumbersDto>();
+            CreateMap<UpdateStockNumbersDto, StockNumbers>();
+            CreateMap<SelectStockNumbersDto, UpdateStockNumbersDto>();
+
+            CreateMap<StockSections, SelectStockSectionsDto>();
+            CreateMap<StockSections, ListStockSectionsDto>();
+            CreateMap<CreateStockSectionsDto, StockSections>();
+            CreateMap<SelectStockSectionsDto, CreateStockSectionsDto>();
+            CreateMap<UpdateStockSectionsDto, StockSections>();
+            CreateMap<SelectStockSectionsDto, UpdateStockSectionsDto>();
+
+            CreateMap<StockShelfs, SelectStockShelfsDto>();
+            CreateMap<StockShelfs, ListStockShelfsDto>();
+            CreateMap<CreateStockShelfsDto, StockShelfs>();
+            CreateMap<SelectStockShelfsDto, CreateStockShelfsDto>();
+            CreateMap<UpdateStockShelfsDto, StockShelfs>();
+            CreateMap<SelectStockShelfsDto, UpdateStockShelfsDto>();
 
             CreateMap<ProductCosts, SelectProductCostsDto>();
             CreateMap<ProductCosts, ListProductCostsDto>();
@@ -1421,6 +1461,22 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateShipmentPlanningLinesDto, ShipmentPlanningLines>();
             CreateMap<SelectShipmentPlanningLinesDto, UpdateShipmentPlanningLinesDto>();
             CreateMap<SelectShipmentPlanningLinesDto, ShipmentPlanningLines>();
+
+            CreateMap<StockAddresses, SelectStockAddressesDto>();
+            CreateMap<StockAddresses, ListStockAddressesDto>();
+            CreateMap<UpdateStockAddressesDto, StockAddresses>();
+            CreateMap<CreateStockAddressesDto, StockAddresses>();
+            CreateMap<SelectStockAddressesDto, CreateStockAddressesDto>();
+            CreateMap<SelectStockAddressesDto, UpdateStockAddressesDto>();
+            CreateMap<StockAddresses, UpdateStockAddressesDto>();
+
+            CreateMap<StockAddressLines, SelectStockAddressLinesDto>();
+            CreateMap<StockAddressLines, ListStockAddressLinesDto>();
+            CreateMap<CreateStockAddressLinesDto, StockAddressLines>();
+            CreateMap<SelectStockAddressLinesDto, CreateStockAddressLinesDto>();
+            CreateMap<UpdateStockAddressLinesDto, StockAddressLines>();
+            CreateMap<SelectStockAddressLinesDto, UpdateStockAddressLinesDto>();
+            CreateMap<SelectStockAddressLinesDto, StockAddressLines>();
         }
     }
 }

@@ -10,6 +10,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Entities.StockFiche.Services;
 using TsiErp.Business.Entities.StockManagement.ProductCostCost.Validations;
@@ -29,9 +30,11 @@ namespace TsiErp.Business.Entities.ProductCost.Services
     public class ProductCostsAppService : ApplicationService<ProductCostsResource>, IProductCostsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ProductCostsAppService(IStringLocalizer<ProductCostsResource> l) : base(l)
+        public ProductCostsAppService(IStringLocalizer<ProductCostsResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateProductCostsValidator), Priority = 1)]

@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ContractUnsuitabilityReport.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche;
@@ -30,10 +31,12 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ContractUnsuitabilityReportsAppService(IStringLocalizer<ContractUnsuitabilityReportsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public ContractUnsuitabilityReportsAppService(IStringLocalizer<ContractUnsuitabilityReportsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateContractUnsuitabilityReportsValidator), Priority = 1)]
@@ -58,7 +61,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
             var query = queryFactory.Query().From(Tables.ContractUnsuitabilityReports).Insert(new CreateContractUnsuitabilityReportsDto
             {
                 FicheNo = input.FicheNo,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 UnsuitabilityItemsID = input.UnsuitabilityItemsID,
                 DataOpenStatus = false,
@@ -205,7 +208,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 UnsuitabilityItemsID = input.UnsuitabilityItemsID,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 Action_ = input.Action_,
                 FicheNo = input.FicheNo,

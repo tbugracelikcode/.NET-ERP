@@ -8,6 +8,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.TechnicalDrawing.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
@@ -24,9 +25,11 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
     public class TechnicalDrawingsAppService : ApplicationService<TechnicalDrawingsResource>, ITechnicalDrawingsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public TechnicalDrawingsAppService(IStringLocalizer<TechnicalDrawingsResource> l) : base(l)
+        public TechnicalDrawingsAppService(IStringLocalizer<TechnicalDrawingsResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateTechnicalDrawingsValidator), Priority = 1)]
@@ -61,7 +64,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 DrawingNo = input.DrawingNo,
                 IsApproved = input.IsApproved,
                 SampleApproval = input.SampleApproval,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -244,7 +247,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, false, false, "");
 

@@ -21,6 +21,7 @@ using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 
 namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Services
 {
@@ -29,10 +30,12 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Serv
     {
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public OperationAdjustmentsAppService()
+        public OperationAdjustmentsAppService(IGetSQLDateAppService getSQLDateAppService)
         {
 
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
 
@@ -44,7 +47,7 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Serv
             var query = queryFactory.Query().From(Tables.OperationAdjustments).Insert(new CreateOperationAdjustmentsDto
             {
                 Id = GuidGenerator.CreateGuid(),
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,

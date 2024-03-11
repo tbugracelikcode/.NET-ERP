@@ -5,6 +5,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.QualityControlParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.QualityControlParameter.Dtos;
@@ -17,9 +18,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.QualityControlPa
     public class QualityControlParametersAppService : ApplicationService<QualityControlParametersResource>, IQualityControlParametersAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public QualityControlParametersAppService(IStringLocalizer<QualityControlParametersResource> l) : base(l)
+        public QualityControlParametersAppService(IStringLocalizer<QualityControlParametersResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public async Task<IDataResult<SelectQualityControlParametersDto>> GetAsync(Guid id)

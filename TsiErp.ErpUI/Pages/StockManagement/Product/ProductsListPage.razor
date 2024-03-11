@@ -25,6 +25,8 @@
 @inject IFicheNumbersAppService FicheNumbersAppService
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
+@inject IStockAddressesAppService StockAddressesService
+@inject IGetSQLDateAppService GetSQLDateAppService
 
 
 @if (!base.IsLoaded)
@@ -64,7 +66,8 @@ else
                                     <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListProductsDto.AmountOfStock) HeaderText="@L["AmountOfStock"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.Amount) HeaderText="@L["AmountOfStock"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.TotalReserved) HeaderText="@L["AmountOfReserved"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.UnitSetCode) HeaderText="@L["UnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.SupplyForm) HeaderText="@L["SupplyForm"]" TextAlign="TextAlign.Center" Width="120">
                                         <Template>
@@ -1464,6 +1467,52 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSICancelButton" OnClick="HidePreviewPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
 
+        </FooterContentTemplate>
+    </DxPopup>
+
+     <DxPopup @bind-Visible="StockAddressPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["StockAddressesPopup"]"
+             Width="47%"
+             Height="46%"
+             MinWidth="800px"
+             MinHeight="500px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="92%" />
+                    <DxGridLayoutColumn Width="4%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                     <SfGrid ID="StockAddressGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StockAddressesList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                               <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                               <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                               <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                               <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                               <GridColumns>
+                                  <GridColumn Field=@nameof(ListStockAddressesDto.Code) HeaderText="@L["StockAddressesCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> 
+                                    <GridColumn Field=@nameof(ListStockAddressesDto.ProductCode) HeaderText="@L["StockAddressesProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                            <GridColumn Field=@nameof(ListStockAddressesDto.ProductName) HeaderText="@L["StockAddressesProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                               </GridColumns>
+                     </SfGrid>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideStockAddressButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

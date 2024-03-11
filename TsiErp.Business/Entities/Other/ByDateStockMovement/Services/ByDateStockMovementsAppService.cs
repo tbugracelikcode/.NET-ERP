@@ -8,6 +8,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ByDateStockMovement.Validations;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.Other.ByDateStockMovement;
@@ -23,9 +24,11 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
     public class ByDateStockMovementsAppService : ApplicationService<ByDateStockMovementsResource>, IByDateStockMovementsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ByDateStockMovementsAppService(IStringLocalizer<ByDateStockMovementsResource> l) : base(l)
+        public ByDateStockMovementsAppService(IStringLocalizer<ByDateStockMovementsResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
 
@@ -49,7 +52,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
                 TotalWastage = input.TotalWastage,
                 WarehouseID = input.WarehouseID,
                 BranchID = input.BranchID,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -183,7 +186,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, false, false, "");
 

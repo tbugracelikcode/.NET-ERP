@@ -422,6 +422,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
         }
 
         #endregion
+
         #region Cari Hesap ButtonEdit
 
         SfTextBox CurrentAccountCardsCodeButtonEdit = new();

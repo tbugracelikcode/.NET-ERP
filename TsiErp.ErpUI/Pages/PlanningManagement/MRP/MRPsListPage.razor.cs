@@ -31,6 +31,13 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.DataAccess.Services.Login;
 using DevExpress.XtraRichEdit.Model;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
+using DevExpress.XtraCharts.Native;
+using Syncfusion.Blazor.Calendars;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 {
@@ -52,7 +59,28 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
         List<ListSalesOrderDto> SalesOrdersList = new List<ListSalesOrderDto>();
 
+        List<SupplierSelectionGrid> SupplierSelectionList = new List<SupplierSelectionGrid>();
+
         private bool LineCrudPopup = false;
+
+        public bool SupplierSelectionPopup = false;
+
+        public class SupplierSelectionGrid
+        {
+            public string ProductCode { get; set; }
+
+            public decimal UnitPrice { get; set; }
+
+            public Guid? CurrentAccountID { get; set; }
+
+            public string CurrentAccountName { get; set; }
+
+            public Guid? CurrenyID { get; set; }
+
+            public string CurrenyCode { get; set; }
+
+            public int SupplyDate { get; set; }
+        }
 
         #region Planning Parameters
 
@@ -84,9 +112,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
+
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
-
 
         }
 
@@ -101,9 +129,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
             DataSource = new SelectMRPsDto()
             {
-                Date_ = DateTime.Today,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu"),
                 MaintenanceMRPID = Guid.Empty,
+                ReferanceDate = GetSQLDateAppService.GetDateFromSQL(),
                 IsMaintenanceMRP = false
             };
             await GetSalesOrdersList();
@@ -158,6 +187,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextChange"], Id = "changed" }); break;
                             case "MRPLineContextRefresh":
                                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextRefresh"], Id = "refresh" }); break;
+                            case "MRPLineContextSupplier":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextSupplier"], Id = "supplier" }); break;
                             default: break;
                         }
                     }
@@ -213,9 +244,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                     var salesOrdersList = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.ToList();
 
-                    foreach(var salesOrder in salesOrdersList)
+                    foreach (var salesOrder in salesOrdersList)
                     {
-                        if(!GridLineList.Any(t=>t.SalesOrderID.GetValueOrDefault() == salesOrder.Id))
+                        if (!GridLineList.Any(t => t.SalesOrderID.GetValueOrDefault() == salesOrder.Id))
                         {
                             SalesOrdersList.Add(salesOrder);
                         }
@@ -228,207 +259,263 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                 case "convertpurchase":
 
+                    var purcres = await ModalManager.ConfirmationAsync(L["UIConvertPurchaseTitle"], L["UIConvertPurchaseMessage"]);
 
-                    DataSource = (await MRPsService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    var mrpLineList = DataSource.SelectMRPLines;
+                    if (purcres == true)
+                    {
+                        Layout.LoadingSpinnerVisible = true;
 
-                    if (mrpLineList.Any(t => t.WarehouseID == null || t.WarehouseID == Guid.Empty || t.BranchID == null || t.BranchID == Guid.Empty))
-                    {
-                        await ModalManager.WarningPopupAsync(L["UIWarningConvertPurchaseTitle"], L["UIWarningConvertPurchaseMessage"]);
-                    }
-                    else
-                    {
-                        if (MRPPurchaseTransaction == 1) //PurchaseOrder
+                        DataSource = (await MRPsService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        var mrpLineList = DataSource.SelectMRPLines;
+
+                        if (mrpLineList.Any(t => t.WarehouseID == null || t.WarehouseID == Guid.Empty || t.BranchID == null || t.BranchID == Guid.Empty))
                         {
-                            var groupedList2 = DataSource.SelectMRPLines.GroupBy(t => new { t.BranchID, t.WarehouseID }, (key, group) => new
+                            await ModalManager.WarningPopupAsync(L["UIWarningConvertPurchaseTitle"], L["UIWarningConvertPurchaseMessage"]);
+                        }
+                        else
+                        {
+                            if (MRPPurchaseTransaction == 1) //PurchaseOrder
                             {
-                                BranchID = key.BranchID,
-                                WarehouseID = key.WarehouseID,
-                                Data = group.ToList()
-                            });
-
-                            List<SelectPurchaseOrderLinesDto> purchaseOrderLineList = new List<SelectPurchaseOrderLinesDto>();
-
-                            Guid? BranchIDData = Guid.Empty;
-                            Guid? WarehouseIDData = Guid.Empty;
-
-                            foreach (var item in groupedList2.ToList())
-                            {
-                                foreach (var data in item.Data)
+                                var groupedList2 = DataSource.SelectMRPLines.GroupBy(t => new { t.BranchID, t.WarehouseID, t.CurrencyID, t.CurrentAccountCardID }, (key, group) => new
                                 {
+                                    BranchID = key.BranchID,
+                                    WarehouseID = key.WarehouseID,
+                                    CurrencyID = key.CurrencyID,
+                                    CurrentAccountCardID = key.CurrentAccountCardID,
+                                    Data = group.ToList()
+                                });
 
-                                    var product = (await ProductsAppService.GetAsync(data.ProductID.GetValueOrDefault())).Data;
+                                List<SelectPurchaseOrderLinesDto> purchaseOrderLineList = new List<SelectPurchaseOrderLinesDto>();
 
-                                    DateTime? supplyDate = null;
+                                List<SelectStockFicheLinesDto> stockFicheLineList = new List<SelectStockFicheLinesDto>();
 
-                                    if (data.RequirementAmount == 0)
+                                Guid? BranchIDData = Guid.Empty;
+                                Guid? WarehouseIDData = Guid.Empty;
+
+                                foreach (var item in groupedList2.ToList())
+                                {
+                                    foreach (var data in item.Data)
                                     {
-                                        supplyDate = DateTime.Today;
+                                        var product = (await ProductsAppService.GetAsync(data.ProductID.GetValueOrDefault())).Data;
+
+                                        DateTime? supplyDate = null;
+
+                                        if (data.RequirementAmount == 0)
+                                        {
+                                            supplyDate = GetSQLDateAppService.GetDateFromSQL();
+                                        }
+
+                                        SelectPurchaseOrderLinesDto purchaseOrderLineModel = new SelectPurchaseOrderLinesDto
+                                        {
+                                            DiscountAmount = 0,
+                                            DiscountRate = 0,
+                                            ExchangeRate = 0,
+                                            LikedPurchaseRequestLineID = Guid.Empty,
+                                            LineAmount = 0,
+                                            LineNr = purchaseOrderLineList.Count + 1,
+                                            LineDescription = string.Empty,
+                                            LineTotalAmount = 0,
+                                            LinkedPurchaseRequestID = Guid.Empty,
+                                            OrderAcceptanceID = data.OrderAcceptanceID.GetValueOrDefault(),
+                                            OrderAcceptanceLineID = data.OrderAcceptanceLineID.GetValueOrDefault(),
+                                            WorkOrderCreationDate = null,
+                                            VATrate = 0,
+                                            VATamount = 0,
+                                            UnitSetID = product.UnitSetID,
+                                            UnitSetCode = product.UnitSet,
+                                            UnitPrice = 0,
+                                            Quantity = data.RequirementAmount,
+                                            PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Beklemede,
+                                            PurchaseOrderID = Guid.Empty,
+                                            ProductName = product.Name,
+                                            ProductionOrderID = Guid.Empty,
+                                            ProductionOrderFicheNo = string.Empty,
+                                            ProductID = product.Id,
+                                            ProductCode = product.Code,
+                                            PaymentPlanID = Guid.Empty,
+                                            PaymentPlanName = string.Empty,
+                                            SupplyDate = supplyDate
+                                        };
+
+                                        SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                                        {
+                                            Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                                            FicheType = Entities.Enums.StockFicheTypeEnum.StokRezerveFisi,
+                                            LineNr = stockFicheLineList.Count + 1,
+                                            UnitSetID = data.UnitSetID,
+                                            UnitSetCode = data.UnitSetCode,
+                                            UnitPrice = data.UnitPrice,
+                                            UnitOutputCost = 0,
+                                            Quantity = data.RequirementAmount,
+                                            MRPLineID = data.Id,
+                                            MRPID = DataSource.Id,
+                                            ProductID = data.ProductID,
+                                            ProductCode = data.ProductCode,
+                                            LineAmount = data.UnitPrice * data.RequirementAmount,
+                                            PurchaseOrderLineID = Guid.Empty,
+                                            PurchaseOrderID = Guid.Empty,
+                                            PurchaseOrderFicheNo = string.Empty,
+                                            LineDescription = string.Empty,
+                                            ProductionDateReferance = string.Empty,
+                                            ProductName = data.ProductName,
+                                        };
+
+                                        BranchIDData = data.BranchID;
+                                        WarehouseIDData = data.WarehouseID;
+                                        purchaseOrderLineList.Add(purchaseOrderLineModel);
+                                        stockFicheLineList.Add(stockFicheLineModel);
+
                                     }
 
-                                    SelectPurchaseOrderLinesDto purchaseOrderLineModel = new SelectPurchaseOrderLinesDto
+                                    CreatePurchaseOrdersDto purchaseOrderModel = new CreatePurchaseOrdersDto
                                     {
-                                        DiscountAmount = 0,
-                                        DiscountRate = 0,
-                                        ExchangeRate = 0,
-                                        LikedPurchaseRequestLineID = Guid.Empty,
-                                        LineAmount = 0,
-                                        LineNr = purchaseOrderLineList.Count + 1,
-                                        LineDescription = string.Empty,
-                                        LineTotalAmount = 0,
-                                        LinkedPurchaseRequestID = Guid.Empty,
-                                        OrderAcceptanceID = data.OrderAcceptanceID.GetValueOrDefault(),
-                                        OrderAcceptanceLineID = data.OrderAcceptanceLineID.GetValueOrDefault(),
                                         WorkOrderCreationDate = null,
-                                        VATrate = 0,
-                                        VATamount = 0,
-                                        UnitSetID = product.UnitSetID,
-                                        UnitSetCode = product.UnitSet,
-                                        UnitPrice = 0,
-                                        Quantity = data.RequirementAmount,
-                                        PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Beklemede,
-                                        PurchaseOrderID = Guid.Empty,
-                                        ProductName = product.Name,
+                                        BranchID = BranchIDData,
+                                        WarehouseID = WarehouseIDData,
+                                        MaintenanceMRPID = DataSource.MaintenanceMRPID,
+                                        TotalVatExcludedAmount = 0,
+                                        CurrencyID = Guid.Empty,
+                                        MRPID = DataSource.Id,
+                                        OrderAcceptanceID = DataSource.OrderAcceptanceID.GetValueOrDefault(),
+                                        CurrentAccountCardID = Guid.Empty,
+                                        ShippingAdressID = Guid.Empty,
+                                        TotalDiscountAmount = 0,
+                                        TotalVatAmount = 0,
+                                        Time_ = string.Empty,
+                                        SpecialCode = string.Empty,
+                                        PurchaseOrderState = 1,
                                         ProductionOrderID = Guid.Empty,
-                                        ProductionOrderFicheNo = string.Empty,
-                                        ProductID = product.Id,
-                                        ProductCode = product.Code,
+                                        Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                                        Description_ = string.Empty,
+                                        GrossAmount = 0,
                                         PaymentPlanID = Guid.Empty,
-                                        PaymentPlanName = string.Empty,
-                                        SupplyDate = supplyDate
-                                    };
-
-                                    BranchIDData = data.BranchID;
-                                    WarehouseIDData = data.WarehouseID;
-                                    purchaseOrderLineList.Add(purchaseOrderLineModel);
-
-
-                                }
-
-                                CreatePurchaseOrdersDto purchaseOrderModel = new CreatePurchaseOrdersDto
-                                {
-                                    WorkOrderCreationDate = null,
-                                    BranchID = BranchIDData,
-                                    WarehouseID = WarehouseIDData,
-                                    MaintenanceMRPID = DataSource.MaintenanceMRPID,
-                                    TotalVatExcludedAmount = 0,
-                                    CurrencyID = Guid.Empty,
-                                    MRPID = DataSource.Id,
-                                    OrderAcceptanceID = DataSource.OrderAcceptanceID.GetValueOrDefault(),
-                                    CurrentAccountCardID = Guid.Empty,
-                                    ShippingAdressID = Guid.Empty,
-                                    TotalDiscountAmount = 0,
-                                    TotalVatAmount = 0,
-                                    Time_ = string.Empty,
-                                    SpecialCode = string.Empty,
-                                    PurchaseOrderState = 1,
-                                    ProductionOrderID = Guid.Empty,
-                                    Date_ = DateTime.Today,
-                                    Description_ = string.Empty,
-                                    GrossAmount = 0,
-                                    PaymentPlanID = Guid.Empty,
-                                    NetAmount = 0,
-                                    LinkedPurchaseRequestID = Guid.Empty,
-                                    ExchangeRate = 0,
-                                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersChildMenu")
-                                };
-
-                                purchaseOrderModel.SelectPurchaseOrderLinesDto = purchaseOrderLineList;
-
-                                await PurchaseOrdersAppService.CreateAsync(purchaseOrderModel);
-                            }
-                        }
-
-                        else if (MRPPurchaseTransaction == 2) //PurchaseRequest
-                        {
-                            var groupedList2 = DataSource.SelectMRPLines.GroupBy(t => new { t.BranchID, t.WarehouseID }, (key, group) => new
-                            {
-                                BranchID = key.BranchID,
-                                WarehouseID = key.WarehouseID,
-                                Data = group.ToList()
-                            });
-
-                            List<SelectPurchaseRequestLinesDto> purchaseRequestLineList = new List<SelectPurchaseRequestLinesDto>();
-
-                            Guid? BranchIDData = Guid.Empty;
-                            Guid? WarehouseIDData = Guid.Empty;
-
-                            foreach (var item in groupedList2.ToList())
-                            {
-                                foreach (var data in item.Data)
-                                {
-                                    var product = (await ProductsAppService.GetAsync(data.ProductID.GetValueOrDefault())).Data;
-
-                                    SelectPurchaseRequestLinesDto purchaseRequestLineModel = new SelectPurchaseRequestLinesDto
-                                    {
-                                        DiscountAmount = 0,
-                                        DiscountRate = 0,
+                                        NetAmount = 0,
+                                        LinkedPurchaseRequestID = Guid.Empty,
                                         ExchangeRate = 0,
-                                        LineAmount = 0,
-                                        LineNr = purchaseRequestLineList.Count + 1,
-                                        LineDescription = string.Empty,
-                                        LineTotalAmount = 0,
-                                        VATrate = 0,
-                                        VATamount = 0,
-                                        UnitSetID = product.UnitSetID,
-                                        UnitSetCode = product.UnitSet,
-                                        UnitPrice = 0,
-                                        Quantity = data.RequirementAmount,
-                                        ProductName = product.Name,
-                                        ProductionOrderID = Guid.Empty,
-                                        ProductionOrderFicheNo = string.Empty,
-                                        ProductID = product.Id,
-                                        ProductCode = product.Code,
-                                        PaymentPlanID = Guid.Empty,
-                                        PaymentPlanName = string.Empty,
-                                        PurchaseRequestLineState = Entities.Enums.PurchaseRequestLineStateEnum.Beklemede,
-                                        PurchaseRequestID = Guid.Empty,
-                                        OrderConversionDate = null,
-
+                                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersChildMenu")
                                     };
 
-                                    BranchIDData = data.BranchID;
-                                    WarehouseIDData = data.WarehouseID;
-                                    purchaseRequestLineList.Add(purchaseRequestLineModel);
+                                    purchaseOrderModel.SelectPurchaseOrderLinesDto = purchaseOrderLineList;
+
+                                    var purchaseOrder = await PurchaseOrdersAppService.CreateAsync(purchaseOrderModel);
+
+                                    CreateStockFichesDto stockFicheModel = new CreateStockFichesDto
+                                    {
+                                        BranchID = BranchIDData,
+                                        WarehouseID = WarehouseIDData,
+                                        Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                                        Description_ = string.Empty,
+                                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                                        ExchangeRate = 0,
+                                        Time_ = null,
+                                        FicheType = 55,
+                                        SpecialCode = string.Empty,
+                                        PurchaseOrderID = purchaseOrder.Data.Id,
+                                        ProductionOrderID = Guid.Empty,
+                                        ProductionDateReferance = string.Empty,
+                                        InputOutputCode = 1,
+                                        NetAmount = stockFicheLineList.Select(t => t.LineAmount).Sum(),
+                                        CurrencyID = Guid.Empty,
+                                    };
+
+                                    stockFicheModel.SelectStockFicheLines = stockFicheLineList;
+
+                                    await StockFichesAppService.CreateAsync(stockFicheModel);
                                 }
 
-                                CreatePurchaseRequestsDto purchaseRequestModel = new CreatePurchaseRequestsDto
+
+                            }
+
+                            else if (MRPPurchaseTransaction == 2) //PurchaseRequest
+                            {
+                                var groupedList2 = DataSource.SelectMRPLines.GroupBy(t => new { t.BranchID, t.WarehouseID }, (key, group) => new
                                 {
-                                    BranchID = BranchIDData,
-                                    WarehouseID = WarehouseIDData,
-                                    TotalVatExcludedAmount = 0,
-                                    CurrencyID = Guid.Empty,
-                                    MRPID = DataSource.Id,
-                                    CurrentAccountCardID = Guid.Empty,
-                                    ValidityDate_ = DateTime.Today,
-                                    RevisionTime = string.Empty,
-                                    RevisionDate = null,
-                                    PurchaseRequestState = 1,
-                                    PropositionRevisionNo = string.Empty,
-                                    TotalDiscountAmount = 0,
-                                    TotalVatAmount = 0,
-                                    Time_ = string.Empty,
-                                    SpecialCode = string.Empty,
-                                    ProductionOrderID = Guid.Empty,
-                                    Date_ = DateTime.Today,
-                                    Description_ = string.Empty,
-                                    GrossAmount = 0,
-                                    PaymentPlanID = Guid.Empty,
-                                    NetAmount = 0,
-                                    LinkedPurchaseRequestID = Guid.Empty,
-                                    ExchangeRate = 0,
-                                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseRequestsChildMenu")
-                                };
+                                    BranchID = key.BranchID,
+                                    WarehouseID = key.WarehouseID,
+                                    Data = group.ToList()
+                                });
 
-                                purchaseRequestModel.SelectPurchaseRequestLines = purchaseRequestLineList;
+                                List<SelectPurchaseRequestLinesDto> purchaseRequestLineList = new List<SelectPurchaseRequestLinesDto>();
 
-                                await PurchaseRequestsAppService.CreateAsync(purchaseRequestModel);
+                                Guid? BranchIDData = Guid.Empty;
+                                Guid? WarehouseIDData = Guid.Empty;
+
+                                foreach (var item in groupedList2.ToList())
+                                {
+                                    foreach (var data in item.Data)
+                                    {
+                                        var product = (await ProductsAppService.GetAsync(data.ProductID.GetValueOrDefault())).Data;
+
+                                        SelectPurchaseRequestLinesDto purchaseRequestLineModel = new SelectPurchaseRequestLinesDto
+                                        {
+                                            DiscountAmount = 0,
+                                            DiscountRate = 0,
+                                            ExchangeRate = 0,
+                                            LineAmount = 0,
+                                            LineNr = purchaseRequestLineList.Count + 1,
+                                            LineDescription = string.Empty,
+                                            LineTotalAmount = 0,
+                                            VATrate = 0,
+                                            VATamount = 0,
+                                            UnitSetID = product.UnitSetID,
+                                            UnitSetCode = product.UnitSet,
+                                            UnitPrice = 0,
+                                            Quantity = data.RequirementAmount,
+                                            ProductName = product.Name,
+                                            ProductionOrderID = Guid.Empty,
+                                            ProductionOrderFicheNo = string.Empty,
+                                            ProductID = product.Id,
+                                            ProductCode = product.Code,
+                                            PaymentPlanID = Guid.Empty,
+                                            PaymentPlanName = string.Empty,
+                                            PurchaseRequestLineState = Entities.Enums.PurchaseRequestLineStateEnum.Beklemede,
+                                            PurchaseRequestID = Guid.Empty,
+                                            OrderConversionDate = null,
+
+                                        };
+
+                                        BranchIDData = data.BranchID;
+                                        WarehouseIDData = data.WarehouseID;
+                                        purchaseRequestLineList.Add(purchaseRequestLineModel);
+                                    }
+
+                                    CreatePurchaseRequestsDto purchaseRequestModel = new CreatePurchaseRequestsDto
+                                    {
+                                        BranchID = BranchIDData,
+                                        WarehouseID = WarehouseIDData,
+                                        TotalVatExcludedAmount = 0,
+                                        CurrencyID = Guid.Empty,
+                                        MRPID = DataSource.Id,
+                                        CurrentAccountCardID = Guid.Empty,
+                                        ValidityDate_ = GetSQLDateAppService.GetDateFromSQL(),
+                                        RevisionTime = string.Empty,
+                                        RevisionDate = null,
+                                        PurchaseRequestState = 1,
+                                        PropositionRevisionNo = string.Empty,
+                                        TotalDiscountAmount = 0,
+                                        TotalVatAmount = 0,
+                                        Time_ = string.Empty,
+                                        SpecialCode = string.Empty,
+                                        ProductionOrderID = Guid.Empty,
+                                        Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                                        Description_ = string.Empty,
+                                        GrossAmount = 0,
+                                        PaymentPlanID = Guid.Empty,
+                                        NetAmount = 0,
+                                        LinkedPurchaseRequestID = Guid.Empty,
+                                        ExchangeRate = 0,
+                                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseRequestsChildMenu")
+                                    };
+
+                                    purchaseRequestModel.SelectPurchaseRequestLines = purchaseRequestLineList;
+
+                                    await PurchaseRequestsAppService.CreateAsync(purchaseRequestModel);
+                                }
                             }
                         }
+
+                        Layout.LoadingSpinnerVisible = false;
                     }
-
-
-
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -527,18 +614,37 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                     {
                         GridLineList[Index].isStockUsage = !selectedline.isStockUsage;
 
-                        if (GridLineList[Index].isStockUsage)
+                        if (GridLineList[Index].isStockUsage) // Stoktan kullanılacaksa
                         {
-                            GridLineList[Index].RequirementAmount = GridLineList[Index].Amount - Convert.ToInt32(GridLineList[Index].AmountOfStock);
-                            if (0 > GridLineList[Index].RequirementAmount)
+                            var stockAmount = GridLineList[Index].AmountOfStock;
+                            var bomAmount = GridLineList[Index].Amount;
+                            var purchaseAmount = GridLineList[Index].RequirementAmount;
+                            var reservedAmount = GridLineList[Index].ReservedAmount;
+
+                            if (stockAmount > bomAmount) // stok miktarı > reçeteden gelen toplam ihtiyaç miktarıysa
                             {
                                 GridLineList[Index].RequirementAmount = 0;
+                                GridLineList[Index].ReservedAmount = bomAmount;
+                                GridLineList[Index].AmountOfStock = stockAmount - bomAmount;
+                            }
+                            else if (stockAmount < bomAmount) // stok miktarı < reçeteden gelen toplam ihtiyaç miktarıysa
+                            {
+                                GridLineList[Index].AmountOfStock = 0;
+                                GridLineList[Index].RequirementAmount = bomAmount - stockAmount;
+                                GridLineList[Index].ReservedAmount = stockAmount;
+                            }
+                            else if (stockAmount == bomAmount) // stok miktarı = reçeteden gelen toplam ihtiyaç miktarıysa
+                            {
+                                GridLineList[Index].AmountOfStock = 0;
+                                GridLineList[Index].RequirementAmount = 0;
+                                GridLineList[Index].ReservedAmount = stockAmount;
                             }
                         }
 
-                        else
+                        else // Stoktan kullanılmayacaksa
                         {
                             GridLineList[Index].RequirementAmount = GridLineList[Index].Amount;
+                            GridLineList[Index].ReservedAmount = 0;
                         }
                     }
 
@@ -558,6 +664,57 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                     await InvokeAsync(StateHasChanged);
                     break;
 
+                case "supplier":
+
+                    LineDataSource = args.RowInfo.RowData;
+
+                    SupplierSelectionList.Clear();
+
+                    var purchasePriceLinesList = (await PurchasePricesAppService.GetSelectLineListAsync(LineDataSource.ProductID.GetValueOrDefault())).Data.ToList();
+
+                    if (purchasePriceLinesList != null && purchasePriceLinesList.Count > 0)
+                    {
+                        var tempPurchasePriceLines = purchasePriceLinesList.Select(t => t.PurchasePriceID).Distinct();
+
+                        foreach (var purchasePriceID in tempPurchasePriceLines)
+                        {
+                            var purchasePrice = (await PurchasePricesAppService.GetAsync(purchasePriceID)).Data;
+
+                            if (purchasePrice != null && purchasePriceID != Guid.Empty && purchasePrice.IsApproved == false)
+                            {
+                                purchasePriceLinesList = purchasePriceLinesList.Where(t => t.PurchasePriceID != purchasePriceID).ToList();
+                                //Onaylı olmayan fiyat kayıtlarına ait satırları yok etme
+                            }
+                        }
+
+                        var groupedPurchasePriceLineList = purchasePriceLinesList.GroupBy(t => new { t.CurrencyID, t.CurrentAccountCardID }, (key, group) => new { CurrencyID = key.CurrencyID, CurrentAccountCardID = key.CurrentAccountCardID, Data = group.ToList() });
+
+                        foreach (var item in groupedPurchasePriceLineList)
+                        {
+                            foreach (var data in item.Data)
+                            {
+                                SupplierSelectionGrid supplierSelectionModel = new SupplierSelectionGrid
+                                {
+                                    CurrentAccountName = data.CurrentAccountCardName,
+                                    CurrentAccountID = data.CurrentAccountCardID,
+                                    CurrenyCode = data.CurrencyCode,
+                                    CurrenyID = data.CurrencyID,
+                                    ProductCode = data.ProductCode,
+                                    UnitPrice = data.Price,
+                                    SupplyDate = data.SupplyDateDay
+                                };
+
+                                SupplierSelectionList.Add(supplierSelectionModel);
+                            }
+                        }
+
+                        SupplierSelectionPopup = true;
+
+                    }
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
                 default:
                     break;
             }
@@ -568,6 +725,44 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             LineCrudPopup = false;
         }
 
+        public void HideSupplierSelectionPopup()
+        {
+            SupplierSelectionList.Clear();
+            SupplierSelectionPopup = false;
+        }
+
+        public async void SupplierDoubleClickHandler(RecordDoubleClickEventArgs<SupplierSelectionGrid> args)
+        {
+            var selectedSupplier = args.RowData;
+
+            if (selectedSupplier != null)
+            {
+                LineDataSource.CurrencyID = selectedSupplier.CurrenyID;
+                LineDataSource.CurrencyCode = selectedSupplier.CurrenyCode;
+                LineDataSource.CurrentAccountCardID = selectedSupplier.CurrentAccountID;
+                LineDataSource.CurrentAccountCardName = selectedSupplier.CurrentAccountName;
+                LineDataSource.UnitPrice = selectedSupplier.UnitPrice;
+                LineDataSource.SupplyDate = LineDataSource.SupplyDate.AddDays(selectedSupplier.SupplyDate);
+                HideSupplierSelectionPopup();
+                await _LineGrid.Refresh();
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        public void ReferanceDateValueChangeHandler(ChangedEventArgs<DateTime> args)
+        {
+            if(GridLineList != null && GridLineList.Count > 0)
+            {
+                foreach(var line in GridLineList)
+                {
+                    int index = GridLineList.IndexOf(line);
+                    GridLineList[index].SupplyDate = args.Value;
+                }
+
+                _LineGrid.Refresh();
+            }
+        }
+
         public async void AddSelectedSalesOrderButtonClicked()
         {
             var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
@@ -575,12 +770,12 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
             foreach (var orderId in BindingSalesOrders)
             {
-                if(!GridLineList.Any(t=>t.SalesOrderID.GetValueOrDefault() == orderId))
+                if (!GridLineList.Any(t => t.SalesOrderID.GetValueOrDefault() == orderId))
                 {
                     var salesOrder = (await SalesOrdersAppService.GetAsync(orderId)).Data;
                     var salesOrderLineList = salesOrder.SelectSalesOrderLines.ToList();
 
-                    foreach(var orderline in salesOrderLineList)
+                    foreach (var orderline in salesOrderLineList)
                     {
                         var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(orderline.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.ToList();
 
@@ -629,7 +824,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             }
         }
 
-        
+
 
         #region SalesOrders
 

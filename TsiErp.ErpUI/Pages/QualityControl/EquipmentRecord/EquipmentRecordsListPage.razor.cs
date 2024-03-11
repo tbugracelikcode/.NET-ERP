@@ -41,7 +41,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.EquipmentRecord
 
             if (argsValue)
             {
-                DataSource.CancellationDate = DateTime.Today;
+                DataSource.CancellationDate = GetSQLDateAppService.GetDateFromSQL();
                 cancelReasonVisible = true;
             }
             else
@@ -57,7 +57,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.EquipmentRecord
             {
                 IsActive = true,
                 CancellationDate = null,
-                RecordDate = DateTime.Today,
+                RecordDate = GetSQLDateAppService.GetDateFromSQL(),
                 Code = FicheNumbersAppService.GetFicheNumberAsync("EquipmentRecordsChildMenu")
             };
 

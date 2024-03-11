@@ -8,6 +8,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.QualityControl.ControlType.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.QualityControl.ControlType;
@@ -23,10 +24,12 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ControlTypesAppService(IStringLocalizer<ControlTypeResources> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public ControlTypesAppService(IStringLocalizer<ControlTypeResources> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
 
@@ -55,7 +58,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
                 Name = input.Name,
                 IsActive = true,
                 Id = GuidGenerator.CreateGuid(),
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -155,7 +158,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 QualityPlanTypes = input.QualityPlanTypes
             }).Where(new { Id = input.Id }, true, true, "");

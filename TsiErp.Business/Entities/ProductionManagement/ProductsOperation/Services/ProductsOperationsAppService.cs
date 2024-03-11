@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.ProductsOperation.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
@@ -36,10 +37,12 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ProductsOperationsAppService(IStringLocalizer<ProductsOperationsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public ProductsOperationsAppService(IStringLocalizer<ProductsOperationsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateProductsOperationsValidatorDto), Priority = 1)]
@@ -67,7 +70,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 TemplateOperationID = input.TemplateOperationID,
                 WorkCenterID = input.WorkCenterID,
                 Code = input.Code,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -91,7 +94,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                     ProcessQuantity = item.ProcessQuantity,
                     StationID = item.StationID,
                     ProductsOperationID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -113,7 +116,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 var queryLine = queryFactory.Query().From(Tables.ContractOfProductsOperations).Insert(new CreateContractOfProductsOperationsDto
                 {
                     ProductsOperationID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -287,7 +290,9 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ProductsOperations)
-                   .Select<ProductsOperations, OperationStockMovements>(null, t => t.TotalAmount, Tables.OperationStockMovements, nameof(ListProductsOperationsDto.TotalAmount), true, nameof(OperationStockMovements.OperationID) + "=" + Tables.ProductsOperations + "." + nameof(ProductsOperations.Id))
+                   .Select<ProductsOperations, OperationStockMovements>(
+                null, 
+                t => t.TotalAmount, Tables.OperationStockMovements, true, nameof(OperationStockMovements.OperationID) + "=" + Tables.ProductsOperations + "." + nameof(ProductsOperations.Id))
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -403,7 +408,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 Id = input.Id,
                 IsActive = input.IsActive,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
             }).Where(new { Id = input.Id }, true, true, "");
@@ -422,7 +427,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                         ProcessQuantity = item.ProcessQuantity,
                         StationID = item.StationID,
                         ProductsOperationID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -462,7 +467,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                         }).Where(new { Id = line.Id }, false, false, "");
@@ -481,7 +486,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                     var queryLine = queryFactory.Query().From(Tables.ContractOfProductsOperations).Insert(new CreateContractOfProductsOperationsDto
                     {
                         ProductsOperationID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -516,7 +521,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             CurrentAccountCardID = item.CurrentAccountCardID

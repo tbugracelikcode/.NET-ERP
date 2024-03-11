@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
@@ -27,10 +28,12 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public UnsuitabilityItemsAppService(IStringLocalizer<UnsuitabilityItemsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public UnsuitabilityItemsAppService(IStringLocalizer<UnsuitabilityItemsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateUnsuitabilityItemsValidator), Priority = 1)]
@@ -53,7 +56,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
             var query = queryFactory.Query().From(Tables.UnsuitabilityItems).Insert(new CreateUnsuitabilityItemsDto
             {
                 Code = input.Code,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -211,7 +214,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 Detectability = input.Detectability,
                 ExtraCost = input.ExtraCost,

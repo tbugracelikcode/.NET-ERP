@@ -133,7 +133,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
         private void GetYearsList()
         {
-            YearList = Enumerable.Range(DateTime.Today.Year - 2, 3).ToList();
+            YearList = Enumerable.Range(GetSQLDateAppService.GetDateFromSQL().Year - 2, 3).ToList();
         }
 
         public async Task YearValueChangeHandler(ChangeEventArgs<int, int> args)

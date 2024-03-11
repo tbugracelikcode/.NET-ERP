@@ -741,8 +741,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
         {
             DataSource = new SelectSalesPropositionsDto()
             {
-                Date_ = DateTime.Today,
-                ValidityDate_ = DateTime.Today.AddDays(15),
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                ValidityDate_ = GetSQLDateAppService.GetDateFromSQL().AddDays(15),
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesPropositionsChildMenu")
             };
 

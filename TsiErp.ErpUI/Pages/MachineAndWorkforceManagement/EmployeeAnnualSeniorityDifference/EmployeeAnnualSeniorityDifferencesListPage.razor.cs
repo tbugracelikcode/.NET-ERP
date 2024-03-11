@@ -40,10 +40,10 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeAnnualSeniori
         {
             DataSource = new SelectEmployeeAnnualSeniorityDifferencesDto()
             {
-                Year_ = DateTime.Today.Year,
+                Year_ = GetSQLDateAppService.GetDateFromSQL().Year,
         };
 
-            dateYear = DateTime.Today;
+            dateYear = GetSQLDateAppService.GetDateFromSQL();
 
             EditPageVisible = true;
             return Task.CompletedTask;
