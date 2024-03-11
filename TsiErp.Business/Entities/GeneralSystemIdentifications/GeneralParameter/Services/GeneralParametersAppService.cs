@@ -5,6 +5,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.GeneralParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.GeneralParameter.Dtos;
@@ -17,9 +18,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.GeneralParameter
     public class GeneralParametersAppService : ApplicationService<GeneralParametersResource>, IGeneralParametersAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public GeneralParametersAppService(IStringLocalizer<GeneralParametersResource> l) : base(l)
+        public GeneralParametersAppService(IStringLocalizer<GeneralParametersResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public async Task<IDataResult<SelectGeneralParametersDto>> GetAsync(Guid id)

@@ -20,6 +20,7 @@
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
 @inject IStockManagementParametersAppService StockManagementParametersAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
 
 @if (!base.IsLoaded)
 {
@@ -157,7 +158,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["Date_Label"] </strong></label><br />
-                            <SfDatePicker @bind-Value="@DataSource.Date_" Max=@(!futureDateParameter ? DateTime.Today : new DateTime(10000,12,31))></SfDatePicker>
+                            <SfDatePicker @bind-Value="@DataSource.Date_" Max=@(!futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(10000,12,31))></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -588,57 +589,6 @@ else
                                         <GridColumns>
                                             <GridColumn Field=@nameof(ListWarehousesDto.Code) HeaderText="@L["WarehouseModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListWarehousesDto.Name) HeaderText="@L["WarehouseModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        </GridColumns>
-                                    </SfGrid>
-                                </CardContent>
-                                <CardFooter>
-                                </CardFooter>
-                            </SfCard>
-                        </Template>
-                    </DxGridLayoutItem>
-                </GridLayoutItems>
-            </DevGridLayout>
-
-        </BodyTemplate>
-        <FooterContentTemplate>
-        </FooterContentTemplate>
-    </DxPopup>
-}
-
-@if (SelectUnitSetsPopupVisible)
-{
-    <DxPopup @bind-Visible="SelectUnitSetsPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["UnitSetModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
-        <BodyTemplate>
-
-            <DevGridLayout ColumnCount="1" RowCount="1">
-                <GridLayoutItems>
-                    <DxGridLayoutItem Row="1" Column="1">
-                        <Template>
-                            <SfCard class="TSIGridCards">
-
-                                <CardContent>
-                                    <SfGrid ID="UnitSetGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnitSetsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
-                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-
-                                        <GridEvents OnRecordDoubleClick="@UnitSetsDoubleClickHandler" TValue="ListUnitSetsDto"></GridEvents>
-                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                        <GridPageSettings PageSizes="true"></GridPageSettings>
-                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                        <GridColumns>
-                                            <GridColumn Field=@nameof(ListUnitSetsDto.Code) HeaderText="@L["UnitSetModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListUnitSetsDto.Name) HeaderText="@L["UnitSetModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>

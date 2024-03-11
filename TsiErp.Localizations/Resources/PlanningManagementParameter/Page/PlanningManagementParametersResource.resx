@@ -172,10 +172,10 @@
     <value>Güncelle</value>
   </data>
   <data name="PurchaseOrder" xml:space="preserve">
-    <value>Satınalma Siparişi</value>
+    <value>Satın Alma Siparişi</value>
   </data>
   <data name="PurchaseRequest" xml:space="preserve">
-    <value>Satınalma Talep</value>
+    <value>Satın Alma Talep</value>
   </data>
   <data name="SalesOrder" xml:space="preserve">
     <value>Satış Siparişleri</value>

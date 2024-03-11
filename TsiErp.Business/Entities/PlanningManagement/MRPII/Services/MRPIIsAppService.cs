@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRPII.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRPII.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
@@ -34,12 +35,14 @@ namespace TsiErp.Business.Entities.MRPII.Services
     public class MRPIIsAppService : ApplicationService<MRPIIsResource>, IMRPIIsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public MRPIIsAppService(IStringLocalizer<MRPIIsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public MRPIIsAppService(IStringLocalizer<MRPIIsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
 
@@ -67,7 +70,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                 Description_ = input.Description_,
                 CalculationDate = input.CalculationDate,
                 Code = input.Code,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -93,7 +96,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                     LineNr = item.LineNr,
                     ProductID = item.ProductID,
                     MRPIIID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -293,7 +296,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, false, false, "");
 
@@ -312,7 +315,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                         SalesOrderID = item.SalesOrderID,
                         ProductID = item.ProductID,
                         MRPIIID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -353,7 +356,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                         }).Where(new { Id = line.Id }, false, false, "");
 

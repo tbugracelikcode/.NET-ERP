@@ -333,6 +333,9 @@
   <data name="MRPLineContextStockUsage" xml:space="preserve">
     <value>Use From Stock</value>
   </data>
+  <data name="MRPLineContextSupplier" xml:space="preserve">
+    <value>Select a Supplier</value>
+  </data>
   <data name="MRPLineGridAmount" xml:space="preserve">
     <value>PLANNED REQUIREMENT AMOUNT</value>
   </data>
@@ -348,6 +351,9 @@
   <data name="MRPLineGridRequirementAmount" xml:space="preserve">
     <value>PURCHASE REQUIREMENT AMOUNT</value>
   </data>
+  <data name="MRPLineGridReservedAmount" xml:space="preserve">
+    <value>RESERVED AMOUNT</value>
+  </data>
   <data name="MRPLineGridSalesOrderFicheNo" xml:space="preserve">
     <value>ORDER FICHE NR</value>
   </data>
@@ -359,6 +365,9 @@
   </data>
   <data name="MRPLineGridSalesOrderisStockUsage" xml:space="preserve">
     <value>STOCK USAGE</value>
+  </data>
+  <data name="MRPLineGridSupplyDate" xml:space="preserve">
+    <value>SUPPLY DATE</value>
   </data>
   <data name="MRPLineGridUnitSetCode" xml:space="preserve">
     <value>UNIT SET</value>
@@ -377,6 +386,9 @@
   </data>
   <data name="MRPOrderGridFicheNo" xml:space="preserve">
     <value>ORDER NO</value>
+  </data>
+  <data name="MRPReferanceDateLabel" xml:space="preserve">
+    <value>Referance Date:</value>
   </data>
   <data name="MRPState_Label" xml:space="preserve">
     <value>Status:</value>
@@ -414,6 +426,9 @@
   <data name="OrderAcceptanceRecordsContextOrderApproval" xml:space="preserve">
     <value>Order Price Approval</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextPending" xml:space="preserve">
+    <value>Put Status on Pending</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
@@ -441,8 +456,35 @@
   <data name="ProductionOrderLoadingDateLabel" xml:space="preserve">
     <value>Production Order Loading Date:</value>
   </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Products</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="SupplierModalTitle" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="SupplierPopupGridCurrentAccountName" xml:space="preserve">
+    <value>SUPPLIER</value>
+  </data>
+  <data name="SupplierPopupGridCurrenyCode" xml:space="preserve">
+    <value>CURRENCY</value>
+  </data>
+  <data name="SupplierPopupGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="SupplierPopupGridSupplyDate" xml:space="preserve">
+    <value>SUPPLY DATE DAY</value>
+  </data>
+  <data name="SupplierPopupGridUnitPrice" xml:space="preserve">
+    <value>UNIT PRICE</value>
   </data>
   <data name="UIConfirmationPopupLineMessage" xml:space="preserve">
     <value>The line you selected will be permanently deleted.</value>

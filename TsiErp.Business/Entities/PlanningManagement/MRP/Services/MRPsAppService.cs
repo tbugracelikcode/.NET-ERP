@@ -9,11 +9,14 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRP.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRP.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.PlanningManagement.MRP;
@@ -37,10 +40,12 @@ namespace TsiErp.Business.Entities.MRP.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public MRPsAppService(IStringLocalizer<MRPsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public MRPsAppService(IStringLocalizer<MRPsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
@@ -71,11 +76,12 @@ namespace TsiErp.Business.Entities.MRP.Services
             {
                 Date_ = input.Date_,
                 IsMaintenanceMRP = input.IsMaintenanceMRP,
+                ReferanceDate = input.ReferanceDate,
                 MaintenanceMRPID = input.MaintenanceMRPID,
                 Description_ = input.Description_,
                 State_ = input.State_,
                 Code = input.Code,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 OrderAcceptanceID = input.OrderAcceptanceID.GetValueOrDefault(),
@@ -102,6 +108,11 @@ namespace TsiErp.Business.Entities.MRP.Services
                     Amount = item.Amount,
                     ProductID = item.ProductID,
                     RequirementAmount = item.RequirementAmount,
+                    CurrencyID = item.CurrencyID,
+                    CurrentAccountCardID = item.CurrentAccountCardID,
+                    ReservedAmount = item.ReservedAmount,
+                    SupplyDate = item.SupplyDate,
+                    UnitPrice = item.UnitPrice,
                     BranchID = item.BranchID,
                     WarehouseID = item.WarehouseID,
                     isStockUsage = item.isStockUsage,
@@ -109,7 +120,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                     SalesOrderLineID = item.SalesOrderLineID,
                     UnitSetID = item.UnitSetID,
                     MRPID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -202,7 +213,6 @@ namespace TsiErp.Business.Entities.MRP.Services
                   null
                 , t => t.Amount
                 , Tables.GrandTotalStockMovements
-                , nameof(SelectMRPLinesDto.AmountOfStock)
                 , true
                 , nameof(GrandTotalStockMovements.ProductID) + "=" + Tables.MRPLines + "." + nameof(MRPLines.ProductID))
                    .Join<Products>
@@ -219,11 +229,25 @@ namespace TsiErp.Business.Entities.MRP.Services
                         nameof(Warehouses.Id),
                         JoinType.Left
                     )
+                     .Join<CurrentAccountCards>
+                    (
+                        s => new { CurrentAccountCardID = s.Id, CurrentAccountCardCode = s.Code, CurrentAccountCardName = s.Name },
+                        nameof(MRPLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
                      .Join<Branches>
                     (
                         s => new { BranchID = s.Id, BranchCode = s.Code },
                         nameof(MRPLines.BranchID),
                         nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Currencies>
+                    (
+                        s => new { CurrencyID = s.Id, CurrencyCode = s.Code },
+                        nameof(MRPLines.CurrencyID),
+                        nameof(Currencies.Id),
                         JoinType.Left
                     )
                    .Join<UnitSets>
@@ -281,7 +305,7 @@ namespace TsiErp.Business.Entities.MRP.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMRPsDto>> UpdateAsync(UpdateMRPsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(mi => new { mi.Code, mi.Id, mi.DataOpenStatus, mi.Date_, mi.DataOpenStatusUserId, mi.State_, mi.MaintenanceMRPID, mi.IsMaintenanceMRP, mi.IsDeleted, mi.Description_, mi.DeleterId })
+            var entityQuery = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(null)
                 .Join<MaintenanceMRPs>
                         (
                             pr => new { MaintenanceMRPCode = pr.Code, MaintenanceMRPID = pr.Id },
@@ -372,6 +396,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 Date_ = input.Date_,
                 MaintenanceMRPID = input.MaintenanceMRPID,
                 IsMaintenanceMRP = input.IsMaintenanceMRP,
+                ReferanceDate = input.ReferanceDate,
                 Description_ = input.Description_,
                 State_ = input.State_,
                 Code = input.Code,
@@ -384,7 +409,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, false, false, "");
 
@@ -404,13 +429,18 @@ namespace TsiErp.Business.Entities.MRP.Services
                         OrderAcceptanceLineID = item.OrderAcceptanceLineID.GetValueOrDefault(),
                         BranchID = item.BranchID,
                         isStockUsage = item.isStockUsage,
+                        CurrencyID = item.CurrencyID,
+                        CurrentAccountCardID = item.CurrentAccountCardID,
+                        ReservedAmount = item.ReservedAmount,
+                        SupplyDate = item.SupplyDate,
+                        UnitPrice = item.UnitPrice,
                         ProductID = item.ProductID,
                         RequirementAmount = item.RequirementAmount,
                         SalesOrderID = item.SalesOrderID,
                         SalesOrderLineID = item.SalesOrderLineID,
                         UnitSetID = item.UnitSetID,
                         MRPID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -444,6 +474,11 @@ namespace TsiErp.Business.Entities.MRP.Services
                             isPurchase = item.isPurchase,
                             BranchID = item.BranchID,
                             WarehouseID = item.WarehouseID,
+                            CurrencyID = item.CurrencyID,
+                            CurrentAccountCardID = item.CurrentAccountCardID,
+                            ReservedAmount = item.ReservedAmount,
+                            SupplyDate = item.SupplyDate,
+                            UnitPrice = item.UnitPrice,
                             ProductID = item.ProductID,
                             RequirementAmount = item.RequirementAmount,
                             SalesOrderID = item.SalesOrderID,
@@ -458,7 +493,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                         }).Where(new { Id = line.Id }, false, false, "");
 
@@ -487,6 +522,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 State_ = entity.State_,
                 IsMaintenanceMRP = entity.IsMaintenanceMRP,
                 MaintenanceMRPID = entity.MaintenanceMRPID,
+                ReferanceDate = entity.ReferanceDate,
                 Date_ = entity.Date_,
                 OrderAcceptanceID = entity.OrderAcceptanceID.GetValueOrDefault(),
                 Description_ = entity.Description_,

@@ -10,6 +10,7 @@ using TsiErp.Business.Entities.EmployeeAnnualSeniorityDifference.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.MachineAndWorkforceManagement.EmployeeAnnualSeniorityDifference.Validations;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeAnnualSeniorityDifference;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeAnnualSeniorityDifference.Dtos;
@@ -25,10 +26,12 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public EmployeeAnnualSeniorityDifferencesAppService(IStringLocalizer<EmployeeAnnualSeniorityDifferencesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public EmployeeAnnualSeniorityDifferencesAppService(IStringLocalizer<EmployeeAnnualSeniorityDifferencesResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
 
@@ -46,7 +49,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 Difference = input.Difference,
                 Year_ = input.Year_,
                 Id = addedEntityId,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -150,7 +153,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, false, false, "");
 

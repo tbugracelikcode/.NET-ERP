@@ -51,7 +51,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
         {
             DataSource = new SelectCustomerComplaintReportsDto()
             {
-                ReportDate = DateTime.Today,
+                ReportDate = GetSQLDateAppService.GetDateFromSQL(),
                 ReportNo = FicheNumbersAppService.GetFicheNumberAsync("CustCompRecordsChildMenu")
             };
 
@@ -180,7 +180,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
                             CA3ResponsibleD6 = string.Empty,
                             ClaimedQuantity = 0,
                             ClaimingPlants = string.Empty,
-                            ClaimOpeningDate = DateTime.Today,
+                            ClaimOpeningDate = GetSQLDateAppService.GetDateFromSQL(),
                             ComplaintJustified = string.Empty,
                             ContainmentActionDate = null,
                             ControlPlanRevisionCompletionDate = null,

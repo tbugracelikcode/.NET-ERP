@@ -1,4 +1,5 @@
 ﻿@inherits BaseModalComponent
+@inject IStringLocalizer<ModalsResource> L
 
 <div class="separatorConfirm"></div>
 <div class="card-body">
@@ -45,10 +46,10 @@
 
     public async override Task SetParametersAsync(ParameterView parameters)
     {
-        Message = parameters.GetValueOrDefault<String>("Message") ?? "No message found";
+        Message = parameters.GetValueOrDefault<String>("Message") ?? L["NoMessageFound"]; 
 
-        YesText = parameters.GetValueOrDefault<String>("YesText") ?? "Evet";
-        CancelText = parameters.GetValueOrDefault<String>("CancelText") ?? "Vazgeç";
+        YesText = parameters.GetValueOrDefault<String>("YesText") ??  L["Yes"];
+        CancelText = parameters.GetValueOrDefault<String>("CancelText") ?? L["Cancel"];
 
         HtmlMessage = new MarkupString(Message);
 

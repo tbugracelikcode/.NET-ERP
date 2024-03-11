@@ -15,6 +15,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.HaltReason
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+
+        public bool isMachineDisabled = false;
+        public bool isOperatorDisabled = false;
+        public bool isManagementDisabled = false;
+
         protected override async void OnInitialized()
         {
             BaseCrudService = HaltReasonsService;
@@ -63,6 +68,66 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.HaltReason
                         default: break;
                     }
                 }
+            }
+        }
+
+        private void IsMachineSwitchValueChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (args.Checked)
+            {
+                DataSource.IsManagement = false;
+                isManagementDisabled = true;
+                DataSource.IsOperator = false;
+                isOperatorDisabled = true;
+                isMachineDisabled = false;
+                DataSource.IsMachine = true;
+            }
+            else
+            {
+                isManagementDisabled = false;
+                isOperatorDisabled = false;
+                isMachineDisabled = false;
+                DataSource.IsMachine = false;
+            }
+        }
+
+        private void IsOperatorSwitchValueChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (args.Checked)
+            {
+                DataSource.IsManagement = false;
+                isManagementDisabled = true;
+                DataSource.IsMachine = false;
+                isMachineDisabled = true;
+                isOperatorDisabled = false;
+                DataSource.IsOperator = true;
+            }
+            else
+            {
+                isManagementDisabled = false;
+                isMachineDisabled = false;
+                isOperatorDisabled = false;
+                DataSource.IsOperator = false;
+            }
+        }
+
+        private void IsManagementSwitchValueChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (args.Checked)
+            {
+                DataSource.IsOperator = false;
+                isOperatorDisabled = true;
+                DataSource.IsMachine = false;
+                isMachineDisabled = true;
+                isManagementDisabled = false;
+                DataSource.IsManagement = true;
+            }
+            else
+            {
+                isOperatorDisabled = false;
+                isMachineDisabled = false;
+                isManagementDisabled = false;
+                DataSource.IsManagement = false;
             }
         }
 

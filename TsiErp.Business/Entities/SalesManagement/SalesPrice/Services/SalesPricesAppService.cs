@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.SalesPrice.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
@@ -31,10 +32,12 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public SalesPricesAppService(IStringLocalizer<SalesPricesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public SalesPricesAppService(IStringLocalizer<SalesPricesResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
 
@@ -66,7 +69,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                 StartDate = input.StartDate,
                 WarehouseID = input.WarehouseID,
                 Code = input.Code,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -91,7 +94,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                     Linenr = item.Linenr,
                     Price = item.Price,
                     SalesPriceID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -388,7 +391,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                 Id = input.Id,
                 IsActive = input.IsActive,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
             }).Where(new { Id = input.Id }, true, true, "");
@@ -406,7 +409,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                         Linenr = item.Linenr,
                         Price = item.Price,
                         SalesPriceID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -447,7 +450,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                         }).Where(new { Id = line.Id }, false, false, "");
 

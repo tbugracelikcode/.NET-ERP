@@ -250,6 +250,15 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok Rezerve Fişi.
+        /// </summary>
+        public static string EnumReserved {
+            get {
+                return ResourceManager.GetString("EnumReserved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok Giriş Fişi.
         /// </summary>
         public static string EnumStockIncome {

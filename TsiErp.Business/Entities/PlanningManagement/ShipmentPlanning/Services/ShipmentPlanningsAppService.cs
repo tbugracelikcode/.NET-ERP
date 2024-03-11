@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.PlanningManagement.ShipmentPlanning.Services;
 using TsiErp.Business.Entities.PlanningManagement.ShipmentPlanning.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
@@ -36,10 +37,12 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ShipmentPlanningsAppService(IStringLocalizer<ShipmentPlanningsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public ShipmentPlanningsAppService(IStringLocalizer<ShipmentPlanningsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
@@ -75,7 +78,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                 TotalNetKG = input.TotalNetKG,
                 Description_ = input.Description_,
                 Code = input.Code,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -99,13 +102,13 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                     NetWeightKG = item.NetWeightKG,
                     PlannedQuantity = item.PlannedQuantity,
                     ProductionOrderID = item.ProductionOrderID,
-                    RequestedLoadingDate = DateTime.Now,
+                    RequestedLoadingDate = _GetSQLDateAppService.GetDateFromSQL(),
                     SentQuantity = item.SentQuantity,
                     ShipmentQuantity = item.ShipmentQuantity,
                     UnitWeightKG = item.UnitWeightKG,
                     SalesOrderID = item.SalesOrderID,
                     ShipmentPlanningID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -344,7 +347,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, false, false, "");
 
@@ -367,7 +370,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                         ShipmentQuantity = item.ShipmentQuantity,
                         UnitWeightKG = item.UnitWeightKG,
                         ShipmentPlanningID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -395,7 +398,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                             UnitWeightKG = item.SentQuantity,
                             SentQuantity = item.SentQuantity,
                             ShipmentQuantity = item.ShipmentQuantity,
-                            RequestedLoadingDate = DateTime.Now,
+                            RequestedLoadingDate = _GetSQLDateAppService.GetDateFromSQL(),
                             NetWeightKG = item.NetWeightKG,
                             LineDescription_ = item.LineDescription_,
                             GrossWeightKG = item.GrossWeightKG,
@@ -412,7 +415,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                         }).Where(new { Id = line.Id }, false, false, "");
 

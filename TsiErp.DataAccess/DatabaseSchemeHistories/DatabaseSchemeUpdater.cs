@@ -151,6 +151,12 @@ using TsiErp.Entities.Entities.StockManagement.ProductCost;
 using TsiErp.Entities.Entities.PlanningManagement.StationOccupancy;
 using TsiErp.Entities.Entities.PlanningManagement.MRPII;
 using TsiErp.Entities.Entities.PlanningManagement.MRPIILine;
+using TsiErp.Entities.Entities.StockManagement.StockColumn;
+using TsiErp.Entities.Entities.StockManagement.StockNumber;
+using TsiErp.Entities.Entities.StockManagement.StockSection;
+using TsiErp.Entities.Entities.StockManagement.StockShelf;
+using TsiErp.Entities.Entities.StockManagement.StockAddressLine;
+using TsiErp.Entities.Entities.StockManagement.StockAddress;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -5274,6 +5280,217 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 MRPIILinesTable.Create();
             }
             #endregion
+
+            #region StockColumns Table Created
+            Table StockColumnsTable = model.CreateTable(Tables.StockColumns);
+
+            if (StockColumnsTable != null)
+            {
+                var properties = (typeof(StockColumns)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(StockColumnsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(StockColumnsTable, "PK_" + StockColumnsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        StockColumnsTable.Indexes.Add(pkIndex);
+                    }
+
+                    StockColumnsTable.Columns.Add(column);
+                }
+
+                StockColumnsTable.Create();
+            }
+            #endregion
+
+            #region StockNumbers Table Created
+            Table StockNumbersTable = model.CreateTable(Tables.StockNumbers);
+
+            if (StockNumbersTable != null)
+            {
+                var properties = (typeof(StockNumbers)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(StockNumbersTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(StockNumbersTable, "PK_" + StockNumbersTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        StockNumbersTable.Indexes.Add(pkIndex);
+                    }
+
+                    StockNumbersTable.Columns.Add(column);
+                }
+
+                StockNumbersTable.Create();
+            }
+            #endregion
+
+            #region StockSections Table Created
+            Table StockSectionsTable = model.CreateTable(Tables.StockSections);
+
+            if (StockSectionsTable != null)
+            {
+                var properties = (typeof(StockSections)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(StockSectionsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(StockSectionsTable, "PK_" + StockSectionsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        StockSectionsTable.Indexes.Add(pkIndex);
+                    }
+
+                    StockSectionsTable.Columns.Add(column);
+                }
+
+                StockSectionsTable.Create();
+            }
+            #endregion
+
+            #region StockShelfs Table Created
+            Table StockShelfsTable = model.CreateTable(Tables.StockShelfs);
+
+            if (StockShelfsTable != null)
+            {
+                var properties = (typeof(StockShelfs)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(StockShelfsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(StockShelfsTable, "PK_" + StockShelfsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        StockShelfsTable.Indexes.Add(pkIndex);
+                    }
+
+                    StockShelfsTable.Columns.Add(column);
+                }
+
+                StockShelfsTable.Create();
+            }
+            #endregion
+
+            #region StockAddresses Table Created
+            Table StockAddressesTable = model.CreateTable(Tables.StockAddresses);
+
+            if (StockAddressesTable != null)
+            {
+                var properties = (typeof(StockAddresses)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(StockAddressesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(StockAddressesTable, "PK_" + StockAddressesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        StockAddressesTable.Indexes.Add(pkIndex);
+                    }
+
+                    StockAddressesTable.Columns.Add(column);
+                }
+
+                StockAddressesTable.Create();
+            }
+            #endregion
+
+            #region StockAddressLines Table Created
+            Table StockAddressLinesTable = model.CreateTable(Tables.StockAddressLines);
+
+            if (StockAddressLinesTable != null)
+            {
+                var properties = (typeof(StockAddressLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(StockAddressLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(StockAddressLinesTable, "PK_" + StockAddressLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        StockAddressLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    StockAddressLinesTable.Columns.Add(column);
+                }
+
+                StockAddressLinesTable.Create();
+            }
+            #endregion
+
 
             return true;
         }

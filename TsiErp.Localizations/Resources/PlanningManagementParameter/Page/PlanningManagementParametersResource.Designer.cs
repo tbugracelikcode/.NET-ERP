@@ -224,7 +224,7 @@ namespace TsiErp.Localizations.Resources.PlanningManagementParameter.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Satınalma Siparişi.
+        ///   Looks up a localized string similar to Satın Alma Siparişi.
         /// </summary>
         public static string PurchaseOrder {
             get {
@@ -233,7 +233,7 @@ namespace TsiErp.Localizations.Resources.PlanningManagementParameter.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Satınalma Talep.
+        ///   Looks up a localized string similar to Satın Alma Talep.
         /// </summary>
         public static string PurchaseRequest {
             get {

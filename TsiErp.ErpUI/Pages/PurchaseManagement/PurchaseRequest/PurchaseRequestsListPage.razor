@@ -22,6 +22,7 @@
 @inject IFicheNumbersAppService FicheNumbersAppService
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
 
 
 @if (!base.IsLoaded)
@@ -149,7 +150,7 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["Date_Label"] </strong></label><br />
-                            <SfDatePicker @bind-Value="@DataSource.Date_" Max=@(!futureDateParameter ? DateTime.Today : new DateTime(10000,12,31))></SfDatePicker>
+                            <SfDatePicker @bind-Value="@DataSource.Date_" Max=@(!futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(10000,12,31))></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 

@@ -6,6 +6,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Menu.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
@@ -22,11 +23,13 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.S
     {
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
         private readonly IMenusAppService _MenusAppService;
-        public UserPermissionsAppService(IStringLocalizer<SalesManagementParametersResource> l, IMenusAppService menusAppService) : base(l)
+        public UserPermissionsAppService(IStringLocalizer<SalesManagementParametersResource> l, IMenusAppService menusAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             _MenusAppService = menusAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         public async Task<IDataResult<SelectUserPermissionsDto>> CreateAsync(CreateUserPermissionsDto input)

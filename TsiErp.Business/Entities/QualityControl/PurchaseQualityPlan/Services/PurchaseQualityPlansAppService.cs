@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.QualityControl.PurchaseQualityPlan.Services;
 using TsiErp.Business.Entities.QualityControl.PurchaseQualityPlan.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -31,11 +32,13 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
     public class PurchaseQualityPlansAppService : ApplicationService<PurchaseQualityPlansResource>, IPurchaseQualityPlansAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public PurchaseQualityPlansAppService(IStringLocalizer<PurchaseQualityPlansResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public PurchaseQualityPlansAppService(IStringLocalizer<PurchaseQualityPlansResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreatePurchaseQualityPlansValidatorDto), Priority = 1)]
@@ -58,7 +61,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
 
             var query = queryFactory.Query().From(Tables.PurchaseQualityPlans).Insert(new CreatePurchaseQualityPlansDto
             {
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -81,7 +84,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                 var queryLine = queryFactory.Query().From(Tables.PurchaseQualityPlanLines).Insert(new CreatePurchaseQualityPlanLinesDto
                 {
                     PurchaseQualityPlanID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -281,7 +284,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 Description_ = input.Description_,
                 DocumentNumber = input.DocumentNumber,
                 ProductID = input.ProductID,
@@ -298,7 +301,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                     var queryLine = queryFactory.Query().From(Tables.PurchaseQualityPlanLines).Insert(new CreatePurchaseQualityPlanLinesDto
                     {
                         PurchaseQualityPlanID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -347,7 +350,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID,

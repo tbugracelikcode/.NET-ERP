@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.PurchasePrice.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
@@ -30,10 +31,12 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public PurchasePricesAppService(IStringLocalizer<PurchasePricesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public PurchasePricesAppService(IStringLocalizer<PurchasePricesResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
 
@@ -65,7 +68,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 StartDate = input.StartDate,
                 WarehouseID = input.WarehouseID,
                 Code = input.Code,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -87,10 +90,11 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                     EndDate = item.EndDate,
                     CurrentAccountCardID = item.CurrentAccountCardID,
                     CurrencyID = item.CurrencyID,
+                    SupplyDateDay = item.SupplyDateDay,
                     Linenr = item.Linenr,
                     Price = item.Price,
                     PurchasePriceID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -153,7 +157,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PurchasePrices)
-                   .Select<PurchasePrices>(pp => new { pp.WarehouseID, pp.StartDate, pp.Name, pp.IsApproved, pp.IsActive, pp.Id, pp.EndDate, pp.DataOpenStatusUserId, pp.DataOpenStatus, pp.CurrentAccountCardID, pp.CurrencyID, pp.Code, pp.BranchID })
+                   .Select<PurchasePrices>(null)
                    .Join<Currencies>
                     (
                         c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
@@ -189,7 +193,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.PurchasePriceLines)
-                   .Select<PurchasePriceLines>(ppl => new { ppl.StartDate, ppl.PurchasePriceID, ppl.ProductID, ppl.Price, ppl.Linenr, ppl.Id, ppl.EndDate, ppl.DataOpenStatusUserId, ppl.DataOpenStatus, ppl.CurrentAccountCardID, ppl.CurrencyID })
+                   .Select<PurchasePriceLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -202,6 +206,15 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         cr => new { CurrencyID = cr.Id, CurrencyCode = cr.Code },
                         nameof(PurchasePriceLines.CurrencyID),
                         nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+
+                    .Join<CurrentAccountCards>
+                    (
+                        cr => new { CurrentAccountCardID = cr.Id, CurrentAccountCardName = cr.Name },
+                        nameof(PurchasePriceLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        "CurrentAccountCardLine",
                         JoinType.Left
                     )
                     .Where(new { PurchasePriceID = id }, false, false, Tables.PurchasePriceLines);
@@ -223,7 +236,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.PurchasePrices)
-                   .Select<PurchasePrices>(pp => new { pp.WarehouseID, pp.StartDate, pp.Name, pp.IsApproved, pp.IsActive, pp.Id, pp.EndDate, pp.DataOpenStatusUserId, pp.DataOpenStatus, pp.CurrentAccountCardID, pp.CurrencyID, pp.Code, pp.BranchID })
+                   .Select<PurchasePrices>(null)
                    .Join<Currencies>
                     (
                         c => new { CurrencyCode = c.Code },
@@ -303,7 +316,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.PurchasePriceLines)
-                   .Select<PurchasePriceLines>(ppl => new { ppl.StartDate, ppl.PurchasePriceID, ppl.ProductID, ppl.Price, ppl.Linenr, ppl.Id, ppl.EndDate, ppl.DataOpenStatusUserId, ppl.DataOpenStatus, ppl.CurrentAccountCardID, ppl.CurrencyID })
+                   .Select<PurchasePriceLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -328,7 +341,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             var listQuery = queryFactory
                            .Query()
                             .From(Tables.PurchasePrices)
-                   .Select<PurchasePrices>(pp => new { pp.WarehouseID, pp.StartDate, pp.Name, pp.IsApproved, pp.IsActive, pp.Id, pp.EndDate, pp.DataOpenStatusUserId, pp.DataOpenStatus, pp.CurrentAccountCardID, pp.CurrencyID, pp.Code, pp.BranchID })
+                   .Select<PurchasePrices>(null)
                    .Join<Currencies>
                     (
                         c => new { CurrencyCode = c.Code },
@@ -386,7 +399,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 Id = input.Id,
                 IsActive = input.IsActive,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
             }).Where(new { Id = input.Id }, true, true, "");
@@ -402,9 +415,10 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         CurrentAccountCardID = item.CurrentAccountCardID,
                         CurrencyID = item.CurrencyID,
                         Linenr = item.Linenr,
+                        SupplyDateDay = item.SupplyDateDay,
                         Price = item.Price,
                         PurchasePriceID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -432,6 +446,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                             StartDate = item.StartDate,
                             ProductID = item.ProductID,
                             EndDate = item.EndDate,
+                            SupplyDateDay = item.SupplyDateDay,
                             CurrentAccountCardID = item.CurrentAccountCardID,
                             CurrencyID = item.CurrencyID,
                             Linenr = item.Linenr,
@@ -445,7 +460,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                         }).Where(new { Id = line.Id }, false, false, "");
 
@@ -468,7 +483,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.PurchasePriceLines)
-                   .Select<PurchasePriceLines>(ppl => new { ppl.StartDate, ppl.PurchasePriceID, ppl.ProductID, ppl.Price, ppl.Linenr, ppl.Id, ppl.EndDate, ppl.DataOpenStatusUserId, ppl.DataOpenStatus, ppl.CurrentAccountCardID, ppl.CurrencyID })
+                   .Select<PurchasePriceLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -481,6 +496,13 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         cr => new { CurrencyID = cr.Id, CurrencyCode = cr.Code },
                         nameof(PurchasePriceLines.CurrencyID),
                         nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        cr => new { CurrentAccountCardID = cr.Id, CurrentAccountCardName = cr.Name },
+                        nameof(PurchasePriceLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
                     .Where(new { ProductID = productId }, false, false, Tables.PurchasePriceLines);

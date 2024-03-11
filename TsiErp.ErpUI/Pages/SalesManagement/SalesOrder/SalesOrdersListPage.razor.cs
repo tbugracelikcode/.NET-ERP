@@ -631,9 +631,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                     ProductTreeLineID = Guid.Empty,
                     PropositionID = productionOrder.LinkedSalesPropositionID.GetValueOrDefault(),
                     PropositionLineID = productionOrder.LikedPropositionLineID.GetValueOrDefault(),
-                    Date_ = DateTime.Today,
+                    Date_ = GetSQLDateAppService.GetDateFromSQL(),
                     Description_ = "",
-                    CreationTime = DateTime.Now,
+                    CreationTime = GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -666,7 +666,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         {
             DataSource = new SelectSalesOrderDto()
             {
-                Date_ = DateTime.Today,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesOrdersChildMenu")
             };
 

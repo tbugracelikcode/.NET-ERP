@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.User;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.User.Dtos;
@@ -24,16 +25,18 @@ namespace TsiErp.Business.Entities.User.Services
     public class UsersAppService : ApplicationService<UsersResource>, IUsersAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
 
         private readonly IUserPermissionsAppService _UserPermissionsAppService;
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public UsersAppService(IStringLocalizer<UsersResource> l, IFicheNumbersAppService ficheNumbersAppService, IUserPermissionsAppService userPermissionsAppService) : base(l)
+        public UsersAppService(IStringLocalizer<UsersResource> l, IFicheNumbersAppService ficheNumbersAppService, IUserPermissionsAppService userPermissionsAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _UserPermissionsAppService = userPermissionsAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateUsersValidator), Priority = 1)]
@@ -63,7 +66,7 @@ namespace TsiErp.Business.Entities.User.Services
                 NameSurname = input.NameSurname,
                 Password = input.Password,
                 UserName = input.UserName,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -193,7 +196,7 @@ namespace TsiErp.Business.Entities.User.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, true, true, "");
 

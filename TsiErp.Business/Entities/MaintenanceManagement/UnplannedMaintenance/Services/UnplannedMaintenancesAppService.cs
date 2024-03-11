@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.UnplannedMaintenance.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
@@ -29,10 +30,12 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public UnplannedMaintenancesAppService(IStringLocalizer<UnplannedMaintenancesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public UnplannedMaintenancesAppService(IStringLocalizer<UnplannedMaintenancesResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateUnplannedMaintenanceValidatorDto), Priority = 1)]
@@ -69,7 +72,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                 RemainingTime = input.RemainingTime,
                 StartDate = input.StartDate,
                 Status = input.Status,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -89,7 +92,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                     InstructionDescription = item.InstructionDescription,
                     MaintenanceNote = item.MaintenanceNote,
                     UnplannedMaintenanceID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -333,7 +336,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, false, false, "");
 
@@ -347,7 +350,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                         InstructionDescription = item.InstructionDescription,
                         MaintenanceNote = item.MaintenanceNote,
                         UnplannedMaintenanceID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -386,7 +389,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID,

@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.MaintenanceInstruction.Validations;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceInstruction;
@@ -29,10 +30,12 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public MaintenanceInstructionsAppService(IStringLocalizer<MaintenanceInstructionsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public MaintenanceInstructionsAppService(IStringLocalizer<MaintenanceInstructionsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateMaintenanceInstructionValidatorDto), Priority = 1)]
@@ -62,7 +65,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                 PlannedMaintenanceTime = input.PlannedMaintenanceTime,
                 StationID = input.StationID,
                 Code = input.Code,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -81,7 +84,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                     Amount = item.Amount,
                     InstructionDescription = item.InstructionDescription,
                     InstructionID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -145,7 +148,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.MaintenanceInstructions)
-                   .Select<MaintenanceInstructions>(mi => new { mi.StationID, mi.PlannedMaintenanceTime, mi.PeriodTime, mi.PeriodID, mi.Note_, mi.InstructionName, mi.Id, mi.DataOpenStatusUserId, mi.DataOpenStatus, mi.Code })
+                   .Select<MaintenanceInstructions>(null)
                    .Join<Stations>
                     (
                         s => new { StationID = s.Id, StationCode = s.Code },
@@ -167,7 +170,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.MaintenanceInstructionLines)
-                   .Select<MaintenanceInstructionLines>(mil => new { mil.UnitSetID, mil.ProductID, mil.LineNr, mil.InstructionID, mil.InstructionDescription, mil.Id, mil.DataOpenStatusUserId, mil.DataOpenStatus, mil.Amount })
+                   .Select<MaintenanceInstructionLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Code, ProductCode = p.Code },
@@ -317,7 +320,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, false, false, "");
 
@@ -331,7 +334,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                         InstructionDescription = item.InstructionDescription,
                         DeletionTime = null,
                         InstructionID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -368,7 +371,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID,

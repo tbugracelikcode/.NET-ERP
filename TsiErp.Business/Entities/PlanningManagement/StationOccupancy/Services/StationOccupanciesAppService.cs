@@ -7,6 +7,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.PlanningManagement.StationOccupancy;
@@ -24,9 +25,11 @@ namespace TsiErp.Business.Entities.StationOccupancy.Services
     public class StationOccupanciesAppService : ApplicationService<StationOccupanciesResource>, IStationOccupanciesAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public StationOccupanciesAppService(IStringLocalizer<StationOccupanciesResource> l) : base(l)
+        public StationOccupanciesAppService(IStringLocalizer<StationOccupanciesResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [CacheRemoveAspect("Get")]
@@ -44,7 +47,7 @@ namespace TsiErp.Business.Entities.StationOccupancy.Services
                 TimeItWorked = input.TimeItWorked,
                 WorkOrderID = input.WorkOrderID,
                 Id = addedEntityId,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -185,7 +188,7 @@ namespace TsiErp.Business.Entities.StationOccupancy.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, false, false, "");
 

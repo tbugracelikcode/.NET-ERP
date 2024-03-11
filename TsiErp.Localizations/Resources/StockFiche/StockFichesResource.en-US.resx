@@ -180,6 +180,9 @@
   <data name="EnumProductionIncome" xml:space="preserve">
     <value>Production Input Fiche</value>
   </data>
+  <data name="EnumReserved" xml:space="preserve">
+    <value>Add Reserved Fiche</value>
+  </data>
   <data name="EnumStockIncome" xml:space="preserve">
     <value>Stock Input Fiche</value>
   </data>

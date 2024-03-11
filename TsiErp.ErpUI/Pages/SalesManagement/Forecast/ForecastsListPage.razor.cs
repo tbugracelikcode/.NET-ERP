@@ -261,9 +261,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
         {
             DataSource = new SelectForecastsDto()
             {
-                CreationDate_ = DateTime.Today,
-                ValidityStartDate = DateTime.Today,
-                ValidityEndDate = DateTime.Today,
+                CreationDate_ = GetSQLDateAppService.GetDateFromSQL(),
+                ValidityStartDate = GetSQLDateAppService.GetDateFromSQL(),
+                ValidityEndDate = GetSQLDateAppService.GetDateFromSQL(),
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ForecastsChildMenu")
             };
 

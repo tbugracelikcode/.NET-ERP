@@ -397,10 +397,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
             #region Context Menü Yetkilendirmesi
 
-            //MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
-            //var parentMenu = MenusList.Where(t => t.MenuName == "StockFichesChildMenu").Select(t => t.Id).FirstOrDefault();
-            //contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
-            //UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "StockFichesChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             #endregion
 
@@ -429,110 +429,72 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             await Task.CompletedTask;
         }
 
-        //protected void CreateLineContextMenuItems()
-        //{
-        //    if (LineGridContextMenu.Count() == 0)
-        //    {
-        //        foreach (var context in contextsList)
-        //        {
-        //            var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-        //            if (permission)
-        //            {
-        //                switch (context.MenuName)
-        //                {
-        //                    case "StockFicheLineContextAdd":
-        //                        LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextAdd"], Id = "new" }); break;
-        //                    case "StockFicheLineContextChange":
-        //                        LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextChange"], Id = "changed" }); break;
-        //                    case "StockFicheLineContextDelete":
-        //                        LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextDelete"], Id = "delete" }); break;
-        //                    case "StockFicheLineContextRefresh":
-        //                        LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextRefresh"], Id = "refresh" }); break;
-        //                    default: break;
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
         protected void CreateLineContextMenuItems()
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextAdd"], Id = "new" });
-
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextChange"], Id = "changed" });
-
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextDelete"], Id = "delete" });
-
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextRefresh"], Id = "refresh" });
-
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "StockFicheLineContextAdd":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextAdd"], Id = "new" }); break;
+                            case "StockFicheLineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextChange"], Id = "changed" }); break;
+                            case "StockFicheLineContextDelete":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextDelete"], Id = "delete" }); break;
+                            case "StockFicheLineContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
 
-        //protected void CreateMainContextMenuItems()
-        //{
-        //    if (MainGridContextMenu.Count() == 0)
-        //    {
-        //        foreach (var context in contextsList)
-        //        {
-        //            var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-        //            if (permission)
-        //            {
-        //                switch (context.MenuName)
-        //                {
-        //                    case "StockFicheContextAddStockIncome":
-        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddStockIncome"], Id = "income" }); break;
-        //                    case "StockFicheContextAddStockOutput":
-        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddStockOutput"], Id = "output" }); break;
-        //                    case "StockFicheContextAddConsume":
-        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddConsume"], Id = "consume" }); break;
-        //                    case "StockFicheContextAddWastege":
-        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddWastege"], Id = "wastage" }); break;
-        //                    case "StockFicheContextAddProductionIncome":
-        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddProductionIncome"], Id = "proincome" }); break;
-        //                    case "StockFicheContextAddWarehouse":
-        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddWarehouse"], Id = "warehouse" }); break;
-        //                    case "StockFicheContextChange":
-        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextChange"], Id = "changed" }); break;
-        //                    case "StockFicheContextDelete":
-        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextDelete"], Id = "delete" }); break;
-        //                    case "StockFicheContextRefresh":
-        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextRefresh"], Id = "refresh" }); break;
-        //                    default: break;
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+
 
         protected void CreateMainContextMenuItems()
         {
             if (MainGridContextMenu.Count() == 0)
             {
-
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddStockIncome"], Id = "income" });
-
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddStockOutput"], Id = "output" });
-
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddConsume"], Id = "consume" });
-
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddWastege"], Id = "wastage" });
-
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddProductionIncome"], Id = "proincome" });
-
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddWarehouse"], Id = "warehouse" });
-
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextChange"], Id = "changed" });
-
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextDelete"], Id = "delete" });
-
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextRefresh"], Id = "refresh" });
-
-
-
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "StockFicheContextAddStockIncome":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddStockIncome"], Id = "income" }); break;
+                            case "StockFicheContextAddStockOutput":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddStockOutput"], Id = "output" }); break;
+                            case "StockFicheContextAddConsume":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddConsume"], Id = "consume" }); break;
+                            case "StockFicheContextAddWastege":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddWastege"], Id = "wastage" }); break;
+                            case "StockFicheContextAddProductionIncome":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddProductionIncome"], Id = "proincome" }); break;
+                            case "StockFicheContextAddWarehouse":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddWarehouse"], Id = "warehouse" }); break;
+                            case "StockFicheContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextChange"], Id = "changed" }); break;
+                            case "StockFicheContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextDelete"], Id = "delete" }); break;
+                            case "StockFicheContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextRefresh"], Id = "refresh" }); break;
+                            case "StockFicheContextAddReserved":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddReserved"], Id = "reserved" }); break;
+                            default: break;
+                        }
+                    }
+                }
             }
         }
+
 
         public async override void ShowEditPage()
         {
@@ -588,6 +550,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
                     await BeforeInsertAsync();
                     DataSource.FicheType = StockFicheTypeEnum.DepoSevkFisi;
+                    EditPageVisible = true;
+                    break;
+                case "reserved":
+
+                    await BeforeInsertAsync();
+                    DataSource.FicheType = StockFicheTypeEnum.StokRezerveFisi;
                     EditPageVisible = true;
                     break;
 

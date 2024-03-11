@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.ProductionManagement.ContractTrackingFiche.Validations;
 using TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.Services;
 using TsiErp.Business.Entities.ProductionTracking.Services;
@@ -42,15 +43,17 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
         private IProductionTrackingsAppService ProductionTrackingsAppService { get; set; }
 
         private IWorkOrdersAppService WorkOrdersAppService { get; set; }
         private IOperationStockMovementsAppService OperationStockMovementsAppService { get; set; }
 
-        public ContractTrackingFichesAppService(IStringLocalizer<ContractTrackingFichesResource> l, IFicheNumbersAppService ficheNumbersAppService, IProductionTrackingsAppService productionTrackingsAppService, IWorkOrdersAppService workOrdersAppService, IOperationStockMovementsAppService operationStockMovementsAppService) : base(l)
+        public ContractTrackingFichesAppService(IStringLocalizer<ContractTrackingFichesResource> l, IFicheNumbersAppService ficheNumbersAppService, IProductionTrackingsAppService productionTrackingsAppService, IWorkOrdersAppService workOrdersAppService, IOperationStockMovementsAppService operationStockMovementsAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
             ProductionTrackingsAppService = productionTrackingsAppService;
             WorkOrdersAppService = workOrdersAppService;
             OperationStockMovementsAppService = operationStockMovementsAppService;
@@ -76,7 +79,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
 
             var query = queryFactory.Query().From(Tables.ContractTrackingFiches).Insert(new CreateContractTrackingFichesDto
             {
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -107,7 +110,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 {
                     StationID = item.StationID,
                     ContractTrackingFicheID = addedEntityId,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -176,7 +179,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         #endregion
 
 
-                        var operationDateTime = new DateTime(input.FicheDate_.Year, input.FicheDate_.Month, input.FicheDate_.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                        var operationDateTime = new DateTime(input.FicheDate_.Year, input.FicheDate_.Month, input.FicheDate_.Day, _GetSQLDateAppService.GetDateFromSQL().Hour, _GetSQLDateAppService.GetDateFromSQL().Minute, _GetSQLDateAppService.GetDateFromSQL().Second);
 
                         var updatedWorkOrder = new UpdateWorkOrdersDto
                         {
@@ -192,7 +195,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                             DeletionTime = workOrder.DeletionTime,
                             IsCancel = workOrder.IsCancel,
                             IsDeleted = workOrder.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = workOrder.LineNr,
                             LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),
@@ -222,7 +225,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
 
                     if (workOrder != null)
                     {
-                        var operationDateTime = new DateTime(input.FicheDate_.Year, input.FicheDate_.Month, input.FicheDate_.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                        var operationDateTime = new DateTime(input.FicheDate_.Year, input.FicheDate_.Month, input.FicheDate_.Day, _GetSQLDateAppService.GetDateFromSQL().Hour, _GetSQLDateAppService.GetDateFromSQL().Minute, _GetSQLDateAppService.GetDateFromSQL().Second);
 
                         var updatedWorkOrder = new UpdateWorkOrdersDto
                         {
@@ -238,7 +241,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                             DeletionTime = workOrder.DeletionTime,
                             IsCancel = workOrder.IsCancel,
                             IsDeleted = workOrder.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = workOrder.LineNr,
                             LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),
@@ -279,7 +282,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                     Amount_ = item.Amount_,
                     Date_ = item.Date_,
                     Description_ = item.Description_,
-                    CreationTime = DateTime.Now,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -688,7 +691,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, false, false, "");
 
@@ -704,7 +707,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         WorkOrderID = item.WorkOrderID,
                         StationID = item.StationID,
                         ContractTrackingFicheID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -742,7 +745,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                         }).Where(new { Id = line.Id }, false, false, "");
@@ -767,7 +770,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         Date_ = item.Date_,
                         Amount_ = item.Amount_,
                         ContractTrackingFicheID = input.Id,
-                        CreationTime = DateTime.Now,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -804,7 +807,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = DateTime.Now,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                         }).Where(new { Id = line.Id }, false, false, "");

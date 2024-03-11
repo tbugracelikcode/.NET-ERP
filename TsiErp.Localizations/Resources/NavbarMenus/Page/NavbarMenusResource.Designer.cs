@@ -1519,6 +1519,24 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok Adresleri.
+        /// </summary>
+        public static string StockAddressesChildMenu {
+            get {
+                return ResourceManager.GetString("StockAddressesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Sütunları.
+        /// </summary>
+        public static string StockColumnsChildMenu {
+            get {
+                return ResourceManager.GetString("StockColumnsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok Fişleri.
         /// </summary>
         public static string StockFichesChildMenu {
@@ -1569,6 +1587,33 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string StockManagementTransactionsMenu {
             get {
                 return ResourceManager.GetString("StockManagementTransactionsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Numaraları.
+        /// </summary>
+        public static string StockNumbersChildMenu {
+            get {
+                return ResourceManager.GetString("StockNumbersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Bölümleri.
+        /// </summary>
+        public static string StockSectionsChildMenu {
+            get {
+                return ResourceManager.GetString("StockSectionsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Rafları.
+        /// </summary>
+        public static string StockShelfsChildMenu {
+            get {
+                return ResourceManager.GetString("StockShelfsChildMenu", resourceCulture);
             }
         }
         

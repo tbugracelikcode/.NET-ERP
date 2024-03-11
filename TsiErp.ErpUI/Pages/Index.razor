@@ -9,6 +9,7 @@
 @inject IProductsAppService ProductsAppService
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
 @inject IPackingListsAppService PackingListsAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
 
 <div class="control-section">
     <div class="col-lg-12 col-sm-12 col-md-12" id="sidebar-section">
@@ -356,7 +357,7 @@
         #region Aylara Göre Sipariş Sayısı
 
 
-        var salesOrderList = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data/* .Where(t => t.Date_.Year == DateTime.Today.Year) */.ToList();
+        var salesOrderList = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.Where(t => t.Date_.Year == GetSQLDateAppService.GetDateFromSQL().Year).ToList();
 
         var groupedByDateList = salesOrderList.GroupBy(t => new { t.Date_.Month }).Select(t => new { Month = t.Key.Month, SalesOrder = t.ToList() }).ToList();
 

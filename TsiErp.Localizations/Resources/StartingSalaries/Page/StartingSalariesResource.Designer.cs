@@ -439,11 +439,29 @@ namespace TsiErp.Localizations.Resources.StartingSalaries.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz satır kalıcı olarak silinecektir..
+        /// </summary>
+        public static string UIConfirmationPopupLineMessage {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupLineMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kayıt kalıcı olarak silinecektir..
         /// </summary>
         public static string UIConfirmationPopupMessageBase {
             get {
                 return ResourceManager.GetString("UIConfirmationPopupMessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
+        /// </summary>
+        public static string UIConfirmationPopupMessageBase1 {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupMessageBase1", resourceCulture);
             }
         }
         
@@ -462,6 +480,15 @@ namespace TsiErp.Localizations.Resources.StartingSalaries.Page {
         public static string UIConfirmationPopupTitleBase {
             get {
                 return ResourceManager.GetString("UIConfirmationPopupTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string UIConfirmationPopupTitleBase1 {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupTitleBase1", resourceCulture);
             }
         }
         

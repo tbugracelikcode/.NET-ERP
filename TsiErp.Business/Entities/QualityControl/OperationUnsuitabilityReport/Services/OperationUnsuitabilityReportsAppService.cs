@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.Validations;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
@@ -33,10 +34,12 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public OperationUnsuitabilityReportsAppService(IStringLocalizer<OperationUnsuitabilityReportsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public OperationUnsuitabilityReportsAppService(IStringLocalizer<OperationUnsuitabilityReportsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreateOperationUnsuitabilityReportsValidator), Priority = 1)]
@@ -61,7 +64,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
             var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Insert(new CreateOperationUnsuitabilityReportsDto
             {
                 FicheNo = input.FicheNo,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 UnsuitabilityItemsID = input.UnsuitabilityItemsID,
                 DataOpenStatus = false,
@@ -235,7 +238,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 UnsuitabilityItemsID = input.UnsuitabilityItemsID,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 Action_ = input.Action_,
                 FicheNo = input.FicheNo,

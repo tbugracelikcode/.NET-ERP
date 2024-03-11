@@ -16,6 +16,7 @@
 @inject IFicheNumbersAppService FicheNumbersAppService
 @inject IPlanningManagementParametersAppService PlanningManagementParametersAppService
 @inject IBillsofMaterialsAppService BillsofMaterialsAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
 
 @if (!base.IsLoaded)
 {
@@ -197,7 +198,7 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(SelectMRPIILinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPIILinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectMRPIILinesDto.EstimatedPurchaseSupplyDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridEstimatedPurchaseSupplyDate"]" TextAlign="TextAlign.Center" Width="300" Context="LineContext">
+                                  @*   <GridColumn Field=@nameof(SelectMRPIILinesDto.EstimatedPurchaseSupplyDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridEstimatedPurchaseSupplyDate"]" TextAlign="TextAlign.Center" Width="300" Context="LineContext">
                                         <Template>
                                             @{
                                                 var estimatedPurchaseSupplyDate = (LineContext as SelectMRPIILinesDto).EstimatedPurchaseSupplyDate.ToShortDateString();
@@ -205,7 +206,7 @@ else
                                             @estimatedPurchaseSupplyDate
 
                                         </Template>
-                                    </GridColumn>
+                                    </GridColumn> *@
                                     <GridColumn Field=@nameof(SelectMRPIILinesDto.EstimatedProductionStartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridEstimatedProductionStartDate"]" TextAlign="TextAlign.Center" Width="300" Context="LineContext">
                                         <Template>
                                             @{

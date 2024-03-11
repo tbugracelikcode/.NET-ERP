@@ -50,8 +50,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PlanningManagementPara
 
         List<MRPPurchaseComboBox> _mrpPurchaseComboBox = new List<MRPPurchaseComboBox>
         {
-            new MRPPurchaseComboBox(){ID = "salesorder", Text="PurchaseOrder"},
-            new MRPPurchaseComboBox(){ID = "salesrequest", Text="PurchaseRequest"},
+            new MRPPurchaseComboBox(){ID = "1", Text="PurchaseOrder"},
+            new MRPPurchaseComboBox(){ID = "2", Text="PurchaseRequest"},
         };
 
         private void MRPPurchaseComboBoxValueChangeHandler(ChangeEventArgs<string, MRPPurchaseComboBox> args)
@@ -61,11 +61,11 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PlanningManagementPara
 
                 switch (args.ItemData.ID)
                 {
-                    case "salesorder":
+                    case "1":
                         DataSource.MRPPurchaseTransaction = 1;
                         break;
 
-                    case "salesrequest":
+                    case "2":
                         DataSource.MRPPurchaseTransaction = 2;
                         break;
 

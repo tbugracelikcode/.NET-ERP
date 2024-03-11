@@ -603,6 +603,12 @@
   <data name="StationsChildMenu" xml:space="preserve">
     <value>Stations</value>
   </data>
+  <data name="StockAddressesChildMenu" xml:space="preserve">
+    <value>Stock Adresses</value>
+  </data>
+  <data name="StockColumnsChildMenu" xml:space="preserve">
+    <value>Stock Columns</value>
+  </data>
   <data name="StockFichesChildMenu" xml:space="preserve">
     <value>Stock Fiches</value>
   </data>
@@ -620,6 +626,15 @@
   </data>
   <data name="StockManagementTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
+  </data>
+  <data name="StockNumbersChildMenu" xml:space="preserve">
+    <value>Stock Numbers</value>
+  </data>
+  <data name="StockSectionsChildMenu" xml:space="preserve">
+    <value>Stock Sections</value>
+  </data>
+  <data name="StockShelfsChildMenu" xml:space="preserve">
+    <value>Stock Shelfs</value>
   </data>
   <data name="TaskScoringsChildMenu" xml:space="preserve">
     <value>Task Scorings</value>

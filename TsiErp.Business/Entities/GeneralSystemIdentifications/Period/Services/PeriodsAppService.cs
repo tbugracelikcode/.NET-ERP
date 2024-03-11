@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Period.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
@@ -24,12 +25,14 @@ namespace TsiErp.Business.Entities.Period.Services
     public class PeriodsAppService : ApplicationService<PeriodsResource>, IPeriodsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public PeriodsAppService(IStringLocalizer<PeriodsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        public PeriodsAppService(IStringLocalizer<PeriodsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
         [ValidationAspect(typeof(CreatePeriodsValidator), Priority = 1)]
@@ -53,7 +56,7 @@ namespace TsiErp.Business.Entities.Period.Services
             {
                 Code = input.Code,
                 BranchID = input.BranchID,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -187,7 +190,7 @@ namespace TsiErp.Business.Entities.Period.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 BranchID = input.BranchID,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, true, true, "");

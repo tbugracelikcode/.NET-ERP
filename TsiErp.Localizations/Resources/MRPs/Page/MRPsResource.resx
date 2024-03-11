@@ -204,6 +204,9 @@
   <data name="LineGridRequirementAmount" xml:space="preserve">
     <value>SATIN ALMA İHTİYAÇ MİKTARI</value>
   </data>
+  <data name="LineGridReservedAmount" xml:space="preserve">
+    <value>REZERVE MİKTARI</value>
+  </data>
   <data name="LineGridSalesOrderFicheNo" xml:space="preserve">
     <value>SİPARİŞ FİŞ NO</value>
   </data>
@@ -215,6 +218,9 @@
   </data>
   <data name="LineGridSalesOrderisStockUsage" xml:space="preserve">
     <value>STOKTAN KULLANILACAK</value>
+  </data>
+  <data name="LineGridSupplyDate" xml:space="preserve">
+    <value>TEMİN TARİHİ</value>
   </data>
   <data name="LineGridUnitSetCode" xml:space="preserve">
     <value>BİRİM SETİ</value>
@@ -273,6 +279,9 @@
   <data name="MRPLineContextStockUsage" xml:space="preserve">
     <value>Stoktan Kullan</value>
   </data>
+  <data name="MRPLineContextSupplier" xml:space="preserve">
+    <value>Tedarikçi Seç</value>
+  </data>
   <data name="MultiDeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Sipariş satırları silinecektir, onaylıyor musunuz?</value>
   </data>
@@ -287,6 +296,9 @@
   </data>
   <data name="PlaceholderSalesOrders" xml:space="preserve">
     <value>Sipariş seçiniz.</value>
+  </data>
+  <data name="ReferanceDateLabel" xml:space="preserve">
+    <value>Referans Tarihi:</value>
   </data>
   <data name="SalesOrderModalTitle" xml:space="preserve">
     <value>Satış Siparişleri</value>
@@ -317,6 +329,27 @@
   </data>
   <data name="State_Label" xml:space="preserve">
     <value>Durum:</value>
+  </data>
+  <data name="SupplierModalTitle" xml:space="preserve">
+    <value>Tedarikçiler</value>
+  </data>
+  <data name="SupplierPopupGridCurrentAccountName" xml:space="preserve">
+    <value>TEDARİKÇİ ÜNVANI</value>
+  </data>
+  <data name="SupplierPopupGridCurrenyCode" xml:space="preserve">
+    <value>PARA BİRİMİ</value>
+  </data>
+  <data name="SupplierPopupGridProductCode" xml:space="preserve">
+    <value>ÜRÜN KODU</value>
+  </data>
+  <data name="SupplierPopupGridUnitPrice" xml:space="preserve">
+    <value>BİRİM FİYAT</value>
+  </data>
+  <data name="UIConvertPurchaseMessage" xml:space="preserve">
+    <value>Seçtiğiniz malzeme ihtiyaç planlaması kaydı, satın almaya dönüşecektir.</value>
+  </data>
+  <data name="UIConvertPurchaseTitle" xml:space="preserve">
+    <value>Onay</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Malzeme İhtiyaç Planlaması (MRP)</value>

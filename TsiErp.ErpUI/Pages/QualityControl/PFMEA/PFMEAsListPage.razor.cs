@@ -54,8 +54,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
         {
             DataSource = new SelectPFMEAsDto()
             {
-                Date_ = DateTime.Today,
-                ActionCompletionDate = DateTime.Today,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                ActionCompletionDate = GetSQLDateAppService.GetDateFromSQL(),
                 LineNr = ListDataSource.Count + 1
             };
 

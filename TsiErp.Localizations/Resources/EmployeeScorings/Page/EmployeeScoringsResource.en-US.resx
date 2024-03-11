@@ -405,6 +405,15 @@
   <data name="TemplateOperationWorkScoreLinesLineLabel" xml:space="preserve">
     <value>Operation Work Score:</value>
   </data>
+  <data name="UIConfirmationPopupLineMessage" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Are you sure you want to delete?</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Employee Scoring Records</value>
   </data>

@@ -736,7 +736,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             {
                 BranchID = DataSource.BranchID.GetValueOrDefault(),
                 CurrencyID = DataSource.CurrencyID.GetValueOrDefault(),
-                Date_ = DateTime.Today,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 Description_ = string.Empty,
                 ExchangeRate = DataSource.ExchangeRate,
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
@@ -809,7 +809,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         {
             DataSource = new SelectPurchaseOrdersDto()
             {
-                Date_ = DateTime.Today,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersChildMenu"),
                 PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Beklemede
             };

@@ -3,7 +3,7 @@
 @using Syncfusion.Blazor.DropDowns
 
 <div style="padding-left:20px">
-    <SfDropDownList TValue="string" TItem="Cultures" DataSource="@CultureList" Width="143px" Index="@cultureIndex" PopupWidth="143px" CssClass="localization-combo">
+    <SfDropDownList TValue="string"  TItem="Cultures" DataSource="@CultureList" Width="143px" Index="@cultureIndex" PopupWidth="143px" CssClass="localization-combo">
         <DropDownListEvents TItem="Cultures" TValue="string" ValueChange="OnSelected"></DropDownListEvents>
         <DropDownListFieldSettings Value="Code" Text="Text"></DropDownListFieldSettings>
     </SfDropDownList>
@@ -48,7 +48,7 @@
             //     this.cultureIndex = 4;
             //     break;
             case "tr":
-                this.cultureIndex = 5;
+                this.cultureIndex = 1;
                 break;
         }
 
@@ -79,7 +79,7 @@
             //     this.cultureIndex = 4;
             //     break;
             case "tr":
-                this.cultureIndex = 5;
+                this.cultureIndex = 1;
                 break;
         }
         NavigationManager.NavigateTo("/Culture/SetCulture" + query, forceLoad: true);

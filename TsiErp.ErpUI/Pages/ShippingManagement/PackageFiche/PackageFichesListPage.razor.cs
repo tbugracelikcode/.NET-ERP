@@ -60,7 +60,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
         {
             DataSource = new SelectPackageFichesDto()
             {
-                Date_ = DateTime.Today,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 Code = FicheNumbersAppService.GetFicheNumberAsync("PackageFichesChildMenu"),
                 PackageContent = 0,
                 NumberofPackage = 0

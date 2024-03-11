@@ -37,7 +37,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
         {
             DataSource = new SelectExchangeRatesDto()
             {
-                Date = DateTime.Today
+                Date = GetSQLDateAppService.GetDateFromSQL()
             };
 
             EditPageVisible = true;

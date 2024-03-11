@@ -20,6 +20,8 @@ namespace TsiErp.Entities.Enums
         [Display(Name = "EnumStockIncome")]
         StokGirisFisi = 50,
         [Display(Name = "EnumStockOutput")]
-        StokCikisFisi = 51
+        StokCikisFisi = 51,
+        [Display(Name = "EnumReserved")]
+        StokRezerveFisi = 55
     }
 }

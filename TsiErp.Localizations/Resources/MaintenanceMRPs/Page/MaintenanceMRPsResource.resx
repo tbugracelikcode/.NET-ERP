@@ -270,6 +270,12 @@
   <data name="TimeLeftforMaintenanceLabel" xml:space="preserve">
     <value>Bakıma Kalan Süre:</value>
   </data>
+  <data name="UIConfirmationModalLineMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationModalTitleBase" xml:space="preserve">
+    <value>Onay</value>
+  </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Bakım Malzemesi İhtiyaç Planlaması</value>
   </data>

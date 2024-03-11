@@ -77,7 +77,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
             DataSource = new SelectMRPIIsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("MRPIIChildMenu"),
-                CalculationDate = DateTime.Today
+                CalculationDate = GetSQLDateAppService.GetDateFromSQL()
             };
 
             DataSource.SelectMRPIILines = new List<SelectMRPIILinesDto>();
@@ -350,28 +350,15 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
 
                                         foreach (var bomLine in bomLineList)
                                         {
-                                            var bomProduct = (await ProductsAppService.GetAsync(bomLine.ProductID.GetValueOrDefault())).Data;
-
-                                            SelectMRPIILinesDto mrpIILineModel2 = new SelectMRPIILinesDto
+                                            if(orderAcceptanceLine.PurchaseSupplyDate > biggestDate)
                                             {
-                                                ProductID = bomProduct.Id,
-                                                ProductCode = bomProduct.Code,
-                                                ProductName = bomProduct.Name,
-                                                LinkedProductCode = product.Code,
-                                                LinkedProductID = product.Id,
-                                                LinkedProductName = product.Name,
-                                                LineNr = GridLineList.Count + 1,
-                                                EstimatedProductionStartDate = orderAcceptanceLine.PurchaseSupplyDate.GetValueOrDefault(),
-                                                EstimatedProductionEndDate = DateTime.Now,
-                                                EstimatedPurchaseSupplyDate = orderAcceptanceLine.PurchaseSupplyDate.GetValueOrDefault(),
-                                                SalesOrderID = Guid.Empty,
-                                                SalesOrderNo = string.Empty,
-                                                OrderAcceptanceID = orderAcceptance.Id,
-                                                OrderAcceptanceNo = orderAcceptance.Code
+                                                int indexFinishedProduct = GridLineList.IndexOf(mrpIILineModel1);
 
-                                            };
+                                                GridLineList[indexFinishedProduct].EstimatedProductionStartDate = biggestDate.GetValueOrDefault();
 
-                                            GridLineList.Add(mrpIILineModel2);
+                                                GridLineList[indexFinishedProduct].EstimatedPurchaseSupplyDate = biggestDate.GetValueOrDefault();
+                                            }
+
 
                                         }
                                     }
@@ -434,33 +421,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
 
                                         foreach (var bomLine in bomLineList)
                                         {
-                                            var bomProduct = (await ProductsAppService.GetAsync(bomLine.ProductID.GetValueOrDefault())).Data;
-
-                                            SelectMRPIILinesDto mrpIILineModel2 = new SelectMRPIILinesDto
+                                            if (salesOrderLine.PurchaseSupplyDate > biggestDate)
                                             {
-                                                ProductID = bomProduct.Id,
-                                                ProductCode = bomProduct.Code,
-                                                ProductName = bomProduct.Name,
-                                                LinkedProductCode = product.Code,
-                                                LinkedProductID = product.Id,
-                                                LinkedProductName = product.Name,
-                                                LineNr = GridLineList.Count + 1,
-                                                EstimatedProductionStartDate = salesOrderLine.PurchaseSupplyDate.GetValueOrDefault(),
-                                                EstimatedProductionEndDate = DateTime.Now,
-                                                EstimatedPurchaseSupplyDate = salesOrderLine.PurchaseSupplyDate.GetValueOrDefault(),
-                                                SalesOrderID = salesOrder.Id,
-                                                SalesOrderNo = salesOrder.FicheNo,
-                                                OrderAcceptanceID = Guid.Empty,
-                                                OrderAcceptanceNo = string.Empty
-
-                                            };
-
-                                            GridLineList.Add(mrpIILineModel2);
-
-                                            if (mrpIILineModel2.EstimatedPurchaseSupplyDate > biggestDate)
-                                            {
-                                                biggestDate = mrpIILineModel2.EstimatedPurchaseSupplyDate;
-
                                                 int indexFinishedProduct = GridLineList.IndexOf(mrpIILineModel1);
 
                                                 GridLineList[indexFinishedProduct].EstimatedProductionStartDate = biggestDate.GetValueOrDefault();

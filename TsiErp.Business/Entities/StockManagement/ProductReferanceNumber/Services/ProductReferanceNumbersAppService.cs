@@ -8,6 +8,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.ProductReferanceNumber.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
@@ -23,9 +24,11 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
     public class ProductReferanceNumbersAppService : ApplicationService<ProductReferanceNumbersResource>, IProductReferanceNumbersAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ProductReferanceNumbersAppService(IStringLocalizer<ProductReferanceNumbersResource> l) : base(l)
+        public ProductReferanceNumbersAppService(IStringLocalizer<ProductReferanceNumbersResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
+            _GetSQLDateAppService = getSQLDateAppService;
         }
 
 
@@ -57,7 +60,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                 CustomerReferanceNo = input.CustomerReferanceNo,
                 MinOrderAmount = input.MinOrderAmount,
                 OrderReferanceNo = input.OrderReferanceNo,
-                CreationTime = DateTime.Now,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -219,7 +222,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = DateTime.Now,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, false, false, "");
 

@@ -62,7 +62,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
         {
             DataSource = new SelectContractUnsuitabilityReportsDto()
             {
-                Date_ = DateTime.Today,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("ContUnsRecordsChildMenu")
             };
 

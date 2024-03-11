@@ -56,7 +56,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StartingSalary
             DataSource = new SelectStartingSalariesDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("StartingSalariesChildMenu"),
-                Year_ = DateTime.Today
+                Year_ = GetSQLDateAppService.GetDateFromSQL()
             };
 
             DataSource.SelectStartingSalaryLines = new List<SelectStartingSalaryLinesDto>();
