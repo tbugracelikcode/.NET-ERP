@@ -1,6 +1,6 @@
 ﻿@page "/"
 
-@inject NavigationManager NavigationManager
+@inject Navigation NavigationManager
 @inject IJSRuntime JSRuntime
 @inject IUsersAppService UsersAppService
 @inject AppService AppService
@@ -52,7 +52,7 @@
                 <DxGridLayoutItem Row="0" Column="1">
                     <Template>
                         <br />
-                        <SfTextBox CssClass="TSI40pxHeightButton" @ref="@EmployeesButtonEdit" Created="@EmployeesCodeOnCreateIcon" @bind-Value="User" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
+                        <SfTextBox CssClass="TSI40pxHeightButton" @ref="@EmployeesButtonEdit" Created="@EmployeesCodeOnCreateIcon" @bind-Value="AppService.EmployeeName" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
 
@@ -142,40 +142,10 @@
 
 @code {
 
-    string User = string.Empty;
     string Password = string.Empty;
-    // bool vispopup;
+
     public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
     List<ListEmployeesDto> EmployeesList = new List<ListEmployeesDto>();
-
-    #region Yorum
-    // private Task<IJSObjectReference> _module;
-
-    // public Task<IJSObjectReference> Module1 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/jquery-3.5.0.min.js").AsTask();
-    // public Task<IJSObjectReference> Module2 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/bootstrap.min.js").AsTask();
-    // public Task<IJSObjectReference> Module3 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/imagesloaded.pkgd.min.js").AsTask();
-    // public Task<IJSObjectReference> Module4 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/validator.min.js").AsTask();
-    // public Task<IJSObjectReference> Module5 => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "/login/js/main.js").AsTask();
-
-    // protected async override Task OnAfterRenderAsync(bool firstRender)
-    // {
-    //     if (firstRender)
-    //     {
-    //         // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/jquery-3.5.0.min.js");
-    //         // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/bootstrap.min.js");
-    //         // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/imagesloaded.pkgd.min.js");
-    //         // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/validator.min.js");
-    //         // await JSRuntime.InvokeAsync<IJSObjectReference>(identifier: "import", "./login/js/main.js");
-    //     }
-    // }
-
-    // void LoginPopupClosing(PopupClosingEventArgs args)
-    // {
-    //     vispopup = false;
-    // }
-    #endregion
-
-
 
     private async void OnLoginButtonClicked()
     {
@@ -237,12 +207,6 @@
 
     }
 
-    // private void OnOkButtonClicked()
-    // {
-    //     vispopup = false;
-    //     NavigationManager.NavigateTo("/");
-    // }
-
     #region Operatör ButtonEdit
 
     SfTextBox EmployeesButtonEdit;
@@ -268,7 +232,7 @@
         {
             LoginedUserService.UserId = Guid.Empty;
             AppService.EmployeeID = Guid.Empty;
-            User = string.Empty;
+            Password = string.Empty;
         }
     }
 
@@ -280,7 +244,8 @@
         {
             LoginedUserService.UserId = selectedEmployee.Id;
             AppService.EmployeeID = selectedEmployee.Id;
-            User = selectedEmployee.Name + " " + selectedEmployee.Surname;
+            AppService.EmployeeName = selectedEmployee.Name + " " + selectedEmployee.Surname;
+            AppService.EmployeePassword = selectedEmployee.ProductionScreenPassword;
             SelectEmployeesPopupVisible = false;
             await InvokeAsync(StateHasChanged);
         }

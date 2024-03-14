@@ -45,11 +45,9 @@ namespace TsiErp.UretimEkranUI.Pages
 
             QualityPercent = 1;
 
-
             ScrapQuantityCalculate();
 
             StartTimer();
-
 
         }
 
@@ -109,12 +107,6 @@ namespace TsiErp.UretimEkranUI.Pages
 
         public void StartAdjustment()
         {
-            //Operasyon süresini durdurmak için M9 registerını resetliyoruz
-            AppService.FatekCommunication.SetDis(Fatek.CommunicationCore.Base.MemoryType.M, 9, Fatek.CommunicationCore.Base.RunningCode.Reset);
-
-            //Ayar süresini başlatmak için M8 registerını setliyoruz
-            AppService.FatekCommunication.SetDis(Fatek.CommunicationCore.Base.MemoryType.M, 8, Fatek.CommunicationCore.Base.RunningCode.Set);
-
             AppService.AdjustmentState = Utilities.EnumUtilities.States.AdjustmentState.FromOperation;
             NavigationManager.NavigateTo("/operation-adjustment");
         }

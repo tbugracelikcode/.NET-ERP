@@ -1,15 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Enums;
-using TsiErp.Fatek.CommunicationCore.Base;
 using TsiErp.UretimEkranUI.Models;
 using TsiErp.UretimEkranUI.Services;
 using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
@@ -30,9 +23,6 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             if (firstRender)
             {
-                HaltReasonTimer = new System.Timers.Timer(1000);
-                HaltReasonTimer.Elapsed += HaltReasonTimerTimedEvent;
-                HaltReasonTimer.Enabled = true;
             }
         }
 
@@ -55,8 +45,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 if (res)
                 {
-                    // İş emri değiştir register ı PLC deki verileri temizlemek için set edildi.
-                    AppService.FatekCommunication.SetDis(MemoryType.M, 2, RunningCode.Set);
+
 
                     OperationDetailDto operationDetail = new OperationDetailDto()
                     {
@@ -75,13 +64,16 @@ namespace TsiErp.UretimEkranUI.Pages
                         StationCode = workOrder.StationCode,
                         TotalQualityControlApprovalTime = 0,
                         WorkOrderID = workOrder.Id,
-                        WorkOrderNo = workOrder.WorkOrderNo
+                        WorkOrderNo = workOrder.WorkOrderNo,
+                        ProductionOrderID = workOrder.ProductionOrderID.GetValueOrDefault(),
+                        StationID = workOrder.StationID.GetValueOrDefault(),
+                        WorkOrderState = (int)workOrder.WorkOrderState
                     };
 
 
                     var localWorkOrderId = await OperationDetailLocalDbService.WorkOrderControl(workOrder.Id);
 
-                    if(localWorkOrderId== 0)
+                    if (localWorkOrderId == 0)
                     {
                         await OperationDetailLocalDbService.InsertAsync(operationDetail);
                         operationDetail.Id = localWorkOrderId;
@@ -92,7 +84,7 @@ namespace TsiErp.UretimEkranUI.Pages
                         AppService.CurrentOperation = await OperationDetailLocalDbService.GetAsync(localWorkOrderId);
                     }
 
-                    NavigationManager.NavigateTo("/before-operation");
+                    NavigationManager.NavigateTo("/work-order-detail");
                 }
 
                 await InvokeAsync(StateHasChanged);
@@ -100,37 +92,8 @@ namespace TsiErp.UretimEkranUI.Pages
         }
 
 
-        #region Duruş Kontrol Timer
-
-        System.Timers.Timer HaltReasonTimer;
-
-        public bool HaltReasonModalVisible { get; set; } = false;
-
-        private void HaltReasonTimerTimedEvent(object source, ElapsedEventArgs e)
-        {
-            if (AppService.FatekCommunication.GetDis(MemoryType.M, 16) == true)
-            {
-                if (!HaltReasonModalVisible)
-                {
-                    HaltReasonModalVisible = true;
-                    //Duruş bilgisi modalı çıkacak. DR600 deki değer okunacak. Bu değer duruş süresi bilgisidir. Duruş bilgisi modal kapandıktan sonra HaltReasonModalVisible false yapılacak. DR600 0 set edilecek.
-                }
-
-            }
-
-            InvokeAsync(StateHasChanged);
-        }
-
-        #endregion
-
         public void Dispose()
         {
-            if (HaltReasonTimer != null)
-            {
-                HaltReasonTimer.Enabled = false;
-                HaltReasonTimer.Stop();
-                HaltReasonTimer.Dispose();
-            }
         }
     }
 }

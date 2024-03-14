@@ -1,4 +1,9 @@
-﻿
+﻿@inject NavMenuService mss
+
+@{
+    mss["NavMenu"] = this;
+}
+
 <div>
 
     <div class="sidebar">
@@ -7,29 +12,23 @@
             <Nodes>
                 <br />
                 <br />
-                <DxTreeViewNode Text="Ana Sayfa" NavigateUrl="/" IconCssClass="fa fa-warehouse">
+                <DxTreeViewNode Text="Ana Sayfa" NavigateUrl="/" IconCssClass="fa fa-warehouse" Enabled=@MainPageMenuEnabled>
 
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Text="İş Emirleri" NavigateUrl="/work-orders" IconCssClass="fa fa-warehouse">
+                <DxTreeViewNode Text="İş Emirleri" NavigateUrl="/work-orders" IconCssClass="fa fa-warehouse" Enabled=@WorkOrderMenuEnabled>
 
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Text="Çıkış" @onclick="(()=>  System.Environment.Exit(0))" IconCssClass="fa fa-warehouse">
-
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Text="İş Emirleri" NavigateUrl="/fatek" IconCssClass="fa fa-warehouse">
+                <DxTreeViewNode Text="Çıkış" @onclick="(()=>  System.Environment.Exit(0))" IconCssClass="fa fa-warehouse" Enabled=@LogoutMenuEnabled>
 
                 </DxTreeViewNode>
 
             </Nodes>
-
         </DxTreeView>
     </div>
 
 </div>
-
 
 <style>
     .scroller {
@@ -77,4 +76,28 @@
     public bool SidebarToggleFixed = true;
 
     DxTreeView treeView;
+
+    bool WorkOrderMenuEnabled = true;
+
+    public void ChangeWorkOrderMenuEnabled(bool isEnable)
+    {
+        WorkOrderMenuEnabled = isEnable;
+        StateHasChanged();
+    }
+
+    bool MainPageMenuEnabled = true;
+
+    public void ChangeMainPageMenuEnabled(bool isEnable)
+    {
+        MainPageMenuEnabled = isEnable;
+        StateHasChanged();
+    }
+
+    bool LogoutMenuEnabled = true;
+
+    public void ChangeLogoutMenuEnabled(bool isEnable)
+    {
+        LogoutMenuEnabled = isEnable;
+        StateHasChanged();
+    }
 }

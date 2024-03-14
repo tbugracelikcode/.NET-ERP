@@ -2,21 +2,12 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
-using TsiErp.Business.Entities.Employee.Services;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.OperationAdjustment.Dtos;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
-using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
-using TsiErp.Fatek.CommunicationCore.Base;
 using TsiErp.UretimEkranUI.Models;
 using TsiErp.UretimEkranUI.Services;
 using TsiErp.UretimEkranUI.Utilities.EnumUtilities;
@@ -129,11 +120,6 @@ namespace TsiErp.UretimEkranUI.Pages
                     AdjustmentTimer.Enabled = true;
                     StartAdjustmenButtonDisabled = true;
 
-                    // Ayar süresi sıfırlandı.
-                    AppService.FatekCommunication.SetItem(MemoryType.DR, 200, 0);
-
-                    //PLC de ayar register'ı set ediliyor.
-                    AppService.FatekCommunication.SetDis(MemoryType.M, 8, RunningCode.Set);
                 }
                 else
                 {
@@ -215,7 +201,8 @@ namespace TsiErp.UretimEkranUI.Pages
                     IsApproval = false,
                     AdjustmentUserID = Adjustment.AdjustmentUserId,
                     ApprovedQuantity = 0,
-                    ScrapQuantity = 0
+                    ScrapQuantity = 0,
+                    ProductionOrderID = AppService.CurrentOperation.ProductionOrderID
                 };
 
                 foreach (var qualityplanline in OperationalQualityPlanLineList)
@@ -239,8 +226,7 @@ namespace TsiErp.UretimEkranUI.Pages
                 var selectFirstProductApproval = (await FirstProductApprovalsAppService.CreateAsync(createdFirstProductApproval)).Data;
 
 
-
-                if (selectFirstProductApproval.Id != Guid.Empty)
+                if (selectFirstProductApproval.Id != Guid.Empty && selectFirstProductApproval != null)
                 {
                     SendQualityControlApprovalButtonDisabled = true;
                     FirstApprovalId = selectFirstProductApproval.Id;
@@ -332,8 +318,7 @@ namespace TsiErp.UretimEkranUI.Pages
             FirstApprovalControlTimer.Stop();
             FirstApprovalControlTimer.Enabled = false;
 
-            // Ayar süresi PLC den okundu.
-            TotalAdjustmentTime = AppService.FatekCommunication.GetItem(MemoryType.DR, 200);
+
 
             Adjustment.TotalAdjustmentTime = TotalAdjustmentTime;
             AppService.CurrentOperation.ApprovedQuantity = ApprovedQuantity;
@@ -357,7 +342,7 @@ namespace TsiErp.UretimEkranUI.Pages
             await OperationAdjustmentAppService.CreateAsync(createAdjustmentDto);
 
 
-            NavigationManager.NavigateTo("/work-order-detail", true);
+            NavigationManager.NavigateTo("/work-order-detail");
 
             await Task.CompletedTask;
         }
@@ -388,17 +373,11 @@ namespace TsiErp.UretimEkranUI.Pages
 
             if (AppService.AdjustmentState == States.AdjustmentState.FromNonOperation)
             {
-                //Ayar süresini durdurmak için M8 registerını resetliyoruz
-                AppService.FatekCommunication.SetDis(Fatek.CommunicationCore.Base.MemoryType.M, 8, Fatek.CommunicationCore.Base.RunningCode.Reset);
                 NavigationManager.NavigateTo("/before-operation");
             }
 
             if (AppService.AdjustmentState == States.AdjustmentState.FromOperation)
             {
-                //Operasyon süresini başlatmak için M9 registerını setliyoruz
-                AppService.FatekCommunication.SetDis(Fatek.CommunicationCore.Base.MemoryType.M, 9, Fatek.CommunicationCore.Base.RunningCode.Set);
-                //Ayar süresini durdurmak için M8 registerını resetliyoruz
-                AppService.FatekCommunication.SetDis(Fatek.CommunicationCore.Base.MemoryType.M, 8, Fatek.CommunicationCore.Base.RunningCode.Reset);
                 NavigationManager.NavigateTo("/work-order-detail");
             }
 

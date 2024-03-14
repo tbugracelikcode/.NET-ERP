@@ -347,11 +347,12 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
 
                                     if (bomLineList != null && bomLineList.Count > 0)
                                     {
+
                                         DateTime? biggestDate = null;
 
                                         foreach (var bomLine in bomLineList)
                                         {
-                                            if(orderAcceptanceLine.PurchaseSupplyDate > biggestDate)
+                                            if (orderAcceptanceLine.PurchaseSupplyDate > biggestDate)
                                             {
                                                 int indexFinishedProduct = GridLineList.IndexOf(mrpIILineModel1);
 

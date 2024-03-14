@@ -120,16 +120,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 LastModifierId = Guid.Empty,
             });
 
-            if(input.OrderAcceptanceID != null && input.OrderAcceptanceID != Guid.Empty)
-            {
-                var OrderAcceptance = (await _OrderAcceptanceRecordsAppService.GetAsync(input.OrderAcceptanceID.GetValueOrDefault())).Data;
-
-                OrderAcceptance.OrderAcceptanceRecordState = TsiErp.Entities.Enums.OrderAcceptanceRecordStateEnum.SiparisOlusturuldu;
-
-                var updatedEntity = ObjectMapper.Map<SelectOrderAcceptanceRecordsDto, UpdateOrderAcceptanceRecordsDto>(OrderAcceptance);
-
-                await _OrderAcceptanceRecordsAppService.UpdateAsync(updatedEntity);
-            }
+            DateTime biggestDate = input.SelectPurchaseOrderLinesDto.Select(t => t.SupplyDate).Max().GetValueOrDefault();
 
             foreach (var item in input.SelectPurchaseOrderLinesDto)
             {
@@ -176,11 +167,11 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
 
-                if(item.OrderAcceptanceID != null && item.OrderAcceptanceID != Guid.Empty) // Sipariş kabul kaydının temin tarihini güncelleme
+                if (item.OrderAcceptanceID != null && item.OrderAcceptanceID != Guid.Empty) // Sipariş kabul kaydının temin tarihini güncelleme
                 {
-                    if(item.OrderAcceptanceLineID != null && item.OrderAcceptanceLineID != Guid.Empty)
+                    if (item.OrderAcceptanceLineID != null && item.OrderAcceptanceLineID != Guid.Empty)
                     {
-                        await _OrderAcceptanceRecordsAppService.UpdateLineAsync(item.OrderAcceptanceLineID.GetValueOrDefault(), item.SupplyDate.GetValueOrDefault());
+                        await _OrderAcceptanceRecordsAppService.UpdateLineAsync(item.OrderAcceptanceLineID.GetValueOrDefault(), biggestDate);
                     }
                 }
             }
@@ -758,6 +749,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, false, false, "");
+
+            DateTime biggestDate = input.SelectPurchaseOrderLinesDto.Select(t => t.SupplyDate).Max().GetValueOrDefault();
 
             foreach (var item in input.SelectPurchaseOrderLinesDto)
             {

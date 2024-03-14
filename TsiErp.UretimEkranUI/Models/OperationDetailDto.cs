@@ -77,5 +77,9 @@ namespace TsiErp.UretimEkranUI.Models
 
         [Column("WorkOrderState")]
         public int WorkOrderState { get; set; }
+
+
+        [Column("ProductionOrderID")]
+        public Guid ProductionOrderID { get; set; }
     }
 }

@@ -33,10 +33,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui-UretimEkran", "ui-Uretim
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.UretimEkranUI", "TsiErp.UretimEkranUI\TsiErp.UretimEkranUI.csproj", "{9CDFE520-7609-4820-BA9E-F5F35F954F9F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FatekCommunication", "FatekCommunication", "{E8F645E3-0EEE-48D0-859C-BA1B7BD6BC74}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.Fatek.CommunicationCore", "TsiErp.Fatek.CommunicationCore\TsiErp.Fatek.CommunicationCore.csproj", "{7904DB92-EF3A-48ED-8F58-C5091C3C9AB3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,14 +122,6 @@ Global
 		{9CDFE520-7609-4820-BA9E-F5F35F954F9F}.Release|x64.ActiveCfg = Release|x64
 		{9CDFE520-7609-4820-BA9E-F5F35F954F9F}.Release|x64.Build.0 = Release|x64
 		{9CDFE520-7609-4820-BA9E-F5F35F954F9F}.Release|x64.Deploy.0 = Release|x64
-		{7904DB92-EF3A-48ED-8F58-C5091C3C9AB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7904DB92-EF3A-48ED-8F58-C5091C3C9AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7904DB92-EF3A-48ED-8F58-C5091C3C9AB3}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{7904DB92-EF3A-48ED-8F58-C5091C3C9AB3}.Debug|x64.Build.0 = Debug|Any CPU
-		{7904DB92-EF3A-48ED-8F58-C5091C3C9AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7904DB92-EF3A-48ED-8F58-C5091C3C9AB3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7904DB92-EF3A-48ED-8F58-C5091C3C9AB3}.Release|x64.ActiveCfg = Release|Any CPU
-		{7904DB92-EF3A-48ED-8F58-C5091C3C9AB3}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,8 +137,6 @@ Global
 		{964AB0B3-F8F2-43E9-83F5-2E725CC14223} = {32ACB6D0-EDD0-4457-823E-4CF3B23DF52C}
 		{AF70C305-0C1D-4D63-9A1A-ADF7BC64F201} = {32ACB6D0-EDD0-4457-823E-4CF3B23DF52C}
 		{9CDFE520-7609-4820-BA9E-F5F35F954F9F} = {8751F505-E4FA-4096-A4E1-190C0F8FC80A}
-		{E8F645E3-0EEE-48D0-859C-BA1B7BD6BC74} = {8751F505-E4FA-4096-A4E1-190C0F8FC80A}
-		{7904DB92-EF3A-48ED-8F58-C5091C3C9AB3} = {E8F645E3-0EEE-48D0-859C-BA1B7BD6BC74}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {249F607F-1AF1-497A-ADFA-357532BFCABD}
