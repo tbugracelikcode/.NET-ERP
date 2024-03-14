@@ -8,6 +8,7 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.Servi
 using TsiErp.Business.Entities.HaltReason.Services;
 using TsiErp.Business.Entities.Menu.Services;
 using TsiErp.Business.Entities.OperationalQualityPlan.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Services;
 using TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Services;
 using TsiErp.Business.Entities.User.Services;
@@ -107,6 +108,7 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<IUserPermissionsAppService, UserPermissionsAppService>();
             builder.Services.AddScoped<IMenusAppService, MenusAppService>();
             builder.Services.AddScoped<IHaltReasonsAppService, HaltReasonsAppService>();
+            builder.Services.AddScoped<IGetSQLDateAppService, GetSQLDateAppService>();
 
 
 
