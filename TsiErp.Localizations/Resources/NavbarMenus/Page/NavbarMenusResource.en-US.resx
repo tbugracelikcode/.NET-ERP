@@ -606,6 +606,9 @@
   <data name="StockAddressesChildMenu" xml:space="preserve">
     <value>Stock Adresses</value>
   </data>
+  <data name="StockAddressesMenu" xml:space="preserve">
+    <value>Stock Addresses</value>
+  </data>
   <data name="StockColumnsChildMenu" xml:space="preserve">
     <value>Stock Columns</value>
   </data>

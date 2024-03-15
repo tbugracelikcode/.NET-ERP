@@ -1475,10 +1475,10 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["StockAddressesPopup"]"
-             Width="47%"
-             Height="46%"
-             MinWidth="800px"
-             MinHeight="500px"
+             Width="70%"
+             Height="64%"
+             MinWidth="1200px"
+             MinHeight="700px"
              HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
@@ -1489,25 +1489,31 @@ else
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="4%" />
-                    <DxGridLayoutColumn Width="92%" />
-                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
                 </Columns>
 
                 <Items>
                     <br />
-                     <SfGrid ID="StockAddressGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StockAddressesList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
-                               <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-                               <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                               <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                               <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
-                               <GridColumns>
-                                  <GridColumn Field=@nameof(ListStockAddressesDto.Code) HeaderText="@L["StockAddressesCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> 
-                                    <GridColumn Field=@nameof(ListStockAddressesDto.ProductCode) HeaderText="@L["StockAddressesProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                            <GridColumn Field=@nameof(ListStockAddressesDto.ProductName) HeaderText="@L["StockAddressesProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                               </GridColumns>
-                     </SfGrid>
+                     <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <SfGrid ID="StockAddressGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StockAddressLinesList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectStockAddressLinesDto.StockSectionName) HeaderText="@L["StockSectionName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectStockAddressLinesDto.StockShelfName) HeaderText="@L["StockShelfName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectStockAddressLinesDto.StockColumnName) HeaderText="@L["StockColumnName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectStockAddressLinesDto.StockNumberName) HeaderText="@L["StockNumberName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+                    
                 </Items>
             </DxGridLayout>
         </BodyTemplate>

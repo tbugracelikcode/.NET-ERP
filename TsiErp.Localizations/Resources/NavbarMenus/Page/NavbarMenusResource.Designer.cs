@@ -1528,6 +1528,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok Adresleri.
+        /// </summary>
+        public static string StockAddressesMenu {
+            get {
+                return ResourceManager.GetString("StockAddressesMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok Sütunları.
         /// </summary>
         public static string StockColumnsChildMenu {
