@@ -30,6 +30,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
             contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
+            contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
         }
 

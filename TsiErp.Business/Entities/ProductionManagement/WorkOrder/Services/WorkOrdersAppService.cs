@@ -154,7 +154,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         public async Task<IDataResult<SelectWorkOrdersDto>> GetAsync(Guid id)
         {
             var query = queryFactory
-                    .Query().From(Tables.WorkOrders).Select<WorkOrders>(wo => new { wo.WorkOrderState, wo.WorkOrderNo, wo.StationID, wo.StationGroupID, wo.RouteID, wo.PropositionID, wo.ProductsOperationID, wo.ProductionOrderID, wo.ProductID, wo.ProducedQuantity, wo.PlannedQuantity, wo.OperationTime, wo.OccuredStartDate, wo.OccuredFinishDate, wo.LinkedWorkOrderID, wo.LineNr, wo.IsCancel, wo.Id, wo.DataOpenStatusUserId, wo.DataOpenStatus, wo.CurrentAccountCardID, wo.AdjustmentAndControlTime })
+                    .Query().From(Tables.WorkOrders).Select<WorkOrders>(null)
                         .Join<ProductionOrders>
                         (
                             po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo = po.FicheNo },
@@ -228,6 +228,83 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
         }
 
+        public async Task<IDataResult<SelectWorkOrdersDto>> GetbyLinkedWorkOrderAsync(Guid linkedWorkOrderID)
+        {
+            var query = queryFactory
+                    .Query().From(Tables.WorkOrders).Select<WorkOrders>(null)
+                        .Join<ProductionOrders>
+                        (
+                            po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo = po.FicheNo },
+                            nameof(WorkOrders.ProductionOrderID),
+                            nameof(ProductionOrders.Id),
+                            JoinType.Left
+                        )
+                         .Join<SalesPropositions>
+                        (
+                            sp => new { PropositionID = sp.Id, PropositionFicheNo = sp.FicheNo },
+                            nameof(WorkOrders.PropositionID),
+                            nameof(SalesPropositions.Id),
+                            JoinType.Left
+                        )
+                        .Join<Routes>
+                        (
+                            r => new { RouteID = r.Id, RouteCode = r.Code },
+                            nameof(WorkOrders.RouteID),
+                            nameof(Routes.Id),
+                            JoinType.Left
+                        )
+                         .Join<ProductsOperations>
+                        (
+                            pro => new { ProductsOperationID = pro.Id, ProductsOperationCode = pro.Code, ProductsOperationName = pro.Name },
+                            nameof(WorkOrders.ProductsOperationID),
+                            nameof(ProductsOperations.Id),
+                            JoinType.Left
+                        )
+                        .Join<Stations>
+                        (
+                            s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
+                            nameof(WorkOrders.StationID),
+                            nameof(Stations.Id),
+                            JoinType.Left
+                        )
+                         .Join<StationGroups>
+                        (
+                            sg => new { StationGroupID = sg.Id, StationGroupCode = sg.Code },
+                            nameof(WorkOrders.StationGroupID),
+                            nameof(StationGroups.Id),
+                            JoinType.Left
+                        )
+                         .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(WorkOrders.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                         .Join<CurrentAccountCards>
+                        (
+                            ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                            nameof(WorkOrders.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        ).Join<SalesOrders>
+                        (
+                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id },
+                            nameof(WorkOrders.OrderID),
+                            nameof(SalesOrders.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { LinkedWorkOrderID = linkedWorkOrderID }, false, false, Tables.WorkOrders);
+
+            var workOrder = queryFactory.Get<SelectWorkOrdersDto>(query);
+
+            LogsAppService.InsertLogToDatabase(workOrder, workOrder, LoginedUserService.UserId, Tables.WorkOrders, LogType.Get, workOrder.Id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectWorkOrdersDto>(workOrder);
+
+        }
+
 
 
         [CacheAspect(duration: 60)]
@@ -235,7 +312,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.WorkOrders).Select<WorkOrders>(wo => new { wo.WorkOrderState, wo.WorkOrderNo, wo.StationID, wo.StationGroupID, wo.RouteID, wo.PropositionID, wo.ProductsOperationID, wo.ProductionOrderID, wo.ProductID, wo.ProducedQuantity, wo.PlannedQuantity, wo.OperationTime, wo.OccuredStartDate, wo.OccuredFinishDate, wo.LinkedWorkOrderID, wo.LineNr, wo.IsCancel, wo.Id, wo.DataOpenStatusUserId, wo.DataOpenStatus, wo.CurrentAccountCardID, wo.AdjustmentAndControlTime,wo.OrderID })
+               .From(Tables.WorkOrders).Select<WorkOrders>(null)
                         .Join<ProductionOrders>
                         (
                             po => new { ProductionOrderFicheNo = po.FicheNo },

@@ -11,6 +11,8 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.Validations;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.ProductionOrder.Services;
+using TsiErp.Business.Entities.WorkOrder.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
@@ -18,6 +20,7 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
@@ -35,11 +38,13 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly IWorkOrdersAppService _WorkOrdersAppService;
 
-        public OperationUnsuitabilityReportsAppService(IStringLocalizer<OperationUnsuitabilityReportsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public OperationUnsuitabilityReportsAppService(IStringLocalizer<OperationUnsuitabilityReportsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, IWorkOrdersAppService workOrdersAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _WorkOrdersAppService = workOrdersAppService;
         }
 
         [ValidationAspect(typeof(CreateOperationUnsuitabilityReportsValidator), Priority = 1)]
@@ -91,6 +96,39 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
 
             var operationUnsuitabilityReport = queryFactory.Insert<SelectOperationUnsuitabilityReportsDto>(query, "Id", true);
+
+            if (input.IsUnsuitabilityWorkOrder)
+            {
+                var workOrder = (await _WorkOrdersAppService.GetAsync(input.WorkOrderID.GetValueOrDefault())).Data;
+
+                CreateWorkOrdersDto createdWorkOrder = new CreateWorkOrdersDto
+                {
+                    AdjustmentAndControlTime = workOrder.AdjustmentAndControlTime,
+                    CurrentAccountCardID = workOrder.CurrentAccountCardID,
+                    IsCancel = false,
+                    WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
+                    WorkOrderState = 1,
+                    StationID = workOrder.StationID,
+                    StationGroupID = workOrder.StationGroupID,
+                    RouteID = workOrder.RouteID,
+                    PropositionID = workOrder.PropositionID,
+                    ProductsOperationID = workOrder.ProductsOperationID,
+                    ProductionOrderID = workOrder.ProductionOrderID,
+                    ProductID = workOrder.ProductID,
+                    ProducedQuantity = 0,
+                    PlannedQuantity = workOrder.PlannedQuantity,
+                    OrderID = workOrder.OrderID,
+                    OperationTime = workOrder.OperationTime,
+                    OccuredStartDate = _GetSQLDateAppService.GetDateFromSQL(),
+                    OccuredFinishDate = _GetSQLDateAppService.GetDateFromSQL(),
+                    LinkedWorkOrderID = input.WorkOrderID,
+                    LineNr = 1
+
+                };
+
+                await _WorkOrdersAppService.CreateAsync(createdWorkOrder);
+
+            }
 
             await FicheNumbersAppService.UpdateFicheNumberAsync("OprUnsRecordsChildMenu", input.FicheNo);
 
@@ -257,6 +295,38 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
             var operationUnsuitabilityReport = queryFactory.Update<SelectOperationUnsuitabilityReportsDto>(query, "Id", true);
 
+            if (entity.IsUnsuitabilityWorkOrder == false && input.IsUnsuitabilityWorkOrder == true)
+            {
+                var workOrder = (await _WorkOrdersAppService.GetAsync(input.WorkOrderID.GetValueOrDefault())).Data;
+
+                CreateWorkOrdersDto createdWorkOrder = new CreateWorkOrdersDto
+                {
+                    AdjustmentAndControlTime = workOrder.AdjustmentAndControlTime,
+                    CurrentAccountCardID = workOrder.CurrentAccountCardID,
+                    IsCancel = false,
+                    WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
+                    WorkOrderState = 1,
+                    StationID = workOrder.StationID,
+                    StationGroupID = workOrder.StationGroupID,
+                    RouteID = workOrder.RouteID,
+                    PropositionID = workOrder.PropositionID,
+                    ProductsOperationID = workOrder.ProductsOperationID,
+                    ProductionOrderID = workOrder.ProductionOrderID,
+                    ProductID = workOrder.ProductID,
+                    ProducedQuantity = 0,
+                    PlannedQuantity = workOrder.PlannedQuantity,
+                    OrderID = workOrder.OrderID,
+                    OperationTime = workOrder.OperationTime,
+                    OccuredStartDate = _GetSQLDateAppService.GetDateFromSQL(),
+                    OccuredFinishDate = _GetSQLDateAppService.GetDateFromSQL(),
+                    LinkedWorkOrderID = input.WorkOrderID,
+                    LineNr = 1
+
+                };
+
+                await _WorkOrdersAppService.CreateAsync(createdWorkOrder);
+
+            }
 
             LogsAppService.InsertLogToDatabase(entity, operationUnsuitabilityReport, LoginedUserService.UserId, Tables.OperationUnsuitabilityReports, LogType.Update, entity.Id);
 

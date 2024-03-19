@@ -138,6 +138,9 @@
   <data name="ComboboxToBeUsedAs" xml:space="preserve">
     <value>Olduğu Gibi Kullanılacak</value>
   </data>
+  <data name="CreatedWorkOrderLabel" xml:space="preserve">
+    <value>Oluşturulmuş İş Emri No:</value>
+  </data>
   <data name="Date_" xml:space="preserve">
     <value>TARİH</value>
   </data>
