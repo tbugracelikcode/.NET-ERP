@@ -165,6 +165,9 @@
   <data name="ContractUnsuitabilityReportContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="CreatedWorkOrderLabel" xml:space="preserve">
+    <value>Oluşturulmuş İş Emri No:</value>
+  </data>
   <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
     <value>Cari Hesap Kodu:</value>
   </data>

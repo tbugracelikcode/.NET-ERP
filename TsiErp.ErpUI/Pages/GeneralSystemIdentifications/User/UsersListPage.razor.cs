@@ -56,6 +56,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
             contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
+            contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
         }
 

@@ -1069,7 +1069,7 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stok Adresi.
+        ///   Looks up a localized string similar to Stok Adresleri.
         /// </summary>
         public static string ProductContextStockAddress {
             get {
@@ -1722,6 +1722,42 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string StockAmountsPopup {
             get {
                 return ResourceManager.GetString("StockAmountsPopup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SÜTUN.
+        /// </summary>
+        public static string StockColumnName {
+            get {
+                return ResourceManager.GetString("StockColumnName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NO.
+        /// </summary>
+        public static string StockNumberName {
+            get {
+                return ResourceManager.GetString("StockNumberName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BÖLÜM.
+        /// </summary>
+        public static string StockSectionName {
+            get {
+                return ResourceManager.GetString("StockSectionName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RAF.
+        /// </summary>
+        public static string StockShelfName {
+            get {
+                return ResourceManager.GetString("StockShelfName", resourceCulture);
             }
         }
         

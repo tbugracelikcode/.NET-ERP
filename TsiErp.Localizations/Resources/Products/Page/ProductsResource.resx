@@ -454,7 +454,7 @@
     <value>Satış Fiyatları</value>
   </data>
   <data name="ProductContextStockAddress" xml:space="preserve">
-    <value>Stok Adresi</value>
+    <value>Stok Adresleri</value>
   </data>
   <data name="ProductContextStockAmounts" xml:space="preserve">
     <value>Depo Toplamları</value>
@@ -671,6 +671,18 @@
   </data>
   <data name="StockAmountsPopup" xml:space="preserve">
     <value>Depo Toplamları</value>
+  </data>
+  <data name="StockColumnName" xml:space="preserve">
+    <value>SÜTUN</value>
+  </data>
+  <data name="StockNumberName" xml:space="preserve">
+    <value>NO</value>
+  </data>
+  <data name="StockSectionName" xml:space="preserve">
+    <value>BÖLÜM</value>
+  </data>
+  <data name="StockShelfName" xml:space="preserve">
+    <value>RAF</value>
   </data>
   <data name="SupplyForm" xml:space="preserve">
     <value>TEMİN ŞEKLİ</value>

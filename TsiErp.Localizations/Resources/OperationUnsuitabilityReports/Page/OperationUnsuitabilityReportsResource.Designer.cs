@@ -125,6 +125,15 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oluşturulmuş İş Emri No:.
+        /// </summary>
+        public static string CreatedWorkOrderLabel {
+            get {
+                return ResourceManager.GetString("CreatedWorkOrderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TARİH.
         /// </summary>
         public static string Date_ {

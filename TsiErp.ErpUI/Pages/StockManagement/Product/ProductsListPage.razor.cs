@@ -25,6 +25,7 @@ using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockAddressLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Enums;
@@ -113,6 +114,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         public List<ListGrandTotalStockMovementsDto> StockAmountsList = new List<ListGrandTotalStockMovementsDto>();
 
         public List<ListStockAddressesDto> StockAddressesList = new List<ListStockAddressesDto>();
+
+        public List<SelectStockAddressLinesDto> StockAddressLinesList = new List<SelectStockAddressLinesDto>();
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
 
@@ -1288,6 +1291,23 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     StockAddressesList = (await StockAddressesService.GetListAsync(new ListStockAddressesParameterDto())).Data.Where(t=>t.ProductID == DataSource.Id).ToList();
 
+                    if(StockAddressesList != null && StockAddressesList.Count != 0)
+                    {
+                        foreach (var stockaddress in StockAddressesList)
+                        {
+                            var lineList = (await StockAddressesService.GetAsync(stockaddress.Id)).Data.SelectStockAddressLines.ToList();
+
+                            if(lineList != null && lineList.Count != 0)
+                            {
+                                foreach (var line in lineList)
+                                {
+                                    StockAddressLinesList.Add(line);
+                                }
+                            }
+                        }
+                    }
+                   
+
                     StockAddressPopupVisible = true;
 
                     await InvokeAsync(StateHasChanged);
@@ -1373,6 +1393,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
+            contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
             CreateMainContextMenuItems();
             CreateTechnicalDrawingContextMenuItems();

@@ -206,6 +206,15 @@ namespace TsiErp.Localizations.Resources.ContractUnsuitabilityReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oluşturulmuş İş Emri No:.
+        /// </summary>
+        public static string CreatedWorkOrderLabel {
+            get {
+                return ResourceManager.GetString("CreatedWorkOrderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cari Hesap Kodu:.
         /// </summary>
         public static string CurrentAccountCardCodeLabel {

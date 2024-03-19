@@ -138,6 +138,9 @@
   <data name="ComboboxToBeUsedAs" xml:space="preserve">
     <value>To Be Used As</value>
   </data>
+  <data name="CreatedWorkOrderLabel" xml:space="preserve">
+    <value>Created Work Order No:</value>
+  </data>
   <data name="Date_" xml:space="preserve">
     <value>DATE</value>
   </data>

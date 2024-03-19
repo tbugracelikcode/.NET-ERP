@@ -454,7 +454,7 @@
     <value>Sales Prices</value>
   </data>
   <data name="ProductContextStockAddress" xml:space="preserve">
-    <value>Stock Address</value>
+    <value>Stock Addresses</value>
   </data>
   <data name="ProductContextStockAmounts" xml:space="preserve">
     <value>Stock Amounts</value>
@@ -671,6 +671,18 @@
   </data>
   <data name="StockAmountsPopup" xml:space="preserve">
     <value>Stock Amounts</value>
+  </data>
+  <data name="StockColumnName" xml:space="preserve">
+    <value>COLUMN</value>
+  </data>
+  <data name="StockNumberName" xml:space="preserve">
+    <value>NO</value>
+  </data>
+  <data name="StockSectionName" xml:space="preserve">
+    <value>SECTION</value>
+  </data>
+  <data name="StockShelfName" xml:space="preserve">
+    <value>SHELF</value>
   </data>
   <data name="SupplyForm" xml:space="preserve">
     <value>SUPPLY TYPE</value>
