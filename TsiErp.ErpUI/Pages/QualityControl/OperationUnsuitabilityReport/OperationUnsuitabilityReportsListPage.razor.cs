@@ -18,6 +18,7 @@ using Microsoft.Extensions.Localization;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Business.Entities.WorkOrder.Services;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
 {
@@ -42,6 +43,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
             new UnsComboBox(){ID = "ToBeUsedAs", Text="ComboboxToBeUsedAs"}
         };
 
+        public bool isCreatedNewWorkOrder = false;
+        public string CreatedWorkOrderNo = string.Empty;
 
 
         protected override async void OnInitialized()
@@ -56,6 +59,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
             contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
+            contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
         }
 
@@ -120,6 +124,20 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
                 else
                 {
                     EditPageVisible = true;
+
+                    var createdWorkOrder = (await WorkOrdersAppService.GetbyLinkedWorkOrderAsync(DataSource.WorkOrderID.GetValueOrDefault())).Data;
+
+                    if(createdWorkOrder != null && createdWorkOrder.Id != Guid.Empty)
+                    {
+                        isCreatedNewWorkOrder = true;
+                        CreatedWorkOrderNo = createdWorkOrder.WorkOrderNo;
+                    }
+                    else
+                    {
+                        isCreatedNewWorkOrder = false;
+                        CreatedWorkOrderNo = string.Empty;
+                    }
+
                     await InvokeAsync(StateHasChanged);
                 }
             }

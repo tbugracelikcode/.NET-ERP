@@ -75,6 +75,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockAddress
             contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
+            contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
 
             CreateMainContextMenuItems();

@@ -206,6 +206,16 @@
                             </Template>
                         </DxGridLayoutItem>
 
+                        @if (isCreatedNewWorkOrder)
+                        {
+                             <DxGridLayoutItem Row="5" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["CreatedWorkOrderLabel"] </strong></label><br />
+                                <SfTextBox @bind-Value="CreatedWorkOrderNo" Enabled=false></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        }
+
 
                     </Items>
                 </DxGridLayout>

@@ -176,5 +176,6 @@
         public static bool StockSectionsChildMenu { get; set; } = true;
         public static bool StockShelfsChildMenu { get; set; } = true;
         public static bool StockAddressesChildMenu { get; set; } = true;
+        public static bool StockAddressesMenu { get; set; } = true;
     }
 }

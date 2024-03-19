@@ -15,5 +15,8 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu
 
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
         public Guid ParentMenuId { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Int)]
+        public int ContextOrderNo { get; set; }
     }
 }
