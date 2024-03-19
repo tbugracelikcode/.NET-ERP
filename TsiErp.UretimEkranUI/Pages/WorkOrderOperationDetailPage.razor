@@ -5,6 +5,8 @@
 @inject AppService AppService
 @inject Navigation NavigationManager
 @inject IOperationAdjustmentsAppService OperationAdjustmentAppService
+@inject IHaltReasonsAppService HaltReasonsService
+@inject OperationHaltReasonsTableLocalDbService OperationHaltReasonsTableLocalDbService
 
 
 <div style="height:800px">
@@ -193,6 +195,10 @@
                                                     </CircularGaugeAxis>
                                                 </CircularGaugeAxes>
                                             </SfCircularGauge>
+
+
+                                            <br />
+                                            <SfButton CssClass="TSIOperationPageAdjustmentButton"><SfIcon Size="IconSize.Large" Name="IconName.ArrowRight"></SfIcon>&nbsp;&nbsp;Adet Arttır</SfButton>
                                         </Template>
                                     </DxGridLayoutItem>
 
@@ -231,6 +237,8 @@
                                                     </CircularGaugeAxis>
                                                 </CircularGaugeAxes>
                                             </SfCircularGauge>
+
+                                           
 
                                         </Template>
                                     </DxGridLayoutItem>
@@ -311,4 +319,155 @@
 
         </Items>
     </DxGridLayout>
+
+    <DxPopup @bind-Visible=HaltReasonModalVisible
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="Duruş Bilgisi"
+             ShowCloseButton=false
+             Width="58%"
+             Height="44%"
+             MinWidth="1000px"
+             MinHeight="480px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="18%" />
+                    <DxGridLayoutRow Height="6%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="72%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="0%" />
+                    <DxGridLayoutColumn Width="30%" />
+                    <DxGridLayoutColumn Width="70%" />
+                    <DxGridLayoutColumn Width="0%" />
+                </Columns>
+
+                <Items>
+
+                    <DxGridLayoutItem Row="0" Column="1" ColumnSpan="2">
+                        <Template>
+                            <table>
+                                <tr>
+                                    <td style="width:50%">
+                                        <label class="TSIOperationPageModalLabel"><strong>Duruş Süresi</strong></label>
+
+                                        <SfTextBox @bind-Value=HaltReasonTime Enabled=false></SfTextBox>
+                                    </td>
+
+                                    <td style="width:50%">
+                                        <label class="TSIOperationPageModalLabel"><strong>Seçilen Duruş Bilgisi</strong></label>
+
+                                        <SfTextBox @bind-Value=SelectedHaltReason.Name Enabled=false></SfTextBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1" ColumnSpan="2">
+                        <Template>
+                            <SfCard class="TSIListPageButtonCard3">
+                                <CardContent>
+                                    <table>
+                                        <tr>
+                                            <td style="width:20%">
+
+                                                <SfButton OnClick=@GetHaltReasonsIsOperator CssClass="TSIOperationPageAdjustmentButton">Personel Kaynaklı Duruşlar</SfButton>
+                                            </td>
+
+                                            <td style="width:20%">
+                                                <SfButton OnClick=@GetHaltReasonsIsMachine CssClass="TSIOperationPageAdjustmentButton">Makine Kaynaklı Duruşlar</SfButton>
+                                            </td>
+
+                                            <td style="width:20%">
+                                                <SfButton OnClick=@GetHaltReasonsIsManagement CssClass="TSIOperationPageAdjustmentButton">Yönetim Kaynaklı Duruşlar</SfButton>
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="2">
+                        <Template>
+                            <br />
+                            <SfCard class="TSIHaltReasonDetailCards">
+                                <CardContent>
+
+                                    <DxGridLayout CssClass="TSIGridOperationPageLayout">
+
+                                        <Rows>
+                                            <DxGridLayoutRow Height="60%" />
+                                            <DxGridLayoutRow Height="15%" />
+                                        </Rows>
+
+                                        <Columns>
+                                            <DxGridLayoutColumn Width="2%" />
+                                            <DxGridLayoutColumn Width="30%" />
+                                            <DxGridLayoutColumn Width="2%" />
+                                            <DxGridLayoutColumn Width="30%" />
+                                            <DxGridLayoutColumn Width="2%" />
+                                            <DxGridLayoutColumn Width="30%" />
+                                            <DxGridLayoutColumn Width="2%" />
+                                        </Columns>
+
+                                        <Items>
+
+                                            <DxGridLayoutItem Row="0" Column="1" ColumnSpan="5">
+                                                <Template>
+
+                                                    @foreach (var item in HaltReasonsList)
+                                                    {
+                                                        for (int i = 0; i <= 30; i++)
+                                                        {
+                                                            <div id="card_sample_1" class="card_sample" onclick="@(()=>OnSelectHaltReason(item))" style=" float:left;width: 290px;">
+                                                                <SfCard CssClass="TSIStationCards">
+                                                                    <div style="background-color:#00ff14">
+                                                                        <br>
+                                                                        <center> <CardHeader Title="@item.Name" /></center>
+                                                                        <CardContent>
+                                                                            <ChildContent>
+                                                                            </ChildContent>
+                                                                        </CardContent>
+
+                                                                        <CardFooter>
+                                                                        </CardFooter>
+                                                                    </div>
+                                                                </SfCard>
+                                                            </div>
+                                                        }
+                                                    }
+                                                </Template>
+                                            </DxGridLayoutItem>
+
+                                        </Items>
+                                    </DxGridLayout>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <div style=" height: 105%;background-color: white !important;width: 100%;text-align: end;">
+                <SfButton Disabled=@EndHaltReasonButtonDisable OnClick=@EndHaltReasonButtonClick CssClass="TSIOperationPageAdjustmentButton">Duruşu Bitir</SfButton>
+            </div>
+        </FooterContentTemplate>
+    </DxPopup>
 </div>

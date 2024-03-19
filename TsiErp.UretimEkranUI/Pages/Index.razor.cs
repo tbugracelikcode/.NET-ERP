@@ -70,8 +70,6 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private async void ShowModal()
         {
-            HaltReasonModalVisible = true;
-            await InvokeAsync(StateHasChanged);
             await Task.CompletedTask;
         }
 
@@ -238,6 +236,14 @@ namespace TsiErp.UretimEkranUI.Pages
 
         #endregion
 
+        private async Task ShowHaltReasonModal()
+        {
+            HaltReasonModalVisible = true;
+            StartHaltReasonTimer();
+            _systemIdleTimer.Stop();
+            _systemIdleTimer.Enabled = false;
+            await InvokeAsync(StateHasChanged);
+        }
 
         public void Dispose()
         {
