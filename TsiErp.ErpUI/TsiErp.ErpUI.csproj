@@ -145,4 +145,8 @@
 		<None Include="wwwroot\login\webfonts\fa-solid-900.woff2" />
 	</ItemGroup>
 
+	<PropertyGroup>
+		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+	</PropertyGroup>
+	
 </Project>
