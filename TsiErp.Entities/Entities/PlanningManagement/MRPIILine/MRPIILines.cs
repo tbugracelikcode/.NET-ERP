@@ -55,5 +55,16 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPIILine
         /// Sipariş Kabul ID
         /// </summary>
         public Guid? OrderAcceptanceID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Referans Tarihi
+        /// </summary>
+        public DateTime ReferanceDate { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Satır No
+        /// </summary>
+        public string Description_ { get; set; }
+
     }
 }

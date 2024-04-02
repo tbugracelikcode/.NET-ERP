@@ -120,11 +120,14 @@
   <data name="BringLinesButton" xml:space="preserve">
     <value>Satırları Getir</value>
   </data>
+  <data name="CalculateAllEndDatesButton" xml:space="preserve">
+    <value>Tahmini Bitiş Tarihlerini Hesapla</value>
+  </data>
   <data name="CalculationDate" xml:space="preserve">
-    <value>HESAPLAMA TARİHİ</value>
+    <value>REFERANS TARİHİ</value>
   </data>
   <data name="CalculationDateLabel" xml:space="preserve">
-    <value>Hesaplama Tarihi:</value>
+    <value>Referans Tarihi:</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
@@ -149,6 +152,9 @@
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
+  </data>
+  <data name="DescriptionLineLabel" xml:space="preserve">
+    <value>Açıklama:</value>
   </data>
   <data name="Description_" xml:space="preserve">
     <value>AÇIKLAMA</value>
@@ -189,8 +195,14 @@
   <data name="LineGridProductName" xml:space="preserve">
     <value>STOK AÇIKLAMASI</value>
   </data>
+  <data name="LineGridReferanceDate" xml:space="preserve">
+    <value>REFERANS TARİHİ</value>
+  </data>
   <data name="LineGridSalesOrderNo" xml:space="preserve">
     <value>SİPARİŞ NO</value>
+  </data>
+  <data name="LineModalTitle" xml:space="preserve">
+    <value>Üretim Kaynak Planlaması (MRPII) Satırları</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -203,6 +215,12 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="MRPIILineContextCalculate" xml:space="preserve">
+    <value>Tahmini Bitiş Tarihi Hesapla</value>
+  </data>
+  <data name="MRPIILineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="MRPIILineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
@@ -221,6 +239,9 @@
   </data>
   <data name="OrderAcceptancesLabel" xml:space="preserve">
     <value>Sipariş Kabul Kayıtları:</value>
+  </data>
+  <data name="ReferanceDateLineLabel" xml:space="preserve">
+    <value>Referans Tarihi:</value>
   </data>
   <data name="SalesOrdersLabel" xml:space="preserve">
     <value>Satış Siparişleri:</value>

@@ -65,5 +65,13 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPIILine.Dtos
         /// Sipariş Kabul No
         /// </summary>
         public string OrderAcceptanceNo { get; set; }
+        /// <summary>
+        /// Referans Tarihi
+        /// </summary>
+        public DateTime ReferanceDate { get; set; }
+        /// <summary>
+        /// Satır No
+        /// </summary>
+        public string Description_ { get; set; }
     }
 }

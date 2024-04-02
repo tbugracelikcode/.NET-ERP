@@ -19,6 +19,7 @@ using TsiErp.Entities.CalendarColorConstant;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalary;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
@@ -31,7 +32,9 @@ using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Helpers;
+using TsiErp.ErpUI.Shared;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using static TsiErp.ErpUI.Pages.QualityControl.Report8D.Report8DsListPage;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 {
@@ -102,6 +105,12 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         private bool MaintenanceModalVisible = false;
         private bool MaintenanceCrudModalVisible = false;
         private bool MaintenanceLineCrudModalVisible = false;
+        private bool DayTypeModalVisible = false;
+        private bool DayTypeCrudModalVisible = false;
+        private bool isDateSpan = false;
+        public DateTime StartDateDayType;
+        public DateTime EndDateDayType;
+        public bool overTimeModalVisible = false;
 
         #endregion
 
@@ -126,6 +135,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             CreateDayContextMenuItems();
             CreateLineMaintenaceInfosContextMenuItems();
             CreateLineMaintenaceInfosLineContextMenuItems();
+            CreateDayTypeContextMenuItems();
             base.OnInitialized();
 
         }
@@ -439,7 +449,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             if (chcTumu) { DataSourceEvent = FinalDataSource; }
         }
 
-
         public async Task OnCellClick(CellClickEventArgs args)
         {
             args.Cancel = true;
@@ -450,6 +459,233 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             await Task.CompletedTask;
         }
 
+        public void DayTypeButtonClicked()
+        {
+            DayTypeModalVisible = true;
+        }
+
+        public void HideDayTypeModal()
+        {
+            DayTypeModalVisible = false;
+            DayTypeList.Clear();
+        }
+
+        public void HideDayTypeCrudModal()
+        {
+            DayTypeCrudModalVisible = false;
+        }
+
+        public class DayTypeModel
+        {
+            public DateTime DayDate { get; set; }
+            public int DayStatus { get; set; }
+        }
+
+        public List<DayTypeModel> DayTypeList = new List<DayTypeModel>();
+        public List<ContextMenuItemModel> DayTypeGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+
+        DayTypeModel DayTypeDataSource;
+
+        private SfGrid<DayTypeModel> _DayTypeGrid;
+
+        protected void CreateDayTypeContextMenuItems()
+        {
+            DayTypeGridContextMenu.Add(new ContextMenuItemModel { Text = L["DayTypeContextAdd"], Id = "new" });
+            DayTypeGridContextMenu.Add(new ContextMenuItemModel { Text = L["DayTypeContextChange"], Id = "change" });
+            DayTypeGridContextMenu.Add(new ContextMenuItemModel { Text = L["DayTypeContextDelete"], Id = "delete" });
+            DayTypeGridContextMenu.Add(new ContextMenuItemModel { Text = L["DayTypeContextRefresh"], Id = "refresh" });
+
+        }
+
+        public async void OnDayTypeContextMenuClick(ContextMenuClickEventArgs<DayTypeModel> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "new":
+                    DayTypeDataSource = new DayTypeModel() { };
+
+                    StartDateDayType = DataSource.SelectCalendarDaysDto.Where(t => t.Date_.Month == 1 && t.Date_.Day == 1).Select(t => t.Date_).FirstOrDefault();
+                    EndDateDayType = DataSource.SelectCalendarDaysDto.Where(t => t.Date_.Month == 1 && t.Date_.Day == 1).Select(t => t.Date_).FirstOrDefault();
+
+                    foreach (var item in _dayTypeComboBox)
+                    {
+                        item.Text = L[item.Text];
+                    }
+
+                    DayTypeCrudModalVisible = true;
+                    await InvokeAsync(StateHasChanged);
+
+                    break;
+
+                case "change":
+
+                    DayTypeDataSource = args.RowInfo.RowData;
+                    StartDateDayType = DayTypeDataSource.DayDate;
+                    EndDateDayType = DayTypeDataSource.DayDate;
+
+                    foreach (var item in _dayTypeComboBox)
+                    {
+                        item.Text = L[item.Text];
+                    }
+                    DayTypeCrudModalVisible = true;
+                    await InvokeAsync(StateHasChanged);
+
+
+                    break;
+
+                case "delete":
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageDayTypeBase"]);
+                    if (res == true)
+                    {
+
+                        DayTypeList.Remove(args.RowInfo.RowData);
+
+                        await _DayTypeGrid.Refresh();
+                        await InvokeAsync(StateHasChanged);
+                    }
+
+                    break;
+
+                case "refresh":
+
+                    await _DayTypeGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        public async void DayTypeOnSubmit()
+        {
+            foreach (var dayType in DayTypeList)
+            {
+                var updatedDay = DataSource.SelectCalendarDaysDto.Where(t => t.Date_ == dayType.DayDate).FirstOrDefault();
+
+                if (updatedDay != null && updatedDay.Id != Guid.Empty)
+                {
+                    updatedDay.CalendarDayStateEnum = dayType.DayStatus;
+                    CalendarsService.UpdateDays(updatedDay);
+                }
+            }
+
+            HideDayTypeModal();
+
+            SchedularDaysList = (await CalendarsService.GetDaysListAsync(DataSource.Id)).Data.ToList();
+            DataSourceEvent = ConvertToAppointmentData(SchedularDaysList);
+            FinalDataSource = DataSourceEvent;
+
+            await InvokeAsync(StateHasChanged);
+
+        }
+
+        public async void DayTypeCrudOnSubmit()
+        {
+            if (!isDateSpan)
+            {
+                DayTypeDataSource.DayDate = StartDateDayType;
+
+                if (!DayTypeList.Contains(DayTypeDataSource))
+                {
+                    DayTypeList.Add(DayTypeDataSource);
+                }
+                else
+                {
+                    int typeIndex = DayTypeList.IndexOf(DayTypeDataSource);
+                    DayTypeList[typeIndex] = DayTypeDataSource;
+                }
+            }
+            else
+            {
+                int status = DayTypeDataSource.DayStatus;
+
+                for (DateTime i = StartDateDayType; i <= EndDateDayType; i = i.AddDays(1))
+                {
+                    if (!DayTypeList.Any(t => t.DayDate == i))
+                    {
+                        DayTypeDataSource = new DayTypeModel
+                        {
+                            DayDate = i,
+                            DayStatus = status
+                        };
+
+                        DayTypeList.Add(DayTypeDataSource);
+                    }
+                    else
+                    {
+                        var dayDataSource = DayTypeList.Where(t=>t.DayDate == i).FirstOrDefault();
+                        int typeIndex = DayTypeList.IndexOf(dayDataSource);
+
+                        DayTypeDataSource = new DayTypeModel
+                        {
+                            DayDate = i,
+                            DayStatus = status
+                        };
+
+                        DayTypeList[typeIndex] = DayTypeDataSource;
+                    }
+                }
+            }
+
+
+            HideDayTypeCrudModal();
+
+            await _DayTypeGrid.Refresh();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public class DayTypeComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<DayTypeComboBox> _dayTypeComboBox = new List<DayTypeComboBox>
+        {
+            new DayTypeComboBox(){ID = "1", Text="WorkExist"},
+            new DayTypeComboBox(){ID = "2", Text="WorkNotExist"},
+            new DayTypeComboBox(){ID = "3", Text="OfficialHoliday"},
+            new DayTypeComboBox(){ID = "4", Text="Holiday"},
+            new DayTypeComboBox(){ID = "5", Text="HalfDay"},
+            new DayTypeComboBox(){ID = "6", Text="LoadingDay"},
+            new DayTypeComboBox(){ID = "7", Text="UIMaintenancePreviousMenu"},
+        };
+
+        private void DayTypeComboBoxValueChangeHandler(ChangeEventArgs<string, DayTypeComboBox> args)
+        {
+            if (args.ItemData != null)
+            {
+                switch (args.ItemData.ID)
+                {
+                    case "1":
+                        DayTypeDataSource.DayStatus = 1;
+                        break;
+                    case "2":
+                        DayTypeDataSource.DayStatus = 2;
+                        break;
+                    case "3":
+                        DayTypeDataSource.DayStatus = 3;
+                        break;
+                    case "4":
+                        DayTypeDataSource.DayStatus = 4;
+                        break;
+                    case "5":
+                        DayTypeDataSource.DayStatus = 5;
+                        break;
+                    case "6":
+                        DayTypeDataSource.DayStatus = 6;
+                        break;
+                    case "7":
+                        DayTypeDataSource.DayStatus = 7;
+                        break;
+
+
+                    default: break;
+                }
+            }
+        }
 
         #endregion
 
@@ -641,18 +877,29 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             lineWorkStatusVisible = false;
         }
 
+        public void ShowLineOverTimeModal()
+        {
+            overTimeModalVisible = true;
+        }
+        public void HideLineOverTimeModal()
+        {
+            overTimeModalVisible = false;
+        }
+
         private async void LineModalSave()
         {
             DataSource.SelectCalendarLinesDto = LineGridList;
 
-
             var updatedEntity = ObjectMapper.Map<SelectCalendarsDto, UpdateCalendarsDto>(DataSource);
 
-            var updatedResult = (await CalendarsService.UpdateAsync(updatedEntity));
+            var updatedResult = (await CalendarsService.UpdateWithoutDaysAsync(updatedEntity));
 
             HideLineModal();
 
             SchedularDaysList = (await CalendarsService.GetDaysListAsync(DataSource.Id)).Data.ToList();
+            DataSourceEvent = ConvertToAppointmentData(SchedularDaysList);
+            FinalDataSource = DataSourceEvent;
+
 
             await InvokeAsync(StateHasChanged);
         }
@@ -674,18 +921,43 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             await InvokeAsync(StateHasChanged);
         }
 
+        private async void LineEditOverTimeModalSave()
+        {
+            int selectedLineIndex = DataSource.SelectCalendarLinesDto.FindIndex(t => t.Id == LineDataSource.Id);
+
+            if (selectedLineIndex > -1)
+            {
+                DataSource.SelectCalendarLinesDto[selectedLineIndex] = LineDataSource;
+            }
+
+            await _LineGrid.Refresh();
+
+            HideLineOverTimeModal();
+            await InvokeAsync(StateHasChanged);
+        }
+
         protected void CreateLineContextMenuItems()
         {
             if (LineGridContextMenu.Count() == 0)
             {
-
-                var contextID = contextsList.Where(t => t.MenuName == "CalendarLineContextWorkStatus").Select(t => t.Id).FirstOrDefault();
-                var permission = UserPermissionsList.Where(t => t.MenuId == contextID).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+                foreach (var context in contextsList)
                 {
-                    LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarLineContextWorkStatus"], Id = "workstatus" });
-                }
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
 
+                    if (permission)
+                    {
+
+                        switch (context.MenuName)
+                        {
+                            case "CalendarLineContextWorkStatus":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarLineContextWorkStatus"], Id = "workstatus" }); break;
+                            case "CalendarLineContextOverTime":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarLineContextOverTime"], Id = "overtime" }); break;
+                            default: break;
+                        }
+                    }
+
+                }
             }
         }
 
@@ -814,10 +1086,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             switch (args.Item.Id)
             {
-                case "maintenance":
-
-
-                    break;
 
                 case "workstatus":
                     LineDataSource = args.RowInfo.RowData;
@@ -826,10 +1094,19 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
                     break;
 
+                case "overtime":
+                    LineDataSource = args.RowInfo.RowData;
+
+                    ShowLineOverTimeModal();
+
+                    break;
+
                 default:
                     break;
             }
         }
+
+       
 
         public async void OnListMaintenaceInfosContextMenuClick(ContextMenuClickEventArgs<SelectPlannedMaintenanceLinesDto> args)
         {
@@ -974,9 +1251,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             {
                 var maintenance = (await PlannedMaintenancesAppService.GetListAsync(new ListPlannedMaintenancesParameterDto())).Data.Where(t => t.PlannedDate == line.Date_ && t.StationID == line.StationID).FirstOrDefault();
 
-                if (maintenance!=null && !PlannedMaintenanceList.Contains(maintenance))
+                if (maintenance != null && !PlannedMaintenanceList.Contains(maintenance))
                 {
-                PlannedMaintenanceList.Add(maintenance);
+                    PlannedMaintenanceList.Add(maintenance);
                 }
             }
 
@@ -984,8 +1261,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         }
 
         public void HideMaintenanceModal()
-        { 
-            MaintenanceModalVisible = false; 
+        {
+            MaintenanceModalVisible = false;
         }
 
         public void HideMaintenanceCrudModal()

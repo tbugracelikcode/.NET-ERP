@@ -147,6 +147,9 @@
   <data name="CalendarLineContextMaintenance" xml:space="preserve">
     <value>Maintenance Information</value>
   </data>
+  <data name="CalendarLineContextOverTime" xml:space="preserve">
+    <value>Update Overtime</value>
+  </data>
   <data name="CalendarLineContextWorkStatus" xml:space="preserve">
     <value>Update Working Status</value>
   </data>
@@ -173,6 +176,42 @@
   </data>
   <data name="DateYear" xml:space="preserve">
     <value>Calendar Year</value>
+  </data>
+  <data name="Date_2Label" xml:space="preserve">
+    <value>Date 2:</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Date 1:</value>
+  </data>
+  <data name="DayDate" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="DayStatus" xml:space="preserve">
+    <value>TYPE</value>
+  </data>
+  <data name="DayTypeButton" xml:space="preserve">
+    <value>Determine Day Type</value>
+  </data>
+  <data name="DayTypeContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="DayTypeContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="DayTypeContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DayTypeContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="DayTypeCrudModalTitle" xml:space="preserve">
+    <value>Determination of Day Type Operations</value>
+  </data>
+  <data name="DayTypeLabel" xml:space="preserve">
+    <value>Type:</value>
+  </data>
+  <data name="DayTypeModalTitle" xml:space="preserve">
+    <value>Determine Day Type</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -206,6 +245,9 @@
   </data>
   <data name="InstructionDescriptionLineLabel" xml:space="preserve">
     <value>Instruction Description:</value>
+  </data>
+  <data name="isDateSpanLabel" xml:space="preserve">
+    <value>Date Range:</value>
   </data>
   <data name="IsPlanned" xml:space="preserve">
     <value>PLANNED</value>
@@ -405,6 +447,9 @@
   <data name="SelectedStationPlan" xml:space="preserve">
     <value>Schedule Selected Stations</value>
   </data>
+  <data name="ShiftOverTimeLineLabel" xml:space="preserve">
+    <value>Overtime:</value>
+  </data>
   <data name="ShowMaintenanceInfosButton" xml:space="preserve">
     <value>Show Maintenance Informations</value>
   </data>
@@ -417,6 +462,9 @@
   <data name="StationCodeLabel" xml:space="preserve">
     <value>Station Code:</value>
   </data>
+  <data name="StationShiftModalOverTimeTitle" xml:space="preserve">
+    <value>Station Overtime Information</value>
+  </data>
   <data name="StationShiftModalTitle" xml:space="preserve">
     <value>Station Shift Information</value>
   </data>
@@ -427,6 +475,9 @@
     <value>Status:</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Selected record will be deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageDayTypeBase" xml:space="preserve">
     <value>Selected record will be deleted.</value>
   </data>
   <data name="UIConfirmationPopupMessageMaintenanceBase" xml:space="preserve">
@@ -446,6 +497,9 @@
   </data>
   <data name="UIInformationSelectedStation" xml:space="preserve">
     <value>The station you selected exists in the list.</value>
+  </data>
+  <data name="UIMaintenancePreviousMenu" xml:space="preserve">
+    <value>Maintenance</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Planning &gt; Work Calendar</value>

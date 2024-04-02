@@ -70,7 +70,16 @@ namespace TsiErp.Localizations.Resources.MRPIIs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to HESAPLAMA TARİHİ.
+        ///   Looks up a localized string similar to Tahmini Bitiş Tarihlerini Hesapla.
+        /// </summary>
+        public static string CalculateAllEndDatesButton {
+            get {
+                return ResourceManager.GetString("CalculateAllEndDatesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to REFERANS TARİHİ.
         /// </summary>
         public static string CalculationDate {
             get {
@@ -79,7 +88,7 @@ namespace TsiErp.Localizations.Resources.MRPIIs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hesaplama Tarihi:.
+        ///   Looks up a localized string similar to Referans Tarihi:.
         /// </summary>
         public static string CalculationDateLabel {
             get {
@@ -174,6 +183,15 @@ namespace TsiErp.Localizations.Resources.MRPIIs.Page {
         public static string Description_Label {
             get {
                 return ResourceManager.GetString("Description_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Açıklama:.
+        /// </summary>
+        public static string DescriptionLineLabel {
+            get {
+                return ResourceManager.GetString("DescriptionLineLabel", resourceCulture);
             }
         }
         
@@ -277,11 +295,29 @@ namespace TsiErp.Localizations.Resources.MRPIIs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to REFERANS TARİHİ.
+        /// </summary>
+        public static string LineGridReferanceDate {
+            get {
+                return ResourceManager.GetString("LineGridReferanceDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SİPARİŞ NO.
         /// </summary>
         public static string LineGridSalesOrderNo {
             get {
                 return ResourceManager.GetString("LineGridSalesOrderNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Kaynak Planlaması (MRPII) Satırları.
+        /// </summary>
+        public static string LineModalTitle {
+            get {
+                return ResourceManager.GetString("LineModalTitle", resourceCulture);
             }
         }
         
@@ -318,6 +354,24 @@ namespace TsiErp.Localizations.Resources.MRPIIs.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tahmini Bitiş Tarihi Hesapla.
+        /// </summary>
+        public static string MRPIILineContextCalculate {
+            get {
+                return ResourceManager.GetString("MRPIILineContextCalculate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MRPIILineContextChange {
+            get {
+                return ResourceManager.GetString("MRPIILineContextChange", resourceCulture);
             }
         }
         
@@ -372,6 +426,15 @@ namespace TsiErp.Localizations.Resources.MRPIIs.Page {
         public static string OrderAcceptancesLabel {
             get {
                 return ResourceManager.GetString("OrderAcceptancesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Referans Tarihi:.
+        /// </summary>
+        public static string ReferanceDateLineLabel {
+            get {
+                return ResourceManager.GetString("ReferanceDateLineLabel", resourceCulture);
             }
         }
         

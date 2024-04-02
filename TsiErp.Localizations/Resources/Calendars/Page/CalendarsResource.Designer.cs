@@ -160,6 +160,15 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fazla Mesai Güncelle.
+        /// </summary>
+        public static string CalendarLineContextOverTime {
+            get {
+                return ResourceManager.GetString("CalendarLineContextOverTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Çalışma Durumunu Güncelle.
         /// </summary>
         public static string CalendarLineContextWorkStatus {
@@ -223,6 +232,24 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tarih 2:.
+        /// </summary>
+        public static string Date_2Label {
+            get {
+                return ResourceManager.GetString("Date_2Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarih 1:.
+        /// </summary>
+        public static string Date_Label {
+            get {
+                return ResourceManager.GetString("Date_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Takvim Yılı:.
         /// </summary>
         public static string DateLabel {
@@ -237,6 +264,96 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         public static string DateYear {
             get {
                 return ResourceManager.GetString("DateYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TARİH.
+        /// </summary>
+        public static string DayDate {
+            get {
+                return ResourceManager.GetString("DayDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TÜR.
+        /// </summary>
+        public static string DayStatus {
+            get {
+                return ResourceManager.GetString("DayStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gün Türünü Belirle.
+        /// </summary>
+        public static string DayTypeButton {
+            get {
+                return ResourceManager.GetString("DayTypeButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string DayTypeContextAdd {
+            get {
+                return ResourceManager.GetString("DayTypeContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string DayTypeContextChange {
+            get {
+                return ResourceManager.GetString("DayTypeContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string DayTypeContextDelete {
+            get {
+                return ResourceManager.GetString("DayTypeContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string DayTypeContextRefresh {
+            get {
+                return ResourceManager.GetString("DayTypeContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gün Türünü Belirleme İşlemleri.
+        /// </summary>
+        public static string DayTypeCrudModalTitle {
+            get {
+                return ResourceManager.GetString("DayTypeCrudModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tür:.
+        /// </summary>
+        public static string DayTypeLabel {
+            get {
+                return ResourceManager.GetString("DayTypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gün Türünü Belirle.
+        /// </summary>
+        public static string DayTypeModalTitle {
+            get {
+                return ResourceManager.GetString("DayTypeModalTitle", resourceCulture);
             }
         }
         
@@ -354,6 +471,15 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         public static string IsActiveLabel {
             get {
                 return ResourceManager.GetString("IsActiveLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarih Aralığı:.
+        /// </summary>
+        public static string isDateSpanLabel {
+            get {
+                return ResourceManager.GetString("isDateSpanLabel", resourceCulture);
             }
         }
         
@@ -943,6 +1069,15 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fazla Mesai:.
+        /// </summary>
+        public static string ShiftOverTimeLineLabel {
+            get {
+                return ResourceManager.GetString("ShiftOverTimeLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bakım Bilgilerini Görüntüle.
         /// </summary>
         public static string ShowMaintenanceInfosButton {
@@ -979,6 +1114,15 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İş İstasyonu Fazla Mesai Bilgileri.
+        /// </summary>
+        public static string StationShiftModalOverTimeTitle {
+            get {
+                return ResourceManager.GetString("StationShiftModalOverTimeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İş İstasyonu Vardiya Bilgileri.
         /// </summary>
         public static string StationShiftModalTitle {
@@ -1011,6 +1155,15 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         public static string UIConfirmationPopupMessageBase {
             get {
                 return ResourceManager.GetString("UIConfirmationPopupMessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçilen kayıt silinecektir..
+        /// </summary>
+        public static string UIConfirmationPopupMessageDayTypeBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupMessageDayTypeBase", resourceCulture);
             }
         }
         
@@ -1065,6 +1218,15 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         public static string UIInformationSelectedStation {
             get {
                 return ResourceManager.GetString("UIInformationSelectedStation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bakım.
+        /// </summary>
+        public static string UIMaintenancePreviousMenu {
+            get {
+                return ResourceManager.GetString("UIMaintenancePreviousMenu", resourceCulture);
             }
         }
         

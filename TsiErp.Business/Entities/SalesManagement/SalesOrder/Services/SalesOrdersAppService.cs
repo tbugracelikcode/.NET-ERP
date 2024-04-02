@@ -67,6 +67,8 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
+            if (input.SalesOrderState == 0) input.SalesOrderState = 1;
+
             string now = _GetSQLDateAppService.GetDateFromSQL().ToString();
 
             string[] timeSplit = now.Split(" ");
@@ -111,6 +113,8 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
             foreach (var item in input.SelectSalesOrderLines)
             {
+                if ((int)item.SalesOrderLineStateEnum == 0) item.SalesOrderLineStateEnum = TsiErp.Entities.Enums.SalesOrderLineStateEnum.Beklemede;
+
                 var queryLine = queryFactory.Query().From(Tables.SalesOrderLines).Insert(new CreateSalesOrderLinesDto
                 {
                     LikedPropositionLineID = Guid.Empty,
@@ -318,7 +322,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.SalesOrders)
-                   .Select<SalesOrders>(so => new { so.WorkOrderCreationDate, so.WarehouseID, so.TotalVatExcludedAmount, so.TotalVatAmount, so.TotalDiscountAmount, so.Time_, so.SpecialCode, so.ShippingAdressID, so.SalesOrderState, so.PaymentPlanID, so.NetAmount, so.LinkedSalesPropositionID, so.Id, so.GrossAmount, so.FicheNo, so.ExchangeRate, so.Description_, so.Date_, so.DataOpenStatusUserId, so.DataOpenStatus, so.CurrentAccountCardID, so.CurrencyID, so.BranchID })
+                   .Select<SalesOrders>(null)
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
@@ -368,7 +372,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.SalesOrderLines)
-                   .Select<SalesOrderLines>(sol => new { sol.WorkOrderCreationDate, sol.VATrate, sol.VATamount, sol.UnitSetID, sol.UnitPrice, sol.Quantity, sol.SalesOrderLineStateEnum, sol.SalesOrderID, sol.ProductID, sol.PaymentPlanID, sol.LikedPropositionLineID, sol.LineTotalAmount, sol.Id, sol.ExchangeRate, sol.DiscountRate, sol.DiscountAmount, sol.DataOpenStatusUserId, sol.DataOpenStatus })
+                   .Select<SalesOrderLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -437,7 +441,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.SalesOrders)
-                   .Select<SalesOrders>(so => new { so.WorkOrderCreationDate, so.WarehouseID, so.TotalVatExcludedAmount, so.TotalVatAmount, so.TotalDiscountAmount, so.Time_, so.SpecialCode, so.ShippingAdressID, so.SalesOrderState, so.PaymentPlanID, so.NetAmount, so.LinkedSalesPropositionID, so.Id, so.GrossAmount, so.FicheNo, so.ExchangeRate, so.Description_, so.Date_, so.DataOpenStatusUserId, so.DataOpenStatus, so.CurrentAccountCardID, so.CurrencyID, so.BranchID })
+                   .Select<SalesOrders>(null)
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },

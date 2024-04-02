@@ -66,7 +66,7 @@
                                         <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Interval="1">
                                             <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
                                         </ChartPrimaryXAxis>
-                                        <ChartPrimaryYAxis DesiredIntervals="10" Interval="10">
+                                        <ChartPrimaryYAxis DesiredIntervals="50" Interval="50">
                                             <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
                                             <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
                                         </ChartPrimaryYAxis>
@@ -318,7 +318,7 @@
 
         SalesOrderLineNotShippedList = (await SalesOrdersAppService.GetLineSelectListAsync()).Data.ToList();
 
-        var groupedLineList = SalesOrderLineNotShippedList.GroupBy(t => new { t.ProductID, t.SalesOrderID }).Select(t => new { ProductID = t.Key.ProductID, SalesOrderID = t.Key.SalesOrderID, SalesOrderLine = t.ToList() }).ToList();
+         var groupedLineList = SalesOrderLineNotShippedList.GroupBy(t => new { t.ProductID, t.SalesOrderID }).Select(t => new { ProductID = t.Key.ProductID, SalesOrderID = t.Key.SalesOrderID, SalesOrderLine = t.ToList() }).ToList();
 
         foreach (var salesOrderLine in groupedLineList)
         {
@@ -334,9 +334,10 @@
 
                 };
 
-            NotShippedProductGroupsList.Add(notShippedProductGroupModel);
 
-            var salesOrder = (await SalesOrdersAppService.GetAsync(salesOrderLine.SalesOrderID)).Data;
+           NotShippedProductGroupsList.Add(notShippedProductGroupModel);
+
+            var salesOrder = (await SalesOrdersAppService.GetAsync(salesOrderLine.SalesOrderLine.Select(t=>t.SalesOrderID).FirstOrDefault())).Data;
 
             NotShippedProductGroupsTooltip tooltipModel = new NotShippedProductGroupsTooltip
                 {

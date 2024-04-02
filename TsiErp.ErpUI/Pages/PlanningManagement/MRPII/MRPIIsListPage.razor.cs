@@ -13,6 +13,7 @@ using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
+using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
 {
@@ -121,10 +122,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
                     {
                         switch (context.MenuName)
                         {
-                            //case "MRPIILineContextChange":
-                            //    LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPIILineContextChange"], Id = "changed" }); break;
-                            //case "MRPIILineContextDelete":
-                            //    LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPIILineContextDelete"], Id = "delete" }); break;
+                            case "MRPIILineContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPIILineContextChange"], Id = "changed" }); break;
+                            case "MRPIILineContextCalculate":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPIILineContextCalculate"], Id = "calculate" }); break;
                             case "MRPIILineContextRefresh":
                                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPIILineContextRefresh"], Id = "refresh" }); break;
                             default: break;
@@ -206,12 +207,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
             {
                 #region Unused Part
 
-                //case "changed":
-                //    LineDataSource = args.RowInfo.RowData;
-                //    LineCrudPopup = true;
-                //    await InvokeAsync(StateHasChanged);
 
-                //    break;
                 //case "delete":
 
                 //    var res = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineDeleteConfirmation"]);
@@ -246,6 +242,93 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
                 //    break;
 
                 #endregion
+
+                case "changed":
+                    LineDataSource = args.RowInfo.RowData;
+                    LineCrudPopup = true;
+                    await InvokeAsync(StateHasChanged);
+
+                    break;
+
+                case "calculate":
+                    LineDataSource = args.RowInfo.RowData;
+
+                    if(MRPIISourceModule == 1) //Order Acceptance
+                    {
+                        var orderAcceptanceLineAmount = (await OrderAcceptanceRecordsAppService.GetAsync(LineDataSource.OrderAcceptanceID.GetValueOrDefault())).Data.SelectOrderAcceptanceRecordLines.Where(t => t.ProductID == LineDataSource.ProductID).Select(t => t.OrderAmount).FirstOrDefault();
+
+                        var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(LineDataSource.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.Where(t => t.ProductSupplyType == 2).ToList();
+
+                        if (bomLineList != null && bomLineList.Count > 0)
+                        {
+                            decimal TotalOperationTime = 0;
+
+                            foreach (var bomLine in bomLineList)
+                            {
+                                #region Tahmini Bitiş Tarihi
+
+                                Guid productsOperationID = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductID == bomLine.ProductID.GetValueOrDefault()).Select(t => t.Id).FirstOrDefault();
+
+                                if (productsOperationID != Guid.Empty)
+                                {
+                                    var productsOperationLineList = (await ProductsOperationsAppService.GetAsync(productsOperationID)).Data.SelectProductsOperationLines;
+
+                                    if (productsOperationLineList != null && productsOperationLineList.Count > 0)
+                                    {
+                                        TotalOperationTime = productsOperationLineList.Sum(t => t.OperationTime) * bomLine.Quantity * orderAcceptanceLineAmount;
+                                    }
+                                }
+
+                                LineDataSource.EstimatedProductionEndDate = LineDataSource.ReferanceDate.AddSeconds((double)TotalOperationTime);
+
+
+                                #endregion
+
+                            }
+                        }
+
+                    }
+
+                    else if (MRPIISourceModule == 2) //Sales Orders
+                    {
+                        var salesOrderLineAmount = (await SalesOrdersAppService.GetAsync(LineDataSource.SalesOrderID.GetValueOrDefault())).Data.SelectSalesOrderLines.Where(t => t.ProductID == LineDataSource.ProductID).Select(t => t.Quantity).FirstOrDefault();
+
+                        var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(LineDataSource.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.Where(t => t.ProductSupplyType == 2).ToList();
+
+                        if (bomLineList != null && bomLineList.Count > 0)
+                        {
+                            decimal TotalOperationTime = 0;
+
+                            foreach (var bomLine in bomLineList)
+                            {
+                                #region Tahmini Bitiş Tarihi
+
+                                Guid productsOperationID = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductID == bomLine.ProductID.GetValueOrDefault()).Select(t => t.Id).FirstOrDefault();
+
+                                if (productsOperationID != Guid.Empty)
+                                {
+                                    var productsOperationLineList = (await ProductsOperationsAppService.GetAsync(productsOperationID)).Data.SelectProductsOperationLines;
+
+                                    if (productsOperationLineList != null && productsOperationLineList.Count > 0)
+                                    {
+                                        TotalOperationTime = productsOperationLineList.Sum(t => t.OperationTime) * bomLine.Quantity * salesOrderLineAmount;
+                                    }
+                                }
+
+                                LineDataSource.EstimatedProductionEndDate = LineDataSource.ReferanceDate.AddSeconds((double)TotalOperationTime);
+
+
+                                #endregion
+
+                            }
+                        }
+
+                    }
+
+                    await _LineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+
+                    break;
 
                 case "refresh":
                     await GetListDataSourceAsync();
@@ -289,6 +372,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
                 if (selectedLineIndex > -1)
                 {
                     DataSource.SelectMRPIILines[selectedLineIndex] = LineDataSource;
+                    DataSource.SelectMRPIILines[selectedLineIndex].EstimatedProductionEndDate = DateTime.MinValue;
+                    DataSource.SelectMRPIILines[selectedLineIndex].EstimatedProductionStartDate = LineDataSource.ReferanceDate;
+                    DataSource.SelectMRPIILines[selectedLineIndex].EstimatedPurchaseSupplyDate = LineDataSource.ReferanceDate;
                 }
             }
 
@@ -331,6 +417,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
                                         ProductName = product.Name,
                                         LinkedProductCode = string.Empty,
                                         LinkedProductID = Guid.Empty,
+                                        Description_ = string.Empty,
+                                        ReferanceDate = DataSource.CalculationDate,
                                         LinkedProductName = string.Empty,
                                         LineNr = GridLineList.Count + 1,
                                         EstimatedProductionStartDate = DateTime.Now,
@@ -344,18 +432,39 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
 
                                     GridLineList.Add(mrpIILineModel1);
 
+                                    int indexFinishedProduct = GridLineList.IndexOf(mrpIILineModel1);
+
                                     var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(product.Id)).Data.SelectBillsofMaterialLines.Where(t => t.ProductSupplyType == 2).ToList();
 
                                     if (bomLineList != null && bomLineList.Count > 0)
                                     {
+                                        decimal TotalOperationTime = 0;
 
                                         DateTime? biggestDate = null;
 
                                         foreach (var bomLine in bomLineList)
                                         {
+                                            #region Tahmini Bitiş Tarihi
+
+                                            Guid productsOperationID = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductID == bomLine.ProductID.GetValueOrDefault()).Select(t => t.Id).FirstOrDefault();
+
+                                            if (productsOperationID != Guid.Empty)
+                                            {
+                                                var productsOperationLineList = (await ProductsOperationsAppService.GetAsync(productsOperationID)).Data.SelectProductsOperationLines;
+
+                                                if (productsOperationLineList != null && productsOperationLineList.Count > 0)
+                                                {
+                                                    TotalOperationTime = productsOperationLineList.Sum(t => t.OperationTime) * bomLine.Quantity * orderAcceptanceLine.OrderAmount;
+                                                }
+                                            }
+
+                                            GridLineList[indexFinishedProduct].EstimatedProductionEndDate = GridLineList[indexFinishedProduct].ReferanceDate.AddSeconds((double)TotalOperationTime);
+
+
+                                            #endregion
+
                                             if (orderAcceptanceLine.PurchaseSupplyDate > biggestDate)
                                             {
-                                                int indexFinishedProduct = GridLineList.IndexOf(mrpIILineModel1);
 
                                                 GridLineList[indexFinishedProduct].EstimatedProductionStartDate = biggestDate.GetValueOrDefault();
 
@@ -401,6 +510,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
                                         ProductCode = product.Code,
                                         ProductName = product.Name,
                                         LinkedProductCode = string.Empty,
+                                        Description_ = string.Empty,
+                                        ReferanceDate = DataSource.CalculationDate,
                                         LinkedProductID = Guid.Empty,
                                         LinkedProductName = string.Empty,
                                         LineNr = GridLineList.Count + 1,
@@ -416,17 +527,38 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
 
                                     GridLineList.Add(mrpIILineModel1);
 
+                                    int indexFinishedProduct = GridLineList.IndexOf(mrpIILineModel1);
+
                                     var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(product.Id)).Data.SelectBillsofMaterialLines.Where(t => t.ProductSupplyType == 2).ToList();
 
                                     if (bomLineList != null && bomLineList.Count > 0)
                                     {
                                         DateTime? biggestDate = null;
 
+                                        decimal TotalOperationTime = 0;
+
                                         foreach (var bomLine in bomLineList)
                                         {
+                                            #region Tahmini Bitiş Tarihi
+
+                                            Guid productsOperationID = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t=>t.ProductID == bomLine.ProductID.GetValueOrDefault()).Select(t=>t.Id).FirstOrDefault();
+
+                                            if( productsOperationID != Guid.Empty)
+                                            {
+                                                var productsOperationLineList = (await ProductsOperationsAppService.GetAsync(productsOperationID)).Data.SelectProductsOperationLines;
+
+                                                if(productsOperationLineList != null && productsOperationLineList.Count > 0)
+                                                {
+                                                    TotalOperationTime = productsOperationLineList.Sum(t => t.OperationTime) * bomLine.Quantity * salesOrderLine.Quantity;
+                                                }
+                                            }
+
+                                            GridLineList[indexFinishedProduct].EstimatedProductionEndDate = GridLineList[indexFinishedProduct].ReferanceDate.AddSeconds((double)TotalOperationTime);
+
+                                            #endregion
+
                                             if (salesOrderLine.PurchaseSupplyDate > biggestDate)
                                             {
-                                                int indexFinishedProduct = GridLineList.IndexOf(mrpIILineModel1);
 
                                                 GridLineList[indexFinishedProduct].EstimatedProductionStartDate = biggestDate.GetValueOrDefault();
 
@@ -446,6 +578,87 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
             }
 
         }
+
+        public async void CalculateAllEndDatesButtonClicked()
+        {
+            foreach(var line in GridLineList)
+            {
+                int lineIndex = GridLineList.IndexOf(line);
+
+                if(MRPIISourceModule == 1) //OrderAcceptanceRecords
+                {
+                    var orderAcceptanceLineAmount = (await OrderAcceptanceRecordsAppService.GetAsync(line.OrderAcceptanceID.GetValueOrDefault())).Data.SelectOrderAcceptanceRecordLines.Where(t => t.ProductID == line.ProductID).Select(t => t.OrderAmount).FirstOrDefault();
+
+                    var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(line.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.Where(t => t.ProductSupplyType == 2).ToList();
+
+                    if (bomLineList != null && bomLineList.Count > 0)
+                    {
+                        decimal TotalOperationTime = 0;
+
+                        foreach (var bomLine in bomLineList)
+                        {
+                            #region Tahmini Bitiş Tarihi
+
+                            Guid productsOperationID = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductID == bomLine.ProductID.GetValueOrDefault()).Select(t => t.Id).FirstOrDefault();
+
+                            if (productsOperationID != Guid.Empty)
+                            {
+                                var productsOperationLineList = (await ProductsOperationsAppService.GetAsync(productsOperationID)).Data.SelectProductsOperationLines;
+
+                                if (productsOperationLineList != null && productsOperationLineList.Count > 0)
+                                {
+                                    TotalOperationTime = productsOperationLineList.Sum(t => t.OperationTime) * bomLine.Quantity * orderAcceptanceLineAmount;
+                                }
+                            }
+
+                            GridLineList[lineIndex].EstimatedProductionEndDate = GridLineList[lineIndex].ReferanceDate.AddSeconds((double)TotalOperationTime);
+
+
+                            #endregion
+
+                        }
+                    }
+                }
+
+                else if (MRPIISourceModule == 2) //Sales Orders
+                {
+                    var salesOrderLineAmount = (await SalesOrdersAppService.GetAsync(line.SalesOrderID.GetValueOrDefault())).Data.SelectSalesOrderLines.Where(t => t.ProductID == line.ProductID).Select(t => t.Quantity).FirstOrDefault();
+
+                    var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(line.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.Where(t => t.ProductSupplyType == 2).ToList();
+
+                    if (bomLineList != null && bomLineList.Count > 0)
+                    {
+                        decimal TotalOperationTime = 0;
+
+                        foreach (var bomLine in bomLineList)
+                        {
+                            #region Tahmini Bitiş Tarihi
+
+                            Guid productsOperationID = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductID == bomLine.ProductID.GetValueOrDefault()).Select(t => t.Id).FirstOrDefault();
+
+                            if (productsOperationID != Guid.Empty)
+                            {
+                                var productsOperationLineList = (await ProductsOperationsAppService.GetAsync(productsOperationID)).Data.SelectProductsOperationLines;
+
+                                if (productsOperationLineList != null && productsOperationLineList.Count > 0)
+                                {
+                                    TotalOperationTime = productsOperationLineList.Sum(t => t.OperationTime) * bomLine.Quantity * salesOrderLineAmount;
+                                }
+                            }
+
+                            GridLineList[lineIndex].EstimatedProductionEndDate = GridLineList[lineIndex].ReferanceDate.AddSeconds((double)TotalOperationTime);
+
+
+                            #endregion
+
+                        }
+                    }
+                }
+            }
+
+            await _LineGrid.Refresh();
+        }
+       
 
         #region OrderAcceptances MultiSelect
 
