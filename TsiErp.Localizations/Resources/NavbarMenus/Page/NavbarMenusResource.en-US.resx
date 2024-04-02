@@ -141,6 +141,9 @@
   <data name="ByProdGrpScrapAnalysisChildMenu" xml:space="preserve">
     <value>Scrap Analysis by Product Group</value>
   </data>
+  <data name="CalendarChildMenu" xml:space="preserve">
+    <value>Working Calendar</value>
+  </data>
   <data name="CalendarMenu" xml:space="preserve">
     <value>Working Calendar</value>
   </data>

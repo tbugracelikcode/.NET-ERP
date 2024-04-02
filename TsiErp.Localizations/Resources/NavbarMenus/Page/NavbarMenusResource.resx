@@ -141,6 +141,9 @@
   <data name="ByProdGrpScrapAnalysisChildMenu" xml:space="preserve">
     <value>Ürün Grubuna Göre Hurda Analizi</value>
   </data>
+  <data name="CalendarChildMenu" xml:space="preserve">
+    <value>Çalışma Takvimi</value>
+  </data>
   <data name="CalendarMenu" xml:space="preserve">
     <value>Çalışma Takvimi</value>
   </data>
