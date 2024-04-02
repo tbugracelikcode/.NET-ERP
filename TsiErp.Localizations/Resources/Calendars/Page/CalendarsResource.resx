@@ -147,6 +147,9 @@
   <data name="CalendarLineContextMaintenance" xml:space="preserve">
     <value>Bakım Bilgileri</value>
   </data>
+  <data name="CalendarLineContextOverTime" xml:space="preserve">
+    <value>Fazla Mesai Güncelle</value>
+  </data>
   <data name="CalendarLineContextWorkStatus" xml:space="preserve">
     <value>Çalışma Durumunu Güncelle</value>
   </data>
@@ -173,6 +176,42 @@
   </data>
   <data name="DateYear" xml:space="preserve">
     <value>Takvim Yılı</value>
+  </data>
+  <data name="Date_2Label" xml:space="preserve">
+    <value>Tarih 2:</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Tarih 1:</value>
+  </data>
+  <data name="DayDate" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="DayStatus" xml:space="preserve">
+    <value>TÜR</value>
+  </data>
+  <data name="DayTypeButton" xml:space="preserve">
+    <value>Gün Türünü Belirle</value>
+  </data>
+  <data name="DayTypeContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="DayTypeContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="DayTypeContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="DayTypeContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="DayTypeCrudModalTitle" xml:space="preserve">
+    <value>Gün Türünü Belirleme İşlemleri</value>
+  </data>
+  <data name="DayTypeLabel" xml:space="preserve">
+    <value>Tür:</value>
+  </data>
+  <data name="DayTypeModalTitle" xml:space="preserve">
+    <value>Gün Türünü Belirle</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -212,6 +251,9 @@
   </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Aktiflik:</value>
+  </data>
+  <data name="isDateSpanLabel" xml:space="preserve">
+    <value>Tarih Aralığı:</value>
   </data>
   <data name="IsPlanned" xml:space="preserve">
     <value>PLANLI</value>
@@ -408,6 +450,9 @@
   <data name="SelectedStationPlan" xml:space="preserve">
     <value>Seçilen İstasyonları Planla</value>
   </data>
+  <data name="ShiftOverTimeLineLabel" xml:space="preserve">
+    <value>Fazla Mesai:</value>
+  </data>
   <data name="ShowMaintenanceInfosButton" xml:space="preserve">
     <value>Bakım Bilgilerini Görüntüle</value>
   </data>
@@ -420,6 +465,9 @@
   <data name="StationCodeLabel" xml:space="preserve">
     <value>İş İstasyonu:</value>
   </data>
+  <data name="StationShiftModalOverTimeTitle" xml:space="preserve">
+    <value>İş İstasyonu Fazla Mesai Bilgileri</value>
+  </data>
   <data name="StationShiftModalTitle" xml:space="preserve">
     <value>İş İstasyonu Vardiya Bilgileri</value>
   </data>
@@ -430,6 +478,9 @@
     <value>Durum:</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Seçilen kayıt silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageDayTypeBase" xml:space="preserve">
     <value>Seçilen kayıt silinecektir.</value>
   </data>
   <data name="UIConfirmationPopupMessageMaintenanceBase" xml:space="preserve">
@@ -449,6 +500,9 @@
   </data>
   <data name="UIInformationSelectedStation" xml:space="preserve">
     <value>Seçtiğiniz istasyon, listede mevcut.</value>
+  </data>
+  <data name="UIMaintenancePreviousMenu" xml:space="preserve">
+    <value>Bakım</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Planlama &gt; Çalışma Takvimi</value>

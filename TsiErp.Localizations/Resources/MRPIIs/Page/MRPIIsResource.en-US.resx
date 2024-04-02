@@ -117,11 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BringLinesButton" xml:space="preserve">
+    <value>Bring the Lines</value>
+  </data>
+  <data name="CalculateAllEndDatesButton" xml:space="preserve">
+    <value>Calculate Estimated End Dates</value>
+  </data>
+  <data name="CalculationDate" xml:space="preserve">
+    <value>REFERNACE DATE</value>
+  </data>
+  <data name="CalculationDateLabel" xml:space="preserve">
+    <value>Referance Date:</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>MRP II CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>MRP II Code:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -135,6 +153,15 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="DescriptionLineLabel" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="Description_" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Production Resource Planning (MRPII)</value>
   </data>
@@ -146,6 +173,36 @@
   </data>
   <data name="ExportTitle" xml:space="preserve">
     <value>Production Resource Planning (MRPII)</value>
+  </data>
+  <data name="LineGridEstimatedProductionEndDate" xml:space="preserve">
+    <value>ESTIMATED PRODUCTION END DATE</value>
+  </data>
+  <data name="LineGridEstimatedProductionStartDate" xml:space="preserve">
+    <value>ESTIMATED PRODUCTION START DATE</value>
+  </data>
+  <data name="LineGridEstimatedPurchaseSupplyDate" xml:space="preserve">
+    <value>ESTIMATED PURCHASE SUPPLY DATE</value>
+  </data>
+  <data name="LineGridLinkedProductCode" xml:space="preserve">
+    <value>LINKED PRODUCT</value>
+  </data>
+  <data name="LineGridOrderAcceptanceNo" xml:space="preserve">
+    <value>ORDER ACCEPTANCE NO</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="LineGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="LineGridReferanceDate" xml:space="preserve">
+    <value>REFERANCE DATE</value>
+  </data>
+  <data name="LineGridSalesOrderNo" xml:space="preserve">
+    <value>ORDER NO</value>
+  </data>
+  <data name="LineModalTitle" xml:space="preserve">
+    <value>Production Resource Planning (MRPII) Lines</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -159,6 +216,15 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="MRPIILineContextCalculate" xml:space="preserve">
+    <value>Calculate Estimated End Date</value>
+  </data>
+  <data name="MRPIILineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="MRPIILineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="MRPIIsContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -171,11 +237,23 @@
   <data name="MRPIIsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="OrderAcceptancesLabel" xml:space="preserve">
+    <value>Order Acceptance Records:</value>
+  </data>
+  <data name="ReferanceDateLineLabel" xml:space="preserve">
+    <value>Referance Date:</value>
+  </data>
+  <data name="SalesOrdersLabel" xml:space="preserve">
+    <value>Sales Orders:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
   <data name="SelectAllText" xml:space="preserve">
     <value>Select All</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Production Resource Planning (MRPII)</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Planning &gt; Production Planning</value>

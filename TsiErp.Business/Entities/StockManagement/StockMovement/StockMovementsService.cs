@@ -44,7 +44,7 @@ namespace TsiErp.Business.Entities.StockMovement
         static QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         public static IGuidGenerator GuidGenerator { get; set; } = new SequentialGuidGenerator();
-        private static IGetSQLDateAppService _GetSQLDateAppService;
+        private static IGetSQLDateAppService _GetSQLDateAppService = new GetSQLDateAppService();
 
         #region Purchase Requests
 

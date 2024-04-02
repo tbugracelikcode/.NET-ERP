@@ -42,5 +42,13 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPIILine.Dtos
         /// Sipariş Kabul ID
         /// </summary>
         public Guid? OrderAcceptanceID { get; set; }
+        /// <summary>
+        /// Referans Tarihi
+        /// </summary>
+        public DateTime ReferanceDate { get; set; }
+        /// <summary>
+        /// Satır No
+        /// </summary>
+        public string Description_ { get; set; }
     }
 }

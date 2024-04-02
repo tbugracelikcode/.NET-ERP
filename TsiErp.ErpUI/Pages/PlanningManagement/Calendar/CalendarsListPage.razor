@@ -310,6 +310,10 @@
 
                     </th>
                     <th style="width:25%">
+                    
+                <br>
+                <br>
+                <center><SfButton CssClass="TSICancelButton" OnClick="DayTypeButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.AgendaDateRange"></SfIcon>&nbsp;@L["DayTypeButton"]</SfButton></center>
                         @* <table id='property' class='property-panel-table' style="width: 100%;">
                         //     <tbody>
                         //         <tr style="height: 50px">
@@ -356,6 +360,7 @@
                         // </table>*@
                     </th>
                 </table>
+
             </BodyTemplate>
             <FooterContentTemplate>
                 <SfButton CssClass="TSICancelButton" OnClick="HideScheduleEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
@@ -377,7 +382,7 @@
 
                 <table style="margin-top:2%">
                     <tr style="height:80%">
-                        <td style="font-size:16px;padding-left:2%; width:20%"><strong>Tarih :</strong> @selectedDate</td>
+                        <td style="font-size:16px;padding-left:2%; width:20%"><strong>Tarih :</strong> @selectedDate.Value.ToShortDateString()</td>
                         <td style="width:80%">
 
                             @if (SelectedStations.Count != 0)
@@ -799,6 +804,225 @@
             <FooterContentTemplate>
                 <SfButton CssClass="TSISaveButton" OnClick="LineEditModalSave"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
                 <SfButton CssClass="TSICancelButton" OnClick="HideLineEditModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            </FooterContentTemplate>
+        </DxPopup>
+
+         <DxPopup Visible="overTimeModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         ShowCloseButton="false"
+         HeaderText="@L["StationShiftModalOverTimeTitle"]"
+         Width="22%"
+         Height="23%"
+         MinWidth="380px"
+         MinHeight="250px"
+         HeaderCssClass="HeaderTitleCss">
+
+            <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="80%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="11%" />
+                    <DxGridLayoutColumn Width="78%" />
+                    <DxGridLayoutColumn Width="11%" />
+
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                        <br/>
+                            <label class="TSIModalLabel"><strong>@L["ShiftOverTimeLineLabel"] </strong></label>
+                             <SfNumericTextBox Min=0 TValue="decimal" @bind-Value="LineDataSource.ShiftOverTime"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+
+                        
+
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="LineEditOverTimeModalSave"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideLineOverTimeModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            </FooterContentTemplate>
+        </DxPopup>
+
+       
+
+        <DxPopup Visible="DayTypeModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         ShowCloseButton="false"
+         HeaderText="@L["DayTypeModalTitle"]"
+         Width="66%"
+         Height="55%"
+         MinWidth="1140px"
+         MinHeight="600px"
+         HeaderCssClass="HeaderTitleCss">
+
+            <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="90%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="90%" />
+                    <DxGridLayoutColumn Width="5%" />
+
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            
+                                <SfGrid ID="DayTypeGrid" @ref=_DayTypeGrid DataSource="@DayTypeList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
+                                class="GridZebra" ContextMenuItems="@DayTypeGridContextMenu">
+                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false"></GridEditSettings>
+                                    <GridEvents ContextMenuItemClicked="@OnDayTypeContextMenuClick" TValue="DayTypeModel"></GridEvents>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                    <GridPageSettings PageSizes="true"></GridPageSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                    <GridColumns>
+
+                                        <GridColumn Field=@nameof(DayTypeModel.DayDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["DayDate"]" TextAlign="TextAlign.Center" Width="140">
+                                        </GridColumn>
+
+                                         <GridColumn Field=@nameof(DayTypeModel.DayStatus) HeaderText="@L["DayStatus"]" TextAlign="TextAlign.Center" Width="140" Context="DayTypeContext">
+                                          <Template>
+                                                @{
+                                                    string state = string.Empty;
+                                                    int dayStateEnum = (DayTypeContext as DayTypeModel).DayStatus;
+
+                                                    switch (dayStateEnum)
+                                                    {
+                                                        case 1: { state = @L["WorkExist"]; break; }
+                                                        case 2: { state =@L["WorkNotExist"]; break; }
+                                                        case 3: { state = @L["OfficialHoliday"]; break; }
+                                                        case 4: { state = @L["Holiday"]; break; }
+                                                        case 5: { state = @L["HalfDay"]; break; }
+                                                        case 6: { state = @L["LoadingDay"]; break; }
+                                                        case 7: { state = @L["UIMaintenancePreviousMenu"]; break; }
+                                                        default: break;
+                                                    }
+                                            }
+                                            @state
+                                        </Template>
+                                        </GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+
+                        
+
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="DayTypeOnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideDayTypeModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            </FooterContentTemplate>
+        </DxPopup>
+
+         <DxPopup Visible="DayTypeCrudModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         ShowCloseButton="false"
+         HeaderText="@L["DayTypeCrudModalTitle"]"
+         Width="42%"
+         Height="33%"
+         MinWidth="720px"
+         MinHeight="350px"
+         HeaderCssClass="HeaderTitleCss">
+
+            <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="45%" />
+                    <DxGridLayoutRow Height="45%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["isDateSpanLabel"] </strong></label><br />
+                            <SfSwitch @bind-Checked="isDateSpan"></SfSwitch>
+
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            
+                            <label class="TSIModalLabel"><strong>@L["DayTypeLabel"] </strong></label><br /> 
+                             <SfComboBox TValue="string" TItem="DayTypeComboBox" DataSource="@_dayTypeComboBox">
+                                 <ComboBoxEvents TItem="DayTypeComboBox" TValue="string" ValueChange="@DayTypeComboBoxValueChangeHandler"></ComboBoxEvents>
+                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                             </SfComboBox>
+
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            
+                            <label class="TSIModalLabel"><strong>@L["Date_Label"] </strong></label><br />
+                            <SfDatePicker @bind-Value="StartDateDayType"></SfDatePicker>
+
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+
+                            
+                            <label class="TSIModalLabel"><strong>@L["Date_2Label"] </strong></label><br />
+                            <SfDatePicker Enabled=isDateSpan @bind-Value="EndDateDayType"></SfDatePicker>
+
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+
+                        
+
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="DayTypeCrudOnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideDayTypeCrudModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 
