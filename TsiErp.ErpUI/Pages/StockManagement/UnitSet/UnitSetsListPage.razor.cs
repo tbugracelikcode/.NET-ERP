@@ -35,8 +35,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.UnitSet
         {
             DataSource = new SelectUnitSetsDto()
             {
-                IsActive = true,
-                Code = FicheNumbersAppService.GetFicheNumberAsync("UnitSetsChildMenu")
+                IsActive = true
             };
 
             EditPageVisible = true;
@@ -69,19 +68,19 @@ namespace TsiErp.ErpUI.Pages.StockManagement.UnitSet
 
         #region Kod ButtonEdit
 
-        SfTextBox CodeButtonEdit;
+        //SfTextBox CodeButtonEdit;
 
-        public async Task CodeOnCreateIcon()
-        {
-            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
-            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
-        }
+        //public async Task CodeOnCreateIcon()
+        //{
+        //    var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+        //    await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        //}
 
-        public async void CodeButtonClickEvent()
-        {
-            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("UnitSetsChildMenu");
-            await InvokeAsync(StateHasChanged);
-        }
+        //public async void CodeButtonClickEvent()
+        //{
+        //    DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("UnitSetsChildMenu");
+        //    await InvokeAsync(StateHasChanged);
+        //}
         #endregion
 
 

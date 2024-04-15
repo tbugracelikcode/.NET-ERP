@@ -988,7 +988,7 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stok Reçeteleri.
+        ///   Looks up a localized string similar to Ürün Reçeteleri.
         /// </summary>
         public static string ProductContextBOMs {
             get {
@@ -1600,7 +1600,7 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Testere Fire:.
+        ///   Looks up a localized string similar to Testere Fire (mm):.
         /// </summary>
         public static string SawWastageLabel {
             get {
@@ -1996,7 +1996,7 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Birim Ağırlık:.
+        ///   Looks up a localized string similar to Birim Ağırlık (Kg.):.
         /// </summary>
         public static string UnitWeightLabel {
             get {

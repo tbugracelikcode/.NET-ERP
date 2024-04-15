@@ -427,7 +427,7 @@
     <value>Ekle</value>
   </data>
   <data name="ProductContextBOMs" xml:space="preserve">
-    <value>Stok Reçeteleri</value>
+    <value>Ürün Reçeteleri</value>
   </data>
   <data name="ProductContextChange" xml:space="preserve">
     <value>Değiştir</value>
@@ -631,7 +631,7 @@
     <value>Kaydet</value>
   </data>
   <data name="SawWastageLabel" xml:space="preserve">
-    <value>Testere Fire:</value>
+    <value>Testere Fire (mm):</value>
   </data>
   <data name="StockAddressesCode" xml:space="preserve">
     <value>STOK ADRES KODU</value>
@@ -763,7 +763,7 @@
     <value>Birim Setleri</value>
   </data>
   <data name="UnitWeightLabel" xml:space="preserve">
-    <value>Birim Ağırlık:</value>
+    <value>Birim Ağırlık (Kg.):</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
