@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Buttons;
 using Syncfusion.Blazor.Data;
+using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
@@ -77,6 +78,18 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                        .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
 
                        }).ToList();
+        }
+
+        private void ProductTypeValueChangeHandler(ChangeEventArgs<ProductTypeEnum, SelectProductsDto> args)
+        {
+            if(args.ItemData.ProductType == ProductTypeEnum.HM)
+            {
+                productSizeVisible = true;
+            }
+            else
+            {
+                productSizeVisible = false;
+            }
         }
 
         #endregion
@@ -199,6 +212,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         bool pdf = false;
 
         string PDFFileName;
+
+        public bool productSizeVisible = false;
 
         #endregion
 
@@ -1404,14 +1419,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         }
 
-        
-
         protected override Task BeforeInsertAsync()
         {
             DataSource = new SelectProductsDto()
             {
-                IsActive = true,
-                Code = FicheNumbersAppService.GetFicheNumberAsync("ProductsChildMenu")
+                IsActive = true
             };
 
             foreach (var item in supplyforms)
@@ -1428,7 +1440,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
             return Task.CompletedTask;
         }
-
 
 
         #region Teknik Resim Cari Hesap Button Edit
@@ -1513,19 +1524,19 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         #region Kod ButtonEdit
 
-        SfTextBox CodeButtonEdit;
+        //SfTextBox CodeButtonEdit;
 
-        public async Task CodeOnCreateIcon()
-        {
-            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
-            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
-        }
+        //public async Task CodeOnCreateIcon()
+        //{
+        //    var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+        //    await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        //}
 
-        public async void CodeButtonClickEvent()
-        {
-            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("ProductsChildMenu");
-            await InvokeAsync(StateHasChanged);
-        }
+        //public async void CodeButtonClickEvent()
+        //{
+        //    DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("ProductsChildMenu");
+        //    await InvokeAsync(StateHasChanged);
+        //}
         #endregion
 
         public void Dispose()
