@@ -631,7 +631,7 @@
     <value>Save</value>
   </data>
   <data name="SawWastageLabel" xml:space="preserve">
-    <value>Saw Wastage:</value>
+    <value>Saw Wastage (mm):</value>
   </data>
   <data name="StockAddressesCode" xml:space="preserve">
     <value>STOCK ADDRESS CODE</value>
@@ -763,7 +763,7 @@
     <value>Unit Sets</value>
   </data>
   <data name="UnitWeightLabel" xml:space="preserve">
-    <value>Unit Weight:</value>
+    <value>Unit Weight (Kg.):</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
