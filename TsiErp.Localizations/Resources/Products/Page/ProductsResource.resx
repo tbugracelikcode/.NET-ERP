@@ -693,6 +693,12 @@
   <data name="Tab1Name" xml:space="preserve">
     <value>Genel Bilgiler</value>
   </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Finansal Bilgiler</value>
+  </data>
+  <data name="Tab3Name" xml:space="preserve">
+    <value>Dış Ticaret Bilgileri</value>
+  </data>
   <data name="TechnicalApprovalLabelRoute" xml:space="preserve">
     <value>Teknik Onay:</value>
   </data>
