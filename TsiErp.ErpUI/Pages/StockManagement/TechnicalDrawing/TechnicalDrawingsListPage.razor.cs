@@ -37,6 +37,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
         //bool disable = new();
 
+
+        bool CustomerCodeEnable = false;
+
         bool ImagePreviewPopup = false;
 
         string previewImagePopupTitle = string.Empty;
@@ -74,7 +77,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
             DataSource = new SelectTechnicalDrawingsDto()
             {
                 RevisionDate = GetSQLDateAppService.GetDateFromSQL(),
-                 
+
             };
 
             EditPageVisible = true;
@@ -224,8 +227,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
                 DataSource.ProductID = Guid.Empty;
                 DataSource.ProductCode = string.Empty;
                 DataSource.ProductName = string.Empty;
+                CustomerCodeEnable = false;
             }
         }
+
 
         public async void ProductsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsDto> args)
         {
@@ -236,7 +241,18 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
                 DataSource.ProductID = selectedProduct.Id;
                 DataSource.ProductCode = selectedProduct.Code;
                 DataSource.ProductName = selectedProduct.Name;
+                DataSource.ProductType = selectedProduct.ProductType;
                 SelectProductsPopupVisible = false;
+
+                if (DataSource.ProductType == Entities.Enums.ProductTypeEnum.MM)
+                {
+                    CustomerCodeEnable = true;
+                }
+                else
+                {
+                    CustomerCodeEnable = false;
+                }
+
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -491,6 +507,34 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
         protected override async Task OnSubmit()
         {
             #region Submit İşlemleri
+
+            if (DataSource.ProductID == Guid.Empty || DataSource.ProductID==null)
+            {
+                await ModalManager.MessagePopupAsync(L["Error"], L["ValidatorProductID"]);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(DataSource.RevisionNo))
+            {
+                await ModalManager.MessagePopupAsync(L["Error"], L["ValidatorCodeEmpty"]);
+                return;
+            }
+
+            if (DataSource.RevisionNo.Length > 50)
+            {
+                await ModalManager.MessagePopupAsync(L["Error"], L["ValidatorCodeMaxLength"]);
+                return;
+            }
+
+            if (DataSource.ProductType == Entities.Enums.ProductTypeEnum.MM)
+            {
+                if (DataSource.CustomerCurrentAccountCardID == Guid.Empty || DataSource.CustomerCurrentAccountCardID == null)
+                {
+                    await ModalManager.MessagePopupAsync(L["Error"], L["ValidatorCurrentCardID"]);
+                    return;
+                }
+            }
+
 
             SelectTechnicalDrawingsDto result;
 
