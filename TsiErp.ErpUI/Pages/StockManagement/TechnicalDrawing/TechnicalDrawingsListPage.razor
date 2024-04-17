@@ -162,7 +162,7 @@
                                 <center>
                                     <label class="TSIModalLabel"><strong>@L["CustomerCodeLabel"] </strong></label><br />
 
-                                    <SfTextBox @ref="@CurrentAccountCardsCodeButtonEdit" Created="@CurrentAccountCardsCodeOnCreateIcon" @bind-Value="DataSource.CustomerCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
+                                    <SfTextBox @ref="@CurrentAccountCardsCodeButtonEdit" Created="@CurrentAccountCardsCodeOnCreateIcon" @bind-Value="DataSource.CustomerCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange" Enabled=@CustomerCodeEnable></SfTextBox>
                                 </center>
                             </Template>
                         </DxGridLayoutItem>
