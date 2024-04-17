@@ -336,6 +336,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ProductionTrackingsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ProductProperties\Page\ProductPropertiesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProductPropertiesResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\ProductReferanceNumbers\Page\ProductReferanceNumbersResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -891,6 +896,10 @@
     <EmbeddedResource Update="Resources\ProductionTrackings\Page\ProductionTrackingsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductionTrackingsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductProperties\Page\ProductPropertiesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductPropertiesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\ProductReferanceNumbers\Page\ProductReferanceNumbersResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

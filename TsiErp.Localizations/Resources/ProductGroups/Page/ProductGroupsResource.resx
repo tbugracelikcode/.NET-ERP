@@ -177,11 +177,77 @@
   <data name="ProductGroupContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="ProductGroupContextProductProperties" xml:space="preserve">
+    <value>Ürün Özellikleri</value>
+  </data>
   <data name="ProductGroupContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="ProductPropertiesCode" xml:space="preserve">
+    <value>ÜRÜN ÖZELLİK KODU</value>
+  </data>
+  <data name="ProductPropertiesName" xml:space="preserve">
+    <value>ÜRÜN ÖZELLİK ADI</value>
+  </data>
+  <data name="ProductPropertyContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProductPropertyContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ProductPropertyContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProductPropertyContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="ProductPropertyLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProductPropertyLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ProductPropertyLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProductPropertyLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="ProductPropertyLineModalTitle" xml:space="preserve">
+    <value>Ürün Özellik Satırları</value>
+  </data>
+  <data name="ProductPropertyModalTitle" xml:space="preserve">
+    <value>Ürün Özellikleri</value>
+  </data>
+  <data name="PropertyCodeLabel" xml:space="preserve">
+    <value>Ürün Özellik Kodu:</value>
+  </data>
+  <data name="PropertyisChooseFromList" xml:space="preserve">
+    <value>Listeden Seçim:</value>
+  </data>
+  <data name="PropertyLineCodeLabel" xml:space="preserve">
+    <value>Özellik Satır Kodu:</value>
+  </data>
+  <data name="PropertyLineGridLineCode" xml:space="preserve">
+    <value>ÖZELLİK SATIR KODU</value>
+  </data>
+  <data name="PropertyLineGridLineName" xml:space="preserve">
+    <value>ÖZELLİK SATIR ADI</value>
+  </data>
+  <data name="PropertyLineNameLabel" xml:space="preserve">
+    <value>Özellik Satır Adı:</value>
+  </data>
+  <data name="PropertyNameLabel" xml:space="preserve">
+    <value>Ürün Özellik Adı:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satır silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Onay</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Ürün Grupları</value>

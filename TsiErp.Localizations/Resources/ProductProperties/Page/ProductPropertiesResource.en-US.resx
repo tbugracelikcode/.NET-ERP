@@ -117,17 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BranchesTitle" xml:space="preserve">
+    <value>Branches</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
   <data name="Code" xml:space="preserve">
-    <value>PRODUCT GROUP CODE</value>
+    <value>BRANCH CODE</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
   <data name="CodeLabel" xml:space="preserve">
-    <value>Product Group Code:</value>
+    <value>Branch Code:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -141,11 +144,23 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="Description_" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
-    <value>Product Groups</value>
+    <value>Branches</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>Branches</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Branches</value>
   </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
@@ -163,117 +178,30 @@
     <value>Information</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>PRODUCT GROUP NAME</value>
+    <value>BRANCH NAME</value>
   </data>
   <data name="NameLabel" xml:space="preserve">
-    <value>Product Group Name:</value>
-  </data>
-  <data name="ProductGroupContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ProductGroupContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ProductGroupContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ProductGroupContextProductProperties" xml:space="preserve">
-    <value>Product Properties</value>
-  </data>
-  <data name="ProductGroupContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="ProductPropertiesCode" xml:space="preserve">
-    <value>PRODUCT PROPERTY CODE</value>
-  </data>
-  <data name="ProductPropertiesName" xml:space="preserve">
-    <value>PRODUCT PROPERTY NAME</value>
-  </data>
-  <data name="ProductPropertyContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ProductPropertyContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ProductPropertyContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ProductPropertyContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="ProductPropertyLineContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ProductPropertyLineContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ProductPropertyLineContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ProductPropertyLineContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="ProductPropertyLineModalTitle" xml:space="preserve">
-    <value>Product Property Lines</value>
-  </data>
-  <data name="ProductPropertyModalTitle" xml:space="preserve">
-    <value>Product Properties</value>
-  </data>
-  <data name="PropertyCodeLabel" xml:space="preserve">
-    <value>Product Property Code:</value>
-  </data>
-  <data name="PropertyisChooseFromList" xml:space="preserve">
-    <value>Choose From List:</value>
-  </data>
-  <data name="PropertyLineCodeLabel" xml:space="preserve">
-    <value>Property Line Code:</value>
-  </data>
-  <data name="PropertyLineGridLineCode" xml:space="preserve">
-    <value>PROPERTY LINE CODE</value>
-  </data>
-  <data name="PropertyLineGridLineName" xml:space="preserve">
-    <value>PROPERTY LINE NAME</value>
-  </data>
-  <data name="PropertyLineNameLabel" xml:space="preserve">
-    <value>Property Line Name:</value>
-  </data>
-  <data name="PropertyNameLabel" xml:space="preserve">
-    <value>Product Property Name:</value>
+    <value>Branch Name:</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
-    <value>The line you selected will be deleted.</value>
-  </data>
-  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
-    <value>Confirmation</value>
-  </data>
-  <data name="UICurrentMenu" xml:space="preserve">
-    <value>Product Groups</value>
-  </data>
-  <data name="UIExportFileName" xml:space="preserve">
-    <value>ProductGroups</value>
-  </data>
-  <data name="UIExportTitle" xml:space="preserve">
-    <value>Product Groups</value>
-  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Inventory Management &gt; Main Records</value>
+    <value>General System Identifications</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Please enter the product group code.</value>
+    <value>Please enter the product property code.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Product group code cannot exceed 17 characters.</value>
+    <value>Product propertycode cannot exceed 17 characters.</value>
   </data>
   <data name="ValidatorNameEmpty" xml:space="preserve">
-    <value>Please enter the product group name.</value>
+    <value>Please enter the product property name.</value>
   </data>
   <data name="ValidatorNameMaxLenght" xml:space="preserve">
-    <value>Product group name cannot exceed 200 characters.</value>
+    <value>Product property code cannot exceed 200 characters.</value>
   </data>
 </root>

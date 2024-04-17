@@ -31,14 +31,12 @@ namespace TsiErp.Business.Entities.Product.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
         private readonly IStockAddressesAppService _stockAddressesAppService;
 
-        public ProductsAppService(IStringLocalizer<ProductsResource> l, IFicheNumbersAppService ficheNumbersAppService, IStockAddressesAppService stockAddressesAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public ProductsAppService(IStringLocalizer<ProductsResource> l, IStockAddressesAppService stockAddressesAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
-            FicheNumbersAppService = ficheNumbersAppService;
             _stockAddressesAppService = stockAddressesAppService;
             _GetSQLDateAppService = getSQLDateAppService;
         }
@@ -103,8 +101,6 @@ namespace TsiErp.Business.Entities.Product.Services
             });
 
             var products = queryFactory.Insert<SelectProductsDto>(query, "Id", true);
-
-            await FicheNumbersAppService.UpdateFicheNumberAsync("ProductsChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Products, LogType.Insert, addedEntityId);
 
