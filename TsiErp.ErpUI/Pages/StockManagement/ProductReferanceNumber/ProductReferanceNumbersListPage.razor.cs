@@ -17,6 +17,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReferanceNumber
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+
+        bool CustomerBarcodeNoEnable = false;
+        bool CustomerReferanceNoEnable = false;
+        bool OrderReferanceNoEnable = false;
         protected override async void OnInitialized()
         {
             BaseCrudService = ProductReferanceNumbersService;
@@ -113,8 +117,13 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReferanceNumber
                 DataSource.CurrentAccountCardCode = string.Empty;
                 DataSource.CurrentAccountCardName = string.Empty;
                 DataSource.CustomerCode = string.Empty;
+                CustomerBarcodeNoEnable = false;
+                CustomerReferanceNoEnable = false;
+                OrderReferanceNoEnable = false;
             }
         }
+
+
 
         public async void CurrentAccountCardsDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
         {
@@ -127,6 +136,20 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReferanceNumber
                 DataSource.CurrentAccountCardName = selectedCurrentAccountCard.Name;
                 DataSource.CustomerCode = selectedCurrentAccountCard.CustomerCode;
                 SelectCurrentAccountCardsPopupVisible = false;
+
+                if(!string.IsNullOrEmpty(DataSource.CustomerCode))
+                {
+                    CustomerBarcodeNoEnable = true;
+                    CustomerReferanceNoEnable = true;
+                    OrderReferanceNoEnable = true;
+                }
+                else
+                {
+                    CustomerBarcodeNoEnable = false;
+                    CustomerReferanceNoEnable = false;
+                    OrderReferanceNoEnable = false;
+                }
+
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -199,7 +222,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReferanceNumber
 
         private async Task GetCurrentAccountCardsList()
         {
-            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => !string.IsNullOrEmpty(t.CustomerCode)).ToList();
+            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
         }
 
         #endregion
