@@ -1789,6 +1789,24 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finansal Bilgiler.
+        /// </summary>
+        public static string Tab2Name {
+            get {
+                return ResourceManager.GetString("Tab2Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dış Ticaret Bilgileri.
+        /// </summary>
+        public static string Tab3Name {
+            get {
+                return ResourceManager.GetString("Tab3Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Teknik Onay:.
         /// </summary>
         public static string TechnicalApprovalLabelRoute {

@@ -149,22 +149,31 @@
                                             @foreach (var item in OpenOrderBalancesList)
 
                                             {
-                                                <tr><td>@item.OrderNo</td><td>@item.ShippingDate.ToShortDateString()</td><td>@item.Amount</td><td>@item.Balance</td>
-                                                    @if(item.ShippingRate < 30 && item.ShippingRate != 0){
-                                                         <td><table>
-                                                        <tr>
-                                                                <td style="width:@item.ShippingRate%; background-color: #37b727;"></td>
-                                                                <td >% @item.ShippingRate</td>
-                                                        </tr>
-                                                            </table></td>
+                                                <tr>
+                                                    <td>@item.OrderNo</td>
+                                                    <td>@item.ShippingDate.ToShortDateString()</td>
+                                                    <td>@item.Amount</td>
+                                                    <td>@item.Balance</td>
+                                                    @if (item.ShippingRate < 30 && item.ShippingRate != 0)
+                                                    {
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:@item.ShippingRate%; background-color: #37b727;"></td>
+                                                                    <td>% @item.ShippingRate</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
                                                     }
                                                     else if (item.ShippingRate == 0)
                                                     {
-                                                         <td><table>
-                                                        <tr>
-                                                                <td >% @item.ShippingRate</td>
-                                                        </tr>
-                                                            </table></td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>% @item.ShippingRate</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
                                                     }
                                                     else
                                                     {
@@ -177,8 +186,8 @@
                                                             </table>
                                                         </td>
                                                     }
-                                                   
-                                                  
+
+
                                                 </tr>
                                             }
                                         </table>
@@ -290,27 +299,31 @@
         var shipmentPlanningListDto = (await ShipmentPlanningsAppService.GetListAsync(new ListShipmentPlanningsParameterDto())).Data.ToList();
         shipmentPlanningListDto = shipmentPlanningListDto.OrderBy(t => t.ShipmentPlanningDate).ToList();
 
-        var shipmentPlanningLineList = (await ShipmentPlanningsAppService.GetAsync(shipmentPlanningListDto[0].Id)).Data.SelectShipmentPlanningLines;
+        if (shipmentPlanningListDto.Count > 0)
+        {
+            var shipmentPlanningLineList = (await ShipmentPlanningsAppService.GetAsync(shipmentPlanningListDto[0].Id)).Data.SelectShipmentPlanningLines.Count > 0 ? (await ShipmentPlanningsAppService.GetAsync(shipmentPlanningListDto[0].Id)).Data.SelectShipmentPlanningLines : new List<SelectShipmentPlanningLinesDto>();
 
-        PlannedQuantity = (int)shipmentPlanningLineList.Sum(t => t.PlannedQuantity);
-        ShipmentQuantity = (int)shipmentPlanningLineList.Sum(t => t.ShipmentQuantity);
-        RestQuantity = PlannedQuantity - ShipmentQuantity;
+            PlannedQuantity = (int)shipmentPlanningLineList.Sum(t => t.PlannedQuantity);
+            ShipmentQuantity = (int)shipmentPlanningLineList.Sum(t => t.ShipmentQuantity);
+            RestQuantity = PlannedQuantity - ShipmentQuantity;
 
-        ShipmentData shipmentDataShipment = new ShipmentData
-            {
-                Count = ShipmentQuantity,
-                QuantityType = L["ClosestShipmentPackaged"],
-                Percentage = (ShipmentQuantity / PlannedQuantity) * 100
-            };
-        ShipmentData shipmentDataRest = new ShipmentData
-            {
-                Count = RestQuantity,
-                QuantityType = L["ClosestShipmentRemaining"],
-                Percentage = (RestQuantity / PlannedQuantity) * 100
-            };
+            ShipmentData shipmentDataShipment = new ShipmentData
+                {
+                    Count = ShipmentQuantity,
+                    QuantityType = L["ClosestShipmentPackaged"],
+                    Percentage = (ShipmentQuantity / PlannedQuantity) * 100
+                };
+            ShipmentData shipmentDataRest = new ShipmentData
+                {
+                    Count = RestQuantity,
+                    QuantityType = L["ClosestShipmentRemaining"],
+                    Percentage = (RestQuantity / PlannedQuantity) * 100
+                };
 
-        ShipmentDataList.Add(shipmentDataShipment);
-        ShipmentDataList.Add(shipmentDataRest);
+            ShipmentDataList.Add(shipmentDataShipment);
+            ShipmentDataList.Add(shipmentDataRest);
+        }
+
 
         #endregion
 
@@ -318,7 +331,7 @@
 
         SalesOrderLineNotShippedList = (await SalesOrdersAppService.GetLineSelectListAsync()).Data.ToList();
 
-         var groupedLineList = SalesOrderLineNotShippedList.GroupBy(t => new { t.ProductID, t.SalesOrderID }).Select(t => new { ProductID = t.Key.ProductID, SalesOrderID = t.Key.SalesOrderID, SalesOrderLine = t.ToList() }).ToList();
+        var groupedLineList = SalesOrderLineNotShippedList.GroupBy(t => new { t.ProductID, t.SalesOrderID }).Select(t => new { ProductID = t.Key.ProductID, SalesOrderID = t.Key.SalesOrderID, SalesOrderLine = t.ToList() }).ToList();
 
         foreach (var salesOrderLine in groupedLineList)
         {
@@ -335,9 +348,9 @@
                 };
 
 
-           NotShippedProductGroupsList.Add(notShippedProductGroupModel);
+            NotShippedProductGroupsList.Add(notShippedProductGroupModel);
 
-            var salesOrder = (await SalesOrdersAppService.GetAsync(salesOrderLine.SalesOrderLine.Select(t=>t.SalesOrderID).FirstOrDefault())).Data;
+            var salesOrder = (await SalesOrdersAppService.GetAsync(salesOrderLine.SalesOrderLine.Select(t => t.SalesOrderID).FirstOrDefault())).Data;
 
             NotShippedProductGroupsTooltip tooltipModel = new NotShippedProductGroupsTooltip
                 {
@@ -420,12 +433,12 @@
                         ShippingRate = (((int)salesOrderLine.Quantity - (int)package.TotalAmount) / (int)salesOrderLine.Quantity) * 100
                     };
 
-                    OpenOrderBalancesList.Add(openOrderBalanceModel);
+                OpenOrderBalancesList.Add(openOrderBalanceModel);
             }
         }
 
-        OpenOrderBalancesList = OpenOrderBalancesList.OrderBy(t=>t.ShippingDate).ToList();
-        
+        OpenOrderBalancesList = OpenOrderBalancesList.OrderBy(t => t.ShippingDate).ToList();
+
 
         #endregion
 

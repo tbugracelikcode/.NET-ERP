@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos
 {
@@ -69,5 +70,9 @@ namespace TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos
         /// Stok Açıklaması
         /// </summary>
         public string ProductName { get; set; }
+        /// <summary>
+        /// Stok Açıklaması
+        /// </summary>
+        public ProductTypeEnum ProductType { get; set; }
     }
 }
