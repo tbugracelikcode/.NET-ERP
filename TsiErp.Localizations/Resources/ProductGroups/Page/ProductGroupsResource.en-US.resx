@@ -285,4 +285,16 @@
   <data name="ValidatorNameMaxLenght" xml:space="preserve">
     <value>Product group name cannot exceed 200 characters.</value>
   </data>
+  <data name="ValidatorProductPropertyCodeEmpty" xml:space="preserve">
+    <value>Please enter the product property code.</value>
+  </data>
+  <data name="ValidatorProductPropertyCodeMaxLenght" xml:space="preserve">
+    <value>Product propertycode cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorProductPropertyNameEmpty" xml:space="preserve">
+    <value>Please enter the product property name.</value>
+  </data>
+  <data name="ValidatorProductPropertyNameMaxLenght" xml:space="preserve">
+    <value>Product property code cannot exceed 200 characters.</value>
+  </data>
 </root>

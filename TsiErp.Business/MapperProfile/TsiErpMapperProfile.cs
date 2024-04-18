@@ -265,6 +265,8 @@ using TsiErp.Entities.Entities.StockManagement.ProductCost;
 using TsiErp.Entities.Entities.StockManagement.ProductCost.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductProperty;
+using TsiErp.Entities.Entities.StockManagement.ProductProperty.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddress;
@@ -1477,6 +1479,14 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateStockAddressLinesDto, StockAddressLines>();
             CreateMap<SelectStockAddressLinesDto, UpdateStockAddressLinesDto>();
             CreateMap<SelectStockAddressLinesDto, StockAddressLines>();
+
+            CreateMap<ProductProperties, SelectProductPropertiesDto>();
+            CreateMap<ProductProperties, ListProductPropertiesDto>();
+            CreateMap<CreateProductPropertiesDto, ProductProperties>();
+            CreateMap<SelectProductPropertiesDto, CreateProductPropertiesDto>();
+            CreateMap<UpdateProductPropertiesDto, ProductProperties>();
+            CreateMap<SelectProductPropertiesDto, UpdateProductPropertiesDto>();
+            CreateMap<SelectProductPropertiesDto, ProductProperties>();
         }
     }
 }
