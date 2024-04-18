@@ -285,4 +285,16 @@
   <data name="ValidatorNameMaxLenght" xml:space="preserve">
     <value>Ürün grubu açıklaması, 200 karakterden fazla olamaz.</value>
   </data>
+  <data name="ValidatorProductPropertyCodeEmpty" xml:space="preserve">
+    <value>Lütfen ürün özellik kodunu yazın.</value>
+  </data>
+  <data name="ValidatorProductPropertyCodeMaxLenght" xml:space="preserve">
+    <value>Ürün özellik kodu 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorProductPropertyNameEmpty" xml:space="preserve">
+    <value>Lütfen ürün özellik adını yazın.</value>
+  </data>
+  <data name="ValidatorProductPropertyNameMaxLenght" xml:space="preserve">
+    <value>Ürün özellik adı 200 karakterden fazla olamaz.</value>
+  </data>
 </root>

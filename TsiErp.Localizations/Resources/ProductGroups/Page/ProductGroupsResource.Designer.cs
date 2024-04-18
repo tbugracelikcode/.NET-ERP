@@ -563,5 +563,41 @@ namespace TsiErp.Localizations.Resources.ProductGroups.Page {
                 return ResourceManager.GetString("ValidatorNameMaxLenght", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen ürün özellik kodunu yazın..
+        /// </summary>
+        public static string ValidatorProductPropertyCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorProductPropertyCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün özellik kodu 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorProductPropertyCodeMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorProductPropertyCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen ürün özellik adını yazın..
+        /// </summary>
+        public static string ValidatorProductPropertyNameEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorProductPropertyNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün özellik adı 200 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorProductPropertyNameMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorProductPropertyNameMaxLenght", resourceCulture);
+            }
+        }
     }
 }
