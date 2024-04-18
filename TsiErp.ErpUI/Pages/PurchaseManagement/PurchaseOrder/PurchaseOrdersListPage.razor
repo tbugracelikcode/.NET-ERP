@@ -23,6 +23,7 @@
 @inject IMenusAppService MenusAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
 @inject IProductReferanceNumbersAppService ProductReferanceNumbersAppService
+@inject IPurchasePricesAppService PurchasePricesAppService
 
 @if (!base.IsLoaded)
 {
@@ -325,14 +326,15 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="10%" />
                 </Rows>
 
                 <Columns>
@@ -443,6 +445,20 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["LineTotalAmountLineLabel"] </strong></label>
                             <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineTotalAmount"Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="8" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["SupplierBillNoLineLabel"] </strong></label>
+                            <SfTextBox  @bind-Value="LineDataSource.SupplierBillNo"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="8" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["SupplierWaybillNoLineLabel"] </strong></label>
+                            <SfTextBox  @bind-Value="LineDataSource.SupplierWaybillNo"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

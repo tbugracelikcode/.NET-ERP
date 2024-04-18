@@ -147,6 +147,16 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine
         /// Sipariş Kabul Satır ID
         /// </summary>
         public Guid? OrderAcceptanceLineID { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Tedarikçi İrsaliye No
+        /// </summary>
+        public string SupplierWaybillNo { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Tedarikçi Fatura No
+        /// </summary>
+        public string SupplierBillNo { get; set; }
 
     }
 }

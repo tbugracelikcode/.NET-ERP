@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
@@ -133,5 +134,13 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
         /// Sipariş Kabul Satır ID
         /// </summary>
         public Guid? OrderAcceptanceLineID { get; set; }
+        /// <summary>
+        /// Tedarikçi İrsaliye No
+        /// </summary>
+        public string SupplierWaybillNo { get; set; }
+        /// <summary>
+        /// Tedarikçi Fatura No
+        /// </summary>
+        public string SupplierBillNo { get; set; }
     }
 }

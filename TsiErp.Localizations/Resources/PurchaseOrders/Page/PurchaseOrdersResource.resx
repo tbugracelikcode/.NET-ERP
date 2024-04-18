@@ -435,8 +435,14 @@
   <data name="StockReceiptFichesContextSelect" xml:space="preserve">
     <value>Seç</value>
   </data>
+  <data name="SupplierBillNoLineLabel" xml:space="preserve">
+    <value>Tedarikçi Fatura No:</value>
+  </data>
   <data name="SupplierReferanceNo" xml:space="preserve">
     <value>TEDARİKÇİ REFERANS NO</value>
+  </data>
+  <data name="SupplierWaybillNoLineLabel" xml:space="preserve">
+    <value>Tedarikçi İrsaliye No:</value>
   </data>
   <data name="SupplyDateLineLabel" xml:space="preserve">
     <value>Temin Tarihi:</value>
