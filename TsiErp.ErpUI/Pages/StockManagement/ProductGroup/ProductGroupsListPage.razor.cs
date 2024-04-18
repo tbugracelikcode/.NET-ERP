@@ -200,7 +200,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
             {
                 case "new":
                     PropertyDataSource = new SelectProductPropertiesDto()
-                    {ProductGroupID = DataSource.Id};
+                    { ProductGroupID = DataSource.Id };
 
                     PropertyGridLineList = new List<SelectProductPropertyLinesDto>();
 
@@ -242,7 +242,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
                     {
                         await ProductPropertiesAppService.DeleteAsync(args.RowInfo.RowData.Id);
 
-                        PropertyGridList =( await ProductPropertiesAppService.GetListAsync(new ListProductPropertiesParameterDto())).Data.Where(t=>t.ProductGroupID == DataSource.Id).ToList();
+                        PropertyGridList = (await ProductPropertiesAppService.GetListAsync(new ListProductPropertiesParameterDto())).Data.Where(t => t.ProductGroupID == DataSource.Id).ToList();
 
                         await InvokeAsync(StateHasChanged);
                     }
@@ -341,9 +341,35 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
 
         public async void OnPropertySubmit()
         {
+
+            if(string.IsNullOrEmpty(PropertyDataSource.Code))
+            {
+                await ModalManager.WarningPopupAsync(L["Error"], L["ValidatorProductPropertyCodeEmpty"]);
+                return;
+            }
+
+            if (PropertyDataSource.Code.Length>17)
+            {
+                await ModalManager.WarningPopupAsync(L["Error"], L["ValidatorProductPropertyCodeMaxLenght"]);
+                return;
+            }
+
+            if(string.IsNullOrEmpty(PropertyDataSource.Name))
+            {
+                await ModalManager.WarningPopupAsync(L["Error"], L["ValidatorProductPropertyNameEmpty"]);
+                return;
+            }
+
+            if (PropertyDataSource.Name.Length>17)
+            {
+                await ModalManager.WarningPopupAsync(L["Error"], L["ValidatorProductPropertyNameMaxLenght"]);
+                return;
+            }
+
+
             if (PropertyDataSource.isChooseFromList)
             {
-                if(PropertyDataSource.SelectProductPropertyLines.Count == 0 || PropertyDataSource.SelectProductPropertyLines == null)
+                if (PropertyDataSource.SelectProductPropertyLines.Count == 0 || PropertyDataSource.SelectProductPropertyLines == null)
                 {
                     await ModalManager.WarningPopupAsync("UIWarningChooseFromListTitle", "UIWarningChooseFromListMessage");
                 }
@@ -354,14 +380,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
             }
             else
             {
-                if (PropertyDataSource.SelectProductPropertyLines.Count == 0 || PropertyDataSource.SelectProductPropertyLines == null)
-                {
-                    await InsertUpdateMappingProductProperty();
-                }
-                else
-                {
-                    await ModalManager.WarningPopupAsync("UIWarningChooseFromListTitle", "UIWarningChooseFromListMessage2");
-                }
+                await InsertUpdateMappingProductProperty();
             }
 
             PropertyGridList = (await ProductPropertiesAppService.GetListAsync(new ListProductPropertiesParameterDto())).Data.Where(t => t.ProductGroupID == DataSource.Id).ToList();
@@ -389,6 +408,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
         {
             if (PropertyLineDataSource.Id == Guid.Empty)
             {
+                if (PropertyDataSource.SelectProductPropertyLines == null)
+                {
+                    PropertyDataSource.SelectProductPropertyLines = new List<SelectProductPropertyLinesDto>();
+                }
+
                 if (PropertyDataSource.SelectProductPropertyLines.Contains(PropertyLineDataSource))
                 {
                     int selectedLineIndex = PropertyDataSource.SelectProductPropertyLines.FindIndex(t => t.LineNr == PropertyLineDataSource.LineNr);
