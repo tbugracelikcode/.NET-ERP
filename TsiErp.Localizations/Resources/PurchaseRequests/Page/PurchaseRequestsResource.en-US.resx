@@ -309,6 +309,9 @@
   <data name="LineGridProductName" xml:space="preserve">
     <value>PRODUCT NAME</value>
   </data>
+  <data name="LineGridPurchaseRequestLineState" xml:space="preserve">
+    <value>FULFILLMENT STATUS</value>
+  </data>
   <data name="LineGridQuantity" xml:space="preserve">
     <value>QUANTITY</value>
   </data>
@@ -431,6 +434,9 @@
   </data>
   <data name="SpecialCodeLabel" xml:space="preserve">
     <value>Private Code:</value>
+  </data>
+  <data name="SupplierReferanceNo" xml:space="preserve">
+    <value>SUPPLIER REFERANCE NO</value>
   </data>
   <data name="TotalDiscountAmountLabel" xml:space="preserve">
     <value>Discount Amount:</value>

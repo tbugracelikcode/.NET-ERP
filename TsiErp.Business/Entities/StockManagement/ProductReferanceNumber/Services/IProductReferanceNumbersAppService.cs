@@ -8,5 +8,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
     public interface IProductReferanceNumbersAppService : ICrudAppService<SelectProductReferanceNumbersDto, ListProductReferanceNumbersDto, CreateProductReferanceNumbersDto, UpdateProductReferanceNumbersDto, ListProductReferanceNumbersParameterDto>
     {
         Task<IDataResult<IList<SelectProductReferanceNumbersDto>>> GetSelectListAsync(Guid productId);
+
+        string GetLastSupplierReferanceNumber(Guid ProductID, Guid CurrentAccountID);
     }
 }

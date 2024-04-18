@@ -241,6 +241,15 @@ namespace TsiErp.Localizations.Resources.ProductGroups.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellikleri.
+        /// </summary>
+        public static string ProductGroupContextProductProperties {
+            get {
+                return ResourceManager.GetString("ProductGroupContextProductProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string ProductGroupContextRefresh {
@@ -250,11 +259,200 @@ namespace TsiErp.Localizations.Resources.ProductGroups.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ÜRÜN ÖZELLİK KODU.
+        /// </summary>
+        public static string ProductPropertiesCode {
+            get {
+                return ResourceManager.GetString("ProductPropertiesCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRÜN ÖZELLİK ADI.
+        /// </summary>
+        public static string ProductPropertiesName {
+            get {
+                return ResourceManager.GetString("ProductPropertiesName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductPropertyContextAdd {
+            get {
+                return ResourceManager.GetString("ProductPropertyContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductPropertyContextChange {
+            get {
+                return ResourceManager.GetString("ProductPropertyContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductPropertyContextDelete {
+            get {
+                return ResourceManager.GetString("ProductPropertyContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductPropertyContextRefresh {
+            get {
+                return ResourceManager.GetString("ProductPropertyContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductPropertyLineContextAdd {
+            get {
+                return ResourceManager.GetString("ProductPropertyLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductPropertyLineContextChange {
+            get {
+                return ResourceManager.GetString("ProductPropertyLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductPropertyLineContextDelete {
+            get {
+                return ResourceManager.GetString("ProductPropertyLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductPropertyLineContextRefresh {
+            get {
+                return ResourceManager.GetString("ProductPropertyLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellik Satırları.
+        /// </summary>
+        public static string ProductPropertyLineModalTitle {
+            get {
+                return ResourceManager.GetString("ProductPropertyLineModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellikleri.
+        /// </summary>
+        public static string ProductPropertyModalTitle {
+            get {
+                return ResourceManager.GetString("ProductPropertyModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellik Kodu:.
+        /// </summary>
+        public static string PropertyCodeLabel {
+            get {
+                return ResourceManager.GetString("PropertyCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Listeden Seçim:.
+        /// </summary>
+        public static string PropertyisChooseFromList {
+            get {
+                return ResourceManager.GetString("PropertyisChooseFromList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Özellik Satır Kodu:.
+        /// </summary>
+        public static string PropertyLineCodeLabel {
+            get {
+                return ResourceManager.GetString("PropertyLineCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÖZELLİK SATIR KODU.
+        /// </summary>
+        public static string PropertyLineGridLineCode {
+            get {
+                return ResourceManager.GetString("PropertyLineGridLineCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÖZELLİK SATIR ADI.
+        /// </summary>
+        public static string PropertyLineGridLineName {
+            get {
+                return ResourceManager.GetString("PropertyLineGridLineName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Özellik Satır Adı:.
+        /// </summary>
+        public static string PropertyLineNameLabel {
+            get {
+                return ResourceManager.GetString("PropertyLineNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellik Adı:.
+        /// </summary>
+        public static string PropertyNameLabel {
+            get {
+                return ResourceManager.GetString("PropertyNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz satır silinecektir..
+        /// </summary>
+        public static string UIConfirmationPopupMessageLineBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupMessageLineBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string UIConfirmationPopupTitleBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupTitleBase", resourceCulture);
             }
         }
         
@@ -291,6 +489,33 @@ namespace TsiErp.Localizations.Resources.ProductGroups.Page {
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Listeden Seçilecek&quot; seçeneği işaretliyken satır tablosu boş bırakılamaz..
+        /// </summary>
+        public static string UIWarningChooseFromListMessage {
+            get {
+                return ResourceManager.GetString("UIWarningChooseFromListMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Listeden Seçilecek&quot; seçeneği işaretli değilken satır tablosu boş bırakılmalıdır..
+        /// </summary>
+        public static string UIWarningChooseFromListMessage2 {
+            get {
+                return ResourceManager.GetString("UIWarningChooseFromListMessage2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningChooseFromListTitle {
+            get {
+                return ResourceManager.GetString("UIWarningChooseFromListTitle", resourceCulture);
             }
         }
         

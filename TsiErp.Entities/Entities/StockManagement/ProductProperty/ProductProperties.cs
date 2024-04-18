@@ -22,7 +22,7 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductProperty
         /// </summary>
         public string Code { get; set; }
 
-        [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Ürün Özellikleri Açıklaması
         /// </summary>
