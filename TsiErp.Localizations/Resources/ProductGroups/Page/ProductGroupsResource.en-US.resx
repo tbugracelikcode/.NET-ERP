@@ -261,6 +261,15 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Inventory Management &gt; Main Records</value>
   </data>
+  <data name="UIWarningChooseFromListMessage" xml:space="preserve">
+    <value>The line table cannot be left empty when the "Choose From List" option is checked.</value>
+  </data>
+  <data name="UIWarningChooseFromListMessage2" xml:space="preserve">
+    <value>The line table should be left empty when the "Choose From List" option is unchecked.</value>
+  </data>
+  <data name="UIWarningChooseFromListTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>

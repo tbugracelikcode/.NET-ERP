@@ -309,8 +309,11 @@
   <data name="StartDateLabel" xml:space="preserve">
     <value>Start Date:</value>
   </data>
+  <data name="SupplierReferanceNo" xml:space="preserve">
+    <value>SUPPLIER REFERANCE NO</value>
+  </data>
   <data name="SupplyDateDayLineLabel" xml:space="preserve">
-    <value>Purchase Supply Date:</value>
+    <value>Purchase Time:</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The price list record you selected will be permanently deleted.</value>

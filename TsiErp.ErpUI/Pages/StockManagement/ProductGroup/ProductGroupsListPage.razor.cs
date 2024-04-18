@@ -341,7 +341,36 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
 
         public async void OnPropertySubmit()
         {
+            if (PropertyDataSource.isChooseFromList)
+            {
+                if(PropertyDataSource.SelectProductPropertyLines.Count == 0 || PropertyDataSource.SelectProductPropertyLines == null)
+                {
+                    await ModalManager.WarningPopupAsync("UIWarningChooseFromListTitle", "UIWarningChooseFromListMessage");
+                }
+                else
+                {
+                    await InsertUpdateMappingProductProperty();
+                }
+            }
+            else
+            {
+                if (PropertyDataSource.SelectProductPropertyLines.Count == 0 || PropertyDataSource.SelectProductPropertyLines == null)
+                {
+                    await InsertUpdateMappingProductProperty();
+                }
+                else
+                {
+                    await ModalManager.WarningPopupAsync("UIWarningChooseFromListTitle", "UIWarningChooseFromListMessage2");
+                }
+            }
 
+            PropertyGridList = (await ProductPropertiesAppService.GetListAsync(new ListProductPropertiesParameterDto())).Data.Where(t => t.ProductGroupID == DataSource.Id).ToList();
+
+            HideProductPropertyCrudPopup();
+        }
+
+        public async Task InsertUpdateMappingProductProperty()
+        {
             if (PropertyDataSource.Id == Guid.Empty)
             {
                 var createInput = ObjectMapper.Map<SelectProductPropertiesDto, CreateProductPropertiesDto>(PropertyDataSource);
@@ -354,11 +383,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
 
                 await ProductPropertiesAppService.UpdateAsync(updateInput);
             }
-
-
-            PropertyGridList = (await ProductPropertiesAppService.GetListAsync(new ListProductPropertiesParameterDto())).Data.Where(t => t.ProductGroupID == DataSource.Id).ToList();
-
-            HideProductPropertyCrudPopup();
         }
 
         protected async Task OnPropertyLineSubmit()

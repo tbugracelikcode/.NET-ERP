@@ -261,6 +261,15 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Stok Yönetimi &gt; Ana Kayıtlar</value>
   </data>
+  <data name="UIWarningChooseFromListMessage" xml:space="preserve">
+    <value>"Listeden Seçilecek" seçeneği işaretliyken satır tablosu boş bırakılamaz.</value>
+  </data>
+  <data name="UIWarningChooseFromListMessage2" xml:space="preserve">
+    <value>"Listeden Seçilecek" seçeneği işaretli değilken satır tablosu boş bırakılmalıdır.</value>
+  </data>
+  <data name="UIWarningChooseFromListTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>

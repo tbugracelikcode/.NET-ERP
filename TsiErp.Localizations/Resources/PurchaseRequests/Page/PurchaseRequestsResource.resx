@@ -309,6 +309,9 @@
   <data name="LineGridProductName" xml:space="preserve">
     <value>STOK AÇIKLAMASI</value>
   </data>
+  <data name="LineGridPurchaseRequestLineState" xml:space="preserve">
+    <value>KARŞILANMA DURUMU</value>
+  </data>
   <data name="LineGridQuantity" xml:space="preserve">
     <value>MİKTAR</value>
   </data>
@@ -431,6 +434,9 @@
   </data>
   <data name="SpecialCodeLabel" xml:space="preserve">
     <value>Özel Kod:</value>
+  </data>
+  <data name="SupplierReferanceNo" xml:space="preserve">
+    <value>TEDARİKÇİ REFERANS NO</value>
   </data>
   <data name="TotalDiscountAmountLabel" xml:space="preserve">
     <value>İndirim Toplamı:</value>

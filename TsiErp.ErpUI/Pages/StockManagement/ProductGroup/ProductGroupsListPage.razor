@@ -222,8 +222,7 @@ else
 
                     <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
                         <Template>
-                            @if(PropertyDataSource.isChooseFromList)
-                            {
+                            
                                 <SfGrid @ref=_PropertyLineGrid ID="PropertyLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@PropertyGridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@PropertyLineGridContextMenu">
                                     <GridEvents ContextMenuItemClicked="@OnProductPropertyLineContextMenuClick" TValue="SelectProductPropertyLinesDto"></GridEvents>
                                     <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
@@ -236,8 +235,6 @@ else
                                         <GridColumn Field=@nameof(SelectProductPropertyLinesDto.LineName) HeaderText="@L["PropertyLineGridLineName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
-                            }
-                           
                         </Template>
                     </DxGridLayoutItem>
                   
