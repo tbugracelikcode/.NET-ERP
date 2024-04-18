@@ -138,21 +138,21 @@
                          <DxGridLayoutItem Row="2" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["OrderReferanceNoLabel"] </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.OrderReferanceNo"></SfTextBox>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.OrderReferanceNo" Enabled=@OrderReferanceNoEnable></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="3" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["CustomerReferanceNoLabel"] </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.CustomerReferanceNo"></SfTextBox>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.CustomerReferanceNo" Enabled=@CustomerReferanceNoEnable></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
                          <DxGridLayoutItem Row="3" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["CustomerBarcodeNoLabel"] </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.CustomerBarcodeNo"></SfTextBox>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.CustomerBarcodeNo"  Enabled=@CustomerBarcodeNoEnable></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
