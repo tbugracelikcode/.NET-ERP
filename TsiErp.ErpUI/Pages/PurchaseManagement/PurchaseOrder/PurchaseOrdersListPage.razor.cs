@@ -942,6 +942,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                         var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
                         await UpdateAsync(updateInput);
                         await ModalManager.MessagePopupAsync(L["UIInformationTitle"], L["UIInformationApproveOrder"]);
+                        await GetListDataSourceAsync();
 
                     }
 

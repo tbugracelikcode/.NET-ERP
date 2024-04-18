@@ -414,6 +414,9 @@
   <data name="PurchaseOrderLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="PurchaseOrderState" xml:space="preserve">
+    <value>SİPARİŞ DURUMU</value>
+  </data>
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Miktar:</value>
   </data>
@@ -431,6 +434,9 @@
   </data>
   <data name="StockReceiptFichesContextSelect" xml:space="preserve">
     <value>Seç</value>
+  </data>
+  <data name="SupplierReferanceNo" xml:space="preserve">
+    <value>TEDARİKÇİ REFERANS NO</value>
   </data>
   <data name="SupplyDateLineLabel" xml:space="preserve">
     <value>Temin Tarihi:</value>

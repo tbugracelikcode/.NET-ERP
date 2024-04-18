@@ -27,12 +27,10 @@ namespace TsiErp.Business.Entities.UnitSet.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public UnitSetsAppService(IStringLocalizer<UnitSetsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public UnitSetsAppService(IStringLocalizer<UnitSetsResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
-            FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
         }
 
@@ -74,8 +72,6 @@ namespace TsiErp.Business.Entities.UnitSet.Services
             });
 
             var unitsets = queryFactory.Insert<SelectUnitSetsDto>(query, "Id", true);
-
-            await FicheNumbersAppService.UpdateFicheNumberAsync("UnitSetsChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UnitSets, LogType.Insert, addedEntityId);
 

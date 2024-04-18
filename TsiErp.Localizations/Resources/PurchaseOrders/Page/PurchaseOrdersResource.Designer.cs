@@ -952,6 +952,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ DURUMU.
+        /// </summary>
+        public static string PurchaseOrderState {
+            get {
+                return ResourceManager.GetString("PurchaseOrderState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Miktar:.
         /// </summary>
         public static string QuantityLineLabel {
@@ -1002,6 +1011,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         public static string StockReceiptFichesContextSelect {
             get {
                 return ResourceManager.GetString("StockReceiptFichesContextSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TEDARİKÇİ REFERANS NO.
+        /// </summary>
+        public static string SupplierReferanceNo {
+            get {
+                return ResourceManager.GetString("SupplierReferanceNo", resourceCulture);
             }
         }
         

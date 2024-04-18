@@ -13,6 +13,7 @@
 @inject IFicheNumbersAppService FicheNumbersAppService
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
+@inject IProductPropertiesAppService ProductPropertiesAppService
 
 @if (!base.IsLoaded)
 {
@@ -117,6 +118,182 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+     <DxPopup @bind-Visible="ProductPropertiesModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["ProductPropertyModalTitle"]"
+         Width="50%"
+         Height="50%"
+         MinWidth="960px"
+         MinHeight="540px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="1%" />
+                    <DxGridLayoutColumn Width="98%" />
+                    <DxGridLayoutColumn Width="1%" />
+                </Columns>
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <SfGrid ID="PropertyGrid" @ref="_PropertyGrid" AllowPdfExport=true DataSource="@PropertyGridList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@PropertyMainGridContextMenu" Toolbar=@GridToolbarItems>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridEvents ContextMenuItemClicked="@OnProductPropertyContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListProductPropertiesDto"></GridEvents>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListProductPropertiesDto.Code) HeaderText="@L["ProductPropertiesCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductPropertiesDto.Name) HeaderText="@L["ProductPropertiesName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+                  
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideProductPropertyPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="ProductPropertiesCrudModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["ProductPropertyModalTitle"]"
+         Width="42%"
+         Height="69%"
+         MinWidth="720px"
+         MinHeight="750px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="16%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="53%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                </Columns>
+                <Items>
+                            <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["PropertyCodeLabel"] </strong></label>
+                             <SfTextBox CssClass="TSITxtBox" @bind-Value="PropertyDataSource.Code" ></SfTextBox> 
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["PropertyNameLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="PropertyDataSource.Name"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PropertyisChooseFromList"] </strong></label><br />
+                            <SfSwitch @bind-Checked="PropertyDataSource.isChooseFromList"></SfSwitch>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
+                        <Template>
+                            
+                                <SfGrid @ref=_PropertyLineGrid ID="PropertyLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@PropertyGridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@PropertyLineGridContextMenu">
+                                    <GridEvents ContextMenuItemClicked="@OnProductPropertyLineContextMenuClick" TValue="SelectProductPropertyLinesDto"></GridEvents>
+                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(SelectProductPropertyLinesDto.LineCode) HeaderText="@L["PropertyLineGridLineCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SelectProductPropertyLinesDto.LineName) HeaderText="@L["PropertyLineGridLineName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+                  
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnPropertySubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideProductPropertyCrudPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="ProductPropertyLinesModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["ProductPropertyLineModalTitle"]"
+         Width="42%"
+         Height="24%"
+         MinWidth="720px"
+         MinHeight="260px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="60%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                </Columns>
+                <Items>
+                            <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["PropertyLineCodeLabel"] </strong></label>
+                             <SfTextBox CssClass="TSITxtBox" @bind-Value="PropertyLineDataSource.LineCode" ></SfTextBox> 
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["PropertyLineNameLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="PropertyLineDataSource.LineName"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    
+                  
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnPropertyLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideProductPropertyLinePopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

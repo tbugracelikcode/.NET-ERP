@@ -414,6 +414,9 @@
   <data name="PurchaseOrderLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PurchaseOrderState" xml:space="preserve">
+    <value>ORDER STATUS</value>
+  </data>
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Quantity:</value>
   </data>
@@ -431,6 +434,9 @@
   </data>
   <data name="StockReceiptFichesContextSelect" xml:space="preserve">
     <value>Select</value>
+  </data>
+  <data name="SupplierReferanceNo" xml:space="preserve">
+    <value>SUPPLIER REFERANCE NO</value>
   </data>
   <data name="SupplyDateLineLabel" xml:space="preserve">
     <value>Supply Date:</value>

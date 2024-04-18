@@ -168,5 +168,7 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string StockShelfs = "StockShelfs";
         public static readonly string StockAddresses = "StockAddresses";
         public static readonly string StockAddressLines = "StockAddressLines";
+        public static readonly string ProductProperties = "ProductProperties";
+        public static readonly string ProductPropertyLines = "ProductPropertyLines";
     }
 }

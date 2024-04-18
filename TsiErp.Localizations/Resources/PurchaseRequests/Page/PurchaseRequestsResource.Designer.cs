@@ -637,6 +637,15 @@ namespace TsiErp.Localizations.Resources.PurchaseRequests.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KARŞILANMA DURUMU.
+        /// </summary>
+        public static string LineGridPurchaseRequestLineState {
+            get {
+                return ResourceManager.GetString("LineGridPurchaseRequestLineState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MİKTAR.
         /// </summary>
         public static string LineGridQuantity {
@@ -1002,6 +1011,15 @@ namespace TsiErp.Localizations.Resources.PurchaseRequests.Page {
         public static string SpecialCodeLabel {
             get {
                 return ResourceManager.GetString("SpecialCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TEDARİKÇİ REFERANS NO.
+        /// </summary>
+        public static string SupplierReferanceNo {
+            get {
+                return ResourceManager.GetString("SupplierReferanceNo", resourceCulture);
             }
         }
         

@@ -637,7 +637,16 @@ namespace TsiErp.Localizations.Resources.PurchasePrices.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Satın Alma Temin Tarihi:.
+        ///   Looks up a localized string similar to TEDARİKÇİ REFERANS NO.
+        /// </summary>
+        public static string SupplierReferanceNo {
+            get {
+                return ResourceManager.GetString("SupplierReferanceNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Süresi:.
         /// </summary>
         public static string SupplyDateDayLineLabel {
             get {
