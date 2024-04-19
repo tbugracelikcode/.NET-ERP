@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.XlsIO;
+using System.Data;
+using System.Dynamic;
+using TsiErp.Business.Entities.SalesPrice.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
@@ -11,9 +15,13 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchasePrice.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using static TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord.OrderAcceptanceRecordsListPage;
 
 namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
 {
@@ -595,6 +603,91 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+        public DataTable table = new DataTable();
+
+        private void OnChange(UploadChangeEventArgs args)
+        {
+            foreach (var file in args.Files)
+            {
+                #region Expando Object Örneği
+
+                var path = file.FileInfo.Name;
+                ExcelEngine excelEngine = new ExcelEngine();
+                IApplication application = excelEngine.Excel;
+                application.DefaultVersion = ExcelVersion.Excel2016;
+
+                var check = ExcelService.ImportGetPath(path);
+                FileStream openFileStream = new FileStream(check, FileMode.OpenOrCreate);
+                file.Stream.WriteTo(openFileStream);
+                FileStream fileStream = new FileStream(check, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                IWorkbook workbook = application.Workbooks.Open(fileStream);
+                IWorksheet worksheet = workbook.Worksheets[0];
+                table = worksheet.ExportDataTable(worksheet.UsedRange, ExcelExportDataTableOptions.ColumnNames);
+                GenerateListFromTable(table);
+
+                #endregion
+
+            }
+        }
+
+        string[] Columns;
+        public List<ExpandoObject> PriceList;
+        public async void GenerateListFromTable(DataTable input)
+        {
+            var list = new List<ExpandoObject>();
+            Columns = input.Columns.Cast<DataColumn>()
+                                 .Select(x => x.ColumnName)
+                                 .ToArray();
+            foreach (DataRow row in input.Rows)
+            {
+                System.Dynamic.ExpandoObject e = new System.Dynamic.ExpandoObject();
+                foreach (DataColumn col in input.Columns)
+                    e.TryAdd(col.ColumnName, row.ItemArray[col.Ordinal]);
+                list.Add(e);
+            }
+            PriceList = list;
+
+
+            foreach (var item in PriceList)
+            {
+                dynamic row = item;
+
+                #region Row DBNull Kontrolleri
+                string productCode = !string.IsNullOrEmpty(Convert.ToString(row.ProductCode)) ? (string)row.ProductCode : string.Empty;
+                string price = !string.IsNullOrEmpty(Convert.ToString(row.Price)) ? (string)row.Price : "0";
+                string supplyday = !string.IsNullOrEmpty(Convert.ToString(row.SupplyDateDay)) ? (string)row.SupplyDateDay : "0";
+                decimal unitPrice = Convert.ToDecimal(price);
+                int SupplyDateDay = Convert.ToInt32(supplyday);
+                #endregion
+
+                var product = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.Where(t => t.Code == productCode).FirstOrDefault();
+
+
+                SelectPurchasePriceLinesDto line = new SelectPurchasePriceLinesDto
+                {
+                    CurrencyCode = DataSource.CurrencyCode,
+                    ProductCode = productCode,
+                    CurrencyID = DataSource.CurrencyID,
+                    CurrentAccountCardID = DataSource.CurrentAccountCardID,
+                    CurrentAccountCardName = DataSource.CurrentAccountCardName,
+                    EndDate = DataSource.EndDate,
+                    Linenr = 0,
+                    Price = unitPrice,
+                    ProductID = product.Id,
+                    ProductName = product.Name,
+                    PurchasePriceID = DataSource.Id,
+                    StartDate = DataSource.StartDate,
+                    SupplyDateDay = SupplyDateDay
+                };
+
+                DataSource.SelectPurchasePriceLines.Add(line);
+            }
+
+            await _LineGrid.Refresh();
+        }
+
+
 
 
         public void Dispose()

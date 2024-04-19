@@ -90,46 +90,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         public bool SupplierSelectionPopup = false;
 
-        public class SupplierSelectionGrid
-        {
-            public string ProductCode { get; set; }
-
-            public decimal UnitPrice { get; set; }
-
-            public Guid? CurrentAccountID { get; set; }
-
-            public string CurrentAccountName { get; set; }
-
-            public Guid? CurrenyID { get; set; }
-
-            public string CurrenyCode { get; set; }
-
-            public int SupplyDate { get; set; }
-        }
-
-        public class VirtualLineModel
-        {
-            public Guid Id { get; set; }
-            public bool IsProductExists { get; set; }
-            public Guid OrderAcceptanceRecordID { get; set; }
-            public int LineNr { get; set; }
-            public Guid? ProductID { get; set; }
-            public string ProductCode { get; set; }
-            public string ProductName { get; set; }
-            public Guid? ProductReferanceNumberID { get; set; }
-            public string OrderReferanceNo { get; set; }
-            public string CustomerReferanceNo { get; set; }
-            public string CustomerBarcodeNo { get; set; }
-            public decimal MinOrderAmount { get; set; }
-            public decimal OrderAmount { get; set; }
-            public Guid? UnitSetID { get; set; }
-            public string UnitSetCode { get; set; }
-            public decimal DefinedUnitPrice { get; set; }
-            public decimal OrderUnitPrice { get; set; }
-            public decimal LineAmount { get; set; }
-            public string Description_ { get; set; }
-        }
-
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = OrderAcceptanceRecordsAppService;
@@ -1666,5 +1626,47 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             GC.Collect();
             GC.SuppressFinalize(this);
         }
+    }
+
+
+
+    public class SupplierSelectionGrid
+    {
+        public string ProductCode { get; set; }
+
+        public decimal UnitPrice { get; set; }
+
+        public Guid? CurrentAccountID { get; set; }
+
+        public string CurrentAccountName { get; set; }
+
+        public Guid? CurrenyID { get; set; }
+
+        public string CurrenyCode { get; set; }
+
+        public int SupplyDate { get; set; }
+    }
+
+    public class VirtualLineModel
+    {
+        public Guid Id { get; set; }
+        public bool IsProductExists { get; set; }
+        public Guid OrderAcceptanceRecordID { get; set; }
+        public int LineNr { get; set; }
+        public Guid? ProductID { get; set; }
+        public string ProductCode { get; set; }
+        public string ProductName { get; set; }
+        public Guid? ProductReferanceNumberID { get; set; }
+        public string OrderReferanceNo { get; set; }
+        public string CustomerReferanceNo { get; set; }
+        public string CustomerBarcodeNo { get; set; }
+        public decimal MinOrderAmount { get; set; }
+        public decimal OrderAmount { get; set; }
+        public Guid? UnitSetID { get; set; }
+        public string UnitSetCode { get; set; }
+        public decimal DefinedUnitPrice { get; set; }
+        public decimal OrderUnitPrice { get; set; }
+        public decimal LineAmount { get; set; }
+        public string Description_ { get; set; }
     }
 }
