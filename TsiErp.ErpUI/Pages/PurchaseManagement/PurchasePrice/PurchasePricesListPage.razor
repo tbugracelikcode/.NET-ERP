@@ -18,6 +18,7 @@
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
 @inject IProductReferanceNumbersAppService ProductReferanceNumbersAppService
+@inject IExcelService ExcelService
 
 @if (!base.IsLoaded)
 {
@@ -96,13 +97,13 @@ else
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="3%" />
                     <DxGridLayoutColumn Width="27%" />
                     <DxGridLayoutColumn Width="4%" />
                     <DxGridLayoutColumn Width="27%" />
                     <DxGridLayoutColumn Width="4%" />
-                    <DxGridLayoutColumn Width="27%" />
-                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="31%" />
+                    <DxGridLayoutColumn Width="3%" />
                 </Columns>
 
                 <Items>
@@ -187,6 +188,14 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["WarehouseCodeLabel"] </strong></label><br />
                             <SfTextBox @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="DataSource.WarehouseCode" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="5">
+                        <Template>
+                            <SfUploader AutoUpload="false">
+                                <UploaderEvents ValueChange="OnChange"></UploaderEvents>
+                            </SfUploader>
                         </Template>
                     </DxGridLayoutItem>
 
