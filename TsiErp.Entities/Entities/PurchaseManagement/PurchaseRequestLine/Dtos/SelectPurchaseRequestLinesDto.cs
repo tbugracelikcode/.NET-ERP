@@ -22,6 +22,11 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine.Dtos
         /// Stok ID
         /// </summary>
         public Guid? ProductID { get; set; }
+
+        /// <summary>
+        /// Tedarikçi Referans No
+        /// </summary>
+        public string SupplierReferanceNo { get; set; }
         /// <summary>
         /// Stok Kodu
         /// </summary>
