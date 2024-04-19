@@ -22,6 +22,11 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos
         /// Cari Ünvan
         /// </summary>
         public string CurrentAccountCardName { get; set; }
+
+        /// <summary>
+        /// Tedarikçi Referans No
+        /// </summary>
+        public string SupplierReferanceNo { get; set; }
         /// <summary>
         /// Stok ID
         /// </summary>

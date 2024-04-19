@@ -435,8 +435,14 @@
   <data name="StockReceiptFichesContextSelect" xml:space="preserve">
     <value>Select</value>
   </data>
+  <data name="SupplierBillNoLineLabel" xml:space="preserve">
+    <value>Supplier Bill No:</value>
+  </data>
   <data name="SupplierReferanceNo" xml:space="preserve">
     <value>SUPPLIER REFERANCE NO</value>
+  </data>
+  <data name="SupplierWaybillNoLineLabel" xml:space="preserve">
+    <value>Supplier Waybill No:</value>
   </data>
   <data name="SupplyDateLineLabel" xml:space="preserve">
     <value>Supply Date:</value>

@@ -1015,11 +1015,29 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tedarikçi Fatura No:.
+        /// </summary>
+        public static string SupplierBillNoLineLabel {
+            get {
+                return ResourceManager.GetString("SupplierBillNoLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TEDARİKÇİ REFERANS NO.
         /// </summary>
         public static string SupplierReferanceNo {
             get {
                 return ResourceManager.GetString("SupplierReferanceNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tedarikçi İrsaliye No:.
+        /// </summary>
+        public static string SupplierWaybillNoLineLabel {
+            get {
+                return ResourceManager.GetString("SupplierWaybillNoLineLabel", resourceCulture);
             }
         }
         

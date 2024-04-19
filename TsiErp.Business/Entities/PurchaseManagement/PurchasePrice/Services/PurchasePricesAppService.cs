@@ -260,7 +260,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                     )
                     .Join<CurrentAccountCards>
                     (
-                        ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
                         nameof(PurchasePrices.CurrentAccountCardID),
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
@@ -365,7 +365,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                     )
                     .Join<CurrentAccountCards>
                     (
-                        ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
                         nameof(PurchasePrices.CurrentAccountCardID),
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left

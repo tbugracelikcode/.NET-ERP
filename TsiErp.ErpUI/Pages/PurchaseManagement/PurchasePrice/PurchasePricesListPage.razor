@@ -92,7 +92,7 @@ else
                     <DxGridLayoutRow Height="15%" />
                     <DxGridLayoutRow Height="12%" />
                     <DxGridLayoutRow Height="12%" />
-                    <DxGridLayoutRow Height="13%" />
+                    <DxGridLayoutRow Height="16%" />
                     <DxGridLayoutRow Height="40%" />
                 </Rows>
 
@@ -211,8 +211,8 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    
-                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductCode) HeaderText="@L["SupplierReferanceNo"]" TextAlign="TextAlign.Center" Width="120" Context="lineContext">
+
+                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.SupplierReferanceNo) HeaderText="@L["SupplierReferanceNo"]" TextAlign="TextAlign.Center" Width="120" Context="lineContext">
                                         <Template>
                                             @{
                                                     Guid productId = (lineContext as SelectPurchasePriceLinesDto).ProductID.GetValueOrDefault() ;

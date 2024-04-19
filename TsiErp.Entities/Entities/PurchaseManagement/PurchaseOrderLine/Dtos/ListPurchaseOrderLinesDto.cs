@@ -24,6 +24,14 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
         /// </summary>
         public string ProductName { get; set; }
         /// <summary>
+        /// Tedarikçi İrsaliye No
+        /// </summary>
+        public string SupplierWaybillNo { get; set; }
+        /// <summary>
+        /// Tedarikçi Fatura No
+        /// </summary>
+        public string SupplierBillNo { get; set; }
+        /// <summary>
         /// Birim Seti Kodu
         /// </summary>
         public string UnitSetCode { get; set; }

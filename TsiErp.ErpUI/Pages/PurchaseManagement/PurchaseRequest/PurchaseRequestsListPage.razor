@@ -24,6 +24,7 @@
 @inject IMenusAppService MenusAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
 @inject IProductReferanceNumbersAppService ProductReferanceNumbersAppService
+@inject IPurchasePricesAppService PurchasePricesAppService
 
 
 @if (!base.IsLoaded)
@@ -234,7 +235,7 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(SelectPurchaseRequestLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchaseRequestLinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchaseRequestLinesDto.ProductCode) HeaderText="@L["SupplierReferanceNo"]" TextAlign="TextAlign.Center" Width="120" Context="lineContext">
+                                    <GridColumn Field=@nameof(SelectPurchaseRequestLinesDto.SupplierReferanceNo) HeaderText="@L["SupplierReferanceNo"]" TextAlign="TextAlign.Center" Width="120" Context="lineContext">
                                         <Template>
                                             @{
                                                     Guid productId = (lineContext as SelectPurchaseRequestLinesDto).ProductID.GetValueOrDefault() ;
