@@ -488,7 +488,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             BaseCrudService = PurchaseRequestsAppService;
             _L = L;
 
-
             futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
 
             #region Context Menü Yetkilendirmesi
