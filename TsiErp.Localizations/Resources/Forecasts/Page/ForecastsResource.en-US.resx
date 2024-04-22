@@ -225,11 +225,17 @@
   <data name="ForecastLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="LineEndDateLabel" xml:space="preserve">
+    <value>End Date:</value>
+  </data>
   <data name="LineGridAmount" xml:space="preserve">
     <value>AMOUNT</value>
   </data>
   <data name="LineGridCustomerProductCode" xml:space="preserve">
     <value>CUSTOMER PRODUCT CODE</value>
+  </data>
+  <data name="LineGridEndDate" xml:space="preserve">
+    <value>END DATE</value>
   </data>
   <data name="LineGridProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
@@ -237,8 +243,14 @@
   <data name="LineGridProductName" xml:space="preserve">
     <value>PRODUCT NAME</value>
   </data>
+  <data name="LineGridStartDate" xml:space="preserve">
+    <value>START DATE</value>
+  </data>
   <data name="LinePopupTitle" xml:space="preserve">
     <value>Forecast Lines</value>
+  </data>
+  <data name="LineStartDateLabel" xml:space="preserve">
+    <value>Start Date:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>

@@ -100,6 +100,8 @@ namespace TsiErp.Business.Entities.Forecast.Services
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
                     ProductID = item.ProductID,
+                    StartDate = item.StartDate,
+                    EndDate = item.EndDate
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -181,7 +183,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.ForecastLines)
-                   .Select<ForecastLines>(fl => new { fl.ProductID, fl.LineNr, fl.Id, fl.ForecastID, fl.DataOpenStatus, fl.DataOpenStatusUserId, fl.CustomerProductCode, fl.Amount })
+                   .Select<ForecastLines>(fl => new { fl.ProductID, fl.LineNr, fl.Id, fl.ForecastID, fl.DataOpenStatus, fl.DataOpenStatusUserId, fl.CustomerProductCode, fl.Amount, fl.StartDate, fl.EndDate })
                    .Join<Products>
                     (
                         pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
@@ -275,7 +277,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.ForecastLines)
-                   .Select<ForecastLines>(fl => new { fl.ProductID, fl.LineNr, fl.Id, fl.ForecastID, fl.DataOpenStatus, fl.DataOpenStatusUserId, fl.CustomerProductCode, fl.Amount })
+                   .Select<ForecastLines>(fl => new { fl.ProductID, fl.LineNr, fl.Id, fl.ForecastID, fl.DataOpenStatus, fl.DataOpenStatusUserId, fl.CustomerProductCode, fl.Amount, fl.StartDate, fl.EndDate })
                   .Join<Products>
                     (
                         pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
@@ -328,7 +330,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
             var query = queryFactory.Query().From(Tables.Forecasts).Update(new UpdateForecastsDto
             {
                 BranchID = input.BranchID,
-                CreationDate_ = input.CreationDate_,
+                CreationDate_ = entity.CreationDate_,
                 CurrentAccountCardID = input.CurrentAccountCardID,
                 Description_ = input.Description_,
                 LineNumber = input.LineNumber,
@@ -370,6 +372,8 @@ namespace TsiErp.Business.Entities.Forecast.Services
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
                         ProductID = item.ProductID,
+                        EndDate = item.EndDate,
+                        StartDate = item.StartDate
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -399,6 +403,8 @@ namespace TsiErp.Business.Entities.Forecast.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID,
+                            EndDate = item.EndDate,
+                            StartDate = item.StartDate
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
