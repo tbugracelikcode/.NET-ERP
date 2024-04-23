@@ -648,6 +648,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
             }
             PriceList = list;
 
+            int lineNr = 1;
 
             foreach (var item in PriceList)
             {
@@ -672,7 +673,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
                     CurrentAccountCardID = DataSource.CurrentAccountCardID,
                     CurrentAccountCardName = DataSource.CurrentAccountCardName,
                     EndDate = DataSource.EndDate,
-                    Linenr = 0,
+                    Linenr = lineNr,
                     Price = unitPrice,
                     ProductID = product.Id,
                     ProductName = product.Name,
@@ -682,6 +683,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
                 };
 
                 DataSource.SelectPurchasePriceLines.Add(line);
+                lineNr++;
             }
 
             await _LineGrid.Refresh();
