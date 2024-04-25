@@ -484,6 +484,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ürüne Bağlı Ürün Özellikleri.
+        /// </summary>
+        public static string EditLineModalTitle {
+            get {
+                return ResourceManager.GetString("EditLineModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MÜŞTERİ KODU.
         /// </summary>
         public static string EditModalTechDrawGridCustomerCode {
@@ -768,6 +777,78 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string IsApprovedLabelTechDraw {
             get {
                 return ResourceManager.GetString("IsApprovedLabelTechDraw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SATIN ALMA DÖKÜMÜ.
+        /// </summary>
+        public static string LineGridisPurchaseBreakdown {
+            get {
+                return ResourceManager.GetString("LineGridisPurchaseBreakdown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KALİTE KONTROL KRİTERİ.
+        /// </summary>
+        public static string LineGridIsQualityControlCriterion {
+            get {
+                return ResourceManager.GetString("LineGridIsQualityControlCriterion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SIRA NO.
+        /// </summary>
+        public static string LineGridLineNr {
+            get {
+                return ResourceManager.GetString("LineGridLineNr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÖZELLİK ADI.
+        /// </summary>
+        public static string LineGridPropertyName {
+            get {
+                return ResourceManager.GetString("LineGridPropertyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÖZELLİK DEĞERİ.
+        /// </summary>
+        public static string LineGridPropertyValue {
+            get {
+                return ResourceManager.GetString("LineGridPropertyValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Dökümü:.
+        /// </summary>
+        public static string LineisPurchaseBreakdownLabel {
+            get {
+                return ResourceManager.GetString("LineisPurchaseBreakdownLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalite Kontrol Kriteri:.
+        /// </summary>
+        public static string LineIsQualityControlCriterionLabel {
+            get {
+                return ResourceManager.GetString("LineIsQualityControlCriterionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Özellik Değeri:.
+        /// </summary>
+        public static string LinePropertyValueLabel {
+            get {
+                return ResourceManager.GetString("LinePropertyValueLabel", resourceCulture);
             }
         }
         
@@ -1182,6 +1263,24 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string ProductNameLabelTechDraw {
             get {
                 return ResourceManager.GetString("ProductNameLabelTechDraw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductPropertyContextChange {
+            get {
+                return ResourceManager.GetString("ProductPropertyContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductPropertyContextRefresh {
+            get {
+                return ResourceManager.GetString("ProductPropertyContextRefresh", resourceCulture);
             }
         }
         
@@ -1803,6 +1902,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string Tab3Name {
             get {
                 return ResourceManager.GetString("Tab3Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellikleri.
+        /// </summary>
+        public static string Tab4Name {
+            get {
+                return ResourceManager.GetString("Tab4Name", resourceCulture);
             }
         }
         

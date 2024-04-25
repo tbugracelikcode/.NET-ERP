@@ -387,16 +387,16 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 LineDataSource.UnitSetID = selectedProduct.UnitSetID;
                 SelectProductsPopupVisible = false;
 
-                if(DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
-                {
-                    var lastApprovedPriceID = (await PurchasePricesAppService.GetListAsync(new ListPurchasePricesParameterDto())).Data.Where(t => t.IsApproved == true && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).LastOrDefault().Id;
+                //if(DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
+                //{
+                //    var lastApprovedPriceID = (await PurchasePricesAppService.GetListAsync(new ListPurchasePricesParameterDto())).Data.Where(t => t.IsApproved == true && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).Last().Id;
 
-                    if(lastApprovedPriceID != Guid.Empty)
-                    {
-                        LineDataSource.UnitPrice = (await PurchasePricesAppService.GetAsync(lastApprovedPriceID)).Data.SelectPurchasePriceLines.Where(t => t.ProductID == selectedProduct.Id).Select(t => t.Price).FirstOrDefault();
+                //    if(lastApprovedPriceID != Guid.Empty)
+                //    {
+                //        LineDataSource.UnitPrice = (await PurchasePricesAppService.GetAsync(lastApprovedPriceID)).Data.SelectPurchasePriceLines.Where(t => t.ProductID == selectedProduct.Id).Select(t => t.Price).FirstOrDefault();
 
-                    }
-                }
+                //    }
+                //}
 
                 await InvokeAsync(StateHasChanged);
             }

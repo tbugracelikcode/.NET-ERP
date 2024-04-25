@@ -1,5 +1,6 @@
 ﻿using BlazorInputFile;
 using DevExpress.Blazor;
+using DevExpress.XtraCharts.Native;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Buttons;
@@ -24,7 +25,10 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPriceLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductProperty.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductPropertyLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddressLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
@@ -82,7 +86,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         private void ProductTypeValueChangeHandler(ChangeEventArgs<ProductTypeEnum, SelectProductsDto> args)
         {
-            if(args.ItemData.ProductType == ProductTypeEnum.HM)
+            if (args.ItemData.ProductType == ProductTypeEnum.HM)
             {
                 productSizeVisible = true;
             }
@@ -97,6 +101,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         #region Listeler ve DataSource
 
         public SelectTechnicalDrawingsDto TechnicalDrawingsDataSource { get; set; }
+
+        SelectProductRelatedProductPropertiesDto LineDataSource;
         public SelectProductReferanceNumbersDto ProductReferanceNumbersDataSource { get; set; }
         public SelectBillsofMaterialsDto BillsofMaterialsDataSource { get; set; }
         public SelectRoutesDto RoutesDataSource { get; set; }
@@ -105,6 +111,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         public List<ContextMenuItemModel> ProductReferanceNumberGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> BillsofMaterialGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> RouteGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> ProductRelatedProductPropertiesContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         public List<SelectTechnicalDrawingsDto> TechnicalDrawingsList = new List<SelectTechnicalDrawingsDto>();
 
@@ -124,6 +131,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         public List<SelectContractProductionTrackingsDto> ContractProductionTrackingsList = new List<SelectContractProductionTrackingsDto>();
 
+        public List<SelectProductPropertyLinesDto> ProductPropertyLineList = new List<SelectProductPropertyLinesDto>();
+
         public List<ListGrandTotalStockMovementsDto> StockAmountsList = new List<ListGrandTotalStockMovementsDto>();
 
         public List<ListStockAddressesDto> StockAddressesList = new List<ListStockAddressesDto>();
@@ -131,6 +140,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         public List<SelectStockAddressLinesDto> StockAddressLinesList = new List<SelectStockAddressLinesDto>();
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
+
+        public List<SelectProductRelatedProductPropertiesDto> ProductRelatedProductPropertiesList = new List<SelectProductRelatedProductPropertiesDto>();
 
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
 
@@ -155,6 +166,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         private SfGrid<SelectRouteLinesDto> _RouteLineGrid;
         private SfGrid<SelectContractProductionTrackingsDto> _ContractProductionTrackingGrid;
         private SfGrid<ListGrandTotalStockMovementsDto> _StockAmountsGrid;
+        private SfGrid<SelectProductRelatedProductPropertiesDto> _LineGrid;
 
         #endregion
 
@@ -214,6 +226,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         string PDFFileName;
 
         public bool productSizeVisible = false;
+
+        public bool LineCrudPopup = false;
 
         #endregion
 
@@ -313,6 +327,85 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             }
         }
 
+
+        protected void CreateLineContextMenuItems()
+        {
+            if (ProductRelatedProductPropertiesContextMenu.Count() == 0)
+            {
+                ProductRelatedProductPropertiesContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyContextChange"], Id = "changed" });
+                ProductRelatedProductPropertiesContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyContextRefresh"], Id = "refresh" });
+
+            }
+        }
+
+        public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectProductRelatedProductPropertiesDto> args)
+        {
+            switch (args.Item.Id)
+            {
+               
+
+                case "changed":
+                    LineDataSource = args.RowInfo.RowData;
+                    ProductPropertyLineList = (await ProductPropertiesAppService.GetAsync(LineDataSource.ProductPropertyID)).Data.SelectProductPropertyLines.ToList();
+                    LineCrudPopup = true;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "refresh":
+                    await GetListDataSourceAsync();
+                    await _LineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        public void HideLinesPopup()
+        {
+            LineCrudPopup = false;
+            ProductPropertyLineList.Clear();
+        }
+
+
+        protected async Task OnLineSubmit()
+        {
+            if (LineDataSource.Id == Guid.Empty)
+            {
+                if (DataSource.SelectProductRelatedProductProperties.Contains(LineDataSource))
+                {
+                    int selectedLineIndex = DataSource.SelectProductRelatedProductProperties.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        DataSource.SelectProductRelatedProductProperties[selectedLineIndex] = LineDataSource;
+                    }
+                }
+                else
+                {
+                    DataSource.SelectProductRelatedProductProperties.Add(LineDataSource);
+                }
+            }
+            else
+            {
+                int selectedLineIndex = DataSource.SelectProductRelatedProductProperties.FindIndex(t => t.Id == LineDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    DataSource.SelectProductRelatedProductProperties[selectedLineIndex] = LineDataSource;
+                }
+            }
+
+            ProductRelatedProductPropertiesList = DataSource.SelectProductRelatedProductProperties;
+            await _LineGrid.Refresh();
+
+            HideLinesPopup();
+            await InvokeAsync(StateHasChanged);
+
+
+        }
+
         #region Teknik Resim Modalı İşlemleri
 
         public async Task TechnicalDrawingBeforeInsertAsync()
@@ -361,7 +454,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextChange"], Id = "changed" });
                 TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextDelete"], Id = "delete" });
                 TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextRefresh"], Id = "refresh" });
-               
+
             }
         }
 
@@ -585,7 +678,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextChange"], Id = "changed" });
                 ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextDelete"], Id = "delete" });
                 ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextRefresh"], Id = "refresh" });
-            
+
             }
         }
 
@@ -1116,6 +1209,32 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 DataSource.ProductGrpID = selectedProductGroup.Id;
                 DataSource.ProductGrp = selectedProductGroup.Name;
                 SelectProductGroupsPopupVisible = false;
+
+                var productPropertyList = (await ProductPropertiesAppService.GetListByProductGroupAsync(selectedProductGroup.Id)).Data.ToList();
+
+                if (productPropertyList != null && productPropertyList.Count > 0)
+                {
+                    foreach (var item in productPropertyList)
+                    {
+                        var productProperty = (await ProductPropertiesAppService.GetAsync(item.Id)).Data;
+
+
+                        SelectProductRelatedProductPropertiesDto lineModel = new SelectProductRelatedProductPropertiesDto
+                        {
+                            isPurchaseBreakdown = false,
+                            IsQualityControlCriterion = false,
+                            LineNr = ProductRelatedProductPropertiesList.Count + 1,
+                            ProductGroupID = selectedProductGroup.Id,
+                            ProductPropertyID = item.Id,
+                            PropertyValue = string.Empty,
+                            PropertyName = productProperty.Name
+                        };
+
+                        ProductRelatedProductPropertiesList.Add(lineModel);
+
+                    }
+                }
+
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -1304,15 +1423,15 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 case "stockaddress":
 
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                    StockAddressesList = (await StockAddressesService.GetListAsync(new ListStockAddressesParameterDto())).Data.Where(t=>t.ProductID == DataSource.Id).ToList();
+                    StockAddressesList = (await StockAddressesService.GetListAsync(new ListStockAddressesParameterDto())).Data.Where(t => t.ProductID == DataSource.Id).ToList();
 
-                    if(StockAddressesList != null && StockAddressesList.Count != 0)
+                    if (StockAddressesList != null && StockAddressesList.Count != 0)
                     {
                         foreach (var stockaddress in StockAddressesList)
                         {
                             var lineList = (await StockAddressesService.GetAsync(stockaddress.Id)).Data.SelectStockAddressLines.ToList();
 
-                            if(lineList != null && lineList.Count != 0)
+                            if (lineList != null && lineList.Count != 0)
                             {
                                 foreach (var line in lineList)
                                 {
@@ -1321,7 +1440,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                             }
                         }
                     }
-                   
+
 
                     StockAddressPopupVisible = true;
 
@@ -1415,6 +1534,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             CreateProductReferanceNumberContextMenuItems();
             CreateBillsofMaterialsContextMenuItems();
             CreateRoutesContextMenuItems();
+            CreateLineContextMenuItems();
 
 
         }
@@ -1425,6 +1545,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             {
                 IsActive = true
             };
+
+
+            DataSource.SelectProductRelatedProductProperties = new List<SelectProductRelatedProductPropertiesDto>();
+            ProductRelatedProductPropertiesList = DataSource.SelectProductRelatedProductProperties;
 
             foreach (var item in supplyforms)
             {

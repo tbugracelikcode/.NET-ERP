@@ -484,11 +484,47 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kalite Kontrol Onayı Verildi.
+        /// </summary>
+        public static string EnumQualityControlApproval {
+            get {
+                return ResourceManager.GetString("EnumQualityControlApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Beklemede.
         /// </summary>
         public static string EnumWaiting {
             get {
                 return ResourceManager.GetString("EnumWaiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onaylandı.
+        /// </summary>
+        public static string EnumWayBillApproved {
+            get {
+                return ResourceManager.GetString("EnumWayBillApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kısmi Onaylandı.
+        /// </summary>
+        public static string EnumWayBillPartialApproved {
+            get {
+                return ResourceManager.GetString("EnumWayBillPartialApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beklemede.
+        /// </summary>
+        public static string EnumWayBillPending {
+            get {
+                return ResourceManager.GetString("EnumWayBillPending", resourceCulture);
             }
         }
         
@@ -588,6 +624,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         public static string LineGridProductName {
             get {
                 return ResourceManager.GetString("LineGridProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İRSALİYE DURUMU.
+        /// </summary>
+        public static string LineGridPurchaseOrderLineWayBillStatusEnum {
+            get {
+                return ResourceManager.GetString("LineGridPurchaseOrderLineWayBillStatusEnum", resourceCulture);
             }
         }
         

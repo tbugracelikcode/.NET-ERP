@@ -270,6 +270,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
                     PropertyLineDataSource = new SelectProductPropertyLinesDto();
                     ProductPropertyLinesModalVisible = true;
                     PropertyLineDataSource.LineNr = PropertyGridLineList.Count + 1;
+                    PropertyLineDataSource.ProductGroupID = PropertyDataSource.ProductGroupID;
                     await InvokeAsync(StateHasChanged);
                     break;
 

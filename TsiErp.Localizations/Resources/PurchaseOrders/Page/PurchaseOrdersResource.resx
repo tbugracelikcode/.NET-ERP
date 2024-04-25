@@ -258,7 +258,19 @@
   <data name="EnumInPartialCompleted" xml:space="preserve">
     <value>Kısmi Tamamlandı</value>
   </data>
+  <data name="EnumQualityControlApproval" xml:space="preserve">
+    <value>Kalite Kontrol Onayı Verildi</value>
+  </data>
   <data name="EnumWaiting" xml:space="preserve">
+    <value>Beklemede</value>
+  </data>
+  <data name="EnumWayBillApproved" xml:space="preserve">
+    <value>Onaylandı</value>
+  </data>
+  <data name="EnumWayBillPartialApproved" xml:space="preserve">
+    <value>Kısmi Onaylandı</value>
+  </data>
+  <data name="EnumWayBillPending" xml:space="preserve">
     <value>Beklemede</value>
   </data>
   <data name="Error" xml:space="preserve">
@@ -293,6 +305,9 @@
   </data>
   <data name="LineGridProductName" xml:space="preserve">
     <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="LineGridPurchaseOrderLineWayBillStatusEnum" xml:space="preserve">
+    <value>İRSALİYE DURUMU</value>
   </data>
   <data name="LineGridQuantity" xml:space="preserve">
     <value>MİKTAR</value>

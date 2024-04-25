@@ -7,11 +7,9 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Product.Validations;
-using TsiErp.Business.Entities.SalesProposition.Services;
 using TsiErp.Business.Entities.StockAddress.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
@@ -19,6 +17,7 @@ using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup;
+using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.TableConstant;
@@ -35,7 +34,7 @@ namespace TsiErp.Business.Entities.Product.Services
 
         private readonly IStockAddressesAppService _stockAddressesAppService;
 
-        public ProductsAppService(IStringLocalizer<ProductsResource> l, IStockAddressesAppService stockAddressesAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public ProductsAppService(IStringLocalizer<ProductsResource> l, IStockAddressesAppService stockAddressesAppService,  IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             _stockAddressesAppService = stockAddressesAppService;
             _GetSQLDateAppService = getSQLDateAppService;
@@ -99,6 +98,33 @@ namespace TsiErp.Business.Entities.Product.Services
                 LastModifierId = Guid.Empty,
                 Name = input.Name
             });
+
+            foreach (var item in input.SelectProductRelatedProductProperties)
+            {
+                var queryLine = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Insert(new CreateProductRelatedProductPropertiesDto
+                {
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    LineNr = item.LineNr,
+                    ProductGroupID = item.ProductGroupID,
+                    ProductPropertyID = item.ProductPropertyID,
+                    isPurchaseBreakdown = item.isPurchaseBreakdown,
+                    IsQualityControlCriterion = item.IsQualityControlCriterion,
+                    ProductID = addedEntityId,
+                    PropertyName = item.PropertyName,
+                    PropertyValue = item.PropertyValue,
+                });
+
+                query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+            }
 
             var products = queryFactory.Insert<SelectProductsDto>(query, "Id", true);
 
@@ -174,24 +200,48 @@ namespace TsiErp.Business.Entities.Product.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.Products).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
-                var products = queryFactory.Update<SelectProductsDto>(query, "Id", true);
+                var query = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Id = id }, true, true, "");
 
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Products, LogType.Delete, id);
+                var products = queryFactory.Get<SelectProductsDto>(query);
 
-                var stockAddressList = (await _stockAddressesAppService.GetListAsync(new ListStockAddressesParameterDto())).Data.Where(t => t.ProductID == id).ToList();
-
-                if(stockAddressList != null && stockAddressList.Count > 0)
+                if (products.Id != Guid.Empty && products != null)
                 {
-                    foreach(var stockAddress in stockAddressList)
-                    {
-                        await _stockAddressesAppService.DeleteAsync(stockAddress.Id);
-                    }
-                }
 
-                await Task.CompletedTask;
-                return new SuccessDataResult<SelectProductsDto>(products);
+                    var deleteQuery = queryFactory.Query().From(Tables.Products).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Delete(LoginedUserService.UserId).Where(new { ProductID = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                    var product = queryFactory.Update<SelectProductsDto>(deleteQuery, "Id", true);
+
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Products, LogType.Delete, id);
+
+                    var stockAddressList = (await _stockAddressesAppService.GetListAsync(new ListStockAddressesParameterDto())).Data.Where(t => t.ProductID == id).ToList();
+
+                    if (stockAddressList != null && stockAddressList.Count > 0)
+                    {
+                        foreach (var stockAddress in stockAddressList)
+                        {
+                            await _stockAddressesAppService.DeleteAsync(stockAddress.Id);
+                        }
+                    }
+
+                    await Task.CompletedTask;
+                    return new SuccessDataResult<SelectProductsDto>(product);
+                }
+                else
+                {
+                    var queryLine = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                    var ProductRelatedProductProperties = queryFactory.Update<SelectProductRelatedProductPropertiesDto>(queryLine, "Id", true);
+
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductRelatedProductProperties, LogType.Delete, id);
+
+                    await Task.CompletedTask;
+                    return new SuccessDataResult<SelectProductRelatedProductPropertiesDto>(ProductRelatedProductProperties);
+                }
             }
         }
 
@@ -217,6 +267,19 @@ namespace TsiErp.Business.Entities.Product.Services
                         .Where(new { Id = id }, true, true, Tables.Products);
 
             var product = queryFactory.Get<SelectProductsDto>(query);
+
+            var queryLines = queryFactory
+                  .Query()
+                  .From(Tables.ProductRelatedProductProperties)
+                  .Select("*").Where(
+           new
+           {
+               ProductID = id
+           }, false, false, "");
+
+            var ProductRelatedProductProperties = queryFactory.GetList<SelectProductRelatedProductPropertiesDto>(queryLines).ToList();
+
+            product.SelectProductRelatedProductProperties = ProductRelatedProductProperties;
 
             LogsAppService.InsertLogToDatabase(product, product, LoginedUserService.UserId, Tables.Products, LogType.Get, id);
 
@@ -320,6 +383,69 @@ namespace TsiErp.Business.Entities.Product.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, true, true, "");
+
+            foreach (var item in input.SelectProductRelatedProductProperties)
+            {
+                if (item.Id == Guid.Empty)
+                {
+                    var queryLine = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Insert(new CreateProductRelatedProductPropertiesDto
+                    {
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        ProductGroupID = item.ProductGroupID,
+                        ProductPropertyID = item.ProductPropertyID,
+                        PropertyValue = item.PropertyValue,
+                        PropertyName = item.PropertyName,
+                        ProductID = item.ProductID,
+                        isPurchaseBreakdown = item.isPurchaseBreakdown,
+                        IsQualityControlCriterion = item.IsQualityControlCriterion,
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                }
+                else
+                {
+                    var lineGetQuery = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Select("*").Where(new { Id = item.Id }, false, false, "");
+
+                    var line = queryFactory.Get<SelectProductRelatedProductPropertiesDto>(lineGetQuery);
+
+                    if (line != null)
+                    {
+                        var queryLine = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Update(new UpdateProductRelatedProductPropertiesDto
+                        {
+                            CreationTime = line.CreationTime,
+                            CreatorId = line.CreatorId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = line.DeleterId.GetValueOrDefault(),
+                            DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                            Id = item.Id,
+                            IsDeleted = item.IsDeleted,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModifierId = LoginedUserService.UserId,
+                            LineNr = item.LineNr,
+                            ProductGroupID = item.ProductGroupID,
+                            ProductPropertyID = item.ProductPropertyID,
+                            IsQualityControlCriterion = item.IsQualityControlCriterion,
+                            isPurchaseBreakdown = item.isPurchaseBreakdown,
+                            ProductID = item.ProductID,
+                            PropertyName = item.PropertyName,
+                            PropertyValue = item.PropertyValue,
+                        }).Where(new { Id = line.Id }, false, false, "");
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                    }
+                }
+            }
 
             var products = queryFactory.Update<SelectProductsDto>(query, "Id", true);
 

@@ -159,6 +159,7 @@ using TsiErp.Entities.Entities.StockManagement.StockAddressLine;
 using TsiErp.Entities.Entities.StockManagement.StockAddress;
 using TsiErp.Entities.Entities.StockManagement.ProductPropertyLine;
 using TsiErp.Entities.Entities.StockManagement.ProductProperty;
+using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -5560,6 +5561,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 ProductPropertyLinesTable.Create();
+            }
+            #endregion
+
+            #region ProductRelatedProductProperties Table Created
+            Table ProductRelatedProductPropertiesTable = model.CreateTable(Tables.ProductRelatedProductProperties);
+
+            if (ProductRelatedProductPropertiesTable != null)
+            {
+                var properties = (typeof(ProductRelatedProductProperties)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ProductRelatedProductPropertiesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ProductRelatedProductPropertiesTable, "PK_" + ProductRelatedProductPropertiesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ProductRelatedProductPropertiesTable.Indexes.Add(pkIndex);
+                    }
+
+                    ProductRelatedProductPropertiesTable.Columns.Add(column);
+                }
+
+                ProductRelatedProductPropertiesTable.Create();
             }
             #endregion
 

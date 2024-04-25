@@ -258,8 +258,20 @@
   <data name="EnumInPartialCompleted" xml:space="preserve">
     <value>Partial Completed</value>
   </data>
+  <data name="EnumQualityControlApproval" xml:space="preserve">
+    <value>Quality Control Approval Granted</value>
+  </data>
   <data name="EnumWaiting" xml:space="preserve">
     <value>Waiting</value>
+  </data>
+  <data name="EnumWayBillApproved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="EnumWayBillPartialApproved" xml:space="preserve">
+    <value>Partial Approved</value>
+  </data>
+  <data name="EnumWayBillPending" xml:space="preserve">
+    <value>Pending</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -293,6 +305,9 @@
   </data>
   <data name="LineGridProductName" xml:space="preserve">
     <value>PRODUCT NAME</value>
+  </data>
+  <data name="LineGridPurchaseOrderLineWayBillStatusEnum" xml:space="preserve">
+    <value>WAYBILL STATUS</value>
   </data>
   <data name="LineGridQuantity" xml:space="preserve">
     <value>QUANTITY</value>

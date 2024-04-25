@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
+using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty.Dtos;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
@@ -110,5 +112,8 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
         /// Kaplama Ağırlığı
         /// </summary>
         public decimal CoatingWeight { get; set; }
+
+        [NoDatabaseAction]
+        public List<SelectProductRelatedProductPropertiesDto> SelectProductRelatedProductProperties { get; set; }
     }
 }
