@@ -77,10 +77,10 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="@L["EditModalTitle"]"
-         Width="53%"
-         Height="65%"
-         MinWidth="910px"
-         MinHeight="700px"
+         Width="70%"
+         Height="80%"
+         MinWidth="1350px"
+         MinHeight="865px"
          HeaderCssClass="HeaderTitleCss"
          Showing="CrudModalShowing"
          Closing="CrudModalClosing">
@@ -89,11 +89,12 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="15%" />
-                    <DxGridLayoutRow Height="12%" />
-                    <DxGridLayoutRow Height="12%" />
-                    <DxGridLayoutRow Height="16%" />
-                    <DxGridLayoutRow Height="40%" />
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="51%" />
                 </Rows>
 
                 <Columns>
@@ -169,11 +170,11 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                      <DxGridLayoutItem Row="2" Column="5">
+                    <DxGridLayoutItem Row="2" Column="5" RowSpan="2">
                         <Template>
-                            <center>
-                            <label class="TSIModalLabel"><strong>@L["IsApprovedLabel"] </strong></label><br />
-                            <SfSwitch @bind-Checked="DataSource.IsApproved"></SfSwitch></center>
+                            <SfUploader AutoUpload="false">
+                                <UploaderEvents ValueChange="OnChange"></UploaderEvents>
+                            </SfUploader>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -191,15 +192,19 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="5">
+                    
+                      <DxGridLayoutItem Row="4" Column="1">
                         <Template>
-                            <SfUploader AutoUpload="false">
-                                <UploaderEvents ValueChange="OnChange"></UploaderEvents>
-                            </SfUploader>
+                            <center>
+                            <label class="TSIModalLabel"><strong>@L["IsApprovedLabel"] </strong></label><br />
+                            <SfSwitch @bind-Checked="DataSource.IsApproved"></SfSwitch></center>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="5">
+                   
+
+
+                    <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
                         <Template>
                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectPurchasePriceLinesDto"></GridEvents>
@@ -212,17 +217,9 @@ else
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.SupplierReferanceNo) HeaderText="@L["SupplierReferanceNo"]" TextAlign="TextAlign.Center" Width="120" Context="lineContext">
-                                        <Template>
-                                            @{
-                                                    Guid productId = (lineContext as SelectPurchasePriceLinesDto).ProductID.GetValueOrDefault() ;
-                                                    Guid currentID = (lineContext as SelectPurchasePriceLinesDto).CurrentAccountCardID.GetValueOrDefault() ;
-                                                string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(productId, currentID);
-
-                                                }
-                                                @supplierReferanceNumber
-                                        </Template>
+                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.SupplierReferanceNo) HeaderText="@L["SupplierReferanceNo"]" TextAlign="TextAlign.Center" Width="120">
                                     </GridColumn>
+
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.CurrencyCode) HeaderText="@L["LineGridCurrencyCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.Price) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridPrice"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridStartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>

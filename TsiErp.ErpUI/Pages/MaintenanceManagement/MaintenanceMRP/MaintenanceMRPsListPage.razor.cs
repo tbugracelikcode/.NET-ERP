@@ -135,15 +135,15 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                         switch (context.MenuName)
                         {
                             case "MaintenanceMRPsContextAdd":
-                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextAdd"], Id = "new" }); break;
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextAdd"], Id = "new" }); break;
                             case "MaintenanceMRPsContextChange":
-                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextChange"], Id = "changed" }); break;
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextChange"], Id = "changed" }); break;
                             case "MaintenanceMRPsContextDelete":
-                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextDelete"], Id = "delete" }); break;
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextDelete"], Id = "delete" }); break;
                             case "MaintenanceMRPsContextRefresh":
-                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextRefresh"], Id = "refresh" }); break;
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextRefresh"], Id = "refresh" }); break;
                             case "MaintenanceMRPsContextConvertMRP":
-                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextConvertMRP"], Id = "convertmrp" }); break;
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceMRPsContextConvertMRP"], Id = "convertmrp" }); break;
                             default: break;
                         }
                     }

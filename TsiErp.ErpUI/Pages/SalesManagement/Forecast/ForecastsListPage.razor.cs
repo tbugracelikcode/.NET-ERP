@@ -3,15 +3,20 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.XlsIO;
+using System.Data;
+using System.Dynamic;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.Forecast.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
@@ -543,6 +548,96 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        public DataTable table = new DataTable();
+
+        private void OnChange(UploadChangeEventArgs args)
+        {
+            foreach (var file in args.Files)
+            {
+                #region Expando Object Örneği
+
+                var path = file.FileInfo.Name;
+                ExcelEngine excelEngine = new ExcelEngine();
+                IApplication application = excelEngine.Excel;
+                application.DefaultVersion = ExcelVersion.Excel2016;
+
+                var check = ExcelService.ImportGetPath(path);
+                FileStream openFileStream = new FileStream(check, FileMode.OpenOrCreate);
+                file.Stream.WriteTo(openFileStream);
+                FileStream fileStream = new FileStream(check, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                IWorkbook workbook = application.Workbooks.Open(fileStream);
+                IWorksheet worksheet = workbook.Worksheets[0];
+                table = worksheet.ExportDataTable(worksheet.UsedRange, ExcelExportDataTableOptions.ColumnNames);
+                GenerateListFromTable(table);
+
+                #endregion
+
+            }
+        }
+
+        string[] Columns;
+        public List<ExpandoObject> ProductList;
+        public async void GenerateListFromTable(DataTable input)
+        {
+            var list = new List<ExpandoObject>();
+            Columns = input.Columns.Cast<DataColumn>()
+                                 .Select(x => x.ColumnName)
+                                 .ToArray();
+            foreach (DataRow row in input.Rows)
+            {
+                System.Dynamic.ExpandoObject e = new System.Dynamic.ExpandoObject();
+                foreach (DataColumn col in input.Columns)
+                    e.TryAdd(col.ColumnName, row.ItemArray[col.Ordinal]);
+                list.Add(e);
+            }
+            ProductList = list;
+
+            int lineNr = 1;
+
+            foreach (var item in ProductList)
+            {
+                dynamic row = item;
+
+                #region Row DBNull Kontrolleri
+                string productCode = !string.IsNullOrEmpty(Convert.ToString(row.ProductCode)) ? (string)row.ProductCode : string.Empty;
+
+                string _amount = !string.IsNullOrEmpty(Convert.ToString(row.Amount)) ? (string)row.Amount : "0";
+
+                string customerProductCode = !string.IsNullOrEmpty(Convert.ToString(row.CustomerProductCode)) ? (string)row.CustomerProductCode : "";
+
+                string _startDate = !string.IsNullOrEmpty(Convert.ToString(row.StartDate)) ? (string)row.StartDate : DateTime.Today.ToShortDateString();
+
+                string _endDate = !string.IsNullOrEmpty(Convert.ToString(row.EndDate)) ? (string)row.EndDate : DateTime.Today.ToShortDateString();
+
+                DateTime EndDate = Convert.ToDateTime(_endDate);
+                DateTime StartDate = Convert.ToDateTime(_startDate);
+                int Amount = Convert.ToInt32(_amount);
+
+                #endregion
+
+                var product = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.Where(t => t.Code == productCode).FirstOrDefault();
+
+                SelectForecastLinesDto line = new SelectForecastLinesDto()
+                {
+                    ProductCode = productCode,
+                    Amount = Amount,
+                    CustomerProductCode = customerProductCode,
+                    EndDate = EndDate,
+                    ForecastID = DataSource.Id,
+                    LineNr = lineNr,
+                    ProductID = product.Id,
+                    ProductName = product.Name,
+                    StartDate = StartDate
+                };
+
+                DataSource.SelectForecastLines.Add(line);
+                lineNr++;
+            }
+
+            await _LineGrid.Refresh();
+        }
 
         public void Dispose()
         {

@@ -38,5 +38,15 @@ namespace TsiErp.Entities.Entities.SalesManagement.ForecastLine.Dtos
         /// Satır Nr
         /// </summary>
         public int LineNr { get; set; }
+
+        /// <summary>
+        /// Başlangıç Tarihi
+        /// </summary>
+        public DateTime? StartDate { get; set; }
+
+        /// <summary>
+        /// Bitiş Tarihi
+        /// </summary>
+        public DateTime? EndDate { get; set; }
     }
 }

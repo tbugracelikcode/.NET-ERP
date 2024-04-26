@@ -31,5 +31,17 @@ namespace TsiErp.Entities.Entities.SalesManagement.ForecastLine
         /// Satır Nr
         /// </summary>
         public int LineNr { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Başlangıç Tarihi
+        /// </summary>
+        public DateTime? StartDate { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Bitiş Tarihi
+        /// </summary>
+        public DateTime? EndDate { get; set; }
     }
 }

@@ -279,6 +279,18 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
                 LineDataSource.ProductID = selectedProduct.Id;
                 LineDataSource.ProductCode = selectedProduct.Code;
                 LineDataSource.ProductName = selectedProduct.Name;
+
+                string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(selectedProduct.Id, DataSource.CurrentAccountCardID.GetValueOrDefault());
+
+                if (!string.IsNullOrEmpty(supplierReferanceNumber))
+                {
+                    LineDataSource.SupplierReferanceNo = supplierReferanceNumber;
+                }
+                else
+                {
+                    LineDataSource.SupplierReferanceNo = "-";
+                }
+
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -585,8 +597,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
 
         #endregion
 
-
-
         #region Kod ButtonEdit
 
         SfTextBox CodeButtonEdit;
@@ -604,6 +614,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
         }
         #endregion
 
+        #region Excel Aktarım
         public DataTable table = new DataTable();
 
         private void OnChange(UploadChangeEventArgs args)
@@ -648,6 +659,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
             }
             PriceList = list;
 
+            int lineNr = 1;
 
             foreach (var item in PriceList)
             {
@@ -663,6 +675,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
 
                 var product = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.Where(t => t.Code == productCode).FirstOrDefault();
 
+                string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(product.Id, DataSource.CurrentAccountCardID.GetValueOrDefault());
+
 
                 SelectPurchasePriceLinesDto line = new SelectPurchasePriceLinesDto
                 {
@@ -672,23 +686,23 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
                     CurrentAccountCardID = DataSource.CurrentAccountCardID,
                     CurrentAccountCardName = DataSource.CurrentAccountCardName,
                     EndDate = DataSource.EndDate,
-                    Linenr = 0,
+                    Linenr = lineNr,
                     Price = unitPrice,
                     ProductID = product.Id,
                     ProductName = product.Name,
                     PurchasePriceID = DataSource.Id,
                     StartDate = DataSource.StartDate,
-                    SupplyDateDay = SupplyDateDay
+                    SupplyDateDay = SupplyDateDay,
+                    SupplierReferanceNo = supplierReferanceNumber
                 };
 
                 DataSource.SelectPurchasePriceLines.Add(line);
+                lineNr++;
             }
 
             await _LineGrid.Refresh();
         }
-
-
-
+        #endregion
 
         public void Dispose()
         {
