@@ -217,17 +217,9 @@ else
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.SupplierReferanceNo) HeaderText="@L["SupplierReferanceNo"]" TextAlign="TextAlign.Center" Width="120" Context="lineContext">
-                                        <Template>
-                                            @{
-                                                    Guid productId = (lineContext as SelectPurchasePriceLinesDto).ProductID.GetValueOrDefault() ;
-                                                    Guid currentID = (lineContext as SelectPurchasePriceLinesDto).CurrentAccountCardID.GetValueOrDefault() ;
-                                                string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(productId, currentID);
-
-                                                }
-                                                @supplierReferanceNumber
-                                        </Template>
+                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.SupplierReferanceNo) HeaderText="@L["SupplierReferanceNo"]" TextAlign="TextAlign.Center" Width="120">
                                     </GridColumn>
+
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.CurrencyCode) HeaderText="@L["LineGridCurrencyCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.Price) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridPrice"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridStartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
