@@ -385,6 +385,15 @@ namespace TsiErp.Localizations.Resources.Forecasts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bitiş Tarihi:.
+        /// </summary>
+        public static string LineEndDateLabel {
+            get {
+                return ResourceManager.GetString("LineEndDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MİKTAR.
         /// </summary>
         public static string LineGridAmount {
@@ -399,6 +408,15 @@ namespace TsiErp.Localizations.Resources.Forecasts.Page {
         public static string LineGridCustomerProductCode {
             get {
                 return ResourceManager.GetString("LineGridCustomerProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BİTİŞ TARİHİ.
+        /// </summary>
+        public static string LineGridEndDate {
+            get {
+                return ResourceManager.GetString("LineGridEndDate", resourceCulture);
             }
         }
         
@@ -421,11 +439,29 @@ namespace TsiErp.Localizations.Resources.Forecasts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BAŞLANGIÇ TARİHİ.
+        /// </summary>
+        public static string LineGridStartDate {
+            get {
+                return ResourceManager.GetString("LineGridStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Forecast Satırları.
         /// </summary>
         public static string LinePopupTitle {
             get {
                 return ResourceManager.GetString("LinePopupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başlangıç Tarihi:.
+        /// </summary>
+        public static string LineStartDateLabel {
+            get {
+                return ResourceManager.GetString("LineStartDateLabel", resourceCulture);
             }
         }
         

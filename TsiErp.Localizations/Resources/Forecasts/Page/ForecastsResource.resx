@@ -225,11 +225,17 @@
   <data name="ForecastLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="LineEndDateLabel" xml:space="preserve">
+    <value>Bitiş Tarihi:</value>
+  </data>
   <data name="LineGridAmount" xml:space="preserve">
     <value>MİKTAR</value>
   </data>
   <data name="LineGridCustomerProductCode" xml:space="preserve">
     <value>MÜŞTERİ STOK KODU</value>
+  </data>
+  <data name="LineGridEndDate" xml:space="preserve">
+    <value>BİTİŞ TARİHİ</value>
   </data>
   <data name="LineGridProductCode" xml:space="preserve">
     <value>STOK KODU</value>
@@ -237,8 +243,14 @@
   <data name="LineGridProductName" xml:space="preserve">
     <value>STOK AÇIKLAMASI</value>
   </data>
+  <data name="LineGridStartDate" xml:space="preserve">
+    <value>BAŞLANGIÇ TARİHİ</value>
+  </data>
   <data name="LinePopupTitle" xml:space="preserve">
     <value>Forecast Satırları</value>
+  </data>
+  <data name="LineStartDateLabel" xml:space="preserve">
+    <value>Başlangıç Tarihi:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
