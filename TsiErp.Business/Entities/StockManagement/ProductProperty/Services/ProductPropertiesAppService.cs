@@ -183,6 +183,8 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
 
         }
 
+       
+
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductPropertiesDto>>> GetListAsync(ListProductPropertiesParameterDto input)
         {
@@ -190,6 +192,22 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
                    .Query()
                    .From(Tables.ProductProperties)
                    .Select("*").Where(null, false, false, "");
+
+            var ProductPropertiesDto = queryFactory.GetList<ListProductPropertiesDto>(query).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListProductPropertiesDto>>(ProductPropertiesDto);
+
+        }
+
+        public async Task<IDataResult<IList<ListProductPropertiesDto>>> GetListByProductGroupAsync(Guid ProductGroupID)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.ProductProperties)
+                   .Select("*").Where(new
+                   {
+                       ProductGroupID = ProductGroupID
+                   }, false, false, "");
 
             var ProductPropertiesDto = queryFactory.GetList<ListProductPropertiesDto>(query).ToList();
             await Task.CompletedTask;
@@ -277,7 +295,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
                         ProductGroupID = item.ProductGroupID,
                         LineName = item.LineName,
                         LineCode = item.LineCode,
-                        ProductPropertyID = item.ProductPropertyID,
+                        ProductPropertyID = input.Id,
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;

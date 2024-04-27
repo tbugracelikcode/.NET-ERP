@@ -33,8 +33,8 @@
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(UnsuitabilitySPCComparingModel.UnsuitabilityItemName) HeaderText="@L["UnsuitabilityItemName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(UnsuitabilitySPCComparingModel.FirstRPNValue)  Type="ColumnType.Number" HeaderText="@FirstDate.ToString()" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(UnsuitabilitySPCComparingModel.SecondRPNValue) Type="ColumnType.Number" HeaderText="@SecondDate.ToString()" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(UnsuitabilitySPCComparingModel.FirstRPNValue) Type="ColumnType.Number" HeaderText="@FirstDate.ToShortDateString()" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(UnsuitabilitySPCComparingModel.SecondRPNValue) Type="ColumnType.Number" HeaderText="@SecondDate.ToShortDateString()" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                 </GridColumns>
                             </SfGrid>

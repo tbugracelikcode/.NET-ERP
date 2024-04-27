@@ -113,6 +113,11 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine
         /// </summary>
         public DateTime? SupplyDate { get; set; }
 
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Satış Sipariş Satırı İrsaliye Durumu
+        /// </summary>
+        public PurchaseOrderLineWayBillStatusEnum PurchaseOrderLineWayBillStatusEnum { get; set; }
 
 
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.DateTime)]

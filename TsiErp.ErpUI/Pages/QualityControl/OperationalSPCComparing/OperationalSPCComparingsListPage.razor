@@ -33,8 +33,8 @@
                             <GridColumns>
                                 <GridColumn Field=@nameof(OperationalSPCComparingModel.WorkCenterName) HeaderText="@L["WorkCenterName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 <GridColumn Field=@nameof(OperationalSPCComparingModel.OperationName) HeaderText="@L["OperationName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(OperationalSPCComparingModel.FirstRPNValue) Type="ColumnType.Number" HeaderText="@FirstDate.ToString()" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(OperationalSPCComparingModel.SecondRPNValue) Type="ColumnType.Number" HeaderText="@SecondDate.ToString()" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(OperationalSPCComparingModel.FirstRPNValue) Type="ColumnType.Number" HeaderText="@FirstDate.ToShortDateString()" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(OperationalSPCComparingModel.SecondRPNValue) Type="ColumnType.Number" HeaderText="@SecondDate.ToShortDateString()" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                             </GridColumns>
                         </SfGrid>

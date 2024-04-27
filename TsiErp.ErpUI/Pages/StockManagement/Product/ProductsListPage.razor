@@ -27,6 +27,7 @@
 @inject IMenusAppService MenusAppService
 @inject IStockAddressesAppService StockAddressesService
 @inject IGetSQLDateAppService GetSQLDateAppService
+@inject IProductPropertiesAppService ProductPropertiesAppService
 
 
 @if (!base.IsLoaded)
@@ -441,6 +442,51 @@ else
                                         </ContentTemplate>
                                     </TabItem>
 
+
+                                    <TabItem>
+                                        <ChildContent>
+                                            <TabHeader Text="@L["Tab4Name"]"></TabHeader>
+                                        </ChildContent>
+                                        <ContentTemplate>
+                                            <DxGridLayout CssClass="TSIGridLayout">
+                                                <Rows>
+                                                    <DxGridLayoutRow Height="95%" />
+                                                </Rows>
+                                                <Columns>
+                                                    <DxGridLayoutColumn Width="1%" />
+                                                    <DxGridLayoutColumn Width="98%" />
+                                                    <DxGridLayoutColumn Width="1%" />
+                                                </Columns>
+                                                <Items>
+
+                                                    <DxGridLayoutItem Row="0" Column="1">
+                                                        <Template>
+                                                            <br />
+                                                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductRelatedProductPropertiesList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@ProductRelatedProductPropertiesContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectProductRelatedProductPropertiesDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectProductRelatedProductPropertiesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectProductRelatedProductPropertiesDto.PropertyName) HeaderText="@L["LineGridPropertyName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectProductRelatedProductPropertiesDto.PropertyValue) HeaderText="@L["LineGridPropertyValue"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectProductRelatedProductPropertiesDto.IsQualityControlCriterion) DisplayAsCheckBox="true" HeaderText="@L["LineGridIsQualityControlCriterion"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectProductRelatedProductPropertiesDto.isPurchaseBreakdown) DisplayAsCheckBox="true" HeaderText="@L["LineGridisPurchaseBreakdown"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                            </GridColumns>
+                        </SfGrid>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                  
+
+                                                </Items>
+                                            </DxGridLayout>
+                                        </ContentTemplate>
+                                    </TabItem>
+
                                 </TabItems>
                             </SfTab>
                         </Template>
@@ -452,6 +498,71 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="LineCrudPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditLineModalTitle"]"
+             Width="32%"
+             Height="29%"
+             MinWidth="550px"
+             MinHeight="300px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="50%" />
+                    <DxGridLayoutRow Height="50%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                </Columns>
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["LinePropertyValueLabel"] </strong></label>
+                            @if(ProductPropertyLineList != null && ProductPropertyLineList.Count > 0)
+                            {
+                                <SfComboBox  @bind-Value="LineDataSource.PropertyValue" DataSource="@ProductPropertyLineList">
+    <ComboBoxFieldSettings Value="LineName"></ComboBoxFieldSettings>
+</SfComboBox>
+                            }
+                            else{
+                                
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="LineDataSource.PropertyValue"></SfTextBox>
+                            }
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["LineIsQualityControlCriterionLabel"] </strong></label>
+                            <SfSwitch CssClass="TSITxtBox" @bind-Checked="LineDataSource.IsQualityControlCriterion"></SfSwitch>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["LineisPurchaseBreakdownLabel"] </strong></label>
+                            <SfSwitch CssClass="TSITxtBox" @bind-Checked="LineDataSource.isPurchaseBreakdown"></SfSwitch>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

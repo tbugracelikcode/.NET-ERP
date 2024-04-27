@@ -29,8 +29,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPCComparing
 
         public List<ListOperationalSPCsDto> OperationalSPCList = new List<ListOperationalSPCsDto>();
 
-        public DateTime? FirstDate = new DateTime();
-        public DateTime? SecondDate = new DateTime();
+        public DateTime FirstDate = new DateTime();
+        public DateTime SecondDate = new DateTime();
 
         protected override async Task OnInitializedAsync()
         {
@@ -38,27 +38,31 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPCComparing
 
             OperationalSPCList = (await OperationalSPCsAppService.GetListAsync(new ListOperationalSPCsParameterDto())).Data.OrderByDescending(t => t.Date_).ToList();
 
-            FirstDate = OperationalSPCList[0].Date_;
-
-            SecondDate = OperationalSPCList[1].Date_;
-
-            var firstSPCLineList = (await OperationalSPCsAppService.GetAsync(OperationalSPCList[0].Id)).Data.SelectOperationalSPCLines;
-
-            var secondSPCLineList = (await OperationalSPCsAppService.GetAsync(OperationalSPCList[1].Id)).Data.SelectOperationalSPCLines;
-
-            foreach (var operation in OperationsList)
+            if( OperationalSPCList.Count > 0 && OperationalSPCList != null)
             {
-                OperationalSPCComparingModel gridModel = new OperationalSPCComparingModel
+                FirstDate = OperationalSPCList[0].Date_;
+
+                SecondDate = OperationalSPCList[1].Date_;
+
+                var firstSPCLineList = (await OperationalSPCsAppService.GetAsync(OperationalSPCList[0].Id)).Data.SelectOperationalSPCLines;
+
+                var secondSPCLineList = (await OperationalSPCsAppService.GetAsync(OperationalSPCList[1].Id)).Data.SelectOperationalSPCLines;
+
+                foreach (var operation in OperationsList)
                 {
+                    OperationalSPCComparingModel gridModel = new OperationalSPCComparingModel
+                    {
 
-                    OperationID = operation.Id,
-                    OperationName = operation.Name,
-                    WorkCenterName = firstSPCLineList.Where(t=>t.OperationID == operation.Id).Select(t=>t.WorkCenterName).FirstOrDefault(),
-                    FirstRPNValue = firstSPCLineList.Where(t => t.OperationID == operation.Id).Select(t => t.RPN).FirstOrDefault(),
-                    SecondRPNValue = secondSPCLineList.Where(t => t.OperationID == operation.Id).Select(t => t.RPN).FirstOrDefault()
+                        OperationID = operation.Id,
+                        OperationName = operation.Name,
+                        WorkCenterName = firstSPCLineList.Where(t => t.OperationID == operation.Id).Select(t => t.WorkCenterName).FirstOrDefault(),
+                        FirstRPNValue = firstSPCLineList.Where(t => t.OperationID == operation.Id).Select(t => t.RPN).FirstOrDefault(),
+                        SecondRPNValue = secondSPCLineList.Where(t => t.OperationID == operation.Id).Select(t => t.RPN).FirstOrDefault()
 
-                };
+                    };
+                }
             }
+
         }
 
         public void Dispose()

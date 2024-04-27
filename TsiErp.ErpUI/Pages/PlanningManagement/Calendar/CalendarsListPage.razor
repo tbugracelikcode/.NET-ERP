@@ -121,17 +121,15 @@
                         <DxGridLayoutItem Row="1" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["DateLabel"] </strong></label>
-                                <SfComboBox @ref="Years"
+                               @* <SfComboBox @ref="Years"
                                     TValue="int"
                                     TItem="int"
                                     CssClass="e-multi-column"
-                                    Value="DataSource.Year"
                                     DataSource="@YearList"
+                                     Index="1"
                                     AllowFiltering="true"
                                     PopupWidth="300px"
                                     PopupHeight="350">
-
-                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
 
                                     <ComboBoxTemplates TItem="int">
                                         <HeaderTemplate>
@@ -154,8 +152,32 @@
                                     </ComboBoxTemplates>
                                     <ComboBoxEvents TValue="int"
                                             TItem="int"
+                                             
                                             ValueChange="YearValueChangeHandler"></ComboBoxEvents>
-                                </SfComboBox>
+                                </SfComboBox>*@
+
+                                   <SfComboBox TValue="int" TItem="int" @bind-Value="DataSource.Year" DataSource="@YearList">
+                                                            <ComboBoxEvents TItem="int" TValue="int" ValueChange="@YearValueChangeHandler"></ComboBoxEvents>
+                                                             <ComboBoxTemplates TItem="int">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">@L["DateYear"]</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@(cmbContext)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+                                                        </SfComboBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="3">
@@ -314,50 +336,50 @@
                 <br>
                 <br>
                 <center><SfButton CssClass="TSICancelButton" OnClick="DayTypeButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.AgendaDateRange"></SfIcon>&nbsp;@L["DayTypeButton"]</SfButton></center>
-                        @* <table id='property' class='property-panel-table' style="width: 100%;">
-                        //     <tbody>
-                        //         <tr style="height: 50px">
-                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
-                        //                 <SfSwitch id="chcTumu" TChecked="bool" @bind-Checked="@chcTumu" ValueChange="@(()=>customChange("chcTumu"))"></SfSwitch><label for="chcTumu" style="padding-left:5%;"> Tümü</label>
-                        //             </td>
-                        //         </tr>
-                        //         <tr style="height: 50px">
-                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
-                        //                 <SfSwitch id="chcCalismaVar" TChecked="bool" @bind-Checked="@chcCalismaVar" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcCalismaVar" style="padding-left:5%; color:#00ff14;"> Çalışma Var</label>
-                        //             </td>
-                        //         </tr>
-                        //         <tr style="height: 50px">
-                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
-                        //                 <SfSwitch id="chcCalismaYok" TChecked="bool" @bind-Checked="@chcCalismaYok" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcCalismaYok" style="padding-left:5%; color:#ff0000;"> Çalışma Yok</label>
-                        //             </td>
-                        //         </tr>
-                        //         <tr style="height: 50px">
-                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
-                        //                 <SfSwitch id="chcResmiTatil" TChecked="bool" @bind-Checked="@chcResmiTatil" ValueChange="@(()=>customChange("chcDiger"))">Resmi tatil</SfSwitch><label for="chcResmiTatil" style="padding-left:5%; color:#6c757d;"> Resmi Tatil</label>
-                        //             </td>
-                        //         </tr>
-                        //         <tr style="height: 50px">
-                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
-                        //                 <SfSwitch id="chcTatil" TChecked="bool" @bind-Checked="@chcTatil" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcTatil" style="padding-left:5%; color:#b75050ed;"> Tatil</label>
-                        //             </td>
-                        //         </tr>
-                        //         <tr style="height: 50px">
-                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
-                        //                 <SfSwitch id="chcYarimGun" TChecked="bool" @bind-Checked="@chcYarimGun" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcYarimGun" style="padding-left:5%; color:#0089ff;"> Yarım Gün</label>
-                        //             </td>
-                        //         </tr>
-                        //         <tr style="height: 50px">
-                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
-                        //                 <SfSwitch id="chcYuklemeGunu" TChecked="bool" @bind-Checked="@chcYuklemeGunu" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcYuklemeGunu" style="padding-left:5%; color:#ffeb00;">Yükleme Günü</label>
-                        //             </td>
-                        //         </tr>
-                        //         <tr style="height: 50px">
-                        //             <td style="width: 14%; text-align:left; padding-left:5%; ">
-                        //                 <SfSwitch id="chcBakim" TChecked="bool" @bind-Checked="@chcBakim" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch><label for="chcBakim" style="padding-left:5%; color:#ff8d00;"> Bakım</label>
-                        //             </td>
-                        //         </tr>
-                        //     </tbody>
-                        // </table>*@
+                        <table id='property' class='property-panel-table' style="width: 100%;">
+                            <tbody>
+                                <tr style="height: 50px">
+                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
+                                        @*<SfSwitch id="chcTumu" TChecked="bool" @bind-Checked="@chcTumu" ValueChange="@(()=>customChange("chcTumu"))"></SfSwitch><label for="chcTumu" style="padding-left:5%;"> Tümü</label>*@
+                                    </td>
+                                </tr>
+                                <tr style="height: 50px">
+                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
+                                        @*<SfSwitch id="chcCalismaVar" TChecked="bool" @bind-Checked="@chcCalismaVar" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch>*@<label for="chcCalismaVar" style="padding-left:5%; color:#00ff14;font-weight:bold;font-size:16px"> Çalışma Var</label>
+                                    </td>
+                                </tr>
+                                <tr style="height: 50px">
+                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
+                                        @*<SfSwitch id="chcCalismaYok" TChecked="bool" @bind-Checked="@chcCalismaYok" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch>*@<label for="chcCalismaYok" style="padding-left:5%; color:#ff0000;font-weight:bold;font-size:16px"> Çalışma Yok</label>
+                                    </td>
+                                </tr>
+                                <tr style="height: 50px">
+                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
+                                        @*<SfSwitch id="chcResmiTatil" TChecked="bool" @bind-Checked="@chcResmiTatil" ValueChange="@(()=>customChange("chcDiger"))">Resmi tatil</SfSwitch>*@<label for="chcResmiTatil" style="padding-left:5%; color:#6c757d;font-weight:bold;font-size:16px"> Resmi Tatil</label>
+                                    </td>
+                                </tr>
+                                <tr style="height: 50px">
+                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
+                                       @* <SfSwitch id="chcTatil" TChecked="bool" @bind-Checked="@chcTatil" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch>*@<label for="chcTatil" style="padding-left:5%; color:#b75050ed;font-weight:bold;font-size:16px"> Tatil</label>
+                                    </td>
+                                </tr>
+                                <tr style="height: 50px">
+                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
+                                       @* <SfSwitch id="chcYarimGun" TChecked="bool" @bind-Checked="@chcYarimGun" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch>*@<label for="chcYarimGun" style="padding-left:5%; color:#0089ff;font-weight:bold;font-size:16px"> Yarım Gün</label>
+                                    </td>
+                                </tr>
+                                <tr style="height: 50px">
+                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
+                                        @*<SfSwitch id="chcYuklemeGunu" TChecked="bool" @bind-Checked="@chcYuklemeGunu" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch>*@<label for="chcYuklemeGunu" style="padding-left:5%; color:#ffeb00;font-weight:bold;font-size:16px">Yükleme Günü</label>
+                                    </td>
+                                </tr>
+                                <tr style="height: 50px">
+                                    <td style="width: 14%; text-align:left; padding-left:5%; ">
+                                        @*<SfSwitch id="chcBakim" TChecked="bool" @bind-Checked="@chcBakim" ValueChange="@(()=>customChange("chcDiger"))"></SfSwitch>*@<label for="chcBakim" style="padding-left:5%; color:#ff8d00;font-weight:bold;font-size:16px"> Bakım</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </th>
                 </table>
 
@@ -385,15 +407,31 @@
                         <td style="font-size:16px;padding-left:2%; width:20%"><strong>Tarih :</strong> @selectedDate.Value.ToShortDateString()</td>
                         <td style="width:80%">
 
-                            @if (SelectedStations.Count != 0)
-                            {
                                 <div class="TSI_Paper">
                                     @foreach (var item in SelectedStations)
                                     {
+                                        if(DataSource.SelectCalendarLinesDto.Any(t=>t.StationID == item.Id))
+                                        {
+                                            int workstatus = DataSource.SelectCalendarLinesDto.Where(t=>t.StationID == item.Id).Select(t=>t.WorkStatus).FirstOrDefault();
+
+                                            switch(workstatus)
+                                            {
+                                                case 1:<div class="TSI_Chip" style="background-color:#00ff14; color:black">@item.Code</div> break;
+                                                case 2:<div class="TSI_Chip" style="background-color:#ff0000; color:black">@item.Code</div> break;
+                                                case 3:<div class="TSI_Chip" style="background-color:#00ff14; color:black">@item.Code</div> break;
+                                                case 4:<div class="TSI_Chip" style="background-color:#00ff14; color:black">@item.Code</div> break;
+                                                case 5:<div class="TSI_Chip" style="background-color:#00ff14; color:black">@item.Code</div> break;
+                                                default:<div class="TSI_Chip" style="background-color:white; color:black">@item.Code</div> break;
+
+                                            }
+                                        }
+                                        else
+                                        {
                                         <div class="TSI_Chip" onclick="@(()=>Remove(item))">@item.Code<SfIcon Size="IconSize.Medium" Name="IconName.Trash"></SfIcon></div>
+                                        }
                                     }
                                 </div>
-                            }
+                            
                         </td>
                     </tr>
                     <tr style="height:20%">

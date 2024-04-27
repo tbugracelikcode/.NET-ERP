@@ -18,6 +18,8 @@ namespace TsiErp.Entities.Enums
         [Display(Name = "EnumCancel")]
         Iptal = 4,
         [Display(Name = "EnumInPartialCompleted")]
-        KismiTamamlandi = 5
+        KismiTamamlandi = 5,
+        [Display(Name = "EnumQualityControlApproval")]
+        KaliteKontrolOnayiVerildi = 6
     }
 }

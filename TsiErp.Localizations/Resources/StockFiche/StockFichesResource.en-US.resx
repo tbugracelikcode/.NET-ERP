@@ -309,6 +309,9 @@
   <data name="StockFicheContextAddProductionIncome" xml:space="preserve">
     <value>Add Production Input Fiche</value>
   </data>
+  <data name="StockFicheContextAddReserved" xml:space="preserve">
+    <value>Add Reserve Fiche</value>
+  </data>
   <data name="StockFicheContextAddStockIncome" xml:space="preserve">
     <value>Add Stock Input Fiche</value>
   </data>

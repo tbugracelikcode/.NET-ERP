@@ -309,6 +309,9 @@
   <data name="StockFicheContextAddProductionIncome" xml:space="preserve">
     <value>Üretimden Giriş Fişi Ekle</value>
   </data>
+  <data name="StockFicheContextAddReserved" xml:space="preserve">
+    <value>Rezerve Fişi Ekle</value>
+  </data>
   <data name="StockFicheContextAddStockIncome" xml:space="preserve">
     <value>Stok Giriş Fişi Ekle</value>
   </data>

@@ -11,5 +11,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
         Task<IDataResult<SelectPurchaseOrdersDto>> ConvertToPurchaseOrderAsync(CreatePurchaseOrdersDto input);
 
         Task<IDataResult<IList<SelectPurchaseOrderLinesDto>>> GetLineListAsync();
+        Task<IDataResult<IList<ListPurchaseOrdersDto>>> GetQualityControlPendingListAsync();
+
+        Task<IDataResult<IList<SelectPurchaseOrdersDto>>> GetQualityControlSelectListAsync();
     }
 }

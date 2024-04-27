@@ -31,6 +31,7 @@ using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
+using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PurchaseOrders.Page;
 
@@ -92,9 +93,10 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
                 OrderAcceptanceID = input.OrderAcceptanceID.GetValueOrDefault(),
-                MaintenanceMRPID = input.MaintenanceMRPID,
+                MaintenanceMRPID = input.MaintenanceMRPID.GetValueOrDefault(),
                 GrossAmount = input.GrossAmount,
                 LinkedPurchaseRequestID = Guid.Empty,
+                PurchaseOrderWayBillStatusEnum = 1,
                 NetAmount = input.NetAmount,
                 MRPID = input.MRPID.GetValueOrDefault(),
                 PaymentPlanID = input.PaymentPlanID.GetValueOrDefault(),
@@ -132,6 +134,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     ExchangeRate = item.ExchangeRate,
                     LikedPurchaseRequestLineID = Guid.Empty,
                     LineAmount = item.LineAmount,
+                    PurchaseOrderLineWayBillStatusEnum = 1,
                     LineDescription = item.LineDescription,
                     SupplierBillNo = item.SupplierBillNo,
                     SupplierWaybillNo = item.SupplierWaybillNo,
@@ -218,6 +221,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
+                OrderAcceptanceID = input.OrderAcceptanceID.GetValueOrDefault(),
+                PurchaseOrderWayBillStatusEnum = 1,
                 MRPID = input.MRPID.GetValueOrDefault(),
                 GrossAmount = input.GrossAmount,
                 LinkedPurchaseRequestID = Guid.Empty,
@@ -255,6 +260,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     ExchangeRate = item.ExchangeRate,
                     LikedPurchaseRequestLineID = Guid.Empty,
                     LineAmount = item.LineAmount,
+                    OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
+                    PurchaseOrderLineWayBillStatusEnum = 1,
+                    OrderAcceptanceLineID = item.OrderAcceptanceLineID.GetValueOrDefault(),
                     LineDescription = item.LineDescription,
                     SupplyDate = item.SupplyDate,
                     LineTotalAmount = item.LineTotalAmount,
@@ -716,6 +724,20 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             }
             #endregion
 
+
+            if (!input.SelectPurchaseOrderLinesDto.Any(t => t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.Onaylandi || t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.KismiOnaylandi))
+            {
+                input.PurchaseOrderWayBillStatusEnum = 1;
+            }
+            else if (input.SelectPurchaseOrderLinesDto.Any(t => t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.Beklemede && t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.KismiOnaylandi))
+            {
+                input.PurchaseOrderWayBillStatusEnum = 2;
+            }
+            else if (!input.SelectPurchaseOrderLinesDto.Any(t => t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.Beklemede && t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.KismiOnaylandi))
+            {
+                input.PurchaseOrderWayBillStatusEnum = 3;
+            }
+
             var query = queryFactory.Query().From(Tables.PurchaseOrders).Update(new UpdatePurchaseOrdersDto
             {
                 FicheNo = input.FicheNo,
@@ -725,6 +747,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 OrderAcceptanceID = input.OrderAcceptanceID.GetValueOrDefault(),
+                PurchaseOrderWayBillStatusEnum = input.PurchaseOrderWayBillStatusEnum,
                 MRPID = input.MRPID,
                 MaintenanceMRPID = input.MaintenanceMRPID.GetValueOrDefault(),
                 ExchangeRate = input.ExchangeRate,
@@ -769,6 +792,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         LikedPurchaseRequestLineID = item.LikedPurchaseRequestLineID.GetValueOrDefault(),
                         LineAmount = item.LineAmount,
                         LineDescription = item.LineDescription,
+                        PurchaseOrderLineWayBillStatusEnum = (int)item.PurchaseOrderLineWayBillStatusEnum,
                         LineTotalAmount = item.LineTotalAmount,
                         OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
                         OrderAcceptanceLineID = item.OrderAcceptanceLineID.GetValueOrDefault(),
@@ -836,6 +860,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             LinkedPurchaseRequestID = item.LinkedPurchaseRequestID.GetValueOrDefault(),
                             PaymentPlanID = item.PaymentPlanID,
                             ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
+                            PurchaseOrderLineWayBillStatusEnum = (int)item.PurchaseOrderLineWayBillStatusEnum,
                             PurchaseOrderLineStateEnum = (int)item.PurchaseOrderLineStateEnum,
                             UnitPrice = item.UnitPrice,
                             SupplyDate = item.SupplyDate,
@@ -906,6 +931,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 OrderAcceptanceID = entity.OrderAcceptanceID.GetValueOrDefault(),
                 GrossAmount = entity.GrossAmount,
                 MaintenanceMRPID = entity.MaintenanceMRPID,
+                PurchaseOrderWayBillStatusEnum = (int)entity.PurchaseOrderWayBillStatusEnum,
                 MRPID = entity.MRPID,
                 LinkedPurchaseRequestID = entity.LinkedPurchaseRequestID,
                 NetAmount = entity.NetAmount,
@@ -992,6 +1018,158 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var purchaseOrderLine = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<List<SelectPurchaseOrderLinesDto>>(purchaseOrderLine);
+        }
+
+        public async Task<IDataResult<IList<ListPurchaseOrdersDto>>> GetQualityControlPendingListAsync()
+        {
+            var query = queryFactory
+                   .Query()
+                    .From(Tables.PurchaseOrders)
+                   .Select<PurchaseOrders>(null)
+                   .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(PurchaseOrders.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Where(null, false, false, Tables.PurchaseOrders);
+
+            var purchaseOrders = queryFactory.GetList<ListPurchaseOrdersDto>(query).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListPurchaseOrdersDto>>(purchaseOrders);
+        }
+
+        public async Task<IDataResult<IList<SelectPurchaseOrdersDto>>> GetQualityControlSelectListAsync()
+        {
+            List<SelectPurchaseOrdersDto> PurchaseOrderSelectList = new List<SelectPurchaseOrdersDto>();
+
+            #region Duruma Göre Satırlar
+
+            var queryLines = queryFactory
+                  .Query()
+                  .From(Tables.PurchaseOrderLines)
+                  .Select<PurchaseOrderLines>(null)
+                  .Join<Products>
+                   (
+                       p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                       nameof(PurchaseOrderLines.ProductID),
+                       nameof(Products.Id),
+                       JoinType.Left
+                   )
+                  .Join<UnitSets>
+                   (
+                       u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                       nameof(PurchaseOrderLines.UnitSetID),
+                       nameof(UnitSets.Id),
+                       JoinType.Left
+                   )
+                    .Join<PaymentPlans>
+                   (
+                       pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                       nameof(PurchaseOrderLines.PaymentPlanID),
+                       nameof(PaymentPlans.Id),
+                       JoinType.Left
+                   ).Join<Branches>
+                   (
+                       b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                       nameof(PurchaseOrderLines.BranchID),
+                       nameof(Branches.Id),
+                       JoinType.Left
+                   )
+                   .Join<Warehouses>
+                   (
+                       w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                       nameof(PurchaseOrderLines.WarehouseID),
+                       nameof(Warehouses.Id),
+                       JoinType.Left
+                   )
+                   .Join<CurrentAccountCards>
+                   (
+                       ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                       nameof(PurchaseOrderLines.CurrentAccountCardID),
+                       nameof(CurrentAccountCards.Id),
+                       JoinType.Left
+                   )
+                   .Where(new { PurchaseOrderLineWayBillStatusEnum = 1}, false, false, Tables.PurchaseOrderLines)
+                   .Where(new { PurchaseOrderLineWayBillStatusEnum = 2}, false, false, Tables.PurchaseOrderLines);
+
+            var purchaseOrderLines = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
+
+            #endregion
+
+            var distinctedPurchaseOrderIdList = purchaseOrderLines.Select(t => t.PurchaseOrderID).Distinct().ToList();
+
+            foreach(var orderId in distinctedPurchaseOrderIdList)
+            {
+                #region Distinct Yapılmış Purchase Order
+
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.PurchaseOrders)
+                   .Select<PurchaseOrders>(null)
+                   .Join<PaymentPlans>
+                    (
+                        pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
+                        nameof(PurchaseOrders.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(PurchaseOrders.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<MRPs>
+                    (
+                        b => new { MRPID = b.Id, MRPCode = b.Code },
+                        nameof(PurchaseOrders.MRPID),
+                        nameof(MRPs.Id),
+                        JoinType.Left
+                    )
+                     .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                        nameof(PurchaseOrders.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                        nameof(PurchaseOrders.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                     .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(PurchaseOrders.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left)
+
+                         .Join<ShippingAdresses>
+                    (
+                        sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
+                        nameof(PurchaseOrders.ShippingAdressID),
+                        nameof(ShippingAdresses.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Id = orderId }, false, false, Tables.PurchaseOrders);
+
+                var purchaseOrders = queryFactory.Get<SelectPurchaseOrdersDto>(query);
+
+                #endregion
+
+                purchaseOrders.SelectPurchaseOrderLinesDto = purchaseOrderLines.Where(t=>t.PurchaseOrderID == orderId).ToList();
+
+                PurchaseOrderSelectList.Add(purchaseOrders);
+            }
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<SelectPurchaseOrdersDto>>(PurchaseOrderSelectList);
         }
     }
 }

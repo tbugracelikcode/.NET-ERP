@@ -448,7 +448,7 @@
     <value>Hepsini Seç</value>
   </data>
   <data name="SelectedStationPlan" xml:space="preserve">
-    <value>Seçilen İstasyonları Planla</value>
+    <value>İstasyonları Planla</value>
   </data>
   <data name="ShiftOverTimeLineLabel" xml:space="preserve">
     <value>Fazla Mesai:</value>

@@ -258,6 +258,9 @@
   <data name="EditCrudModalTechDrawTitle" xml:space="preserve">
     <value>Teknik Resim İşlemleri</value>
   </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Ürüne Bağlı Ürün Özellikleri</value>
+  </data>
   <data name="EditModalTechDrawGridCustomerCode" xml:space="preserve">
     <value>MÜŞTERİ KODU</value>
   </data>
@@ -353,6 +356,30 @@
   </data>
   <data name="IsApprovedLabelTechDraw" xml:space="preserve">
     <value>AR-EKS Onayı:</value>
+  </data>
+  <data name="LineGridisPurchaseBreakdown" xml:space="preserve">
+    <value>SATIN ALMA DÖKÜMÜ</value>
+  </data>
+  <data name="LineGridIsQualityControlCriterion" xml:space="preserve">
+    <value>KALİTE KONTROL KRİTERİ</value>
+  </data>
+  <data name="LineGridLineNr" xml:space="preserve">
+    <value>SIRA NO</value>
+  </data>
+  <data name="LineGridPropertyName" xml:space="preserve">
+    <value>ÖZELLİK ADI</value>
+  </data>
+  <data name="LineGridPropertyValue" xml:space="preserve">
+    <value>ÖZELLİK DEĞERİ</value>
+  </data>
+  <data name="LineisPurchaseBreakdownLabel" xml:space="preserve">
+    <value>Satın Alma Dökümü:</value>
+  </data>
+  <data name="LineIsQualityControlCriterionLabel" xml:space="preserve">
+    <value>Kalite Kontrol Kriteri:</value>
+  </data>
+  <data name="LinePropertyValueLabel" xml:space="preserve">
+    <value>Özellik Değeri:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -491,6 +518,12 @@
   </data>
   <data name="ProductNameLabelTechDraw" xml:space="preserve">
     <value>Stok Açıklaması:</value>
+  </data>
+  <data name="ProductPropertyContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ProductPropertyContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="ProductReferanceNumberContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -698,6 +731,9 @@
   </data>
   <data name="Tab3Name" xml:space="preserve">
     <value>Dış Ticaret Bilgileri</value>
+  </data>
+  <data name="Tab4Name" xml:space="preserve">
+    <value>Ürün Özellikleri</value>
   </data>
   <data name="TechnicalApprovalLabelRoute" xml:space="preserve">
     <value>Teknik Onay:</value>

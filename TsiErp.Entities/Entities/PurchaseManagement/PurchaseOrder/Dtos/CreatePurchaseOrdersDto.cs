@@ -42,6 +42,11 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
         /// Sipariş Durumu
         /// </summary>
         public int PurchaseOrderState { get; set; }
+
+        /// <summary>
+        /// Sipariş İrsaliye Durumu
+        /// </summary>
+        public int PurchaseOrderWayBillStatusEnum { get; set; }
         /// <summary>
         /// Bağlı Satın Alma Talep ID
         /// </summary>
