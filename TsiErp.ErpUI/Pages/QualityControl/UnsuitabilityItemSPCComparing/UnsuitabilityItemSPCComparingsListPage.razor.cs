@@ -22,8 +22,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPCComparing
 
         public List<ListUnsuitabilityItemSPCsDto> UnsuitabilityItemSPCList = new List<ListUnsuitabilityItemSPCsDto>();
 
-        public DateTime? FirstDate = new DateTime();
-        public DateTime? SecondDate = new DateTime();
+        public DateTime FirstDate = new DateTime();
+        public DateTime SecondDate = new DateTime();
 
         protected override async Task OnInitializedAsync()
         {
@@ -31,26 +31,31 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPCComparing
 
             UnsuitabilityItemSPCList = (await UnsuitabilityItemSPCsAppService.GetListAsync(new ListUnsuitabilityItemSPCsParameterDto())).Data.OrderByDescending(t => t.Date_).ToList();
 
-            FirstDate = UnsuitabilityItemSPCList[0].Date_;
-
-            SecondDate = UnsuitabilityItemSPCList[1].Date_;
-
-            var firstSPCLineList = (await UnsuitabilityItemSPCsAppService.GetAsync(UnsuitabilityItemSPCList[0].Id)).Data.SelectUnsuitabilityItemSPCLines;
-
-            var secondSPCLineList = (await UnsuitabilityItemSPCsAppService.GetAsync(UnsuitabilityItemSPCList[1].Id)).Data.SelectUnsuitabilityItemSPCLines;
-
-            foreach (var unsuitabilityItem in UnsuitabilityItemsList)
+            if(UnsuitabilityItemSPCList.Count >0 && UnsuitabilityItemSPCList != null)
             {
-                UnsuitabilitySPCComparingModel gridModel = new UnsuitabilitySPCComparingModel
+                FirstDate = UnsuitabilityItemSPCList[0].Date_;
+
+                SecondDate = UnsuitabilityItemSPCList[1].Date_;
+
+                var firstSPCLineList = (await UnsuitabilityItemSPCsAppService.GetAsync(UnsuitabilityItemSPCList[0].Id)).Data.SelectUnsuitabilityItemSPCLines;
+
+                var secondSPCLineList = (await UnsuitabilityItemSPCsAppService.GetAsync(UnsuitabilityItemSPCList[1].Id)).Data.SelectUnsuitabilityItemSPCLines;
+
+                foreach (var unsuitabilityItem in UnsuitabilityItemsList)
                 {
+                    UnsuitabilitySPCComparingModel gridModel = new UnsuitabilitySPCComparingModel
+                    {
 
-                    UnsuitabilityItemID = unsuitabilityItem.Id,
-                    UnsuitabilityItemName = unsuitabilityItem.Name,
-                    FirstRPNValue = firstSPCLineList.Where(t => t.UnsuitabilityItemID == unsuitabilityItem.Id).Select(t => t.RPN).FirstOrDefault(),
-                    SecondRPNValue = secondSPCLineList.Where(t => t.UnsuitabilityItemID == unsuitabilityItem.Id).Select(t => t.RPN).FirstOrDefault()
+                        UnsuitabilityItemID = unsuitabilityItem.Id,
+                        UnsuitabilityItemName = unsuitabilityItem.Name,
+                        FirstRPNValue = firstSPCLineList.Where(t => t.UnsuitabilityItemID == unsuitabilityItem.Id).Select(t => t.RPN).FirstOrDefault(),
+                        SecondRPNValue = secondSPCLineList.Where(t => t.UnsuitabilityItemID == unsuitabilityItem.Id).Select(t => t.RPN).FirstOrDefault()
 
-                };
+                    };
+                }
             }
+
+           
         }
 
         public void Dispose()

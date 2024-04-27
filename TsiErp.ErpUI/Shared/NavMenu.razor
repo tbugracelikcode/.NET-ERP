@@ -365,7 +365,7 @@
                         <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShiftsChildMenu)" NavigateUrl="/shifts" Text=@L["ShiftsChildMenu"] />
                         <DxTreeViewNode Visible="@(NavBarPermissionsModel.UsersChildMenu)" NavigateUrl="/users" Text=@L["UsersChildMenu"] />
                         <DxTreeViewNode Visible="@(NavBarPermissionsModel.UserGrpChildMenu)" NavigateUrl="/user-groups" Text=@L["UserGrpChildMenu"] />
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.RoleDefinitionsChildMenu)" NavigateUrl="" Text=@L["RoleDefinitionsChildMenu"] />
+                        @* <DxTreeViewNode Visible="@(NavBarPermissionsModel.RoleDefinitionsChildMenu)" NavigateUrl="" Text=@L["RoleDefinitionsChildMenu"] /> *@
                         <DxTreeViewNode Visible="@(NavBarPermissionsModel.GeneralSystemParametersParentMenu)" Text=@L["GeneralSystemParametersParentMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.FinanceManagementParametersChildMenu)" NavigateUrl="/finance-management-parameters" Text=@L["FinanceManagementParametersChildMenu"] />
@@ -381,8 +381,8 @@
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.GeneralParametersChildMenu)" Text=@L["GeneralParametersChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode NavigateUrl="/insert-menu" Text="Menü Ekle" />
-                        <DxTreeViewNode NavigateUrl="/excel-import-datagrid" Text="Excel'den Grid'e Aktarým" />
+                       @*  <DxTreeViewNode NavigateUrl="/insert-menu" Text="Menü Ekle" />
+                        <DxTreeViewNode NavigateUrl="/excel-import-datagrid" Text="Excel'den Grid'e Aktarým" /> *@
                     </Nodes>
                 </DxTreeViewNode>
 

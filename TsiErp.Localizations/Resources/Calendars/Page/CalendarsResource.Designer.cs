@@ -1060,7 +1060,7 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seçilen İstasyonları Planla.
+        ///   Looks up a localized string similar to İstasyonları Planla.
         /// </summary>
         public static string SelectedStationPlan {
             get {

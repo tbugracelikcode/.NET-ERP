@@ -445,7 +445,7 @@
     <value>Select All</value>
   </data>
   <data name="SelectedStationPlan" xml:space="preserve">
-    <value>Schedule Selected Stations</value>
+    <value>Schedule Stations</value>
   </data>
   <data name="ShiftOverTimeLineLabel" xml:space="preserve">
     <value>Overtime:</value>

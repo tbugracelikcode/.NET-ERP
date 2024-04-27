@@ -637,6 +637,15 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rezerve Fişi Ekle.
+        /// </summary>
+        public static string StockFicheContextAddReserved {
+            get {
+                return ResourceManager.GetString("StockFicheContextAddReserved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok Giriş Fişi Ekle.
         /// </summary>
         public static string StockFicheContextAddStockIncome {

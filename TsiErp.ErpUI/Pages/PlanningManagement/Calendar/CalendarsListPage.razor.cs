@@ -63,7 +63,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         List<SelectPlannedMaintenanceLinesDto> PlannedMaintenanceLineList = new List<SelectPlannedMaintenanceLinesDto>();
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
         List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
-        SfComboBox<int, int> Years;
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
@@ -382,7 +381,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             DataSource = new SelectCalendarsDto()
             {
                 IsPlanned = true,
-                Code = FicheNumbersAppService.GetFicheNumberAsync("CalendarChildMenu")
+                Code = FicheNumbersAppService.GetFicheNumberAsync("CalendarChildMenu"),
+                Year = GetSQLDateAppService.GetDateFromSQL().Year
             };
 
             DataSource.SelectCalendarDaysDto = GridDaysList;
@@ -454,7 +454,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             args.Cancel = true;
             selectedDate = args.StartTime;
             ShowStationsModal();
-
 
             await Task.CompletedTask;
         }
@@ -704,6 +703,13 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                 StationGroupNameList.Add(groupname);
             }
             var a = StationGroupNameList;
+
+            foreach(var station in DataSource.SelectCalendarLinesDto)
+            {
+                var selectedStation = StationsList.Where(t => t.Id == station.StationID).FirstOrDefault();
+                SelectedStations.Add(selectedStation);
+            }
+
             StationsModalVisible = true;
         }
 
@@ -822,6 +828,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
             else
             {
+
                 foreach (var shift in ShiftsList)
                 {
                     foreach (var station in SelectedStations)
@@ -975,10 +982,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                         {
                             case "MaintenaceInfosContextChange":
                                 MaintenanceGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextChange"], Id = "change" }); break;
-                            case "MaintenaceInfosContextDelete":
-                                MaintenanceGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextDelete"], Id = "delete" }); break;
-                            case "MaintenaceInfosContextRefresh":
-                                MaintenanceGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextRefresh"], Id = "refresh" }); break;
+                            //case "MaintenaceInfosContextDelete":
+                            //    MaintenanceGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextDelete"], Id = "delete" }); break;
+                            //case "MaintenaceInfosContextRefresh":
+                            //    MaintenanceGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenaceInfosContextRefresh"], Id = "refresh" }); break;
                             default: break;
                         }
                     }
