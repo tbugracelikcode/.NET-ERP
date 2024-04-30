@@ -465,6 +465,9 @@
   <data name="PurchaseOrderFicheListChildMenu" xml:space="preserve">
     <value>List of Purchase Orders</value>
   </data>
+  <data name="PurchaseOrdersAwaitingApprovalsChildMenu" xml:space="preserve">
+    <value>Purchase Orders Awaiting Approval</value>
+  </data>
   <data name="PurchaseOrdersChildMenu" xml:space="preserve">
     <value>Purchase Ordes</value>
   </data>

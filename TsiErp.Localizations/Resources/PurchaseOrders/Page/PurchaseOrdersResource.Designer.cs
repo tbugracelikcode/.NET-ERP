@@ -61,6 +61,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Onay Bekleyen Satın Alma Siparişleri.
+        /// </summary>
+        public static string ApprovalModalTitle {
+            get {
+                return ResourceManager.GetString("ApprovalModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ŞUBE KODU.
         /// </summary>
         public static string BranchCode {
@@ -628,6 +637,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SATIR DURUMU.
+        /// </summary>
+        public static string LineGridPurchaseOrderLineStateEnum {
+            get {
+                return ResourceManager.GetString("LineGridPurchaseOrderLineStateEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İRSALİYE DURUMU.
         /// </summary>
         public static string LineGridPurchaseOrderLineWayBillStatusEnum {
@@ -993,6 +1011,42 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         public static string PurchaseOrderLineContextRefresh {
             get {
                 return ResourceManager.GetString("PurchaseOrderLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satırlara Kalite Kontrol Onayı Ver.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalContextApprove {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalContextApprove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalContextRefresh {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalite Kontrol Onayı Ver.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalLineContextApprove {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalLineContextApprove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalLineContextRefresh {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalLineContextRefresh", resourceCulture);
             }
         }
         

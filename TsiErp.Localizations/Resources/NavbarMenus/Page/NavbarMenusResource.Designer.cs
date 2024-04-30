@@ -1105,6 +1105,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Onay Bekleyen Satın Alma Siparişleri.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalsChildMenu {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satın Alma Siparişleri.
         /// </summary>
         public static string PurchaseOrdersChildMenu {
