@@ -6,6 +6,7 @@ using Syncfusion.Blazor.Inputs;
 using Syncfusion.XlsIO;
 using System.Data;
 using System.Dynamic;
+using TsiErp.Business.Entities.ProductReferanceNumber.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
@@ -566,6 +567,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
                 var check = ExcelService.ImportGetPath(path);
                 FileStream openFileStream = new FileStream(check, FileMode.OpenOrCreate);
                 file.Stream.WriteTo(openFileStream);
+
+               
                 FileStream fileStream = new FileStream(check, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 IWorkbook workbook = application.Workbooks.Open(fileStream);
                 IWorksheet worksheet = workbook.Worksheets[0];
@@ -605,8 +608,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
 
                 string _amount = !string.IsNullOrEmpty(Convert.ToString(row.Amount)) ? (string)row.Amount : "0";
 
-                string customerProductCode = !string.IsNullOrEmpty(Convert.ToString(row.CustomerProductCode)) ? (string)row.CustomerProductCode : "";
-
                 string _startDate = !string.IsNullOrEmpty(Convert.ToString(row.StartDate)) ? (string)row.StartDate : DateTime.Today.ToShortDateString();
 
                 string _endDate = !string.IsNullOrEmpty(Convert.ToString(row.EndDate)) ? (string)row.EndDate : DateTime.Today.ToShortDateString();
@@ -619,11 +620,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
 
                 var product = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.Where(t => t.Code == productCode).FirstOrDefault();
 
+                string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(product.Id, DataSource.CurrentAccountCardID.GetValueOrDefault());
+
                 SelectForecastLinesDto line = new SelectForecastLinesDto()
                 {
                     ProductCode = productCode,
                     Amount = Amount,
-                    CustomerProductCode = customerProductCode,
+                    CustomerProductCode = supplierReferanceNumber,
                     EndDate = EndDate,
                     ForecastID = DataSource.Id,
                     LineNr = lineNr,
