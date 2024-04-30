@@ -160,6 +160,7 @@ using TsiErp.Entities.Entities.StockManagement.StockAddress;
 using TsiErp.Entities.Entities.StockManagement.ProductPropertyLine;
 using TsiErp.Entities.Entities.StockManagement.ProductProperty;
 using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty;
+using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -5596,6 +5597,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 ProductRelatedProductPropertiesTable.Create();
+            }
+            #endregion
+
+            #region ProductReceiptTransactions Table Created
+            Table ProductReceiptTransactionsTable = model.CreateTable(Tables.ProductReceiptTransactions);
+
+            if (ProductReceiptTransactionsTable != null)
+            {
+                var properties = (typeof(ProductReceiptTransactions)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ProductReceiptTransactionsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ProductReceiptTransactionsTable, "PK_" + ProductReceiptTransactionsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ProductReceiptTransactionsTable.Indexes.Add(pkIndex);
+                    }
+
+                    ProductReceiptTransactionsTable.Columns.Add(column);
+                }
+
+                ProductReceiptTransactionsTable.Create();
             }
             #endregion
 

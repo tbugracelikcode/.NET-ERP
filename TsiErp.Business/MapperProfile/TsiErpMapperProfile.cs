@@ -267,6 +267,8 @@ using TsiErp.Entities.Entities.StockManagement.ProductGroup;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductProperty;
 using TsiErp.Entities.Entities.StockManagement.ProductProperty.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction;
+using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddress;
@@ -318,6 +320,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectStockNumbersDto, CreateStockNumbersDto>();
             CreateMap<UpdateStockNumbersDto, StockNumbers>();
             CreateMap<SelectStockNumbersDto, UpdateStockNumbersDto>();
+
+            CreateMap<ProductReceiptTransactions, SelectProductReceiptTransactionsDto>();
+            CreateMap<ProductReceiptTransactions, ListProductReceiptTransactionsDto>();
+            CreateMap<CreateProductReceiptTransactionsDto, ProductReceiptTransactions>();
+            CreateMap<SelectProductReceiptTransactionsDto, CreateProductReceiptTransactionsDto>();
+            CreateMap<UpdateProductReceiptTransactionsDto, ProductReceiptTransactions>();
+            CreateMap<SelectProductReceiptTransactionsDto, UpdateProductReceiptTransactionsDto>();
 
             CreateMap<StockSections, SelectStockSectionsDto>();
             CreateMap<StockSections, ListStockSectionsDto>();

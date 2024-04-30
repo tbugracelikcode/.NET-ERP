@@ -261,6 +261,9 @@
   <data name="EnumInPartialCompleted" xml:space="preserve">
     <value>Kısmi Tamamlandı</value>
   </data>
+  <data name="EnumPartialApproved" xml:space="preserve">
+    <value>Kısmi Onay Verildi</value>
+  </data>
   <data name="EnumQualityControlApproval" xml:space="preserve">
     <value>Kalite Kontrol Onayı Verildi</value>
   </data>

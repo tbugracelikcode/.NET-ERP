@@ -131,6 +131,10 @@ else
                                                     case PurchaseOrderLineStateEnum.Beklemede: purchaseOrderLineStateEnumStr = L["EnumWaiting"]; break;
                                                     case PurchaseOrderLineStateEnum.KismiTamamlandi: purchaseOrderLineStateEnumStr = L["EnumInPartialCompleted"]; break;
                                                     case PurchaseOrderLineStateEnum.KaliteKontrolOnayiVerildi: purchaseOrderLineStateEnumStr = L["EnumQualityControlApproval"] ;break; 
+                                                    case PurchaseOrderLineStateEnum.Iptal: purchaseOrderLineStateEnumStr = L["EnumCancel"] ;break; 
+                                                    case PurchaseOrderLineStateEnum.Tamamlandi: purchaseOrderLineStateEnumStr = L["EnumCompleted"] ;break;
+                                                    case PurchaseOrderLineStateEnum.Onaylandı: purchaseOrderLineStateEnumStr = L["EnumApproved"]; break;
+                                                    case PurchaseOrderLineStateEnum.KismiOnayVerildi: purchaseOrderLineStateEnumStr = L["EnumPartialApproved"]; break;
                                                     default: break;
                                                 }
                                             }
