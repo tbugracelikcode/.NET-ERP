@@ -313,6 +313,8 @@
                                     </Nodes>
                                 </DxTreeViewNode>
 
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseOrdersAwaitingApprovalsChildMenu)" NavigateUrl="/purchase-orders-awaiting-approvals" Text=@L["PurchaseOrdersAwaitingApprovalsChildMenu"] />
+
 
                                 @*  <DxTreeViewNode Text=@L["QualityControlReportsMenu"]>
                                 </DxTreeViewNode> *@
@@ -381,8 +383,8 @@
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.GeneralParametersChildMenu)" Text=@L["GeneralParametersChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                       @*  <DxTreeViewNode NavigateUrl="/insert-menu" Text="Menü Ekle" />
-                        <DxTreeViewNode NavigateUrl="/excel-import-datagrid" Text="Excel'den Grid'e Aktarým" /> *@
+                         <DxTreeViewNode NavigateUrl="/insert-menu" Text="Menü Ekle" />
+                        <DxTreeViewNode NavigateUrl="/excel-import-datagrid" Text="Excel'den Grid'e Aktarým" /> 
                     </Nodes>
                 </DxTreeViewNode>
 

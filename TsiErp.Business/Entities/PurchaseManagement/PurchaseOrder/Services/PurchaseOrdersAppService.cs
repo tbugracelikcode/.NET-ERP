@@ -1091,8 +1091,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                        nameof(CurrentAccountCards.Id),
                        JoinType.Left
                    )
-                   .Where(new { PurchaseOrderLineWayBillStatusEnum = 1}, false, false, Tables.PurchaseOrderLines)
-                   .Where(new { PurchaseOrderLineWayBillStatusEnum = 2}, false, false, Tables.PurchaseOrderLines);
+                   .Where(new { PurchaseOrderLineStateEnum = 1}, false, false, Tables.PurchaseOrderLines)
+                   .Where(new { PurchaseOrderLineStateEnum = 5}, false, false, Tables.PurchaseOrderLines);
 
             var purchaseOrderLines = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
 
@@ -1163,9 +1163,13 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
                 #endregion
 
-                purchaseOrders.SelectPurchaseOrderLinesDto = purchaseOrderLines.Where(t=>t.PurchaseOrderID == orderId).ToList();
+                if(purchaseOrders != null && purchaseOrders.Id != Guid.Empty)
+                {
+                    purchaseOrders.SelectPurchaseOrderLinesDto = purchaseOrderLines.Where(t => t.PurchaseOrderID == orderId).ToList();
 
-                PurchaseOrderSelectList.Add(purchaseOrders);
+                    PurchaseOrderSelectList.Add(purchaseOrders);
+
+                }
             }
 
             await Task.CompletedTask;

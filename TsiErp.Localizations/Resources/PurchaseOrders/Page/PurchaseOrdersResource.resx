@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApprovalModalTitle" xml:space="preserve">
+    <value>Onay Bekleyen Satın Alma Siparişleri</value>
+  </data>
   <data name="BranchCode" xml:space="preserve">
     <value>ŞUBE KODU</value>
   </data>
@@ -306,6 +309,9 @@
   <data name="LineGridProductName" xml:space="preserve">
     <value>STOK AÇIKLAMASI</value>
   </data>
+  <data name="LineGridPurchaseOrderLineStateEnum" xml:space="preserve">
+    <value>SATIR DURUMU</value>
+  </data>
   <data name="LineGridPurchaseOrderLineWayBillStatusEnum" xml:space="preserve">
     <value>İRSALİYE DURUMU</value>
   </data>
@@ -427,6 +433,18 @@
     <value>Sil</value>
   </data>
   <data name="PurchaseOrderLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalContextApprove" xml:space="preserve">
+    <value>Satırlara Kalite Kontrol Onayı Ver</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalLineContextApprove" xml:space="preserve">
+    <value>Kalite Kontrol Onayı Ver</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
   <data name="PurchaseOrderState" xml:space="preserve">

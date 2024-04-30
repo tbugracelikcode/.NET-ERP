@@ -1,0 +1,156 @@
+﻿@page "/purchase-orders-awaiting-approvals"
+@layout MainLayout
+
+@inherits BaseListPage<SelectPurchaseOrdersDto, ListPurchaseOrdersDto, CreatePurchaseOrdersDto, UpdatePurchaseOrdersDto, ListPurchaseOrdersParameterDto>
+
+
+@inject IPurchaseOrdersAppService PurchaseOrdersAppService
+@inject IControlConditionsAppService ControlConditionsAppService
+@inject IStringLocalizer<PurchaseOrdersResource> L
+@inject IUserPermissionsAppService UserPermissionsAppService
+@inject IMenusAppService MenusAppService
+
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+        <GridLayoutItems>
+            <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+            <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIGridCards">
+
+                        <CardContent>
+                            <SfGrid ID="Grid" @ref="_Grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="SelectPurchaseOrdersDto"></GridEvents>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersDto.FicheNo) HeaderText="@L["FicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersDto.Date_) Format="dd.MM.yyyy" HeaderText="@L["Date_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersDto.CurrentAccountCardCode) HeaderText="@L["CurrentAccountCardCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersDto.PurchaseOrderState) HeaderText="@L["PurchaseOrderState"]" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                var purchaseOrderState = (context as SelectPurchaseOrdersDto).PurchaseOrderState;
+                                                string purchaseOrderStateStr = string.Empty;
+
+                                                switch(purchaseOrderState)
+                                                {
+                                                    case PurchaseOrderStateEnum.Iptal: purchaseOrderStateStr = L["EnumCancel"]; break; 
+                                                    case PurchaseOrderStateEnum.Beklemede: purchaseOrderStateStr = L["EnumWaiting"]; break; 
+                                                    case PurchaseOrderStateEnum.Onaylandı: purchaseOrderStateStr = L["EnumApproved"] ;break; 
+                                                    case PurchaseOrderStateEnum.Tamamlandi: purchaseOrderStateStr = L["EnumCompleted"]; break; 
+                                                    case PurchaseOrderStateEnum.KismiTamamlandi: purchaseOrderStateStr = L["EnumInPartialCompleted"]; break; 
+                                                    default: break;
+                                                }
+                                            }
+                                            @purchaseOrderStateStr
+                                        </Template>
+                                    </GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
+
+
+    <DxPopup @bind-Visible="OrdersAwatingApprovalModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["ApprovalModalTitle"]"
+         Width="53%"
+         Height="50%"
+         MinWidth="1000px"
+         MinHeight="540px"
+         HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="90%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
+                </Columns>
+
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1" >
+                        <Template>
+                            <br />
+                            <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectPurchaseOrderLinesDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.UnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridUnitPrice"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                     <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.PurchaseOrderLineStateEnum) HeaderText="@L["LineGridPurchaseOrderLineStateEnum"]" TextAlign="TextAlign.Center" Width="120" Context="lineContext">
+                                        <Template>
+                                            @{
+                                                var purchaseOrderLineStateEnum = (lineContext as SelectPurchaseOrderLinesDto).PurchaseOrderLineStateEnum;
+                                                string purchaseOrderLineStateEnumStr = string.Empty;
+
+                                                switch(purchaseOrderLineStateEnum)
+                                                {
+                                                    case PurchaseOrderLineStateEnum.Beklemede: purchaseOrderLineStateEnumStr = L["EnumWaiting"]; break;
+                                                    case PurchaseOrderLineStateEnum.KismiTamamlandi: purchaseOrderLineStateEnumStr = L["EnumInPartialCompleted"]; break;
+                                                    case PurchaseOrderLineStateEnum.KaliteKontrolOnayiVerildi: purchaseOrderLineStateEnumStr = L["EnumQualityControlApproval"] ;break; 
+                                                    default: break;
+                                                }
+                                            }
+                                            @purchaseOrderLineStateEnumStr
+                                        </Template>
+                                    </GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideApprovalPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+
+   
+
+}

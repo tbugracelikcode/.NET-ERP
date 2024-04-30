@@ -465,6 +465,9 @@
   <data name="PurchaseOrderFicheListChildMenu" xml:space="preserve">
     <value>Satın Alma Siparişleri Listesi</value>
   </data>
+  <data name="PurchaseOrdersAwaitingApprovalsChildMenu" xml:space="preserve">
+    <value>Onay Bekleyen Satın Alma Siparişleri</value>
+  </data>
   <data name="PurchaseOrdersChildMenu" xml:space="preserve">
     <value>Satın Alma Siparişleri</value>
   </data>
