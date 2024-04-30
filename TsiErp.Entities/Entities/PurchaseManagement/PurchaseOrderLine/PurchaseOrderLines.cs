@@ -163,5 +163,11 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine
         /// </summary>
         public string SupplierBillNo { get; set; }
 
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Tedarikçi Referans No
+        /// </summary>
+        public string SupplierReferenceNo { get; set; }
+
     }
 }

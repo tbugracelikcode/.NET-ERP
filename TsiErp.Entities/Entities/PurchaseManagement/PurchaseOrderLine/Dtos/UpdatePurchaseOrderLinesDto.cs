@@ -145,5 +145,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
         /// Sipariş Kabul Satır ID
         /// </summary>
         public Guid? OrderAcceptanceLineID { get; set; }
+
+        /// <summary>
+        /// Tedarikçi Referans No
+        /// </summary>
+        public string SupplierReferenceNo { get; set; }
     }
 }

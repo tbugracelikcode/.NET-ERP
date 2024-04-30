@@ -146,7 +146,8 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     BranchID = input.BranchID.GetValueOrDefault(),
                     CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                     WarehouseID = input.WarehouseID.GetValueOrDefault(),
-                    Date_ = input.Date_
+                    Date_ = input.Date_,
+                    SupplierReferenceNo = item.SupplierReferenceNo
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -586,8 +587,8 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         LineDescription = item.LineDescription,
                         LineTotalAmount = item.LineTotalAmount,
                         OrderConversionDate = item.OrderConversionDate,
-                        PaymentPlanID = item.PaymentPlanID,
-                        ProductionOrderID = item.ProductionOrderID,
+                        PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
+                        ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                         PurchaseRequestLineState = (int)item.PurchaseRequestLineState,
                         UnitPrice = item.UnitPrice,
                         VATamount = item.VATamount,
@@ -604,13 +605,14 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
-                        ProductID = item.ProductID,
+                        ProductID = item.ProductID.GetValueOrDefault(),
                         Quantity = item.Quantity,
-                        UnitSetID = item.UnitSetID,
+                        UnitSetID = item.UnitSetID.GetValueOrDefault(),
                         BranchID = input.BranchID.GetValueOrDefault(),
                         CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                         Date_ = input.Date_,
-                        WarehouseID = input.WarehouseID.GetValueOrDefault()
+                        WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                        SupplierReferenceNo = item.SupplierReferenceNo
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -632,8 +634,8 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             LineDescription = item.LineDescription,
                             LineTotalAmount = item.LineTotalAmount,
                             OrderConversionDate = item.OrderConversionDate,
-                            PaymentPlanID = item.PaymentPlanID,
-                            ProductionOrderID = item.ProductionOrderID,
+                            PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
+                            ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                             PurchaseRequestLineState = (int)item.PurchaseRequestLineState,
                             UnitPrice = item.UnitPrice,
                             VATamount = item.VATamount,
@@ -650,13 +652,14 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                            ProductID = item.ProductID,
+                            ProductID = item.ProductID.GetValueOrDefault(),
                             Quantity = item.Quantity,
-                            UnitSetID = item.UnitSetID,
+                            UnitSetID = item.UnitSetID.GetValueOrDefault(),
                             BranchID = input.BranchID.GetValueOrDefault(),
                             CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                             Date_ = input.Date_,
-                            WarehouseID = input.WarehouseID.GetValueOrDefault()
+                            WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                            SupplierReferenceNo = item.SupplierReferenceNo
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -806,7 +809,8 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             BranchID = line.BranchID,
                             CurrentAccountCardID = line.CurrentAccountCardID,
                             WarehouseID = line.WarehouseID,
-                            Date_ = line.Date_
+                            Date_ = line.Date_,
+                            SupplierReferenceNo = line.SupplierReferenceNo
                         }).Where(new { Id = line.Id }, false, false, "");
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
 

@@ -371,6 +371,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 LineDataSource.ProductName = string.Empty;
                 LineDataSource.UnitSetID = Guid.Empty;
                 LineDataSource.UnitSetCode = string.Empty;
+                LineDataSource.SupplierReferenceNo = string.Empty;
             }
         }
 
@@ -385,18 +386,29 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 LineDataSource.ProductName = selectedProduct.Name;
                 LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
                 LineDataSource.UnitSetID = selectedProduct.UnitSetID;
+
+                if(DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
+                {
+                    //    var lastApprovedPriceID = (await PurchasePricesAppService.GetListAsync(new ListPurchasePricesParameterDto())).Data.Where(t => t.IsApproved == true && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).Last().Id;
+
+                    //    if(lastApprovedPriceID != Guid.Empty)
+                    //    {
+                    //        LineDataSource.UnitPrice = (await PurchasePricesAppService.GetAsync(lastApprovedPriceID)).Data.SelectPurchasePriceLines.Where(t => t.ProductID == selectedProduct.Id).Select(t => t.Price).FirstOrDefault();
+
+                    //    }
+
+                    string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(selectedProduct.Id, DataSource.CurrentAccountCardID.GetValueOrDefault());
+
+                    if (!string.IsNullOrEmpty(supplierReferanceNumber))
+                    {
+                        LineDataSource.SupplierReferenceNo = supplierReferanceNumber;
+                    }
+                    else
+                    {
+                        LineDataSource.SupplierReferenceNo = "-";
+                    }
+                }
                 SelectProductsPopupVisible = false;
-
-                //if(DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
-                //{
-                //    var lastApprovedPriceID = (await PurchasePricesAppService.GetListAsync(new ListPurchasePricesParameterDto())).Data.Where(t => t.IsApproved == true && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).Last().Id;
-
-                //    if(lastApprovedPriceID != Guid.Empty)
-                //    {
-                //        LineDataSource.UnitPrice = (await PurchasePricesAppService.GetAsync(lastApprovedPriceID)).Data.SelectPurchasePriceLines.Where(t => t.ProductID == selectedProduct.Id).Select(t => t.Price).FirstOrDefault();
-
-                //    }
-                //}
 
                 await InvokeAsync(StateHasChanged);
             }

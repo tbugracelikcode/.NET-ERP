@@ -120,5 +120,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine.Dtos
         /// Cari Hesap Kartı ID
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
+
+        /// <summary>
+        /// Tedarikçi Referans No
+        /// </summary>
+        public string SupplierReferenceNo { get; set; }
     }
 }

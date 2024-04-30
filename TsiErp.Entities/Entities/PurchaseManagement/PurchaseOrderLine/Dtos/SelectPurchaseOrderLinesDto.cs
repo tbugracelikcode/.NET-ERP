@@ -31,7 +31,7 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
         /// <summary>
         /// Tedarikçi Referans No
         /// </summary>
-        public string SupplierReferanceNo { get; set; }
+        public string SupplierReferenceNo { get; set; }
         /// <summary>
         /// Stok ID
         /// </summary>
