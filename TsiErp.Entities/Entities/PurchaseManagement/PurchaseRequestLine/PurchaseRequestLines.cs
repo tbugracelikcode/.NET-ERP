@@ -121,5 +121,11 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
 
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Tedarikçi Referans No
+        /// </summary>
+        public string SupplierReferenceNo { get; set; }
+
     }
 }
