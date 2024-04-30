@@ -24,10 +24,6 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine.Dtos
         public Guid? ProductID { get; set; }
 
         /// <summary>
-        /// Tedarikçi Referans No
-        /// </summary>
-        public string SupplierReferanceNo { get; set; }
-        /// <summary>
         /// Stok Kodu
         /// </summary>
         public string ProductCode { get; set; }
@@ -171,5 +167,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine.Dtos
         /// Cari Ünvan
         /// </summary>
         public string CurrentAccountCardName { get; set; }
+
+        /// <summary>
+        /// Tedarikçi Referans No
+        /// </summary>
+        public string SupplierReferenceNo { get; set; }
     }
 }

@@ -366,6 +366,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 LineDataSource.ProductName = string.Empty;
                 LineDataSource.UnitSetCode = string.Empty;
                 LineDataSource.UnitSetID = Guid.Empty;
+                LineDataSource.SupplierReferenceNo = string.Empty;
             }
         }
 
@@ -380,18 +381,31 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 LineDataSource.ProductName = selectedProduct.Name;
                 LineDataSource.UnitSetID = selectedProduct.UnitSetID;
                 LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
-                SelectProductsPopupVisible = false;
 
                 if (DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
                 {
-                    var lastApprovedPriceID = (await PurchasePricesAppService.GetListAsync(new ListPurchasePricesParameterDto())).Data.Where(t => t.IsApproved == true && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).LastOrDefault().Id;
+                    //var lastApprovedPriceID = (await PurchasePricesAppService.GetListAsync(new ListPurchasePricesParameterDto())).Data.Where(t => t.IsApproved == true && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).LastOrDefault().Id;
 
-                    if (lastApprovedPriceID != Guid.Empty)
+                    //if (lastApprovedPriceID != Guid.Empty)
+                    //{
+                    //    LineDataSource.UnitPrice = (await PurchasePricesAppService.GetAsync(lastApprovedPriceID)).Data.SelectPurchasePriceLines.Where(t => t.ProductID == selectedProduct.Id).Select(t => t.Price).FirstOrDefault();
+
+                    //}
+
+                    string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(selectedProduct.Id, DataSource.CurrentAccountCardID.GetValueOrDefault());
+
+                    if (!string.IsNullOrEmpty(supplierReferanceNumber))
                     {
-                        LineDataSource.UnitPrice = (await PurchasePricesAppService.GetAsync(lastApprovedPriceID)).Data.SelectPurchasePriceLines.Where(t => t.ProductID == selectedProduct.Id).Select(t => t.Price).FirstOrDefault();
-
+                        LineDataSource.SupplierReferenceNo = supplierReferanceNumber;
+                    }
+                    else
+                    {
+                        LineDataSource.SupplierReferenceNo = "-";
                     }
                 }
+
+
+                SelectProductsPopupVisible = false;
 
                 await InvokeAsync(StateHasChanged);
             }

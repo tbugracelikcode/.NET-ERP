@@ -147,5 +147,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
         /// Tedarikçi Fatura No
         /// </summary>
         public string SupplierBillNo { get; set; }
+
+        /// <summary>
+        /// Tedarikçi Referans No
+        /// </summary>
+        public string SupplierReferenceNo { get; set; }
     }
 }

@@ -97,5 +97,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine.Dtos
         /// Siparişe Çevirilme Tarihi
         /// </summary>
         public DateTime? OrderConversionDate { get; set; }
+
+        /// <summary>
+        /// Tedarikçi Referans No
+        /// </summary>
+        public string SupplierReferenceNo { get; set; }
     }
 }
