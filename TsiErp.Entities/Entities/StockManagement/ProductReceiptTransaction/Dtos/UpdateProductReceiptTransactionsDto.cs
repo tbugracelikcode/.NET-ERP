@@ -31,6 +31,10 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dto
         /// </summary>
         public decimal WaybillQuantity { get; set; }
         /// <summary>
+        /// Miktar
+        /// </summary>
+        public decimal PurchaseOrderQuantity { get; set; }
+        /// <summary>
         /// İrsaliye Numarası
         /// </summary>
         public string WaybillNo { get; set; }

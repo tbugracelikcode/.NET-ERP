@@ -178,5 +178,6 @@
         public static bool StockAddressesChildMenu { get; set; } = true;
         public static bool StockAddressesMenu { get; set; } = true;
         public static bool PurchaseOrdersAwaitingApprovalsChildMenu { get; set; } = true;
+        public static bool ProductReceiptTransactionsChildMenu { get; set; } = true;
     }
 }

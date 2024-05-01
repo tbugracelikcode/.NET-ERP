@@ -441,6 +441,9 @@
   <data name="ProductionTrackingRecordsMenu" xml:space="preserve">
     <value>Üretim Takip Kayıtları</value>
   </data>
+  <data name="ProductReceiptTransactionsChildMenu" xml:space="preserve">
+    <value>Stok Giriş Hareketleri</value>
+  </data>
   <data name="ProductRefNumbersChildMenu" xml:space="preserve">
     <value>Ürün Referans Numaraları</value>
   </data>

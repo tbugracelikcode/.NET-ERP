@@ -1033,6 +1033,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok Giriş Hareketleri.
+        /// </summary>
+        public static string ProductReceiptTransactionsChildMenu {
+            get {
+                return ResourceManager.GetString("ProductReceiptTransactionsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Referans Numaraları.
         /// </summary>
         public static string ProductRefNumbersChildMenu {

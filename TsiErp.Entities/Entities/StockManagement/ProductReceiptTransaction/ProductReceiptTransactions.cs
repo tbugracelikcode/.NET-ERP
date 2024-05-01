@@ -66,5 +66,10 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction
         /// Tedarikçi Stok Kodu
         /// </summary>
         public string SupplierProductCode { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Miktar
+        /// </summary>
+        public decimal PurchaseOrderQuantity { get; set; }
     }
 }

@@ -23,6 +23,10 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dto
         /// </summary>
         public Guid? PurchaseOrderLineID { get; set; }
         /// <summary>
+        /// Miktar
+        /// </summary>
+        public decimal PurchaseOrderQuantity { get; set; }
+        /// <summary>
         /// Cari Hesap ID
         /// </summary>
         public Guid? CurrentAccountCardID { get; set; }

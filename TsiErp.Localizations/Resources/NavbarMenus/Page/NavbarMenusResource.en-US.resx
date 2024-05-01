@@ -441,6 +441,9 @@
   <data name="ProductionTrackingRecordsMenu" xml:space="preserve">
     <value>Production Tracking Records</value>
   </data>
+  <data name="ProductReceiptTransactionsChildMenu" xml:space="preserve">
+    <value>Product Receipt Transactions</value>
+  </data>
   <data name="ProductRefNumbersChildMenu" xml:space="preserve">
     <value>Product Referance Numbers</value>
   </data>

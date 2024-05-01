@@ -295,7 +295,15 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
             var productReferanceNumber = queryFactory.GetList<SelectProductReferanceNumbersDto>(query).ToList().LastOrDefault();
 
-            return !string.IsNullOrEmpty(productReferanceNumber.ReferanceNo) ? productReferanceNumber.ReferanceNo : "-";
+            if(productReferanceNumber != null && productReferanceNumber.Id != Guid.Empty )
+            {
+                return !string.IsNullOrEmpty(productReferanceNumber.ReferanceNo) ? productReferanceNumber.ReferanceNo : "-";
+
+            }
+            else
+            {
+                return "-";
+            }
         }
     }
 }

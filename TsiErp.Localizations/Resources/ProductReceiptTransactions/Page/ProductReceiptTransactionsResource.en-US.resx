@@ -120,6 +120,12 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="CurrentAccountCardName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="CurrentAccountCardNameLabel" xml:space="preserve">
+    <value>Current Account Name:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -132,8 +138,20 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Product Receipt Transactions</value>
+  </data>
+  <data name="EnumAwaitingQualityControlApproval" xml:space="preserve">
+    <value>Awaiting Quality Control Approval</value>
+  </data>
+  <data name="EnumQualityControlApproved" xml:space="preserve">
+    <value>Quality Control Approval Granted</value>
+  </data>
+  <data name="EnumWarehouseApproved" xml:space="preserve">
+    <value>Warehouse Approval Granted</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -156,8 +174,32 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductNameLabel" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
   <data name="ProductReceiptTransactionsContextAdd" xml:space="preserve">
     <value>Add</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextApproveIncomingQuantity" xml:space="preserve">
+    <value>Approve Incoming Quantity</value>
   </data>
   <data name="ProductReceiptTransactionsContextChange" xml:space="preserve">
     <value>Change</value>
@@ -168,11 +210,71 @@
   <data name="ProductReceiptTransactionsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ProductReceiptTransactionStateEnum" xml:space="preserve">
+    <value>STATUS</value>
+  </data>
+  <data name="PurchaseOrderDate" xml:space="preserve">
+    <value>ORDER DATE</value>
+  </data>
+  <data name="PurchaseOrderFicheNo" xml:space="preserve">
+    <value>ORDER NO</value>
+  </data>
+  <data name="PurchaseOrderFicheNoLabel" xml:space="preserve">
+    <value>Order No:</value>
+  </data>
+  <data name="PurchaseOrderQuantity" xml:space="preserve">
+    <value>ORDER QUANTITY</value>
+  </data>
+  <data name="PurchaseOrderQuantityLabel" xml:space="preserve">
+    <value>Order Quantity:</value>
+  </data>
+  <data name="PurchaseOrdersModalCurrentAccountCardCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="PurchaseOrdersModalCurrentAccountCardName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="PurchaseOrdersModalDate_" xml:space="preserve">
+    <value>ORDER DATE</value>
+  </data>
+  <data name="PurchaseOrdersModalFicheNo" xml:space="preserve">
+    <value>ORDER FICHE NO</value>
+  </data>
+  <data name="PurchaseOrdersModalTitle" xml:space="preserve">
+    <value>Purchase Orders</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SupplierProductCode" xml:space="preserve">
+    <value>SUPPLIER PRODUCT CODE</value>
+  </data>
+  <data name="SupplierProductCodeLabel" xml:space="preserve">
+    <value>Supplier Product Code:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Product Receipt Transactions</value>
+  </data>
+  <data name="UIMessageApproveIncomingMessage" xml:space="preserve">
+    <value>Do you want to confirm the incoming product quantity?</value>
+  </data>
+  <data name="UIMessageApproveIncomingTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Stock Management &gt;Transactions </value>
+  </data>
+  <data name="UIWarningPurchaseOrderMessage" xml:space="preserve">
+    <value>Product cannot be selected without selecting an order.</value>
+  </data>
+  <data name="UIWarningPurchaseOrderTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningStockMessage" xml:space="preserve">
+    <value>Order lines that are in stock cannot be changed.</value>
+  </data>
+  <data name="UIWarningStockTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="ValidatorCurrentAccountCardID" xml:space="preserve">
     <value>Please select a current account card.</value>
@@ -182,5 +284,29 @@
   </data>
   <data name="ValidatorPurchaseOrderID" xml:space="preserve">
     <value>Please select a order.</value>
+  </data>
+  <data name="WarehouseReceiptQuantity" xml:space="preserve">
+    <value>WAREHOUSE RECEIPT QUANTITY</value>
+  </data>
+  <data name="WarehouseReceiptQuantityLabel" xml:space="preserve">
+    <value>Warehouse Receipt Quantity:</value>
+  </data>
+  <data name="WaybillDate" xml:space="preserve">
+    <value>WAYBILL DATE</value>
+  </data>
+  <data name="WaybillDateLabel" xml:space="preserve">
+    <value>Waybill Date:</value>
+  </data>
+  <data name="WaybillNo" xml:space="preserve">
+    <value>WAYBILL NO</value>
+  </data>
+  <data name="WaybillNoLabel" xml:space="preserve">
+    <value>Waybill No:</value>
+  </data>
+  <data name="WaybillQuantity" xml:space="preserve">
+    <value>WAYBILL QUANTITY</value>
+  </data>
+  <data name="WaybillQuantityLabel" xml:space="preserve">
+    <value>Waybill Quantity:</value>
   </data>
 </root>

@@ -120,6 +120,12 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="CurrentAccountCardName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="CurrentAccountCardNameLabel" xml:space="preserve">
+    <value>Cari Hesap Ünvanı:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -132,8 +138,20 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Stok Giriş Hareketleri</value>
+  </data>
+  <data name="EnumAwaitingQualityControlApproval" xml:space="preserve">
+    <value>Kalite Kontrol Onayı Bekliyor</value>
+  </data>
+  <data name="EnumQualityControlApproved" xml:space="preserve">
+    <value>Kalite Kontrol Onayı Verildi</value>
+  </data>
+  <data name="EnumWarehouseApproved" xml:space="preserve">
+    <value>Depo Onayı Verildi</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
@@ -156,8 +174,32 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductNameLabel" xml:space="preserve">
+    <value>Stok Açıklaması:</value>
+  </data>
   <data name="ProductReceiptTransactionsContextAdd" xml:space="preserve">
     <value>Ekle</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextApproveIncomingQuantity" xml:space="preserve">
+    <value>Gelen Miktarı Onayla</value>
   </data>
   <data name="ProductReceiptTransactionsContextChange" xml:space="preserve">
     <value>Değiştir</value>
@@ -168,11 +210,71 @@
   <data name="ProductReceiptTransactionsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="ProductReceiptTransactionStateEnum" xml:space="preserve">
+    <value>DURUM</value>
+  </data>
+  <data name="PurchaseOrderDate" xml:space="preserve">
+    <value>SİPARİŞ TARİHİ</value>
+  </data>
+  <data name="PurchaseOrderFicheNo" xml:space="preserve">
+    <value>SİPARİŞ NO</value>
+  </data>
+  <data name="PurchaseOrderFicheNoLabel" xml:space="preserve">
+    <value>Sipariş No:</value>
+  </data>
+  <data name="PurchaseOrderQuantity" xml:space="preserve">
+    <value>SİPARİŞ MİKTARI</value>
+  </data>
+  <data name="PurchaseOrderQuantityLabel" xml:space="preserve">
+    <value>Sipariş Miktarı:</value>
+  </data>
+  <data name="PurchaseOrdersModalCurrentAccountCardCode" xml:space="preserve">
+    <value>CARİ KOD</value>
+  </data>
+  <data name="PurchaseOrdersModalCurrentAccountCardName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="PurchaseOrdersModalDate_" xml:space="preserve">
+    <value>SİPARİŞ TARİHİ</value>
+  </data>
+  <data name="PurchaseOrdersModalFicheNo" xml:space="preserve">
+    <value>SİPARİŞ FİŞ NO</value>
+  </data>
+  <data name="PurchaseOrdersModalTitle" xml:space="preserve">
+    <value>Satın Alma Sipariş Kayıtları</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="SupplierProductCode" xml:space="preserve">
+    <value>TEDARİKÇİ STOK KODU</value>
+  </data>
+  <data name="SupplierProductCodeLabel" xml:space="preserve">
+    <value>Tedarikçi Stok Kodu:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Stok Giriş Hareketleri</value>
+  </data>
+  <data name="UIMessageApproveIncomingMessage" xml:space="preserve">
+    <value>Stok gelen miktarı onaylamak istiyor musunuz?</value>
+  </data>
+  <data name="UIMessageApproveIncomingTitle" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Stok Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="UIWarningPurchaseOrderMessage" xml:space="preserve">
+    <value>Sipariş seçmeden stok seçilemez.</value>
+  </data>
+  <data name="UIWarningPurchaseOrderTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningStockMessage" xml:space="preserve">
+    <value>Stoğa alınmış olan sipariş satırları değiştirilemez.</value>
+  </data>
+  <data name="UIWarningStockTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="ValidatorCurrentAccountCardID" xml:space="preserve">
     <value>Lütfen cari hesap seçin.</value>
@@ -182,5 +284,29 @@
   </data>
   <data name="ValidatorPurchaseOrderID" xml:space="preserve">
     <value>Lütfen sipariş seçin.</value>
+  </data>
+  <data name="WarehouseReceiptQuantity" xml:space="preserve">
+    <value>DEPO GİRİŞ MİKTARI</value>
+  </data>
+  <data name="WarehouseReceiptQuantityLabel" xml:space="preserve">
+    <value>Depo Giriş Miktarı:</value>
+  </data>
+  <data name="WaybillDate" xml:space="preserve">
+    <value>İRSALİYE TARİHİ</value>
+  </data>
+  <data name="WaybillDateLabel" xml:space="preserve">
+    <value>İrsaliye Tarihi:</value>
+  </data>
+  <data name="WaybillNo" xml:space="preserve">
+    <value>İRSALİYE NO</value>
+  </data>
+  <data name="WaybillNoLabel" xml:space="preserve">
+    <value>İrsaliye No:</value>
+  </data>
+  <data name="WaybillQuantity" xml:space="preserve">
+    <value>İRSALİYE MİKTARI</value>
+  </data>
+  <data name="WaybillQuantityLabel" xml:space="preserve">
+    <value>İrsaliye Miktarı:</value>
   </data>
 </root>

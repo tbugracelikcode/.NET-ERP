@@ -19,6 +19,10 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dto
         /// </summary>
         public DateTime PurchaseOrderDate { get; set; }
         /// <summary>
+        /// Miktar
+        /// </summary>
+        public decimal PurchaseOrderQuantity { get; set; }
+        /// <summary>
         /// Satın Alma Sipariş Satır ID
         /// </summary>
         public Guid? PurchaseOrderLineID { get; set; }
