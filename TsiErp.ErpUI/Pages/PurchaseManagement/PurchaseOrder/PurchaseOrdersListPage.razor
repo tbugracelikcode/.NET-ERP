@@ -106,6 +106,25 @@ else
                                         </Template>
                                     </GridColumn>
 
+
+                                    <GridColumn Field=@nameof(ListPurchaseOrdersDto.PriceApprovalState) HeaderText="@L["PriceApprovalStateEnum"]" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                var purchaseOrderPriceApprovalStateEnum = (context as ListPurchaseOrdersDto).PriceApprovalState;
+                                                string purchaseOrderPriceApprovalStateEnumStr = string.Empty;
+
+                                                switch (purchaseOrderPriceApprovalStateEnum)
+                                                {
+                                                    case PurchaseOrderPriceApprovalStateEnum.Beklemede: purchaseOrderPriceApprovalStateEnumStr = L["EnumPriceApprovalPending"]; break;
+
+                                                    case PurchaseOrderPriceApprovalStateEnum.Onaylandi: purchaseOrderPriceApprovalStateEnumStr = L["EnumPriceApprovalApproved"]; break;
+                                                    default: break;
+                                                }
+                                            }
+                                            @purchaseOrderPriceApprovalStateEnumStr
+                                        </Template>
+                                    </GridColumn>
+
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
