@@ -371,7 +371,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
                 if (DataSource.DataOpenStatus == true && DataSource.DataOpenStatus != null)
                 {
                     EditPageVisible = false;
-                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+
+                    string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
+
+                    MessagePopupInformationDescriptionBase = MessagePopupInformationDescriptionBase.Replace("{0}", LoginedUserService.UserName);
+
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], MessagePopupInformationDescriptionBase);
                     await InvokeAsync(StateHasChanged);
                 }
                 else
@@ -1115,6 +1120,30 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
             }
         }
         #endregion
+
+        public async void SupplierDoubleClickHandler(RecordDoubleClickEventArgs<Models.SupplierSelectionGrid> args)
+        {
+            var selectedSupplier = args.RowData;
+
+            if (selectedSupplier != null)
+            {
+                MRPLineDataSource.CurrencyID = selectedSupplier.CurrenyID;
+                MRPLineDataSource.CurrencyCode = selectedSupplier.CurrenyCode;
+                MRPLineDataSource.CurrentAccountCardID = selectedSupplier.CurrentAccountID;
+                MRPLineDataSource.CurrentAccountCardName = selectedSupplier.CurrentAccountName;
+                MRPLineDataSource.UnitPrice = selectedSupplier.UnitPrice;
+                MRPLineDataSource.SupplyDate = MRPLineDataSource.SupplyDate.AddDays(selectedSupplier.SupplyDate);
+                HideSupplierSelectionPopup();
+                await _MRPLineGrid.Refresh();
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        public void HideSupplierSelectionPopup()
+        {
+            SupplierSelectionList.Clear();
+            SupplierSelectionPopup = false;
+        }
 
         #endregion
 

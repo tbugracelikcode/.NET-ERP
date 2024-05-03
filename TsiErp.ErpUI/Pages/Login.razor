@@ -152,14 +152,15 @@
 
     private async void OnLoginButtonClicked()
     {
-         var loginnedUser = (await UsersAppService.GetAsyncByUserNameAndPassword(User, Password)).Data;
+        var loginnedUser = (await UsersAppService.GetAsyncByUserNameAndPassword(User, Password)).Data;
 
         // if (loginnedUser != null)
         // {
 
-            //LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
+        //LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
 
-             LoginedUserService.UserId = loginnedUser.Id;
+        LoginedUserService.UserId = loginnedUser.Id;
+        LoginedUserService.UserName = loginnedUser.UserName;
 
             LoginedUserService.VersionTableId = Guid.Parse("8A5F698D-D632-4314-A0C4-02E496FEB6CD");
 
