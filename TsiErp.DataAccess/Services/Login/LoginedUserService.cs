@@ -8,5 +8,12 @@ namespace TsiErp.DataAccess.Services.Login
 
         public static string UserName { get; set; }
         public static Guid VersionTableId { get; set; }
+
+        public static bool StockManagementShowAmountsChildMenu { get; set; } = true;
+        public static bool ProductionManagementShowAmountsChildMenu { get; set; } = true;
+        public static bool PurchaseManagementShowAmountsChildMenu { get; set; } = true;
+        public static bool SalesManagementShowAmountsChildMenu { get; set; } = true;
+        public static bool ShipmentShowAmountsChildMenu { get; set; } = true;
+        public static bool MachWorkforceManagementShowAmountsChildMenu { get; set; } = true;
     }
 }
