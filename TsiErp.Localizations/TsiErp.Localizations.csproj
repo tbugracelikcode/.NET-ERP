@@ -366,6 +366,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PurchaseManagementParametersResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\PurchaseOrdersAwaitingApprovals\Page\PurchaseOrdersAwaitingApprovalsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PurchaseOrdersAwaitingApprovalsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\PurchaseOrders\Page\PurchaseOrdersResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -931,6 +936,10 @@
     <EmbeddedResource Update="Resources\PurchaseManagementParameter\Page\PurchaseManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PurchaseManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchaseOrdersAwaitingApprovals\Page\PurchaseOrdersAwaitingApprovalsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PurchaseOrdersAwaitingApprovalsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\PurchaseOrders\Page\PurchaseOrdersResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
