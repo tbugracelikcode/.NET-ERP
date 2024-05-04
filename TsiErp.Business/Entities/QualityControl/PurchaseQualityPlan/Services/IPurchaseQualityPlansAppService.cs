@@ -7,5 +7,7 @@ namespace TsiErp.Business.Entities.QualityControl.PurchaseQualityPlan.Services
     public interface IPurchaseQualityPlansAppService : ICrudAppService<SelectPurchaseQualityPlansDto, ListPurchaseQualityPlansDto, CreatePurchaseQualityPlansDto, UpdatePurchaseQualityPlansDto, ListPurchaseQualityPlansParameterDto>
     {
         Task<IResult> DeleteLineAsync(Guid id);
+
+        Task<IDataResult<SelectPurchaseQualityPlansDto>> GetbyCurrentAccountandProductAsync(Guid CurrentAccountCardID, Guid ProductID);
     }
 }

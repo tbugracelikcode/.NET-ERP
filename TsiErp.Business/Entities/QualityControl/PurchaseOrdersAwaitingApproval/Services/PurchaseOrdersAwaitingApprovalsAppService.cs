@@ -8,6 +8,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.QualityControl.PurchaseQualityPlan.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
@@ -28,14 +29,16 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly IPurchaseQualityPlansAppService _PurchaseQualityPlansAppService;
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
 
-        public PurchaseOrdersAwaitingApprovalsAppService(IStringLocalizer<PurchaseOrdersAwaitingApprovalsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public PurchaseOrdersAwaitingApprovalsAppService(IStringLocalizer<PurchaseOrdersAwaitingApprovalsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, IPurchaseQualityPlansAppService purchaseQualityPlansAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _PurchaseQualityPlansAppService = purchaseQualityPlansAppService;
         }
 
         [CacheRemoveAspect("Get")]
@@ -43,6 +46,41 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
         {
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+
+            #region Satın Alma Kalite Planı Satır Get İşlemi
+
+            var qualityPlan = (await _PurchaseQualityPlansAppService.GetbyCurrentAccountandProductAsync(input.CurrentAccountCardID.GetValueOrDefault(), input.ProductID.GetValueOrDefault())).Data;
+
+            if (qualityPlan != null && qualityPlan.Id != Guid.Empty)
+            {
+                var qualityPlanLines = qualityPlan.SelectPurchaseQualityPlanLines;
+
+                if (qualityPlanLines != null && qualityPlanLines.Count() > 0)
+                {
+                    foreach (var line in qualityPlanLines)
+                    {
+                        SelectPurchaseOrdersAwaitingApprovalLinesDto approvalLineModel = new SelectPurchaseOrdersAwaitingApprovalLinesDto
+                        {
+                            BottomTolerance = line.BottomTolerance,
+                            ControlFrequency = line.ControlFrequency,
+                            ControlTypesID = line.ControlTypesID,
+                            ControlTypesName = line.ControlTypesName,
+                            IdealMeasure = line.IdealMeasure,
+                            UpperTolerance = line.UpperTolerance,
+                            MeasureValue = 0,
+                            LineNr = input.SelectPurchaseOrdersAwaitingApprovalLines.Count + 1,
+                        };
+
+                        input.SelectPurchaseOrdersAwaitingApprovalLines.Add(approvalLineModel);
+                    }
+                }
+                else
+                {
+                    input.SelectPurchaseOrdersAwaitingApprovalLines = new List<SelectPurchaseOrdersAwaitingApprovalLinesDto>();
+                }
+            }
+
+            #endregion
 
             var query = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Insert(new CreatePurchaseOrdersAwaitingApprovalsDto
             {

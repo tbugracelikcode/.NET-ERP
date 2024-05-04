@@ -9,10 +9,12 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services;
 using TsiErp.Business.Entities.StockManagement.ProductReceiptTransaction.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
+using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction;
 using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dtos;
@@ -26,10 +28,12 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly IPurchaseOrdersAwaitingApprovalsAppService _PurchaseOrdersAwaitingApprovalsAppService;
 
-        public ProductReceiptTransactionsAppService(IStringLocalizer<ProductReceiptTransactionsResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public ProductReceiptTransactionsAppService(IStringLocalizer<ProductReceiptTransactionsResource> l, IGetSQLDateAppService getSQLDateAppService, IPurchaseOrdersAwaitingApprovalsAppService purchaseOrdersAwaitingApprovalsAppService) : base(l)
         {
             _GetSQLDateAppService = getSQLDateAppService;
+            _PurchaseOrdersAwaitingApprovalsAppService = purchaseOrdersAwaitingApprovalsAppService;
         }
 
 
@@ -69,6 +73,22 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
             var ProductReceiptTransactions = queryFactory.Insert<SelectProductReceiptTransactionsDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductReceiptTransactions, LogType.Insert, addedEntityId);
+
+            #region Onay Bekleyen Satın Alma Siparişleri Create İşlemi
+
+            CreatePurchaseOrdersAwaitingApprovalsDto createOrderApprovalModel = new CreatePurchaseOrdersAwaitingApprovalsDto
+            {
+                PurchaseOrdersAwaitingApprovalStateEnum = 1,
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                PurchaseOrderLineID = input.PurchaseOrderLineID.GetValueOrDefault(),
+                PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
+                ProductID = input.ProductID.GetValueOrDefault(),
+                ProductReceiptTransactionID = addedEntityId,
+            };
+
+            await _PurchaseOrdersAwaitingApprovalsAppService.CreateAsync(createOrderApprovalModel);
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectProductReceiptTransactionsDto>(ProductReceiptTransactions);
