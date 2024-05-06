@@ -162,7 +162,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockAddress
                 if (DataSource.DataOpenStatus == true && DataSource.DataOpenStatus != null)
                 {
                     EditPageVisible = false;
-                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+
+                    string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
+
+                    MessagePopupInformationDescriptionBase = MessagePopupInformationDescriptionBase.Replace("{0}", LoginedUserService.UserName);
+
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], MessagePopupInformationDescriptionBase);
                     await InvokeAsync(StateHasChanged);
                 }
                 else

@@ -261,6 +261,12 @@
   <data name="EnumInPartialCompleted" xml:space="preserve">
     <value>Kısmi Tamamlandı</value>
   </data>
+  <data name="EnumPriceApprovalApproved" xml:space="preserve">
+    <value>Onaylandı</value>
+  </data>
+  <data name="EnumPriceApprovalPending" xml:space="preserve">
+    <value>Beklemede</value>
+  </data>
   <data name="EnumQualityControlApproval" xml:space="preserve">
     <value>Kalite Kontrol Onayı Verildi</value>
   </data>
@@ -366,6 +372,9 @@
   <data name="PaymentPlanNameLabel" xml:space="preserve">
     <value>Ödeme Planı:</value>
   </data>
+  <data name="PriceApprovalStateEnum" xml:space="preserve">
+    <value>FATURA ONAY DURUMU</value>
+  </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Stok Kodu:</value>
   </data>
@@ -420,6 +429,9 @@
   <data name="PurchaseOrderContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="PurchaseOrderContextPriceApproval" xml:space="preserve">
+    <value>Fiyat Onayı Ver</value>
+  </data>
   <data name="PurchaseOrderContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
@@ -449,6 +461,9 @@
   </data>
   <data name="PurchaseOrderState" xml:space="preserve">
     <value>SİPARİŞ DURUMU</value>
+  </data>
+  <data name="PurchaseOrderWayBillStatusEnum" xml:space="preserve">
+    <value>İRSALİYE ONAY DURUMU</value>
   </data>
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Miktar:</value>
@@ -527,6 +542,9 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Satın Alma Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="UIPriceStatusApprovalMessage" xml:space="preserve">
+    <value>Seçtiğiniz siparişin fiyat onayı verilecektir.</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>Birim seti seçilmeden satır kaydetme işlemi yapılamaz.</value>

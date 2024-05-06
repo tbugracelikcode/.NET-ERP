@@ -330,7 +330,12 @@ namespace TsiErp.ErpUI.Pages.Base
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {
                     EditPageVisible = false;
-                    await ModalManager.MessagePopupAsync(loc["MessagePopupInformationTitleBase"], loc["MessagePopupInformationDescriptionBase"]);
+
+                    string MessagePopupInformationDescriptionBase = loc["MessagePopupInformationDescriptionBase"];
+
+                    MessagePopupInformationDescriptionBase = MessagePopupInformationDescriptionBase.Replace("{0}", LoginedUserService.UserName);
+
+                    await ModalManager.MessagePopupAsync(loc["MessagePopupInformationTitleBase"], MessagePopupInformationDescriptionBase);
                     await InvokeAsync(StateHasChanged);
                 }
                 else

@@ -670,7 +670,9 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     TotalVatAmount = DataSource.TotalVatAmount,
                     TotalVatExcludedAmount = DataSource.TotalVatExcludedAmount,
                     WarehouseID = DataSource.WarehouseID,
-                    ProductionOrderID = DataSource.ProductionOrderID
+                    ProductionOrderID = DataSource.ProductionOrderID,
+                    PurchaseOrderWayBillStatusEnum = (int)Entities.Enums.PurchaseOrderWayBillStatusEnum.Beklemede,
+                    PriceApprovalState = (int)Entities.Enums.PurchaseOrderPriceApprovalStateEnum.Beklemede
                 };
 
                 List<SelectPurchaseOrderLinesDto> orderLineList = new List<SelectPurchaseOrderLinesDto>();
@@ -696,7 +698,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                         UnitSetID = item.UnitSetID,
                         VATamount = item.VATamount,
                         VATrate = item.VATrate,
-                        LinkedPurchaseRequestID = createPurchaseOrder.LinkedPurchaseRequestID
+                        LinkedPurchaseRequestID = createPurchaseOrder.LinkedPurchaseRequestID,
+                        PurchaseOrderLineWayBillStatusEnum = Entities.Enums.PurchaseOrderLineWayBillStatusEnum.Beklemede
                     };
                     orderLineList.Add(selectPurchaseOrderLine);
                     item.PurchaseRequestLineState = Entities.Enums.PurchaseRequestLineStateEnum.SatinAlma;
@@ -869,7 +872,12 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 if (DataSource.DataOpenStatus == true && DataSource.DataOpenStatus != null)
                 {
                     EditPageVisible = false;
-                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+
+                    string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
+
+                    MessagePopupInformationDescriptionBase = MessagePopupInformationDescriptionBase.Replace("{0}", LoginedUserService.UserName);
+
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], MessagePopupInformationDescriptionBase);
                     await InvokeAsync(StateHasChanged);
                 }
                 else

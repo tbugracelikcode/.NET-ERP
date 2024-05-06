@@ -1,4 +1,5 @@
 ﻿@page "/order-acceptance-records"
+@using TsiErp.ErpUI.Models;
 @layout MainLayout
 
 
@@ -245,9 +246,9 @@ else
                                     <GridColumn Field=@nameof(VirtualLineModel.OrderAmount) Type="ColumnType.Number" HeaderText="@L["LineGridOrderAmount"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.MinOrderAmount) Type="ColumnType.Number" HeaderText="@L["LineGridMinOrderAmount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.DefinedUnitPrice) Type="ColumnType.Number" HeaderText="@L["LineGridDefinedUnitPrice"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.OrderUnitPrice) Type="ColumnType.Number" HeaderText="@L["LineGridOrderUnitPrice"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.LineAmount) Type="ColumnType.Number" HeaderText="@L["LineGridLineAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(VirtualLineModel.DefinedUnitPrice) Type="ColumnType.Number" HeaderText="@L["LineGridDefinedUnitPrice"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu></GridColumn>
+                                    <GridColumn Field=@nameof(VirtualLineModel.OrderUnitPrice) Type="ColumnType.Number" HeaderText="@L["LineGridOrderUnitPrice"]" TextAlign="TextAlign.Center" Width="240" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu></GridColumn>
+                                    <GridColumn Field=@nameof(VirtualLineModel.LineAmount) Type="ColumnType.Number" HeaderText="@L["LineGridLineAmount"]" TextAlign="TextAlign.Center" Width="120" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu></GridColumn>
 
                                     <GridColumn Field=@nameof(VirtualLineModel.Description_) HeaderText="@L["LineGridDescription_"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                 </GridColumns>

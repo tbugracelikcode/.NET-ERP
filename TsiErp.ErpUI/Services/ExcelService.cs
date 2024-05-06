@@ -13,7 +13,7 @@ namespace TsiErp.ErpUI.Services
             _hostEnvironment = environment;
         }
 
-       
+
 
         public string GetPath(string filename)
         {
@@ -24,7 +24,7 @@ namespace TsiErp.ErpUI.Services
 
         public string ImportGetPath(string filename)
         {
-            string path = Path.Combine(_hostEnvironment.WebRootPath, filename);
+            string path = Path.Combine(_hostEnvironment.WebRootPath, "TempFiles", filename);
             return path;
         }
 
