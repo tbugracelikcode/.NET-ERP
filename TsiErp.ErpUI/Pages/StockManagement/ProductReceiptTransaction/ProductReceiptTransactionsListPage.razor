@@ -70,9 +70,9 @@ else
                                     <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.SupplierProductCode) HeaderText="@L["SupplierProductCode"]" TextAlign="TextAlign.Center" Width="260"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                         <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.ProductName) HeaderText="@L["ProductName"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.PurchaseOrderQuantity) Type="ColumnType.Number" HeaderText="@L["PurchaseOrderQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.WaybillQuantity) Type="ColumnType.Number" HeaderText="@L["WaybillQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.WarehouseReceiptQuantity) Type="ColumnType.Number" HeaderText="@L["WarehouseReceiptQuantity"]" TextAlign="TextAlign.Center" Width="260"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.PurchaseOrderQuantity) Type="ColumnType.Number" HeaderText="@L["PurchaseOrderQuantity"]" TextAlign="TextAlign.Center" Width="220" Format="N2"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.WaybillQuantity) Type="ColumnType.Number" HeaderText="@L["WaybillQuantity"]" TextAlign="TextAlign.Center" Width="220" Format="N2"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.WarehouseReceiptQuantity) Type="ColumnType.Number" HeaderText="@L["WarehouseReceiptQuantity"]" TextAlign="TextAlign.Center" Width="260" Format="N2"></GridColumn>
                                 </GridColumns>
 
                             </SfGrid>
