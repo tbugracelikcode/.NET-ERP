@@ -27,6 +27,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
         DxTreeView treeview;
 
+        public string[] CheckedNodes = new string[] {};
+
         public class UserMenuPermission
         {
             public string MenuName { get; set; }
@@ -232,7 +234,20 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
                     PermissionModalMenusList.AddRange(parentList);
 
-                    var subParentList = userPermissionList.Where(t => !t.MenuName.Contains("Context") && !t.MenuName.Contains("Parent")).Select(t => new UserMenuPermission
+                    var subAmountsParentList = userPermissionList.Where(t => t.MenuName.Contains("AmountsChildMenu")).Select(t => new UserMenuPermission
+                    {
+                        isPermitted = t.IsUserPermitted,
+                        PermissionID = t.Id,
+                        MenuID = t.MenuId.ToString(),
+                        MenuName = L[t.MenuName],
+                        Expanded = false,
+                        HasChild = false,
+                        ParentID = t.ParentID.ToString()
+                    }).ToList();
+
+                    PermissionModalMenusList.AddRange(subAmountsParentList);
+
+                    var subParentList = userPermissionList.Where(t => !t.MenuName.Contains("Context") && !t.MenuName.Contains("Parent") && !t.MenuName.Contains("AmountsChildMenu")).Select(t => new UserMenuPermission
                     {
                         isPermitted = t.IsUserPermitted,
                         PermissionID = t.Id,
@@ -257,6 +272,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                     }).ToList();
 
                     PermissionModalMenusList.AddRange(contextList);
+
+                    CheckedNodes = PermissionModalMenusList.Where(t=>t.isPermitted == true).Select(t=>t.MenuID).ToArray();
 
 
                     //foreach (var permission in userPermissionList)
