@@ -231,45 +231,45 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                   
-                        <DxGridLayoutItem Row="7" Column="1">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>@L["GrossAmountLabel"] </strong></label>
-                                <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.GrossAmount" Enabled=false></SfNumericTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
+                    @{
+                        if (LoginedUserService.SalesManagementShowAmountsChildMenu)
+                        {
+                            <DxGridLayoutItem Row="7" Column="1">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["GrossAmountLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.GrossAmount" Enabled=false></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                        <DxGridLayoutItem Row="7" Column="3">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>@L["TotalDiscountAmountLabel"] </strong></label>
-                                <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.TotalDiscountAmount" Enabled=false></SfNumericTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="7" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["TotalDiscountAmountLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.TotalDiscountAmount" Enabled=false></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                        <DxGridLayoutItem Row="7" Column="5">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>@L["TotalVatExcludedAmountLabel"] </strong></label>
-                                <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.TotalVatExcludedAmount" Enabled=false></SfNumericTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="7" Column="5">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["TotalVatExcludedAmountLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.TotalVatExcludedAmount" Enabled=false></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                        <DxGridLayoutItem Row="8" Column="1">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>@L["TotalVatAmountLabel"] </strong></label>
-                                <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.TotalVatAmount" Enabled=false></SfNumericTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="8" Column="1">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["TotalVatAmountLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.TotalVatAmount" Enabled=false></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                        <DxGridLayoutItem Row="8" Column="3">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>@L["NetAmountLabel"] </strong></label>
-                                <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.NetAmount" Enabled=false></SfNumericTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
-                    
-
-
-
+                            <DxGridLayoutItem Row="8" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["NetAmountLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.NetAmount" Enabled=false></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
+                        }
+                    }
                 </Items>
             </DxGridLayout>
         </BodyTemplate>
@@ -343,65 +343,70 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
+                    @{
+                        if (LoginedUserService.SalesManagementShowAmountsChildMenu)
+                        {
 
-                    <DxGridLayoutItem Row="0" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["UnitPriceLineLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.UnitPrice" OnChange="LineCalculate">
+                            <DxGridLayoutItem Row="0" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["UnitPriceLineLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.UnitPrice" OnChange="LineCalculate">
 
 
-                            </SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                                    </SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["QuantityLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="decimal" @bind-Value="LineDataSource.Quantity" OnChange="LineCalculate"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="1" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["QuantityLineLabel"] </strong></label>
+                                    <SfNumericTextBox TValue="decimal" @bind-Value="LineDataSource.Quantity" OnChange="LineCalculate"></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["VATrateLineLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" @bind-Value="LineDataSource.VATrate" OnChange="LineCalculate"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="2" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["VATrateLineLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" @bind-Value="LineDataSource.VATrate" OnChange="LineCalculate"></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["VATamountLineLabel"]</strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.VATamount" Enabled=false></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="3" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["VATamountLineLabel"]</strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.VATamount" Enabled=false></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="4" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["DiscountRateLineLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountRate" Enabled=false></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="4" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["DiscountRateLineLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountRate" Enabled=false></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="5" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["DiscountAmountLineLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountAmount" OnChange="LineCalculate"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="5" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["DiscountAmountLineLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountAmount" OnChange="LineCalculate"></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="6" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["LineAmountLineLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineAmount" Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="6" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["LineAmountLineLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineAmount" Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="7" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["LineTotalAmountLineLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineTotalAmount" Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="7" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["LineTotalAmountLineLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineTotalAmount" Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
+                        }
+                    }
 
                 </Items>
             </DxGridLayout>

@@ -5,7 +5,7 @@
 
 @inherits BaseListPage<SelectPurchaseOrdersDto, ListPurchaseOrdersDto, CreatePurchaseOrdersDto, UpdatePurchaseOrdersDto, ListPurchaseOrdersParameterDto>
 
-@inject IStringLocalizer<PurchaseOrdersResource> L 
+@inject IStringLocalizer<PurchaseOrdersResource> L
 @inject IPurchaseOrdersAppService PurchaseOrdersAppService
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
 @inject IBranchesAppService BranchesAppService
@@ -49,7 +49,7 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="_grid"   AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu"Toolbar=@GridToolbarItems>
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListPurchaseOrdersDto"></GridEvents>
@@ -75,13 +75,13 @@ else
                                                 var purchaseOrderState = (context as ListPurchaseOrdersDto).PurchaseOrderState;
                                                 string purchaseOrderStateStr = string.Empty;
 
-                                                switch(purchaseOrderState)
+                                                switch (purchaseOrderState)
                                                 {
-                                                    case PurchaseOrderStateEnum.Iptal: purchaseOrderStateStr = L["EnumCancel"]; break; 
-                                                    case PurchaseOrderStateEnum.Beklemede: purchaseOrderStateStr = L["EnumWaiting"]; break; 
-                                                    case PurchaseOrderStateEnum.Onaylandı: purchaseOrderStateStr = L["EnumApproved"] ;break; 
-                                                    case PurchaseOrderStateEnum.Tamamlandi: purchaseOrderStateStr = L["EnumCompleted"]; break; 
-                                                    case PurchaseOrderStateEnum.KismiTamamlandi: purchaseOrderStateStr = L["EnumInPartialCompleted"]; break; 
+                                                    case PurchaseOrderStateEnum.Iptal: purchaseOrderStateStr = L["EnumCancel"]; break;
+                                                    case PurchaseOrderStateEnum.Beklemede: purchaseOrderStateStr = L["EnumWaiting"]; break;
+                                                    case PurchaseOrderStateEnum.Onaylandı: purchaseOrderStateStr = L["EnumApproved"]; break;
+                                                    case PurchaseOrderStateEnum.Tamamlandi: purchaseOrderStateStr = L["EnumCompleted"]; break;
+                                                    case PurchaseOrderStateEnum.KismiTamamlandi: purchaseOrderStateStr = L["EnumInPartialCompleted"]; break;
                                                     default: break;
                                                 }
                                             }
@@ -94,11 +94,11 @@ else
                                                 var purchaseOrderWayBillStatusEnum = (context as ListPurchaseOrdersDto).PurchaseOrderWayBillStatusEnum;
                                                 string purchaseOrderWayBillStatusEnumStr = string.Empty;
 
-                                                switch(purchaseOrderWayBillStatusEnum)
+                                                switch (purchaseOrderWayBillStatusEnum)
                                                 {
-                                                    case PurchaseOrderWayBillStatusEnum.Beklemede: purchaseOrderWayBillStatusEnumStr = L["EnumWayBillPending"]; break; 
-                                                    case PurchaseOrderWayBillStatusEnum.KismiOnaylandi: purchaseOrderWayBillStatusEnumStr = L["EnumWayBillPartialApproved"]; break; 
-                                                    case PurchaseOrderWayBillStatusEnum.Onaylandi: purchaseOrderWayBillStatusEnumStr = L["EnumWayBillApproved"] ;break; 
+                                                    case PurchaseOrderWayBillStatusEnum.Beklemede: purchaseOrderWayBillStatusEnumStr = L["EnumWayBillPending"]; break;
+                                                    case PurchaseOrderWayBillStatusEnum.KismiOnaylandi: purchaseOrderWayBillStatusEnumStr = L["EnumWayBillPartialApproved"]; break;
+                                                    case PurchaseOrderWayBillStatusEnum.Onaylandi: purchaseOrderWayBillStatusEnumStr = L["EnumWayBillApproved"]; break;
                                                     default: break;
                                                 }
                                             }
@@ -138,17 +138,17 @@ else
 
 
     <DxPopup @bind-Visible="base.EditPageVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EditModalTitle"]"
-         Width="53%"
-         Height="87%"
-         MinWidth="1000px"
-         MinHeight="980px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="53%"
+             Height="87%"
+             MinWidth="1000px"
+             MinHeight="980px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -257,7 +257,7 @@ else
                     <DxGridLayoutItem Row="3" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ExchangeRateLabel"]</strong></label>
-                            <SfNumericTextBox CssClass="TSITxtBox" Min="0" TValue="decimal" @bind-Value="DataSource.ExchangeRate" ></SfNumericTextBox>
+                            <SfNumericTextBox CssClass="TSITxtBox" Min="0" TValue="decimal" @bind-Value="DataSource.ExchangeRate"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -284,19 +284,19 @@ else
                                     <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.ProductionOrderFicheNo) HeaderText="@L["LineGridProdOrderFiche"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.UnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridUnitPrice"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridLineAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.UnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridUnitPrice"]" TextAlign="TextAlign.Center" Width="120" Visible=@LoginedUserService.PurchaseManagementShowAmountsChildMenu></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridLineAmount"]" TextAlign="TextAlign.Center" Width="120" Visible=@LoginedUserService.PurchaseManagementShowAmountsChildMenu></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.PurchaseOrderLineWayBillStatusEnum) HeaderText="@L["LineGridPurchaseOrderLineWayBillStatusEnum"]" TextAlign="TextAlign.Center" Width="120" Context="lineContext">
                                         <Template>
                                             @{
                                                 var purchaseOrderLineWayBillStatusEnum = (lineContext as SelectPurchaseOrderLinesDto).PurchaseOrderLineWayBillStatusEnum;
                                                 string purchaseOrderLineWayBillStatusEnumStr = string.Empty;
 
-                                                switch(purchaseOrderLineWayBillStatusEnum)
+                                                switch (purchaseOrderLineWayBillStatusEnum)
                                                 {
-                                                    case PurchaseOrderLineWayBillStatusEnum.Beklemede: purchaseOrderLineWayBillStatusEnumStr = L["EnumWayBillPending"]; break; 
-                                                    case PurchaseOrderLineWayBillStatusEnum.KismiOnaylandi: purchaseOrderLineWayBillStatusEnumStr = L["EnumWayBillPartialApproved"]; break; 
-                                                    case PurchaseOrderLineWayBillStatusEnum.Onaylandi: purchaseOrderLineWayBillStatusEnumStr = L["EnumWayBillApproved"] ;break; 
+                                                    case PurchaseOrderLineWayBillStatusEnum.Beklemede: purchaseOrderLineWayBillStatusEnumStr = L["EnumWayBillPending"]; break;
+                                                    case PurchaseOrderLineWayBillStatusEnum.KismiOnaylandi: purchaseOrderLineWayBillStatusEnumStr = L["EnumWayBillPartialApproved"]; break;
+                                                    case PurchaseOrderLineWayBillStatusEnum.Onaylandi: purchaseOrderLineWayBillStatusEnumStr = L["EnumWayBillApproved"]; break;
                                                     default: break;
                                                 }
                                             }
@@ -308,39 +308,43 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="8" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["GrossAmountLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.GrossAmount" Enabled=false></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="8" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["TotalDiscountAmountLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.TotalDiscountAmount" Enabled=false></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                    @{
+                        if (LoginedUserService.PurchaseManagementShowAmountsChildMenu)
+                        {
+                            <DxGridLayoutItem Row="8" Column="1">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["GrossAmountLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.GrossAmount" Enabled=false></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="8" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["TotalDiscountAmountLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.TotalDiscountAmount" Enabled=false></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="8" Column="5">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["TotalVatExcludedAmountLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox"  @bind-Value="DataSource.TotalVatExcludedAmount" Enabled=false></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="9" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["TotalVatAmountLabel"]</strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.TotalVatAmount" Enabled=false></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="8" Column="5">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["TotalVatExcludedAmountLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.TotalVatExcludedAmount" Enabled=false></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="9" Column="1">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["TotalVatAmountLabel"]</strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.TotalVatAmount" Enabled=false></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="9" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["NetAmountLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.NetAmount" Enabled=false></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
+                            <DxGridLayoutItem Row="9" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["NetAmountLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.NetAmount" Enabled=false></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
+                        }
+                    }
 
 
                 </Items>
@@ -354,15 +358,15 @@ else
 
 
     <DxPopup @bind-Visible="LineCrudPopup"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EditLineModalTitle"]"
-         Width="40%"
-         Height="65%"
-         MinWidth="760px"
-         MinHeight="700px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditLineModalTitle"]"
+             Width="40%"
+             Height="65%"
+             MinWidth="760px"
+             MinHeight="700px"
+             HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -412,7 +416,7 @@ else
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["LineDescriptionLineLabel"]</strong></label><br />
-                            <SfTextBox @bind-Value="LineDataSource.LineDescription"  Multiline=true></SfTextBox>
+                            <SfTextBox @bind-Value="LineDataSource.LineDescription" Multiline=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -423,84 +427,88 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="6" Column="1">
+                    <DxGridLayoutItem Row="6" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong> @L["SupplyDateLineLabel"] </strong></label>
                             <SfDatePicker @bind-Value="LineDataSource.SupplyDate"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
+                    @{
+                        if (LoginedUserService.PurchaseManagementShowAmountsChildMenu)
+                        {
+                            <DxGridLayoutItem Row="0" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["UnitPriceLineLabel"]</strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.UnitPrice" OnChange="LineCalculate">
 
-                    <DxGridLayoutItem Row="0" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["UnitPriceLineLabel"]</strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.UnitPrice" OnChange="LineCalculate">
 
+                                    </SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                            </SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="1" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["QuantityLineLabel"] </strong></label>
+                                    <SfNumericTextBox TValue="decimal" @bind-Value="LineDataSource.Quantity" OnChange="LineCalculate"></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["QuantityLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="decimal" @bind-Value="LineDataSource.Quantity" OnChange="LineCalculate"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="2" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong> @L["VATrateLineLabel"]</strong></label>
+                                    <SfNumericTextBox Min="0" @bind-Value="LineDataSource.VATrate" OnChange="LineCalculate"></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong> @L["VATrateLineLabel"]</strong></label>
-                            <SfNumericTextBox Min="0" @bind-Value="LineDataSource.VATrate"  OnChange="LineCalculate"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="3" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["VATamountLineLabel"]</strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.VATamount" Enabled=false></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["VATamountLineLabel"]</strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.VATamount" Enabled=false></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="4" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["DiscountRateLineLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountRate" Enabled=false></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="4" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["DiscountRateLineLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountRate" Enabled=false></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="5" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["DiscountAmountLineLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountAmount" OnChange="LineCalculate"></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="5" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["DiscountAmountLineLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountAmount" OnChange="LineCalculate"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="6" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["LineAmountLineLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineAmount" Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="6" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["LineAmountLineLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineAmount" Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                            <DxGridLayoutItem Row="7" Column="3">
+                                <Template>
+                                    <label class="TSIModalLabel"><strong>@L["LineTotalAmountLineLabel"] </strong></label>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineTotalAmount" Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
+                        }
+                    }
 
-                    <DxGridLayoutItem Row="7" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["LineTotalAmountLineLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineTotalAmount"Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                     <DxGridLayoutItem Row="8" Column="1">
+                    <DxGridLayoutItem Row="8" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["SupplierBillNoLineLabel"] </strong></label>
-                            <SfTextBox  @bind-Value="LineDataSource.SupplierBillNo"></SfTextBox>
+                            <SfTextBox @bind-Value="LineDataSource.SupplierBillNo"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="8" Column="3">
+                    <DxGridLayoutItem Row="8" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["SupplierWaybillNoLineLabel"] </strong></label>
-                            <SfTextBox  @bind-Value="LineDataSource.SupplierWaybillNo"></SfTextBox>
+                            <SfTextBox @bind-Value="LineDataSource.SupplierWaybillNo"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -514,18 +522,18 @@ else
     </DxPopup>
 
     <DxPopup @bind-Visible="CreateStockFishesCrudPopup"
-         ShowFooter="true"
-         CloseOnEscape="false"
-          ShowCloseButton="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["CreateStockFishesModalTitle"]"
-         Width="53%"
-         Height="50%"
-         MinWidth="1000px"
-         MinHeight="540px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             ShowCloseButton="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["CreateStockFishesModalTitle"]"
+             Width="53%"
+             Height="50%"
+             MinWidth="1000px"
+             MinHeight="540px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -541,9 +549,9 @@ else
                 </Columns>
 
                 <Items>
-                   
 
-                    <DxGridLayoutItem Row="6" Column="1" >
+
+                    <DxGridLayoutItem Row="6" Column="1">
                         <Template>
                             <SfGrid @ref=_CreateStockFishesGrid ID="CreateStockFishesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CreateStockFishesList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@CreateStockFishesGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnCreateStockReceiptFishesContextMenuClick" TValue="CreateStockReceiptFishes"></GridEvents>
@@ -553,11 +561,11 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" CheckboxOnly="true"></GridSelectionSettings>
                                 <GridColumns>
-                    <GridColumn Type="ColumnType.CheckBox" Width="50"></GridColumn>
+                                    <GridColumn Type="ColumnType.CheckBox" Width="50"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.PurchaseStateLine) HeaderText="@L["CreateStockFishesGridPurchaseStateLine"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     @* <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="40"></GridColumn> *@
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductCode) HeaderText="@L["CreateStockFishesGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductName) HeaderText="@L["CreateStockFishesGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> 
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductName) HeaderText="@L["CreateStockFishesGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["CreateStockFishesGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.UnitSetCode) HeaderText="@L["CreateStockFishesGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
@@ -576,18 +584,18 @@ else
     </DxPopup>
 
     <DxPopup @bind-Visible="CancelOrderCrudPopup"
-         ShowFooter="true"
+             ShowFooter="true"
              CloseOnEscape="false"
              ShowCloseButton="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["CancelOrderModalTitle"]"
-         Width="53%"
-         Height="50%"
-         MinWidth="1000px"
-         MinHeight="540px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
+             CloseOnOutsideClick="false"
+             HeaderText="@L["CancelOrderModalTitle"]"
+             Width="53%"
+             Height="50%"
+             MinWidth="1000px"
+             MinHeight="540px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -603,9 +611,9 @@ else
                 </Columns>
 
                 <Items>
-                   
 
-                    <DxGridLayoutItem Row="6" Column="1" >
+
+                    <DxGridLayoutItem Row="6" Column="1">
                         <Template>
                             <SfGrid @ref=_CancelOrderGrid ID="CancelOrderGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CancelOrderList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@CreateStockFishesGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnCancelOrderContextMenuClick" TValue="CreateStockReceiptFishes"></GridEvents>
@@ -615,11 +623,11 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" CheckboxOnly="true"></GridSelectionSettings>
                                 <GridColumns>
-                    <GridColumn Type="ColumnType.CheckBox" Width="50"></GridColumn>
+                                    <GridColumn Type="ColumnType.CheckBox" Width="50"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.PurchaseStateLine) HeaderText="@L["CreateStockFishesGridPurchaseStateLine"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     @* <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="40"></GridColumn> *@
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductCode) HeaderText="@L["CreateStockFishesGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductName) HeaderText="@L["CreateStockFishesGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> 
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductName) HeaderText="@L["CreateStockFishesGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["CreateStockFishesGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.UnitSetCode) HeaderText="@L["CreateStockFishesGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
@@ -642,15 +650,15 @@ else
 @if (SelectUnitSetsPopupVisible)
 {
     <DxPopup @bind-Visible="SelectUnitSetsPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["UnitSetModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["UnitSetModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
             <DevGridLayout ColumnCount="1" RowCount="1">
                 <GridLayoutItems>
@@ -660,7 +668,7 @@ else
 
                                 <CardContent>
                                     <SfGrid ID="UnitSetGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnitSetsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@UnitSetsDoubleClickHandler" TValue="ListUnitSetsDto"></GridEvents>
@@ -691,15 +699,15 @@ else
 @if (SelectCurrencyPopupVisible)
 {
     <DxPopup @bind-Visible="SelectCurrencyPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["CurrencyModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["CurrencyModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
@@ -709,7 +717,7 @@ else
                             <SfCard class="TSIGridCards">
 
                                 <CardContent>
-                                    <SfGrid ID="CurrenciesGrid" DataSource="@CurrenciesList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                    <SfGrid ID="CurrenciesGrid" DataSource="@CurrenciesList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@CurrenciesDoubleClickHandler" TValue="ListCurrenciesDto"></GridEvents>
@@ -740,15 +748,15 @@ else
 @if (SelectBranchesPopupVisible)
 {
     <DxPopup @bind-Visible="SelectBranchesPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["BranchModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["BranchModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
@@ -758,7 +766,7 @@ else
                             <SfCard class="TSIGridCards">
 
                                 <CardContent>
-                                    <SfGrid ID="BranchesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@BranchesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                    <SfGrid ID="BranchesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@BranchesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
 
                                         <GridEvents OnRecordDoubleClick="@BranchesDoubleClickHandler" TValue="ListBranchesDto"></GridEvents>
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
@@ -792,15 +800,15 @@ else
 @if (SelectPaymentPlansPopupVisible)
 {
     <DxPopup @bind-Visible="SelectPaymentPlansPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["PaymentPlanModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["PaymentPlanModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
@@ -810,7 +818,7 @@ else
                             <SfCard class="TSIGridCards">
 
                                 <CardContent>
-                                    <SfGrid ID="PaymentPlansGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@PaymentPlansList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                    <SfGrid ID="PaymentPlansGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@PaymentPlansList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                         <GridEvents OnRecordDoubleClick="@PaymentPlansDoubleClickHandler" TValue="ListPaymentPlansDto"></GridEvents>
                                         <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
@@ -842,15 +850,15 @@ else
 @if (SelectWarehousesPopupVisible)
 {
     <DxPopup @bind-Visible="SelectWarehousesPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["WarehouseModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["WarehouseModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
@@ -891,15 +899,15 @@ else
 @if (SelectCurrentAccountCardsPopupVisible)
 {
     <DxPopup @bind-Visible="SelectCurrentAccountCardsPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["CurrentAccountModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["CurrentAccountModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
@@ -910,7 +918,7 @@ else
 
                                 <CardContent>
                                     <SfGrid ID="CurrentAccountCardsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CurrentAccountCardsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@CurrentAccountCardsDoubleClickHandler" TValue="ListCurrentAccountCardsDto"></GridEvents>
@@ -946,15 +954,15 @@ else
 @if (SelectProductsPopupVisible)
 {
     <DxPopup @bind-Visible="SelectProductsPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["ProductModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["ProductModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
@@ -965,7 +973,7 @@ else
 
                                 <CardContent>
                                     <SfGrid ID="ProductsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@ProductsDoubleClickHandler" TValue="ListProductsDto"></GridEvents>
@@ -994,18 +1002,18 @@ else
     </DxPopup>
 }
 
- @if (SelectProductionOrdersPopupVisible)
+@if (SelectProductionOrdersPopupVisible)
 {
     <DxPopup @bind-Visible="SelectProductionOrdersPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["ProductionOrderModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["ProductionOrderModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
@@ -1016,7 +1024,7 @@ else
 
                                 <CardContent>
                                     <SfGrid ID="ProductionOrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductionOrdersList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@ProductionOrdersDoubleClickHandler" TValue="ListProductionOrdersDto"></GridEvents>
