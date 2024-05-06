@@ -434,7 +434,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 if (TechnicalDrawingsDataSource.DataOpenStatus == true && TechnicalDrawingsDataSource.DataOpenStatus != null)
                 {
                     TechnicalDrawingsChangedCrudPopup = false;
-                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+
+                    string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
+
+                    MessagePopupInformationDescriptionBase = MessagePopupInformationDescriptionBase.Replace("{0}", LoginedUserService.UserName);
+
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], MessagePopupInformationDescriptionBase);
                     await InvokeAsync(StateHasChanged);
                 }
                 else
@@ -659,7 +664,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 if (ProductReferanceNumbersDataSource.DataOpenStatus == true && ProductReferanceNumbersDataSource.DataOpenStatus != null)
                 {
                     ProductReferanceNumbersCrudPopup = false;
-                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+
+                    string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
+
+                    MessagePopupInformationDescriptionBase = MessagePopupInformationDescriptionBase.Replace("{0}", LoginedUserService.UserName);
+
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], MessagePopupInformationDescriptionBase);
                     await InvokeAsync(StateHasChanged);
                 }
                 else

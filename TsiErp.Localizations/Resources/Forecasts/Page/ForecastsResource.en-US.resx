@@ -210,6 +210,9 @@
   <data name="ForecastContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ForecastContextMRP" xml:space="preserve">
+    <value>Material Requirement List</value>
+  </data>
   <data name="ForecastContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
@@ -264,6 +267,114 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="MRPBranchCodeButtonEditLabel" xml:space="preserve">
+    <value>Branch Code:</value>
+  </data>
+  <data name="MRPCodeLabel" xml:space="preserve">
+    <value>MRP Code:</value>
+  </data>
+  <data name="MRPDate_Label" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="MRPDescription_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="MRPFilterEndDateLabel" xml:space="preserve">
+    <value>End Date:</value>
+  </data>
+  <data name="MRPFilterModalTitle" xml:space="preserve">
+    <value>Date Range</value>
+  </data>
+  <data name="MRPFilterStartDateLabel" xml:space="preserve">
+    <value>Start Date:</value>
+  </data>
+  <data name="MRPIsMaintenanceMRPLabel" xml:space="preserve">
+    <value>Maintenance Material Requirement Planning:</value>
+  </data>
+  <data name="MRPLineBranchCodeButtonEditLabel" xml:space="preserve">
+    <value>Branch Code:</value>
+  </data>
+  <data name="MRPLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="MRPLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MRPLineContextDeleteOrderLines" xml:space="preserve">
+    <value>Delete Order Lines</value>
+  </data>
+  <data name="MRPLineContextDoNotCalculate" xml:space="preserve">
+    <value>Remove from Calculation</value>
+  </data>
+  <data name="MRPLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="MRPLineContextStockUsage" xml:space="preserve">
+    <value>Use From Stock</value>
+  </data>
+  <data name="MRPLineContextSupplier" xml:space="preserve">
+    <value>Select a Supplier</value>
+  </data>
+  <data name="MRPLineGridAmount" xml:space="preserve">
+    <value>PLANNED REQUIREMENT AMOUNT</value>
+  </data>
+  <data name="MRPLineGridAmountOfStock" xml:space="preserve">
+    <value>AMOUNT OF STOCK</value>
+  </data>
+  <data name="MRPLineGridBranchCode" xml:space="preserve">
+    <value>BRANCH</value>
+  </data>
+  <data name="MRPLineGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="MRPLineGridRequirementAmount" xml:space="preserve">
+    <value>PURCHASE REQUIREMENT AMOUNT</value>
+  </data>
+  <data name="MRPLineGridReservedAmount" xml:space="preserve">
+    <value>RESERVED AMOUNT</value>
+  </data>
+  <data name="MRPLineGridSalesOrderFicheNo" xml:space="preserve">
+    <value>ORDER FICHE NR</value>
+  </data>
+  <data name="MRPLineGridSalesOrderisCalculated" xml:space="preserve">
+    <value>WILL BE CALCULATED</value>
+  </data>
+  <data name="MRPLineGridSalesOrderisPurchase" xml:space="preserve">
+    <value>CONVERTED TO PURCHASE</value>
+  </data>
+  <data name="MRPLineGridSalesOrderisStockUsage" xml:space="preserve">
+    <value>STOCK USAGE</value>
+  </data>
+  <data name="MRPLineGridSupplyDate" xml:space="preserve">
+    <value>SUPPLY DATE</value>
+  </data>
+  <data name="MRPLineGridUnitSetCode" xml:space="preserve">
+    <value>UNIT SET</value>
+  </data>
+  <data name="MRPLineGridWarehouseCode" xml:space="preserve">
+    <value>WAREHOUSE</value>
+  </data>
+  <data name="MRPLineModalTitle" xml:space="preserve">
+    <value>Material Requirement Planning (MRP) Lines</value>
+  </data>
+  <data name="MRPLineWarehouseCodeButtonEditLabel" xml:space="preserve">
+    <value>Warehouse Code:</value>
+  </data>
+  <data name="MRPModalTitle" xml:space="preserve">
+    <value>Material Requirement Planning (MRP)</value>
+  </data>
+  <data name="MRPOrderGridFicheNo" xml:space="preserve">
+    <value>ORDER NO</value>
+  </data>
+  <data name="MRPReferanceDateLabel" xml:space="preserve">
+    <value>Referance Date:</value>
+  </data>
+  <data name="MRPState_Label" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="MRPWarehouseCodeButtonEditLabel" xml:space="preserve">
+    <value>Warehouse Code:</value>
+  </data>
   <data name="PeriodCode" xml:space="preserve">
     <value>PERIOD CODE</value>
   </data>
@@ -296,6 +407,24 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="SupplierModalTitle" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="SupplierPopupGridCurrentAccountName" xml:space="preserve">
+    <value>SUPPLIER</value>
+  </data>
+  <data name="SupplierPopupGridCurrenyCode" xml:space="preserve">
+    <value>CURRENCY</value>
+  </data>
+  <data name="SupplierPopupGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="SupplierPopupGridSupplyDate" xml:space="preserve">
+    <value>SUPPLY DATE DAY</value>
+  </data>
+  <data name="SupplierPopupGridUnitPrice" xml:space="preserve">
+    <value>UNIT PRICE</value>
   </data>
   <data name="Total" xml:space="preserve">
     <value>TOTAL</value>

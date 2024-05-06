@@ -65,7 +65,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 Description_ = input.Description_,
                 LineNumber = input.LineNumber,
                 PeriodID = input.PeriodID,
-                ValidityEndDate = input.ValidityStartDate,
+                ValidityEndDate = input.ValidityEndDate,
                 ValidityStartDate = input.ValidityStartDate,
                 Total = input.Total,
                 Code = input.Code,
@@ -335,7 +335,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 Description_ = input.Description_,
                 LineNumber = input.LineNumber,
                 PeriodID = input.PeriodID,
-                ValidityEndDate = input.ValidityStartDate,
+                ValidityEndDate = input.ValidityEndDate,
                 ValidityStartDate = input.ValidityStartDate,
                 Total = input.Total,
                 Code = input.Code,
@@ -435,12 +435,12 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 Description_ = entity.Description_,
                 LineNumber = entity.LineNumber,
                 PeriodID = entity.PeriodID,
-                ValidityEndDate = entity.ValidityStartDate,
+                ValidityEndDate = entity.ValidityEndDate,
                 ValidityStartDate = entity.ValidityStartDate,
                 Total = entity.Total,
                 Code = entity.Code,
                 CreationTime = entity.CreationTime.Value,
-                CreatorId = entity.CreatorId.Value,
+                CreatorId = entity.CreatorId.GetValueOrDefault(),
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -448,7 +448,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 Id = entity.Id,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
-                LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                LastModifierId = entity.LastModifierId.GetValueOrDefault()
             }).Where(new { Id = id }, false, false, "");
 
             var forecastsDto = queryFactory.Update<SelectForecastsDto>(query, "Id", true);

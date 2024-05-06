@@ -21,6 +21,7 @@ using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -387,7 +388,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
                 LineDataSource.UnitSetID = selectedProduct.UnitSetID;
 
-                if(DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
+                if (DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
                 {
                     //    var lastApprovedPriceID = (await PurchasePricesAppService.GetListAsync(new ListPurchasePricesParameterDto())).Data.Where(t => t.IsApproved == true && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).Last().Id;
 
@@ -512,8 +513,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     {
                         int selectedIndex = CancelOrderList.IndexOf(CancelOrderDataSource);
 
-                            CancelOrderList[selectedIndex].SelectedLine = true;
-                       
+                        CancelOrderList[selectedIndex].SelectedLine = true;
+
                         await _CancelOrderGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
@@ -579,11 +580,12 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 {
                     if (DataSource.PurchaseOrderState == Entities.Enums.PurchaseOrderStateEnum.Tamamlandi || DataSource.PurchaseOrderState == Entities.Enums.PurchaseOrderStateEnum.KismiTamamlandi)
                     {
-                        var stockFicheID = (await StockFichesAppService.GetListAsync(new ListStockFichesParameterDto())).Data.Where(t => t.PurchaseOrderID == DataSource.Id).Select(t => t.Id).FirstOrDefault();
+                        var stockFicheIDs = (await StockFichesAppService.GetListAsync(new ListStockFichesParameterDto())).Data.Where(t => t.PurchaseOrderID == DataSource.Id).Select(t => t.Id).ToList();
 
-                        await StockFichesAppService.DeleteAsync(stockFicheID);
-
-
+                        foreach (var stockFicheID in stockFicheIDs)
+                        {
+                            await StockFichesAppService.DeleteAsync(stockFicheID);
+                        }
                     }
 
                     foreach (var line in DataSource.SelectPurchaseOrderLinesDto)
@@ -663,8 +665,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     {
                         int selectedIndex = CreateStockFishesList.IndexOf(CreateStockReceiptFishesDataSource);
 
-                         CreateStockFishesList[selectedIndex].SelectedLine = true;
-                       
+                        CreateStockFishesList[selectedIndex].SelectedLine = true;
+
                         await _CreateStockFishesGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
@@ -837,7 +839,9 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             {
                 Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersChildMenu"),
-                PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Beklemede
+                PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Beklemede,
+                PriceApprovalState = Entities.Enums.PurchaseOrderPriceApprovalStateEnum.Beklemede,
+                PurchaseOrderWayBillStatusEnum = Entities.Enums.PurchaseOrderWayBillStatusEnum.Beklemede
             };
 
             DataSource.SelectPurchaseOrderLinesDto = new List<SelectPurchaseOrderLinesDto>();
@@ -902,6 +906,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextCancelOrder"], Id = "cancelorder" }); break;
                             case "PurchaseOrderContextRefresh":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextRefresh"], Id = "refresh" }); break;
+                            case "PurchaseOrderContextPriceApproval":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextPriceApproval"], Id = "priceApproval" }); break;
                             default: break;
                         }
                     }
@@ -918,7 +924,12 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 if (DataSource.DataOpenStatus == true && DataSource.DataOpenStatus != null)
                 {
                     EditPageVisible = false;
-                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+
+                    string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
+
+                    MessagePopupInformationDescriptionBase = MessagePopupInformationDescriptionBase.Replace("{0}", LoginedUserService.UserName);
+
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], MessagePopupInformationDescriptionBase);
                     await InvokeAsync(StateHasChanged);
                 }
                 else
@@ -1064,6 +1075,22 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     break;
 
                 case "refresh":
+                    await GetListDataSourceAsync();
+                    await _grid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "priceApproval":
+                    var resConfirm = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIPriceStatusApprovalMessage"]);
+
+                    if (resConfirm == true)
+                    {
+                        var order = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        order.PriceApprovalState = PurchaseOrderPriceApprovalStateEnum.Onaylandi;
+                        var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(order);
+                        await UpdateAsync(updateInput);
+                    }
+
                     await GetListDataSourceAsync();
                     await _grid.Refresh();
                     await InvokeAsync(StateHasChanged);
@@ -1237,7 +1264,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
             if (DataSource.Id == Guid.Empty)
             {
-                foreach(var item in DataSource.SelectPurchaseOrderLinesDto)
+                foreach (var item in DataSource.SelectPurchaseOrderLinesDto)
                 {
                     int itemIndex = DataSource.SelectPurchaseOrderLinesDto.IndexOf(item);
                     DataSource.SelectPurchaseOrderLinesDto[itemIndex].PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Beklemede;

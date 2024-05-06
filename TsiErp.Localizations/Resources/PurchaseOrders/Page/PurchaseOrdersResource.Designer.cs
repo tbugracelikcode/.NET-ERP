@@ -493,6 +493,24 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Onaylandı.
+        /// </summary>
+        public static string EnumPriceApprovalApproved {
+            get {
+                return ResourceManager.GetString("EnumPriceApprovalApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beklemede.
+        /// </summary>
+        public static string EnumPriceApprovalPending {
+            get {
+                return ResourceManager.GetString("EnumPriceApprovalPending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kısmi Onay Verildi.
         /// </summary>
         public static string EnumPartialApproved {
@@ -817,6 +835,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FATURA ONAY DURUMU.
+        /// </summary>
+        public static string PriceApprovalStateEnum {
+            get {
+                return ResourceManager.GetString("PriceApprovalStateEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok Kodu:.
         /// </summary>
         public static string ProductCodeLineLabel {
@@ -979,6 +1006,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fiyat Onayı Ver.
+        /// </summary>
+        public static string PurchaseOrderContextPriceApproval {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextPriceApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string PurchaseOrderContextRefresh {
@@ -1065,6 +1101,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         public static string PurchaseOrderState {
             get {
                 return ResourceManager.GetString("PurchaseOrderState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İRSALİYE ONAY DURUMU.
+        /// </summary>
+        public static string PurchaseOrderWayBillStatusEnum {
+            get {
+                return ResourceManager.GetString("PurchaseOrderWayBillStatusEnum", resourceCulture);
             }
         }
         
@@ -1299,6 +1344,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz siparişin fiyat onayı verilecektir..
+        /// </summary>
+        public static string UIPriceStatusApprovalMessage {
+            get {
+                return ResourceManager.GetString("UIPriceStatusApprovalMessage", resourceCulture);
             }
         }
         

@@ -210,6 +210,9 @@
   <data name="ForecastContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="ForecastContextMRP" xml:space="preserve">
+    <value>Malzeme İhtiyaç Listesi</value>
+  </data>
   <data name="ForecastContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
@@ -264,6 +267,114 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="MRPBranchCodeButtonEditLabel" xml:space="preserve">
+    <value>Şube Kodu:</value>
+  </data>
+  <data name="MRPCodeLabel" xml:space="preserve">
+    <value>MRP Kodu:</value>
+  </data>
+  <data name="MRPDate_Label" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
+  <data name="MRPDescription_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="MRPFilterEndDateLabel" xml:space="preserve">
+    <value>Bitiş Tarihi:</value>
+  </data>
+  <data name="MRPFilterModalTitle" xml:space="preserve">
+    <value>Tarih Aralığı</value>
+  </data>
+  <data name="MRPFilterStartDateLabel" xml:space="preserve">
+    <value>Başlangıç Tarihi:</value>
+  </data>
+  <data name="MRPIsMaintenanceMRPLabel" xml:space="preserve">
+    <value>Bakım Malzeme İhtiyaç Planlaması:</value>
+  </data>
+  <data name="MRPLineBranchCodeButtonEditLabel" xml:space="preserve">
+    <value>Şube Kodu:</value>
+  </data>
+  <data name="MRPLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="MRPLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="MRPLineContextDeleteOrderLines" xml:space="preserve">
+    <value>Sipariş Satırlarını Sil</value>
+  </data>
+  <data name="MRPLineContextDoNotCalculate" xml:space="preserve">
+    <value>Hesaplamadan Kaldır</value>
+  </data>
+  <data name="MRPLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="MRPLineContextStockUsage" xml:space="preserve">
+    <value>Stoktan Kullan</value>
+  </data>
+  <data name="MRPLineContextSupplier" xml:space="preserve">
+    <value>Tedarikçi Seç</value>
+  </data>
+  <data name="MRPLineGridAmount" xml:space="preserve">
+    <value>PLANLANAN İHTİYAÇ MİKTARI</value>
+  </data>
+  <data name="MRPLineGridAmountOfStock" xml:space="preserve">
+    <value>STOK TOPLAMI</value>
+  </data>
+  <data name="MRPLineGridBranchCode" xml:space="preserve">
+    <value>ŞUBE</value>
+  </data>
+  <data name="MRPLineGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="MRPLineGridRequirementAmount" xml:space="preserve">
+    <value>SATIN ALMA İHTİYAÇ MİKTARI</value>
+  </data>
+  <data name="MRPLineGridReservedAmount" xml:space="preserve">
+    <value>REZERVE MİKTARI</value>
+  </data>
+  <data name="MRPLineGridSalesOrderFicheNo" xml:space="preserve">
+    <value>SİPARİŞ FİŞ NO</value>
+  </data>
+  <data name="MRPLineGridSalesOrderisCalculated" xml:space="preserve">
+    <value>HESAPLANACAK</value>
+  </data>
+  <data name="MRPLineGridSalesOrderisPurchase" xml:space="preserve">
+    <value>SATIN ALMAYA DÖNÜŞTÜ</value>
+  </data>
+  <data name="MRPLineGridSalesOrderisStockUsage" xml:space="preserve">
+    <value>STOKTAN KULLANILACAK</value>
+  </data>
+  <data name="MRPLineGridSupplyDate" xml:space="preserve">
+    <value>TEMİN TARİHİ</value>
+  </data>
+  <data name="MRPLineGridUnitSetCode" xml:space="preserve">
+    <value>BİRİM SETİ</value>
+  </data>
+  <data name="MRPLineGridWarehouseCode" xml:space="preserve">
+    <value>DEPO</value>
+  </data>
+  <data name="MRPLineModalTitle" xml:space="preserve">
+    <value>Malzeme İhtiyaç Planlaması (MRP) Satırları</value>
+  </data>
+  <data name="MRPLineWarehouseCodeButtonEditLabel" xml:space="preserve">
+    <value>Depo Kodu:</value>
+  </data>
+  <data name="MRPModalTitle" xml:space="preserve">
+    <value>Malzeme İhtiyaç Planlaması (MRP)</value>
+  </data>
+  <data name="MRPOrderGridFicheNo" xml:space="preserve">
+    <value>SİPARİŞ NO</value>
+  </data>
+  <data name="MRPReferanceDateLabel" xml:space="preserve">
+    <value>Referans Tarihi:</value>
+  </data>
+  <data name="MRPState_Label" xml:space="preserve">
+    <value>Durum:</value>
+  </data>
+  <data name="MRPWarehouseCodeButtonEditLabel" xml:space="preserve">
+    <value>Depo Kodu:</value>
+  </data>
   <data name="PeriodCode" xml:space="preserve">
     <value>DÖNEM KODU</value>
   </data>
@@ -296,6 +407,24 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="SupplierModalTitle" xml:space="preserve">
+    <value>Tedarikçiler</value>
+  </data>
+  <data name="SupplierPopupGridCurrentAccountName" xml:space="preserve">
+    <value>TEDARİKÇİ</value>
+  </data>
+  <data name="SupplierPopupGridCurrenyCode" xml:space="preserve">
+    <value>PARA BİRİMİ</value>
+  </data>
+  <data name="SupplierPopupGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="SupplierPopupGridSupplyDate" xml:space="preserve">
+    <value>TEMİN TARİH GÜNÜ</value>
+  </data>
+  <data name="SupplierPopupGridUnitPrice" xml:space="preserve">
+    <value>BİRİM FİYAT</value>
   </data>
   <data name="Total" xml:space="preserve">
     <value>TOPLAM ADET</value>

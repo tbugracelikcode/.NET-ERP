@@ -8,6 +8,7 @@ using Syncfusion.XlsIO;
 using System.Data;
 using System.Dynamic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using Tsi.Core.Utilities.Guids;
 using TsiErp.Business.Entities.Branch.Services;
 using TsiErp.Business.Entities.Forecast.Services;
@@ -40,6 +41,7 @@ using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using static TsiErp.ErpUI.Pages.PlanningManagement.MRP.MRPsListPage;
+using TsiErp.ErpUI.Models;
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 {
@@ -86,7 +88,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         #endregion
 
-        List<SupplierSelectionGrid> SupplierSelectionList = new List<SupplierSelectionGrid>();
+        List<Models.SupplierSelectionGrid> SupplierSelectionList = new List<Models.SupplierSelectionGrid>();
 
         public bool SupplierSelectionPopup = false;
 
@@ -222,7 +224,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                 if (DataSource.DataOpenStatus == true && DataSource.DataOpenStatus != null)
                 {
                     EditPageVisible = false;
-                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+
+                    string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
+
+                    MessagePopupInformationDescriptionBase = MessagePopupInformationDescriptionBase.Replace("{0}", LoginedUserService.UserName);
+
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], MessagePopupInformationDescriptionBase);
                     await InvokeAsync(StateHasChanged);
                 }
                 else
@@ -865,7 +872,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         {
                             foreach (var data in item.Data)
                             {
-                                SupplierSelectionGrid supplierSelectionModel = new SupplierSelectionGrid
+                                Models.SupplierSelectionGrid supplierSelectionModel = new Models.SupplierSelectionGrid
                                 {
                                     CurrentAccountName = data.CurrentAccountCardName,
                                     CurrentAccountID = data.CurrentAccountCardID,
@@ -1032,7 +1039,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             VirtualLineDataSource.LineAmount = VirtualLineDataSource.OrderAmount * VirtualLineDataSource.OrderUnitPrice;
         }
 
-        public async void SupplierDoubleClickHandler(RecordDoubleClickEventArgs<SupplierSelectionGrid> args)
+        public async void SupplierDoubleClickHandler(RecordDoubleClickEventArgs<Models.SupplierSelectionGrid> args)
         {
             var selectedSupplier = args.RowData;
 
@@ -1630,22 +1637,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
 
 
-    public class SupplierSelectionGrid
-    {
-        public string ProductCode { get; set; }
-
-        public decimal UnitPrice { get; set; }
-
-        public Guid? CurrentAccountID { get; set; }
-
-        public string CurrentAccountName { get; set; }
-
-        public Guid? CurrenyID { get; set; }
-
-        public string CurrenyCode { get; set; }
-
-        public int SupplyDate { get; set; }
-    }
 
     public class VirtualLineModel
     {

@@ -94,7 +94,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
                 if (DataSource.DataOpenStatus == true && DataSource.DataOpenStatus != null)
                 {
                     TechnicalDrawingsChangedCrudPopup = false;
-                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+
+                    string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
+
+                    MessagePopupInformationDescriptionBase = MessagePopupInformationDescriptionBase.Replace("{0}", LoginedUserService.UserName);
+
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], MessagePopupInformationDescriptionBase);
                     await InvokeAsync(StateHasChanged);
                 }
                 else

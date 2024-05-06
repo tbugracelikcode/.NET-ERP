@@ -51,6 +51,13 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder
         /// Sipariş İrsaliye Durumu
         /// </summary>
         public PurchaseOrderWayBillStatusEnum PurchaseOrderWayBillStatusEnum { get; set; }
+        
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Fiyat Onay Durumu
+        /// </summary>
+        public PurchaseOrderPriceApprovalStateEnum PriceApprovalState { get; set; }
+
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Bağlı Satın Alma Talep ID

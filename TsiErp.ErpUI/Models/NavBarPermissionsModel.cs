@@ -178,6 +178,12 @@
         public static bool StockAddressesChildMenu { get; set; } = true;
         public static bool StockAddressesMenu { get; set; } = true;
         public static bool PurchaseOrdersAwaitingApprovalsChildMenu { get; set; } = true;
+        public static bool StockManagementShowAmountsChildMenu { get; set; } = true;
+        public static bool ProductionManagementShowAmountsChildMenu { get; set; } = true;
+        public static bool PurchaseManagementShowAmountsChildMenu { get; set; } = true;
+        public static bool SalesManagementShowAmountsChildMenu { get; set; } = true;
+        public static bool ShipmentShowAmountsChildMenu { get; set; } = true;
+        public static bool MachWorkforceManagementShowAmountsChildMenu { get; set; } = true;
         public static bool ProductReceiptTransactionsChildMenu { get; set; } = true;
     }
 }

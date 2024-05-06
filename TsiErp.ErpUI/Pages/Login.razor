@@ -152,30 +152,38 @@
 
     private async void OnLoginButtonClicked()
     {
-         var loginnedUser = (await UsersAppService.GetAsyncByUserNameAndPassword(User, Password)).Data;
+        var loginnedUser = (await UsersAppService.GetAsyncByUserNameAndPassword(User, Password)).Data;
 
         // if (loginnedUser != null)
         // {
 
-            //LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
+        //LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
 
-             LoginedUserService.UserId = loginnedUser.Id;
+        LoginedUserService.UserId = loginnedUser.Id;
+        LoginedUserService.UserName = loginnedUser.UserName;
 
-            LoginedUserService.VersionTableId = Guid.Parse("8A5F698D-D632-4314-A0C4-02E496FEB6CD");
+        LoginedUserService.VersionTableId = Guid.Parse("8A5F698D-D632-4314-A0C4-02E496FEB6CD");
 
         var permissions = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data;
 
-            var menus = (typeof(NavBarPermissionsModel)).GetProperties();
+        var menus = (typeof(NavBarPermissionsModel)).GetProperties();
 
-            foreach (var item in permissions)
+        foreach (var item in permissions)
+        {
+            var menu = menus.Where(t => t.Name == item.MenuName).FirstOrDefault();
+
+            if (menu != null)
             {
-                var menu = menus.Where(t => t.Name == item.MenuName).FirstOrDefault();
-
-                if (menu != null)
-                {
-                    menu.SetValue(menu, item.IsUserPermitted);
-                }
+                menu.SetValue(menu, item.IsUserPermitted);
             }
+        }
+
+        LoginedUserService.StockManagementShowAmountsChildMenu = NavBarPermissionsModel.StockManagementShowAmountsChildMenu;
+        LoginedUserService.ProductionManagementShowAmountsChildMenu = NavBarPermissionsModel.ProductionManagementShowAmountsChildMenu;
+        LoginedUserService.PurchaseManagementShowAmountsChildMenu = NavBarPermissionsModel.PurchaseManagementShowAmountsChildMenu;
+        LoginedUserService.SalesManagementShowAmountsChildMenu = NavBarPermissionsModel.SalesManagementShowAmountsChildMenu;
+        LoginedUserService.ShipmentShowAmountsChildMenu = NavBarPermissionsModel.ShipmentShowAmountsChildMenu;
+        LoginedUserService.MachWorkforceManagementShowAmountsChildMenu = NavBarPermissionsModel.MachWorkforceManagementShowAmountsChildMenu;
 
             NavigationManager.NavigateTo("/home");
         // }

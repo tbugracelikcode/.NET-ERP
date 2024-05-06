@@ -120,6 +120,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
+                PriceApprovalState = input.PriceApprovalState
             });
 
             DateTime biggestDate = input.SelectPurchaseOrderLinesDto.Select(t => t.SupplyDate).Max().GetValueOrDefault();
@@ -249,6 +250,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
+                PriceApprovalState = input.PriceApprovalState
             });
 
             foreach (var item in input.SelectPurchaseOrderLinesDto)
@@ -673,7 +675,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var listQuery = queryFactory
                            .Query()
                            .From(Tables.PurchaseOrders)
-                   .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate, po.WarehouseID, po.TotalVatExcludedAmount, po.TotalVatAmount, po.TotalDiscountAmount, po.Time_, po.SpecialCode, po.ShippingAdressID, po.PurchaseOrderState, po.ProductionOrderID, po.PaymentPlanID, po.NetAmount, po.LinkedPurchaseRequestID, po.Id, po.GrossAmount, po.FicheNo, po.ExchangeRate, po.Description_, po.Date_, po.DataOpenStatusUserId, po.DataOpenStatus, po.CurrentAccountCardID, po.CurrencyID, po.BranchID })
+                   .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate, po.WarehouseID, po.TotalVatExcludedAmount, po.TotalVatAmount, po.TotalDiscountAmount, po.Time_, po.SpecialCode, po.ShippingAdressID, po.PurchaseOrderState, po.ProductionOrderID, po.PaymentPlanID, po.NetAmount, po.LinkedPurchaseRequestID, po.Id, po.GrossAmount, po.FicheNo, po.ExchangeRate, po.Description_, po.Date_, po.DataOpenStatusUserId, po.DataOpenStatus, po.CurrentAccountCardID, po.CurrencyID, po.BranchID, po.PurchaseOrderWayBillStatusEnum, po.PriceApprovalState })
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },
@@ -777,6 +779,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
+                PriceApprovalState = input.PriceApprovalState
             }).Where(new { Id = input.Id }, false, false, "");
 
             DateTime biggestDate = input.SelectPurchaseOrderLinesDto.Select(t => t.SupplyDate).Max().GetValueOrDefault();
@@ -959,7 +962,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 Id = entity.Id,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
-                LastModifierId = entity.LastModifierId.GetValueOrDefault()
+                LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                PriceApprovalState = (int)entity.PriceApprovalState
             }).Where(new { Id = id }, false, false, "");
 
             var purchaseOrdersDto = queryFactory.Update<SelectPurchaseOrdersDto>(query, "Id", true);
@@ -1095,8 +1099,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                        nameof(CurrentAccountCards.Id),
                        JoinType.Left
                    )
-                   .Where(new { PurchaseOrderLineStateEnum = 1}, false, false, Tables.PurchaseOrderLines)
-                   .Where(new { PurchaseOrderLineStateEnum = 5}, false, false, Tables.PurchaseOrderLines);
+                   .Where(new { PurchaseOrderLineStateEnum = 1 }, false, false, Tables.PurchaseOrderLines)
+                   .Where(new { PurchaseOrderLineStateEnum = 5 }, false, false, Tables.PurchaseOrderLines);
 
             var purchaseOrderLines = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
 
@@ -1167,7 +1171,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
                 #endregion
 
-                if(purchaseOrders != null && purchaseOrders.Id != Guid.Empty)
+                if (purchaseOrders != null && purchaseOrders.Id != Guid.Empty)
                 {
                     purchaseOrders.SelectPurchaseOrderLinesDto = purchaseOrderLines.Where(t => t.PurchaseOrderID == orderId).ToList();
 

@@ -264,6 +264,12 @@
   <data name="EnumPartialApproved" xml:space="preserve">
     <value>Partially Approved</value>
   </data>
+  <data name="EnumPriceApprovalApproved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="EnumPriceApprovalPending" xml:space="preserve">
+    <value>Waiting</value>
+  </data>
   <data name="EnumQualityControlApproval" xml:space="preserve">
     <value>Quality Control Approval Granted</value>
   </data>
@@ -369,6 +375,9 @@
   <data name="PaymentPlanNameLabel" xml:space="preserve">
     <value>Payment Plan:</value>
   </data>
+  <data name="PriceApprovalStateEnum" xml:space="preserve">
+    <value>PROCE APPROVAL STATE</value>
+  </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Product Code:</value>
   </data>
@@ -423,6 +432,9 @@
   <data name="PurchaseOrderContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PurchaseOrderContextPriceApproval" xml:space="preserve">
+    <value>Grant Price Approval</value>
+  </data>
   <data name="PurchaseOrderContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
@@ -452,6 +464,9 @@
   </data>
   <data name="PurchaseOrderState" xml:space="preserve">
     <value>ORDER STATUS</value>
+  </data>
+  <data name="PurchaseOrderWayBillStatusEnum" xml:space="preserve">
+    <value>WAY BILL APPROVAL STATUS</value>
   </data>
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Quantity:</value>
@@ -530,6 +545,9 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Purchasing Management &gt; Transactions</value>
+  </data>
+  <data name="UIPriceStatusApprovalMessage" xml:space="preserve">
+    <value>Price approval of order you selected will be granted.</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>It is not possible to save lines without selecting the unit set.</value>
