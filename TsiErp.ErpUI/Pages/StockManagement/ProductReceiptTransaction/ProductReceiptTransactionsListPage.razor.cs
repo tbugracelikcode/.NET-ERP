@@ -29,6 +29,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
 
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
+        public bool GrantWarehouseApprovalVisible = false;
+
         protected override async void OnInitialized()
         {
             BaseCrudService = ProductReceiptTransactionsService;
@@ -121,28 +123,16 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
 
                 case "approveincomingquantity":
 
+                    DataSource = (await ProductReceiptTransactionsService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIMessageApproveIncomingTitle"], L["UIMessageApproveIncomingMessage"]);
-                    if (res)
+                    if(DataSource.ProductReceiptTransactionStateEnum == Entities.Enums.ProductReceiptTransactionStateEnum.KaliteKontrolOnayVerildi)
                     {
-                        DataSource = (await ProductReceiptTransactionsService.GetAsync(args.RowInfo.RowData.Id)).Data;
-
-                        if (DataSource.ProductReceiptTransactionStateEnum != Entities.Enums.ProductReceiptTransactionStateEnum.DepoOnayiVerildi)
-                        {
-                            DataSource.ProductReceiptTransactionStateEnum = Entities.Enums.ProductReceiptTransactionStateEnum.DepoOnayiVerildi;
-
-                            var updatedEntity = ObjectMapper.Map<SelectProductReceiptTransactionsDto, UpdateProductReceiptTransactionsDto>(DataSource);
-
-                            await ProductReceiptTransactionsService.UpdateAsync(updatedEntity);
-
-
-                            await GetListDataSourceAsync();
-
-                            await _grid.Refresh();
-                            await InvokeAsync(StateHasChanged);
-                        }
+                        GrantWarehouseApprovalVisible = true;
                     }
-                    
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningGrantApprovalTitle"], L["UIWarningGrantApprovalMessage"]);
+                    }
 
                     break;
 
@@ -182,6 +172,26 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
             }
         }
 
+        public void HideGrantApproval()
+        {
+            GrantWarehouseApprovalVisible = false;
+        }
+
+        public async void OnGrantWarehouseApprovalSubmit()
+        {
+            if(!string.IsNullOrEmpty(DataSource.PartyNo) && DataSource.WarehouseReceiptQuantity > 0)
+            {
+                DataSource.ProductReceiptTransactionStateEnum = Entities.Enums.ProductReceiptTransactionStateEnum.DepoOnayiVerildi;
+                var updatedEntity = ObjectMapper.Map<SelectProductReceiptTransactionsDto, UpdateProductReceiptTransactionsDto>(DataSource);
+                await ProductReceiptTransactionsService.UpdateAsync(updatedEntity);
+                GrantWarehouseApprovalVisible = false;
+                await GetListDataSourceAsync();
+            }
+            else
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningPartyNoQuantityTitle"], L["UIWarningPartyNoQuantityMessage"]);
+            }
+        }
         #region Satın Alma Sipariş Button Edit
 
         SfTextBox PurchaseOrdersButtonEdit;

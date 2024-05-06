@@ -197,6 +197,15 @@ namespace TsiErp.Localizations.Resources.ProductReceiptTransactions.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gelen Miktarı Onayla.
+        /// </summary>
+        public static string GrantApprovalModalTitle {
+            get {
+                return ResourceManager.GetString("GrantApprovalModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
@@ -229,6 +238,24 @@ namespace TsiErp.Localizations.Resources.ProductReceiptTransactions.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PARTİ NO.
+        /// </summary>
+        public static string PartyNo {
+            get {
+                return ResourceManager.GetString("PartyNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parti No:.
+        /// </summary>
+        public static string PartyNoLabel {
+            get {
+                return ResourceManager.GetString("PartyNoLabel", resourceCulture);
             }
         }
         
@@ -499,6 +526,42 @@ namespace TsiErp.Localizations.Resources.ProductReceiptTransactions.Page {
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sadece durumu &quot;Kalite Kontrol Onay Verildi&quot; olan kayıtlara depo onayı verilebilir..
+        /// </summary>
+        public static string UIWarningGrantApprovalMessage {
+            get {
+                return ResourceManager.GetString("UIWarningGrantApprovalMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningGrantApprovalTitle {
+            get {
+                return ResourceManager.GetString("UIWarningGrantApprovalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parti numarası ve depo giriş miktarı olmadan kaydedilemez..
+        /// </summary>
+        public static string UIWarningPartyNoQuantityMessage {
+            get {
+                return ResourceManager.GetString("UIWarningPartyNoQuantityMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningPartyNoQuantityTitle {
+            get {
+                return ResourceManager.GetString("UIWarningPartyNoQuantityTitle", resourceCulture);
             }
         }
         

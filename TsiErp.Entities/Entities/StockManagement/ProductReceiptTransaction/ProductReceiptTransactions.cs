@@ -71,5 +71,10 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction
         /// Miktar
         /// </summary>
         public decimal PurchaseOrderQuantity { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Parti No
+        /// </summary>
+        public string PartyNo { get; set; }
     }
 }
