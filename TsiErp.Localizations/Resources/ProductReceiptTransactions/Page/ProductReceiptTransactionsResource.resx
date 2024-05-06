@@ -162,6 +162,9 @@
   <data name="ExportTitle" xml:space="preserve">
     <value>Stok Giriş Hareketleri</value>
   </data>
+  <data name="GrantApprovalModalTitle" xml:space="preserve">
+    <value>Gelen Miktarı Onayla</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
@@ -173,6 +176,12 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="PartyNo" xml:space="preserve">
+    <value>PARTİ NO</value>
+  </data>
+  <data name="PartyNoLabel" xml:space="preserve">
+    <value>Parti No:</value>
   </data>
   <data name="ProductCode" xml:space="preserve">
     <value>STOK KODU</value>
@@ -263,6 +272,18 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Stok Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="UIWarningGrantApprovalMessage" xml:space="preserve">
+    <value>Sadece durumu "Kalite Kontrol Onay Verildi" olan kayıtlara depo onayı verilebilir.</value>
+  </data>
+  <data name="UIWarningGrantApprovalTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningPartyNoQuantityMessage" xml:space="preserve">
+    <value>Parti numarası ve depo giriş miktarı olmadan kaydedilemez.</value>
+  </data>
+  <data name="UIWarningPartyNoQuantityTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UIWarningPurchaseOrderMessage" xml:space="preserve">
     <value>Sipariş seçmeden stok seçilemez.</value>

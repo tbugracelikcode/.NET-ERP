@@ -63,6 +63,7 @@ else
                                         </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.WaybillNo) HeaderText="@L["WaybillNo"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.PartyNo) HeaderText="@L["PartyNo"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.WaybillDate) Format="dd.MM.yyyy" Type="ColumnType.Date" HeaderText="@L["WaybillDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.PurchaseOrderFicheNo) HeaderText="@L["PurchaseOrderFicheNo"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.PurchaseOrderDate) Format="dd.MM.yyyy" Type="ColumnType.Date" HeaderText="@L["PurchaseOrderDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
@@ -137,6 +138,13 @@ else
                                 <SfDatePicker @bind-Value="DataSource.WaybillDate"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["PartyNoLabel"] </strong></label>
+                            <SfTextBox @bind-Value="DataSource.PartyNo"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PurchaseOrderFicheNoLabel"] </strong></label>
@@ -206,6 +214,60 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="GrantWarehouseApprovalVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["GrantApprovalModalTitle"]"
+             Width="42%"
+             Height="23%"
+             MinWidth="720px"
+             MinHeight="250px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="90%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                </Columns>
+
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["PartyNoLabel"] </strong></label>
+                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                            <SfTextBox @bind-Value="DataSource.PartyNo"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["WarehouseReceiptQuantityLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.WarehouseReceiptQuantity"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                   
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnGrantWarehouseApprovalSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideGrantApproval"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 }

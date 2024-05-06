@@ -162,6 +162,9 @@
   <data name="ExportTitle" xml:space="preserve">
     <value>Product Receipt Transactions</value>
   </data>
+  <data name="GrantApprovalModalTitle" xml:space="preserve">
+    <value>Approve Incoming Quantity</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
@@ -173,6 +176,12 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="PartyNo" xml:space="preserve">
+    <value>PARTY NO</value>
+  </data>
+  <data name="PartyNoLabel" xml:space="preserve">
+    <value>Party No:</value>
   </data>
   <data name="ProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
@@ -263,6 +272,18 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Stock Management &gt;Transactions </value>
+  </data>
+  <data name="UIWarningGrantApprovalMessage" xml:space="preserve">
+    <value>Only records with a status of "Quality Control Approval Granted" can be given warehouse approval.</value>
+  </data>
+  <data name="UIWarningGrantApprovalTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningPartyNoQuantityMessage" xml:space="preserve">
+    <value>It cannot be recorded without the party number and warehouse receipt quantity.</value>
+  </data>
+  <data name="UIWarningPartyNoQuantityTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UIWarningPurchaseOrderMessage" xml:space="preserve">
     <value>Product cannot be selected without selecting an order.</value>

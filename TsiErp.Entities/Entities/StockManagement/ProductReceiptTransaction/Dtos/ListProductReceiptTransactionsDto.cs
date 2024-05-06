@@ -78,5 +78,9 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dto
         /// Tedarikçi Stok Kodu
         /// </summary>
         public string SupplierProductCode { get; set; }
+        /// <summary>
+        /// Parti No
+        /// </summary>
+        public string PartyNo { get; set; }
     }
 }
