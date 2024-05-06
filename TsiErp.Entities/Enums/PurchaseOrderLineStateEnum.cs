@@ -20,6 +20,8 @@ namespace TsiErp.Entities.Enums
         [Display(Name = "EnumInPartialCompleted")]
         KismiTamamlandi = 5,
         [Display(Name = "EnumQualityControlApproval")]
-        KaliteKontrolOnayiVerildi = 6
+        KaliteKontrolOnayiVerildi = 6,
+        [Display(Name = "EnumPartialApproved")]
+        KismiOnayVerildi = 7
     }
 }

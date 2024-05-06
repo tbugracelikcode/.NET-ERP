@@ -511,6 +511,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kısmi Onay Verildi.
+        /// </summary>
+        public static string EnumPartialApproved {
+            get {
+                return ResourceManager.GetString("EnumPartialApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kalite Kontrol Onayı Verildi.
         /// </summary>
         public static string EnumQualityControlApproval {

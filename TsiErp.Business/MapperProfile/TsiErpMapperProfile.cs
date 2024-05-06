@@ -205,6 +205,10 @@ using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PFMEA;
 using TsiErp.Entities.Entities.QualityControl.PFMEA.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval;
+using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine;
+using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine;
@@ -267,6 +271,8 @@ using TsiErp.Entities.Entities.StockManagement.ProductGroup;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductProperty;
 using TsiErp.Entities.Entities.StockManagement.ProductProperty.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction;
+using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddress;
@@ -318,6 +324,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectStockNumbersDto, CreateStockNumbersDto>();
             CreateMap<UpdateStockNumbersDto, StockNumbers>();
             CreateMap<SelectStockNumbersDto, UpdateStockNumbersDto>();
+
+            CreateMap<ProductReceiptTransactions, SelectProductReceiptTransactionsDto>();
+            CreateMap<ProductReceiptTransactions, ListProductReceiptTransactionsDto>();
+            CreateMap<CreateProductReceiptTransactionsDto, ProductReceiptTransactions>();
+            CreateMap<SelectProductReceiptTransactionsDto, CreateProductReceiptTransactionsDto>();
+            CreateMap<UpdateProductReceiptTransactionsDto, ProductReceiptTransactions>();
+            CreateMap<SelectProductReceiptTransactionsDto, UpdateProductReceiptTransactionsDto>();
 
             CreateMap<StockSections, SelectStockSectionsDto>();
             CreateMap<StockSections, ListStockSectionsDto>();
@@ -1487,6 +1500,25 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateProductPropertiesDto, ProductProperties>();
             CreateMap<SelectProductPropertiesDto, UpdateProductPropertiesDto>();
             CreateMap<SelectProductPropertiesDto, ProductProperties>();
+
+
+
+            CreateMap<PurchaseOrdersAwaitingApprovals, SelectPurchaseOrdersAwaitingApprovalsDto>();
+            CreateMap<PurchaseOrdersAwaitingApprovals, ListPurchaseOrdersAwaitingApprovalsDto>();
+            CreateMap<UpdatePurchaseOrdersAwaitingApprovalsDto, PurchaseOrdersAwaitingApprovals>();
+            CreateMap<CreatePurchaseOrdersAwaitingApprovalsDto, PurchaseOrdersAwaitingApprovals>();
+            CreateMap<SelectPurchaseOrdersAwaitingApprovalsDto, CreatePurchaseOrdersAwaitingApprovalsDto>();
+            CreateMap<SelectPurchaseOrdersAwaitingApprovalsDto, UpdatePurchaseOrdersAwaitingApprovalsDto>();
+            CreateMap<PurchaseOrdersAwaitingApprovals, UpdatePurchaseOrdersAwaitingApprovalsDto>();
+
+            CreateMap<PurchaseOrdersAwaitingApprovalLines, SelectPurchaseOrdersAwaitingApprovalLinesDto>();
+            CreateMap<PurchaseOrdersAwaitingApprovalLines, ListPurchaseOrdersAwaitingApprovalLinesDto>();
+            CreateMap<CreatePurchaseOrdersAwaitingApprovalLinesDto, PurchaseOrdersAwaitingApprovalLines>();
+            CreateMap<SelectPurchaseOrdersAwaitingApprovalLinesDto, CreatePurchaseOrdersAwaitingApprovalLinesDto>();
+            CreateMap<UpdatePurchaseOrdersAwaitingApprovalLinesDto, PurchaseOrdersAwaitingApprovalLines>();
+            CreateMap<SelectPurchaseOrdersAwaitingApprovalLinesDto, UpdatePurchaseOrdersAwaitingApprovalLinesDto>();
+            CreateMap<SelectPurchaseOrdersAwaitingApprovalLinesDto, PurchaseOrdersAwaitingApprovalLines>();
+
         }
     }
 }

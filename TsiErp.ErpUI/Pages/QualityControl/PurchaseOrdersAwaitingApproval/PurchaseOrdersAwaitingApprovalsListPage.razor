@@ -1,12 +1,16 @@
 ﻿@page "/purchase-orders-awaiting-approvals"
 @layout MainLayout
 
-@inherits BaseListPage<SelectPurchaseOrdersDto, ListPurchaseOrdersDto, CreatePurchaseOrdersDto, UpdatePurchaseOrdersDto, ListPurchaseOrdersParameterDto>
+@inherits BaseListPage<SelectPurchaseOrdersAwaitingApprovalsDto, ListPurchaseOrdersAwaitingApprovalsDto, CreatePurchaseOrdersAwaitingApprovalsDto, UpdatePurchaseOrdersAwaitingApprovalsDto, ListPurchaseOrdersAwaitingApprovalsParameterDto>
 
 
+@inject IPurchaseOrdersAwaitingApprovalsAppService PurchaseOrdersAwaitingApprovalsAppService
+@inject IPurchaseQualityPlansAppService PurchaseQualityPlansAppService
 @inject IPurchaseOrdersAppService PurchaseOrdersAppService
+@inject IProductReceiptTransactionsAppService ProductReceiptTransactionsAppService
+@inject IUsersAppService UsersAppService
 @inject IControlConditionsAppService ControlConditionsAppService
-@inject IStringLocalizer<PurchaseOrdersResource> L
+@inject IStringLocalizer<PurchaseOrdersAwaitingApprovalsResource> L
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
 
@@ -29,44 +33,44 @@ else
                     </SfCard>
                 </Template>
             </DxGridLayoutItem>
+
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="_Grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="SelectPurchaseOrdersDto"></GridEvents>
+
+                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListPurchaseOrdersAwaitingApprovalsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrdersDto.FicheNo) HeaderText="@L["FicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrdersDto.Date_) Format="dd.MM.yyyy" HeaderText="@L["Date_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                    <GridColumn Field=@nameof(SelectPurchaseOrdersDto.CurrentAccountCardCode) HeaderText="@L["CurrentAccountCardCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrdersDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrdersDto.PurchaseOrderState) HeaderText="@L["PurchaseOrderState"]" TextAlign="TextAlign.Center" Width="120">
+                                    <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.PurchaseOrderFicheNo) HeaderText="@L["PurchaseOrderFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.CurrentAccountCardCode) HeaderText="@L["CurrentAccountCardCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.PurchaseOrderDate) Format="dd.MM.yyyy" Type="ColumnType.Date" HeaderText="@L["PurchaseOrderDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.PurchaseOrdersAwaitingApprovalStateEnum) HeaderText="@L["PurchaseOrdersAwaitingApprovalStateEnum"]" TextAlign="TextAlign.Center" Width="260">
                                         <Template>
                                             @{
-                                                var purchaseOrderState = (context as SelectPurchaseOrdersDto).PurchaseOrderState;
-                                                string purchaseOrderStateStr = string.Empty;
+                                                var purchaseOrdersAwaitingApprovalStateEnum = (context as ListPurchaseOrdersAwaitingApprovalsDto).PurchaseOrdersAwaitingApprovalStateEnum;
+                                                string purchaseOrdersAwaitingApprovalStateEnumStr = string.Empty;
 
-                                                switch(purchaseOrderState)
+                                                switch (purchaseOrdersAwaitingApprovalStateEnum)
                                                 {
-                                                    case PurchaseOrderStateEnum.Iptal: purchaseOrderStateStr = L["EnumCancel"]; break; 
-                                                    case PurchaseOrderStateEnum.Beklemede: purchaseOrderStateStr = L["EnumWaiting"]; break; 
-                                                    case PurchaseOrderStateEnum.Onaylandı: purchaseOrderStateStr = L["EnumApproved"] ;break; 
-                                                    case PurchaseOrderStateEnum.Tamamlandi: purchaseOrderStateStr = L["EnumCompleted"]; break; 
-                                                    case PurchaseOrderStateEnum.KismiTamamlandi: purchaseOrderStateStr = L["EnumInPartialCompleted"]; break; 
-                                                    default: break;
+                                                    case PurchaseOrdersAwaitingApprovalStateEnum.KaliteKontrolOnayBekliyor: purchaseOrdersAwaitingApprovalStateEnumStr = L["EnumAwaitingQualityControlApproval"]; break;
+                                                    case PurchaseOrdersAwaitingApprovalStateEnum.KaliteKontrolOnayVerildi: purchaseOrdersAwaitingApprovalStateEnumStr = L["EnumQualityControlApproved"]; break;
                                                 }
                                             }
-                                            @purchaseOrderStateStr
+                                            @purchaseOrdersAwaitingApprovalStateEnumStr
                                         </Template>
                                     </GridColumn>
+
+
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -78,79 +82,249 @@ else
         </GridLayoutItems>
     </DevGridLayout>
 
-
-    <DxPopup @bind-Visible="OrdersAwatingApprovalModalVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["ApprovalModalTitle"]"
-         Width="53%"
-         Height="50%"
-         MinWidth="1000px"
-         MinHeight="540px"
-         HeaderCssClass="HeaderTitleCss">
+    <DxPopup @bind-Visible="base.EditPageVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="62%"
+             Height="65%"
+             MinWidth="1060px"
+             MinHeight="700px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="90%" />
+                    <DxGridLayoutRow Height="16%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="60%" />
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="2%" />
-                    <DxGridLayoutColumn Width="96%" />
-                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
                 </Columns>
 
                 <Items>
-                    <DxGridLayoutItem Row="0" Column="1" >
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
                         <Template>
-                            <br />
+                            <label class="TSIModalLabel"><strong>@L["CurrentAccountCardNameLabel"] </strong></label>
+                            <SfTextBox  @bind-Value="DataSource.CurrentAccountCardName" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PurchaseOrderFicheNoLabel"] </strong></label><br />
+                            <SfTextBox @bind-Value="DataSource.PurchaseOrderFicheNo" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["UserNameLabel"] </strong></label><br />
+                            <SfTextBox @bind-Value="@UserName" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["QualityApprovalDateLabel"] </strong></label><br />
+                            <SfDatePicker @bind-Value="DataSource.QualityApprovalDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ControlQuantityLabel"] </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.ControlQuantity"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
+                        <Template>
                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
-                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectPurchaseOrderLinesDto"></GridEvents>
+                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectPurchaseOrdersAwaitingApprovalLinesDto"></GridEvents>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.UnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridUnitPrice"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                     <GridColumn Field=@nameof(SelectPurchaseOrderLinesDto.PurchaseOrderLineStateEnum) HeaderText="@L["LineGridPurchaseOrderLineStateEnum"]" TextAlign="TextAlign.Center" Width="120" Context="lineContext">
-                                        <Template>
-                                            @{
-                                                var purchaseOrderLineStateEnum = (lineContext as SelectPurchaseOrderLinesDto).PurchaseOrderLineStateEnum;
-                                                string purchaseOrderLineStateEnumStr = string.Empty;
-
-                                                switch(purchaseOrderLineStateEnum)
-                                                {
-                                                    case PurchaseOrderLineStateEnum.Beklemede: purchaseOrderLineStateEnumStr = L["EnumWaiting"]; break;
-                                                    case PurchaseOrderLineStateEnum.KismiTamamlandi: purchaseOrderLineStateEnumStr = L["EnumInPartialCompleted"]; break;
-                                                    case PurchaseOrderLineStateEnum.KaliteKontrolOnayiVerildi: purchaseOrderLineStateEnumStr = L["EnumQualityControlApproval"] ;break; 
-                                                    default: break;
-                                                }
-                                            }
-                                            @purchaseOrderLineStateEnumStr
-                                        </Template>
-                                    </GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.ControlTypesName) HeaderText="@L["LineGridControlTypesName"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.ControlFrequency) HeaderText="@L["LineGridControlFrequency"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.IdealMeasure) Type="ColumnType.Number" HeaderText="@L["LineGridIdealMeasure"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.BottomTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridBottomTolerance"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.UpperTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridUpperTolerance"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.MeasureValue) Type="ColumnType.Number" HeaderText="@L["LineGridMeasureValue"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
                     </DxGridLayoutItem>
+
+
                 </Items>
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideApprovalPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
+    <DxPopup @bind-Visible="LineCrudPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["LineModalTitle"]"
+             Width="22%"
+             Height="23%"
+             MinWidth="380px"
+             MinHeight="250px"
+             HeaderCssClass="HeaderTitleCss">
 
-   
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="80%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="10%" />
+                    <DxGridLayoutColumn Width="80%" />
+                    <DxGridLayoutColumn Width="10%" />
+
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["MeasureValueLineLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.MeasureValue"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="@PreviewPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="62%"
+             Height="65%"
+             MinWidth="1060px"
+             MinHeight="700px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="16%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="60%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["CurrentAccountCardNameLabel"] </strong></label>
+                            <SfTextBox @bind-Value="DataSource.CurrentAccountCardName" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PurchaseOrderFicheNoLabel"] </strong></label><br />
+                            <SfTextBox @bind-Value="DataSource.PurchaseOrderFicheNo" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["UserNameLabel"] </strong></label><br />
+                            <SfTextBox @bind-Value="@UserName" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["QualityApprovalDateLabel"] </strong></label><br />
+                            <SfDatePicker @bind-Value="DataSource.QualityApprovalDate" Enabled=false></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ControlQuantityLabel"] </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.ControlQuantity" Enabled=false></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
+                        <Template>
+                            <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.ControlTypesName) HeaderText="@L["LineGridControlTypesName"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.ControlFrequency) HeaderText="@L["LineGridControlFrequency"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.IdealMeasure) Type="ColumnType.Number" HeaderText="@L["LineGridIdealMeasure"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.BottomTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridBottomTolerance"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.UpperTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridUpperTolerance"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.MeasureValue) Type="ColumnType.Number" HeaderText="@L["LineGridMeasureValue"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HidePreviewPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
 
 }
+

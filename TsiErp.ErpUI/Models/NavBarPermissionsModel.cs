@@ -184,5 +184,6 @@
         public static bool SalesManagementShowAmountsChildMenu { get; set; } = true;
         public static bool ShipmentShowAmountsChildMenu { get; set; } = true;
         public static bool MachWorkforceManagementShowAmountsChildMenu { get; set; } = true;
+        public static bool ProductReceiptTransactionsChildMenu { get; set; } = true;
     }
 }

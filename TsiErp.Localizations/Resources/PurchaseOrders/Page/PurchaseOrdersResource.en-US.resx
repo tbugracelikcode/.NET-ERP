@@ -261,6 +261,9 @@
   <data name="EnumInPartialCompleted" xml:space="preserve">
     <value>Partial Completed</value>
   </data>
+  <data name="EnumPartialApproved" xml:space="preserve">
+    <value>Partially Approved</value>
+  </data>
   <data name="EnumPriceApprovalApproved" xml:space="preserve">
     <value>Approved</value>
   </data>

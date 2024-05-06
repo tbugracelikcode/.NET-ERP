@@ -341,6 +341,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ProductPropertiesResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ProductReceiptTransactions\Page\ProductReceiptTransactionsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProductReceiptTransactionsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\ProductReferanceNumbers\Page\ProductReferanceNumbersResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -360,6 +365,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>PurchaseManagementParametersResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\PurchaseOrdersAwaitingApprovals\Page\PurchaseOrdersAwaitingApprovalsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PurchaseOrdersAwaitingApprovalsResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\PurchaseOrders\Page\PurchaseOrdersResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -901,6 +911,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductPropertiesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductReceiptTransactions\Page\ProductReceiptTransactionsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductReceiptTransactionsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\ProductReferanceNumbers\Page\ProductReferanceNumbersResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
@@ -922,6 +936,10 @@
     <EmbeddedResource Update="Resources\PurchaseManagementParameter\Page\PurchaseManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PurchaseManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchaseOrdersAwaitingApprovals\Page\PurchaseOrdersAwaitingApprovalsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PurchaseOrdersAwaitingApprovalsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\PurchaseOrders\Page\PurchaseOrdersResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

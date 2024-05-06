@@ -267,6 +267,9 @@
   <data name="EnumPriceApprovalPending" xml:space="preserve">
     <value>Beklemede</value>
   </data>
+  <data name="EnumPartialApproved" xml:space="preserve">
+    <value>Kısmi Onay Verildi</value>
+  </data>
   <data name="EnumQualityControlApproval" xml:space="preserve">
     <value>Kalite Kontrol Onayı Verildi</value>
   </data>
