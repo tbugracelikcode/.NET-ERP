@@ -15,6 +15,7 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Enums;
 using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
+using System.Timers;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 {
@@ -120,7 +121,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                 if (DataSource.DataOpenStatus == true && DataSource.DataOpenStatus != null)
                 {
                     EditPageVisible = false;
-                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+
+                    string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
+
+                    MessagePopupInformationDescriptionBase = MessagePopupInformationDescriptionBase.Replace("{0}", LoginedUserService.UserName);
+
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], MessagePopupInformationDescriptionBase);
                     await InvokeAsync(StateHasChanged);
                 }
                 else
@@ -153,7 +159,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                                 GridLineList.Add(approvalLineModel);
                             }
 
-                            if(GridLineList != null && GridLineList.Count > 0)
+                            if (GridLineList != null && GridLineList.Count > 0)
                             {
                                 DataSource.SelectPurchaseOrdersAwaitingApprovalLines = GridLineList;
                             }
@@ -200,8 +206,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
                     await InvokeAsync(StateHasChanged);
                     break;
-
-
 
                 case "refresh":
                     await GetListDataSourceAsync();
@@ -254,7 +258,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
             var productReceiptTransaction = (await ProductReceiptTransactionsAppService.GetAsync(DataSource.ProductReceiptTransactionID.GetValueOrDefault())).Data;
 
-            if(productReceiptTransaction != null && productReceiptTransaction.Id != Guid.Empty)
+            if (productReceiptTransaction != null && productReceiptTransaction.Id != Guid.Empty)
             {
                 productReceiptTransaction.ProductReceiptTransactionStateEnum = ProductReceiptTransactionStateEnum.KaliteKontrolOnayBekliyor;
 
@@ -269,14 +273,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
             var purchaseOrder = (await PurchaseOrdersAppService.GetAsync(DataSource.PurchaseOrderID.GetValueOrDefault())).Data;
 
-            if(purchaseOrder!= null && purchaseOrder.Id != Guid.Empty)
+            if (purchaseOrder != null && purchaseOrder.Id != Guid.Empty)
             {
                 var purchaseOrderLineList = purchaseOrder.SelectPurchaseOrderLinesDto.ToList();
 
-                if(purchaseOrderLineList != null && purchaseOrderLineList.Count > 0)
+                if (purchaseOrderLineList != null && purchaseOrderLineList.Count > 0)
                 {
-                    var updatedLine = purchaseOrderLineList.Where(t=>t.Id == DataSource.PurchaseOrderLineID.GetValueOrDefault()).FirstOrDefault();
-                    
+                    var updatedLine = purchaseOrderLineList.Where(t => t.Id == DataSource.PurchaseOrderLineID.GetValueOrDefault()).FirstOrDefault();
+
                     int updatedIndex = purchaseOrderLineList.IndexOf(updatedLine);
 
                     purchaseOrder.SelectPurchaseOrderLinesDto[updatedIndex].PurchaseOrderLineStateEnum = PurchaseOrderLineStateEnum.Beklemede;
@@ -346,7 +350,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
         {
             if (LineDataSource.Id == Guid.Empty)
             {
-                if (DataSource.SelectPurchaseOrdersAwaitingApprovalLines.Any(t=>t.LineNr == LineDataSource.LineNr))
+                if (DataSource.SelectPurchaseOrdersAwaitingApprovalLines.Any(t => t.LineNr == LineDataSource.LineNr))
                 {
                     int selectedLineIndex = DataSource.SelectPurchaseOrdersAwaitingApprovalLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
 
@@ -386,7 +390,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
             await PurchaseOrdersAwaitingApprovalsAppService.UpdateAsync(updateInput);
 
             GrantedQualityApproval();
-          
+
             await GetListDataSourceAsync();
 
             var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
@@ -395,13 +399,54 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
         }
 
+        public override void HideEditPage()
+        {
+            if (_Timer.Enabled == false)
+            {
+                _Timer.Start();
+                _Timer.Enabled = true;
+            }
+
+            base.HideEditPage();
+        }
+
 
 
         #endregion
 
 
+        #region Timer
+
+        System.Timers.Timer _Timer;
+
+        private void StartTimer()
+        {
+            _Timer = new System.Timers.Timer(10000);
+            _Timer.Elapsed += _TimerTimedEvent;
+            _Timer.AutoReset = true;
+            _Timer.Enabled = true;
+        }
+
+        private async void _TimerTimedEvent(object source, ElapsedEventArgs e)
+        {
+            await base.GetListDataSourceAsync();
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
+
         public void Dispose()
         {
+
+            if (_Timer != null)
+            {
+                if (_Timer.Enabled)
+                {
+                    _Timer.Stop();
+                    _Timer.Enabled = false;
+                    _Timer.Dispose();
+                }
+            }
+
             GC.Collect();
             GC.SuppressFinalize(this);
         }

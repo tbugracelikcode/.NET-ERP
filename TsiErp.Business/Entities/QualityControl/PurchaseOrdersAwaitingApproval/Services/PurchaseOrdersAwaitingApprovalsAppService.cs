@@ -18,6 +18,7 @@ using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval.Dto
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PurchaseOrdersAwaitingApprovals.Page;
 
@@ -221,7 +222,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                         nameof(PurchaseOrders.Id),
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.PurchaseOrdersAwaitingApprovals);
+                    .Where(new { PurchaseOrdersAwaitingApprovalStateEnum = 1 }, false, false, Tables.PurchaseOrdersAwaitingApprovals);
 
             var purchaseOrdersAwaitingApprovals = queryFactory.GetList<ListPurchaseOrdersAwaitingApprovalsDto>(query).ToList();
             await Task.CompletedTask;
