@@ -47,41 +47,6 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
-            #region Satın Alma Kalite Planı Satır Get İşlemi
-
-            var qualityPlan = (await _PurchaseQualityPlansAppService.GetbyCurrentAccountandProductAsync(input.CurrentAccountCardID.GetValueOrDefault(), input.ProductID.GetValueOrDefault())).Data;
-
-            if (qualityPlan != null && qualityPlan.Id != Guid.Empty)
-            {
-                var qualityPlanLines = qualityPlan.SelectPurchaseQualityPlanLines;
-
-                if (qualityPlanLines != null && qualityPlanLines.Count() > 0)
-                {
-                    foreach (var line in qualityPlanLines)
-                    {
-                        SelectPurchaseOrdersAwaitingApprovalLinesDto approvalLineModel = new SelectPurchaseOrdersAwaitingApprovalLinesDto
-                        {
-                            BottomTolerance = line.BottomTolerance,
-                            ControlFrequency = line.ControlFrequency,
-                            ControlTypesID = line.ControlTypesID,
-                            ControlTypesName = line.ControlTypesName,
-                            IdealMeasure = line.IdealMeasure,
-                            UpperTolerance = line.UpperTolerance,
-                            MeasureValue = 0,
-                            LineNr = input.SelectPurchaseOrdersAwaitingApprovalLines.Count + 1,
-                        };
-
-                        input.SelectPurchaseOrdersAwaitingApprovalLines.Add(approvalLineModel);
-                    }
-                }
-                else
-                {
-                    input.SelectPurchaseOrdersAwaitingApprovalLines = new List<SelectPurchaseOrdersAwaitingApprovalLinesDto>();
-                }
-            }
-
-            #endregion
-
             var query = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Insert(new CreatePurchaseOrdersAwaitingApprovalsDto
             {
                 ProductID = input.ProductID,
@@ -91,10 +56,14 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                 PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
                 PurchaseOrderLineID = input.PurchaseOrderLineID.GetValueOrDefault(),
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                ControlQuantity = 0,
                 CreatorId = input.CreatorId != Guid.Empty ? input.CreatorId : LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
+                ApproverID = LoginedUserService.UserId,
+                QualityApprovalDate = _GetSQLDateAppService.GetDateFromSQL(),
                 DeleterId = Guid.Empty,
+                SelectPurchaseOrdersAwaitingApprovalLines = new List<SelectPurchaseOrdersAwaitingApprovalLinesDto>(),
                 DeletionTime = null,
                 Id = addedEntityId,
                 IsDeleted = false,
@@ -102,32 +71,32 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                 LastModifierId = Guid.Empty,
             });
 
-            foreach (var item in input.SelectPurchaseOrdersAwaitingApprovalLines)
-            {
-                var queryLine = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovalLines).Insert(new CreatePurchaseOrdersAwaitingApprovalLinesDto
-                {
-                    BottomTolerance = item.BottomTolerance,
-                    IdealMeasure = item.IdealMeasure,
-                    ControlFrequency = item.ControlFrequency,
-                    ControlTypesID = item.ControlTypesID.GetValueOrDefault(),
-                    MeasureValue = item.MeasureValue,
-                    UpperTolerance = item.UpperTolerance,
-                    LineNr = item.LineNr,
-                    PurchaseOrdersAwaitingApprovalID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                    CreatorId = item.CreatorId != Guid.Empty ? item.CreatorId : LoginedUserService.UserId,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = Guid.Empty,
-                    DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
-                    IsDeleted = false,
-                    LastModificationTime = null,
-                    LastModifierId = Guid.Empty
-                });
+            //foreach (var item in input.SelectPurchaseOrdersAwaitingApprovalLines)
+            //{
+            //    var queryLine = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovalLines).Insert(new CreatePurchaseOrdersAwaitingApprovalLinesDto
+            //    {
+            //        BottomTolerance = item.BottomTolerance,
+            //        IdealMeasure = item.IdealMeasure,
+            //        ControlFrequency = item.ControlFrequency,
+            //        ControlTypesID = item.ControlTypesID.GetValueOrDefault(),
+            //        MeasureValue = item.MeasureValue,
+            //        UpperTolerance = item.UpperTolerance,
+            //        LineNr = item.LineNr,
+            //        PurchaseOrdersAwaitingApprovalID = addedEntityId,
+            //        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+            //        CreatorId = item.CreatorId != Guid.Empty ? item.CreatorId : LoginedUserService.UserId,
+            //        DataOpenStatus = false,
+            //        DataOpenStatusUserId = Guid.Empty,
+            //        DeleterId = Guid.Empty,
+            //        DeletionTime = null,
+            //        Id = GuidGenerator.CreateGuid(),
+            //        IsDeleted = false,
+            //        LastModificationTime = null,
+            //        LastModifierId = Guid.Empty
+            //    });
 
-                query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
-            }
+            //    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+            //}
 
             var PurchaseOrdersAwaitingApproval = queryFactory.Insert<SelectPurchaseOrdersAwaitingApprovalsDto>(query, "Id", true);
 
@@ -207,8 +176,8 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                     .Join<ControlTypes>
                     (
                         p => new { ControlTypesID = p.Id, ControlTypesName = p.Name },
-                        nameof(PurchaseOrdersAwaitingApprovals.ProductID),
-                        nameof(Products.Id),
+                        nameof(PurchaseOrdersAwaitingApprovalLines.ControlTypesID),
+                        nameof(ControlTypes.Id),
                         JoinType.Left
                     )
                     .Where(new { PurchaseOrdersAwaitingApprovalID = id }, false, false, Tables.PurchaseOrdersAwaitingApprovalLines);
@@ -299,8 +268,8 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                     .Join<ControlTypes>
                     (
                         p => new { ControlTypesID = p.Id, ControlTypesName = p.Name },
-                        nameof(PurchaseOrdersAwaitingApprovals.ProductID),
-                        nameof(Products.Id),
+                        nameof(PurchaseOrdersAwaitingApprovalLines.ControlTypesID),
+                        nameof(ControlTypes.Id),
                         JoinType.Left
                     )
                     .Where(new { PurchaseOrdersAwaitingApprovalID = input.Id }, false, false, Tables.PurchaseOrdersAwaitingApprovalLines);
@@ -312,13 +281,16 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
             var query = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Update(new UpdatePurchaseOrdersAwaitingApprovalsDto
             {
                 ProductID = input.ProductID,
+                ApproverID = input.ApproverID,
                 PurchaseOrderLineID = input.PurchaseOrderLineID.GetValueOrDefault(),
                 PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                QualityApprovalDate = input.QualityApprovalDate,
                 ProductReceiptTransactionID = input.ProductReceiptTransactionID.GetValueOrDefault(),
                 PurchaseOrdersAwaitingApprovalStateEnum = input.PurchaseOrdersAwaitingApprovalStateEnum,
                 CreationTime = entity.CreationTime,
                 CreatorId = entity.CreatorId,
+                ControlQuantity = input.ControlQuantity,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -410,7 +382,10 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
             var query = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Update(new UpdatePurchaseOrdersAwaitingApprovalsDto
             {
                 ProductID = entity.ProductID,
+                QualityApprovalDate = entity.QualityApprovalDate,
+                ApproverID = entity.ApproverID,
                 CreationTime = entity.CreationTime.Value,
+                ControlQuantity = entity.ControlQuantity,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,

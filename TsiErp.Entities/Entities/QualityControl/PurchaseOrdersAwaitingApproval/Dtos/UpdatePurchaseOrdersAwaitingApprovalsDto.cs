@@ -8,9 +8,17 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval
     {
 
         /// <summary>
+        /// Kontrol Adedi
+        /// </summary>
+        public DateTime QualityApprovalDate { get; set; }
+        /// <summary>
         /// Satın Alma Sipariş ID
         /// </summary>
         public Guid? PurchaseOrderID { get; set; }
+        /// <summary>
+        /// Kontrol Adedi
+        /// </summary>
+        public decimal ControlQuantity { get; set; }
         /// <summary>
         /// Satın Alma Sipariş Satır ID
         /// </summary>
@@ -27,6 +35,10 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval
         /// Stok Giriş Hareketi ID
         /// </summary>
         public Guid? ProductReceiptTransactionID { get; set; }
+        /// <summary>
+        /// Onaylayan Adı
+        /// </summary>
+        public Guid? ApproverID { get; set; }
         /// <summary>
         /// Stok Giriş Hareketi ID
         /// </summary>

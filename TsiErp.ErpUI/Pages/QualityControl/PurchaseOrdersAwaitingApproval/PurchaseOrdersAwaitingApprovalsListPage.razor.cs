@@ -1,25 +1,26 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementParameter.Services;
-using TsiErp.Business.Entities.Other.GetSQLDate.Services;
-using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
-using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
-using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
-using TsiErp.ErpUI.Helpers;
+using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using static TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder.PurchaseOrdersListPage;
+using TsiErp.ErpUI.Helpers;
+using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Entities.Enums;
+using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 {
     public partial class PurchaseOrdersAwaitingApprovalsListPage : IDisposable
     {
-        private SfGrid<SelectPurchaseOrderLinesDto> _LineGrid;
-        private SfGrid<SelectPurchaseOrdersDto> _Grid;
-
+        private SfGrid<SelectPurchaseOrdersAwaitingApprovalLinesDto> _LineGrid;
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
@@ -27,23 +28,23 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
         [Inject]
         ModalManager ModalManager { get; set; }
 
-        SelectPurchaseOrderLinesDto LineDataSource;
+        SelectPurchaseOrdersAwaitingApprovalLinesDto LineDataSource;
 
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
-        List<SelectPurchaseOrderLinesDto> GridLineList = new List<SelectPurchaseOrderLinesDto>();
+        List<SelectPurchaseOrdersAwaitingApprovalLinesDto> GridLineList = new List<SelectPurchaseOrdersAwaitingApprovalLinesDto>();
 
-        List<SelectPurchaseOrdersDto> GridList = new List<SelectPurchaseOrdersDto>();
+        public bool LineCrudPopup = false;
 
-        public bool OrdersAwatingApprovalModalVisible = false;
+        public bool PreviewPopup = false;
+
+        string UserName = string.Empty;
 
         protected override async Task OnInitializedAsync()
         {
-            BaseCrudService = PurchaseOrdersAppService;
+            BaseCrudService = PurchaseOrdersAwaitingApprovalsAppService;
             _L = L;
-
-            GridList = (await PurchaseOrdersAppService.GetQualityControlSelectListAsync()).Data.ToList();
 
             #region Context Menü Yetkilendirmesi
 
@@ -57,38 +58,15 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+
         }
 
-        #region Sipariş Onaylama İşlemleri
-
-        protected void CreateLineContextMenuItems()
-        {
-            if (LineGridContextMenu.Count() == 0)
-            {
-
-                foreach (var context in contextsList)
-                {
-                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                    if (permission)
-                    {
-                        switch (context.MenuName)
-                        {
-                            case "PurchaseOrdersAwaitingApprovalLineContextApprove":
-                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrdersAwaitingApprovalLineContextApprove"], Id = "approve" }); break;
-                            case "PurchaseOrdersAwaitingApprovalLineContextRefresh":
-                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrdersAwaitingApprovalLineContextRefresh"], Id = "refresh" }); break;
-                            default: break;
-                        }
-                    }
-                }
-            }
-        }
+        #region Operasyon Kalite Planı Satır İşlemleri
 
         protected void CreateMainContextMenuItems()
         {
             if (MainGridContextMenu.Count() == 0)
             {
-
                 foreach (var context in contextsList)
                 {
                     var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
@@ -96,10 +74,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                     {
                         switch (context.MenuName)
                         {
-                            case "PurchaseOrdersAwaitingApprovalContextApprove":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrdersAwaitingApprovalContextApprove"], Id = "approve" }); break;
-                            case "PurchaseOrdersAwaitingApprovalContextRefresh":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrdersAwaitingApprovalContextRefresh"], Id = "refresh" }); break;
+                            case "PurchaseOrdersAwaitingApprovalsContextQualityApproval":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrdersAwaitingApprovalsContextQualityApproval"], Id = "qualityapproval" }); break;
+                            case "PurchaseOrdersAwaitingApprovalsContextQualityApprovalCancel":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrdersAwaitingApprovalsContextQualityApprovalCancel"], Id = "qualityapprovalcancel" }); break;
+                            case "PurchaseOrdersAwaitingApprovalsContextReview":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrdersAwaitingApprovalsContextReview"], Id = "review" }); break;
+                            case "PurchaseOrdersAwaitingApprovalsContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrdersAwaitingApprovalsContextRefresh"], Id = "refresh" }); break;
                             default: break;
                         }
                     }
@@ -107,22 +89,146 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
             }
         }
 
-        public async void MainContextMenuClick(ContextMenuClickEventArgs<SelectPurchaseOrdersDto> args)
+        protected void CreateLineContextMenuItems()
+        {
+            if (LineGridContextMenu.Count() == 0)
+            {
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "PurchaseOrdersAwaitingApprovalLinesContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrdersAwaitingApprovalLinesContextChange"], Id = "changed" }); break;
+                            case "PurchaseOrdersAwaitingApprovalLinesContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrdersAwaitingApprovalLinesContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
+            }
+        }
+
+        public async override void ShowEditPage()
+        {
+
+            if (DataSource != null)
+            {
+
+                if (DataSource.DataOpenStatus == true && DataSource.DataOpenStatus != null)
+                {
+                    EditPageVisible = false;
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    GridLineList.Clear();
+
+                    var qualityPlan = (await PurchaseQualityPlansAppService.GetbyCurrentAccountandProductAsync(DataSource.CurrentAccountCardID.GetValueOrDefault(), DataSource.ProductID.GetValueOrDefault())).Data;
+
+                    if (qualityPlan != null && qualityPlan.Id != Guid.Empty)
+                    {
+                        var qualityPlanLines = qualityPlan.SelectPurchaseQualityPlanLines;
+
+                        if (qualityPlanLines != null && qualityPlanLines.Count > 0)
+                        {
+                            foreach (var line in qualityPlanLines)
+                            {
+                                SelectPurchaseOrdersAwaitingApprovalLinesDto approvalLineModel = new SelectPurchaseOrdersAwaitingApprovalLinesDto
+                                {
+                                    BottomTolerance = line.BottomTolerance,
+                                    ControlFrequency = line.ControlFrequency,
+                                    ControlTypesID = line.ControlTypesID,
+                                    ControlTypesName = line.ControlTypesName,
+                                    IdealMeasure = line.IdealMeasure,
+                                    UpperTolerance = line.UpperTolerance,
+                                    PurchaseOrdersAwaitingApprovalID = DataSource.Id,
+                                    MeasureValue = 0,
+                                    LineNr = GridLineList.Count + 1,
+                                };
+
+                                GridLineList.Add(approvalLineModel);
+                            }
+
+                            if(GridLineList != null && GridLineList.Count > 0)
+                            {
+                                DataSource.SelectPurchaseOrdersAwaitingApprovalLines = GridLineList;
+                            }
+
+                        }
+                    }
+
+                    UserName = (await UsersAppService.GetAsync(DataSource.ApproverID.GetValueOrDefault())).Data.UserName;
+
+                    EditPageVisible = true;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+        }
+
+        public async void MainContextMenuClick(ContextMenuClickEventArgs<ListPurchaseOrdersAwaitingApprovalsDto> args)
         {
             switch (args.Item.Id)
             {
-                case "approve":
-                    DataSource = args.RowInfo.RowData;
-                    GridLineList = DataSource.SelectPurchaseOrderLinesDto;
+                case "qualityapproval":
+                    IsChanged = true;
+                    DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    OrdersAwatingApprovalModalVisible = true;
+                    ShowEditPage();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "qualityapprovalcancel":
+
+                    DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    CancelQualityApproval();
 
                     await InvokeAsync(StateHasChanged);
                     break;
 
+                case "review":
+
+                    GridLineList.Clear();
+                    DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    GridLineList = DataSource.SelectPurchaseOrdersAwaitingApprovalLines;
+                    UserName = (await UsersAppService.GetAsync(DataSource.ApproverID.GetValueOrDefault())).Data.UserName;
+                    PreviewPopup = true;
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+
+
                 case "refresh":
-                    GridList = (await PurchaseOrdersAppService.GetQualityControlSelectListAsync()).Data.ToList();
-                    await _Grid.Refresh();
+                    await GetListDataSourceAsync();
+                    await _grid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectPurchaseOrdersAwaitingApprovalLinesDto> args)
+        {
+            switch (args.Item.Id)
+            {
+
+                case "changed":
+                    LineDataSource = args.RowInfo.RowData;
+                    LineCrudPopup = true;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+
+
+                case "refresh":
+                    await GetListDataSourceAsync();
+                    await _LineGrid.Refresh();
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -131,61 +237,168 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
             }
         }
 
-        public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectPurchaseOrderLinesDto> args)
+        public void HideLinesPopup()
         {
-            switch (args.Item.Id)
+            LineCrudPopup = false;
+        }
+
+
+        public void HidePreviewPopup()
+        {
+            PreviewPopup = false;
+        }
+
+        public async void CancelQualityApproval()
+        {
+            #region Depo Giriş Kaydı Durumu Güncelleme
+
+            var productReceiptTransaction = (await ProductReceiptTransactionsAppService.GetAsync(DataSource.ProductReceiptTransactionID.GetValueOrDefault())).Data;
+
+            if(productReceiptTransaction != null && productReceiptTransaction.Id != Guid.Empty)
             {
-               
+                productReceiptTransaction.ProductReceiptTransactionStateEnum = ProductReceiptTransactionStateEnum.KaliteKontrolOnayBekliyor;
 
-                case "approve":
-                    LineDataSource = args.RowInfo.RowData;
-                    int lineIndex = GridLineList.IndexOf(LineDataSource);
+                var updatedReceiptTransaction = ObjectMapper.Map<SelectProductReceiptTransactionsDto, UpdateProductReceiptTransactionsDto>(productReceiptTransaction);
 
-                    GridLineList[lineIndex].PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.KaliteKontrolOnayiVerildi;
-
-                    DataSource.SelectPurchaseOrderLinesDto = GridLineList;
-
-                    await _LineGrid.Refresh();
-
-                    await InvokeAsync(StateHasChanged);
-                    break;
-
-                case "refresh":
-                    await _LineGrid.Refresh();
-                    await InvokeAsync(StateHasChanged);
-                    break;
-
-                default:
-                    break;
+                await ProductReceiptTransactionsAppService.UpdateAsync(updatedReceiptTransaction);
             }
+
+            #endregion
+
+            #region Satın Alma Sipariş Satırı Durumu Güncelleme
+
+            var purchaseOrder = (await PurchaseOrdersAppService.GetAsync(DataSource.PurchaseOrderID.GetValueOrDefault())).Data;
+
+            if(purchaseOrder!= null && purchaseOrder.Id != Guid.Empty)
+            {
+                var purchaseOrderLineList = purchaseOrder.SelectPurchaseOrderLinesDto.ToList();
+
+                if(purchaseOrderLineList != null && purchaseOrderLineList.Count > 0)
+                {
+                    var updatedLine = purchaseOrderLineList.Where(t=>t.Id == DataSource.PurchaseOrderLineID.GetValueOrDefault()).FirstOrDefault();
+                    
+                    int updatedIndex = purchaseOrderLineList.IndexOf(updatedLine);
+
+                    purchaseOrder.SelectPurchaseOrderLinesDto[updatedIndex].PurchaseOrderLineStateEnum = PurchaseOrderLineStateEnum.Beklemede;
+
+                    var updatedPurchaseOrder = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(purchaseOrder);
+
+                    await PurchaseOrdersAppService.UpdateAsync(updatedPurchaseOrder);
+                }
+            }
+
+            #endregion
+
+            #region Satırları Silme
+
+            foreach (var line in DataSource.SelectPurchaseOrdersAwaitingApprovalLines)
+            {
+                await PurchaseOrdersAwaitingApprovalsAppService.DeleteAsync(line.Id);
+            }
+
+            #endregion
+        }
+
+        public async void GrantedQualityApproval()
+        {
+            #region Depo Giriş Kaydı Durumu Güncelleme
+
+            var productReceiptTransaction = (await ProductReceiptTransactionsAppService.GetAsync(DataSource.ProductReceiptTransactionID.GetValueOrDefault())).Data;
+
+            if (productReceiptTransaction != null && productReceiptTransaction.Id != Guid.Empty)
+            {
+                productReceiptTransaction.ProductReceiptTransactionStateEnum = ProductReceiptTransactionStateEnum.KaliteKontrolOnayVerildi;
+
+                var updatedReceiptTransaction = ObjectMapper.Map<SelectProductReceiptTransactionsDto, UpdateProductReceiptTransactionsDto>(productReceiptTransaction);
+
+                await ProductReceiptTransactionsAppService.UpdateAsync(updatedReceiptTransaction);
+            }
+
+            #endregion
+
+            #region Satın Alma Sipariş Satırı Durumu Güncelleme
+
+            var purchaseOrder = (await PurchaseOrdersAppService.GetAsync(DataSource.PurchaseOrderID.GetValueOrDefault())).Data;
+
+            if (purchaseOrder != null && purchaseOrder.Id != Guid.Empty)
+            {
+                var purchaseOrderLineList = purchaseOrder.SelectPurchaseOrderLinesDto.ToList();
+
+                if (purchaseOrderLineList != null && purchaseOrderLineList.Count > 0)
+                {
+                    var updatedLine = purchaseOrderLineList.Where(t => t.Id == DataSource.PurchaseOrderLineID.GetValueOrDefault()).FirstOrDefault();
+
+                    int updatedIndex = purchaseOrderLineList.IndexOf(updatedLine);
+
+                    purchaseOrder.SelectPurchaseOrderLinesDto[updatedIndex].PurchaseOrderLineStateEnum = PurchaseOrderLineStateEnum.KaliteKontrolOnayiVerildi;
+
+                    var updatedPurchaseOrder = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(purchaseOrder);
+
+                    await PurchaseOrdersAppService.UpdateAsync(updatedPurchaseOrder);
+                }
+            }
+
+            #endregion
+
+        }
+
+        protected async Task OnLineSubmit()
+        {
+            if (LineDataSource.Id == Guid.Empty)
+            {
+                if (DataSource.SelectPurchaseOrdersAwaitingApprovalLines.Any(t=>t.LineNr == LineDataSource.LineNr))
+                {
+                    int selectedLineIndex = DataSource.SelectPurchaseOrdersAwaitingApprovalLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        DataSource.SelectPurchaseOrdersAwaitingApprovalLines[selectedLineIndex] = LineDataSource;
+                    }
+                }
+                else
+                {
+                    DataSource.SelectPurchaseOrdersAwaitingApprovalLines.Add(LineDataSource);
+                }
+            }
+            else
+            {
+                int selectedLineIndex = DataSource.SelectPurchaseOrdersAwaitingApprovalLines.FindIndex(t => t.Id == LineDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    DataSource.SelectPurchaseOrdersAwaitingApprovalLines[selectedLineIndex] = LineDataSource;
+                }
+            }
+
+            GridLineList = DataSource.SelectPurchaseOrdersAwaitingApprovalLines;
+            await _LineGrid.Refresh();
+
+            HideLinesPopup();
+            await InvokeAsync(StateHasChanged);
         }
 
         protected override async Task OnSubmit()
         {
-            SelectPurchaseOrdersDto result;
+            DataSource.PurchaseOrdersAwaitingApprovalStateEnum = PurchaseOrdersAwaitingApprovalStateEnum.KaliteKontrolOnayVerildi;
+
+            var updateInput = ObjectMapper.Map<SelectPurchaseOrdersAwaitingApprovalsDto, UpdatePurchaseOrdersAwaitingApprovalsDto>(DataSource);
+
+            await PurchaseOrdersAwaitingApprovalsAppService.UpdateAsync(updateInput);
+
+            GrantedQualityApproval();
           
-            var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
+            await GetListDataSourceAsync();
 
-            result = (await UpdateAsync(updateInput)).Data;
+            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
 
-            if (result == null)
-            {
+            HideEditPage();
 
-                return;
-            }
-
-            GridList = (await PurchaseOrdersAppService.GetQualityControlSelectListAsync()).Data.ToList();
-
-            OrdersAwatingApprovalModalVisible = false;
         }
 
-        public void HideApprovalPage()
-        {
-            OrdersAwatingApprovalModalVisible = false;
-        }
 
 
         #endregion
+
 
         public void Dispose()
         {

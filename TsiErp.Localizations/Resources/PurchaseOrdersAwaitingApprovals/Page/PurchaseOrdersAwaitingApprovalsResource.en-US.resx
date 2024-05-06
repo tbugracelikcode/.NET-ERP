@@ -120,6 +120,18 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="ControlQuantityLabel" xml:space="preserve">
+    <value>Control Quantity:</value>
+  </data>
+  <data name="CurrentAccountCardCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="CurrentAccountCardName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="CurrentAccountCardNameLabel" xml:space="preserve">
+    <value>Current Account Name:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -150,11 +162,38 @@
   <data name="ExportTitle" xml:space="preserve">
     <value>Purchase Orders Awaiting Approval</value>
   </data>
+  <data name="LineGridBottomTolerance" xml:space="preserve">
+    <value>BOTTOM TOLERANCE</value>
+  </data>
+  <data name="LineGridControlFrequency" xml:space="preserve">
+    <value>CONTROL FREQUENCY</value>
+  </data>
+  <data name="LineGridControlTypesName" xml:space="preserve">
+    <value>CONTROL TYPE</value>
+  </data>
+  <data name="LineGridIdealMeasure" xml:space="preserve">
+    <value>IDEAL MEASURE</value>
+  </data>
+  <data name="LineGridLineNr" xml:space="preserve">
+    <value>LINE NO</value>
+  </data>
+  <data name="LineGridMeasureValue" xml:space="preserve">
+    <value>MEASUREMENT VALUE</value>
+  </data>
+  <data name="LineGridUpperTolerance" xml:space="preserve">
+    <value>UPPER TOLERANCE</value>
+  </data>
+  <data name="LineModalTitle" xml:space="preserve">
+    <value>Purchase Orders Awaiting Approval Lines</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
+  </data>
+  <data name="MeasureValueLineLabel" xml:space="preserve">
+    <value>Measurement Value:</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
@@ -162,10 +201,49 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="PurchaseOrderDate" xml:space="preserve">
+    <value>ORDER DATE</value>
+  </data>
+  <data name="PurchaseOrderFicheNo" xml:space="preserve">
+    <value>ORDER NO</value>
+  </data>
+  <data name="PurchaseOrderFicheNoLabel" xml:space="preserve">
+    <value>Order Fiche No:</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalLinesContextChange" xml:space="preserve">
+    <value>Add Value</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalLinesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextQualityApproval" xml:space="preserve">
+    <value>Grant Quality Approval</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextQualityApprovalCancel" xml:space="preserve">
+    <value>Cancel Quality Approval</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextReview" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalStateEnum" xml:space="preserve">
+    <value>STATUS</value>
+  </data>
+  <data name="QualityApprovalDateLabel" xml:space="preserve">
+    <value>Approval Date:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Purchase Orders Awaiting Approval</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control &gt; Transactions</value>
+  </data>
+  <data name="UserNameLabel" xml:space="preserve">
+    <value>Approver:</value>
   </data>
 </root>

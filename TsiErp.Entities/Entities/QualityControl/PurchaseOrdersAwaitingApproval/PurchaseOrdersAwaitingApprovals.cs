@@ -31,6 +31,22 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval
         /// Stok Giriş Hareketi ID
         /// </summary>
         public Guid ProductReceiptTransactionID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Onaylayan ID
+        /// </summary>
+        public Guid ApproverID { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Kontrol Adedi
+        /// </summary>
+        public decimal ControlQuantity { get; set; }
+
+        [SqlColumnType(SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Kontrol Adedi
+        /// </summary>
+        public DateTime QualityApprovalDate { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
         /// <summary>
         /// Stok Giriş Hareketi ID

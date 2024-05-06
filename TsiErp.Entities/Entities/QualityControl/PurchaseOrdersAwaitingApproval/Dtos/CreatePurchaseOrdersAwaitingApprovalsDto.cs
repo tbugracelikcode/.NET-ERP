@@ -23,9 +23,21 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval
         /// </summary>
         public Guid? ProductID { get; set; }
         /// <summary>
+        /// Kontrol Adedi
+        /// </summary>
+        public DateTime QualityApprovalDate { get; set; }
+        /// <summary>
         /// Stok Giriş Hareketi ID
         /// </summary>
         public Guid? ProductReceiptTransactionID { get; set; }
+        /// <summary>
+        /// Onaylayan Adı
+        /// </summary>
+        public Guid? ApproverID { get; set; }
+        /// <summary>
+        /// Kontrol Adedi
+        /// </summary>
+        public decimal ControlQuantity { get; set; }
         /// <summary>
         /// Stok Giriş Hareketi ID
         /// </summary>

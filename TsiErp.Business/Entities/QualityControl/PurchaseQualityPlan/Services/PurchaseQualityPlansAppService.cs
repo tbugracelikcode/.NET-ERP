@@ -477,7 +477,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                         nameof(ControlConditions.Id),
                         JoinType.Left
                     )
-                    .Where(new { PurchaseQualityPlanID = id }, false, false, Tables.PurchaseQualityPlanLines);
+                    .Where(new { PurchaseQualityPlanID = purchaseQualityPlans.Id }, false, false, Tables.PurchaseQualityPlanLines);
 
             var purchaseQualityPlanLine = queryFactory.GetList<SelectPurchaseQualityPlanLinesDto>(queryLines).ToList();
 
