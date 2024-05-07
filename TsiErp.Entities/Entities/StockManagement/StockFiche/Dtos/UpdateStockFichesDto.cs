@@ -22,6 +22,10 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// </summary>
         public string ProductionDateReferance { get; set; }
         /// <summary>
+        /// İşlem Dövizi ID
+        /// </summary>
+        public Guid? TransactionExchangeCurrencyID { get; set; }
+        /// <summary>
         /// Tarih
         /// </summary>
         public DateTime Date_ { get; set; }

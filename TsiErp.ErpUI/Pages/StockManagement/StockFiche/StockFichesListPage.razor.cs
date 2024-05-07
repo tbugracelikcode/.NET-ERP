@@ -339,6 +339,47 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
         #endregion
 
+        #region İşlem Dövizi Para Birimleri ButtonEdit
+
+        SfTextBox TransactionExchangeCurrenciesButtonEdit;
+        bool SelectTransactionExchangeCurrencyPopupVisible = false;
+        List<ListCurrenciesDto> TransactionExchangeCurrenciesList = new List<ListCurrenciesDto>();
+
+        public async Task TransactionExchangeCurrenciesOnCreateIcon()
+        {
+            var TransactionExchangeCurrenciesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, TransactionExchangeCurrenciesButtonClickEvent);
+            await TransactionExchangeCurrenciesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", TransactionExchangeCurrenciesButtonClick } });
+        }
+
+        public async void TransactionExchangeCurrenciesButtonClickEvent()
+        {
+            SelectCurrencyPopupVisible = true;
+            TransactionExchangeCurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void TransactionExchangeCurrenciesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.TransactionExchangeCurrencyID = Guid.Empty;
+                DataSource.TransactionExchangeCurrencyCode = string.Empty;
+            }
+        }
+
+        public async void TransactionExchangeCurrenciesDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrenciesDto> args)
+        {
+            var selectedCurrency = args.RowData;
+
+            if (selectedCurrency != null)
+            {
+                DataSource.TransactionExchangeCurrencyID = selectedCurrency.Id;
+                DataSource.TransactionExchangeCurrencyCode = selectedCurrency.Name;
+                SelectTransactionExchangeCurrencyPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
 
         #region Kod ButtonEdit
 

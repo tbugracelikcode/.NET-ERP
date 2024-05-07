@@ -87,6 +87,14 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// Para Birimi Kodu
         /// </summary>
         public string CurrencyCode { get; set; }
+        /// <summary>
+        /// İşlem Dövizi ID
+        /// </summary>
+        public Guid? TransactionExchangeCurrencyID { get; set; }
+        /// <summary>
+        /// İşlem Dövizi Kodu
+        /// </summary>
+        public string TransactionExchangeCurrencyCode { get; set; }
 
         /// <summary>
         /// Kur Tutarı

@@ -169,7 +169,7 @@
     <value>Cari Hesap Kartları</value>
   </data>
   <data name="CurrenyCodeLabel" xml:space="preserve">
-    <value>Para Birimi:</value>
+    <value>İşlem Dövizi:</value>
   </data>
   <data name="CustomerBarcodeNoLineLabel" xml:space="preserve">
     <value>Müşteri Barkod Numarası:</value>

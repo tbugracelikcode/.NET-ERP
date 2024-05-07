@@ -17,6 +17,7 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesProposition;
 using TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos;
@@ -79,6 +80,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                 BranchID = input.BranchID,
                 CurrencyID = input.CurrencyID,
                 CurrentAccountCardID = input.CurrentAccountCardID,
+                TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
@@ -209,7 +211,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.SalesPropositions)
-                   .Select<SalesPropositions>(sp => new { sp.WarehouseID, sp.ValidityDate_, sp.TotalVatExcludedAmount, sp.TotalVatAmount, sp.TotalDiscountAmount, sp.Time_, sp.SpecialCode, sp.ShippingAdressID, sp.RevisionTime, sp.RevisionDate, sp.SalesPropositionState, sp.PropositionRevisionNo, sp.PaymentPlanID, sp.NetAmount, sp.LinkedSalesPropositionID, sp.Id, sp.GrossAmount, sp.FicheNo, sp.ExchangeRate, sp.Description_, sp.Date_, sp.DataOpenStatusUserId, sp.DataOpenStatus, sp.CurrentAccountCardID, sp.CurrencyID, sp.BranchID })
+                   .Select<SalesPropositions>(null)
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
@@ -238,6 +240,14 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                         nameof(Currencies.Id),
                         JoinType.Left
                     )
+                      .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(SalesPropositions.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
+                        JoinType.Left
+                    )
                     .Join<CurrentAccountCards>
                     (
                         ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
@@ -259,7 +269,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.SalesPropositionLines)
-                   .Select<SalesPropositionLines>(spl => new { spl.VATrate, spl.VATamount, spl.UnitSetID, spl.UnitPrice, spl.Quantity, spl.SalesPropositionLineState, spl.SalesPropositionID, spl.ProductID, spl.PaymentPlanID, spl.OrderConversionDate, spl.LineTotalAmount, spl.LineNr, spl.LineDescription, spl.LineAmount, spl.Id, spl.ExchangeRate, spl.DiscountRate, spl.DiscountAmount, spl.DataOpenStatusUserId, spl.DataOpenStatus })
+                   .Select<SalesPropositionLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -321,7 +331,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.SalesPropositions)
-                   .Select<SalesPropositions>(sp => new { sp.WarehouseID, sp.ValidityDate_, sp.TotalVatExcludedAmount, sp.TotalVatAmount, sp.TotalDiscountAmount, sp.Time_, sp.SpecialCode, sp.ShippingAdressID, sp.RevisionTime, sp.RevisionDate, sp.SalesPropositionState, sp.PropositionRevisionNo, sp.PaymentPlanID, sp.NetAmount, sp.LinkedSalesPropositionID, sp.Id, sp.GrossAmount, sp.FicheNo, sp.ExchangeRate, sp.Description_, sp.Date_, sp.DataOpenStatusUserId, sp.DataOpenStatus, sp.CurrentAccountCardID, sp.CurrencyID, sp.BranchID })
+                   .Select<SalesPropositions>(null)
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },
@@ -348,6 +358,14 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                         c => new { CurrencyCode = c.Code },
                         nameof(SalesPropositions.CurrencyID),
                         nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                    .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(SalesPropositions.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
                         JoinType.Left
                     )
                     .Join<CurrentAccountCards>
@@ -408,6 +426,14 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                         nameof(Currencies.Id),
                         JoinType.Left
                     )
+                    .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(SalesPropositions.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
+                        JoinType.Left
+                    )
                     .Join<CurrentAccountCards>
                     (
                         ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
@@ -429,7 +455,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.SalesPropositionLines)
-                   .Select<SalesPropositionLines>(spl => new { spl.VATrate, spl.VATamount, spl.UnitSetID, spl.UnitPrice, spl.Quantity, spl.SalesPropositionLineState, spl.SalesPropositionID, spl.ProductID, spl.PaymentPlanID, spl.OrderConversionDate, spl.LineTotalAmount, spl.LineNr, spl.LineDescription, spl.LineAmount, spl.Id, spl.ExchangeRate, spl.DiscountRate, spl.DiscountAmount, spl.DataOpenStatusUserId, spl.DataOpenStatus })
+                   .Select<SalesPropositionLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -545,6 +571,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                 CurrentAccountCardID = input.CurrentAccountCardID,
                 Date_ = input.Date_,
                 Description_ = input.Description_,
+                TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 ExchangeRate = input.ExchangeRate,
                 GrossAmount = input.GrossAmount,
                 NetAmount = input.NetAmount,
@@ -684,6 +711,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                 BranchID = entity.BranchID,
                 CurrencyID = entity.CurrencyID,
                 CurrentAccountCardID = entity.CurrentAccountCardID,
+                TransactionExchangeCurrencyID = entity.TransactionExchangeCurrencyID,
                 Date_ = entity.Date_,
                 Description_ = entity.Description_,
                 ExchangeRate = entity.ExchangeRate,
@@ -733,6 +761,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                     BranchID = entity.BranchID,
                     CurrencyID = entity.CurrencyID,
                     CurrentAccountCardID = entity.CurrentAccountCardID,
+                    TransactionExchangeCurrencyID = entity.TransactionExchangeCurrencyID,
                     Date_ = entity.Date_,
                     Description_ = entity.Description_,
                     ExchangeRate = entity.ExchangeRate,

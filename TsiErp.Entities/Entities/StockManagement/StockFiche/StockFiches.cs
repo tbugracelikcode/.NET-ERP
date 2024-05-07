@@ -83,6 +83,12 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche
         /// </summary>
         public Guid CurrencyID { get; set; }
 
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// İşlem Dövizi ID
+        /// </summary>
+        public Guid TransactionExchangeCurrencyID { get; set; }
+
 
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>

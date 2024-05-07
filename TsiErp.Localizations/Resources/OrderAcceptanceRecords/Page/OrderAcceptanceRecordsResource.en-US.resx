@@ -169,7 +169,7 @@
     <value>Current Account Cards</value>
   </data>
   <data name="CurrenyCodeLabel" xml:space="preserve">
-    <value>Curreny:</value>
+    <value>Transaction Exchange Currency:</value>
   </data>
   <data name="CustomerBarcodeNoLineLabel" xml:space="preserve">
     <value>Customer Barcode Number:</value>

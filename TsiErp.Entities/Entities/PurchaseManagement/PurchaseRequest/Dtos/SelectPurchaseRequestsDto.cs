@@ -18,6 +18,14 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos
         /// </summary>
         public string FicheNo { get; set; }
         /// <summary>
+        /// İşlem Dövizi ID
+        /// </summary>
+        public Guid? TransactionExchangeCurrencyID { get; set; }
+        /// <summary>
+        /// İşlem Dövizi Kodu
+        /// </summary>
+        public string TransactionExchangeCurrencyCode { get; set; }
+        /// <summary>
         /// MRP ID
         /// </summary>
         public Guid? MRPID { get; set; }
