@@ -157,10 +157,10 @@
     <value>There is a record with the same number.</value>
   </data>
   <data name="CurrencyCode" xml:space="preserve">
-    <value>CURRENCY</value>
+    <value>LOCAL CURRENCY</value>
   </data>
   <data name="CurrencyCodeLabel" xml:space="preserve">
-    <value>Currency:</value>
+    <value>Local Currency:</value>
   </data>
   <data name="CurrencyModalGridCode" xml:space="preserve">
     <value>CURRENCY CODE</value>
@@ -479,6 +479,9 @@
   </data>
   <data name="TotalVatExcludedAmountLabel" xml:space="preserve">
     <value>Total Amount:</value>
+  </data>
+  <data name="TransactionExchangeLabel" xml:space="preserve">
+    <value>Transaction Exchange Currency:</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The sales order you selected will be permanently deleted.</value>

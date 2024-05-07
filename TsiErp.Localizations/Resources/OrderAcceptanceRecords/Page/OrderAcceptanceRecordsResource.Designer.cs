@@ -215,7 +215,7 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Para Birimi:.
+        ///   Looks up a localized string similar to İşlem Dövizi:.
         /// </summary>
         public static string CurrenyCodeLabel {
             get {

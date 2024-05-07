@@ -75,6 +75,12 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest
         /// Ödeme Planı ID
         /// </summary>
         public Guid PaymentPlanID { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// İşlem Dövizi ID
+        /// </summary>
+        public Guid TransactionExchangeCurrencyID { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Şube ID

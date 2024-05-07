@@ -108,7 +108,7 @@ namespace TsiErp.Business.Entities.User.Services
         public async Task<IDataResult<SelectUsersDto>> GetAsync(Guid id)
         {
             var query = queryFactory
-                    .Query().From(Tables.Users).Select<Users>(u => new { u.GroupID, u.Id, u.IsActive, u.Code, u.DataOpenStatus, u.DataOpenStatusUserId, u.Email, u.NameSurname, u.Password, u.UserName })
+                    .Query().From(Tables.Users).Select<Users>(null)
                         .Join<UserGroups>
                         (
                             ug => new { GroupID = ug.Id, GroupName = ug.Name },
@@ -143,7 +143,7 @@ namespace TsiErp.Business.Entities.User.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.Users).Select<Users>(u => new { u.GroupID, u.Id, u.IsActive, u.Code, u.DataOpenStatus, u.DataOpenStatusUserId, u.Email, u.NameSurname, u.Password, u.UserName })
+               .From(Tables.Users).Select<Users>(null)
                         .Join<UserGroups>
                         (
                             ug => new { GroupName = ug.Name },

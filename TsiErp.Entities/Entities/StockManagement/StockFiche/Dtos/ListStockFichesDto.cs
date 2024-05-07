@@ -57,5 +57,14 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// Net Tutar
         /// </summary>
         public decimal NetAmount { get; set; }
+
+        /// <summary>
+        /// İşlem Dövizi ID
+        /// </summary>
+        public Guid? TransactionExchangeCurrencyID { get; set; }
+        /// <summary>
+        /// İşlem Dövizi Kodu
+        /// </summary>
+        public string TransactionExchangeCurrencyCode { get; set; }
     }
 }

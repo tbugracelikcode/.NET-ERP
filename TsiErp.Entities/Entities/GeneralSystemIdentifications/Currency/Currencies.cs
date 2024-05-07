@@ -24,5 +24,10 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Yerel Para Birimi
+        /// </summary>
+        public bool IsLocalCurrency { get; set; }
     }
 }

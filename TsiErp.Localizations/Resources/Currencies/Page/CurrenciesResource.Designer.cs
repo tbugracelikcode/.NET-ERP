@@ -196,6 +196,15 @@ namespace TsiErp.Localizations.Resources.Currencies.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yerel Para Birimi:.
+        /// </summary>
+        public static string IsLocalCurrencyLabel {
+            get {
+                return ResourceManager.GetString("IsLocalCurrencyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {

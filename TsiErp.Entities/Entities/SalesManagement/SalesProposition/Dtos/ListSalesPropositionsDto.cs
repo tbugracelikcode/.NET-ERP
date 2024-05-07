@@ -17,6 +17,14 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos
         /// </summary>
         public DateTime Date_ { get; set; }
         /// <summary>
+        /// İşlem Dövizi ID
+        /// </summary>
+        public Guid? TransactionExchangeCurrencyID { get; set; }
+        /// <summary>
+        /// İşlem Dövizi Kodu
+        /// </summary>
+        public string TransactionExchangeCurrencyCode { get; set; }
+        /// <summary>
         /// Özel Kod
         /// </summary>
         public string SpecialCode { get; set; }

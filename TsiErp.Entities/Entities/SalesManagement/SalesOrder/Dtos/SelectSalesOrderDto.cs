@@ -22,6 +22,14 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// </summary>
         public string CustomerOrderNr { get; set; }
         /// <summary>
+        /// İşlem Dövizi ID
+        /// </summary>
+        public Guid? TransactionExchangeCurrencyID { get; set; }
+        /// <summary>
+        /// İşlem Dövizi Kodu
+        /// </summary>
+        public string TransactionExchangeCurrencyCode { get; set; }
+        /// <summary>
         /// Müşterinin İstediği Tarih
         /// </summary>
         public DateTime CustomerRequestedDate { get; set; }

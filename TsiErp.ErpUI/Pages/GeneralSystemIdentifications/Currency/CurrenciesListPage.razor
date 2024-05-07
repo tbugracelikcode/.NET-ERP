@@ -118,6 +118,15 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <center>
+                                <label class="TSIModalLabel"><strong>@L["IsLocalCurrencyLabel"] </strong></label><br />
+                                <SfSwitch @bind-Checked="@DataSource.IsLocalCurrency"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
                 </Items>
             </DxGridLayout>
         </BodyTemplate>

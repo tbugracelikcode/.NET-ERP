@@ -58,6 +58,7 @@ namespace TsiErp.Business.Entities.Currency.Services
             {
                 Code = input.Code,
                 Name = input.Name,
+                IsLocalCurrency = input.IsLocalCurrency,
                 IsActive = true,
                 Id = addedEntityId,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
@@ -177,6 +178,7 @@ namespace TsiErp.Business.Entities.Currency.Services
             {
                 Code = input.Code,
                 Name = input.Name,
+                IsLocalCurrency = input.IsLocalCurrency,
                 Id = input.Id,
                 IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
@@ -209,6 +211,7 @@ namespace TsiErp.Business.Entities.Currency.Services
             {
                 Code = entity.Code,
                 Name = entity.Name,
+                IsLocalCurrency = entity.IsLocalCurrency,
                 IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,

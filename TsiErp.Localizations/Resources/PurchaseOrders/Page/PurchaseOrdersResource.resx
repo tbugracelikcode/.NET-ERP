@@ -172,10 +172,10 @@
     <value>Stok Giriş Fişlerini Oluştur</value>
   </data>
   <data name="CurrencyCode" xml:space="preserve">
-    <value>PARA BİRİMİ</value>
+    <value>YEREL PARA BİRİMİ</value>
   </data>
   <data name="CurrencyCodeLabel" xml:space="preserve">
-    <value>Para Birimi:</value>
+    <value>Yerel Para Birimi:</value>
   </data>
   <data name="CurrencyModalGridCode" xml:space="preserve">
     <value>PARA BİRİMİ KODU</value>
@@ -632,5 +632,8 @@
   </data>
   <data name="WarehouseModalTitle" xml:space="preserve">
     <value>Depolar</value>
+  </data>
+  <data name="TransactionExchangeLabel" xml:space="preserve">
+    <value>İşlem Dövizi:</value>
   </data>
 </root>

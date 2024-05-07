@@ -25,6 +25,7 @@ using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.StockFiche;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
@@ -84,6 +85,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 BranchID = input.BranchID,
                 CurrencyID = input.CurrencyID,
                 CurrentAccountCardID = input.CurrentAccountCardID,
+                TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 CustomerRequestedDate = input.CustomerRequestedDate,
                 Description_ = input.Description_,
@@ -193,6 +195,8 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 BranchID = input.BranchID,
                 CurrencyID = input.CurrencyID,
                 CurrentAccountCardID = input.CurrentAccountCardID,
+                TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
+                CustomerRequestedDate = input.CustomerRequestedDate,
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
@@ -351,6 +355,14 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         nameof(Currencies.Id),
                         JoinType.Left
                     )
+                      .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(SalesOrders.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
+                        JoinType.Left
+                    )
                      .Join<CurrentAccountCards>
                     (
                         ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
@@ -468,6 +480,14 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         c => new { CurrencyCode = c.Code },
                         nameof(SalesOrders.CurrencyID),
                         nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                      .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(SalesOrders.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
                         JoinType.Left
                     )
                      .Join<CurrentAccountCards>
@@ -590,6 +610,14 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
                         nameof(SalesOrders.CurrencyID),
                         nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                      .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(SalesOrders.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
                         JoinType.Left
                     )
                      .Join<CurrentAccountCards>
@@ -734,6 +762,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 BranchID = input.BranchID,
                 CurrencyID = input.CurrencyID,
                 CurrentAccountCardID = input.CurrentAccountCardID,
+                TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 CustomerOrderNr = input.CustomerOrderNr,
@@ -881,6 +910,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 CurrencyID = entity.CurrencyID,
                 CustomerOrderNr = entity.CustomerOrderNr,
                 CurrentAccountCardID = entity.CurrentAccountCardID,
+                TransactionExchangeCurrencyID = entity.TransactionExchangeCurrencyID,
                 Date_ = entity.Date_,
                 Description_ = entity.Description_,
                 CustomerRequestedDate = entity.CustomerRequestedDate,

@@ -20,6 +20,11 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder
         /// Tarih
         /// </summary>
         public DateTime Date_ { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// İşlem Dövizi ID
+        /// </summary>
+        public Guid TransactionExchangeCurrencyID { get; set; }
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
         /// <summary>
         /// Müşterinin İstediği Tarih

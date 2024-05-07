@@ -19,5 +19,9 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+        /// <summary>
+        /// Yerel Para Birimi
+        /// </summary>
+        public bool IsLocalCurrency { get; set; }
     }
 }

@@ -178,7 +178,7 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PARA BİRİMİ.
+        ///   Looks up a localized string similar to YEREL PARA BİRİMİ.
         /// </summary>
         public static string CurrencyCode {
             get {
@@ -187,7 +187,7 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Para Birimi:.
+        ///   Looks up a localized string similar to Yerel Para Birimi:.
         /// </summary>
         public static string CurrencyCodeLabel {
             get {
@@ -1146,6 +1146,15 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         public static string TotalVatExcludedAmountLabel {
             get {
                 return ResourceManager.GetString("TotalVatExcludedAmountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Dövizi:.
+        /// </summary>
+        public static string TransactionExchangeLabel {
+            get {
+                return ResourceManager.GetString("TransactionExchangeLabel", resourceCulture);
             }
         }
         

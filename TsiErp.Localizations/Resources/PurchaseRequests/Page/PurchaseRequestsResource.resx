@@ -172,10 +172,10 @@
     <value>BİRİM SETİ</value>
   </data>
   <data name="CurrencyCode" xml:space="preserve">
-    <value>PARA BİRİMİ</value>
+    <value>YEREL PARA BİRİMİ</value>
   </data>
   <data name="CurrencyCodeLabel" xml:space="preserve">
-    <value>Para Birimi:</value>
+    <value>Yerel Para Birimi:</value>
   </data>
   <data name="CurrencyModalGridCode" xml:space="preserve">
     <value>PARA BİRİMİ KODU</value>
@@ -446,6 +446,9 @@
   </data>
   <data name="TotalVatExcludedAmountLabel" xml:space="preserve">
     <value>Toplam Tutar:</value>
+  </data>
+  <data name="TransactionExchangeLabel" xml:space="preserve">
+    <value>İşlem Dövizi:</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>Seçtiğiniz satın alma talebi, kalıcı olarak silinecektir.</value>

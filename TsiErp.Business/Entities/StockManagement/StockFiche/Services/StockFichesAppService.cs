@@ -17,6 +17,7 @@ using TsiErp.Business.Entities.StockFiche.Validations;
 using TsiErp.Business.Entities.StockMovement;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
@@ -103,6 +104,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
                 CurrencyID = input.CurrencyID,
+                TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 BranchID = input.BranchID,
                 Date_ = input.Date_,
                 Description_ = input.Description_,
@@ -303,6 +305,21 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         nameof(Warehouses.Id),
                         JoinType.Left
                     )
+                     .Join<Currencies>
+                    (
+                        w => new { CurrencyCode = w.Code, CurrencyID = w.Id },
+                        nameof(StockFiches.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(StockFiches.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
+                        JoinType.Left
+                    )
                     .Where(new { Id = id }, false, false, Tables.StockFiches);
 
             var stockFiches = queryFactory.Get<SelectStockFichesDto>(query);
@@ -381,6 +398,21 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         nameof(Warehouses.Id),
                         JoinType.Left
                     )
+                     .Join<Currencies>
+                    (
+                        w => new { CurrencyCode = w.Code, CurrencyID = w.Id },
+                        nameof(StockFiches.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(StockFiches.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
+                        JoinType.Left
+                    )
                     .Where(null, false, false, Tables.StockFiches);
 
             var stockFichesDto = queryFactory.GetList<ListStockFichesDto>(query).ToList();
@@ -416,6 +448,21 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         w => new { WarehouseCode = w.Code, WarehouseID = w.Id },
                         nameof(StockFiches.WarehouseID),
                         nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        w => new { CurrencyCode = w.Code, CurrencyID = w.Id },
+                        nameof(StockFiches.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(StockFiches.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
                         JoinType.Left
                     )
                     .Where(new { Id = input.Id }, false, false, Tables.StockFiches);
@@ -492,6 +539,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 CreatorId = entity.CreatorId,
                 InputOutputCode = input.InputOutputCode,
                 PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
+                TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -679,6 +727,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             {
                 FicheNo = entity.FicheNo,
                 CreationTime = entity.CreationTime.Value,
+                TransactionExchangeCurrencyID = entity.TransactionExchangeCurrencyID,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
