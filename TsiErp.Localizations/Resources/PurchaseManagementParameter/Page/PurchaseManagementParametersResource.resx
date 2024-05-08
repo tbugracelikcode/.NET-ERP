@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BanknoteBuying" xml:space="preserve">
+    <value>Efektif Alış</value>
+  </data>
+  <data name="BanknoteSelling" xml:space="preserve">
+    <value>Efektif Satış</value>
+  </data>
   <data name="BranchesPopupGridCode" xml:space="preserve">
     <value>ŞUBE KODU</value>
   </data>
@@ -146,6 +152,12 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="ForexBuying" xml:space="preserve">
+    <value>Döviz Alış</value>
+  </data>
+  <data name="ForexSelling" xml:space="preserve">
+    <value>Döviz Satış</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -179,6 +191,12 @@
   </data>
   <data name="PurchaseManagementParameterContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="PurchaseOrderExchangeRateTypeLabel" xml:space="preserve">
+    <value>Satın Alma Sipariş Fişleri'nde kullanılacak kur türünü seçin.</value>
+  </data>
+  <data name="PurchaseRequestExchangeRateTypeLabel" xml:space="preserve">
+    <value>Satın Alma Talep Fişleri'nde kullanılacak kur türünü seçin.</value>
   </data>
   <data name="RequestFutureDateParameterLabel" xml:space="preserve">
     <value>Satın alma talep fişlerinde ileri tarihli kayıt yapılsın.</value>

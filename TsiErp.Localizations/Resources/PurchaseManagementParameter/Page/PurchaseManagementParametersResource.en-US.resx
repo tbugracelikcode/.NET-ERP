@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BanknoteBuying" xml:space="preserve">
+    <value>Banknote Buying</value>
+  </data>
+  <data name="BanknoteSelling" xml:space="preserve">
+    <value>Banknote Selling</value>
+  </data>
   <data name="BranchesPopupGridCode" xml:space="preserve">
     <value>BRANCH CODE</value>
   </data>
@@ -146,6 +152,12 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="ForexBuying" xml:space="preserve">
+    <value>Forex Buying</value>
+  </data>
+  <data name="ForexSelling" xml:space="preserve">
+    <value>Forex Selling</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -179,6 +191,12 @@
   </data>
   <data name="PurchaseManagementParameterContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrderExchangeRateTypeLabel" xml:space="preserve">
+    <value>Select the exchange rate type to use in Purchase Orders.</value>
+  </data>
+  <data name="PurchaseRequestExchangeRateTypeLabel" xml:space="preserve">
+    <value>Select the exchange rate type to use in Purchase Requests.</value>
   </data>
   <data name="RequestFutureDateParameterLabel" xml:space="preserve">
     <value>Post-dated recording can be made in the purchase request fiches.</value>

@@ -41,6 +41,8 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
             {
                 Id = GuidGenerator.CreateGuid(),
                 OrderFutureDateParameter = input.OrderFutureDateParameter,
+                SalesOrderExchangeRateType = input.SalesOrderExchangeRateType,
+                SalesPropositionExchangeRateType = input.SalesPropositionExchangeRateType,
                 PropositionFutureDateParameter = input.PropositionFutureDateParameter
             }).UseIsDelete(false); ;
 
@@ -89,6 +91,8 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
             var query = queryFactory.Query().From(Tables.SalesManagementParameters).Update(new UpdateSalesManagementParametersDto
             {
                 OrderFutureDateParameter = input.OrderFutureDateParameter,
+                SalesPropositionExchangeRateType = input.SalesPropositionExchangeRateType,
+                SalesOrderExchangeRateType = input.SalesOrderExchangeRateType,
                 PropositionFutureDateParameter = input.PropositionFutureDateParameter,
                 Id = input.Id
             }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);

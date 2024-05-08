@@ -48,6 +48,7 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListCurrenciesDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListCurrenciesDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListCurrenciesDto.IsLocalCurrency) DisplayAsCheckBox="true" HeaderText="@L["LocalCurrency"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -122,7 +123,7 @@ else
                         <Template>
                             <center>
                                 <label class="TSIModalLabel"><strong>@L["IsLocalCurrencyLabel"] </strong></label><br />
-                                <SfSwitch @bind-Checked="@DataSource.IsLocalCurrency"></SfSwitch>
+                                <SfSwitch @bind-Checked="@DataSource.IsLocalCurrency" ></SfSwitch>
                             </center>
                         </Template>
                     </DxGridLayoutItem>

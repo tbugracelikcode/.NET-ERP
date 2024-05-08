@@ -26,5 +26,13 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManageme
         /// Depo ID
         /// </summary>
         public Guid? WarehouseID { get; set; }
+        /// <summary>
+        /// Satın Alma Sipariş Kur Türü
+        /// </summary>
+        public int PurchaseOrderExchangeRateType { get; set; }
+        /// <summary>
+        /// Satın Alma Talep Kur Türü
+        /// </summary>
+        public int PurchaseRequestExchangeRateType { get; set; }
     }
 }

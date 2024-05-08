@@ -46,22 +46,66 @@ else
                                     
                                 </td>
 
-                                 <td style="width: 30%; text-align: left;height: 80px; padding-left: 2%;">
-                                   
-                                        <label class="TSIEditFormLabel">• @L["OrderFutureDateParameterLabel"]  </label><br />
-                                    
-
-                                </td>
-
-                                <td style="width: 20%; text-align: left;height: 80px; padding-top: 1%;">
-                                        <SfSwitch  ValueChange="SalesOrderFichesChange" @bind-Checked="DataSource.OrderFutureDateParameter" TChecked="bool"></SfSwitch>
-
-                                        <SfButton CssClass="TSISaveButton" OnClick="OnClick"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
-                                    
-                                </td>
-
-
                             </tr>
+
+                                <tr>
+
+                                    <td style="width: 30%; text-align: left;height: 80px; padding-left: 2%;">
+
+                                        <label class="TSIEditFormLabel">• @L["OrderFutureDateParameterLabel"]  </label><br />
+
+
+                                    </td>
+
+                                    <td style="width: 20%; text-align: left;height: 80px; padding-top: 1%;">
+                                        <SfSwitch ValueChange="SalesOrderFichesChange" @bind-Checked="DataSource.OrderFutureDateParameter" TChecked="bool"></SfSwitch>
+                                    </td>
+
+
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 50%; text-align: left;height: 80px; padding-left: 2%;">
+
+                                        <label class="TSIEditFormLabel">•@L["SalesOrderExchangeRateTypeLabel"] </label><br />
+
+
+                                    </td>
+                                    <td style="width: 50%; text-align: left;height: 80px; padding-top: 1%;">
+                                        <SfComboBox TValue="string" Index="DataSource.SalesOrderExchangeRateType" TItem="SalesOrderExchageTypeComboBox" DataSource="@_salesOrderExchageTypeComboBox">
+                                            <ComboBoxEvents TItem="SalesOrderExchageTypeComboBox" TValue="string" ValueChange="@SalesOrderExchageTypeComboBoxValueChangeHandler"></ComboBoxEvents>
+                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                        </SfComboBox>
+
+
+                                    </td>
+
+                                </tr>
+                               
+
+                                <tr>
+                                    <td style="width: 50%; text-align: left;height: 80px; padding-left: 2%;">
+
+                                        <label class="TSIEditFormLabel">•@L["SalesPropositionExchangeRateTypeLabel"] </label><br />
+
+
+                                    </td>
+                                    <td style="width: 50%; text-align: left;height: 80px; padding-top: 1%;">
+                                        <SfComboBox TValue="string" Index="DataSource.SalesPropositionExchangeRateType" TItem="SalesPropositionExchageTypeComboBox" DataSource="@_salesPropositionExchageTypeComboBox">
+                                            <ComboBoxEvents TItem="SalesPropositionExchageTypeComboBox" TValue="string" ValueChange="@SalesPropositionExchageTypeComboBoxValueChangeHandler"></ComboBoxEvents>
+                                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                        </SfComboBox>
+
+
+                                    </td>
+
+                                </tr>
+                               
+                                <tr>
+                                    <td style=" text-align: left;height: 80px; padding-left: 2%;">
+                                        <SfButton CssClass="TSISaveButton" OnClick="OnClick"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                                    </td>
+                                </tr>
                         </table>
 
                     </CardContent>

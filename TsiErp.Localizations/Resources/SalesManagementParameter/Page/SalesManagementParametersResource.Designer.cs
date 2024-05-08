@@ -62,6 +62,24 @@ namespace TsiErp.Localizations.Resources.SalesManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Efektif Alış.
+        /// </summary>
+        public static string BanknoteBuying {
+            get {
+                return ResourceManager.GetString("BanknoteBuying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Efektif Satış.
+        /// </summary>
+        public static string BanknoteSelling {
+            get {
+                return ResourceManager.GetString("BanknoteSelling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -121,6 +139,24 @@ namespace TsiErp.Localizations.Resources.SalesManagementParameter.Page {
         public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Döviz Alış.
+        /// </summary>
+        public static string ForexBuying {
+            get {
+                return ResourceManager.GetString("ForexBuying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Döviz Satış.
+        /// </summary>
+        public static string ForexSelling {
+            get {
+                return ResourceManager.GetString("ForexSelling", resourceCulture);
             }
         }
         
@@ -211,6 +247,24 @@ namespace TsiErp.Localizations.Resources.SalesManagementParameter.Page {
         public static string SalesManagementParameterContextRefresh {
             get {
                 return ResourceManager.GetString("SalesManagementParameterContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satış Sipariş Fişleri&apos;nde kullanılacak kur türünü seçin..
+        /// </summary>
+        public static string SalesOrderExchangeRateTypeLabel {
+            get {
+                return ResourceManager.GetString("SalesOrderExchangeRateTypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verilen Teklif Fişleri&apos;nde kullanılacak kur türünü seçin..
+        /// </summary>
+        public static string SalesPropositionExchangeRateTypeLabel {
+            get {
+                return ResourceManager.GetString("SalesPropositionExchangeRateTypeLabel", resourceCulture);
             }
         }
         

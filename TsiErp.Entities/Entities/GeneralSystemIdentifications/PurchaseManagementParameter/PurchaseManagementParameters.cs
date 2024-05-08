@@ -31,5 +31,15 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManageme
         /// Depo ID
         /// </summary>
         public Guid WarehouseID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Satın Alma Sipariş Kur Türü
+        /// </summary>
+        public int PurchaseOrderExchangeRateType { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Satın Alma Talep Kur Türü
+        /// </summary>
+        public int PurchaseRequestExchangeRateType { get; set; }
     }
 }
