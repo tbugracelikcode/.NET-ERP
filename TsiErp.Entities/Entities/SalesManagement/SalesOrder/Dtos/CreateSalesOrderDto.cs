@@ -6,7 +6,28 @@ using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
 {
     public class CreateSalesOrderDto : FullAuditedEntityDto
-    {
+    {/// <summary>
+     /// İşlem Dövizi Brüt Tutar
+     /// </summary>
+        public decimal TransactionExchangeGrossAmount { get; set; }
+
+        /// <summary>
+        /// İşlem Dövizi Toplam İndirimli Tutar
+        /// </summary>
+        public decimal TransactionExchangeTotalDiscountAmount { get; set; }
+        /// <summary>
+        /// İşlem Dövizi Net Tutar
+        /// </summary>
+        public decimal TransactionExchangeNetAmount { get; set; }
+        /// <summary>
+        /// İşlem Dövizi KDV Tutar
+        /// </summary>
+        public decimal TransactionExchangeTotalVatAmount { get; set; }
+
+        /// <summary>
+        /// İşlem Dövizi KDV hariç Tutar
+        /// </summary>
+        public decimal TransactionExchangeTotalVatExcludedAmount { get; set; }
         /// <summary>
         /// Satış Fiş No
         /// </summary>

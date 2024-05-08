@@ -115,5 +115,30 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine
         /// Cari Hesap Kartı ID
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// İşlem Dövizi Birim Fiyat
+        /// </summary>
+        public decimal TransactionExchangeUnitPrice { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// İşlem Dövizi KDV Tutarı
+        /// </summary>
+        public decimal TransactionExchangeVATamount { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// İşlem Dövizi Satır Tutarı
+        /// </summary>
+        public decimal TransactionExchangeLineAmount { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// İşlem Dövizi Satır Toplar Tutarı
+        /// </summary>
+        public decimal TransactionExchangeLineTotalAmount { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        ///<summary>
+        /// İşlem Dövizi İndirim Tutarı
+        /// </summary>
+        public decimal TransactionExchangeDiscountAmount { get; set; }
     }
 }

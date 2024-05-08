@@ -138,6 +138,34 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest
         /// </summary>
         public Guid MRPID { get; set; }
 
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// İşlem Dövizi Brüt Tutar
+        /// </summary>
+        public decimal TransactionExchangeGrossAmount { get; set; }
+
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// İşlem Dövizi Toplam İndirimli Tutar
+        /// </summary>
+        public decimal TransactionExchangeTotalDiscountAmount { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// İşlem Dövizi Net Tutar
+        /// </summary>
+        public decimal TransactionExchangeNetAmount { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// İşlem Dövizi KDV Tutar
+        /// </summary>
+        public decimal TransactionExchangeTotalVatAmount { get; set; }
+
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// İşlem Dövizi KDV hariç Tutar
+        /// </summary>
+        public decimal TransactionExchangeTotalVatExcludedAmount { get; set; }
+
 
 
     }

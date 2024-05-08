@@ -1150,11 +1150,101 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İşlem Dövizi İndirim Tutarı:.
+        /// </summary>
+        public static string TransactionExchangeDiscountAmountLineLabel {
+            get {
+                return ResourceManager.GetString("TransactionExchangeDiscountAmountLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Dövizi Brüt Toplam:.
+        /// </summary>
+        public static string TransactionExchangeGrossAmountLabel {
+            get {
+                return ResourceManager.GetString("TransactionExchangeGrossAmountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İşlem Dövizi:.
         /// </summary>
         public static string TransactionExchangeLabel {
             get {
                 return ResourceManager.GetString("TransactionExchangeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Dövizi Satır Tutarı:.
+        /// </summary>
+        public static string TransactionExchangeLineAmountLineLabel {
+            get {
+                return ResourceManager.GetString("TransactionExchangeLineAmountLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Dövizi Satır Toplam Tutarı:.
+        /// </summary>
+        public static string TransactionExchangeLineTotalAmountLineLabel {
+            get {
+                return ResourceManager.GetString("TransactionExchangeLineTotalAmountLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Dövizi Net Toplam:.
+        /// </summary>
+        public static string TransactionExchangeNetAmountLabel {
+            get {
+                return ResourceManager.GetString("TransactionExchangeNetAmountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Dövizi İndirim Toplamı:.
+        /// </summary>
+        public static string TransactionExchangeTotalDiscountAmountLabel {
+            get {
+                return ResourceManager.GetString("TransactionExchangeTotalDiscountAmountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Dövizi KDV Toplamı:.
+        /// </summary>
+        public static string TransactionExchangeTotalVatAmountLabel {
+            get {
+                return ResourceManager.GetString("TransactionExchangeTotalVatAmountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Dövizi Toplam Tutar:.
+        /// </summary>
+        public static string TransactionExchangeTotalVatExcludedAmountLabel {
+            get {
+                return ResourceManager.GetString("TransactionExchangeTotalVatExcludedAmountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Dövizi Birim Fiyat:.
+        /// </summary>
+        public static string TransactionExchangeUnitPriceLineLabel {
+            get {
+                return ResourceManager.GetString("TransactionExchangeUnitPriceLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Dövizi KDV Tutarı:.
+        /// </summary>
+        public static string TransactionExchangeVATamountLineLabel {
+            get {
+                return ResourceManager.GetString("TransactionExchangeVATamountLineLabel", resourceCulture);
             }
         }
         

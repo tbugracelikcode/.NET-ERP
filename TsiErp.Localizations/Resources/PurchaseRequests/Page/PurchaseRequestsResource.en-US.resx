@@ -447,8 +447,38 @@
   <data name="TotalVatExcludedAmountLabel" xml:space="preserve">
     <value>Total Amount:</value>
   </data>
+  <data name="TransactionExchangeDiscountAmountLineLabel" xml:space="preserve">
+    <value>Transaction Exchange Discount Amount:</value>
+  </data>
+  <data name="TransactionExchangeGrossAmountLabel" xml:space="preserve">
+    <value>Transaction Exchange Gross Amount:</value>
+  </data>
   <data name="TransactionExchangeLabel" xml:space="preserve">
     <value>Transaction Exchange Currency:</value>
+  </data>
+  <data name="TransactionExchangeLineAmountLineLabel" xml:space="preserve">
+    <value>Transaction Exchange Line Amount:</value>
+  </data>
+  <data name="TransactionExchangeLineTotalAmountLineLabel" xml:space="preserve">
+    <value>Transaction Exchange Total Line Amount:</value>
+  </data>
+  <data name="TransactionExchangeNetAmountLabel" xml:space="preserve">
+    <value>Transaction Exchange Net Amount:</value>
+  </data>
+  <data name="TransactionExchangeTotalDiscountAmountLabel" xml:space="preserve">
+    <value>Transaction Exchange Total Discount Amount:</value>
+  </data>
+  <data name="TransactionExchangeTotalVatAmountLabel" xml:space="preserve">
+    <value>Transaction Exchange Total VAT Amount:</value>
+  </data>
+  <data name="TransactionExchangeTotalVatExcludedAmountLabel" xml:space="preserve">
+    <value>Transaction Exchange Total Amount:</value>
+  </data>
+  <data name="TransactionExchangeUnitPriceLineLabel" xml:space="preserve">
+    <value>Transaction Exchange Unit Price:</value>
+  </data>
+  <data name="TransactionExchangeVATamountLineLabel" xml:space="preserve">
+    <value>Transaction Exchange VAT Amount:</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The purchase request you selected will be permanently deleted.</value>
