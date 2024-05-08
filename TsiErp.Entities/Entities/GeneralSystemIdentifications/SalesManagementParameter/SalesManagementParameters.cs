@@ -21,5 +21,15 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementP
         /// Id
         /// </summary>
         public Guid Id { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Satış Sipariş Kur Türü
+        /// </summary>
+        public int SalesOrderExchangeRateType { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Verilen Teklif Kur Türü
+        /// </summary>
+        public int SalesPropositionExchangeRateType { get; set; }
     }
 }

@@ -43,6 +43,8 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
                 OrderFutureDateParameter = input.OrderFutureDateParameter,
                 RequestFutureDateParameter = input.RequestFutureDateParameter,
                 BranchID = input.BranchID,
+                PurchaseOrderExchangeRateType = input.PurchaseOrderExchangeRateType,
+                PurchaseRequestExchangeRateType = input.PurchaseRequestExchangeRateType,
                 WarehouseID = input.WarehouseID,
             }).UseIsDelete(false); ;
 
@@ -93,6 +95,8 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
                 OrderFutureDateParameter = input.OrderFutureDateParameter,
                 RequestFutureDateParameter = input.RequestFutureDateParameter,
                 Id = input.Id,
+                PurchaseRequestExchangeRateType = input.PurchaseRequestExchangeRateType,
+                PurchaseOrderExchangeRateType = input.PurchaseOrderExchangeRateType,
                 WarehouseID = input.WarehouseID,
                 BranchID = input.BranchID,
             }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);

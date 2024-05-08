@@ -171,6 +171,9 @@
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
   </data>
+  <data name="LocalCurrency" xml:space="preserve">
+    <value>YEREL PARA BİRİMİ</value>
+  </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
@@ -197,6 +200,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Genel Sistem Tanımlamaları</value>
+  </data>
+  <data name="UIWarningLocalCurrencyMessage" xml:space="preserve">
+    <value>Başka bir kayıtta yerel para birimi seçiliyken yeni bir yerel para birimi kaydı yapılamaz.</value>
+  </data>
+  <data name="UIWarningLocalCurrencyTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

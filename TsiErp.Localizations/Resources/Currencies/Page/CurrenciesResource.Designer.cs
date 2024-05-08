@@ -223,6 +223,15 @@ namespace TsiErp.Localizations.Resources.Currencies.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to YEREL PARA BİRİMİ.
+        /// </summary>
+        public static string LocalCurrency {
+            get {
+                return ResourceManager.GetString("LocalCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçtiğiniz kayıt {0} tarafından kullanılmaktadır..
         /// </summary>
         public static string MessagePopupInformationDescriptionBase {
@@ -300,6 +309,24 @@ namespace TsiErp.Localizations.Resources.Currencies.Page {
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başka bir kayıtta yerel para birimi seçiliyken yeni bir yerel para birimi kaydı yapılamaz..
+        /// </summary>
+        public static string UIWarningLocalCurrencyMessage {
+            get {
+                return ResourceManager.GetString("UIWarningLocalCurrencyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningLocalCurrencyTitle {
+            get {
+                return ResourceManager.GetString("UIWarningLocalCurrencyTitle", resourceCulture);
             }
         }
         

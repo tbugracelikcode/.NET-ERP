@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BanknoteBuying" xml:space="preserve">
+    <value>Efektif Alış</value>
+  </data>
+  <data name="BanknoteSelling" xml:space="preserve">
+    <value>Efektif Satış</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -137,6 +143,12 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="ForexBuying" xml:space="preserve">
+    <value>Döviz Alış</value>
+  </data>
+  <data name="ForexSelling" xml:space="preserve">
+    <value>Döviz Satış</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -167,6 +179,12 @@
   </data>
   <data name="SalesManagementParameterContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="SalesOrderExchangeRateTypeLabel" xml:space="preserve">
+    <value>Satış Sipariş Fişleri'nde kullanılacak kur türünü seçin.</value>
+  </data>
+  <data name="SalesPropositionExchangeRateTypeLabel" xml:space="preserve">
+    <value>Verilen Teklif Fişleri'nde kullanılacak kur türünü seçin.</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

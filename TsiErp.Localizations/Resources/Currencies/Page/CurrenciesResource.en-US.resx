@@ -171,6 +171,9 @@
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
   </data>
+  <data name="LocalCurrency" xml:space="preserve">
+    <value>LOCAL CURRENCY</value>
+  </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
   </data>
@@ -197,6 +200,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>General System Identifications</value>
+  </data>
+  <data name="UIWarningLocalCurrencyMessage" xml:space="preserve">
+    <value>A new local currency record cannot be made while the local currency is selected in another record.</value>
+  </data>
+  <data name="UIWarningLocalCurrencyTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

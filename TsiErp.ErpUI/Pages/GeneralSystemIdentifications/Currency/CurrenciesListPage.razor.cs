@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Currency
 {
@@ -16,6 +18,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Currency
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+        [Inject]
+        ModalManager ModalManager { get; set; }
 
         protected override async void OnInitialized()
         {
@@ -46,6 +50,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Currency
             return Task.CompletedTask;
         }
 
+       
+
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
             foreach (var context in contextsList)
@@ -67,6 +73,33 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Currency
                     }
                 }
             }
+        }
+
+        protected override async Task OnSubmit()
+        {
+            if(DataSource.IsLocalCurrency && ListDataSource.Any(t => t.IsLocalCurrency))
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningLocalCurrencyTitle"], L["UIWarningLocalCurrencyMessage"]);
+            }
+            else 
+            {
+                if (DataSource.Id == Guid.Empty)
+                {
+                    var createInput = ObjectMapper.Map<SelectCurrenciesDto, CreateCurrenciesDto>(DataSource);
+
+                    await CreateAsync(createInput);
+                }
+                else
+                {
+                    var updateInput = ObjectMapper.Map<SelectCurrenciesDto, UpdateCurrenciesDto>(DataSource);
+
+                    await UpdateAsync(updateInput);
+                }
+
+                await GetListDataSourceAsync();
+                HideEditPage();
+            }
+          
         }
 
 

@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Buttons;
+using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using static TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PlanningManagementParameter.PlanningManagementParametersListPage;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PurchaseManagementParameter
 {
@@ -20,6 +22,15 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PurchaseManagementPara
             _L = L;
 
             DataSource = (await PurchaseManagementParametersService.GetPurchaseManagementParametersAsync()).Data;
+
+            foreach (var item in _purchaseOrderExchageTypeComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+            foreach (var item in _purchaseRequestExchageTypeComboBox)
+            {
+                item.Text = L[item.Text];
+            }
         }
 
         private void PurchaseOrderFichesChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
@@ -146,6 +157,90 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PurchaseManagementPara
                 await InvokeAsync(StateHasChanged);
             }
         }
+        #endregion
+
+        #region ComboBox İşlemleri
+
+        public class PurchaseOrderExchageTypeComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        public class PurchaseRequestExchageTypeComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<PurchaseOrderExchageTypeComboBox> _purchaseOrderExchageTypeComboBox = new List<PurchaseOrderExchageTypeComboBox>
+        {
+            new PurchaseOrderExchageTypeComboBox(){ID = "0", Text="ForexBuying"},
+            new PurchaseOrderExchageTypeComboBox(){ID = "1", Text="ForexSelling"},
+            new PurchaseOrderExchageTypeComboBox(){ID = "2", Text="BanknoteBuying"},
+            new PurchaseOrderExchageTypeComboBox(){ID = "3", Text="BanknoteSelling"},
+        };
+
+        List<PurchaseRequestExchageTypeComboBox> _purchaseRequestExchageTypeComboBox = new List<PurchaseRequestExchageTypeComboBox>
+        {
+            new PurchaseRequestExchageTypeComboBox(){ID = "0", Text="ForexBuying"},
+            new PurchaseRequestExchageTypeComboBox(){ID = "1", Text="ForexSelling"},
+            new PurchaseRequestExchageTypeComboBox(){ID = "2", Text="BanknoteBuying"},
+            new PurchaseRequestExchageTypeComboBox(){ID = "3", Text="BanknoteSelling"},
+        };
+
+        private void PurchaseOrderExchageTypeComboBoxValueChangeHandler(ChangeEventArgs<string, PurchaseOrderExchageTypeComboBox> args)
+        {
+            if (args.ItemData != null)
+            {
+
+                switch (args.ItemData.ID)
+                {
+                    case "0":
+                        DataSource.PurchaseOrderExchangeRateType = 0;
+                        break;
+
+                    case "1":
+                        DataSource.PurchaseOrderExchangeRateType = 1;
+                        break;
+                    case "2":
+                        DataSource.PurchaseOrderExchangeRateType = 2;
+                        break;
+                    case "3":
+                        DataSource.PurchaseOrderExchangeRateType = 3;
+                        break;
+
+                    default: break;
+                }
+            }
+        }
+
+        private void PurchaseRequestExchageTypeComboBoxValueChangeHandler(ChangeEventArgs<string, PurchaseRequestExchageTypeComboBox> args)
+        {
+            if (args.ItemData != null)
+            {
+
+                switch (args.ItemData.ID)
+                {
+                    case "0":
+                        DataSource.PurchaseRequestExchangeRateType = 0;
+                        break;
+
+                    case "1":
+                        DataSource.PurchaseRequestExchangeRateType = 1;
+                        break;
+                    case "2":
+                        DataSource.PurchaseRequestExchangeRateType = 2;
+                        break;
+                    case "3":
+                        DataSource.PurchaseRequestExchangeRateType = 3;
+                        break;
+
+                    default: break;
+                }
+            }
+        }
+
         #endregion
 
 
