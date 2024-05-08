@@ -99,5 +99,17 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine
         /// MRP Satır ID
         /// </summary>
         public Guid MRPLineID { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// İşlem Dövizi Birim Fiyat
+        /// </summary>
+        public decimal TransactionExchangeUnitPrice { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// İşlem Dövizi Satır Tutarı
+        /// </summary>
+        public decimal TransactionExchangeLineAmount { get; set; }
     }
 }

@@ -10,6 +10,15 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
     public class ListStockFicheLinesDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// İşlem Dövizi Birim Fiyat
+        /// </summary>
+        public decimal TransactionExchangeUnitPrice { get; set; }
+
+        /// <summary>
+        /// İşlem Dövizi Satır Tutarı
+        /// </summary>
+        public decimal TransactionExchangeLineAmount { get; set; }
+        /// <summary>
         /// Stok Kodu
         /// </summary>
         public string ProductCode { get; set; }
