@@ -447,8 +447,38 @@
   <data name="TotalVatExcludedAmountLabel" xml:space="preserve">
     <value>Toplam Tutar:</value>
   </data>
+  <data name="TransactionExchangeDiscountAmountLineLabel" xml:space="preserve">
+    <value>İşlem Dövizi İndirim Tutarı:</value>
+  </data>
+  <data name="TransactionExchangeGrossAmountLabel" xml:space="preserve">
+    <value>İşlem Dövizi Brüt Toplam:</value>
+  </data>
   <data name="TransactionExchangeLabel" xml:space="preserve">
     <value>İşlem Dövizi:</value>
+  </data>
+  <data name="TransactionExchangeLineAmountLineLabel" xml:space="preserve">
+    <value>İşlem Dövizi Satır Tutarı:</value>
+  </data>
+  <data name="TransactionExchangeLineTotalAmountLineLabel" xml:space="preserve">
+    <value>İşlem Dövizi Satır Toplam Tutarı:</value>
+  </data>
+  <data name="TransactionExchangeNetAmountLabel" xml:space="preserve">
+    <value>İşlem Dövizi Net Toplam:</value>
+  </data>
+  <data name="TransactionExchangeTotalDiscountAmountLabel" xml:space="preserve">
+    <value>İşlem Dövizi İndirim Toplamı:</value>
+  </data>
+  <data name="TransactionExchangeTotalVatAmountLabel" xml:space="preserve">
+    <value>İşlem Dövizi KDV Toplamı:</value>
+  </data>
+  <data name="TransactionExchangeTotalVatExcludedAmountLabel" xml:space="preserve">
+    <value>İşlem Dövizi Toplam Tutar:</value>
+  </data>
+  <data name="TransactionExchangeUnitPriceLineLabel" xml:space="preserve">
+    <value>İşlem Dövizi Birim Fiyat:</value>
+  </data>
+  <data name="TransactionExchangeVATamountLineLabel" xml:space="preserve">
+    <value>İşlem Dövizi KDV Tutarı:</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>Seçtiğiniz satın alma talebi, kalıcı olarak silinecektir.</value>

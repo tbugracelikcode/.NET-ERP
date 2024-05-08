@@ -95,6 +95,11 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 ExchangeRate = input.ExchangeRate,
                 OrderAcceptanceID = input.OrderAcceptanceID.GetValueOrDefault(),
                 MaintenanceMRPID = input.MaintenanceMRPID.GetValueOrDefault(),
+                TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
+                TransactionExchangeNetAmount = input.TransactionExchangeNetAmount,
+                TransactionExchangeTotalDiscountAmount = input.TransactionExchangeTotalDiscountAmount,
+                TransactionExchangeTotalVatAmount = input.TransactionExchangeTotalVatAmount,
+                TransactionExchangeTotalVatExcludedAmount = input.TransactionExchangeTotalVatExcludedAmount,
                 TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 GrossAmount = input.GrossAmount,
                 LinkedPurchaseRequestID = Guid.Empty,
@@ -132,6 +137,11 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 var queryLine = queryFactory.Query().From(Tables.PurchaseOrderLines).Insert(new CreatePurchaseOrderLinesDto
                 {
                     DiscountAmount = item.DiscountAmount,
+                    TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
+                    TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
+                    TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
+                    TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                    TransactionExchangeVATamount = item.TransactionExchangeVATamount,
                     WorkOrderCreationDate = item.WorkOrderCreationDate,
                     DiscountRate = item.DiscountRate,
                     ExchangeRate = item.ExchangeRate,
@@ -224,6 +234,11 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 MaintenanceMRPID = input.MaintenanceMRPID.GetValueOrDefault(),
                 TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 Date_ = input.Date_,
+                TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
+                TransactionExchangeNetAmount = input.TransactionExchangeNetAmount,
+                TransactionExchangeTotalDiscountAmount = input.TransactionExchangeTotalDiscountAmount,
+                TransactionExchangeTotalVatAmount = input.TransactionExchangeTotalVatAmount,
+                TransactionExchangeTotalVatExcludedAmount = input.TransactionExchangeTotalVatExcludedAmount,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
                 OrderAcceptanceID = input.OrderAcceptanceID.GetValueOrDefault(),
@@ -272,6 +287,11 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     LineDescription = item.LineDescription,
                     SupplyDate = item.SupplyDate,
                     LineTotalAmount = item.LineTotalAmount,
+                    TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
+                    TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
+                    TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
+                    TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                    TransactionExchangeVATamount = item.TransactionExchangeVATamount,
                     SupplierBillNo = item.SupplierBillNo,
                     SupplierWaybillNo = item.SupplierWaybillNo,
                     LinkedPurchaseRequestID = Guid.Empty,
@@ -755,19 +775,25 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             }
             #endregion
 
+            #region Depo Onaya Göre İrsaliye Durumu Belirleme
 
-            if (!input.SelectPurchaseOrderLinesDto.Any(t => t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.Onaylandi || t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.KismiOnaylandi))
+            if (input.SelectPurchaseOrderLinesDto != null && input.SelectPurchaseOrderLinesDto.Count > 0)
             {
-                input.PurchaseOrderWayBillStatusEnum = 1;
+                if (!input.SelectPurchaseOrderLinesDto.Any(t => t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.Onaylandi || t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.KismiOnaylandi))
+                {
+                    input.PurchaseOrderWayBillStatusEnum = 1;
+                }
+                else if (!input.SelectPurchaseOrderLinesDto.Any(t => t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.Beklemede && t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.KismiOnaylandi))
+                {
+                    input.PurchaseOrderWayBillStatusEnum = 3;
+                }
+                else
+                {
+                    input.PurchaseOrderWayBillStatusEnum = 2;
+                }
             }
-            else if (input.SelectPurchaseOrderLinesDto.Any(t => t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.Beklemede && t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.KismiOnaylandi))
-            {
-                input.PurchaseOrderWayBillStatusEnum = 2;
-            }
-            else if (!input.SelectPurchaseOrderLinesDto.Any(t => t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.Beklemede && t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.KismiOnaylandi))
-            {
-                input.PurchaseOrderWayBillStatusEnum = 3;
-            }
+
+            #endregion
 
             var query = queryFactory.Query().From(Tables.PurchaseOrders).Update(new UpdatePurchaseOrdersDto
             {
@@ -776,6 +802,11 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 CurrencyID = input.CurrencyID.GetValueOrDefault(),
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Date_ = input.Date_,
+                TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
+                TransactionExchangeNetAmount = input.TransactionExchangeNetAmount,
+                TransactionExchangeTotalDiscountAmount = input.TransactionExchangeTotalDiscountAmount,
+                TransactionExchangeTotalVatAmount = input.TransactionExchangeTotalVatAmount,
+                TransactionExchangeTotalVatExcludedAmount = input.TransactionExchangeTotalVatExcludedAmount,
                 Description_ = input.Description_,
                 OrderAcceptanceID = input.OrderAcceptanceID.GetValueOrDefault(),
                 TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
@@ -824,6 +855,11 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         ExchangeRate = item.ExchangeRate,
                         LikedPurchaseRequestLineID = item.LikedPurchaseRequestLineID.GetValueOrDefault(),
                         LineAmount = item.LineAmount,
+                        TransactionExchangeVATamount = item.TransactionExchangeVATamount,
+                        TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                        TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
+                        TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
+                        TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
                         LineDescription = item.LineDescription,
                         PurchaseOrderLineWayBillStatusEnum = (int)item.PurchaseOrderLineWayBillStatusEnum,
                         LineTotalAmount = item.LineTotalAmount,
@@ -897,6 +933,11 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             PurchaseOrderLineWayBillStatusEnum = (int)item.PurchaseOrderLineWayBillStatusEnum,
                             PurchaseOrderLineStateEnum = (int)item.PurchaseOrderLineStateEnum,
                             UnitPrice = item.UnitPrice,
+                            TransactionExchangeVATamount = item.TransactionExchangeVATamount,
+                            TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                            TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
+                            TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
+                            TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
                             SupplyDate = item.SupplyDate,
                             SupplierBillNo = item.SupplierBillNo,
                             SupplierWaybillNo = item.SupplierWaybillNo,
@@ -963,6 +1004,11 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 Date_ = entity.Date_,
                 Description_ = entity.Description_,
                 ExchangeRate = entity.ExchangeRate,
+                TransactionExchangeTotalVatExcludedAmount = entity.TransactionExchangeTotalVatExcludedAmount,
+                TransactionExchangeTotalVatAmount = entity.TransactionExchangeTotalVatAmount,
+                TransactionExchangeTotalDiscountAmount = entity.TransactionExchangeTotalDiscountAmount,
+                TransactionExchangeNetAmount = entity.TransactionExchangeNetAmount,
+                TransactionExchangeGrossAmount = entity.TransactionExchangeGrossAmount,
                 OrderAcceptanceID = entity.OrderAcceptanceID.GetValueOrDefault(),
                 TransactionExchangeCurrencyID = entity.TransactionExchangeCurrencyID,
                 GrossAmount = entity.GrossAmount,

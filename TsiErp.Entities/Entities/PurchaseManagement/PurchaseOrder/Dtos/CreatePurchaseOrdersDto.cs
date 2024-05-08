@@ -1,13 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
+﻿using Tsi.Core.Entities.Auditing;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
-using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
 {
@@ -129,6 +122,29 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
         /// Sipariş Kabul ID
         /// </summary>
         public Guid? OrderAcceptanceID { get; set; }
+
+        /// <summary>
+        /// İşlem Dövizi Brüt Tutar
+        /// </summary>
+        public decimal TransactionExchangeGrossAmount { get; set; }
+
+        /// <summary>
+        /// İşlem Dövizi Toplam İndirimli Tutar
+        /// </summary>
+        public decimal TransactionExchangeTotalDiscountAmount { get; set; }
+        /// <summary>
+        /// İşlem Dövizi Net Tutar
+        /// </summary>
+        public decimal TransactionExchangeNetAmount { get; set; }
+        /// <summary>
+        /// İşlem Dövizi KDV Tutar
+        /// </summary>
+        public decimal TransactionExchangeTotalVatAmount { get; set; }
+
+        /// <summary>
+        /// İşlem Dövizi KDV hariç Tutar
+        /// </summary>
+        public decimal TransactionExchangeTotalVatExcludedAmount { get; set; }
         [NoDatabaseAction]
         public List<SelectPurchaseOrderLinesDto> SelectPurchaseOrderLinesDto { get; set; }
     }

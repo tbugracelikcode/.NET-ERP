@@ -12,6 +12,26 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos
     public class SelectSalesOrderLinesDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// İşlem Dövizi Birim Fiyat
+        /// </summary>
+        public decimal TransactionExchangeUnitPrice { get; set; }
+        /// <summary>
+        /// İşlem Dövizi KDV Tutarı
+        /// </summary>
+        public decimal TransactionExchangeVATamount { get; set; }
+        /// <summary>
+        /// İşlem Dövizi Satır Tutarı
+        /// </summary>
+        public decimal TransactionExchangeLineAmount { get; set; }
+        /// <summary>
+        /// İşlem Dövizi Satır Toplar Tutarı
+        /// </summary>
+        public decimal TransactionExchangeLineTotalAmount { get; set; }
+        ///<summary>
+        /// İşlem Dövizi İndirim Tutarı
+        /// </summary>
+        public decimal TransactionExchangeDiscountAmount { get; set; }
+        /// <summary>
         /// Satış Sipariş ID
         /// </summary>
         public Guid SalesOrderID { get; set; }

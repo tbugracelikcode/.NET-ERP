@@ -1,12 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
-using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
-using TsiErp.Entities.Enums;
+﻿using Tsi.Core.Entities.Auditing;
 
 namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
 {
@@ -152,5 +144,27 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
         /// Tedarikçi Referans No
         /// </summary>
         public string SupplierReferenceNo { get; set; }
+
+
+        /// <summary>
+        /// İşlem Dövizi Birim Fiyat
+        /// </summary>
+        public decimal TransactionExchangeUnitPrice { get; set; }
+        /// <summary>
+        /// İşlem Dövizi KDV Tutarı
+        /// </summary>
+        public decimal TransactionExchangeVATamount { get; set; }
+        /// <summary>
+        /// İşlem Dövizi Satır Tutarı
+        /// </summary>
+        public decimal TransactionExchangeLineAmount { get; set; }
+        /// <summary>
+        /// İşlem Dövizi Satır Toplar Tutarı
+        /// </summary>
+        public decimal TransactionExchangeLineTotalAmount { get; set; }
+        ///<summary>
+        /// İşlem Dövizi İndirim Tutarı
+        /// </summary>
+        public decimal TransactionExchangeDiscountAmount { get; set; }
     }
 }

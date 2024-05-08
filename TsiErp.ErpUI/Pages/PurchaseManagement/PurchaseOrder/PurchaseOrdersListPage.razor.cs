@@ -1281,6 +1281,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 {
                     LineDataSource.DiscountRate = 0;
                     LineDataSource.DiscountAmount = 0;
+                    LineDataSource.TransactionExchangeDiscountAmount = 0;
                 }
             }
             else
@@ -1289,6 +1290,16 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             }
 
             LineDataSource.LineTotalAmount = LineDataSource.LineAmount + LineDataSource.VATamount;
+
+            #region İşlem Dövizi Hesaplamaları
+
+            LineDataSource.TransactionExchangeLineAmount = (LineDataSource.Quantity * LineDataSource.TransactionExchangeUnitPrice) - LineDataSource.TransactionExchangeDiscountAmount;
+
+            LineDataSource.TransactionExchangeVATamount = (LineDataSource.TransactionExchangeLineAmount * LineDataSource.VATrate) / 100;
+
+
+            LineDataSource.TransactionExchangeLineTotalAmount = LineDataSource.TransactionExchangeLineAmount + LineDataSource.TransactionExchangeVATamount;
+            #endregion
 
             await InvokeAsync(StateHasChanged);
         }
@@ -1300,6 +1311,12 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             DataSource.TotalVatExcludedAmount = DataSource.GrossAmount - DataSource.TotalDiscountAmount;
             DataSource.TotalVatAmount = GridLineList.Sum(x => x.VATamount);
             DataSource.NetAmount = GridLineList.Sum(x => x.LineTotalAmount);
+
+            DataSource.TransactionExchangeGrossAmount = GridLineList.Sum(x => x.TransactionExchangeLineAmount) + GridLineList.Sum(x => x.TransactionExchangeDiscountAmount);
+            DataSource.TransactionExchangeTotalDiscountAmount = GridLineList.Sum(x => x.TransactionExchangeDiscountAmount);
+            DataSource.TransactionExchangeTotalVatExcludedAmount = DataSource.TransactionExchangeGrossAmount - DataSource.TransactionExchangeTotalDiscountAmount;
+            DataSource.TransactionExchangeTotalVatAmount = GridLineList.Sum(x => x.TransactionExchangeVATamount);
+            DataSource.TransactionExchangeNetAmount = GridLineList.Sum(x => x.TransactionExchangeLineTotalAmount);
         }
 
         protected override async Task OnSubmit()

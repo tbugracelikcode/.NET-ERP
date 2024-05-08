@@ -508,7 +508,7 @@
     <value>Uyarı</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
-    <value>Sipariş Onay Kayıtları</value>
+    <value>Sipariş Kabul Kayıtları</value>
   </data>
   <data name="UILineIncludeEmptyProductMessage" xml:space="preserve">
     <value>Satırlarda stok kartı kaydı olmayan ürünler mevcut.</value>

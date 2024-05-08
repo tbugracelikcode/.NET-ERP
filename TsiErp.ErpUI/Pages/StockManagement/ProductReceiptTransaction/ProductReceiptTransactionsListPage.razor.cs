@@ -14,6 +14,7 @@ using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddressLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockShelf.Dtos;
+using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
@@ -102,11 +103,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
 
                     var purchaseOrderLine = (await PurchaseOrdersAppService.GetAsync(DataSource.PurchaseOrderID.GetValueOrDefault())).Data.SelectPurchaseOrderLinesDto.Where(t => t.Id == DataSource.PurchaseOrderLineID.GetValueOrDefault()).FirstOrDefault();
 
-                    if(purchaseOrderLine != null && purchaseOrderLine.Id != Guid.Empty)
+                    if (purchaseOrderLine != null && purchaseOrderLine.Id != Guid.Empty)
                     {
                         var purchaseOrderLineState = purchaseOrderLine.PurchaseOrderLineStateEnum;
 
-                        if(purchaseOrderLineState == Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi)
+                        if (purchaseOrderLineState == Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi)
                         {
                             await ModalManager.WarningPopupAsync(L["UIWarningStockTitle"], L["UIWarningStockMessage"]);
                         }
@@ -125,7 +126,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
 
                     DataSource = (await ProductReceiptTransactionsService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if(DataSource.ProductReceiptTransactionStateEnum == Entities.Enums.ProductReceiptTransactionStateEnum.KaliteKontrolOnayVerildi)
+                    if (DataSource.ProductReceiptTransactionStateEnum == Entities.Enums.ProductReceiptTransactionStateEnum.KaliteKontrolOnayVerildi)
                     {
                         GrantWarehouseApprovalVisible = true;
                     }
@@ -179,13 +180,54 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
 
         public async void OnGrantWarehouseApprovalSubmit()
         {
-            if(!string.IsNullOrEmpty(DataSource.PartyNo) && DataSource.WarehouseReceiptQuantity > 0)
+            if (!string.IsNullOrEmpty(DataSource.PartyNo) && DataSource.WarehouseReceiptQuantity > 0)
             {
                 DataSource.ProductReceiptTransactionStateEnum = Entities.Enums.ProductReceiptTransactionStateEnum.DepoOnayiVerildi;
+
                 var updatedEntity = ObjectMapper.Map<SelectProductReceiptTransactionsDto, UpdateProductReceiptTransactionsDto>(DataSource);
+
                 await ProductReceiptTransactionsService.UpdateAsync(updatedEntity);
-                GrantWarehouseApprovalVisible = false;
+
                 await GetListDataSourceAsync();
+
+                #region Sipariş ve Sipariş Satır İrsaliye Durumunu Güncelleme
+
+                var purchaseOrder = (await PurchaseOrdersAppService.GetAsync(DataSource.PurchaseOrderID.GetValueOrDefault())).Data;
+
+                if (purchaseOrder != null && purchaseOrder.Id != Guid.Empty && purchaseOrder.SelectPurchaseOrderLinesDto != null && purchaseOrder.SelectPurchaseOrderLinesDto.Count > 0)
+                {
+                    var purchaseOrderLine = purchaseOrder.SelectPurchaseOrderLinesDto.Where(t => t.Id == DataSource.PurchaseOrderLineID.GetValueOrDefault()).FirstOrDefault();
+
+                    if (purchaseOrderLine != null)
+                    {
+                        int lineIndex = purchaseOrder.SelectPurchaseOrderLinesDto.IndexOf(purchaseOrderLine);
+
+                        #region Sipariş Satır Onaylanma Durumu
+
+                        var grantedApprovalList = ListDataSource.Where(t => t.PurchaseOrderLineID == DataSource.PurchaseOrderLineID && t.ProductReceiptTransactionStateEnum == ProductReceiptTransactionStateEnum.DepoOnayiVerildi).ToList();
+
+                        if (grantedApprovalList.Select(t=>t.WarehouseReceiptQuantity).Sum() >= DataSource.PurchaseOrderQuantity)
+                        {
+                            purchaseOrder.SelectPurchaseOrderLinesDto[lineIndex].PurchaseOrderLineStateEnum = PurchaseOrderLineStateEnum.Onaylandı;
+                        }
+                        else if(grantedApprovalList.Select(t => t.WarehouseReceiptQuantity).Sum() < DataSource.PurchaseOrderQuantity)
+                        {
+                            purchaseOrder.SelectPurchaseOrderLinesDto[lineIndex].PurchaseOrderLineStateEnum = PurchaseOrderLineStateEnum.KismiOnayVerildi;
+                        }
+
+                        #endregion
+
+                        purchaseOrder.SelectPurchaseOrderLinesDto[lineIndex].PurchaseOrderLineWayBillStatusEnum = PurchaseOrderLineWayBillStatusEnum.Onaylandi;
+
+                        var updatedPurchaseOrderEntity = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(purchaseOrder);
+
+                        await PurchaseOrdersAppService.UpdateAsync(updatedPurchaseOrderEntity);
+                    }
+                }
+
+                #endregion
+
+                GrantWarehouseApprovalVisible = false;
             }
             else
             {
@@ -256,17 +298,17 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
 
         public async void ProductsCodeButtonClickEvent()
         {
-            if(DataSource.PurchaseOrderID != null && DataSource.PurchaseOrderID != Guid.Empty)
+            if (DataSource.PurchaseOrderID != null && DataSource.PurchaseOrderID != Guid.Empty)
             {
-               var productsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
+                var productsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
 
                 var purchaseOrderLines = (await PurchaseOrdersAppService.GetAsync(DataSource.PurchaseOrderID.GetValueOrDefault())).Data.SelectPurchaseOrderLinesDto;
 
-                foreach(var product in purchaseOrderLines)
+                foreach (var product in purchaseOrderLines)
                 {
                     var addedProduct = productsList.Where(t => t.Id == product.ProductID.GetValueOrDefault()).FirstOrDefault();
 
-                    if(addedProduct != null && addedProduct.Id != Guid.Empty)
+                    if (addedProduct != null && addedProduct.Id != Guid.Empty)
                     {
                         ProductsList.Add(addedProduct);
                     }
@@ -280,7 +322,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningPurchaseOrderTitle"], L["UIWarningPurchaseOrderMessage"]);
             }
-            
+
             await InvokeAsync(StateHasChanged);
         }
         public async Task ProductsNameOnCreateIcon()
@@ -342,11 +384,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
                 DataSource.ProductName = selectedProduct.Name;
                 DataSource.SupplierProductCode = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(DataSource.ProductID.GetValueOrDefault(), DataSource.CurrentAccountCardID.GetValueOrDefault());
 
-                var purchaseOrderLine = (await PurchaseOrdersAppService.GetAsync(DataSource.PurchaseOrderID.GetValueOrDefault())).Data.SelectPurchaseOrderLinesDto.Where(t=>t.ProductID == selectedProduct.Id).FirstOrDefault();
+                var purchaseOrderLine = (await PurchaseOrdersAppService.GetAsync(DataSource.PurchaseOrderID.GetValueOrDefault())).Data.SelectPurchaseOrderLinesDto.Where(t => t.ProductID == selectedProduct.Id).FirstOrDefault();
 
-                if(purchaseOrderLine != null && purchaseOrderLine.Id != Guid.Empty)
+                if (purchaseOrderLine != null && purchaseOrderLine.Id != Guid.Empty)
                 {
-                    DataSource.PurchaseOrderLineID = purchaseOrderLine.Id;  
+                    DataSource.PurchaseOrderLineID = purchaseOrderLine.Id;
                     DataSource.PurchaseOrderQuantity = purchaseOrderLine.Quantity;
                 }
 
