@@ -784,6 +784,13 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
         {
             LineDataSource.LineAmount = LineDataSource.Quantity * LineDataSource.UnitPrice;
 
+            await Task.CompletedTask;
+        }
+
+        public async void LineCalculate2()
+        {
+
+            LineDataSource.TransactionExchangeLineAmount = LineDataSource.Quantity * LineDataSource.TransactionExchangeUnitPrice;
 
             await Task.CompletedTask;
         }

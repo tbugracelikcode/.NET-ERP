@@ -1,11 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Enums;
+﻿using Tsi.Core.Entities.Auditing;
 
 namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
 {
@@ -85,5 +78,14 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
         /// MRP Satır ID
         /// </summary>
         public Guid? MRPLineID { get; set; }
+        /// <summary>
+        /// İşlem Dövizi Birim Fiyat
+        /// </summary>
+        public decimal TransactionExchangeUnitPrice { get; set; }
+
+        /// <summary>
+        /// İşlem Dövizi Satır Tutarı
+        /// </summary>
+        public decimal TransactionExchangeLineAmount { get; set; }
     }
 }

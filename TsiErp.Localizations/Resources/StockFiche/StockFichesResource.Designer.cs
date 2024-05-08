@@ -763,6 +763,24 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İşlem Dövizi Satır Tutarı:.
+        /// </summary>
+        public static string TransactionExchangeLineAmountLabel {
+            get {
+                return ResourceManager.GetString("TransactionExchangeLineAmountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Dövizi Birim Fiyat:.
+        /// </summary>
+        public static string TransactionExchangeUnitPriceLabel {
+            get {
+                return ResourceManager.GetString("TransactionExchangeUnitPriceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçtiğiniz stok fişi kalıcı olarak silinecektir..
         /// </summary>
         public static string UIConfirmationPopupMessageBase {

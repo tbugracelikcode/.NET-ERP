@@ -351,6 +351,12 @@
   <data name="TransactionExchangeLabel" xml:space="preserve">
     <value>İşlem Dövizi:</value>
   </data>
+  <data name="TransactionExchangeLineAmountLabel" xml:space="preserve">
+    <value>İşlem Dövizi Satır Tutarı:</value>
+  </data>
+  <data name="TransactionExchangeUnitPriceLabel" xml:space="preserve">
+    <value>İşlem Dövizi Birim Fiyat:</value>
+  </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>Seçtiğiniz stok fişi kalıcı olarak silinecektir.</value>
   </data>
