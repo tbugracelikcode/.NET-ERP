@@ -16,6 +16,12 @@ using TsiErp.Entities.Enums;
 using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using System.Timers;
+using static DevExpress.XtraPrinting.Native.ExportOptionsPropertiesNames;
+using Syncfusion.Blazor.Inputs;
+using TsiErp.ErpUI.Services;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 {
@@ -59,6 +65,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+
+            StartTimer();
 
         }
 
@@ -181,6 +189,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
             {
                 case "qualityapproval":
                     IsChanged = true;
+
+                    foreach (var item in states)
+                    {
+                        item.PurchaseOrdersAwaitingApprovalStateEnumName = L[item.PurchaseOrdersAwaitingApprovalStateEnumName];
+                    }
+
                     DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     ShowEditPage();
@@ -199,6 +213,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                 case "review":
 
                     GridLineList.Clear();
+
+                    foreach (var item in states)
+                    {
+                        item.PurchaseOrdersAwaitingApprovalStateEnumName = L[item.PurchaseOrdersAwaitingApprovalStateEnumName];
+                    }
+
                     DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectPurchaseOrdersAwaitingApprovalLines;
                     UserName = (await UsersAppService.GetAsync(DataSource.ApproverID.GetValueOrDefault())).Data.UserName;
@@ -247,10 +267,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
         }
 
 
-        public void HidePreviewPopup()
-        {
-            PreviewPopup = false;
-        }
 
         public async void CancelQualityApproval()
         {
@@ -410,6 +426,136 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
             base.HideEditPage();
         }
 
+
+
+        #endregion
+
+        #region Teknik Resim Görüntüleme İşlemleri
+
+        #region Değişkenler
+
+        List<System.IO.FileInfo> uploadedfiles = new List<System.IO.FileInfo>();
+
+        bool UploadedFile = false;
+
+        bool ImagePreviewPopup = false;
+
+        string previewImagePopupTitle = string.Empty;
+
+        string imageDataUri;
+
+        string PDFrootPath;
+
+        bool image = false;
+
+        bool pdf = false;
+
+        string PDFFileName;
+
+        #endregion
+
+        private async void PreviewUploadedImage()
+        {
+            string webrootpath = FileUploadService.GetRootPath();
+            string qualityPlanPath = @"\UploadedFiles\QualityControl\PurchaseQualityPlan\" + DataSource.CurrentAccountCardName + @"\" + DataSource.ProductCode + @"\";
+            DirectoryInfo qualityPlan = new DirectoryInfo(webrootpath + qualityPlanPath);
+            if (qualityPlan.Exists)
+            {
+                System.IO.FileInfo[] exactFilesQualityPlan = qualityPlan.GetFiles();
+
+                if (exactFilesQualityPlan.Length > 0 && exactFilesQualityPlan != null)
+                {
+                    var file = exactFilesQualityPlan[0];
+
+                    string format = file.Extension;
+
+                    UploadedFile = true;
+
+                    string rootpath = FileUploadService.GetRootPath();
+
+                    if (format == ".jpg" || format == ".jpeg" || format == ".png")
+                    {
+                        imageDataUri = @"\UploadedFiles\QualityControl\PurchaseQualityPlan\" + DataSource.CurrentAccountCardName + @"\" + DataSource.ProductCode + @"\" + file.Name;
+
+                        image = true;
+
+                        pdf = false;
+
+                        ImagePreviewPopup = true;
+                    }
+
+                    else if (format == ".pdf")
+                    {
+
+                        PDFrootPath = "wwwroot/UploadedFiles/QualityControl/PurchaseQualityPlan/" + DataSource.CurrentAccountCardName + "/" + DataSource.ProductCode + "/" + file.Name;
+
+                        PDFFileName = file.Name;
+
+                        previewImagePopupTitle = file.Name;
+
+                        pdf = true;
+
+                        image = false;
+
+                        ImagePreviewPopup = true;
+                    }
+
+                }
+
+                else
+                {
+                    await ModalManager.MessagePopupAsync(L["UIInformationFileTitle"], L["UIInformationFileMessage"]);
+                }
+
+
+                await InvokeAsync(() => StateHasChanged());
+
+            }
+            else
+            {
+                await ModalManager.MessagePopupAsync(L["UIInformationFileTitle"], L["UIInformationFileMessage"]);
+            }
+        }
+
+
+        public void HidePreviewPopup()
+        {
+            ImagePreviewPopup = false;
+
+            if (!UploadedFile)
+            {
+                if (pdf)
+                {
+                    System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
+                    if (pdfFile.Exists)
+                    {
+                        pdfFile.Delete();
+                    }
+                }
+            }
+        }
+
+
+        #endregion
+
+        #region Kalite Ekranı Durum Enum Combobox
+
+        public IEnumerable<SelectPurchaseOrdersAwaitingApprovalsDto> states = GetEnumDisplayApprovalStateNames<PurchaseOrdersAwaitingApprovalStateEnum>();
+
+        public static List<SelectPurchaseOrdersAwaitingApprovalsDto> GetEnumDisplayApprovalStateNames<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<PurchaseOrdersAwaitingApprovalStateEnum>()
+                       .Select(x => new SelectPurchaseOrdersAwaitingApprovalsDto
+                       {
+                           PurchaseOrdersAwaitingApprovalStateEnum = x,
+                           PurchaseOrdersAwaitingApprovalStateEnumName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
+        }
 
 
         #endregion

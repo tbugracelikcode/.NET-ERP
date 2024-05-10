@@ -548,7 +548,7 @@ namespace TsiErp.Localizations.Resources.ProductReceiptTransactions.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parti numarası ve depo giriş miktarı olmadan kaydedilemez..
+        ///   Looks up a localized string similar to Depo giriş miktarı olmadan kaydedilemez..
         /// </summary>
         public static string UIWarningPartyNoQuantityMessage {
             get {

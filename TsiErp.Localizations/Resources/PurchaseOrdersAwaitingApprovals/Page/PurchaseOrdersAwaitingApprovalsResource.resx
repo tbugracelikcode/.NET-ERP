@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApprovedQuantityLabel" xml:space="preserve">
+    <value>Onaylanan Adet:</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -144,14 +147,23 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Onay Bekleyen Satın Alma Siparişleri</value>
   </data>
   <data name="EnumAwaitingQualityControlApproval" xml:space="preserve">
-    <value>Kalite Kontrol Onay Bekleniyor</value>
+    <value>Onay Bekleniyor</value>
+  </data>
+  <data name="EnumPartialApproval" xml:space="preserve">
+    <value>Şartlı Onaylandı</value>
   </data>
   <data name="EnumQualityControlApproved" xml:space="preserve">
-    <value>Kalite Kontrol Onayı Verildi</value>
+    <value>Onayı Verildi</value>
+  </data>
+  <data name="EnumReject" xml:space="preserve">
+    <value>Red Edildi</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
@@ -201,6 +213,9 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="PreviewButton" xml:space="preserve">
+    <value>Teknik Resmi Görüntüle</value>
+  </data>
   <data name="PurchaseOrderDate" xml:space="preserve">
     <value>SİPARİŞ TARİHİ</value>
   </data>
@@ -231,6 +246,9 @@
   <data name="PurchaseOrdersAwaitingApprovalStateEnum" xml:space="preserve">
     <value>DURUM</value>
   </data>
+  <data name="PurchaseOrdersAwaitingApprovalStateEnumLabel" xml:space="preserve">
+    <value>Durum:</value>
+  </data>
   <data name="QualityApprovalDateLabel" xml:space="preserve">
     <value>Kalite Onay Tarihi:</value>
   </data>
@@ -239,6 +257,12 @@
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Onay Bekleyen Satın Alma Siparişleri</value>
+  </data>
+  <data name="UIInformationFileMessage" xml:space="preserve">
+    <value>Böyle bir teknik resim bulunmamaktadır.</value>
+  </data>
+  <data name="UIInformationFileTitle" xml:space="preserve">
+    <value>Bilgi</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Hareketler</value>

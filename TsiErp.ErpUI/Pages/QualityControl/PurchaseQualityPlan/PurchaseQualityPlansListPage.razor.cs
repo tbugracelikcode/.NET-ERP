@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorInputFile;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
@@ -12,6 +14,8 @@ using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.ErpUI.Helpers;
+using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
@@ -33,6 +37,28 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectPurchaseQualityPlanLinesDto> GridLineList = new List<SelectPurchaseQualityPlanLinesDto>();
+
+        List<IFileListEntry> files = new List<IFileListEntry>();
+
+        public bool TechnicalDrawingsChangedCrudPopup = false;
+
+        List<System.IO.FileInfo> uploadedfiles = new List<System.IO.FileInfo>();
+
+        bool UploadedFile = false;
+
+        bool ImagePreviewPopup = false;
+
+        string previewImagePopupTitle = string.Empty;
+
+        string imageDataUri;
+
+        string PDFrootPath;
+
+        bool image = false;
+
+        bool pdf = false;
+
+        string PDFFileName;
 
         #region Değişkenler
 
@@ -138,7 +164,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
 
                 if (DataSource.DataOpenStatus == true && DataSource.DataOpenStatus != null)
                 {
-                    EditPageVisible = false;
+                    TechnicalDrawingsChangedCrudPopup = false;
 
                     string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
 
@@ -149,7 +175,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
                 }
                 else
                 {
-                    EditPageVisible = true;
+                    TechnicalDrawingsChangedCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
                 }
             }
@@ -167,6 +193,20 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
                     IsChanged = true;
                     DataSource = (await PurchaseQualityPlansAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectPurchaseQualityPlanLines;
+
+                    string rootpath = FileUploadService.GetRootPath();
+                    string qualityPlanPath = @"\UploadedFiles\QualityControl\PurchaseQualityPlan\" + DataSource.CurrrentAccountCardName + @"\" + DataSource.ProductCode + @"\";
+                    DirectoryInfo qualityPlan = new DirectoryInfo(rootpath + qualityPlanPath);
+                    if (qualityPlan.Exists)
+                    {
+                        System.IO.FileInfo[] exactFilesQualityPlan = qualityPlan.GetFiles();
+
+                        foreach (System.IO.FileInfo fileinfo in exactFilesQualityPlan)
+                        {
+                            uploadedfiles.Add(fileinfo);
+                        }
+
+                    }
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
@@ -320,6 +360,84 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
             HideLinesPopup();
 
             await InvokeAsync(StateHasChanged);
+        }
+
+        protected override async Task OnSubmit()
+        {
+            #region Submit İşlemi
+
+            SelectPurchaseQualityPlansDto result;
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                var createInput = ObjectMapper.Map<SelectPurchaseQualityPlansDto, CreatePurchaseQualityPlansDto>(DataSource);
+
+                result = (await CreateAsync(createInput)).Data;
+
+                if (result != null)
+                    DataSource.Id = result.Id;
+            }
+            else
+            {
+                var updateInput = ObjectMapper.Map<SelectPurchaseQualityPlansDto, UpdatePurchaseQualityPlansDto>(DataSource);
+
+                result = (await UpdateAsync(updateInput)).Data;
+            }
+
+            if (result == null)
+            {
+
+                return;
+            }
+
+            await GetListDataSourceAsync();
+
+            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+            HideEditPage();
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                DataSource.Id = result.Id;
+            }
+
+            if (savedEntityIndex > -1)
+                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+            else
+                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+            #endregion
+
+            #region File Upload İşlemleri
+
+            string productcode = DataSource.ProductCode;
+            string currentname = DataSource.CurrrentAccountCardName;
+
+            List<string> _result = new List<string>();
+
+            foreach (var file in files)
+            {
+                //disable = true;
+
+                string fileName = file.Name;
+                string rootPath = "UploadedFiles/QualityControl/PurchaseQualityPlan/" + currentname + "/" + productcode;
+
+
+                _result.Add(await FileUploadService.UploadTechnicalDrawing(file, rootPath, fileName));
+                await InvokeAsync(() => StateHasChanged());
+
+            }
+
+            HideEditPage();
+            HideTechnicalDrawingChangedCrudPopup();
+
+            //disable = false;
+
+            files.Clear();
+
+            await InvokeAsync(() => StateHasChanged());
+
+            #endregion
         }
 
         #endregion
@@ -619,6 +737,181 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
 
         #endregion
 
+        #region Kalite Planı Teknik Çizim Upload İşlemleri
+
+        private async void HandleFileSelectedTechnicalDrawing(IFileListEntry[] entryFiles)
+        {
+            if (uploadedfiles != null && uploadedfiles.Count == 0)
+            {
+                foreach (var file in entryFiles)
+                {
+                    files.Add(file);
+                }
+            }
+            else
+            {
+                await ModalManager.WarningPopupAsync(L["UIWaringUploadTitle"], L["UIWaringUploadMessage"]);
+            }
+        }
+
+        private void Remove(IFileListEntry file)
+        {
+            files.Remove(file);
+
+            InvokeAsync(() => StateHasChanged());
+        }
+
+        private async void RemoveUploaded(System.IO.FileInfo file)
+        {
+            string extention = file.Extension;
+            string rootpath = FileUploadService.GetRootPath();
+
+            if (extention == ".pdf")
+            {
+                PDFrootPath = rootpath + @"\UploadedFiles\QualityControl\PurchaseQualityPlan\" +  DataSource.CurrrentAccountCardName + @"\" + DataSource.ProductCode + @"\" + file.Name;
+
+                System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
+                if (pdfFile.Exists)
+                {
+                    pdfFile.Delete();
+                }
+            }
+
+            else
+            {
+                imageDataUri = rootpath + @"\UploadedFiles\QualityControl\PurchaseQualityPlan\" + DataSource.CurrrentAccountCardName + @"\" + DataSource.ProductCode + @"\" + file.Name;
+
+                System.IO.FileInfo jpgfile = new System.IO.FileInfo(imageDataUri);
+                if (jpgfile.Exists)
+                {
+                    jpgfile.Delete();
+                }
+            }
+            uploadedfiles.Remove(file);
+
+            await InvokeAsync(() => StateHasChanged());
+
+            await ModalManager.MessagePopupAsync(L["UIInformationPopupTitleBase"], L["UIInformationPopupMessageBase"]);
+        }
+
+        private async void PreviewImage(IFileListEntry file)
+        {
+            string format = file.Type;
+
+            if (format == "image/jpg" || format == "image/jpeg" || format == "image/png")
+            {
+
+                IFileListEntry imageFile = await file.ToImageFileAsync(format, 1214, 800);
+
+                MemoryStream ms = new MemoryStream();
+
+                await imageFile.Data.CopyToAsync(ms);
+
+                imageDataUri = $"data:{format};base64,{Convert.ToBase64String(ms.ToArray())}";
+
+                previewImagePopupTitle = file.Name;
+
+                image = true;
+
+                pdf = false;
+
+                ImagePreviewPopup = true;
+            }
+
+            else if (format == "application/pdf")
+            {
+                string rootPath = "tempFiles/";
+
+                PDFrootPath = "wwwroot/" + rootPath + file.Name;
+
+                PDFFileName = file.Name;
+
+                List<string> _result = new List<string>();
+
+                _result.Add(await FileUploadService.UploadTechnicalDrawingPDF(file, rootPath, PDFFileName));
+
+                previewImagePopupTitle = file.Name;
+
+                pdf = true;
+
+                image = false;
+
+                ImagePreviewPopup = true;
+
+            }
+
+
+            await InvokeAsync(() => StateHasChanged());
+
+        }
+
+        private async void PreviewUploadedImage(System.IO.FileInfo file)
+        {
+            string format = file.Extension;
+
+            UploadedFile = true;
+
+            string rootpath = FileUploadService.GetRootPath();
+
+            if (format == ".jpg" || format == ".jpeg" || format == ".png")
+            {
+                imageDataUri = @"\UploadedFiles\QualityControl\PurchaseQualityPlan\" + DataSource.CurrrentAccountCardName + @"\" + DataSource.ProductCode + @"\" + file.Name;
+
+                image = true;
+
+                pdf = false;
+
+                ImagePreviewPopup = true;
+            }
+
+            else if (format == ".pdf")
+            {
+
+                PDFrootPath = "wwwroot/UploadedFiles/QualityControl/PurchaseQualityPlan/" + DataSource.CurrrentAccountCardName + "/" + DataSource.ProductCode + "/" + file.Name;
+
+                PDFFileName = file.Name;
+
+                previewImagePopupTitle = file.Name;
+
+                pdf = true;
+
+                image = false;
+
+                ImagePreviewPopup = true;
+
+            }
+
+
+            await InvokeAsync(() => StateHasChanged());
+
+        }
+
+        public void HidePreviewPopup()
+        {
+            ImagePreviewPopup = false;
+
+            if (!UploadedFile)
+            {
+                if (pdf)
+                {
+                    System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
+                    if (pdfFile.Exists)
+                    {
+                        pdfFile.Delete();
+                    }
+                }
+            }
+        }
+
+        public void HideTechnicalDrawingChangedCrudPopup()
+        {
+            TechnicalDrawingsChangedCrudPopup = false;
+            uploadedfiles.Clear();
+            InvokeAsync(StateHasChanged);
+        }
+
+
+        #endregion
 
         #region Kod ButtonEdit
 

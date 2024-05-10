@@ -247,10 +247,19 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>@L["PartyNoLabel"] </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["PartyNoLabel"] </strong></label><br />
                             @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+                            <table>
+                                <tr>
+                                    <td style="width:40%; padding-right:0%">
+                                        <SfTextBox @bind-Value="@TemplatePartyNo" Readonly=true></SfTextBox>
 
-                            <SfTextBox @bind-Value="DataSource.PartyNo"></SfTextBox>
+                                    </td>
+                                    <td style="width:60%; padding-left:0%">
+                                        <SfTextBox @bind-Value="DataSource.PartyNo"></SfTextBox>
+                                    </td>
+                                </tr>
+                            </table>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -258,6 +267,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["WarehouseReceiptQuantityLabel"] </strong></label>
+                            <br />
                             <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.WarehouseReceiptQuantity"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>

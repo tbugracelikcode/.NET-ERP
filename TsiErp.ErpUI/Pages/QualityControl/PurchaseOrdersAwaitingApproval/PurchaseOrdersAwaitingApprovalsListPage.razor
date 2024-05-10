@@ -13,6 +13,7 @@
 @inject IStringLocalizer<PurchaseOrdersAwaitingApprovalsResource> L
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
+@inject IFileUploadService FileUploadService
 
 @if (!base.IsLoaded)
 {
@@ -64,6 +65,10 @@ else
                                                 {
                                                     case PurchaseOrdersAwaitingApprovalStateEnum.KaliteKontrolOnayBekliyor: purchaseOrdersAwaitingApprovalStateEnumStr = L["EnumAwaitingQualityControlApproval"]; break;
                                                     case PurchaseOrdersAwaitingApprovalStateEnum.KaliteKontrolOnayVerildi: purchaseOrdersAwaitingApprovalStateEnumStr = L["EnumQualityControlApproved"]; break;
+                                                    case PurchaseOrdersAwaitingApprovalStateEnum.SartliOnaylandi: purchaseOrdersAwaitingApprovalStateEnumStr = L["EnumPartialApproval"];break;
+                                                    case PurchaseOrdersAwaitingApprovalStateEnum.Red:
+                                                        purchaseOrdersAwaitingApprovalStateEnumStr = L["EnumReject"];break;
+                                                        default:break;
                                                 }
                                             }
                                             @purchaseOrdersAwaitingApprovalStateEnumStr
@@ -101,7 +106,8 @@ else
                 <Rows>
                     <DxGridLayoutRow Height="16%" />
                     <DxGridLayoutRow Height="14%" />
-                    <DxGridLayoutRow Height="60%" />
+                    <DxGridLayoutRow Height="20%" />
+                    <DxGridLayoutRow Height="40%" />
                 </Rows>
 
                 <Columns>
@@ -152,7 +158,37 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
+                    <DxGridLayoutItem Row="1" Column="5">
+                        <Template>
+                            <br />
+                            <center><SfButton CssClass="TSISaveButton" OnClick="PreviewUploadedImage"><SfIcon Size="IconSize.Medium" Name="IconName.Eye"></SfIcon>&nbsp;@L["PreviewButton"]</SfButton></center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PurchaseOrdersAwaitingApprovalStateEnumLabel"] </strong></label><br />
+                            <SfDropDownList TItem="SelectPurchaseOrdersAwaitingApprovalsDto" TValue="PurchaseOrdersAwaitingApprovalStateEnum" PopupHeight="230px" @bind-Value="@DataSource.PurchaseOrdersAwaitingApprovalStateEnum" DataSource="@states">
+                                <DropDownListFieldSettings Text="PurchaseOrdersAwaitingApprovalStateEnumName" Value="PurchaseOrdersAwaitingApprovalStateEnum"></DropDownListFieldSettings>
+                            </SfDropDownList>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ApprovedQuantityLabel"] </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.ApprovedQuantity"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label><br />
+                            <SfTextBox CssClass="TSIMemoBox60" Multiline="true" @bind-Value="DataSource.Description_"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="5">
                         <Template>
                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectPurchaseOrdersAwaitingApprovalLinesDto"></GridEvents>
@@ -323,6 +359,40 @@ else
         </BodyTemplate>
         <FooterContentTemplate>
             <SfButton CssClass="TSICancelButton" OnClick="HidePreviewPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="ImagePreviewPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             ShowCloseButton=false
+             CloseOnOutsideClick="false"
+             HeaderText="@previewImagePopupTitle"
+             MinWidth="1214px"
+             MinHeight="860px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <SfCard class="TSIGridCards">
+                <CardContent>
+                    @if (image)
+                    {
+                        <img style="width:100%; height:800px; margin-left:0% !important" src="@imageDataUri" />
+
+                    }
+                    else
+                    {
+                        <SfPdfViewerServer DocumentPath="@PDFrootPath" Height="800px" Width="1210px"></SfPdfViewerServer>
+                    }
+                </CardContent>
+                <CardFooter>
+                </CardFooter>
+            </SfCard>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HidePreviewPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+
         </FooterContentTemplate>
     </DxPopup>
 

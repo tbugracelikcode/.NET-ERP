@@ -8,6 +8,14 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval
     {
 
         /// <summary>
+        /// Onaylanan Adedi
+        /// </summary>
+        public decimal ApprovedQuantity { get; set; }
+        /// <summary>
+        /// Açıklama 
+        /// </summary>
+        public string Description_ { get; set; }
+        /// <summary>
         /// Kontrol Adedi
         /// </summary>
         public DateTime QualityApprovalDate { get; set; }

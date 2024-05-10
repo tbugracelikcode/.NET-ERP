@@ -62,6 +62,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrdersAwaitingApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Onaylanan Adet:.
+        /// </summary>
+        public static string ApprovedQuantityLabel {
+            get {
+                return ResourceManager.GetString("ApprovedQuantityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -143,6 +152,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrdersAwaitingApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Açıklama:.
+        /// </summary>
+        public static string Description_Label {
+            get {
+                return ResourceManager.GetString("Description_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Onay Bekleyen Satın Alma Siparişleri.
         /// </summary>
         public static string EditModalTitle {
@@ -152,7 +170,7 @@ namespace TsiErp.Localizations.Resources.PurchaseOrdersAwaitingApprovals.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kalite Kontrol Onay Bekleniyor.
+        ///   Looks up a localized string similar to Onay Bekleniyor.
         /// </summary>
         public static string EnumAwaitingQualityControlApproval {
             get {
@@ -161,11 +179,29 @@ namespace TsiErp.Localizations.Resources.PurchaseOrdersAwaitingApprovals.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kalite Kontrol Onayı Verildi.
+        ///   Looks up a localized string similar to Şartlı Onaylandı.
+        /// </summary>
+        public static string EnumPartialApproval {
+            get {
+                return ResourceManager.GetString("EnumPartialApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onayı Verildi.
         /// </summary>
         public static string EnumQualityControlApproved {
             get {
                 return ResourceManager.GetString("EnumQualityControlApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red Edildi.
+        /// </summary>
+        public static string EnumReject {
+            get {
+                return ResourceManager.GetString("EnumReject", resourceCulture);
             }
         }
         
@@ -314,6 +350,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrdersAwaitingApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Teknik Resmi Görüntüle.
+        /// </summary>
+        public static string PreviewButton {
+            get {
+                return ResourceManager.GetString("PreviewButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SİPARİŞ TARİHİ.
         /// </summary>
         public static string PurchaseOrderDate {
@@ -404,6 +449,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrdersAwaitingApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Durum:.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalStateEnumLabel {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalStateEnumLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kalite Onay Tarihi:.
         /// </summary>
         public static string QualityApprovalDateLabel {
@@ -427,6 +481,24 @@ namespace TsiErp.Localizations.Resources.PurchaseOrdersAwaitingApprovals.Page {
         public static string UICurrentMenu {
             get {
                 return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Böyle bir teknik resim bulunmamaktadır..
+        /// </summary>
+        public static string UIInformationFileMessage {
+            get {
+                return ResourceManager.GetString("UIInformationFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string UIInformationFileTitle {
+            get {
+                return ResourceManager.GetString("UIInformationFileTitle", resourceCulture);
             }
         }
         
