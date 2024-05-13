@@ -14,6 +14,10 @@
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
 @inject IFileUploadService FileUploadService
+@inject IFicheNumbersAppService FicheNumbersAppService
+@inject IUnsuitabilityTypesItemsAppService UnsuitabilityTypesItemsAppService
+@inject IUnsuitabilityItemsAppService UnsuitabilityItemsAppService
+@inject IPurchaseUnsuitabilityReportsAppService PurchaseUnsuitabilityReportsService
 
 @if (!base.IsLoaded)
 {
@@ -396,5 +400,208 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
+    <DxPopup @bind-Visible="PurchaseUnsuitabilityCrudPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["PurchaseUnsuitabilityModalTitle"]"
+             Width="57%"
+             Height="35%"
+             MinWidth="1100px"
+             MinHeight="550px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="21%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="12%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="18%" />
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="20%" />
+                    <DxGridLayoutColumn Width="10%" />
+                </Columns>
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityFicheNoLabel"] </strong></label>
+                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="PurchaseUnsuitabilityDataSource.Code"></SfTextBox> *@
+
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="PurchaseUnsuitabilityDataSource.FicheNo" ShowClearButton=true></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityDate_Label"] </strong></label>
+                            <SfDatePicker Readonly=true @bind-Value="PurchaseUnsuitabilityDataSource.Date_"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="7" ColumnSpan="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityDescription_Label"] </strong></label>
+                            <SfTextBox @bind-Value="PurchaseUnsuitabilityDataSource.Description_" CssClass="TSIMemoBox100"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityOrderFicheNoLabel"] </strong></label><br />
+                            <SfTextBox Readonly=true @bind-Value="PurchaseUnsuitabilityDataSource.OrderFicheNo"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityCurrentAccountCardCodeLabel"] </strong></label><br />
+
+
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="PurchaseUnsuitabilityDataSource.CurrentAccountCardCode" Readonly=true></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3" ColumnSpan="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityCurrentAccountCardNameLabel"] </strong></label><br />
+
+
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="PurchaseUnsuitabilityDataSource.CurrentAccountCardName" Readonly=true></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="3" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityProductCodeLabel"] </strong></label>
+                            <SfTextBox Readonly=true @bind-Value="PurchaseUnsuitabilityDataSource.ProductCode"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="3" ColumnSpan="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityProductNameLabel"] </strong></label>
+                            <SfTextBox Readonly=true @bind-Value ="PurchaseUnsuitabilityDataSource.ProductName"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="7">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityPartyNoLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="PurchaseUnsuitabilityDataSource.PartyNo"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityUnsuitabilityNameLabel"] </strong></label><br />
+                            <SfTextBox @ref="@UnsuitabilityItemsButtonEdit" Created="@UnsuitabilityItemsOnCreateIcon" @bind-Value="PurchaseUnsuitabilityDataSource.UnsuitabilityItemsName" ShowClearButton=true ValueChange="UnsuitabilityItemsOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityUnsuitableAmountLabel"] </strong></label>
+                            <SfNumericTextBox TValue="decimal" @bind-Value="PurchaseUnsuitabilityDataSource.UnsuitableAmount" Min=0></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+
+                    <DxGridLayoutItem Row="4" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityActionLabel"] </strong></label><br />
+                            <SfComboBox TValue="string" TItem="UnsComboBox" DataSource="@_unsComboBox" @bind-Value="PurchaseUnsuitabilityDataSource.Action_">
+                                <ComboBoxEvents TItem="UnsComboBox" TValue="string" ValueChange="@UnsComboBoxValueChangeHandler"></ComboBoxEvents>
+                                <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    @* <DxGridLayoutItem Row="5" Column="1">
+                <Template>
+                <center>
+                <label class="TSIModalLabel"><strong>@L["IsUnsuitabilityWorkOrderLabel"]</strong></label><br />
+                <SfSwitch @bind-Checked="PurchaseUnsuitabilityDataSource.IsUnsuitabilityWorkOrder"></SfSwitch>
+                </center>
+                </Template>
+                </DxGridLayoutItem>* *@
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnPurchaseUnsuitabilitySubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HidePurchaseUnsuitabilityPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+}
+
+@if (SelectUnsuitabilityItemsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectUnsuitabilityItemsPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["UnsuitabilityItemsModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="UnsuitabilityItemsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnsuitabilityItemsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@UnsuitabilityItemsDoubleClickHandler" TValue="ListUnsuitabilityItemsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListUnsuitabilityItemsDto.Code) HeaderText=@L["UnsutabilityItemModalGridCode"] TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                            <GridColumn Field=@nameof(ListUnsuitabilityItemsDto.Name) HeaderText=@L["UnsutabilityItemModalGridName"] TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
 }
 

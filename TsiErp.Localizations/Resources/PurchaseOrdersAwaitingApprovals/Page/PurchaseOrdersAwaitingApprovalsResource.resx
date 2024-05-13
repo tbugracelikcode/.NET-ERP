@@ -123,6 +123,18 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="ComboboxContactSupplier" xml:space="preserve">
+    <value>Tedarikçi ile İrtibat</value>
+  </data>
+  <data name="ComboboxCorrection" xml:space="preserve">
+    <value>Düzeltme</value>
+  </data>
+  <data name="ComboboxRejection" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="ComboboxToBeUsedAs" xml:space="preserve">
+    <value>Olduğu Gibi Kullanılacak</value>
+  </data>
   <data name="ControlQuantityLabel" xml:space="preserve">
     <value>Kontrol Adedi:</value>
   </data>
@@ -160,7 +172,7 @@
     <value>Şartlı Onaylandı</value>
   </data>
   <data name="EnumQualityControlApproved" xml:space="preserve">
-    <value>Onayı Verildi</value>
+    <value>Onay Verildi</value>
   </data>
   <data name="EnumReject" xml:space="preserve">
     <value>Red Edildi</value>
@@ -231,6 +243,9 @@
   <data name="PurchaseOrdersAwaitingApprovalLinesContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextPurchaseUnsuitability" xml:space="preserve">
+    <value>Satın Alma Uygunsuzluk Kaydı Oluştur</value>
+  </data>
   <data name="PurchaseOrdersAwaitingApprovalsContextQualityApproval" xml:space="preserve">
     <value>Kalite Onayı Ver</value>
   </data>
@@ -249,6 +264,45 @@
   <data name="PurchaseOrdersAwaitingApprovalStateEnumLabel" xml:space="preserve">
     <value>Durum:</value>
   </data>
+  <data name="PurchaseUnsuitabilityActionLabel" xml:space="preserve">
+    <value>Uygunsuzluk Aksiyonu:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityCurrentAccountCardCodeLabel" xml:space="preserve">
+    <value>Cari Hesap Kodu:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityCurrentAccountCardNameLabel" xml:space="preserve">
+    <value>Cari Hesap Ünvanı:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityDate_Label" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityDescription_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityFicheNoLabel" xml:space="preserve">
+    <value>Uygunsuzluk Fiş Numarası:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityModalTitle" xml:space="preserve">
+    <value>Satın Alma Uygunsuzluk Kayıtları</value>
+  </data>
+  <data name="PurchaseUnsuitabilityOrderFicheNoLabel" xml:space="preserve">
+    <value>Sipariş Numarası:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityPartyNoLabel" xml:space="preserve">
+    <value>Parti Numarası:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityProductCodeLabel" xml:space="preserve">
+    <value>Ürün Kodu:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityProductNameLabel" xml:space="preserve">
+    <value>Ürün Açıklaması:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityUnsuitabilityNameLabel" xml:space="preserve">
+    <value>Uygunsuzluk Başlığı:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityUnsuitableAmountLabel" xml:space="preserve">
+    <value>Hatalı Miktar:</value>
+  </data>
   <data name="QualityApprovalDateLabel" xml:space="preserve">
     <value>Kalite Onay Tarihi:</value>
   </data>
@@ -266,6 +320,27 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Hareketler</value>
+  </data>
+  <data name="UIWarningAmountActionMessage" xml:space="preserve">
+    <value>Uygunsuzluk kaydı oluştururken aksiyon ve uygunsuz miktar girişi zorunludur.</value>
+  </data>
+  <data name="UIWarningAmountActionTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningPurchUnsMessage" xml:space="preserve">
+    <value>Durumu "Red" olmayan kayıtlar için satın alma uygunsuzluk kaydı oluşturulamaz.</value>
+  </data>
+  <data name="UIWarningPurchUnsTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UnsuitabilityItemsModalTitle" xml:space="preserve">
+    <value>Uygunsuzluk Başlıkları</value>
+  </data>
+  <data name="UnsutabilityItemModalGridCode" xml:space="preserve">
+    <value>BAŞLIK KODU</value>
+  </data>
+  <data name="UnsutabilityItemModalGridName" xml:space="preserve">
+    <value>BAŞLIK ADI</value>
   </data>
   <data name="UserNameLabel" xml:space="preserve">
     <value>Onaylayan:</value>

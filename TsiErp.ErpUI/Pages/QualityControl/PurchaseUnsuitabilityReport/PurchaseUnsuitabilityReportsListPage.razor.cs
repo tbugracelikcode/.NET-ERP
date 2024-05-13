@@ -130,10 +130,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
 
         public override async void ShowEditPage()
         {
-            foreach (var item in _unsComboBox)
-            {
-                item.Text = L[item.Text];
-            }
 
             if (DataSource != null)
             {
@@ -151,6 +147,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
                 }
                 else
                 {
+                    foreach (var item in _unsComboBox)
+                    {
+                        item.Text = L[item.Text];
+                    }
+
                     EditPageVisible = true;
                     await InvokeAsync(StateHasChanged);
                 }
@@ -272,6 +273,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
         }
         #endregion
 
+        #region Uygunsuzluk Başlıkları ButtonEdit
+
         SfTextBox UnsuitabilityItemsButtonEdit;
         bool SelectUnsuitabilityItemsPopupVisible = false;
         List<ListUnsuitabilityItemsDto> UnsuitabilityItemsList = new List<ListUnsuitabilityItemsDto>();
@@ -311,6 +314,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
                 await InvokeAsync(StateHasChanged);
             }
         }
+
+        #endregion
 
         private async Task GetProductsList()
         {
