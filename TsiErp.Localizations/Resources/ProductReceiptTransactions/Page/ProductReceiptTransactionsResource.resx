@@ -280,7 +280,7 @@
     <value>Uyarı</value>
   </data>
   <data name="UIWarningPartyNoQuantityMessage" xml:space="preserve">
-    <value>Parti numarası ve depo giriş miktarı olmadan kaydedilemez.</value>
+    <value>Depo giriş miktarı olmadan kaydedilemez.</value>
   </data>
   <data name="UIWarningPartyNoQuantityTitle" xml:space="preserve">
     <value>Uyarı</value>

@@ -917,6 +917,15 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dosya Yok.
+        /// </summary>
+        public static string NoFile2 {
+            get {
+                return ResourceManager.GetString("NoFile2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parti İçi Numune Sayısı:.
         /// </summary>
         public static string NumberofSampleinPartLabel {
@@ -1457,7 +1466,7 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operasyon Resimleri.
+        ///   Looks up a localized string similar to Teknik Resimler.
         /// </summary>
         public static string Tab2Name {
             get {
@@ -1466,7 +1475,7 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operasyon Resimleri.
+        ///   Looks up a localized string similar to Teknik Resimler.
         /// </summary>
         public static string Tab2Name1 {
             get {
@@ -1601,6 +1610,24 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yüklenmiş teknik resim dosyası, başarıyla silinmiştir..
+        /// </summary>
+        public static string UIInformationPopupMessageBase {
+            get {
+                return ResourceManager.GetString("UIInformationPopupMessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgilendirme.
+        /// </summary>
+        public static string UIInformationPopupTitleBase {
+            get {
+                return ResourceManager.GetString("UIInformationPopupTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kalite Kontrol &gt; Ana Kayıtlar &gt; Kalite Planları.
         /// </summary>
         public static string UIPreviousMenu {
@@ -1615,6 +1642,24 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         public static string UIPreviousMenu1 {
             get {
                 return ResourceManager.GetString("UIPreviousMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bu kayıtta yüklenmiş bir teknik resim dosyası mevcut..
+        /// </summary>
+        public static string UIWaringUploadMessage {
+            get {
+                return ResourceManager.GetString("UIWaringUploadMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWaringUploadTitle {
+            get {
+                return ResourceManager.GetString("UIWaringUploadTitle", resourceCulture);
             }
         }
         

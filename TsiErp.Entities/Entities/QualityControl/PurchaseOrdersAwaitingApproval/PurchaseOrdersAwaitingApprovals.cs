@@ -52,5 +52,16 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval
         /// Stok Giriş Hareketi ID
         /// </summary>
         public PurchaseOrdersAwaitingApprovalStateEnum PurchaseOrdersAwaitingApprovalStateEnum { get; set; }
+
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Onaylanan Adedi
+        /// </summary>
+        public decimal ApprovedQuantity { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Açıklama 
+        /// </summary>
+        public string Description_ { get; set; }
     }
 }

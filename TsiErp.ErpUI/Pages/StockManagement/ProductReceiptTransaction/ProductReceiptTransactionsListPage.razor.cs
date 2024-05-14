@@ -31,6 +31,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         public bool GrantWarehouseApprovalVisible = false;
+        public string TemplatePartyNo = string.Empty;
 
         protected override async void OnInitialized()
         {
@@ -128,6 +129,14 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
 
                     if (DataSource.ProductReceiptTransactionStateEnum == Entities.Enums.ProductReceiptTransactionStateEnum.KaliteKontrolOnayVerildi)
                     {
+                        DateTime wayBillDate = GetSQLDateAppService.GetDateFromSQL();
+                        string YearStr = (wayBillDate.Year - 2000).ToString();
+                        string DayStr = wayBillDate.Day.ToString();
+                        string MonthStr = wayBillDate.Month.ToString();
+                        string OrderNo = DataSource.PurchaseOrderFicheNo.TrimStart('0');
+
+                        TemplatePartyNo = "AR" + YearStr + DayStr + MonthStr + "-" + OrderNo;
+
                         GrantWarehouseApprovalVisible = true;
                     }
                     else
@@ -180,9 +189,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
 
         public async void OnGrantWarehouseApprovalSubmit()
         {
-            if (!string.IsNullOrEmpty(DataSource.PartyNo) && DataSource.WarehouseReceiptQuantity > 0)
+            if (DataSource.WarehouseReceiptQuantity > 0)
             {
                 DataSource.ProductReceiptTransactionStateEnum = Entities.Enums.ProductReceiptTransactionStateEnum.DepoOnayiVerildi;
+
+                DataSource.PartyNo = TemplatePartyNo + DataSource.PartyNo;
 
                 var updatedEntity = ObjectMapper.Map<SelectProductReceiptTransactionsDto, UpdateProductReceiptTransactionsDto>(DataSource);
 

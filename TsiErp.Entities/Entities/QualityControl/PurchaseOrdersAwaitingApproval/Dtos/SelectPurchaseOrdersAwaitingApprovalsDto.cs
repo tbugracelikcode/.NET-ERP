@@ -8,6 +8,14 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval
     public class SelectPurchaseOrdersAwaitingApprovalsDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Onaylanan Adedi
+        /// </summary>
+        public decimal ApprovedQuantity { get; set; }
+        /// <summary>
+        /// Açıklama 
+        /// </summary>
+        public string Description_ { get; set; }
+        /// <summary>
         /// Kontrol Adedi
         /// </summary>
         public DateTime QualityApprovalDate { get; set; }
@@ -64,9 +72,13 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval
         /// </summary>
         public Guid? ProductReceiptTransactionID { get; set; }
         /// <summary>
-        /// Stok Giriş Hareketi ID
+        /// Stok Giriş Hareketi Durum
         /// </summary>
         public PurchaseOrdersAwaitingApprovalStateEnum PurchaseOrdersAwaitingApprovalStateEnum { get; set; }
+        /// <summary>
+        /// Stok Giriş Hareketi Durum Adı
+        /// </summary>
+        public string PurchaseOrdersAwaitingApprovalStateEnumName { get; set; }
 
         [NoDatabaseAction]
         public List<SelectPurchaseOrdersAwaitingApprovalLinesDto> SelectPurchaseOrdersAwaitingApprovalLines { get; set; }

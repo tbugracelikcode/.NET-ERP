@@ -52,6 +52,8 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
             {
                 ProductID = input.ProductID,
                 PurchaseOrdersAwaitingApprovalStateEnum = 1,
+                ApprovedQuantity = input.ApprovedQuantity,
+                Description_ = input.Description_,
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 ProductReceiptTransactionID = input.ProductReceiptTransactionID.GetValueOrDefault(),
                 PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
@@ -222,7 +224,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                         nameof(PurchaseOrders.Id),
                         JoinType.Left
                     )
-                    .Where(new { PurchaseOrdersAwaitingApprovalStateEnum = 1 }, false, false, Tables.PurchaseOrdersAwaitingApprovals);
+                    .Where(null, false, false, Tables.PurchaseOrdersAwaitingApprovals);
 
             var purchaseOrdersAwaitingApprovals = queryFactory.GetList<ListPurchaseOrdersAwaitingApprovalsDto>(query).ToList();
             await Task.CompletedTask;
@@ -290,6 +292,8 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                 ProductReceiptTransactionID = input.ProductReceiptTransactionID.GetValueOrDefault(),
                 PurchaseOrdersAwaitingApprovalStateEnum = input.PurchaseOrdersAwaitingApprovalStateEnum,
                 CreationTime = entity.CreationTime,
+                ApprovedQuantity = input.ApprovedQuantity,
+                Description_ = input.Description_,
                 CreatorId = entity.CreatorId,
                 ControlQuantity = input.ControlQuantity,
                 DataOpenStatus = false,
@@ -383,6 +387,8 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
             var query = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Update(new UpdatePurchaseOrdersAwaitingApprovalsDto
             {
                 ProductID = entity.ProductID,
+                ApprovedQuantity = entity.ApprovedQuantity,
+                Description_ = entity.Description_,
                 QualityApprovalDate = entity.QualityApprovalDate,
                 ApproverID = entity.ApproverID,
                 CreationTime = entity.CreationTime.Value,

@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApprovedQuantityLabel" xml:space="preserve">
+    <value>Approved Quantity:</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="ComboboxContactSupplier" xml:space="preserve">
+    <value>Contact with Supplier</value>
+  </data>
+  <data name="ComboboxCorrection" xml:space="preserve">
+    <value>Correction</value>
+  </data>
+  <data name="ComboboxRejection" xml:space="preserve">
+    <value>Rejection</value>
+  </data>
+  <data name="ComboboxToBeUsedAs" xml:space="preserve">
+    <value>To Be Used As</value>
   </data>
   <data name="ControlQuantityLabel" xml:space="preserve">
     <value>Control Quantity:</value>
@@ -144,14 +159,23 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Purchase Orders Awaiting Approval</value>
   </data>
   <data name="EnumAwaitingQualityControlApproval" xml:space="preserve">
-    <value>Quality Control Approval Awaiting</value>
+    <value>Approval Awaiting</value>
+  </data>
+  <data name="EnumPartialApproval" xml:space="preserve">
+    <value>Conditionally Approved</value>
   </data>
   <data name="EnumQualityControlApproved" xml:space="preserve">
-    <value>Quality Control Approval Granted</value>
+    <value>Approval Granted</value>
+  </data>
+  <data name="EnumReject" xml:space="preserve">
+    <value>Rejected</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -201,6 +225,9 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="PreviewButton" xml:space="preserve">
+    <value>Preview Technical Drawing</value>
+  </data>
   <data name="PurchaseOrderDate" xml:space="preserve">
     <value>ORDER DATE</value>
   </data>
@@ -215,6 +242,9 @@
   </data>
   <data name="PurchaseOrdersAwaitingApprovalLinesContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextPurchaseUnsuitability" xml:space="preserve">
+    <value>Create Purchase Unsuitability Report</value>
   </data>
   <data name="PurchaseOrdersAwaitingApprovalsContextQualityApproval" xml:space="preserve">
     <value>Grant Quality Approval</value>
@@ -231,6 +261,48 @@
   <data name="PurchaseOrdersAwaitingApprovalStateEnum" xml:space="preserve">
     <value>STATUS</value>
   </data>
+  <data name="PurchaseOrdersAwaitingApprovalStateEnumLabel" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityActionLabel" xml:space="preserve">
+    <value>Unsuitability Action:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityCurrentAccountCardCodeLabel" xml:space="preserve">
+    <value>Current Account Code:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityCurrentAccountCardNameLabel" xml:space="preserve">
+    <value>Current Account Name:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityDate_Label" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityDescription_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityFicheNoLabel" xml:space="preserve">
+    <value>Unsuitability Receipt Number:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityModalTitle" xml:space="preserve">
+    <value>Purchase Unsuitability Records</value>
+  </data>
+  <data name="PurchaseUnsuitabilityOrderFicheNoLabel" xml:space="preserve">
+    <value>Order Number:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityPartyNoLabel" xml:space="preserve">
+    <value>Party Number:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityProductCodeLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityProductNameLabel" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityUnsuitabilityNameLabel" xml:space="preserve">
+    <value>Unsuitability Item Name:</value>
+  </data>
+  <data name="PurchaseUnsuitabilityUnsuitableAmountLabel" xml:space="preserve">
+    <value>Unsuitable Amount:</value>
+  </data>
   <data name="QualityApprovalDateLabel" xml:space="preserve">
     <value>Approval Date:</value>
   </data>
@@ -240,8 +312,35 @@
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Purchase Orders Awaiting Approval</value>
   </data>
+  <data name="UIInformationFileMessage" xml:space="preserve">
+    <value>There is no such technical drawing.</value>
+  </data>
+  <data name="UIInformationFileTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control &gt; Transactions</value>
+  </data>
+  <data name="UIWarningAmountActionMessage" xml:space="preserve">
+    <value>When creating a unsuitability record, action and unsuitable amount entry is mandatory.</value>
+  </data>
+  <data name="UIWarningAmountActionTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningPurchUnsMessage" xml:space="preserve">
+    <value>A purchase unsuitability report cannot be created for records whose status is not "Rejected".</value>
+  </data>
+  <data name="UIWarningPurchUnsTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UnsuitabilityItemsModalTitle" xml:space="preserve">
+    <value>Unsuitability Items</value>
+  </data>
+  <data name="UnsutabilityItemModalGridCode" xml:space="preserve">
+    <value>ITEM CODE</value>
+  </data>
+  <data name="UnsutabilityItemModalGridName" xml:space="preserve">
+    <value>ITEM NAME</value>
   </data>
   <data name="UserNameLabel" xml:space="preserve">
     <value>Approver:</value>

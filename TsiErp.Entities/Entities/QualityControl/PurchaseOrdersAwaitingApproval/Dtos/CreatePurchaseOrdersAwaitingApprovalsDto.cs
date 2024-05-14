@@ -45,5 +45,13 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval
 
         [NoDatabaseAction]
         public List<SelectPurchaseOrdersAwaitingApprovalLinesDto> SelectPurchaseOrdersAwaitingApprovalLines { get; set; }
+        /// <summary>
+        /// Onaylanan Adedi
+        /// </summary>
+        public decimal ApprovedQuantity { get; set; }
+        /// <summary>
+        /// Açıklama 
+        /// </summary>
+        public string Description_ { get; set; }
     }
 }

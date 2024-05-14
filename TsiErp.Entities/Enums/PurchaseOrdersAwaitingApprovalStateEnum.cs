@@ -6,7 +6,11 @@ namespace TsiErp.Entities.Enums
     {
         [Display(Name = "EnumAwaitingQualityControlApproval")]
         KaliteKontrolOnayBekliyor = 1,
+        [Display(Name = "EnumPartialApproval")]
+        SartliOnaylandi = 2,
         [Display(Name = "EnumQualityControlApproved")]
-        KaliteKontrolOnayVerildi = 2,
+        KaliteKontrolOnayVerildi = 3,
+        [Display(Name = "EnumReject")]
+        Red = 4,
     }
 }

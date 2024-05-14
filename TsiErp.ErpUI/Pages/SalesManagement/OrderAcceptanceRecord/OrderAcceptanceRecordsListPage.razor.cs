@@ -42,6 +42,7 @@ using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using static TsiErp.ErpUI.Pages.PlanningManagement.MRP.MRPsListPage;
 using TsiErp.ErpUI.Models;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 {
@@ -464,10 +465,17 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                     var shippingaddressID = (await ShippingAdressesAppService.GetListAsync(new ListShippingAdressesParameterDto())).Data.Where(t => t.CustomerCardName == DataSource.CurrentAccountCardName).Select(t => t.Id).FirstOrDefault();
 
+                    var localCurrency = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.Where(t => t.IsLocalCurrency).FirstOrDefault();
+
+                    if (localCurrency == null)
+                    {
+                        localCurrency.Id = Guid.Empty;
+                    }
+
                     CreateSalesOrderDto createdSalesOrderEntity = new CreateSalesOrderDto
                     {
                         BranchID = Guid.Empty,
-                        CurrencyID = DataSource.CurrenyID,
+                        CurrencyID = localCurrency.Id,
                         CurrentAccountCardID = DataSource.CurrentAccountCardID,
                         CustomerRequestedDate = DataSource.CustomerRequestedDate,
                         CustomerOrderNr = string.Empty,
@@ -476,6 +484,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesOrdersChildMenu"),
                         WorkOrderCreationDate = null,
                         WarehouseID = Guid.Empty,
+                        TransactionExchangeCurrencyID = DataSource.CurrenyID,
+                        TransactionExchangeGrossAmount = 0,
+                        TransactionExchangeNetAmount = 0,
+                        TransactionExchangeTotalDiscountAmount = 0,
+                        TransactionExchangeTotalVatAmount = 0,
+                        TransactionExchangeTotalVatExcludedAmount = 0,
                         TotalVatExcludedAmount = 0,
                         TotalVatAmount = 0,
                         TotalDiscountAmount = 0,
@@ -512,6 +526,22 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                             DiscountAmount = 0,
                             DiscountRate = 0,
                             LikedPropositionLineID = Guid.Empty,
+                            CurrentAccountCardCode = DataSource.CurrentAccountCardCode,
+                            CurrentAccountCardID = DataSource.CurrentAccountCardID.GetValueOrDefault(),
+                            CurrentAccountCardName = DataSource.CurrentAccountCardName,
+                            PurchaseSupplyDate = line.PurchaseSupplyDate,
+                            Date_ = DataSource.Date_,
+                            TransactionExchangeDiscountAmount = 0,
+                            TransactionExchangeLineAmount = 0,
+                            TransactionExchangeLineTotalAmount = 0,
+                            TransactionExchangeUnitPrice = 0,
+                            TransactionExchangeVATamount = 0,
+                            WarehouseID = Guid.Empty,
+                            BranchID = Guid.Empty,
+                            BranchCode = string.Empty,
+                            BranchName = string.Empty,
+                            WarehouseCode = string.Empty,
+                            WarehouseName = string.Empty,
                             LineAmount = 0,
                             LineDescription = string.Empty,
                             LineNr = line.LineNr,

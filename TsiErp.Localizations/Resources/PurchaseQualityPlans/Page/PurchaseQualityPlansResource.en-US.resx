@@ -688,10 +688,10 @@
     <value>Quality Plan Lines</value>
   </data>
   <data name="Tab2Name" xml:space="preserve">
-    <value>Operation Pictures</value>
+    <value>Technical Drawings</value>
   </data>
   <data name="Tab2Name1" xml:space="preserve">
-    <value>Operation Pictures</value>
+    <value>Technical Drawings</value>
   </data>
   <data name="Tab3Name" xml:space="preserve">
     <value>Operations</value>
@@ -735,11 +735,23 @@
   <data name="UICurrentMenu1" xml:space="preserve">
     <value>Contract Entry Quality Plans</value>
   </data>
+  <data name="UIInformationPopupMessageBase" xml:space="preserve">
+    <value>The uploaded technical drawing file has been deleted successfully.</value>
+  </data>
+  <data name="UIInformationPopupTitleBase" xml:space="preserve">
+    <value>Information</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control &gt; Main Records &gt; Quality Plans</value>
   </data>
   <data name="UIPreviousMenu1" xml:space="preserve">
     <value>Quality Control &gt; Main Records &gt; Quality Plans</value>
+  </data>
+  <data name="UIWaringUploadMessage" xml:space="preserve">
+    <value>There is a technical drawing file loaded in this record.</value>
+  </data>
+  <data name="UIWaringUploadTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UIWarningMessageBase" xml:space="preserve">
     <value>It is not possible to add a line without selecting an product.</value>

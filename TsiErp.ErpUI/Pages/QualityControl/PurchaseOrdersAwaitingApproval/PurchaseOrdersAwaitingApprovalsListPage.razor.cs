@@ -16,6 +16,18 @@ using TsiErp.Entities.Enums;
 using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using System.Timers;
+using static DevExpress.XtraPrinting.Native.ExportOptionsPropertiesNames;
+using Syncfusion.Blazor.Inputs;
+using TsiErp.ErpUI.Services;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
+using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Charts.Chart.Models;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services;
+using Syncfusion.Blazor.DropDowns;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 {
@@ -31,12 +43,16 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
         SelectPurchaseOrdersAwaitingApprovalLinesDto LineDataSource;
 
+        SelectPurchaseUnsuitabilityReportsDto PurchaseUnsuitabilityDataSource;
+
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectPurchaseOrdersAwaitingApprovalLinesDto> GridLineList = new List<SelectPurchaseOrdersAwaitingApprovalLinesDto>();
 
         public bool LineCrudPopup = false;
+
+        public bool PurchaseUnsuitabilityCrudPopup = false;
 
         public bool PreviewPopup = false;
 
@@ -59,6 +75,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+
+            StartTimer();
 
         }
 
@@ -83,6 +101,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrdersAwaitingApprovalsContextReview"], Id = "review" }); break;
                             case "PurchaseOrdersAwaitingApprovalsContextRefresh":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrdersAwaitingApprovalsContextRefresh"], Id = "refresh" }); break;
+                            case "PurchaseOrdersAwaitingApprovalsContextPurchaseUnsuitability":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrdersAwaitingApprovalsContextPurchaseUnsuitability"], Id = "purchaseunsuitability" }); break;
                             default: break;
                         }
                     }
@@ -181,6 +201,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
             {
                 case "qualityapproval":
                     IsChanged = true;
+
+                    foreach (var item in states)
+                    {
+                        item.PurchaseOrdersAwaitingApprovalStateEnumName = L[item.PurchaseOrdersAwaitingApprovalStateEnumName];
+                    }
+
                     DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     ShowEditPage();
@@ -199,10 +225,61 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                 case "review":
 
                     GridLineList.Clear();
+
+                    foreach (var item in states)
+                    {
+                        item.PurchaseOrdersAwaitingApprovalStateEnumName = L[item.PurchaseOrdersAwaitingApprovalStateEnumName];
+                    }
+
                     DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectPurchaseOrdersAwaitingApprovalLines;
                     UserName = (await UsersAppService.GetAsync(DataSource.ApproverID.GetValueOrDefault())).Data.UserName;
                     PreviewPopup = true;
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "purchaseunsuitability":
+
+                    DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    if (DataSource.PurchaseOrdersAwaitingApprovalStateEnum == PurchaseOrdersAwaitingApprovalStateEnum.Red)
+                    {
+                        foreach (var item in _unsComboBox)
+                        {
+                            item.Text = L[item.Text];
+                        }
+
+                        PurchaseUnsuitabilityDataSource = new SelectPurchaseUnsuitabilityReportsDto
+                        {
+                            Action_ = string.Empty,
+                            CurrentAccountCardCode = DataSource.CurrentAccountCardCode,
+                            CurrentAccountCardID = DataSource.CurrentAccountCardID,
+                            CurrentAccountCardName = DataSource.CurrentAccountCardName,
+                            Date_ = DataSource.QualityApprovalDate,
+                            FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchUnsRecordsChildMenu"),
+                            Description_ = string.Empty,
+                            IsUnsuitabilityWorkOrder = false,
+                            UnsuitabilityItemsName = string.Empty,
+                            UnsuitabilityItemsID = Guid.Empty,
+                            ProductID = DataSource.ProductID,
+                            ProductName = DataSource.ProductName,
+                            ProductCode = DataSource.ProductCode,
+                            PartyNo = string.Empty,
+                            OrderID = DataSource.PurchaseOrderID,
+                            OrderFicheNo = DataSource.PurchaseOrderFicheNo,
+                            UnsuitableAmount = 0
+
+                        };
+
+                        PurchaseUnsuitabilityCrudPopup = true;
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningPurchUnsTitle"], L["UIWarningPurchUnsMessage"]);
+                    }
+
 
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -244,12 +321,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
         public void HideLinesPopup()
         {
             LineCrudPopup = false;
-        }
-
-
-        public void HidePreviewPopup()
-        {
-            PreviewPopup = false;
         }
 
         public async void CancelQualityApproval()
@@ -383,8 +454,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
         protected override async Task OnSubmit()
         {
-            DataSource.PurchaseOrdersAwaitingApprovalStateEnum = PurchaseOrdersAwaitingApprovalStateEnum.KaliteKontrolOnayVerildi;
-
             var updateInput = ObjectMapper.Map<SelectPurchaseOrdersAwaitingApprovalsDto, UpdatePurchaseOrdersAwaitingApprovalsDto>(DataSource);
 
             await PurchaseOrdersAwaitingApprovalsAppService.UpdateAsync(updateInput);
@@ -411,6 +480,282 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
         }
 
 
+
+        #endregion
+
+        #region Teknik Resim Görüntüleme İşlemleri
+
+        #region Değişkenler
+
+        List<System.IO.FileInfo> uploadedfiles = new List<System.IO.FileInfo>();
+
+        bool UploadedFile = false;
+
+        bool ImagePreviewPopup = false;
+
+        string previewImagePopupTitle = string.Empty;
+
+        string imageDataUri;
+
+        string PDFrootPath;
+
+        bool image = false;
+
+        bool pdf = false;
+
+        string PDFFileName;
+
+        #endregion
+
+        private async void PreviewUploadedImage()
+        {
+            string webrootpath = FileUploadService.GetRootPath();
+            string qualityPlanPath = @"\UploadedFiles\QualityControl\PurchaseQualityPlan\" + DataSource.CurrentAccountCardName + @"\" + DataSource.ProductCode + @"\";
+            DirectoryInfo qualityPlan = new DirectoryInfo(webrootpath + qualityPlanPath);
+            if (qualityPlan.Exists)
+            {
+                System.IO.FileInfo[] exactFilesQualityPlan = qualityPlan.GetFiles();
+
+                if (exactFilesQualityPlan.Length > 0 && exactFilesQualityPlan != null)
+                {
+                    var file = exactFilesQualityPlan[0];
+
+                    string format = file.Extension;
+
+                    UploadedFile = true;
+
+                    string rootpath = FileUploadService.GetRootPath();
+
+                    if (format == ".jpg" || format == ".jpeg" || format == ".png")
+                    {
+                        imageDataUri = @"\UploadedFiles\QualityControl\PurchaseQualityPlan\" + DataSource.CurrentAccountCardName + @"\" + DataSource.ProductCode + @"\" + file.Name;
+
+                        image = true;
+
+                        pdf = false;
+
+                        ImagePreviewPopup = true;
+                    }
+
+                    else if (format == ".pdf")
+                    {
+
+                        PDFrootPath = "wwwroot/UploadedFiles/QualityControl/PurchaseQualityPlan/" + DataSource.CurrentAccountCardName + "/" + DataSource.ProductCode + "/" + file.Name;
+
+                        PDFFileName = file.Name;
+
+                        previewImagePopupTitle = file.Name;
+
+                        pdf = true;
+
+                        image = false;
+
+                        ImagePreviewPopup = true;
+                    }
+
+                }
+
+                else
+                {
+                    await ModalManager.MessagePopupAsync(L["UIInformationFileTitle"], L["UIInformationFileMessage"]);
+                }
+
+
+                await InvokeAsync(() => StateHasChanged());
+
+            }
+            else
+            {
+                await ModalManager.MessagePopupAsync(L["UIInformationFileTitle"], L["UIInformationFileMessage"]);
+            }
+        }
+
+
+        public void HidePreviewPopup()
+        {
+            ImagePreviewPopup = false;
+
+            if (!UploadedFile)
+            {
+                if (pdf)
+                {
+                    System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
+                    if (pdfFile.Exists)
+                    {
+                        pdfFile.Delete();
+                    }
+                }
+            }
+        }
+
+
+        #endregion
+
+        #region Kalite Ekranı Durum Enum Combobox
+
+        public IEnumerable<SelectPurchaseOrdersAwaitingApprovalsDto> states = GetEnumDisplayApprovalStateNames<PurchaseOrdersAwaitingApprovalStateEnum>();
+
+        public static List<SelectPurchaseOrdersAwaitingApprovalsDto> GetEnumDisplayApprovalStateNames<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<PurchaseOrdersAwaitingApprovalStateEnum>()
+                       .Select(x => new SelectPurchaseOrdersAwaitingApprovalsDto
+                       {
+                           PurchaseOrdersAwaitingApprovalStateEnum = x,
+                           PurchaseOrdersAwaitingApprovalStateEnumName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
+        }
+
+
+        #endregion
+
+        #region Satın Alma Uygunsuzluk Ekleme Modalı İşlemleri
+
+        #region Satın Alma Uygunsuzluk Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            PurchaseUnsuitabilityDataSource.FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchUnsRecordsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
+
+        #region Uygunsuzluk Başlıkları ButtonEdit
+
+        SfTextBox UnsuitabilityItemsButtonEdit;
+        bool SelectUnsuitabilityItemsPopupVisible = false;
+        List<ListUnsuitabilityItemsDto> UnsuitabilityItemsList = new List<ListUnsuitabilityItemsDto>();
+
+        public async Task UnsuitabilityItemsOnCreateIcon()
+        {
+            var UnsuitabilityItemsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, UnsuitabilityItemsButtonClickEvent);
+            await UnsuitabilityItemsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", UnsuitabilityItemsButtonClick } });
+        }
+
+        public async void UnsuitabilityItemsButtonClickEvent()
+        {
+            SelectUnsuitabilityItemsPopupVisible = true;
+            await GetUnsuitabilityItemsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void UnsuitabilityItemsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                PurchaseUnsuitabilityDataSource.UnsuitabilityItemsID = Guid.Empty;
+                PurchaseUnsuitabilityDataSource.UnsuitabilityItemsName = string.Empty;
+            }
+        }
+
+        public async void UnsuitabilityItemsDoubleClickHandler(RecordDoubleClickEventArgs<ListUnsuitabilityItemsDto> args)
+        {
+            var selectedOrder = args.RowData;
+
+            if (selectedOrder != null)
+            {
+                PurchaseUnsuitabilityDataSource.UnsuitabilityItemsID = selectedOrder.Id;
+                PurchaseUnsuitabilityDataSource.UnsuitabilityItemsName = selectedOrder.Name;
+                SelectUnsuitabilityItemsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        private async Task GetUnsuitabilityItemsList()
+        {
+            var unsuitabilityTypesItem = (await UnsuitabilityTypesItemsAppService.GetWithUnsuitabilityItemDescriptionAsync("Purchase")).Data;
+
+            if (unsuitabilityTypesItem != null)
+            {
+                UnsuitabilityItemsList = (await UnsuitabilityItemsAppService.GetListAsync(new ListUnsuitabilityItemsParameterDto())).Data.Where(t => t.UnsuitabilityTypesItemsName == unsuitabilityTypesItem.Name).ToList();
+            }
+        }
+
+        #endregion
+
+        #region Satın Alma Uygunsuzluk ComboBox İşlemleri
+
+        public class UnsComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<UnsComboBox> _unsComboBox = new List<UnsComboBox>
+        {
+            new UnsComboBox(){ID = "Rejection", Text="ComboboxRejection"},
+            new UnsComboBox(){ID = "Correction", Text="ComboboxCorrection"},
+            new UnsComboBox(){ID = "ToBeUsedAs", Text="ComboboxToBeUsedAs"},
+            new UnsComboBox(){ID = "ContactSupplier", Text="ComboboxContactSupplier"}
+        };
+
+        private void UnsComboBoxValueChangeHandler(ChangeEventArgs<string, UnsComboBox> args)
+        {
+            if (args.ItemData != null)
+            {
+                switch (args.ItemData.ID)
+                {
+                    case "Rejection":
+                        PurchaseUnsuitabilityDataSource.Action_ = L["ComboboxRejection"].Value;
+                        break;
+
+                    case "Correction":
+                        PurchaseUnsuitabilityDataSource.Action_ = L["ComboboxCorrection"].Value;
+                        break;
+
+                    case "ToBeUsedAs":
+                        PurchaseUnsuitabilityDataSource.Action_ = L["ComboboxToBeUsedAs"].Value;
+                        break;
+
+                    case "ContactSupplier":
+                        PurchaseUnsuitabilityDataSource.Action_ = L["ComboboxContactSupplier"].Value;
+                        break;
+
+                    default: break;
+                }
+            }
+            else
+            {
+                PurchaseUnsuitabilityDataSource.Action_ = string.Empty;
+            }
+        }
+
+        #endregion
+
+        protected async Task OnPurchaseUnsuitabilitySubmit()
+        {
+            if(PurchaseUnsuitabilityDataSource.UnsuitableAmount > 0 && !string.IsNullOrEmpty(PurchaseUnsuitabilityDataSource.Action_))
+            {
+                var createInput = ObjectMapper.Map<SelectPurchaseUnsuitabilityReportsDto, CreatePurchaseUnsuitabilityReportsDto>(PurchaseUnsuitabilityDataSource);
+
+                await PurchaseUnsuitabilityReportsService.CreateAsync(createInput);
+
+                HidePurchaseUnsuitabilityPopup();
+            }
+            else
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningAmountActionTitle"], L["UIWarningAmountActionMessage"]);
+            }
+            
+        }
+
+        public void HidePurchaseUnsuitabilityPopup()
+        {
+            PurchaseUnsuitabilityCrudPopup = false;
+        }
 
         #endregion
 

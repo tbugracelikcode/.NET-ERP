@@ -280,7 +280,7 @@
     <value>Warning</value>
   </data>
   <data name="UIWarningPartyNoQuantityMessage" xml:space="preserve">
-    <value>It cannot be recorded without the party number and warehouse receipt quantity.</value>
+    <value>It cannot be recorded without warehouse receipt quantity.</value>
   </data>
   <data name="UIWarningPartyNoQuantityTitle" xml:space="preserve">
     <value>Warning</value>

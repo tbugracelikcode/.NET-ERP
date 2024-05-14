@@ -402,6 +402,9 @@
   <data name="NoFile1" xml:space="preserve">
     <value>Dosya yok.</value>
   </data>
+  <data name="NoFile2" xml:space="preserve">
+    <value>Dosya Yok</value>
+  </data>
   <data name="NumberofSampleinPartLabel" xml:space="preserve">
     <value>Parti İçi Numune Sayısı:</value>
   </data>
@@ -583,10 +586,10 @@
     <value>Kalite Planı Satırları</value>
   </data>
   <data name="Tab2Name" xml:space="preserve">
-    <value>Operasyon Resimleri</value>
+    <value>Teknik Resimler</value>
   </data>
   <data name="Tab2Name1" xml:space="preserve">
-    <value>Operasyon Resimleri</value>
+    <value>Teknik Resimler</value>
   </data>
   <data name="Tab3Name" xml:space="preserve">
     <value>Operasyonlar</value>
@@ -630,11 +633,23 @@
   <data name="UICurrentMenu1" xml:space="preserve">
     <value>Fason Giriş Kalite Planları</value>
   </data>
+  <data name="UIInformationPopupMessageBase" xml:space="preserve">
+    <value>Yüklenmiş teknik resim dosyası, başarıyla silinmiştir.</value>
+  </data>
+  <data name="UIInformationPopupTitleBase" xml:space="preserve">
+    <value>Bilgilendirme</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Ana Kayıtlar &gt; Kalite Planları</value>
   </data>
   <data name="UIPreviousMenu1" xml:space="preserve">
     <value>Kalite Kontrol &gt; Ana Kayıtlar &gt; Kalite Planları</value>
+  </data>
+  <data name="UIWaringUploadMessage" xml:space="preserve">
+    <value>Bu kayıtta yüklenmiş bir teknik resim dosyası mevcut.</value>
+  </data>
+  <data name="UIWaringUploadTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UIWarningMessageBase" xml:space="preserve">
     <value>Stok seçmeden satır ekleme işlemi yapılamaz.</value>
