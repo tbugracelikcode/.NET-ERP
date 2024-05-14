@@ -141,6 +141,12 @@
   <data name="CurrencyContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>SYMBOL</value>
+  </data>
+  <data name="CurrencySymbolLabel" xml:space="preserve">
+    <value>Symbol</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>

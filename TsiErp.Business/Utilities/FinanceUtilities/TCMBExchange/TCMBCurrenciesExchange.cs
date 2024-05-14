@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace TsiErp.Business.Utilities.FinanceUtilities.TCMBExchange
 {
-    public static class CurrenciesExchange
+    public static class TCMBCurrenciesExchange
     {
 
 

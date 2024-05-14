@@ -69,7 +69,8 @@ namespace TsiErp.Business.Entities.Currency.Services
                 DeletionTime = null,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
-                IsDeleted = false
+                IsDeleted = false,
+                CurrencySymbol = input.CurrencySymbol
             });
 
 
@@ -189,7 +190,8 @@ namespace TsiErp.Business.Entities.Currency.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                LastModifierId = LoginedUserService.UserId
+                LastModifierId = LoginedUserService.UserId,
+                CurrencySymbol = input.CurrencySymbol
             }).Where(new { Id = input.Id }, true, true, "");
 
             var currencies = queryFactory.Update<SelectCurrenciesDto>(query, "Id", true);
@@ -222,8 +224,8 @@ namespace TsiErp.Business.Entities.Currency.Services
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 Id = id,
                 DataOpenStatus = lockRow,
-                DataOpenStatusUserId = userId
-
+                DataOpenStatusUserId = userId,
+                CurrencySymbol = entity.CurrencySymbol
             }).Where(new { Id = id }, true, true, "");
 
             var currencies = queryFactory.Update<SelectCurrenciesDto>(query, "Id", true);

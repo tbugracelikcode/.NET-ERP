@@ -133,6 +133,24 @@ namespace TsiErp.Localizations.Resources.Currencies.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SEMBOL.
+        /// </summary>
+        public static string CurrencySymbol {
+            get {
+                return ResourceManager.GetString("CurrencySymbol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sembol.
+        /// </summary>
+        public static string CurrencySymbolLabel {
+            get {
+                return ResourceManager.GetString("CurrencySymbolLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {

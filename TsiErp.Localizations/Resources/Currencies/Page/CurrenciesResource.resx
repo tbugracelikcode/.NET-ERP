@@ -141,6 +141,12 @@
   <data name="CurrencyContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="CurrencySymbol" xml:space="preserve">
+    <value>SEMBOL</value>
+  </data>
+  <data name="CurrencySymbolLabel" xml:space="preserve">
+    <value>Sembol</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
