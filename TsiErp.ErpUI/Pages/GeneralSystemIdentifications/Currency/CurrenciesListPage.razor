@@ -49,6 +49,8 @@ else
                                     <GridColumn Field=@nameof(ListCurrenciesDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListCurrenciesDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListCurrenciesDto.IsLocalCurrency) DisplayAsCheckBox="true" HeaderText="@L["LocalCurrency"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+
+                                    <GridColumn Field=@nameof(ListCurrenciesDto.CurrencySymbol) HeaderText="@L["CurrencySymbol"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -77,9 +79,9 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="50%" />
+                    <DxGridLayoutRow Height="31%" />
                     <DxGridLayoutRow Height="1%" />
-                    <DxGridLayoutRow Height="17%" />
+                    <DxGridLayoutRow Height="39%" />
                     <DxGridLayoutRow Height="1%" />
                     <DxGridLayoutRow Height="17%" />
                 </Rows>
@@ -102,6 +104,7 @@ else
                             <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
@@ -112,6 +115,14 @@ else
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["CurrencySymbolLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.CurrencySymbol"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="1">
+                        <Template>
                             <center>
                             <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
                             <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
@@ -119,7 +130,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="3">
+                    <DxGridLayoutItem Row="4" Column="3">
                         <Template>
                             <center>
                                 <label class="TSIModalLabel"><strong>@L["IsLocalCurrencyLabel"] </strong></label><br />

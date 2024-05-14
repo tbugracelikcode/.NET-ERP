@@ -1,5 +1,6 @@
 ﻿using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 
+
 namespace TsiErp.DataAccess.Services.Login
 {
     public static class LoginedUserService
@@ -15,5 +16,8 @@ namespace TsiErp.DataAccess.Services.Login
         public static bool SalesManagementShowAmountsChildMenu { get; set; } = true;
         public static bool ShipmentShowAmountsChildMenu { get; set; } = true;
         public static bool MachWorkforceManagementShowAmountsChildMenu { get; set; } = true;
+
+        public static int PurchaseOrderExchangeRateType { get; set; } = 0;
+        public static int PurchaseRequestExchangeRateType { get; set; } = 0;
     }
 }

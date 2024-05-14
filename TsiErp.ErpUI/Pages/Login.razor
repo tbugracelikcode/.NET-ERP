@@ -5,6 +5,7 @@
 @inject IJSRuntime JSRuntime
 @inject IUsersAppService UsersAppService
 @inject IUserPermissionsAppService UserPermissionsAppService
+@inject IPurchaseManagementParametersAppService PurchaseManagementParametersAppService
 
 <!doctype html>
 <html class="no-js" lang="">
@@ -154,11 +155,6 @@
     {
         var loginnedUser = (await UsersAppService.GetAsyncByUserNameAndPassword(User, Password)).Data;
 
-        // if (loginnedUser != null)
-        // {
-
-        //LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
-
         LoginedUserService.UserId = loginnedUser.Id;
         LoginedUserService.UserName = loginnedUser.UserName;
 
@@ -185,27 +181,19 @@
         LoginedUserService.ShipmentShowAmountsChildMenu = NavBarPermissionsModel.ShipmentShowAmountsChildMenu;
         LoginedUserService.MachWorkforceManagementShowAmountsChildMenu = NavBarPermissionsModel.MachWorkforceManagementShowAmountsChildMenu;
 
-            NavigationManager.NavigateTo("/home");
-        // }
-        // else
-        // {
-        //     vispopup = true;
-        // }
+        var purchaseManagementParameter = (await PurchaseManagementParametersAppService.GetPurchaseManagementParametersAsync()).Data;
 
-        //if (User == "admin" && Password == "admin")
-        //{
-        //    VisibleSpinner = true;
+        if (purchaseManagementParameter.PurchaseOrderExchangeRateType > -1)
+        {
+            LoginedUserService.PurchaseOrderExchangeRateType = purchaseManagementParameter.PurchaseOrderExchangeRateType;
+        }
 
-        //    LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
+        if (purchaseManagementParameter.PurchaseRequestExchangeRateType > -1)
+        {
+            LoginedUserService.PurchaseRequestExchangeRateType = purchaseManagementParameter.PurchaseRequestExchangeRateType;
+        }
 
-        //    LoginedUserService.VersionTableId = Guid.Parse("8A5F698D-D632-4314-A0C4-02E496FEB6CD");
-
-        //    NavigationManager.NavigateTo("/home");
-        //}
-        //else
-        //{
-        //    vispopup = true;
-        //}
+        NavigationManager.NavigateTo("/home");
 
     }
     private void OnOkButtonClicked()

@@ -21,6 +21,7 @@ using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using TsiErp.Business.Utilities.FinanceUtilities.TCMBExchange;
 
 namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 {
@@ -163,6 +164,11 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             {
                 DataSource.TransactionExchangeCurrencyID = Guid.Empty;
                 DataSource.TransactionExchangeCurrencyCode = string.Empty;
+                DataSource.ExchangeRate = 0;
+            }
+            else
+            {
+               
             }
         }
 
@@ -557,6 +563,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
+
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             CreateConvertToOrderContextMenuItems();

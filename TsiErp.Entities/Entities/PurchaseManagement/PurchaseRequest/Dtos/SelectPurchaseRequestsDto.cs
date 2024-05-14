@@ -108,6 +108,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos
         /// </summary>
         public string CurrencyCode { get; set; }
         /// <summary>
+        /// Para Birimi Sembol
+        /// </summary>
+        public string CurrencySymbol { get; set; }
+        /// <summary>
         /// Ödeme Planı ID
         /// </summary>
         public Guid? PaymentPlanID { get; set; }

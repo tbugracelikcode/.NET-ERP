@@ -256,7 +256,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     )
                     .Join<Currencies>
                     (
-                        c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                        c => new { CurrencyID = c.Id, CurrencyCode = c.Code, CurrencySymbol=c.CurrencySymbol },
                         nameof(PurchaseRequests.CurrencyID),
                         nameof(Currencies.Id),
                         JoinType.Left
