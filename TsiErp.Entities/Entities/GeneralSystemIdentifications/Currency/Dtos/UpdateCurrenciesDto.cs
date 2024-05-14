@@ -23,5 +23,10 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos
         /// Yerel Para Birimi
         /// </summary>
         public bool IsLocalCurrency { get; set; }
+
+        /// <summary>
+        /// Sembol
+        /// </summary>
+        public string CurrencySymbol { get; set; }
     }
 }

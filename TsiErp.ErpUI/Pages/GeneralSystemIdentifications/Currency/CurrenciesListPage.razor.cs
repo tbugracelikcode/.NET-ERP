@@ -50,7 +50,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Currency
             return Task.CompletedTask;
         }
 
-       
+
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
@@ -77,11 +77,11 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Currency
 
         protected override async Task OnSubmit()
         {
-            if(DataSource.IsLocalCurrency && ListDataSource.Any(t => t.IsLocalCurrency))
+            if (DataSource.IsLocalCurrency && ListDataSource.Any(t => t.IsLocalCurrency && t.Id != DataSource.Id))
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningLocalCurrencyTitle"], L["UIWarningLocalCurrencyMessage"]);
             }
-            else 
+            else
             {
                 if (DataSource.Id == Guid.Empty)
                 {
@@ -99,7 +99,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Currency
                 await GetListDataSourceAsync();
                 HideEditPage();
             }
-          
+
         }
 
 

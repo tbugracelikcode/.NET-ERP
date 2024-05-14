@@ -29,5 +29,12 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency
         /// Yerel Para Birimi
         /// </summary>
         public bool IsLocalCurrency { get; set; }
+
+
+        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Sembol
+        /// </summary>
+        public string CurrencySymbol { get; set; }
     }
 }
