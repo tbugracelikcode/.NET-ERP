@@ -143,6 +143,15 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sipariş Kabul Kontrol.
+        /// </summary>
+        public static string ControlModalTitle {
+            get {
+                return ResourceManager.GetString("ControlModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri Kodu:.
         /// </summary>
         public static string CurrentAccountCardCustomerCodeLabel {
@@ -481,6 +490,33 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         public static string LineGridDescription_ {
             get {
                 return ResourceManager.GetString("LineGridDescription_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ONAY DURUMU.
+        /// </summary>
+        public static string LineGridIsApproved {
+            get {
+                return ResourceManager.GetString("LineGridIsApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to REÇETE.
+        /// </summary>
+        public static string LineGridIsBoM {
+            get {
+                return ResourceManager.GetString("LineGridIsBoM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ROTA.
+        /// </summary>
+        public static string LineGridIsRoute {
+            get {
+                return ResourceManager.GetString("LineGridIsRoute", resourceCulture);
             }
         }
         
@@ -953,6 +989,15 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sipariş Kabul Kontrol.
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextControl {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextControl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Siparişine Dönüştür.
         /// </summary>
         public static string OrderAcceptanceRecordsContextConverttoOrder {
@@ -985,6 +1030,15 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         public static string OrderAcceptanceRecordsContextOrderApproval {
             get {
                 return ResourceManager.GetString("OrderAcceptanceRecordsContextOrderApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sipariş Satırları.
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextOrderLines {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextOrderLines", resourceCulture);
             }
         }
         
@@ -1030,6 +1084,15 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         public static string OrderAmountLineLabel {
             get {
                 return ResourceManager.GetString("OrderAmountLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sipariş Satırları.
+        /// </summary>
+        public static string OrderLineModalTitle {
+            get {
+                return ResourceManager.GetString("OrderLineModalTitle", resourceCulture);
             }
         }
         

@@ -43,12 +43,15 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 using static TsiErp.ErpUI.Pages.PlanningManagement.MRP.MRPsListPage;
 using TsiErp.ErpUI.Models;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 {
     public partial class OrderAcceptanceRecordsListPage : IDisposable
     {
         private SfGrid<VirtualLineModel> _VirtualLineGrid;
+        private SfGrid<OrderLineModel> _OrderLineGrid;
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -66,17 +69,22 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         List<VirtualLineModel> GridVirtualLineList = new List<VirtualLineModel>();
 
+        List<OrderLineModel> GridOrderLineList = new List<OrderLineModel>();
+
         List<ListSalesOrderDto> SalesOrdersList = new List<ListSalesOrderDto>();
 
         public List<SelectMRPLinesDto> MRPLinesList = new List<SelectMRPLinesDto>();
+
+        public List<ListProductReferanceNumbersDto> ProductReferanceNumbersList = new List<ListProductReferanceNumbersDto>();
 
         SelectMRPsDto MRPDataSource;
         SelectMRPLinesDto MRPLineDataSource;
 
         public bool MRPCrudModalVisible = false;
         public bool MRPLineCrudPopup = false;
-
+        public bool OrderAcceptanceControlPopup = false;
         private bool VirtualLineCrudPopup = false;
+        private bool OrderLineCrudPopup = false;
 
         #region Planning Parameters
 
@@ -196,6 +204,10 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextOrderApproval"], Id = "orderapproval" }); break;
                             case "OrderAcceptanceRecordsContextPending":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextPending"], Id = "pending" }); break;
+                            case "OrderAcceptanceRecordsContextControl":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextControl"], Id = "control" }); break;
+                            case "OrderAcceptanceRecordsContextOrderLines":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextOrderLines"], Id = "orderlines" }); break;
                             default: break;
                         }
                     }
@@ -663,6 +675,149 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     await InvokeAsync(StateHasChanged);
                     break;
 
+                case "control":
+
+                    DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    GridVirtualLineList.Clear();
+
+                    var productList2 = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
+
+                    foreach (var line in DataSource.SelectOrderAcceptanceRecordLines)
+                    {
+                        if (productList2.Any(t => t.Id == line.ProductID))
+                        {
+                            VirtualLineModel virtualModel = new VirtualLineModel
+                            {
+                                Id = line.Id,
+                                CustomerBarcodeNo = line.CustomerBarcodeNo,
+                                CustomerReferanceNo = line.CustomerReferanceNo,
+                                DefinedUnitPrice = line.DefinedUnitPrice,
+                                Description_ = line.Description_,
+                                IsProductExists = true,
+                                LineAmount = line.LineAmount,
+                                LineNr = line.LineNr,
+                                MinOrderAmount = line.MinOrderAmount,
+                                OrderAcceptanceRecordID = line.OrderAcceptanceRecordID,
+                                OrderAmount = line.OrderAmount,
+                                OrderReferanceNo = line.OrderReferanceNo,
+                                OrderUnitPrice = line.OrderUnitPrice,
+                                ProductCode = line.ProductCode,
+                                ProductID = line.ProductID,
+                                ProductName = line.ProductName,
+                                ProductReferanceNumberID = line.ProductReferanceNumberID,
+                                UnitSetCode = line.UnitSetCode,
+                                UnitSetID = line.UnitSetID,
+                            };
+
+                            GridVirtualLineList.Add(virtualModel);
+                        }
+
+                        else
+                        {
+                            VirtualLineModel virtualModel = new VirtualLineModel
+                            {
+                                Id = line.Id,
+                                CustomerBarcodeNo = line.CustomerBarcodeNo,
+                                CustomerReferanceNo = line.CustomerReferanceNo,
+                                DefinedUnitPrice = line.DefinedUnitPrice,
+                                Description_ = line.Description_,
+                                IsProductExists = false,
+                                LineAmount = line.LineAmount,
+                                LineNr = line.LineNr,
+                                MinOrderAmount = line.MinOrderAmount,
+                                OrderAcceptanceRecordID = line.OrderAcceptanceRecordID,
+                                OrderAmount = line.OrderAmount,
+                                OrderReferanceNo = line.OrderReferanceNo,
+                                OrderUnitPrice = line.OrderUnitPrice,
+                                ProductCode = line.ProductCode,
+                                ProductID = line.ProductID,
+                                ProductName = line.ProductName,
+                                ProductReferanceNumberID = line.ProductReferanceNumberID,
+                                UnitSetCode = line.UnitSetCode,
+                                UnitSetID = line.UnitSetID,
+                            };
+
+                            GridVirtualLineList.Add(virtualModel);
+                        }
+                    }
+
+                    OrderAcceptanceControlPopup = true;
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "orderlines":
+
+                    DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    var RoutesList = (await RoutesAppService.GetListAsync(new ListRoutesParameterDto())).Data.ToList();
+
+                    foreach (var line in DataSource.SelectOrderAcceptanceRecordLines)
+                    {
+                        bool isRoute = false;
+                        bool isBoM = false;
+                        bool isApproved = false;
+
+                        var route = RoutesList.Where(t => t.ProductID == line.ProductID && t.IsActive == true).FirstOrDefault();
+                        var boM = (await BillsofMaterialsAppService.GetbyCurrentAccountIDAsync(DataSource.CurrentAccountCardID.GetValueOrDefault(), line.ProductID.GetValueOrDefault())).Data;
+                        var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
+
+                        #region Rota, Reçete ve Onay Kontrolleri
+
+                        if (route != null && route.Id != Guid.Empty)
+                        {
+                            isRoute = true;
+                        }
+                        else
+                        {
+                            isRoute = false;
+                        }
+
+                        if (boM != null && boM.Id != Guid.Empty)
+                        {
+                            isBoM = true;
+                        }
+                        else
+                        {
+                            isBoM = false;
+                        }
+                        if (product != null && product.Id != Guid.Empty)
+                        {
+                            isApproved = product.Confirmation;
+                        }
+                        else
+                        {
+                            isApproved = false;
+                        }
+
+                        #endregion
+
+                        OrderLineModel orderLineModel = new OrderLineModel
+                        {
+                            CustomerBarcodeNo = line.CustomerBarcodeNo,
+                            CustomerReferanceNo = line.CustomerReferanceNo,
+                            Description_ = line.Description_,
+                            IsApproved = isApproved,
+                            IsBoM = isBoM,
+                            IsRoute = isRoute,
+                            OrderAmount = line.OrderAmount,
+                            OrderReferanceNo = line.OrderReferanceNo,
+                            ProductCode = line.ProductCode,
+                            ProductID = line.ProductID,
+                            ProductName = line.ProductName,
+                            UnitSetCode = line.UnitSetCode,
+                            UnitSetID = line.UnitSetID,
+                        };
+
+                        GridOrderLineList.Add(orderLineModel);
+                    }
+
+                    OrderLineCrudPopup = true;
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
                 default:
                     break;
             }
@@ -944,6 +1099,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             MRPCrudModalVisible = false;
         }
 
+        public void HideOrderLinePopup()
+        {
+            OrderLineCrudPopup = false; 
+            GridOrderLineList.Clear();
+        }
+
         protected async Task OnLineSubmit()
         {
 
@@ -1093,6 +1254,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             SupplierSelectionPopup = false;
         }
 
+        public void HideOrderAcceptanceControlPopup()
+        {
+            OrderAcceptanceControlPopup = false;
+            GridVirtualLineList.Clear();
+        }
+
         public void ReferanceDateValueChangeHandler(ChangedEventArgs<DateTime> args)
         {
             if (MRPLinesList != null && MRPLinesList.Count > 0)
@@ -1183,7 +1350,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                     if (salesPriceLine != null && salesPriceLine.Id != Guid.Empty)
                     {
-                        var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductCode == product.Code && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).FirstOrDefault();
+                        var productRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == product.Id).FirstOrDefault();
 
                         VirtualLineModel virtualModel = new VirtualLineModel
                         {
@@ -1247,6 +1414,148 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         }
 
         #endregion
+
+        #region Sipariş Kabul Kontrol Excel'den Aktarım
+        //SfGrid<ExpandoObject> Grid;
+        public DataTable controltable = new DataTable();
+        private void ControlOnChange(UploadChangeEventArgs args)
+        {
+            foreach (var file in args.Files)
+            {
+                #region Expando Object Örneği
+
+                var path = file.FileInfo.Name;
+                ExcelEngine excelEngine = new ExcelEngine();
+                IApplication application = excelEngine.Excel;
+                application.DefaultVersion = ExcelVersion.Excel2016;
+
+                var check = ExcelService.ImportGetPath(path);
+                FileStream openFileStream = new FileStream(check, FileMode.OpenOrCreate);
+                file.Stream.WriteTo(openFileStream);
+                FileStream fileStream = new FileStream(check, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                IWorkbook workbook = application.Workbooks.Open(fileStream);
+                IWorksheet worksheet = workbook.Worksheets[1];
+                controltable = worksheet.ExportDataTable(worksheet.UsedRange, ExcelExportDataTableOptions.ColumnNames);
+                ControlGenerateListFromTable(controltable);
+
+                #endregion
+
+            }
+        }
+        string[] ControlColumns;
+        public List<ExpandoObject> ControlOrderList;
+        public async void ControlGenerateListFromTable(DataTable input)
+        {
+            var list = new List<ExpandoObject>();
+            ControlColumns = input.Columns.Cast<DataColumn>()
+                                 .Select(x => x.ColumnName)
+                                 .ToArray();
+            foreach (DataRow row in input.Rows)
+            {
+                System.Dynamic.ExpandoObject e = new System.Dynamic.ExpandoObject();
+                foreach (DataColumn col in input.Columns)
+                    e.TryAdd(col.ColumnName, row.ItemArray[col.Ordinal]);
+                list.Add(e);
+            }
+            ControlOrderList = list;
+
+
+            foreach (var item in ControlOrderList)
+            {
+                dynamic row = item;
+
+                #region Row DBNull Kontrolleri
+
+                string productCode = !string.IsNullOrEmpty(Convert.ToString(row.ProductCode)) ? (string)row.ProductCode : string.Empty;
+                string customerBarcodeNo = !string.IsNullOrEmpty(Convert.ToString(row.CustomerBarcodeNo)) ? (string)row.CustomerBarcodeNo : string.Empty;
+                string customerReferanceNo = !string.IsNullOrEmpty(Convert.ToString(row.CustomerReferanceNo)) ? (string)row.CustomerReferanceNo : string.Empty;
+                string orderReferanceNo = !string.IsNullOrEmpty(Convert.ToString(row.OrderReferanceNo)) ? (string)row.OrderReferanceNo : string.Empty;
+                decimal lineAmount = !string.IsNullOrEmpty(Convert.ToString(row.LineAmount)) ? Convert.ToDecimal(row.LineAmount) : 0;
+                decimal orderAmount = !string.IsNullOrEmpty(Convert.ToString(row.OrderAmount)) ? Convert.ToDecimal(row.OrderAmount) : 0;
+                decimal orderUnitPrice = !string.IsNullOrEmpty(Convert.ToString(row.OrderUnitPrice)) ? Convert.ToDecimal(row.OrderUnitPrice) : 0;
+
+                #endregion
+
+                if (!DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == productCode))
+                {
+                    var product = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.Where(t => t.Code == productCode).FirstOrDefault();
+
+                    if (product != null)
+                    {
+                        var salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.StartDate <= DataSource.Date_ && t.EndDate >= DataSource.Date_ && t.CurrentAccountCardID == DataSource.CurrentAccountCardID && t.IsActive == true && t.IsApproved == true).Select(t => t.Id).FirstOrDefault();
+                        var salesPriceLine = (await SalesPricesAppService.GetAsync(salesPriceID)).Data.SelectSalesPriceLines.Where(t => t.ProductCode == product.Code).FirstOrDefault();
+
+
+                        if (salesPriceLine != null && salesPriceLine.Id != Guid.Empty)
+                        {
+                            var productRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == product.Id).FirstOrDefault();
+
+                            VirtualLineModel virtualModel = new VirtualLineModel
+                            {
+                                CustomerBarcodeNo = customerBarcodeNo,
+                                ProductCode = product.Code,
+                                ProductName = product.Name,
+                                ProductID = product.Id,
+                                CustomerReferanceNo = customerReferanceNo,
+                                DefinedUnitPrice = salesPriceLine.Price,
+                                Description_ = string.Empty,
+                                IsProductExists = true,
+                                LineAmount = lineAmount,
+                                LineNr = GridVirtualLineList.Count + 1,
+                                MinOrderAmount = productRefNo.MinOrderAmount,
+                                OrderAmount = orderAmount,
+                                OrderReferanceNo = orderReferanceNo,
+                                OrderUnitPrice = orderUnitPrice,
+                                ProductReferanceNumberID = productRefNo.Id,
+                                UnitSetID = product.UnitSetID,
+                                UnitSetCode = product.UnitSetCode,
+                            };
+
+                            GridVirtualLineList.Add(virtualModel);
+                        }
+                        else
+                        {
+                            await ModalManager.WarningPopupAsync("UIWarningSalesPriceTitle", "UIWarningSalesPriceMessage");
+                        }
+
+
+                    }
+                    else if (product == null && productCode != string.Empty)
+                    {
+                        VirtualLineModel virtualModel = new VirtualLineModel
+                        {
+                            CustomerBarcodeNo = customerBarcodeNo,
+                            ProductCode = productCode,
+                            ProductName = string.Empty,
+                            ProductID = Guid.Empty,
+                            CustomerReferanceNo = customerReferanceNo,
+                            DefinedUnitPrice = 0,
+                            Description_ = string.Empty,
+                            IsProductExists = false,
+                            LineAmount = lineAmount,
+                            LineNr = GridVirtualLineList.Count + 1,
+                            MinOrderAmount = 0,
+                            OrderAmount = orderAmount,
+                            OrderReferanceNo = orderReferanceNo,
+                            OrderUnitPrice = orderUnitPrice,
+                            ProductReferanceNumberID = Guid.Empty,
+                            UnitSetID = Guid.Empty,
+                            UnitSetCode = string.Empty,
+                        };
+
+                        GridVirtualLineList.Add(virtualModel);
+                    }
+                }
+
+
+
+            }
+
+            await _VirtualLineGrid.Refresh();
+        }
+
+        #endregion
+
 
         #endregion
 
@@ -1393,6 +1702,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                 DataSource.CurrentAccountCardCustomerCode = string.Empty;
                 DataSource.CurrenyID = Guid.Empty;
                 DataSource.CurrenyCode = string.Empty;
+
+                ProductReferanceNumbersList = new List<ListProductReferanceNumbersDto>();
             }
         }
 
@@ -1408,6 +1719,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                 DataSource.CurrentAccountCardCustomerCode = selectedCurrentAccount.CustomerCode;
                 DataSource.CurrenyID = selectedCurrentAccount.CurrencyID;
                 DataSource.CurrenyCode = selectedCurrentAccount.Currency;
+                ProductReferanceNumbersList = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.CurrentAccountCardID == selectedCurrentAccount.Id).ToList();
                 SelectCurrentAccountCardsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -1689,5 +2001,22 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         public decimal OrderUnitPrice { get; set; }
         public decimal LineAmount { get; set; }
         public string Description_ { get; set; }
+    }
+
+    public class OrderLineModel
+    {
+        public Guid? ProductID { get; set; }
+        public string ProductCode { get; set; }
+        public string ProductName { get; set; }
+        public string OrderReferanceNo { get; set; }
+        public string CustomerReferanceNo { get; set; }
+        public string CustomerBarcodeNo { get; set; }
+        public decimal OrderAmount { get; set; }
+        public Guid? UnitSetID { get; set; }
+        public string UnitSetCode { get; set; }
+        public string Description_ { get; set; }
+        public bool IsRoute { get; set; }
+        public bool IsBoM { get; set; }
+        public bool IsApproved { get; set; }
     }
 }

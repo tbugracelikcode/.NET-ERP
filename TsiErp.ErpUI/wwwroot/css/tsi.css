@@ -441,6 +441,11 @@
     height: 88%;
 }
 
+.TSIGridLayoutHeight90 {
+    width: 100%;
+    height: 90% !important;
+}
+
 .TSIPackingListGridLayout {
     width: 100%;
     height: 320px;
