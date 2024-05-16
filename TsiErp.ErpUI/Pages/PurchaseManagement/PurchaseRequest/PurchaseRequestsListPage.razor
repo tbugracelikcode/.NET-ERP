@@ -25,6 +25,7 @@
 @inject IGetSQLDateAppService GetSQLDateAppService
 @inject IProductReferanceNumbersAppService ProductReferanceNumbersAppService
 @inject IPurchasePricesAppService PurchasePricesAppService
+@inject IExchangeRatesAppService ExchangeRatesService
 
 
 @if (!base.IsLoaded)
@@ -151,7 +152,11 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["Date_Label"] </strong></label><br />
-                            <SfDatePicker @bind-Value="@DataSource.Date_" Max=@(!futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(10000,12,31))></SfDatePicker>
+                            <SfDatePicker TValue="DateTime" Value="@DataSource.Date_" Max=@MaxDate>
+
+                                <DatePickerEvents TValue="DateTime" ValueChange="DateValueChangeHandler"></DatePickerEvents>
+
+                            </SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -226,6 +231,16 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["TransactionExchangeLabel"] </strong></label>
                             <SfTextBox @ref="@TransactionExchangeCurrenciesButtonEdit" Created="@TransactionExchangeCurrenciesOnCreateIcon" @bind-Value="DataSource.TransactionExchangeCurrencyCode" ShowClearButton=true ValueChange="TransactionExchangeCurrenciesOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PricingCurrencyLabel"] </strong></label><br />
+                            <SfDropDownList TItem="SelectPurchaseRequestsDto" TValue="PricingCurrencyEnum" PopupHeight="230px" @bind-Value="@DataSource.PricingCurrency" DataSource="@PricingCurrencyList" ShowClearButton=true>
+                                <DropDownListEvents TItem="SelectPurchaseRequestsDto" TValue="PricingCurrencyEnum" ValueChange="@PricingCurrencyValueChangeHandler"></DropDownListEvents>
+                                <DropDownListFieldSettings Text="PricingCurrencyName" Value="PricingCurrency"></DropDownListFieldSettings>
+                            </SfDropDownList>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -434,7 +449,7 @@ else
                             <DxGridLayoutItem Row="0" Column="3">
                                 <Template>
                                     <label class="TSIModalLabel"><strong>@L["UnitPriceLineLabel"] </strong></label>
-                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.UnitPrice" OnChange="LineCalculate">
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.UnitPrice" Enabled=@UnitPriceEnabled OnChange="LineCalculate">
 
 
                                     </SfNumericTextBox>
@@ -472,28 +487,28 @@ else
                             <DxGridLayoutItem Row="5" Column="3">
                                 <Template>
                                     <label class="TSIModalLabel"><strong>@L["DiscountAmountLineLabel"]</strong></label>
-                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountAmount" OnChange="LineCalculate"></SfNumericTextBox>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountAmount" Enabled=@DiscountAmountEnabled OnChange="LineCalculate"></SfNumericTextBox>
                                 </Template>
                             </DxGridLayoutItem>
 
                             <DxGridLayoutItem Row="6" Column="3">
                                 <Template>
                                     <label class="TSIModalLabel"><strong>@L["LineAmountLineLabel"] </strong></label>
-                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineAmount" Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineAmount" Enabled=@LineAmountEnabled style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
                                 </Template>
                             </DxGridLayoutItem>
 
                             <DxGridLayoutItem Row="7" Column="3">
                                 <Template>
                                     <label class="TSIModalLabel"><strong>@L["LineTotalAmountLineLabel"] </strong></label>
-                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineTotalAmount" Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineTotalAmount" Enabled=@LineTotalAmountEnabled style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
                                 </Template>
                             </DxGridLayoutItem>
 
                             <DxGridLayoutItem Row="0" Column="5">
                                 <Template>
                                     <label class="TSIModalLabel"><strong>@L["TransactionExchangeUnitPriceLineLabel"]</strong></label>
-                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.TransactionExchangeUnitPrice" OnChange="LineCalculate">
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.TransactionExchangeUnitPrice" Enabled=@TransactionExchangeUnitPriceEnabled OnChange="LineCalculate">
 
 
                                     </SfNumericTextBox>
@@ -510,21 +525,21 @@ else
                             <DxGridLayoutItem Row="5" Column="5">
                                 <Template>
                                     <label class="TSIModalLabel"><strong>@L["TransactionExchangeDiscountAmountLineLabel"] </strong></label>
-                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.TransactionExchangeDiscountAmount" OnChange="LineCalculate"></SfNumericTextBox>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.TransactionExchangeDiscountAmount" Enabled=@TransactionExchangeDiscountAmountEnabled OnChange="LineCalculate"></SfNumericTextBox>
                                 </Template>
                             </DxGridLayoutItem>
 
                             <DxGridLayoutItem Row="6" Column="5">
                                 <Template>
                                     <label class="TSIModalLabel"><strong>@L["TransactionExchangeLineAmountLineLabel"] </strong></label>
-                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.TransactionExchangeLineAmount" Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.TransactionExchangeLineAmount" Enabled=@TransactionExchangeLineAmountEnabled style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
                                 </Template>
                             </DxGridLayoutItem>
 
                             <DxGridLayoutItem Row="7" Column="5">
                                 <Template>
                                     <label class="TSIModalLabel"><strong>@L["TransactionExchangeLineTotalAmountLineLabel"] </strong></label>
-                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.TransactionExchangeLineTotalAmount" Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
+                                    <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.TransactionExchangeLineTotalAmount" Enabled=@TransactionExchangeLineTotalAmountEnabled style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
                                 </Template>
                             </DxGridLayoutItem>
                         }
@@ -715,53 +730,53 @@ else
     </DxPopup>
 }
 
-if (SelectTransactionExchangeCurrencyPopupVisible)
+@if (SelectTransactionExchangeCurrencyPopupVisible)
 {
-<DxPopup @bind-Visible="SelectTransactionExchangeCurrencyPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["CurrencyModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
-    <BodyTemplate>
+    <DxPopup @bind-Visible="SelectTransactionExchangeCurrencyPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["CurrencyModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
 
-        <DevGridLayout ColumnCount="1" RowCount="1">
-            <GridLayoutItems>
-                <DxGridLayoutItem Row="1" Column="1">
-                    <Template>
-                        <SfCard class="TSIGridCards">
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
 
-                            <CardContent>
-                                <SfGrid ID="TransactionExchangeCurrenciesGrid" DataSource="@TransactionExchangeCurrenciesList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
-                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <CardContent>
+                                    <SfGrid ID="TransactionExchangeCurrenciesGrid" DataSource="@TransactionExchangeCurrenciesList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                    <GridEvents OnRecordDoubleClick="@TransactionExchangeCurrenciesDoubleClickHandler" TValue="ListCurrenciesDto"></GridEvents>
-                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                    <GridPageSettings PageSizes="true"></GridPageSettings>
-                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                    <GridColumns>
-                                        <GridColumn Field=@nameof(ListCurrenciesDto.Code) HeaderText="@L["CurrencyModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListCurrenciesDto.Name) HeaderText="@L["CurrencyModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    </GridColumns>
-                                </SfGrid>
-                            </CardContent>
-                            <CardFooter>
-                            </CardFooter>
-                        </SfCard>
-                    </Template>
-                </DxGridLayoutItem>
-            </GridLayoutItems>
-        </DevGridLayout>
+                                        <GridEvents OnRecordDoubleClick="@TransactionExchangeCurrenciesDoubleClickHandler" TValue="ListCurrenciesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.Code) HeaderText="@L["CurrencyModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.Name) HeaderText="@L["CurrencyModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
 
-    </BodyTemplate>
-    <FooterContentTemplate>
-    </FooterContentTemplate>
-</DxPopup>
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
 }
 
 @if (SelectBranchesPopupVisible)

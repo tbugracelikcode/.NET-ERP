@@ -116,6 +116,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
+                PricingCurrency = input.PricingCurrency
             });
 
             foreach (var item in input.SelectPurchaseRequestLines)
@@ -256,7 +257,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     )
                     .Join<Currencies>
                     (
-                        c => new { CurrencyID = c.Id, CurrencyCode = c.Code, CurrencySymbol=c.CurrencySymbol },
+                        c => new { CurrencyID = c.Id, CurrencyCode = c.Code, CurrencySymbol = c.CurrencySymbol },
                         nameof(PurchaseRequests.CurrencyID),
                         nameof(Currencies.Id),
                         JoinType.Left
@@ -614,6 +615,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
+                PricingCurrency = input.PricingCurrency
             }).Where(new { Id = input.Id }, false, false, "");
 
             foreach (var item in input.SelectPurchaseRequestLines)
@@ -778,6 +780,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                PricingCurrency = (int)entity.PricingCurrency
             }).Where(new { Id = id }, false, false, "");
 
             var purchaseRequestsDto = queryFactory.Update<SelectPurchaseRequestsDto>(query, "Id", true);

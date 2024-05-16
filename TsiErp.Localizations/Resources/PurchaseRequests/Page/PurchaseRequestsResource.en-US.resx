@@ -264,6 +264,9 @@
   <data name="EnumApproved" xml:space="preserve">
     <value>Approved</value>
   </data>
+  <data name="EnumLocalCurrency" xml:space="preserve">
+    <value>Local Currency</value>
+  </data>
   <data name="EnumPartiallyApproved" xml:space="preserve">
     <value>Partially Approved</value>
   </data>
@@ -272,6 +275,9 @@
   </data>
   <data name="EnumPurchase" xml:space="preserve">
     <value>Purchase</value>
+  </data>
+  <data name="EnumTransactionCurrency" xml:space="preserve">
+    <value>Transaction Currency</value>
   </data>
   <data name="EnumWaiting" xml:space="preserve">
     <value>Waiting</value>
@@ -362,6 +368,9 @@
   </data>
   <data name="PaymentPlanNameLabel" xml:space="preserve">
     <value>Payment Plan:</value>
+  </data>
+  <data name="PricingCurrencyLabel" xml:space="preserve">
+    <value>Pricing Currency:</value>
   </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Product Code:</value>

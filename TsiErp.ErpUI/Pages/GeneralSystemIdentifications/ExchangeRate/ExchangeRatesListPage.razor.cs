@@ -8,6 +8,9 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
+using TsiErp.Business.Utilities.FinanceUtilities.TCMBExchange;
+using TsiErp.Business.Entities.Currency.Services;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
 {
@@ -18,9 +21,13 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+
+        [Inject]
+        ModalManager ModalManager { get; set; }
         protected override async void OnInitialized()
         {
             BaseCrudService = ExchangeRatesService;
+
             _L = L;
 
             #region Context Menü Yetkilendirmesi
@@ -64,10 +71,143 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
                             GridContextMenu.Add(new ContextMenuItemModel { Text = L["ExchangeRateContextDelete"], Id = "delete" }); break;
                         case "ExchangeRateContextRefresh":
                             GridContextMenu.Add(new ContextMenuItemModel { Text = L["ExchangeRateContextRefresh"], Id = "refresh" }); break;
+                        case "ExchangeRateContextCentralBankExchange":
+                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ExchangeRateContextCentralBankExchange"], Id = "bankexchange" }); break;
                         default: break;
                     }
                 }
             }
+        }
+
+        public override async void OnContextMenuClick(ContextMenuClickEventArgs<ListExchangeRatesDto> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "new":
+                    await BeforeInsertAsync();
+                    break;
+
+                case "changed":
+                    IsChanged = true;
+                    SelectFirstDataRow = false;
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    ShowEditPage();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "delete":
+
+                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+
+
+                    if (res == true)
+                    {
+                        SelectFirstDataRow = false;
+                        await DeleteAsync(args.RowInfo.RowData.Id);
+                        await GetListDataSourceAsync();
+                        await InvokeAsync(StateHasChanged);
+                    }
+
+                    break;
+
+                case "refresh":
+                    await GetListDataSourceAsync();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "bankexchange":
+
+                    var date = GetSQLDateAppService.GetDateFromSQL();
+
+                    var controlDate = new DateTime(date.Year, date.Month, date.Day);
+
+                    var currencyList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
+
+                    foreach (var currency in currencyList)
+                    {
+                        string symbol = currency.CurrencySymbol;
+
+                        Guid currencyId = currency.Id;
+
+                        var currencyControl = (await ExchangeRatesService.GetListAsync(new ListExchangeRatesParameterDto())).Data.Where(t => t.Date == controlDate && t.CurrencyId == currencyId).ToList();
+
+                        int currencyCode = GetCurrencyCode(symbol);
+
+                        if (currencyControl.Count == 0)
+                        {
+                            if (currencyCode > -1)
+                            {
+                                var currencyRates = TCMBCurrenciesExchange.GetHistoricalExchangeRates((TCMBCurrencyCode)currencyCode, date);
+
+                                CreateExchangeRatesDto exRate = new CreateExchangeRatesDto
+                                {
+                                    BuyingRate = Convert.ToDecimal(currencyRates.ForexBuying),
+                                    CurrencyID = currencyId,
+                                    Date = new DateTime(date.Year, date.Month, date.Day),
+                                    EffectiveBuyingRate = Convert.ToDecimal(currencyRates.BanknoteBuying),
+                                    EffectiveSaleRate = Convert.ToDecimal(currencyRates.BanknoteSelling),
+                                    SaleRate = Convert.ToDecimal(currencyRates.ForexSelling)
+                                };
+
+                                await ExchangeRatesService.CreateAsync(exRate);
+
+                            }
+                        }
+                        else
+                        {
+                            if (currencyCode > -1)
+                            {
+                                var currencyRates = TCMBCurrenciesExchange.GetHistoricalExchangeRates((TCMBCurrencyCode)currencyCode, date);
+
+                                UpdateExchangeRatesDto exRate = new UpdateExchangeRatesDto
+                                {
+                                    BuyingRate = Convert.ToDecimal(currencyRates.ForexBuying),
+                                    CurrencyID = currencyId,
+                                    Date = new DateTime(date.Year, date.Month, date.Day),
+                                    EffectiveBuyingRate = Convert.ToDecimal(currencyRates.BanknoteBuying),
+                                    EffectiveSaleRate = Convert.ToDecimal(currencyRates.BanknoteSelling),
+                                    SaleRate = Convert.ToDecimal(currencyRates.ForexSelling),
+                                    Id = currencyControl.LastOrDefault().Id
+                                };
+
+                                await ExchangeRatesService.UpdateAsync(exRate);
+
+                            }
+                        }
+                    }
+                    await GetListDataSourceAsync();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private int GetCurrencyCode(string symbol)
+        {
+            int code = -1;
+
+            switch (symbol)
+            {
+                case "USD":
+                    code = 0;
+                    break;
+                case "EUR":
+                    code = 1;
+                    break;
+                case "GBP":
+                    code = 2;
+                    break;
+                case "TRY":
+                    code = 3;
+                    break;
+
+                default:
+                    break;
+            }
+
+            return code;
         }
 
         #region Para Birimi ButtonEdit

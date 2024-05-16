@@ -191,6 +191,16 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos
         /// Üretim Emri Fiş No
         /// </summary>
         public string ProductionOrderFicheNo { get; set; }
+
+        /// <summary>
+        ///Fiyatlandırma Dövizi
+        /// </summary>
+        public PricingCurrencyEnum PricingCurrency { get; set; }
+        /// <summary>
+        ///Fiyatlandırma Dövizi Adı
+        /// </summary>
+        public string PricingCurrencyName { get; set; }
+
         [NoDatabaseAction]
         public List<SelectPurchaseRequestLinesDto> SelectPurchaseRequestLines { get; set; }
     }

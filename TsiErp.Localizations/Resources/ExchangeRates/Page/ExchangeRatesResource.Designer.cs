@@ -250,6 +250,15 @@ namespace TsiErp.Localizations.Resources.ExchangeRates.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merkez Bankası Kurlarını Çek.
+        /// </summary>
+        public static string ExchangeRateContextCentralBankExchange {
+            get {
+                return ResourceManager.GetString("ExchangeRateContextCentralBankExchange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ExchangeRateContextChange {

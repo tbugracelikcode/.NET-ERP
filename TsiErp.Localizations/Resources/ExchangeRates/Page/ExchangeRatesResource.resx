@@ -180,6 +180,9 @@
   <data name="ExchangeRateContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
+  <data name="ExchangeRateContextCentralBankExchange" xml:space="preserve">
+    <value>Merkez Bankası Kurlarını Çek</value>
+  </data>
   <data name="ExchangeRateContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>
