@@ -823,7 +823,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             {
                 DataSource.CurrencyID = localCurrency.Id;
                 DataSource.CurrencyCode = localCurrency.Code;
-                DataSource.CurrencySymbol = localCurrency.CurrencySymbol;
             }
 
             foreach (var item in PricingCurrencyList)

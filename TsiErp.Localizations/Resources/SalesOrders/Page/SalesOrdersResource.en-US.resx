@@ -276,6 +276,12 @@
   <data name="EnumInProduction" xml:space="preserve">
     <value>In Production</value>
   </data>
+  <data name="EnumLocalCurrency" xml:space="preserve">
+    <value>Local Currency</value>
+  </data>
+  <data name="EnumTransactionCurrency" xml:space="preserve">
+    <value>Transaction Currency</value>
+  </data>
   <data name="EnumTransfer" xml:space="preserve">
     <value>Shipped</value>
   </data>
@@ -362,6 +368,9 @@
   </data>
   <data name="PaymentPlanNameLabel" xml:space="preserve">
     <value>Payment Plan:</value>
+  </data>
+  <data name="PricingCurrencyLabel" xml:space="preserve">
+    <value>Pricing Currency:</value>
   </data>
   <data name="ProdOrderGridLineAmount" xml:space="preserve">
     <value>LINE AMOUNT</value>

@@ -126,6 +126,11 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// </summary>
         public Guid? ShippingAdressID { get; set; }
 
+        /// <summary>
+        ///Fiyatlandırma Dövizi
+        /// </summary>
+        public int PricingCurrency { get; set; }
+
 
         [NoDatabaseAction]
         /// <summary>

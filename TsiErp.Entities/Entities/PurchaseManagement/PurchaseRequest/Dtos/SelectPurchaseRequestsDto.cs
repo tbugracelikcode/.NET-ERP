@@ -107,10 +107,7 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos
         /// Para Birimi Kodu
         /// </summary>
         public string CurrencyCode { get; set; }
-        /// <summary>
-        /// Para Birimi Sembol
-        /// </summary>
-        public string CurrencySymbol { get; set; }
+
         /// <summary>
         /// Ödeme Planı ID
         /// </summary>

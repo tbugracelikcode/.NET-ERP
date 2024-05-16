@@ -129,6 +129,12 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos
         /// Sevkiyat Adresi ID
         /// </summary>
         public Guid? ShippingAdressID { get; set; }
+
+        /// <summary>
+        ///Fiyatlandırma Dövizi
+        /// </summary>
+        public int PricingCurrency { get; set; }
+
         [NoDatabaseAction]
         /// <summary>
         /// Teklif Satırları
