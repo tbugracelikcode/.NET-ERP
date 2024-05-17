@@ -59,7 +59,15 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest
         /// <summary>
         /// Satın Alma Talep Durumu
         /// </summary>
-        public PurchaseRequestStateEnum PurchaseRequestState { get; set; }
+        public PurchaseRequestStateEnum PurchaseRequestState { get; set; } 
+        
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        ///Fiyatlandırma Dövizi
+        /// </summary>
+        public PricingCurrencyEnum PricingCurrency { get; set; }
+
+
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Bağlı Teklif ID

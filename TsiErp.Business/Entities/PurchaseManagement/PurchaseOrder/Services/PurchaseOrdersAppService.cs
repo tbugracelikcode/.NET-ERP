@@ -127,7 +127,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
-                PriceApprovalState = input.PriceApprovalState
+                PriceApprovalState = input.PriceApprovalState,
+                PricingCurrency = input.PricingCurrency
             });
 
             DateTime biggestDate = input.SelectPurchaseOrderLinesDto.Select(t => t.SupplyDate).Max().GetValueOrDefault();
@@ -268,7 +269,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
-                PriceApprovalState = input.PriceApprovalState
+                PriceApprovalState = input.PriceApprovalState,
+                PricingCurrency = input.PricingCurrency
             });
 
             foreach (var item in input.SelectPurchaseOrderLinesDto)
@@ -838,7 +840,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-                PriceApprovalState = input.PriceApprovalState
+                PriceApprovalState = input.PriceApprovalState,
+                PricingCurrency = input.PricingCurrency
             }).Where(new { Id = input.Id }, false, false, "");
 
             DateTime biggestDate = input.SelectPurchaseOrderLinesDto.Select(t => t.SupplyDate).Max().GetValueOrDefault();
@@ -1038,7 +1041,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-                PriceApprovalState = (int)entity.PriceApprovalState
+                PriceApprovalState = (int)entity.PriceApprovalState,
+                PricingCurrency = (int)entity.PricingCurrency
             }).Where(new { Id = id }, false, false, "");
 
             var purchaseOrdersDto = queryFactory.Update<SelectPurchaseOrdersDto>(query, "Id", true);

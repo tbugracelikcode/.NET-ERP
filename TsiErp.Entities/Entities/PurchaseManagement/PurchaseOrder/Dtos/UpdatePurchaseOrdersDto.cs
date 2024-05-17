@@ -151,6 +151,12 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
         /// Sipariş Kabul ID
         /// </summary>
         public Guid? OrderAcceptanceID { get; set; }
+
+        /// <summary>
+        ///Fiyatlandırma Dövizi
+        /// </summary>
+        public int PricingCurrency { get; set; }
+
         [NoDatabaseAction]
         public List<SelectPurchaseOrderLinesDto> SelectPurchaseOrderLinesDto { get; set; }
     }

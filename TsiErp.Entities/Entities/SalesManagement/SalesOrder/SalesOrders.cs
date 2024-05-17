@@ -152,5 +152,11 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder
         /// İşlem Dövizi KDV hariç Tutar
         /// </summary>
         public decimal TransactionExchangeTotalVatExcludedAmount { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        ///Fiyatlandırma Dövizi
+        /// </summary>
+        public PricingCurrencyEnum PricingCurrency { get; set; }
     }
 }

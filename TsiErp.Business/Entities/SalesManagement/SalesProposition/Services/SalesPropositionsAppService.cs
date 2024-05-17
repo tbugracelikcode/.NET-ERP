@@ -113,6 +113,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
+                PricingCurrency = input.PricingCurrency
             });
 
             foreach (var item in input.SelectSalesPropositionLines)
@@ -612,6 +613,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
+                PricingCurrency = input.PricingCurrency
             }).Where(new { Id = input.Id }, false, false, "");
 
             foreach (var item in input.SelectSalesPropositionLines)
@@ -771,6 +773,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                PricingCurrency = (int)entity.PricingCurrency
             }).Where(new { Id = id }, false, false, "");
 
             var salesPropositionDto = queryFactory.Update<SelectSalesPropositionsDto>(query, "Id", true);

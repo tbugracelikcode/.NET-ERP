@@ -145,6 +145,12 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
         /// İşlem Dövizi KDV hariç Tutar
         /// </summary>
         public decimal TransactionExchangeTotalVatExcludedAmount { get; set; }
+
+        /// <summary>
+        ///Fiyatlandırma Dövizi
+        /// </summary>
+        public int PricingCurrency { get; set; }
+
         [NoDatabaseAction]
         public List<SelectPurchaseOrderLinesDto> SelectPurchaseOrderLinesDto { get; set; }
     }

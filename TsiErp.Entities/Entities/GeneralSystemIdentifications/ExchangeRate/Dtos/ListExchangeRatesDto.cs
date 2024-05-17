@@ -10,6 +10,11 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dto
     public class ListExchangeRatesDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Parabirimi Id
+        /// </summary>
+        public Guid CurrencyId { get; set; }
+
+        /// <summary>
         /// Parabirimi kodu
         /// </summary>
         public string CurrencyCode { get; set; }

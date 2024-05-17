@@ -261,6 +261,9 @@
   <data name="EnumInPartialCompleted" xml:space="preserve">
     <value>Partial Completed</value>
   </data>
+  <data name="EnumLocalCurrency" xml:space="preserve">
+    <value>Local Currency</value>
+  </data>
   <data name="EnumPartialApproved" xml:space="preserve">
     <value>Partially Approved</value>
   </data>
@@ -272,6 +275,9 @@
   </data>
   <data name="EnumQualityControlApproval" xml:space="preserve">
     <value>Quality Control Approval Granted</value>
+  </data>
+  <data name="EnumTransactionCurrency" xml:space="preserve">
+    <value>Transaction Currency</value>
   </data>
   <data name="EnumWaiting" xml:space="preserve">
     <value>Waiting</value>
@@ -377,6 +383,9 @@
   </data>
   <data name="PriceApprovalStateEnum" xml:space="preserve">
     <value>PROCE APPROVAL STATE</value>
+  </data>
+  <data name="PricingCurrencyLabel" xml:space="preserve">
+    <value>Pricing Currency:</value>
   </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Product Code:</value>

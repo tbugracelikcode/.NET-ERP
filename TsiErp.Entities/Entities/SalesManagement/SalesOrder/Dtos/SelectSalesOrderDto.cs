@@ -170,6 +170,17 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// </summary>
         public string ShippingAdressCode { get; set; }
 
+        /// <summary>
+        ///Fiyatlandırma Dövizi
+        /// </summary>
+        public PricingCurrencyEnum PricingCurrency { get; set; }
+
+
+        /// <summary>
+        ///Fiyatlandırma Dövizi Adı
+        /// </summary>
+        public string PricingCurrencyName { get; set; }
+
 
         [NoDatabaseAction]
         /// <summary>
