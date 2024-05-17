@@ -22,6 +22,15 @@ using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using TsiErp.Business.Utilities.FinanceUtilities.TCMBExchange;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos;
+using DevExpress.CodeParser;
+using TsiErp.Business.Entities.Currency.Services;
+using System.ComponentModel.DataAnnotations;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
+using TsiErp.Entities.Enums;
+using System.Reflection;
+using Syncfusion.Blazor.DropDowns;
+using Syncfusion.Blazor.Calendars;
 
 namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 {
@@ -55,6 +64,32 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
         private bool LineCrudPopup = false;
 
         private bool ConvertToOrderCrudPopup = false;
+
+        DateTime MaxDate;
+
+        protected override async void OnInitialized()
+        {
+            BaseCrudService = PurchaseRequestsAppService;
+            _L = L;
+
+            futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
+
+            #region Context Menü Yetkilendirmesi
+
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            var parentMenu = MenusList.Where(t => t.MenuName == "PurchaseRequestsChildMenu").Select(t => t.Id).FirstOrDefault();
+            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
+            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
+
+            contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
+            #endregion
+
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
+            CreateConvertToOrderContextMenuItems();
+
+            MaxDate = !futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(10000, 12, 31);
+        }
 
         #region Birim Setleri ButtonEdit
         SfTextBox UnitSetsButtonEdit;
@@ -132,55 +167,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             if (selectedUnitSet != null)
             {
                 DataSource.CurrencyID = selectedUnitSet.Id;
-                DataSource.CurrencyCode = selectedUnitSet.Name;
+                DataSource.CurrencyCode = selectedUnitSet.Code;
                 SelectCurrencyPopupVisible = false;
-                await InvokeAsync(StateHasChanged);
-            }
-        }
-        #endregion
-
-        #region İşlem Dövizi Para Birimleri ButtonEdit
-
-        SfTextBox TransactionExchangeCurrenciesButtonEdit;
-        bool SelectTransactionExchangeCurrencyPopupVisible = false;
-        List<ListCurrenciesDto> TransactionExchangeCurrenciesList = new List<ListCurrenciesDto>();
-
-        public async Task TransactionExchangeCurrenciesOnCreateIcon()
-        {
-            var TransactionExchangeCurrenciesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, TransactionExchangeCurrenciesButtonClickEvent);
-            await TransactionExchangeCurrenciesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", TransactionExchangeCurrenciesButtonClick } });
-        }
-
-        public async void TransactionExchangeCurrenciesButtonClickEvent()
-        {
-            SelectCurrencyPopupVisible = true;
-            TransactionExchangeCurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public void TransactionExchangeCurrenciesOnValueChange(ChangedEventArgs args)
-        {
-            if (args.Value == null)
-            {
-                DataSource.TransactionExchangeCurrencyID = Guid.Empty;
-                DataSource.TransactionExchangeCurrencyCode = string.Empty;
-                DataSource.ExchangeRate = 0;
-            }
-            else
-            {
-               
-            }
-        }
-
-        public async void TransactionExchangeCurrenciesDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrenciesDto> args)
-        {
-            var selectedCurrency = args.RowData;
-
-            if (selectedCurrency != null)
-            {
-                DataSource.TransactionExchangeCurrencyID = selectedCurrency.Id;
-                DataSource.TransactionExchangeCurrencyCode = selectedCurrency.Name;
-                SelectTransactionExchangeCurrencyPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -546,29 +534,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
         }
         #endregion
 
-
-        protected override async void OnInitialized()
-        {
-            BaseCrudService = PurchaseRequestsAppService;
-            _L = L;
-
-            futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
-
-            #region Context Menü Yetkilendirmesi
-
-            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
-            var parentMenu = MenusList.Where(t => t.MenuName == "PurchaseRequestsChildMenu").Select(t => t.Id).FirstOrDefault();
-            contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
-            UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
-
-            contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
-            #endregion
-
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
-            CreateConvertToOrderContextMenuItems();
-        }
-
         #region Satın Almayı Talebe Dönüştürme Modalı İşlemleri
 
         protected void CreateConvertToOrderContextMenuItems()
@@ -852,6 +817,20 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             DataSource.SelectPurchaseRequestLines = new List<SelectPurchaseRequestLinesDto>();
             GridLineList = DataSource.SelectPurchaseRequestLines;
 
+            var localCurrency = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.Where(t => t.IsLocalCurrency == true).FirstOrDefault();
+
+            if (localCurrency != null && localCurrency.Id != Guid.Empty)
+            {
+                DataSource.CurrencyID = localCurrency.Id;
+                DataSource.CurrencyCode = localCurrency.Code;
+            }
+
+            foreach (var item in PricingCurrencyList)
+            {
+                item.PricingCurrencyName = L[item.PricingCurrencyName];
+            }
+
+
             EditPageVisible = true;
 
 
@@ -933,11 +912,18 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 }
                 else
                 {
+                    foreach (var item in PricingCurrencyList)
+                    {
+                        item.PricingCurrencyName = L[item.PricingCurrencyName];
+                    }
+
                     EditPageVisible = true;
                     await InvokeAsync(StateHasChanged);
                 }
             }
         }
+
+
 
         public async void MainContextMenuClick(ContextMenuClickEventArgs<ListPurchaseRequestsDto> args)
         {
@@ -1121,39 +1107,73 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
         public override async void LineCalculate()
         {
-            LineDataSource.LineAmount = (LineDataSource.Quantity * LineDataSource.UnitPrice) - LineDataSource.DiscountAmount;
-            LineDataSource.VATamount = (LineDataSource.LineAmount * LineDataSource.VATrate) / 100;
-
-            if (LineDataSource.DiscountAmount > 0)
+            if (DataSource.PricingCurrency == PricingCurrencyEnum.LocalCurrency)
             {
-                if (LineDataSource.Quantity > 0 && LineDataSource.UnitPrice > 0)
-                {
-                    LineDataSource.DiscountRate = (LineDataSource.DiscountAmount / (LineDataSource.Quantity * LineDataSource.UnitPrice)) * 100;
-                }
+                LineDataSource.LineAmount = (LineDataSource.Quantity * LineDataSource.UnitPrice) - LineDataSource.DiscountAmount;
+                LineDataSource.VATamount = (LineDataSource.LineAmount * LineDataSource.VATrate) / 100;
 
-                if (LineDataSource.Quantity == 0 || LineDataSource.UnitPrice == 0)
+                if (LineDataSource.DiscountAmount > 0)
+                {
+                    if (LineDataSource.Quantity > 0 && LineDataSource.UnitPrice > 0)
+                    {
+                        LineDataSource.DiscountRate = (LineDataSource.DiscountAmount / (LineDataSource.Quantity * LineDataSource.UnitPrice)) * 100;
+                    }
+
+                    if (LineDataSource.Quantity == 0 || LineDataSource.UnitPrice == 0)
+                    {
+                        LineDataSource.DiscountRate = 0;
+                        LineDataSource.DiscountAmount = 0;
+                        LineDataSource.TransactionExchangeDiscountAmount = 0;
+                    }
+                }
+                else
                 {
                     LineDataSource.DiscountRate = 0;
-                    LineDataSource.DiscountAmount = 0;
-                    LineDataSource.TransactionExchangeDiscountAmount = 0;
                 }
+
+                LineDataSource.LineTotalAmount = LineDataSource.LineAmount + LineDataSource.VATamount;
+
+
+                LineDataSource.TransactionExchangeUnitPrice = 0;
+                LineDataSource.TransactionExchangeVATamount = 0;
+                LineDataSource.TransactionExchangeDiscountAmount = 0;
+                LineDataSource.TransactionExchangeLineAmount = 0;
+                LineDataSource.TransactionExchangeLineTotalAmount = 0;
             }
             else
             {
-                LineDataSource.DiscountRate = 0;
+                LineDataSource.TransactionExchangeLineAmount = (LineDataSource.Quantity * LineDataSource.TransactionExchangeUnitPrice) - LineDataSource.TransactionExchangeDiscountAmount;
+                LineDataSource.TransactionExchangeVATamount = (LineDataSource.TransactionExchangeLineAmount * LineDataSource.VATrate) / 100;
+
+                if (LineDataSource.TransactionExchangeDiscountAmount > 0)
+                {
+                    if (LineDataSource.Quantity > 0 && LineDataSource.TransactionExchangeUnitPrice > 0)
+                    {
+                        LineDataSource.DiscountRate = (LineDataSource.TransactionExchangeDiscountAmount / (LineDataSource.Quantity * LineDataSource.TransactionExchangeUnitPrice)) * 100;
+                    }
+
+                    if (LineDataSource.Quantity == 0 || LineDataSource.TransactionExchangeUnitPrice == 0)
+                    {
+                        LineDataSource.DiscountRate = 0;
+                        LineDataSource.TransactionExchangeDiscountAmount = 0;
+                        LineDataSource.TransactionExchangeDiscountAmount = 0;
+                    }
+                }
+                else
+                {
+                    LineDataSource.DiscountRate = 0;
+                }
+
+                LineDataSource.TransactionExchangeLineTotalAmount = LineDataSource.TransactionExchangeLineAmount + LineDataSource.TransactionExchangeVATamount;
+
+
+                LineDataSource.UnitPrice = LineDataSource.TransactionExchangeUnitPrice * DataSource.ExchangeRate;
+                LineDataSource.VATamount = LineDataSource.TransactionExchangeVATamount * DataSource.ExchangeRate;
+                LineDataSource.DiscountAmount = LineDataSource.TransactionExchangeDiscountAmount * DataSource.ExchangeRate;
+                LineDataSource.LineAmount = LineDataSource.TransactionExchangeLineAmount * DataSource.ExchangeRate;
+                LineDataSource.LineTotalAmount = LineDataSource.TransactionExchangeLineTotalAmount * DataSource.ExchangeRate;
+
             }
-
-            LineDataSource.LineTotalAmount = LineDataSource.LineAmount + LineDataSource.VATamount;
-
-            #region İşlem Dövizi Hesaplamaları
-
-            LineDataSource.TransactionExchangeLineAmount = (LineDataSource.Quantity * LineDataSource.TransactionExchangeUnitPrice) - LineDataSource.TransactionExchangeDiscountAmount;
-
-            LineDataSource.TransactionExchangeVATamount = (LineDataSource.TransactionExchangeLineAmount * LineDataSource.VATrate) / 100;
-
-
-            LineDataSource.TransactionExchangeLineTotalAmount = LineDataSource.TransactionExchangeLineAmount + LineDataSource.TransactionExchangeVATamount;
-            #endregion
 
             await InvokeAsync(StateHasChanged);
         }
@@ -1224,7 +1244,196 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
         #endregion
 
+        #region İşlem Dövizi Para Birimleri ButtonEdit
 
+        SfTextBox TransactionExchangeCurrenciesButtonEdit;
+        bool SelectTransactionExchangeCurrencyPopupVisible = false;
+        List<ListCurrenciesDto> TransactionExchangeCurrenciesList = new List<ListCurrenciesDto>();
+
+        public async Task TransactionExchangeCurrenciesOnCreateIcon()
+        {
+            var TransactionExchangeCurrenciesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, TransactionExchangeCurrenciesButtonClickEvent);
+            await TransactionExchangeCurrenciesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", TransactionExchangeCurrenciesButtonClick } });
+        }
+
+        public async void TransactionExchangeCurrenciesButtonClickEvent()
+        {
+            SelectTransactionExchangeCurrencyPopupVisible = true;
+            TransactionExchangeCurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void TransactionExchangeCurrenciesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.TransactionExchangeCurrencyID = Guid.Empty;
+                DataSource.TransactionExchangeCurrencyCode = string.Empty;
+                DataSource.ExchangeRate = 0;
+            }
+            else
+            {
+                decimal exRate = 1;
+
+                var exchangeRateType = LoginedUserService.PurchaseRequestExchangeRateType;
+
+                var date = new DateTime(DataSource.Date_.Year, DataSource.Date_.Month, DataSource.Date_.Day);
+
+                var exchangeRate = (await ExchangeRatesService.GetListAsync(new ListExchangeRatesParameterDto())).Data.Where(t => t.Date == date && t.CurrencyId == DataSource.TransactionExchangeCurrencyID).FirstOrDefault();
+
+                if (exchangeRate != null)
+                {
+                    switch (exchangeRateType)
+                    {
+                        case 0:
+                            exRate = exchangeRate.BuyingRate;
+                            break;
+                        case 1:
+                            exRate = exchangeRate.SaleRate;
+                            break;
+                        case 2:
+                            exRate = exchangeRate.EffectiveBuyingRate;
+                            break;
+                        case 3:
+                            exRate = exchangeRate.EffectiveSaleRate;
+                            break;
+                        default:
+                            exRate = 1;
+                            break;
+                    }
+                }
+
+                DataSource.ExchangeRate = exRate;
+
+            }
+        }
+
+        public async void TransactionExchangeCurrenciesDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrenciesDto> args)
+        {
+            var selectedCurrency = args.RowData;
+
+            if (selectedCurrency != null)
+            {
+                DataSource.TransactionExchangeCurrencyID = selectedCurrency.Id;
+                DataSource.TransactionExchangeCurrencyCode = selectedCurrency.Code;
+                SelectTransactionExchangeCurrencyPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Fiyatlandırma Dövizi Enum Combobox
+
+        public IEnumerable<SelectPurchaseRequestsDto> PricingCurrencyList = GetEnumPricingCurrencyNames<PricingCurrencyEnum>();
+
+        public static List<SelectPurchaseRequestsDto> GetEnumPricingCurrencyNames<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<PricingCurrencyEnum>()
+                       .Select(x => new SelectPurchaseRequestsDto
+                       {
+                           PricingCurrency = x,
+                           PricingCurrencyName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
+        }
+
+        private async void PricingCurrencyValueChangeHandler(ChangeEventArgs<PricingCurrencyEnum, SelectPurchaseRequestsDto> args)
+        {
+            if (args != null)
+            {
+                if (args.Value == PricingCurrencyEnum.LocalCurrency)
+                {
+                    UnitPriceEnabled = true;
+                    DiscountAmountEnabled = true;
+                    LineAmountEnabled = true;
+                    LineTotalAmountEnabled = true;
+
+                    TransactionExchangeUnitPriceEnabled = false;
+                    TransactionExchangeDiscountAmountEnabled = false;
+                    TransactionExchangeLineAmountEnabled = false;
+                    TransactionExchangeLineTotalAmountEnabled = false;
+                }
+                else if (args.Value == PricingCurrencyEnum.TransactionCurrency)
+                {
+                    UnitPriceEnabled = false;
+                    DiscountAmountEnabled = false;
+                    LineAmountEnabled = false;
+                    LineTotalAmountEnabled = false;
+
+                    TransactionExchangeUnitPriceEnabled = true;
+                    TransactionExchangeDiscountAmountEnabled = true;
+                    TransactionExchangeLineAmountEnabled = true;
+                    TransactionExchangeLineTotalAmountEnabled = true;
+                }
+                else
+                {
+                    UnitPriceEnabled = false;
+                    DiscountAmountEnabled = false;
+                    LineAmountEnabled = false;
+                    LineTotalAmountEnabled = false;
+
+                    TransactionExchangeUnitPriceEnabled = false;
+                    TransactionExchangeDiscountAmountEnabled = false;
+                    TransactionExchangeLineAmountEnabled = false;
+                    TransactionExchangeLineTotalAmountEnabled = false;
+                }
+            }
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        private bool UnitPriceEnabled = false;
+        private bool DiscountAmountEnabled = false;
+        private bool LineAmountEnabled = false;
+        private bool LineTotalAmountEnabled = false;
+
+        private bool TransactionExchangeUnitPriceEnabled = false;
+        private bool TransactionExchangeDiscountAmountEnabled = false;
+        private bool TransactionExchangeLineAmountEnabled = false;
+        private bool TransactionExchangeLineTotalAmountEnabled = false;
+
+        #endregion
+
+        public async void DateValueChangeHandler(ChangedEventArgs<DateTime> args)
+        {
+            decimal exRate = 1;
+
+            var exchangeRateType = LoginedUserService.PurchaseRequestExchangeRateType;
+
+            var date = new DateTime(args.Value.Year, args.Value.Month, args.Value.Day);
+
+            var exchangeRate = (await ExchangeRatesService.GetListAsync(new ListExchangeRatesParameterDto())).Data.Where(t => t.Date == date && t.CurrencyId == DataSource.TransactionExchangeCurrencyID).FirstOrDefault();
+
+            if (exchangeRate != null)
+            {
+                switch (exchangeRateType)
+                {
+                    case 0:
+                        exRate = exchangeRate.BuyingRate;
+                        break;
+                    case 1:
+                        exRate = exchangeRate.SaleRate;
+                        break;
+                    case 2:
+                        exRate = exchangeRate.EffectiveBuyingRate;
+                        break;
+                    case 3:
+                        exRate = exchangeRate.EffectiveSaleRate;
+                        break;
+                    default:
+                        exRate = 1;
+                        break;
+                }
+            }
+
+            DataSource.Date_ = args.Value;
+            DataSource.ExchangeRate = exRate;
+            await InvokeAsync(StateHasChanged);
+        }
 
         #region Kod ButtonEdit
 

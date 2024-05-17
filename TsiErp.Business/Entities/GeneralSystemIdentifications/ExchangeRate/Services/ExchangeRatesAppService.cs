@@ -113,7 +113,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
                .Select<ExchangeRates>(e => new { e.CurrencyID, e.BuyingRate, e.SaleRate, e.EffectiveBuyingRate, e.EffectiveSaleRate, e.DataOpenStatus, e.DataOpenStatusUserId, e.Date, e.Id })
                    .Join<Currencies>
                    (
-                      c => new { CurrencyCode = c.Code },
+                      c => new { CurrencyCode = c.Code, CurrencyId=c.Id },
                        nameof(ExchangeRates.CurrencyID),
                             nameof(Currencies.Id),
                        JoinType.Left

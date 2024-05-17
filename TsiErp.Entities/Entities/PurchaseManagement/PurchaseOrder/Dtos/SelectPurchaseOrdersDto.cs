@@ -109,6 +109,7 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
         /// Para Birimi Kodu
         /// </summary>
         public string CurrencyCode { get; set; }
+
         /// <summary>
         /// Ödeme Planı ID
         /// </summary>
@@ -202,6 +203,18 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
         /// Sipariş Kabul ID
         /// </summary>
         public Guid? OrderAcceptanceID { get; set; }
+
+        /// <summary>
+        ///Fiyatlandırma Dövizi
+        /// </summary>
+        public PricingCurrencyEnum PricingCurrency { get; set; }
+
+
+        /// <summary>
+        /// Fiyatlandırma Dövizi Adı
+        /// </summary>
+        public string PricingCurrencyName { get; set; }
+
         [NoDatabaseAction]
         public List<SelectPurchaseOrderLinesDto> SelectPurchaseOrderLinesDto { get; set; }
     }

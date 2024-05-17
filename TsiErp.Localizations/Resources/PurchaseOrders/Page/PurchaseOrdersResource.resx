@@ -666,4 +666,13 @@
   <data name="TransactionExchangeVATamountLineLabel" xml:space="preserve">
     <value>İşlem Dövizi KDV Tutarı:</value>
   </data>
+  <data name="PricingCurrencyLabel" xml:space="preserve">
+    <value>Fiyatlandırma Dövizi</value>
+  </data>
+  <data name="EnumLocalCurrency" xml:space="preserve">
+    <value>Yerel Para Birimi</value>
+  </data>
+  <data name="EnumTransactionCurrency" xml:space="preserve">
+    <value>İşlem Dövizi</value>
+  </data>
 </root>

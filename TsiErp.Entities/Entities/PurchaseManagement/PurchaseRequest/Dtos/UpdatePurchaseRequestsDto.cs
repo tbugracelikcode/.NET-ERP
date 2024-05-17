@@ -136,6 +136,12 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos
         /// Üretim Emri ID
         /// </summary>
         public Guid? ProductionOrderID { get; set; }
+
+        /// <summary>
+        ///Fiyatlandırma Dövizi
+        /// </summary>
+        public int PricingCurrency { get; set; }
+
         [NoDatabaseAction]
         public List<SelectPurchaseRequestLinesDto> SelectPurchaseRequestLines { get; set; }
     }

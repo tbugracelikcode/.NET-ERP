@@ -179,5 +179,11 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder
         /// </summary>
         public decimal TransactionExchangeTotalVatExcludedAmount { get; set; }
 
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        ///Fiyatlandırma Dövizi
+        /// </summary>
+        public PricingCurrencyEnum PricingCurrency { get; set; }
+
     }
 }

@@ -264,6 +264,9 @@
   <data name="EnumApproved" xml:space="preserve">
     <value>Onaylandı</value>
   </data>
+  <data name="EnumLocalCurrency" xml:space="preserve">
+    <value>Yerel Para Birimi</value>
+  </data>
   <data name="EnumPartiallyApproved" xml:space="preserve">
     <value>Kısmi Onaylandı</value>
   </data>
@@ -272,6 +275,9 @@
   </data>
   <data name="EnumPurchase" xml:space="preserve">
     <value>Satın Alma</value>
+  </data>
+  <data name="EnumTransactionCurrency" xml:space="preserve">
+    <value>İşlem Dövizi</value>
   </data>
   <data name="EnumWaiting" xml:space="preserve">
     <value>Beklemede</value>
@@ -362,6 +368,9 @@
   </data>
   <data name="PaymentPlanNameLabel" xml:space="preserve">
     <value>Ödeme Planı:</value>
+  </data>
+  <data name="PricingCurrencyLabel" xml:space="preserve">
+    <value>Fiyatlandırma Dövizi</value>
   </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Stok Kodu:</value>

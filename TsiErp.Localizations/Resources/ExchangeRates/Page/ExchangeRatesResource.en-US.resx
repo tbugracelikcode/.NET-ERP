@@ -180,6 +180,9 @@
   <data name="ExchangeRateContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="ExchangeRateContextCentralBankExchange" xml:space="preserve">
+    <value>Pull Central Bank Exchange Rates</value>
+  </data>
   <data name="ExchangeRateContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
