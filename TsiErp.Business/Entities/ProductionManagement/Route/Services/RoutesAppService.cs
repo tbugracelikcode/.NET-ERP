@@ -169,7 +169,7 @@ namespace TsiErp.Business.Entities.Route.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Routes)
-                   .Select<Routes>(r => new { r.TechnicalApproval, r.ProductionStart, r.ProductID, r.Name, r.IsActive, r.Id, r.DataOpenStatusUserId, r.DataOpenStatus, r.Code, r.Approval })
+                   .Select<Routes>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -184,7 +184,7 @@ namespace TsiErp.Business.Entities.Route.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.RouteLines)
-                   .Select<RouteLines>(rl => new { rl.RouteID, rl.ProductsOperationID, rl.ProductionPoolID, rl.ProductionPoolDescription, rl.ProductID, rl.Priority, rl.OperationTime, rl.LineNr, rl.Id, rl.DataOpenStatusUserId, rl.DataOpenStatus, rl.AdjustmentAndControlTime })
+                   .Select<RouteLines>(null)
                    .Join<Products>
                     (
                         pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
@@ -218,7 +218,7 @@ namespace TsiErp.Business.Entities.Route.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.Routes)
-                   .Select<Routes>(r => new { r.TechnicalApproval, r.ProductionStart, r.ProductID, r.Name, r.IsActive, r.Id, r.DataOpenStatusUserId, r.DataOpenStatus, r.Code, r.Approval })
+                   .Select<Routes>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -257,7 +257,7 @@ namespace TsiErp.Business.Entities.Route.Services
             var queryLines = queryFactory
                    .Query()
                     .From(Tables.RouteLines)
-                   .Select<RouteLines>(rl => new { rl.RouteID, rl.ProductsOperationID, rl.ProductionPoolID, rl.ProductionPoolDescription, rl.ProductID, rl.Priority, rl.OperationTime, rl.LineNr, rl.Id, rl.DataOpenStatusUserId, rl.DataOpenStatus, rl.AdjustmentAndControlTime })
+                   .Select<RouteLines>(null)
                    .Join<Products>
                     (
                         pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
@@ -400,7 +400,7 @@ namespace TsiErp.Business.Entities.Route.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ProductsOperations)
-                   .Select<ProductsOperations>(po => new { po.WorkCenterID, po.TemplateOperationID, po.ProductID, po.Name, po.IsActive, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code })
+                   .Select<ProductsOperations>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },

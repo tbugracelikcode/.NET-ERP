@@ -29,9 +29,17 @@
 
 <div class="main" style="margin-left:360px !important">
     <div class="top-row px-4" style="z-index:1111;padding-top:0px">
-        <CultureSwitcher />
-
-           @*  <span class="fa fa-euro-sign"></span> *@
+        
+            <CultureSwitcher /> 
+            <i class="fa fa-dollar-sign TSIIndexDollarIcon"></i>
+            <i class="fa fa-bell TSIIndexBellIcon"><sup style="font-size:18px; color:black; font-weight:bold">23</sup></i>
+            <SfDropDownButton IconCss="fa fa-user TSIIndexUserIcon">
+                <DropDownMenuItems>
+                        <DropDownMenuItem Text="Ayarlar"></DropDownMenuItem>
+                        <DropDownMenuItem Text="Hesap"></DropDownMenuItem>
+                        <DropDownMenuItem Text="Çıkış"></DropDownMenuItem>
+                </DropDownMenuItems>
+            </SfDropDownButton>
     </div>
 
     <div class="content px-4">

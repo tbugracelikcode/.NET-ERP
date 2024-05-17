@@ -144,6 +144,9 @@
   <data name="ConfirmedLoadingDateLabel" xml:space="preserve">
     <value>Confirmed Loading Date:</value>
   </data>
+  <data name="ControlModalTitle" xml:space="preserve">
+    <value>Order Acceptance Control</value>
+  </data>
   <data name="CurrentAccountCardCustomerCodeLabel" xml:space="preserve">
     <value>Customer Code:</value>
   </data>
@@ -257,6 +260,15 @@
   </data>
   <data name="LineGridDescription_" xml:space="preserve">
     <value>DESCRIPTION</value>
+  </data>
+  <data name="LineGridIsApproved" xml:space="preserve">
+    <value>APPROVEMENT STATUS</value>
+  </data>
+  <data name="LineGridIsBoM" xml:space="preserve">
+    <value>BOM</value>
+  </data>
+  <data name="LineGridIsRoute" xml:space="preserve">
+    <value>ROUTE</value>
   </data>
   <data name="LineGridLineAmount" xml:space="preserve">
     <value>LINE AMOUNT</value>
@@ -414,6 +426,9 @@
   <data name="OrderAcceptanceRecordsContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextControl" xml:space="preserve">
+    <value>Order Acceptance Control</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextConverttoOrder" xml:space="preserve">
     <value>Convert to Sales Order</value>
   </data>
@@ -425,6 +440,9 @@
   </data>
   <data name="OrderAcceptanceRecordsContextOrderApproval" xml:space="preserve">
     <value>Order Price Approval</value>
+  </data>
+  <data name="OrderAcceptanceRecordsContextOrderLines" xml:space="preserve">
+    <value>Order Lines</value>
   </data>
   <data name="OrderAcceptanceRecordsContextPending" xml:space="preserve">
     <value>Put Status on Pending</value>
@@ -440,6 +458,9 @@
   </data>
   <data name="OrderAmountLineLabel" xml:space="preserve">
     <value>Order Amount:</value>
+  </data>
+  <data name="OrderLineModalTitle" xml:space="preserve">
+    <value>Order Lines</value>
   </data>
   <data name="OrderReferanceNoLineLabel" xml:space="preserve">
     <value>Order Referance Number:</value>
