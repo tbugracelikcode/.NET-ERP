@@ -619,7 +619,7 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sarf Fişi Ekle.
+        ///   Looks up a localized string similar to Sarf Fişi.
         /// </summary>
         public static string StockFicheContextAddConsume {
             get {
@@ -628,7 +628,7 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Üretimden Giriş Fişi Ekle.
+        ///   Looks up a localized string similar to Üretimden Giriş Fişi.
         /// </summary>
         public static string StockFicheContextAddProductionIncome {
             get {
@@ -637,7 +637,7 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rezerve Fişi Ekle.
+        ///   Looks up a localized string similar to Rezerve Fişi.
         /// </summary>
         public static string StockFicheContextAddReserved {
             get {
@@ -646,7 +646,7 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stok Giriş Fişi Ekle.
+        ///   Looks up a localized string similar to Stok Giriş Fişi.
         /// </summary>
         public static string StockFicheContextAddStockIncome {
             get {
@@ -655,7 +655,7 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stok Çıkış Fişi Ekle.
+        ///   Looks up a localized string similar to Stok Çıkış Fişi.
         /// </summary>
         public static string StockFicheContextAddStockOutput {
             get {
@@ -664,7 +664,7 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Depo Sevk Fişi Ekle.
+        ///   Looks up a localized string similar to Depo Sevk Fişi.
         /// </summary>
         public static string StockFicheContextAddWarehouse {
             get {
@@ -673,7 +673,7 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fire Fişi Ekle.
+        ///   Looks up a localized string similar to Fire Fişi.
         /// </summary>
         public static string StockFicheContextAddWastege {
             get {
@@ -741,6 +741,15 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         public static string StockFicheLineContextRefresh {
             get {
                 return ResourceManager.GetString("StockFicheLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StockFichesGeneralConAdd {
+            get {
+                return ResourceManager.GetString("StockFichesGeneralConAdd", resourceCulture);
             }
         }
         
