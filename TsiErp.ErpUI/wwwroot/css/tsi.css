@@ -42,6 +42,14 @@
         color: #DA0505 !important;
     }
 
+.TSIIndexDropdown {
+    -webkit-tap-highlight-color: transparent !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: #fff;
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .TSISpinner {
     border: 16px solid silver;
     border-top: 16px solid #dd1d1d;
@@ -85,8 +93,8 @@
 }
 
 .TSIScrollablePermissionModal {
-    max-height:680px;
-    overflow-y:auto;
+    max-height: 680px;
+    overflow-y: auto;
 }
 
 .TSIScrollableIndexPanel {
@@ -94,8 +102,8 @@
     overflow-y: auto;
 }
 
-.TSIReportViewer{
-    width:100%;
+.TSIReportViewer {
+    width: 100%;
 }
 
 .TSITxtBox {
@@ -1410,7 +1418,3 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
     outline: 0;
     background-color: rgba(0,0,0,0.5);
 }
-
-
-
- 

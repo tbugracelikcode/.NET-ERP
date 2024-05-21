@@ -16,12 +16,29 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
+using TsiErp.ErpUI.Helpers;
+using TsiErp.Business.Extensions.ObjectMapping;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 {
     public partial class PackageFichesListPage : IDisposable
     {
+        public class ProductionOrderReferanceNumber
+        {
+            public string ProductionOrderNo { get; set; }
+            public Guid ProductionOrderID { get; set; }
+            public string ProductionOrderReferenceNo { get; set; }
+
+
+
+        }
         private SfGrid<SelectPackageFicheLinesDto> _LineGrid;
+
+
+        SelectPackageFicheLinesDto LineDataSource = new();
+        public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -34,7 +51,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
         List<SelectPackageFicheLinesDto> GridLineList = new List<SelectPackageFicheLinesDto>();
 
-        public bool refno = false;
+        List<ProductionOrderReferanceNumber> ProductionOrderReferenceNoList = new List<ProductionOrderReferanceNumber>();
+
+        private bool LineCrudPopup = false;
 
 
         protected override async void OnInitialized()
@@ -52,6 +71,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
             CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
         }
 
@@ -62,7 +82,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             DataSource = new SelectPackageFichesDto()
             {
                 Date_ = GetSQLDateAppService.GetDateFromSQL(),
-                Code = FicheNumbersAppService.GetFicheNumberAsync("PackageFichesChildMenu"),
                 PackageContent = 0,
                 NumberofPackage = 0
             };
@@ -74,8 +93,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             {
                 item.Text = L[item.Text];
             }
-
-            refno = false;
 
             EditPageVisible = true;
 
@@ -139,6 +156,28 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             }
         }
 
+        protected void CreateLineContextMenuItems()
+        {
+            if (LineGridContextMenu.Count() == 0)
+            {
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "PackageFicheLinesContextChange":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackageFicheLinesContextChange"], Id = "changed" }); break;
+                            case "PackageFicheLinesContextRefresh":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackageFicheLinesContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
+            }
+        }
+
         public async void MainContextMenuClick(ContextMenuClickEventArgs<ListPackageFichesDto> args)
         {
             switch (args.Item.Id)
@@ -180,30 +219,203 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
         public async void CreateLines()
         {
-            if (DataSource.PackageContent == 0 || DataSource.NumberofPackage == 0)
+            if (DataSource.PackageContent == 0 || DataSource.NumberofPackage == 0 || DataSource.SalesOrderID == null || DataSource.SalesOrderID == Guid.Empty || DataSource.ProductID == null || DataSource.ProductID == Guid.Empty || string.IsNullOrEmpty(DataSource.PackageType) || ProductionOrdersID == Guid.Empty)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningPackageTitle"], L["UIWarningPackageMessage"]);
             }
             else
             {
-                SelectPackageFicheLinesDto packageFicheLineModel = new SelectPackageFicheLinesDto
-                {
-                    PackingDate = DataSource.Date_,
-                    LineNr = 1,
-                    ProductID = DataSource.ProductID,
-                    ProductName = DataSource.ProductName,
-                    ProductCode = DataSource.ProductCode,
-                    Quantity = DataSource.PackageContent * DataSource.NumberofPackage,
-                    ProductionOrderID = Guid.Empty,
-                    ProductionOrderFicheNo = string.Empty,
-                    Status_ = string.Empty,
-                };
+                decimal numberOfLines = 0;
+                int mod = 0;
+                int numberOfPackage = 0;
 
-                GridLineList.Add(packageFicheLineModel);
-                refno = true;
+                if (DataSource.PackageType == L["BigPackage"].Value)
+                {
+                    numberOfPackage = 18;
+                    decimal a = DataSource.NumberofPackage / numberOfPackage;
+                    numberOfLines = Math.Ceiling(a);
+                    mod = DataSource.NumberofPackage % numberOfPackage;
+                }
+                else if (DataSource.PackageType == L["SmallPackage"].Value)
+                {
+                    numberOfPackage = 30;
+                    decimal a = DataSource.NumberofPackage / numberOfPackage;
+                    numberOfLines = Math.Ceiling(a);
+                    mod = DataSource.NumberofPackage % numberOfPackage;
+                }
+
+
+                for (int i = 0; i <= numberOfLines; i++)
+                {
+                    if (i != numberOfLines)
+                    {
+                        SelectPackageFicheLinesDto packageFicheLineModel = new SelectPackageFicheLinesDto
+                        {
+                            PackingDate = DataSource.Date_,
+                            LineNr = GridLineList.Count + 1,
+                            ProductID = DataSource.ProductID,
+                            ProductName = DataSource.ProductName,
+                            ProductCode = DataSource.ProductCode,
+                            Quantity = DataSource.PackageContent * numberOfPackage,
+                            ProductionOrderID = ProductionOrdersID,
+                            ProductionOrderFicheNo = ProductionOrdersNo,
+                            Status_ = string.Empty,
+                            NumberofPackage = numberOfPackage,
+                            PackageContent = DataSource.PackageContent,
+                        };
+
+                        GridLineList.Add(packageFicheLineModel);
+                    }
+                    else
+                    {
+                        SelectPackageFicheLinesDto packageFicheLineModel = new SelectPackageFicheLinesDto
+                        {
+                            PackingDate = DataSource.Date_,
+                            LineNr = GridLineList.Count + 1,
+                            ProductID = DataSource.ProductID,
+                            ProductName = DataSource.ProductName,
+                            ProductCode = DataSource.ProductCode,
+                            Quantity = DataSource.PackageContent * mod,
+                            ProductionOrderID = ProductionOrdersID,
+                            ProductionOrderFicheNo = ProductionOrdersNo,
+                            Status_ = string.Empty,
+                            NumberofPackage = mod,
+                            PackageContent = DataSource.PackageContent,
+                        };
+
+                        GridLineList.Add(packageFicheLineModel);
+                    }
+
+                }
+
+
+
                 await _LineGrid.Refresh();
                 await InvokeAsync(StateHasChanged);
             }
+        }
+
+        public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectPackageFicheLinesDto> args)
+        {
+            switch (args.Item.Id)
+            {
+
+
+                case "changed":
+                    LineDataSource = args.RowInfo.RowData;
+                    LineCrudPopup = true;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "refresh":
+                    await GetListDataSourceAsync();
+                    await _LineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        public void HideLinesPopup()
+        {
+            LineCrudPopup = false;
+        }
+
+        protected async Task OnLineSubmit()
+        {
+            if (LineDataSource.Id == Guid.Empty)
+            {
+                if (DataSource.SelectPackageFicheLines.Contains(LineDataSource))
+                {
+                    int selectedLineIndex = DataSource.SelectPackageFicheLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        DataSource.SelectPackageFicheLines[selectedLineIndex] = LineDataSource;
+                    }
+                }
+                else
+                {
+                    DataSource.SelectPackageFicheLines.Add(LineDataSource);
+                }
+            }
+            else
+            {
+                int selectedLineIndex = DataSource.SelectPackageFicheLines.FindIndex(t => t.Id == LineDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    DataSource.SelectPackageFicheLines[selectedLineIndex] = LineDataSource;
+                }
+            }
+
+            GridLineList = DataSource.SelectPackageFicheLines;
+            await _LineGrid.Refresh();
+
+            HideLinesPopup();
+            await InvokeAsync(StateHasChanged);
+
+
+        }
+
+        protected override async Task OnSubmit()
+        {
+
+            decimal bottomLimit = DataSource.ProductUnitWeight - (DataSource.ProductUnitWeight * (2 / 100));
+            decimal upperLimit = DataSource.ProductUnitWeight + (DataSource.ProductUnitWeight * (2 / 100));
+
+            if (DataSource.UnitWeight >= bottomLimit && DataSource.UnitWeight <= upperLimit)
+            {
+                SelectPackageFichesDto result;
+
+                if (DataSource.Id == Guid.Empty)
+                {
+                    var createInput = ObjectMapper.Map<SelectPackageFichesDto, CreatePackageFichesDto>(DataSource);
+
+                    result = (await CreateAsync(createInput)).Data;
+
+                    if (result != null)
+                        DataSource.Id = result.Id;
+                }
+                else
+                {
+                    var updateInput = ObjectMapper.Map<SelectPackageFichesDto, UpdatePackageFichesDto>(DataSource);
+
+                    result = (await UpdateAsync(updateInput)).Data;
+                }
+
+                if (result == null)
+                {
+
+                    return;
+                }
+
+                await GetListDataSourceAsync();
+
+                var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+                HideEditPage();
+
+                if (DataSource.Id == Guid.Empty)
+                {
+                    DataSource.Id = result.Id;
+                }
+
+                if (savedEntityIndex > -1)
+                    SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+                else
+                    SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+            }
+            else if (DataSource.UnitWeight < bottomLimit || DataSource.UnitWeight > upperLimit)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningUnitWeightTitle"], L["UIWarningUnitWeightMessage"]);
+            }
+
+
+
+
         }
 
 
@@ -267,9 +479,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
         SfTextBox ProductionOrdersButtonEdit;
         bool SelectProductionOrdersPopupVisible = false;
-        List<ListProductionOrdersDto> ProductionOrdersList = new List<ListProductionOrdersDto>();
         Guid ProductionOrdersID = Guid.Empty;
         string ProductionOrdersNo = string.Empty;
+        string ProductionOrdersReferenceNo = string.Empty;
 
         public async Task ProductionOrdersOnCreateIcon()
         {
@@ -279,8 +491,30 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
         public async void ProductionOrdersButtonClickEvent()
         {
-            SelectProductionOrdersPopupVisible = true;
-            ProductionOrdersList = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t=>t.FinishedProductID == DataSource.ProductID).ToList();
+            if (DataSource.ProductID != Guid.Empty && DataSource.ProductID != null && DataSource.SalesOrderID != Guid.Empty && DataSource.SalesOrderID != null)
+            {
+                ProductionOrderReferenceNoList.Clear();
+
+                var stockFicheLines = (await StockFichesAppService.GetbyProductionOrderAsync(ProductionOrdersID)).Data.SelectStockFicheLines.ToList();
+
+                foreach (var line in stockFicheLines)
+                {
+                    if (!ProductionOrderReferenceNoList.Any(t => t.ProductionOrderReferenceNo == line.ProductionDateReferance))
+                    {
+                        ProductionOrderReferanceNumber referenceModel = new ProductionOrderReferanceNumber
+                        {
+                            ProductionOrderID = ProductionOrdersID,
+                            ProductionOrderNo = ProductionOrdersNo,
+                            ProductionOrderReferenceNo = line.ProductionDateReferance
+                        };
+
+                        ProductionOrderReferenceNoList.Add(referenceModel);
+                    }
+                }
+
+                SelectProductionOrdersPopupVisible = true;
+
+            }
 
             await InvokeAsync(StateHasChanged);
         }
@@ -290,11 +524,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
         {
             if (args.Value == null)
             {
-                ProductionOrdersID = Guid.Empty;
-                ProductionOrdersNo = string.Empty;
+                ProductionOrdersReferenceNo = string.Empty;
 
-                GridLineList[0].ProductionOrderID = ProductionOrdersID;
-                GridLineList[0].ProductionOrderFicheNo = ProductionOrdersNo;
+                foreach (var line in GridLineList)
+                {
+                    int lineIndex = GridLineList.IndexOf(line);
+                    GridLineList[lineIndex].ProductionOrderID = Guid.Empty;
+                    GridLineList[lineIndex].ProductionOrderFicheNo = string.Empty;
+                }
 
                 await _LineGrid.Refresh();
                 await InvokeAsync(StateHasChanged);
@@ -302,16 +539,20 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             }
         }
 
-        public async void ProductionOrdersDoubleClickHandler(RecordDoubleClickEventArgs<ListProductionOrdersDto> args)
+        public async void ProductionOrdersDoubleClickHandler(RecordDoubleClickEventArgs<ProductionOrderReferanceNumber> args)
         {
             var selectedProductionOrder = args.RowData;
 
             if (selectedProductionOrder != null)
             {
-                ProductionOrdersID = selectedProductionOrder.Id;
-                ProductionOrdersNo = selectedProductionOrder.FicheNo;
-                GridLineList[0].ProductionOrderID = ProductionOrdersID;
-                GridLineList[0].ProductionOrderFicheNo = ProductionOrdersNo;
+                ProductionOrdersReferenceNo = selectedProductionOrder.ProductionOrderReferenceNo;
+
+                foreach (var line in GridLineList)
+                {
+                    int lineIndex = GridLineList.IndexOf(line);
+                    GridLineList[lineIndex].ProductionOrderID = ProductionOrdersID;
+                    GridLineList[lineIndex].ProductionOrderFicheNo = selectedProductionOrder.ProductionOrderReferenceNo;
+                }
                 await _LineGrid.Refresh();
                 SelectProductionOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
@@ -340,6 +581,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             else
             {
                 SelectProductsPopupVisible = true;
+
+                ProductsList.Clear();
                 var productList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
 
                 foreach (var products in productList)
@@ -368,6 +611,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             else
             {
                 SelectProductsPopupVisible = true;
+                ProductsList.Clear();
                 var productList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
 
                 foreach (var products in productList)
@@ -402,6 +646,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                 DataSource.ProductCode = selectedProduct.Code;
                 DataSource.ProductName = selectedProduct.Name;
                 DataSource.ProductUnitWeight = selectedProduct.UnitWeight;
+                var productionOrder = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.FinishedProductID == selectedProduct.Id && t.OrderID == DataSource.SalesOrderID).FirstOrDefault();
+                ProductionOrdersID = productionOrder.Id;
+                ProductionOrdersNo = productionOrder.FicheNo;
+
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

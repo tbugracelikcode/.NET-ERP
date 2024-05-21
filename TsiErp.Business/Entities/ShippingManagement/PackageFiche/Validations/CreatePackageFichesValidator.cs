@@ -7,11 +7,11 @@ namespace TsiErp.Business.Entities.ShippingManagement.PackageFiche.Validations
     {
         public CreatePackageFichesValidator()
         {
-            RuleFor(x => x.Code)
-               .NotEmpty()
-               .WithMessage("ValidatorCodeEmpty")
-               .MaximumLength(17)
-               .WithMessage("ValidatorCodeMaxLenght");
+            //RuleFor(x => x.Code)
+            //   .NotEmpty()
+            //   .WithMessage("ValidatorCodeEmpty")
+            //   .MaximumLength(17)
+            //   .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.SalesOrderID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)

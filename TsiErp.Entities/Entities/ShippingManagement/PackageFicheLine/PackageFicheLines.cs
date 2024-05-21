@@ -45,5 +45,20 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine
         /// Durum
         /// </summary>
         public string Status_ { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Koli İçeriği
+        /// </summary>
+        public int PackageContent { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Koli Sayısı
+        /// </summary>
+        public int NumberofPackage { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Üretim Emri Referans No
+        /// </summary>
+        public string ProductionOrderFicheNo { get; set; }
     }
 }

@@ -340,6 +340,24 @@ namespace TsiErp.Localizations.Resources.PackageFiches.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PackageFicheLinesContextChange {
+            get {
+                return ResourceManager.GetString("PackageFicheLinesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PackageFicheLinesContextRefresh {
+            get {
+                return ResourceManager.GetString("PackageFicheLinesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string PackageFichesContextAdd {
@@ -426,6 +444,15 @@ namespace TsiErp.Localizations.Resources.PackageFiches.Page {
         public static string ProductionOrderNr {
             get {
                 return ResourceManager.GetString("ProductionOrderNr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRETİM EMRİ REFERANS NO.
+        /// </summary>
+        public static string ProductionOrderReferenceNo {
+            get {
+                return ResourceManager.GetString("ProductionOrderReferenceNo", resourceCulture);
             }
         }
         
@@ -529,6 +556,15 @@ namespace TsiErp.Localizations.Resources.PackageFiches.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ SİPARİŞ NO.
+        /// </summary>
+        public static string SalesOrderModalGridCustomerOrderNr {
+            get {
+                return ResourceManager.GetString("SalesOrderModalGridCustomerOrderNr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SİPARİŞ TARİH.
         /// </summary>
         public static string SalesOrderModalGridDate_ {
@@ -592,7 +628,7 @@ namespace TsiErp.Localizations.Resources.PackageFiches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Koli sayısı ve koli içeriği 0&apos;dan büyük olmak zorundadır..
+        ///   Looks up a localized string similar to Satırları oluşturmak için sipariş, stok, koli türü, koli içeriği, koli sayısı ve üretim emri referans numarası alanları dolu olmalıdır..
         /// </summary>
         public static string UIWarningPackageMessage {
             get {
@@ -624,6 +660,24 @@ namespace TsiErp.Localizations.Resources.PackageFiches.Page {
         public static string UIWarningSalesOrderTitle {
             get {
                 return ResourceManager.GetString("UIWarningSalesOrderTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Birim ağırlık, tanımlı birim ağırlığın %2&apos;sinden az ve %2&apos;sinden çok olamaz..
+        /// </summary>
+        public static string UIWarningUnitWeightMessage {
+            get {
+                return ResourceManager.GetString("UIWarningUnitWeightMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningUnitWeightTitle {
+            get {
+                return ResourceManager.GetString("UIWarningUnitWeightTitle", resourceCulture);
             }
         }
         

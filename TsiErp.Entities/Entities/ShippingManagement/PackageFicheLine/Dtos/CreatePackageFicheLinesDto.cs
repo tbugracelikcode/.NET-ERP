@@ -38,5 +38,17 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos
         /// Durum
         /// </summary>
         public string Status_ { get; set; }
+        /// <summary>
+        /// Koli İçeriği
+        /// </summary>
+        public int PackageContent { get; set; }
+        /// <summary>
+        /// Koli Sayısı
+        /// </summary>
+        public int NumberofPackage { get; set; }
+        /// <summary>
+        /// Üretim Emri Referans No
+        /// </summary>
+        public string ProductionOrderFicheNo { get; set; }
     }
 }
