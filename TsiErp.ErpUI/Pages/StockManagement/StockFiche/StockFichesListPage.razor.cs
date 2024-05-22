@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.Navigations;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using TsiErp.DataAccess.Services.Login;
@@ -497,12 +498,53 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             }
         }
 
-
-
         protected void CreateMainContextMenuItems()
         {
             if (MainGridContextMenu.Count() == 0)
             {
+
+                //var menus = new List<ContextMenuItemModel>()
+                //{
+                //  new ContextMenuItemModel
+                //      {
+                //          Text = "Deneme 1",
+                //          Target = ".e-content",
+                //          Id = "deneme1",
+                //          Items = new List<MenuItem>()
+                //                  {
+                //                      new MenuItem
+                //                          { Text = "Deneme1-1",
+                //                            Id = "deneme11"
+                //                          },
+                //                      new MenuItem
+                //                          {
+                //                            Text ="Deneme1-2",
+                //                            Id ="deneme12"
+                //                          }
+                //                  }
+                //       },
+                //  new ContextMenuItemModel
+                //      {
+                //          Text = "Deneme 2",
+                //          Target = ".e-content",
+                //          Id = "deneme2",
+                //          Items = new List<MenuItem>()
+                //                  {
+                //                      new MenuItem
+                //                          { Text = "Deneme2-1",
+                //                            Id = "deneme21"
+                //                          },
+                //                      new MenuItem
+                //                          {
+                //                            Text ="Deneme2-2",
+                //                            Id ="deneme22"
+                //                          }
+                //                  }
+                //       },
+                //};
+
+                //MainGridContextMenu.AddRange(menus);
+
                 foreach (var context in contextsList)
                 {
                     var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
@@ -510,26 +552,49 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
                     {
                         switch (context.MenuName)
                         {
-                            case "StockFicheContextAddStockIncome":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddStockIncome"], Id = "income" }); break;
-                            case "StockFicheContextAddStockOutput":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddStockOutput"], Id = "output" }); break;
-                            case "StockFicheContextAddConsume":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddConsume"], Id = "consume" }); break;
-                            case "StockFicheContextAddWastege":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddWastege"], Id = "wastage" }); break;
-                            case "StockFicheContextAddProductionIncome":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddProductionIncome"], Id = "proincome" }); break;
-                            case "StockFicheContextAddWarehouse":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddWarehouse"], Id = "warehouse" }); break;
+                            case "StockFichesGeneralConAdd":
+
+                                List<MenuItem> subMenus = new List<MenuItem>();
+
+                                var subList = MenusList.Where(t => t.ParentMenuId == context.Id).ToList();
+
+                                foreach (var subMenu in subList)
+                                {
+                                    var subPermission = UserPermissionsList.Where(t => t.MenuId == subMenu.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+
+                                    if (subPermission)
+                                    {
+                                        switch (subMenu.MenuName)
+                                        {
+                                            case "StockFicheContextAddStockIncome":
+                                                subMenus.Add(new MenuItem { Text = L["StockFicheContextAddStockIncome"], Id = "income" }); break;
+                                            case "StockFicheContextAddStockOutput":
+                                                subMenus.Add(new MenuItem { Text = L["StockFicheContextAddStockOutput"], Id = "output" }); break;
+                                            case "StockFicheContextAddConsume":
+                                                subMenus.Add(new MenuItem { Text = L["StockFicheContextAddConsume"], Id = "consume" }); break;
+                                            case "StockFicheContextAddWastege":
+                                                subMenus.Add(new MenuItem { Text = L["StockFicheContextAddWastege"], Id = "wastage" }); break;
+                                            case "StockFicheContextAddProductionIncome":
+                                                subMenus.Add(new MenuItem { Text = L["StockFicheContextAddProductionIncome"], Id = "proincome" }); break;
+                                            case "StockFicheContextAddWarehouse":
+                                                subMenus.Add(new MenuItem { Text = L["StockFicheContextAddWarehouse"], Id = "warehouse" }); break;
+                                            case "StockFicheContextAddReserved":
+                                                subMenus.Add(new MenuItem { Text = L["StockFicheContextAddReserved"], Id = "reserved" }); break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFichesGeneralConAdd"], Id = "add",Items=subMenus }); break;
+                            
                             case "StockFicheContextChange":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextChange"], Id = "changed" }); break;
                             case "StockFicheContextDelete":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextDelete"], Id = "delete" }); break;
                             case "StockFicheContextRefresh":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextRefresh"], Id = "refresh" }); break;
-                            case "StockFicheContextAddReserved":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddReserved"], Id = "reserved" }); break;
+                           
                             default: break;
                         }
                     }

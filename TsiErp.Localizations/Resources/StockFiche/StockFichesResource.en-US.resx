@@ -304,25 +304,25 @@
     <value>Add</value>
   </data>
   <data name="StockFicheContextAddConsume" xml:space="preserve">
-    <value>Add Consumption Fiche</value>
+    <value>Consumption Fiche</value>
   </data>
   <data name="StockFicheContextAddProductionIncome" xml:space="preserve">
-    <value>Add Production Input Fiche</value>
+    <value>Production Input Fiche</value>
   </data>
   <data name="StockFicheContextAddReserved" xml:space="preserve">
-    <value>Add Reserve Fiche</value>
+    <value>Reserve Fiche</value>
   </data>
   <data name="StockFicheContextAddStockIncome" xml:space="preserve">
-    <value>Add Stock Input Fiche</value>
+    <value>Stock Input Fiche</value>
   </data>
   <data name="StockFicheContextAddStockOutput" xml:space="preserve">
-    <value>Add Stock Output Fiche</value>
+    <value>Stock Output Fiche</value>
   </data>
   <data name="StockFicheContextAddWarehouse" xml:space="preserve">
-    <value>Add Shipping to Warehouse Fiche</value>
+    <value>Shipping to Warehouse Fiche</value>
   </data>
   <data name="StockFicheContextAddWastege" xml:space="preserve">
-    <value>Add Wastage Fiche</value>
+    <value>Wastage Fiche</value>
   </data>
   <data name="StockFicheContextChange" xml:space="preserve">
     <value>Change</value>
@@ -344,6 +344,9 @@
   </data>
   <data name="StockFicheLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="StockFichesGeneralConAdd" xml:space="preserve">
+    <value>Add</value>
   </data>
   <data name="Time_Label" xml:space="preserve">
     <value>Hour:</value>

@@ -96,6 +96,7 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<ModalManager>();
             builder.Services.AddScoped<Navigation>();
             builder.Services.AddScoped<AppService>();
+            builder.Services.AddScoped<ConnectorService>();
             builder.Services.AddScoped<NavMenuService>();
             builder.Services.AddScoped<IFicheNumbersAppService, FicheNumbersAppService>();
             builder.Services.AddScoped<IUsersAppService, UsersAppService>();

@@ -226,10 +226,37 @@ else
                         <Template>
                             <br />
                             <div class="TSIScrollablePermissionModal">
-                                <SfTreeView TValue="UserMenuPermission" ShowCheckBox="true">
-                                    <TreeViewFieldsSettings TValue="UserMenuPermission" Id="MenuID" DataSource="@PermissionModalMenusList" Text="MenuName" ParentID="ParentID" IsChecked="isPermitted" HasChildren="HasChild" Expanded="Expanded"></TreeViewFieldsSettings>
-                                    <TreeViewEvents TValue="UserMenuPermission" NodeChecked="NodeCheckedHandler" NodeChecking="NodeCheckingHandler"></TreeViewEvents>
-                                </SfTreeView> 
+                               @*  <SfTreeView TValue="UserMenuPermission" ShowCheckBox="true">
+                                    <TreeViewFieldsSettings 
+                                        TValue="UserMenuPermission"
+                                        Id="MenuID"
+                                        DataSource="@PermissionModalMenusList" 
+                                        Text="MenuName" 
+                                        ParentID="ParentID" 
+                                        IsChecked="isPermitted" 
+                                        HasChildren="HasChild" 
+                                        Expanded="Expanded">
+                                    </TreeViewFieldsSettings>
+
+                                    <TreeViewEvents 
+                                        TValue="UserMenuPermission" 
+                                        NodeChecking="NodeCheckingHandler">
+                                    </TreeViewEvents>
+
+                                </SfTreeView>  *@
+
+                                <DxTreeView Data="@PermissionModalMenusList"
+                                            CheckMode="TreeViewCheckMode.Recursive"
+                                            AnimationType="LayoutAnimationType.Slide">
+                                    <DataMappings>
+                                        <DxTreeViewDataMapping ParentKey="ParentID" 
+                                                               HasChildren="HasChild"
+                                                               Checked="isPermitted"
+                                                               Key="MenuID"
+                                                               Text="MenuName" />
+                                    </DataMappings>
+                                </DxTreeView>
+
                             </div>
 
 

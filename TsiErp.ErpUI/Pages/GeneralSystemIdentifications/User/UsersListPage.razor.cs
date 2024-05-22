@@ -35,7 +35,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
             public bool isPermitted { get; set; }
             public bool HasChild { get; set; }
             public bool Expanded { get; set; }
-            public Guid PermissionID { get; set; }
+            public Guid Id { get; set; }
         }
 
         [Inject]
@@ -226,7 +226,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                         isPermitted = t.IsUserPermitted,
                         MenuID = t.MenuId.ToString(),
                         MenuName = L[t.MenuName],
-                        PermissionID = t.Id
+                        Id = t.Id
                     }).ToList();
 
                     PermissionModalMenusList.AddRange(parentList);
@@ -234,7 +234,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                     var subAmountsParentList = userPermissionList.Where(t => t.MenuName.Contains("AmountsChildMenu")).Select(t => new UserMenuPermission
                     {
                         isPermitted = t.IsUserPermitted,
-                        PermissionID = t.Id,
+                        Id = t.Id,
                         MenuID = t.MenuId.ToString(),
                         MenuName = L[t.MenuName],
                         //Expanded = false,
@@ -247,7 +247,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                     var subParentList = userPermissionList.Where(t => !t.MenuName.Contains("Context") && !t.MenuName.Contains("Parent") && !t.MenuName.Contains("AmountsChildMenu")).Select(t => new UserMenuPermission
                     {
                         isPermitted = t.IsUserPermitted,
-                        PermissionID = t.Id,
+                        Id = t.Id,
                         MenuID = t.MenuId.ToString(),
                         MenuName = L[t.MenuName],
                         //Expanded = false,
@@ -264,7 +264,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                         isPermitted = t.IsUserPermitted,
                         MenuID = t.MenuId.ToString(),
                         MenuName = L[t.MenuName],
-                        PermissionID = t.Id,
+                        Id = t.Id,
                         ParentID = t.ParentID.ToString()
                     }).ToList();
 
@@ -371,101 +371,90 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
             isPermissionModal = false;
         }
 
-   
-
         public void NodeCheckingHandler(NodeCheckEventArgs args)
         {
             //Layout.LoadingSpinnerVisible = true;
 
-            var item = PermissionModalMenusList.Where(t => t.MenuID == args.NodeData.Id).FirstOrDefault();
+            //var item = PermissionModalMenusList.Where(t => t.MenuID == args.NodeData.Id).FirstOrDefault();
 
 
-            if (!item.MenuName.Contains("Context")) //Context menu dışında, child menü içeren tüm menüler için permission update işlemi
-            {
+            //if (!item.MenuName.Contains("Context")) //Context menu dışında, child menü içeren tüm menüler için permission update işlemi
+            //{
 
-                var updatedChilds = PermissionModalMenusList.Where(t => t.ParentID == item.MenuID).ToList();
+            //    var updatedChilds = PermissionModalMenusList.Where(t => t.ParentID == item.MenuID).ToList();
 
-                if (updatedChilds != null && updatedChilds.Count > 0)
-                {
-                    #region Child İçeren Parent Menünün İşlemleri
+            //    if (updatedChilds != null && updatedChilds.Count > 0)
+            //    {
+            //        #region Child İçeren Parent Menünün İşlemleri
 
-                    int indexItemContext = PermissionModalMenusList.IndexOf(item);
+            //        int indexItemContext = PermissionModalMenusList.IndexOf(item);
 
-                    PermissionModalMenusList[indexItemContext].isPermitted = args.NodeData.IsChecked == "false" ? true : false;
+            //        PermissionModalMenusList[indexItemContext].isPermitted = args.NodeData.IsChecked == "false" ? true : false;
 
-                    ChangedPermissionsList.Add(new Guid(item.MenuID));
+            //        ChangedPermissionsList.Add(new Guid(item.MenuID));
 
-                    #endregion
+            //        #endregion
 
-                    foreach (var child in updatedChilds)
-                    {
-                        int indexChild = PermissionModalMenusList.IndexOf(child);
+            //        foreach (var child in updatedChilds)
+            //        {
+            //            int indexChild = PermissionModalMenusList.IndexOf(child);
 
-                        PermissionModalMenusList[indexChild].isPermitted = PermissionModalMenusList[indexItemContext].isPermitted;
+            //            PermissionModalMenusList[indexChild].isPermitted = PermissionModalMenusList[indexItemContext].isPermitted;
 
-                        ChangedPermissionsList.Add(new Guid(child.MenuID));
-                    }
+            //            ChangedPermissionsList.Add(new Guid(child.MenuID));
+            //        }
 
                    
-                }
-                else  // Tutar alanlarının childlerı yok ama Context değiller, bu kısım onlar için
-                {
-                    int indexItemContext = PermissionModalMenusList.IndexOf(item);
+            //    }
+            //    else  // Tutar alanlarının childlerı yok ama Context değiller, bu kısım onlar için
+            //    {
+            //        int indexItemContext = PermissionModalMenusList.IndexOf(item);
 
-                    PermissionModalMenusList[indexItemContext].isPermitted = args.NodeData.IsChecked == "false" ? true : false;
+            //        PermissionModalMenusList[indexItemContext].isPermitted = args.NodeData.IsChecked == "false" ? true : false;
 
-                    ChangedPermissionsList.Add(new Guid(item.MenuID));
-                }
-
-
-            }
-            else // Context menüler için permission update işlemi
-            {
-                int indexItemContext = PermissionModalMenusList.IndexOf(item);
-
-                PermissionModalMenusList[indexItemContext].isPermitted = args.NodeData.IsChecked == "false" ? true : false;
-
-                ChangedPermissionsList.Add(new Guid(item.MenuID));
-            }
+            //        ChangedPermissionsList.Add(new Guid(item.MenuID));
+            //    }
 
 
-        }
+            //}
+            //else // Context menüler için permission update işlemi
+            //{
+            //    int indexItemContext = PermissionModalMenusList.IndexOf(item);
 
-      
+            //    PermissionModalMenusList[indexItemContext].isPermitted = args.NodeData.IsChecked == "false" ? true : false;
 
-        public void NodeCheckedHandler(NodeCheckEventArgs args)
-        {
-           
-            //Layout.LoadingSpinnerVisible = false;
+            //    ChangedPermissionsList.Add(new Guid(item.MenuID));
+            //}
+
 
         }
 
         public async void OnPermissionsSubmit()
         {
-            //Layout.LoadingSpinnerVisible = true;
+            ////Layout.LoadingSpinnerVisible = true;
 
-            foreach (var changedPermissionMenuID in ChangedPermissionsList)
-            {
-                var permission = (await UserPermissionsAppService.GetListAsyncByUserId(DataSource.Id)).Data.Where(t => t.MenuId == changedPermissionMenuID).FirstOrDefault();
+            //foreach (var changedPermissionMenuID in ChangedPermissionsList)
+            //{
+            //    var permission = (await UserPermissionsAppService.GetListAsyncByUserId(DataSource.Id)).Data.Where(t => t.MenuId == changedPermissionMenuID).FirstOrDefault();
 
-                if (permission != null && permission.Id != Guid.Empty)
-                {
-                    bool permissionStatus = PermissionModalMenusList.Where(t => t.MenuID == changedPermissionMenuID.ToString()).Select(t => t.isPermitted).FirstOrDefault();
+            //    if (permission != null && permission.Id != Guid.Empty)
+            //    {
+            //        bool permissionStatus = PermissionModalMenusList.Where(t => t.MenuID == changedPermissionMenuID.ToString()).Select(t => t.isPermitted).FirstOrDefault();
 
-                    permission.IsUserPermitted = permissionStatus;
+            //        permission.IsUserPermitted = permissionStatus;
 
-                    var updatedPermission = ObjectMapper.Map<SelectUserPermissionsDto, UpdateUserPermissionsDto>(permission);
+            //        var updatedPermission = ObjectMapper.Map<SelectUserPermissionsDto, UpdateUserPermissionsDto>(permission);
 
-                    updatedPermission.SelectUserPermissionsList = new List<SelectUserPermissionsDto>();
+            //        updatedPermission.SelectUserPermissionsList = new List<SelectUserPermissionsDto>();
 
-                    updatedPermission.SelectUserPermissionsList.Add(permission);
+            //        updatedPermission.SelectUserPermissionsList.Add(permission);
 
-                    await UserPermissionsAppService.UpdateAsync(updatedPermission);
-                }
-            }
+            //        await UserPermissionsAppService.UpdateAsync(updatedPermission);
+            //    }
+            //}
 
-            HidePermissionModal();
-            //Layout.LoadingSpinnerVisible = false;
+            //HidePermissionModal();
+            ////Layout.LoadingSpinnerVisible = false;
         }
 
         #region Kod ButtonEdit
