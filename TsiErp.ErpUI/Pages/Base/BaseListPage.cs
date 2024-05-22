@@ -82,11 +82,18 @@ namespace TsiErp.ErpUI.Pages.Base
 
 
                 CreateContextMenuItems(loc);
-                CreateGridToolbar();
             }
 
             await GetListDataSourceAsync();
             await InvokeAsync(StateHasChanged);
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender)
+            {
+                CreateGridToolbar();
+            }
         }
 
         protected virtual void CreateContextMenuItems(IStringLocalizer loc)
