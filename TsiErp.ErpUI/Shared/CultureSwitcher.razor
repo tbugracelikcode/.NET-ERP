@@ -3,16 +3,16 @@
 @using Syncfusion.Blazor.DropDowns
 
 <div style="padding-left:20px">
-   @*  <SfDropDownList TValue="string"  TItem="Cultures"  DataSource="@CultureList" Width="143px" Index="@cultureIndex" PopupWidth="143px" CssClass="localization-combo">
-        <DropDownListEvents TItem="Cultures" TValue="string" ValueChange="OnSelected"></DropDownListEvents>
-        <DropDownListFieldSettings Value="Code" Text="Text"></DropDownListFieldSettings>
+    @*  <SfDropDownList TValue="string"  TItem="Cultures"  DataSource="@CultureList" Width="143px" Index="@cultureIndex" PopupWidth="143px" CssClass="localization-combo">
+    <DropDownListEvents TItem="Cultures" TValue="string" ValueChange="OnSelected"></DropDownListEvents>
+    <DropDownListFieldSettings Value="Code" Text="Text"></DropDownListFieldSettings>
     </SfDropDownList> *@
 
-    <SfDropDownButton IconCss="fa fa-globe TSIIndexLanguageIcon" >
+    <SfDropDownButton CssClass="TSIIndexDropdown" IconCss="fa fa-globe TSIIndexLanguageIcon">
         <DropDownMenuItems>
             @foreach (var item in CultureList)
-            {        
-                <DropDownMenuItem  Id="@item.Code" Text="@item.Text"></DropDownMenuItem>
+            {
+                <DropDownMenuItem Id="@item.Code" Text="@item.Text"></DropDownMenuItem>
             }
         </DropDownMenuItems>
         <DropDownButtonEvents ItemSelected="OnSelected"></DropDownButtonEvents>
@@ -29,25 +29,29 @@
         color: #333333;
     }
 
-    .e-btn, .e-css.e-btn {
-        -webkit-tap-highlight-color: transparent !important;
-        background-color : transparent  !important;
-        border-color: transparent !important;
-        transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    /*   .e-btn, .e-css.e-btn {
+            -webkit-tap-highlight-color: transparent !important;
+            background-color : transparent  !important;
+            border-color: transparent !important;
+            transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+        } */
     .TSIIndexLanguageIcon {
-    font-size: 22px !important;
-    position: relative;
-    margin-left: 30px;
-    color: black;
-}
+        font-size: 22px !important;
+        position: relative;
+        margin-left: 30px;
+        color: black;
+        background-color: transparent !important;
+        border-color: transparent !important;
+    }
 
         .TSIIndexLanguageIcon:hover {
             font-size: 26px !important;
-        position: relative;
-        margin-left: 30px;
-        color: #DA0505;
-    }
+            position: relative;
+            margin-left: 30px;
+            color: #DA0505;
+        }
+
+   
 
 </style>
 
@@ -171,4 +175,3 @@
     };
 }
 
-     

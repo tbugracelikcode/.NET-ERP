@@ -210,6 +210,12 @@
   <data name="PackageContentLabel" xml:space="preserve">
     <value>Koli İçeriği:</value>
   </data>
+  <data name="PackageFicheLinesContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="PackageFicheLinesContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="PackageFichesContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -239,6 +245,9 @@
   </data>
   <data name="ProductionOrderNr" xml:space="preserve">
     <value>ÜRETİM EMRİ FİŞ NO</value>
+  </data>
+  <data name="ProductionOrderReferenceNo" xml:space="preserve">
+    <value>ÜRETİM EMRİ REFERANS NO</value>
   </data>
   <data name="ProductionOrdersNoLabel" xml:space="preserve">
     <value>Üretim Emri Referans No:</value>
@@ -273,6 +282,9 @@
   <data name="SalesOrderModalGridCurrentAccountCardName" xml:space="preserve">
     <value>CARİ ÜNVAN</value>
   </data>
+  <data name="SalesOrderModalGridCustomerOrderNr" xml:space="preserve">
+    <value>MÜŞTERİ SİPARİŞ NO</value>
+  </data>
   <data name="SalesOrderModalGridDate_" xml:space="preserve">
     <value>SİPARİŞ TARİH</value>
   </data>
@@ -295,7 +307,7 @@
     <value>Sevkiyat Yönetimi &gt; Hareketler</value>
   </data>
   <data name="UIWarningPackageMessage" xml:space="preserve">
-    <value>Koli sayısı ve koli içeriği 0'dan büyük olmak zorundadır.</value>
+    <value>Satırları oluşturmak için sipariş, stok, koli türü, koli içeriği, koli sayısı ve üretim emri referans numarası alanları dolu olmalıdır.</value>
   </data>
   <data name="UIWarningPackageTitle" xml:space="preserve">
     <value>Uyarı</value>
@@ -304,6 +316,12 @@
     <value>Satış Siparişi seçmeden ürün seçimi yapılamaz.</value>
   </data>
   <data name="UIWarningSalesOrderTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningUnitWeightMessage" xml:space="preserve">
+    <value>Birim ağırlık, tanımlı birim ağırlığın %2'sinden az ve %2'sinden çok olamaz.</value>
+  </data>
+  <data name="UIWarningUnitWeightTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>
   <data name="UnitWeightLabel" xml:space="preserve">

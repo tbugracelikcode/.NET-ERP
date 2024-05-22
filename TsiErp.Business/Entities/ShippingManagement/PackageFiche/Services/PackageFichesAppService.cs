@@ -42,78 +42,81 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPackageFichesDto>> CreateAsync(CreatePackageFichesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.PackageFiches).Select("*").Where(new { Code = input.Code }, false, false, "");
-            var list = queryFactory.ControlList<PackageFiches>(listQuery).ToList();
 
-            #region Code Control 
-
-            if (list.Count > 0)
+            if(input.SelectPackageFicheLines != null && input.SelectPackageFicheLines.Count > 0)
             {
-                throw new DuplicateCodeException(L["CodeControlManager"]);
-            }
-
-            #endregion
-
-            Guid addedEntityId = GuidGenerator.CreateGuid();
-
-            var query = queryFactory.Query().From(Tables.PackageFiches).Insert(new CreatePackageFichesDto
-            {
-                CurrentAccountID = input.CurrentAccountID,
-                ProductID = input.ProductID,
-                SalesOrderID = input.SalesOrderID,
-                Date_ = input.Date_,
-                NumberofPackage = input.NumberofPackage,
-                PackageContent = input.PackageContent,
-                PackageType = input.PackageType,
-                PalletNumber = input.PalletNumber,
-                ProductPalletOrder = input.ProductPalletOrder,
-                UnitWeight = input.UnitWeight,
-                Code = input.Code,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                CreatorId = LoginedUserService.UserId,
-                DataOpenStatus = false,
-                DataOpenStatusUserId = Guid.Empty,
-                DeleterId = Guid.Empty,
-                DeletionTime = null,
-                Id = addedEntityId,
-                IsDeleted = false,
-                LastModificationTime = null,
-                LastModifierId = Guid.Empty,
-            });
-
-            foreach (var item in input.SelectPackageFicheLines)
-            {
-                var queryLine = queryFactory.Query().From(Tables.PackageFicheLines).Insert(new CreatePackageFicheLinesDto
+                foreach(var line in input.SelectPackageFicheLines)
                 {
-                    PackingDate = item.PackingDate,
-                    ProductionOrderID = item.ProductionOrderID,
-                    PackageFicheID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                    CreatorId = LoginedUserService.UserId,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = Guid.Empty,
-                    DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
-                    IsDeleted = false,
-                    LastModificationTime = null,
-                    LastModifierId = Guid.Empty,
-                    LineNr = item.LineNr,
-                    ProductID = item.ProductID,
-                    Quantity = item.Quantity,
-                });
+                    string code = FicheNumbersAppService.GetFicheNumberAsync("PackageFichesChildMenu");
 
-                query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                    Guid addedEntityId = GuidGenerator.CreateGuid();
+
+                    var query = queryFactory.Query().From(Tables.PackageFiches).Insert(new CreatePackageFichesDto
+                    {
+                        CurrentAccountID = input.CurrentAccountID,
+                        ProductID = input.ProductID,
+                        SalesOrderID = input.SalesOrderID,
+                        Date_ = input.Date_,
+                        NumberofPackage = input.NumberofPackage,
+                        PackageContent = input.PackageContent,
+                        PackageType = input.PackageType,
+                        PalletNumber = input.PalletNumber,
+                        ProductPalletOrder = input.ProductPalletOrder,
+                        UnitWeight = input.UnitWeight,
+                        Code = code,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = addedEntityId,
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                    });
+
+                    var queryLine = queryFactory.Query().From(Tables.PackageFicheLines).Insert(new CreatePackageFicheLinesDto
+                    {
+                        PackingDate = line.PackingDate,
+                        ProductionOrderID = line.ProductionOrderID,
+                        PackageFicheID = addedEntityId,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = 1,
+                        ProductID = line.ProductID,
+                        Quantity = line.Quantity,
+                        NumberofPackage = line.NumberofPackage,
+                        PackageContent = line.PackageContent,
+                        ProductionOrderFicheNo = line.ProductionOrderFicheNo,
+                        Status_ = line.Status_,
+
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+
+                    var packageFiche = queryFactory.Insert<SelectPackageFichesDto>(query, "Id", true);
+
+                    await FicheNumbersAppService.UpdateFicheNumberAsync("PackageFichesChildMenu", code);
+
+                    LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PackageFiches, LogType.Insert, addedEntityId);
+                }
+
+
             }
 
-            var packageFiche = queryFactory.Insert<SelectPackageFichesDto>(query, "Id", true);
-
-            await FicheNumbersAppService.UpdateFicheNumberAsync("PackageFichesChildMenu", input.Code);
-
-            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PackageFiches, LogType.Insert, addedEntityId);
+            SelectPackageFichesDto packageTemp = new SelectPackageFichesDto();
 
             await Task.CompletedTask;
-            return new SuccessDataResult<SelectPackageFichesDto>(packageFiche);
+            return new SuccessDataResult<SelectPackageFichesDto>(packageTemp);
 
         }
 
@@ -374,6 +377,9 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                     {
                         PackageFicheID = input.Id,
                         PackingDate = item.PackingDate,
+                        ProductionOrderFicheNo = item.ProductionOrderFicheNo,
+                        PackageContent = item.PackageContent,
+                        NumberofPackage = item.NumberofPackage,
                         ProductionOrderID = item.ProductionOrderID,
                         Status_ = item.Status_,
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
@@ -406,6 +412,9 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                             PackageFicheID = input.Id,
                             PackingDate = item.PackingDate,
                             ProductionOrderID = item.ProductionOrderID,
+                            NumberofPackage = item.NumberofPackage,
+                            PackageContent = item.PackageContent,
+                            ProductionOrderFicheNo = item.ProductionOrderFicheNo,
                             Status_ = item.Status_,
                             CreationTime = line.CreationTime,
                             CreatorId = line.CreatorId,
