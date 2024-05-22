@@ -245,9 +245,10 @@ else
 
                                 </SfTreeView>  *@
 
-                                <DxTreeView Data="@PermissionModalMenusList"
+                                <DxTreeView Data="@PermissionModalMenusList" 
                                             CheckMode="TreeViewCheckMode.Recursive"
-                                            AnimationType="LayoutAnimationType.Slide">
+                                            AnimationType="LayoutAnimationType.Slide"
+                                 >
                                     <DataMappings>
                                         <DxTreeViewDataMapping ParentKey="ParentID" 
                                                                HasChildren="HasChild"
@@ -323,6 +324,31 @@ else
         </FooterContentTemplate>
     </DxPopup>
 }
+
+<style>
+    
+
+ .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-checked>.dxbl-checkbox-check-element:not(:hover), .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-indeterminate>.dxbl-checkbox-check-element:not(:hover) {
+        background-color: var(--dxbl-treeview-checkbox-checked-bg, #fffff) !important;
+    opacity: var(--dxbl-treeview-checkbox-checked-bg,80%);
+}
+
+    .dxbl-gridlayout > .dxbl-gridlayout-root, .dxbl-stacklayout > .dxbl-stacklayout-root {
+        -webkit-box-pack: start;
+        -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        -webkit-box-align: stretch;
+        -webkit-align-items: stretch;
+        -ms-flex-align: stretch;
+        align-items: stretch;
+        background-image: linear-gradient(314deg, rgb(70 70 70) 0%, #0e0e0e 70%) !important;
+        width: 100%;
+        height: 100%;
+        display: grid;
+    }
+
+</style>
 
 
 

@@ -135,6 +135,65 @@
 </CascadingValue>
 
 <style>
+     .dxbl-treeview .dxbl-treeview-item > .dxbl-treeview-item-content > .dxbl-treeview-item-container .dxbl-treeview-item-text-container > .dxbl-treeview-item-text {
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+    }
+
+ .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-checked>.dxbl-checkbox-check-element:not(:hover), .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-indeterminate>.dxbl-checkbox-check-element:not(:hover) {
+        background-color: var(--dxbl-treeview-checkbox-checked-bg, #ff0606) !important;
+    opacity: var(--dxbl-treeview-checkbox-checked-bg,80%);
+}
+.dxbl-treeview {
+    --dxbl-treeview-spacing-x: 0.25rem;
+    --dxbl-treeview-spacing-y: 0;
+    --dxbl-treeview-font-size: 0.875rem;
+    --dxbl-treeview-font-weight: 400;
+    --dxbl-treeview-line-height: 1.4285;
+        --dxbl-treeview-text-padding-y: 0.2rem !important;
+    --dxbl-treeview-btn-bg: transparent;
+    --dxbl-treeview-btn-color: unset;
+    --dxbl-treeview-btn-hover-bg: unset;
+    --dxbl-treeview-btn-hover-color: inherit;
+    --dxbl-treeview-image-spacing: 0.375rem;
+    --dxbl-treeview-navigation-filter-bottom-spacing: 0.75rem;
+    --dxbl-treeview-navigation-filter-content-bg-color: yellow;
+    --dxbl-treeview-navigation-filter-content-color: #212529;
+    --dxbl-treeview-check-all-bottom-spacing: 0.25rem;
+    --dxbl-treeview-check-all-border-bottom-color: unset;
+    --dxbl-treeview-check-all-border-bottom-width: 1px;
+    --dxbl-treeview-check-all-border-bottom-style: solid;
+    --dxbl-treeview-item-text-wrap: normal;
+    --dxbl-treeview-item-content-indent: 0.9375rem;
+    --dxbl-treeview-item-hover-bg: unset;
+    --dxbl-treeview-item-hover-color: inherit;
+    --dxbl-treeview-item-selection-bg: unset;
+    --dxbl-treeview-item-selection-color: #fff;
+    --dxbl-treeview-item-border-radius: 0.25rem;
+    --dxbl-treeview-item-spacing-y: 0.375rem;
+    --dxbl-treeview-item-content-container-border-width: 0.125rem;
+    --dxbl-treeview-checkbox-checked-color: #fff;
+    --dxbl-treeview-checkbox-checked-bg: unset;
+    --dxbl-treeview-checkbox-checked-hover-bg: #5f368d;
+    --dxbl-treeview-checkbox-disabled-bg: unset;
+    --dxbl-treeview-checkbox-disabled-color: #fff;
+    --dxbl-treeview-checkbox-unchecked-bg: #fff;
+    --dxbl-treeview-checkbox-unchecked-hover-bg: #fff;
+    --dxbl-treeview-checkbox-unchecked-hover-border-color: unset;
+    --dxbl-treeview-checkbox-unchecked-border-width: 2px;
+    --dxbl-treeview-empty-data-padding-x: 1rem;
+    --dxbl-treeview-empty-data-padding-y: 1rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding: var(--dxbl-treeview-spacing-y) var(--dxbl-treeview-spacing-x);
+}
 
     .Loading-Background{
         position: fixed;
