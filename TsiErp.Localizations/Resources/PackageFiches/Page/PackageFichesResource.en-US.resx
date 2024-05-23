@@ -312,6 +312,12 @@
   <data name="UIWarningPackageTitle" xml:space="preserve">
     <value>Warning</value>
   </data>
+  <data name="UIWarningQuantityMessage" xml:space="preserve">
+    <value>The total quantity in the line table cannot exceed the occured quantity from the production order reference.</value>
+  </data>
+  <data name="UIWarningQuantityTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UIWarningSalesOrderMessage" xml:space="preserve">
     <value>Product selection cannot be made without selecting a Sales Order.</value>
   </data>

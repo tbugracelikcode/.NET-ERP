@@ -485,6 +485,13 @@
     height: 100%;
 }
 
+.TSIPermissionGridLayout {
+    width: 690px !important;
+    height: 100%;
+}
+
+
+
 .TSIGridLayoutHeight88 {
     width: 100%;
     height: 88%;

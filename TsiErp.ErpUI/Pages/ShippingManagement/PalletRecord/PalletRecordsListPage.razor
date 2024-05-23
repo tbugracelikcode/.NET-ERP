@@ -172,7 +172,7 @@ else
                     <DxGridLayoutItem Row="2" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PalletPackageNumberLabel"] </strong></label><br />
-                            <SfNumericTextBox TValue="int" @bind-Value="DataSource.PalletPackageNumber" Min="0"></SfNumericTextBox>
+                            <SfNumericTextBox Enabled=false TValue="int" @bind-Value="DataSource.PalletPackageNumber" Min="0"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

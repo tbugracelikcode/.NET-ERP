@@ -646,6 +646,24 @@ namespace TsiErp.Localizations.Resources.PackageFiches.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır tablosundaki toplam miktar, üretim emri referansından gelen gerçekleşen miktardan fazla olamaz..
+        /// </summary>
+        public static string UIWarningQuantityMessage {
+            get {
+                return ResourceManager.GetString("UIWarningQuantityMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningQuantityTitle {
+            get {
+                return ResourceManager.GetString("UIWarningQuantityTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Siparişi seçmeden ürün seçimi yapılamaz..
         /// </summary>
         public static string UIWarningSalesOrderMessage {
