@@ -362,59 +362,72 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
         protected override async Task OnSubmit()
         {
+            var productionOrderID = GridLineList.Select(t => t.ProductionOrderID).FirstOrDefault();
 
-            decimal bottomLimit = DataSource.ProductUnitWeight - (DataSource.ProductUnitWeight * (2 / 100));
-            decimal upperLimit = DataSource.ProductUnitWeight + (DataSource.ProductUnitWeight * (2 / 100));
-
-            if (DataSource.UnitWeight >= bottomLimit && DataSource.UnitWeight <= upperLimit)
+            if(productionOrderID != null && productionOrderID != Guid.Empty)
             {
-                SelectPackageFichesDto result;
+                var stockFicheLineList = (await StockFichesAppService.GetbyProductionOrderAsync(productionOrderID.GetValueOrDefault())).Data.SelectStockFicheLines.Where(t=>t.ProductID == DataSource.ProductID).ToList();
 
-                if (DataSource.Id == Guid.Empty)
+                if(stockFicheLineList != null && stockFicheLineList.Count > 0)
                 {
-                    var createInput = ObjectMapper.Map<SelectPackageFichesDto, CreatePackageFichesDto>(DataSource);
+                    if(stockFicheLineList.Select(t=>t.Quantity).Sum() < GridLineList.Select(T => T.Quantity).Sum())
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningQuantityTitle"], L["UIWarningQuantityMessage"]);
+                    }
+                    else
+                    {
+                        decimal bottomLimit = DataSource.ProductUnitWeight - (DataSource.ProductUnitWeight * (2 / 100));
+                        decimal upperLimit = DataSource.ProductUnitWeight + (DataSource.ProductUnitWeight * (2 / 100));
 
-                    result = (await CreateAsync(createInput)).Data;
+                        if (DataSource.UnitWeight >= bottomLimit && DataSource.UnitWeight <= upperLimit)
+                        {
+                            SelectPackageFichesDto result;
 
-                    if (result != null)
-                        DataSource.Id = result.Id;
+                            if (DataSource.Id == Guid.Empty)
+                            {
+                                var createInput = ObjectMapper.Map<SelectPackageFichesDto, CreatePackageFichesDto>(DataSource);
+
+                                result = (await CreateAsync(createInput)).Data;
+
+                                if (result != null)
+                                    DataSource.Id = result.Id;
+                            }
+                            else
+                            {
+                                var updateInput = ObjectMapper.Map<SelectPackageFichesDto, UpdatePackageFichesDto>(DataSource);
+
+                                result = (await UpdateAsync(updateInput)).Data;
+                            }
+
+                            if (result == null)
+                            {
+
+                                return;
+                            }
+
+                            await GetListDataSourceAsync();
+
+                            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+                            HideEditPage();
+
+                            if (DataSource.Id == Guid.Empty)
+                            {
+                                DataSource.Id = result.Id;
+                            }
+
+                            if (savedEntityIndex > -1)
+                                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+                            else
+                                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+                        }
+                        else if (DataSource.UnitWeight < bottomLimit || DataSource.UnitWeight > upperLimit)
+                        {
+                            await ModalManager.WarningPopupAsync(L["UIWarningUnitWeightTitle"], L["UIWarningUnitWeightMessage"]);
+                        }
+                    }
                 }
-                else
-                {
-                    var updateInput = ObjectMapper.Map<SelectPackageFichesDto, UpdatePackageFichesDto>(DataSource);
-
-                    result = (await UpdateAsync(updateInput)).Data;
-                }
-
-                if (result == null)
-                {
-
-                    return;
-                }
-
-                await GetListDataSourceAsync();
-
-                var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
-
-                HideEditPage();
-
-                if (DataSource.Id == Guid.Empty)
-                {
-                    DataSource.Id = result.Id;
-                }
-
-                if (savedEntityIndex > -1)
-                    SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
-                else
-                    SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
             }
-            else if (DataSource.UnitWeight < bottomLimit || DataSource.UnitWeight > upperLimit)
-            {
-                await ModalManager.WarningPopupAsync(L["UIWarningUnitWeightTitle"], L["UIWarningUnitWeightMessage"]);
-            }
-
-
-
 
         }
 
@@ -495,7 +508,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             {
                 ProductionOrderReferenceNoList.Clear();
 
-                var stockFicheLines = (await StockFichesAppService.GetbyProductionOrderAsync(ProductionOrdersID)).Data.SelectStockFicheLines.ToList();
+                var stockFicheLines = (await StockFichesAppService.GetbyProductionOrderAsync(ProductionOrdersID)).Data.SelectStockFicheLines.Where(t=>t.ProductID == DataSource.ProductID).ToList();
 
                 foreach (var line in stockFicheLines)
                 {

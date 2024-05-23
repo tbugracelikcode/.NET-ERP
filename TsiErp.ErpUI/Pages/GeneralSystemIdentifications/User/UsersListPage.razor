@@ -212,60 +212,61 @@ else
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
-            <DxGridLayout CssClass="TSIGridLayout">
-                <Rows>
-                    <DxGridLayoutRow Height="95%" />
-                </Rows>
-                <Columns>
-                    <DxGridLayoutColumn Width="2%" />
-                    <DxGridLayoutColumn Width="96%" />
-                    <DxGridLayoutColumn Width="2%" />
-                </Columns>
-                <Items>
-                    <DxGridLayoutItem Row="0" Column="1">
-                        <Template>
-                            <br />
-                            <div class="TSIScrollablePermissionModal">
-                               @*  <SfTreeView TValue="UserMenuPermission" ShowCheckBox="true">
-                                    <TreeViewFieldsSettings 
-                                        TValue="UserMenuPermission"
-                                        Id="MenuID"
-                                        DataSource="@PermissionModalMenusList" 
-                                        Text="MenuName" 
-                                        ParentID="ParentID" 
-                                        IsChecked="isPermitted" 
-                                        HasChildren="HasChild" 
-                                        Expanded="Expanded">
-                                    </TreeViewFieldsSettings>
+            <SfCard CssClass="TSIPermissionBackground">
+                <DxGridLayout CssClass="TSIPermissionGridLayout">
+                    <Rows>
+                        <DxGridLayoutRow Height="95%" />
+                    </Rows>
+                    <Columns>
+                        <DxGridLayoutColumn Width="2%" />
+                        <DxGridLayoutColumn Width="96%" />
+                        <DxGridLayoutColumn Width="2%" />
+                    </Columns>
+                    <Items>
+                        <DxGridLayoutItem Row="0" Column="1">
+                            <Template>
+                                <div class="TSIScrollablePermissionModal">
+                                    @*  <SfTreeView TValue="UserMenuPermission" ShowCheckBox="true">
+                                <TreeViewFieldsSettings
+                                TValue="UserMenuPermission"
+                                Id="MenuID"
+                                DataSource="@PermissionModalMenusList"
+                                Text="MenuName"
+                                ParentID="ParentID"
+                                IsChecked="isPermitted"
+                                HasChildren="HasChild"
+                                Expanded="Expanded">
+                                </TreeViewFieldsSettings>
 
-                                    <TreeViewEvents 
-                                        TValue="UserMenuPermission" 
-                                        NodeChecking="NodeCheckingHandler">
-                                    </TreeViewEvents>
+                                <TreeViewEvents
+                                TValue="UserMenuPermission"
+                                NodeChecking="NodeCheckingHandler">
+                                </TreeViewEvents>
 
                                 </SfTreeView>  *@
 
-                                <DxTreeView Data="@PermissionModalMenusList" 
-                                            CheckMode="TreeViewCheckMode.Recursive"
-                                            AnimationType="LayoutAnimationType.Slide"
-                                 >
-                                    <DataMappings>
-                                        <DxTreeViewDataMapping ParentKey="ParentID" 
-                                                               HasChildren="HasChild"
-                                                               Checked="isPermitted"
-                                                               Key="MenuID"
-                                                               Text="MenuName" />
-                                    </DataMappings>
-                                </DxTreeView>
+                                    <DxTreeView Data="@PermissionModalMenusList"
+                                                CheckMode="TreeViewCheckMode.Recursive"
+                                                AnimationType="LayoutAnimationType.Slide">
+                                        <DataMappings>
+                                            <DxTreeViewDataMapping ParentKey="ParentID"
+                                                                   HasChildren="HasChild"
+                                                                   Checked="isPermitted"
+                                                                   Key="MenuID"
+                                                                   Text="MenuName" />
+                                        </DataMappings>
+                                    </DxTreeView>
 
-                            </div>
+                                </div>
 
 
-                        </Template>
-                    </DxGridLayoutItem>
 
-                </Items>
-            </DxGridLayout>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                    </Items>
+                </DxGridLayout>
+            </SfCard>
         </BodyTemplate>
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnPermissionsSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
@@ -326,14 +327,9 @@ else
 }
 
 <style>
-    
 
- .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-checked>.dxbl-checkbox-check-element:not(:hover), .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-indeterminate>.dxbl-checkbox-check-element:not(:hover) {
-        background-color: var(--dxbl-treeview-checkbox-checked-bg, #fffff) !important;
-    opacity: var(--dxbl-treeview-checkbox-checked-bg,80%);
-}
 
-    .dxbl-gridlayout > .dxbl-gridlayout-root, .dxbl-stacklayout > .dxbl-stacklayout-root {
+    .TSIPermissionBackground {
         -webkit-box-pack: start;
         -webkit-justify-content: flex-start;
         -ms-flex-pack: start;
@@ -342,11 +338,19 @@ else
         -webkit-align-items: stretch;
         -ms-flex-align: stretch;
         align-items: stretch;
-        background-image: linear-gradient(314deg, rgb(70 70 70) 0%, #0e0e0e 70%) !important;
+        background-image: linear-gradient(314deg, rgb(116 115 115) 0%, #3b3a3a 70%) !important;
         width: 100%;
-        height: 100%;
+        height: 105%;
         display: grid;
     }
+
+    .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-checked > .dxbl-checkbox-check-element:not(:hover), .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-indeterminate > .dxbl-checkbox-check-element:not(:hover) {
+        background-color: var(--dxbl-treeview-checkbox-checked-bg, #ffffff) !important;
+        opacity: var(--dxbl-treeview-checkbox-checked-bg,80%);
+    }
+
+
+  
 
 </style>
 

@@ -82,7 +82,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             DataSource = new SelectPalletRecordsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("PalletRecordsChildMenu"),
-                MaxPackageNumber = 0
+                MaxPackageNumber = 0,
+                Lenght_ = 100
             };
 
             DataSource.SelectPalletRecordLines = new List<SelectPalletRecordLinesDto>();
@@ -423,7 +424,12 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     }
                 }
 
+                DataSource.PalletPackageNumber = GridLineList.Select(t => t.TotalAmount).Sum();
+
+                await _LineGrid.Refresh();
+
                 HidePackageFichesPopup();
+                await InvokeAsync(StateHasChanged);
             }
             else if(PackageFichesSelectionList.Where(t=>t.SelectedLine == true).Count() == 0)
             {

@@ -312,6 +312,12 @@
   <data name="UIWarningPackageTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>
+  <data name="UIWarningQuantityMessage" xml:space="preserve">
+    <value>Satır tablosundaki toplam miktar, üretim emri referansından gelen gerçekleşen miktardan fazla olamaz.</value>
+  </data>
+  <data name="UIWarningQuantityTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
   <data name="UIWarningSalesOrderMessage" xml:space="preserve">
     <value>Satış Siparişi seçmeden ürün seçimi yapılamaz.</value>
   </data>

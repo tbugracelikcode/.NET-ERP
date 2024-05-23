@@ -241,7 +241,7 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uzunluk:.
+        ///   Looks up a localized string similar to Yükseklik:.
         /// </summary>
         public static string Lenght_Label {
             get {
