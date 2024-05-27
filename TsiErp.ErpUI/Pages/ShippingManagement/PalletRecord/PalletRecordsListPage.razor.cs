@@ -15,6 +15,8 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.DataAccess.Services.Login;
+using Syncfusion.Blazor.Navigations;
+using TsiErp.Business.Extensions.ObjectMapping;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 {
@@ -145,6 +147,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordLinesContextAddPackageFiche"], Id = "addpackagefiche" }); break;
                             case "PalletRecordLinesContextRemovePackageFiche":
                                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordLinesContextRemovePackageFiche"], Id = "removepackagefiche" }); break;
+                            case "PalletRecordLinesContextLineApproval":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordLinesContextLineApproval"], Id = "approval" }); break;
+                            case "PalletRecordLinesContextLineApprovalRemove":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordLinesContextLineApprovalRemove"], Id = "approvalremove" }); break;
                             default: break;
                         }
                     }
@@ -171,6 +177,90 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextDelete"], Id = "delete" }); break;
                             case "PalletRecordsContextRefresh":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextRefresh"], Id = "refresh" }); break;
+
+                            case "PalletRecordsContextState":
+
+                                List<MenuItem> subMenus = new List<MenuItem>();
+
+                                var subList = MenusList.Where(t => t.ParentMenuId == context.Id).OrderBy(t => t.ContextOrderNo).ToList();
+
+                                foreach (var subMenu in subList)
+                                {
+                                    var subPermission = UserPermissionsList.Where(t => t.MenuId == subMenu.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+
+                                    if (subPermission)
+                                    {
+                                        switch (subMenu.MenuName)
+                                        {
+                                            case "PalletRecordsContextStatePreparing":
+                                                subMenus.Add(new MenuItem { Text = L["PalletRecordsContextStatePreparing"], Id = "preparing" }); break;
+                                            case "PalletRecordsContextStateCompleted":
+                                                subMenus.Add(new MenuItem { Text = L["PalletRecordsContextStateCompleted"], Id = "completed" }); break;
+                                            case "PalletRecordsContextStateApproved":
+                                                subMenus.Add(new MenuItem { Text = L["PalletRecordsContextStateApproved"], Id = "approved" }); break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextState"], Id = "state", Items = subMenus }); break;
+
+                            case "PalletRecordsContextTicketState":
+
+                                List<MenuItem> subTicketMenus = new List<MenuItem>();
+
+                                var subTicketList = MenusList.Where(t => t.ParentMenuId == context.Id).OrderBy(t => t.ContextOrderNo).ToList();
+
+                                foreach (var subTicketMenu in subTicketList)
+                                {
+                                    var subTicketPermission = UserPermissionsList.Where(t => t.MenuId == subTicketMenu.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+
+                                    if (subTicketPermission)
+                                    {
+                                        switch (subTicketMenu.MenuName)
+                                        {
+                                            case "PalletRecordsContextTicketStatePending":
+                                                subTicketMenus.Add(new MenuItem { Text = L["PalletRecordsContextTicketStatePending"], Id = "ticketpending" }); break;
+                                            case "PalletRecordsContextTicketStateCompleted":
+                                                subTicketMenus.Add(new MenuItem { Text = L["PalletRecordsContextTicketStateCompleted"], Id = "ticketcompleted" }); break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+
+
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextTicketState"], Id = "ticketstate", Items =subTicketMenus }); break;
+
+                            case "PalletRecordsContextPrintTicket":
+
+                                List<MenuItem> subPrintTicketMenus = new List<MenuItem>();
+
+                                var subPrintTicketList = MenusList.Where(t => t.ParentMenuId == context.Id).OrderBy(t => t.ContextOrderNo).ToList();
+
+                                foreach (var subPrintTicketMenu in subPrintTicketList)
+                                {
+                                    var subPrintTicketPermission = UserPermissionsList.Where(t => t.MenuId == subPrintTicketMenu.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+
+                                    if (subPrintTicketPermission)
+                                    {
+                                        switch (subPrintTicketMenu.MenuName)
+                                        {
+                                            case "PalletRecordsContextPrintSmall":
+                                                subPrintTicketMenus.Add(new MenuItem { Text = L["PalletRecordsContextPrintSmall"], Id = "printsmall" }); break;
+                                            case "PalletRecordsContextPrintBig":
+                                                subPrintTicketMenus.Add(new MenuItem { Text = L["PalletRecordsContextPrintBig"], Id = "printbig" }); break;
+                                            case "PalletRecordsContextPrintPallet":
+                                                subPrintTicketMenus.Add(new MenuItem { Text = L["PalletRecordsContextPrintPallet"], Id = "printpallet" }); break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+
+
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextPrintTicket"], Id = "printticket", Items =subPrintTicketMenus }); break;
                             default: break;
                         }
                     }
@@ -194,6 +284,237 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
+
+                case "preparing":
+                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    if(DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Hazirlaniyor)
+                    {
+                        var resState = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStatePreparingMessage"]);
+
+                        if (resState == true)
+                        {
+                            DataSource.PalletRecordsStateEnum = Entities.Enums.PalletRecordsStateEnum.Hazirlaniyor;
+
+                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                            await GetListDataSourceAsync();
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
+                    }
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPreparingStateMessage"]);
+                    }
+                    
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "completed":
+                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    if(DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Tamamlandi)
+                    {
+                        var resState2 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStateCompletedMessage"]);
+
+                        if (resState2 == true)
+                        {
+                            DataSource.PalletRecordsStateEnum = Entities.Enums.PalletRecordsStateEnum.Tamamlandi;
+
+                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                            await GetListDataSourceAsync();
+
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
+                    }
+
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningCompletedStateMessage"]);
+                    }
+
+                    
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "approved":
+                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    if (DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Onaylandi)
+                    {
+                        var resState3 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStateApprovedMessage"]);
+
+                        if (resState3 == true)
+                        {
+                            DataSource.PalletRecordsStateEnum = Entities.Enums.PalletRecordsStateEnum.Onaylandi;
+
+                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                            await GetListDataSourceAsync();
+
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
+                    }
+
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningApprovedStateMessage"]);
+                    }
+
+
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "ticketpending":
+                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    if (DataSource.PalletRecordsTicketStateEnum != Entities.Enums.PalletRecordsTicketStateEnum.Bekliyor)
+                    {
+                        var resState4 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UITicketStatePendingMessage"]);
+
+                        if (resState4 == true)
+                        {
+                            DataSource.PalletRecordsTicketStateEnum = Entities.Enums.PalletRecordsTicketStateEnum.Bekliyor;
+
+                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                            await GetListDataSourceAsync();
+
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
+                    }
+
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPendingTicketStateMessage"]);
+                    }
+
+
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "ticketcompleted":
+                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    if (DataSource.PalletRecordsTicketStateEnum != Entities.Enums.PalletRecordsTicketStateEnum.Tamamlandi)
+                    {
+                        var resState5 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UITicketStateCompletedMessage"]);
+
+                        if (resState5 == true)
+                        {
+                            DataSource.PalletRecordsTicketStateEnum = Entities.Enums.PalletRecordsTicketStateEnum.Tamamlandi;
+
+                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                            await GetListDataSourceAsync();
+
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
+                    }
+
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningCompletedTicketStateMessage"]);
+                    }
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "printsmall":
+                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    if (DataSource.PalletRecordsPrintTicketEnum != Entities.Enums.PalletRecordsPrintTicketEnum.KucukEtiket)
+                    {
+                        var resState6 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIPrintSmallCompletedMessage"]);
+
+                        if (resState6 == true)
+                        {
+                            DataSource.PalletRecordsPrintTicketEnum = Entities.Enums.PalletRecordsPrintTicketEnum.KucukEtiket;
+
+                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                            await GetListDataSourceAsync();
+
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
+                    }
+
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPrintSmallStateMessage"]);
+                    }
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "printbig":
+                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    if (DataSource.PalletRecordsPrintTicketEnum != Entities.Enums.PalletRecordsPrintTicketEnum.BuyukEtiket)
+                    {
+                        var resState7 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIPrintBigCompletedMessage"]);
+
+                        if (resState7 == true)
+                        {
+                            DataSource.PalletRecordsPrintTicketEnum = Entities.Enums.PalletRecordsPrintTicketEnum.BuyukEtiket;
+
+                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                            await GetListDataSourceAsync();
+
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
+                    }
+
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPrintBigStateMessage"]);
+                    }
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "printpallet":
+                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    if (DataSource.PalletRecordsPrintTicketEnum != Entities.Enums.PalletRecordsPrintTicketEnum.PaletEtiketi)
+                    {
+                        var resState7 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIPrintPalletCompletedMessage"]);
+
+                        if (resState7 == true)
+                        {
+                            DataSource.PalletRecordsPrintTicketEnum = Entities.Enums.PalletRecordsPrintTicketEnum.PaletEtiketi;
+
+                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                            await GetListDataSourceAsync();
+
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
+                    }
+
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPrintPalletStateMessage"]);
+                    }
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+
 
                 case "delete":
                     var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
@@ -279,6 +600,48 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 DataSource.SelectPalletRecordLines.Remove(line);
                             }
                         }
+
+                        await _LineGrid.Refresh();
+                        GetTotal();
+                        await InvokeAsync(StateHasChanged);
+                    }
+
+                    break;
+
+                case "approval":
+
+                    var res1 = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineApprovalConfirmation"]);
+
+                    if (res1 == true)
+                    {
+                        var line = args.RowInfo.RowData;
+
+                        int indexLine = GridLineList.IndexOf(line);
+
+                        GridLineList[indexLine].LineApproval = true;
+
+                        DataSource.SelectPalletRecordLines = GridLineList;
+
+                        await _LineGrid.Refresh();
+                        GetTotal();
+                        await InvokeAsync(StateHasChanged);
+                    }
+
+                    break;
+
+                case "approvalremove":
+
+                    var res2 = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineApprovalRemoveConfirmation"]);
+
+                    if (res2 == true)
+                    {
+                        var line = args.RowInfo.RowData;
+
+                        int indexLine = GridLineList.IndexOf(line);
+
+                        GridLineList[indexLine].LineApproval = false;
+
+                        DataSource.SelectPalletRecordLines = GridLineList;
 
                         await _LineGrid.Refresh();
                         GetTotal();

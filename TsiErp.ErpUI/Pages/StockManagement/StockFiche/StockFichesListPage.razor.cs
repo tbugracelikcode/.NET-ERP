@@ -503,48 +503,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             if (MainGridContextMenu.Count() == 0)
             {
 
-                //var menus = new List<ContextMenuItemModel>()
-                //{
-                //  new ContextMenuItemModel
-                //      {
-                //          Text = "Deneme 1",
-                //          Target = ".e-content",
-                //          Id = "deneme1",
-                //          Items = new List<MenuItem>()
-                //                  {
-                //                      new MenuItem
-                //                          { Text = "Deneme1-1",
-                //                            Id = "deneme11"
-                //                          },
-                //                      new MenuItem
-                //                          {
-                //                            Text ="Deneme1-2",
-                //                            Id ="deneme12"
-                //                          }
-                //                  }
-                //       },
-                //  new ContextMenuItemModel
-                //      {
-                //          Text = "Deneme 2",
-                //          Target = ".e-content",
-                //          Id = "deneme2",
-                //          Items = new List<MenuItem>()
-                //                  {
-                //                      new MenuItem
-                //                          { Text = "Deneme2-1",
-                //                            Id = "deneme21"
-                //                          },
-                //                      new MenuItem
-                //                          {
-                //                            Text ="Deneme2-2",
-                //                            Id ="deneme22"
-                //                          }
-                //                  }
-                //       },
-                //};
-
-                //MainGridContextMenu.AddRange(menus);
-
                 foreach (var context in contextsList)
                 {
                     var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
@@ -556,7 +514,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
                                 List<MenuItem> subMenus = new List<MenuItem>();
 
-                                var subList = MenusList.Where(t => t.ParentMenuId == context.Id).ToList();
+                                var subList = MenusList.Where(t => t.ParentMenuId == context.Id).OrderBy(t => t.ContextOrderNo).ToList();
 
                                 foreach (var subMenu in subList)
                                 {

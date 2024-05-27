@@ -165,6 +165,30 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Palet Kayıtları</value>
   </data>
+  <data name="EnumApproved" xml:space="preserve">
+    <value>Onaylandı</value>
+  </data>
+  <data name="EnumBigTicket" xml:space="preserve">
+    <value>Büyük Etiket</value>
+  </data>
+  <data name="EnumCompleted" xml:space="preserve">
+    <value>Tamamlandı</value>
+  </data>
+  <data name="EnumPalletTicket" xml:space="preserve">
+    <value>Palet Etiketi</value>
+  </data>
+  <data name="EnumPreparing" xml:space="preserve">
+    <value>Hazırlanıyor</value>
+  </data>
+  <data name="EnumSmallTicket" xml:space="preserve">
+    <value>Küçük Etiket</value>
+  </data>
+  <data name="EnumTicketCompleted" xml:space="preserve">
+    <value>Tamamlandı</value>
+  </data>
+  <data name="EnumTicketPending" xml:space="preserve">
+    <value>Bekliyor</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
@@ -182,6 +206,9 @@
   </data>
   <data name="LineGridCustomerCode" xml:space="preserve">
     <value>MÜŞTERİ KODU</value>
+  </data>
+  <data name="LineGridLineApproval" xml:space="preserve">
+    <value>SATIR ONAYI</value>
   </data>
   <data name="LineGridNumberofPackage" xml:space="preserve">
     <value>PAKET SAYISI</value>
@@ -303,6 +330,12 @@
   <data name="PalletRecordLinesContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="PalletRecordLinesContextLineApproval" xml:space="preserve">
+    <value>Satır Onayı Ver</value>
+  </data>
+  <data name="PalletRecordLinesContextLineApprovalRemove" xml:space="preserve">
+    <value>Satır Onayı Kaldır</value>
+  </data>
   <data name="PalletRecordLinesContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
@@ -318,8 +351,47 @@
   <data name="PalletRecordsContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="PalletRecordsContextPrintBig" xml:space="preserve">
+    <value>Büyük Etiket</value>
+  </data>
+  <data name="PalletRecordsContextPrintPallet" xml:space="preserve">
+    <value>Palet Etiketi</value>
+  </data>
+  <data name="PalletRecordsContextPrintSmall" xml:space="preserve">
+    <value>Küçük Etiket</value>
+  </data>
+  <data name="PalletRecordsContextPrintTicket" xml:space="preserve">
+    <value>Etiket Yazdır</value>
+  </data>
   <data name="PalletRecordsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="PalletRecordsContextState" xml:space="preserve">
+    <value>Durum</value>
+  </data>
+  <data name="PalletRecordsContextStateApproved" xml:space="preserve">
+    <value>Onaylandı</value>
+  </data>
+  <data name="PalletRecordsContextStateCompleted" xml:space="preserve">
+    <value>Tamamlandı</value>
+  </data>
+  <data name="PalletRecordsContextStatePreparing" xml:space="preserve">
+    <value>Hazırlanıyor</value>
+  </data>
+  <data name="PalletRecordsContextTicketState" xml:space="preserve">
+    <value>Etiket Basım</value>
+  </data>
+  <data name="PalletRecordsContextTicketStateCompleted" xml:space="preserve">
+    <value>Tamamlandı</value>
+  </data>
+  <data name="PalletRecordsContextTicketStatePending" xml:space="preserve">
+    <value>Bekliyor</value>
+  </data>
+  <data name="PalletRecordsStateEnum" xml:space="preserve">
+    <value>DURUM</value>
+  </data>
+  <data name="PalletRecordsTicketStateEnum" xml:space="preserve">
+    <value>ETİKET BASIM</value>
   </data>
   <data name="PlannedLoadingTimeLabel" xml:space="preserve">
     <value>Planlanan Yükleme Tarihi:</value>
@@ -360,6 +432,12 @@
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Palet Kayıtları</value>
   </data>
+  <data name="UILineApprovalConfirmation" xml:space="preserve">
+    <value>Satır onayı vermek istiyor musunuz?</value>
+  </data>
+  <data name="UILineApprovalRemoveConfirmation" xml:space="preserve">
+    <value>Satır onayını kaldırmak istiyor musunuz?</value>
+  </data>
   <data name="UILineDeleteConfirmation" xml:space="preserve">
     <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
   </data>
@@ -372,11 +450,44 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sevkiyat Yönetimi &gt; Hareketler</value>
   </data>
+  <data name="UIPrintBigCompletedMessage" xml:space="preserve">
+    <value>Kaydın etiket yazdır durumunu "Büyük Etiket" yapmak istiyor musunuz?</value>
+  </data>
+  <data name="UIPrintPalletCompletedMessage" xml:space="preserve">
+    <value>Kaydın etiket yazdır durumunu "Palet Etiketi" yapmak istiyor musunuz?</value>
+  </data>
+  <data name="UIPrintSmallCompletedMessage" xml:space="preserve">
+    <value>Kaydın etiket yazdır durumunu "Küçük Etiket" yapmak istiyor musunuz?</value>
+  </data>
+  <data name="UIStateApprovedMessage" xml:space="preserve">
+    <value>Kaydın durumunu "Onaylandı" yapmak istiyor musunuz?</value>
+  </data>
+  <data name="UIStateCompletedMessage" xml:space="preserve">
+    <value>Kaydın durumunu "Tamamlandı" yapmak istiyor musunuz?</value>
+  </data>
+  <data name="UIStatePreparingMessage" xml:space="preserve">
+    <value>Kaydın durumunu "Hazırlanıyor" yapmak istiyor musunuz?</value>
+  </data>
+  <data name="UITicketStateCompletedMessage" xml:space="preserve">
+    <value>Kaydın etiket basım durumunu "Tamamlandı" yapmak istiyor musunuz?</value>
+  </data>
+  <data name="UITicketStatePendingMessage" xml:space="preserve">
+    <value>Kaydın etiket basım durumunu "Bekliyor" yapmak istiyor musunuz?</value>
+  </data>
   <data name="UIWarninCurrentAccountMessage" xml:space="preserve">
     <value>Cari hesap ve koli türü seçmeden paket fişi aktarılamaz.</value>
   </data>
   <data name="UIWarninCurrentAccountTitle" xml:space="preserve">
     <value>Uyarı</value>
+  </data>
+  <data name="UIWarningApprovedStateMessage" xml:space="preserve">
+    <value>Kaydın durumu zaten "Onaylandı".</value>
+  </data>
+  <data name="UIWarningCompletedStateMessage" xml:space="preserve">
+    <value>Kaydın durumu zaten "Tamamlandı".</value>
+  </data>
+  <data name="UIWarningCompletedTicketStateMessage" xml:space="preserve">
+    <value>Kaydın etiket basım durumu zaten "Tamamlandı".</value>
   </data>
   <data name="UIWarningNumberofPackagesMessage" xml:space="preserve">
     <value>Seçilen paket miktarı, maksimum paket sayısını aşmıştır.</value>
@@ -384,10 +495,28 @@
   <data name="UIWarningNumberofPackagesTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>
+  <data name="UIWarningPendingTicketStateMessage" xml:space="preserve">
+    <value>Kaydın etiket basım durumu zaten "Bekliyor".</value>
+  </data>
+  <data name="UIWarningPreparingStateMessage" xml:space="preserve">
+    <value>Kaydın durumu zaten "Hazırlanıyor".</value>
+  </data>
+  <data name="UIWarningPrintBigStateMessage" xml:space="preserve">
+    <value>Kaydın etiket yazdır durumu zaten "Büyük Etiket".</value>
+  </data>
+  <data name="UIWarningPrintPalletStateMessage" xml:space="preserve">
+    <value>Kaydın etiket yazdır durumu zaten "Palet Etiketi".</value>
+  </data>
+  <data name="UIWarningPrintSmallStateMessage" xml:space="preserve">
+    <value>Kaydın etiket yazdır durumu zaten "Küçük Etiket".</value>
+  </data>
   <data name="UIWarningSelectedPackageFicheMessage" xml:space="preserve">
     <value>Paket fişi aktarmak için en az bir seçim yapılmalıdır.</value>
   </data>
   <data name="UIWarningSelectedPackageFicheTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">

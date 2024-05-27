@@ -165,6 +165,30 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Pallet Records</value>
   </data>
+  <data name="EnumApproved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="EnumBigTicket" xml:space="preserve">
+    <value>Big Ticket</value>
+  </data>
+  <data name="EnumCompleted" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="EnumPalletTicket" xml:space="preserve">
+    <value>Pallet Ticket</value>
+  </data>
+  <data name="EnumPreparing" xml:space="preserve">
+    <value>Preparing</value>
+  </data>
+  <data name="EnumSmallTicket" xml:space="preserve">
+    <value>Small Ticket</value>
+  </data>
+  <data name="EnumTicketCompleted" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="EnumTicketPending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -182,6 +206,9 @@
   </data>
   <data name="LineGridCustomerCode" xml:space="preserve">
     <value>CUSTOMER CODE</value>
+  </data>
+  <data name="LineGridLineApproval" xml:space="preserve">
+    <value>LINE APPROVAL</value>
   </data>
   <data name="LineGridNumberofPackage" xml:space="preserve">
     <value>NUMBER OF PACKAGES</value>
@@ -303,6 +330,12 @@
   <data name="PalletRecordLinesContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PalletRecordLinesContextLineApproval" xml:space="preserve">
+    <value>Grant Line Approval</value>
+  </data>
+  <data name="PalletRecordLinesContextLineApprovalRemove" xml:space="preserve">
+    <value>Remove Line Approval</value>
+  </data>
   <data name="PalletRecordLinesContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
@@ -318,8 +351,47 @@
   <data name="PalletRecordsContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PalletRecordsContextPrintBig" xml:space="preserve">
+    <value>Big Ticket</value>
+  </data>
+  <data name="PalletRecordsContextPrintPallet" xml:space="preserve">
+    <value>Pallet Ticket</value>
+  </data>
+  <data name="PalletRecordsContextPrintSmall" xml:space="preserve">
+    <value>Small Ticket</value>
+  </data>
+  <data name="PalletRecordsContextPrintTicket" xml:space="preserve">
+    <value>Print Ticket</value>
+  </data>
   <data name="PalletRecordsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="PalletRecordsContextState" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="PalletRecordsContextStateApproved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="PalletRecordsContextStateCompleted" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="PalletRecordsContextStatePreparing" xml:space="preserve">
+    <value>Preparing</value>
+  </data>
+  <data name="PalletRecordsContextTicketState" xml:space="preserve">
+    <value>Ticket Status</value>
+  </data>
+  <data name="PalletRecordsContextTicketStateCompleted" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="PalletRecordsContextTicketStatePending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="PalletRecordsStateEnum" xml:space="preserve">
+    <value>STATUS</value>
+  </data>
+  <data name="PalletRecordsTicketStateEnum" xml:space="preserve">
+    <value>TICKET STATUS</value>
   </data>
   <data name="PlannedLoadingTimeLabel" xml:space="preserve">
     <value>Planned Loading Date:</value>
@@ -360,6 +432,12 @@
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Pallet Records</value>
   </data>
+  <data name="UILineApprovalConfirmation" xml:space="preserve">
+    <value>Doyou want to grant line approval?</value>
+  </data>
+  <data name="UILineApprovalRemoveConfirmation" xml:space="preserve">
+    <value>Do you want to remove line approval?</value>
+  </data>
   <data name="UILineDeleteConfirmation" xml:space="preserve">
     <value>The line you selected will be permanenty deleted.</value>
   </data>
@@ -372,11 +450,44 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Shipment Management &gt; Transactions</value>
   </data>
+  <data name="UIPrintBigCompletedMessage" xml:space="preserve">
+    <value>Do you want to change the ticket printing status of the recording to "Big Ticket"?</value>
+  </data>
+  <data name="UIPrintPalletCompletedMessage" xml:space="preserve">
+    <value>Do you want to change the ticket printing status of the recording to "Pallet Ticket"?</value>
+  </data>
+  <data name="UIPrintSmallCompletedMessage" xml:space="preserve">
+    <value>Do you want to change the ticket printing status of the recording to "Small Ticket"?</value>
+  </data>
+  <data name="UIStateApprovedMessage" xml:space="preserve">
+    <value>Do you want to change the status of the recording to "Approved"?</value>
+  </data>
+  <data name="UIStateCompletedMessage" xml:space="preserve">
+    <value>Do you want to change the status of the recording to "Completed"?</value>
+  </data>
+  <data name="UIStatePreparingMessage" xml:space="preserve">
+    <value>Do you want to change the status of the recording to "Preparing"?</value>
+  </data>
+  <data name="UITicketStateCompletedMessage" xml:space="preserve">
+    <value>Do you want to change the ticket status of the recording to "Completed"?</value>
+  </data>
+  <data name="UITicketStatePendingMessage" xml:space="preserve">
+    <value>Do you want to change the ticket status of the recording to "Pending"?</value>
+  </data>
   <data name="UIWarninCurrentAccountMessage" xml:space="preserve">
     <value>Package fiches cannot be transferred without selecting a current account and package type.</value>
   </data>
   <data name="UIWarninCurrentAccountTitle" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="UIWarningApprovedStateMessage" xml:space="preserve">
+    <value>The status of the record is already "Approved".</value>
+  </data>
+  <data name="UIWarningCompletedStateMessage" xml:space="preserve">
+    <value>The status of the record is already "Completed".</value>
+  </data>
+  <data name="UIWarningCompletedTicketStateMessage" xml:space="preserve">
+    <value>The ticket status of the record is already "Completed".</value>
   </data>
   <data name="UIWarningNumberofPackagesMessage" xml:space="preserve">
     <value>The selected package quantity exceeded the maximum number of packages.</value>
@@ -384,10 +495,28 @@
   <data name="UIWarningNumberofPackagesTitle" xml:space="preserve">
     <value>Warning</value>
   </data>
+  <data name="UIWarningPendingTicketStateMessage" xml:space="preserve">
+    <value>The ticket status of the record is already "Pending".</value>
+  </data>
+  <data name="UIWarningPreparingStateMessage" xml:space="preserve">
+    <value>The status of the record is already "Preparing".</value>
+  </data>
+  <data name="UIWarningPrintBigStateMessage" xml:space="preserve">
+    <value>The ticket printing status of the record is already "Big Ticket".</value>
+  </data>
+  <data name="UIWarningPrintPalletStateMessage" xml:space="preserve">
+    <value>The ticket printing status of the record is already "Pallet Ticket".</value>
+  </data>
+  <data name="UIWarningPrintSmallStateMessage" xml:space="preserve">
+    <value>The ticket printing status of the record is already "Small Ticket".</value>
+  </data>
   <data name="UIWarningSelectedPackageFicheMessage" xml:space="preserve">
     <value>At least one selection must be made to transfer the packet fiche.</value>
   </data>
   <data name="UIWarningSelectedPackageFicheTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningTitle" xml:space="preserve">
     <value>Warning</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">

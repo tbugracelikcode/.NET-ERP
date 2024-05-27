@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ShippingManagement.PalletRecord
 {
@@ -65,5 +66,20 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PalletRecord
         /// Çeki Listesi ID
         /// </summary>
         public Guid? PackingListID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Durum
+        /// </summary>
+        public PalletRecordsStateEnum PalletRecordsStateEnum { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Etiket Basımı Durumu
+        /// </summary>
+        public PalletRecordsTicketStateEnum PalletRecordsTicketStateEnum { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Etiket Yazdır
+        /// </summary>
+        public PalletRecordsPrintTicketEnum PalletRecordsPrintTicketEnum { get; set; }
     }
 }
