@@ -164,6 +164,7 @@
       <ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
       <ProjectReference Include="..\TSI.QueryBuilder\TSI.QueryBuilder.csproj" />
       <ProjectReference Include="..\TsiErp.Business\TsiErp.Business.csproj" />
+      <ProjectReference Include="..\TsiErp.Connector\TsiErp.Connector.csproj" />
       <ProjectReference Include="..\TsiErp.Entities\TsiErp.Entities.csproj" />
       <ProjectReference Include="..\TsiErp.Localizations\TsiErp.Localizations.csproj" />
     </ItemGroup>

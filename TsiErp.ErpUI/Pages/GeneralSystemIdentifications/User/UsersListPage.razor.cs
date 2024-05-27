@@ -429,6 +429,13 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
         }
 
+        void UserPermissionCheckedChanged(TreeViewCheckedChangedEventArgs e)
+        {
+            var item = PermissionModalMenusList;
+            //var firstCheckedNode = e.CheckedItems.FirstOrDefault();
+            //FirstChecked = firstCheckedNode != null ? firstCheckedNode.Text : "none";
+        }
+
         public async void OnPermissionsSubmit()
         {
             ////Layout.LoadingSpinnerVisible = true;
