@@ -247,7 +247,8 @@ else
 
                                     <DxTreeView Data="@PermissionModalMenusList"
                                                 CheckMode="TreeViewCheckMode.Recursive"
-                                                AnimationType="LayoutAnimationType.Slide">
+                                                AnimationType="LayoutAnimationType.Slide"
+                                                CheckedChanged="UserPermissionCheckedChanged">
                                         <DataMappings>
                                             <DxTreeViewDataMapping ParentKey="ParentID"
                                                                    HasChildren="HasChild"

@@ -13,6 +13,7 @@ using TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Services
 using TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Services;
 using TsiErp.Business.Entities.User.Services;
 using TsiErp.Business.Entities.WorkOrder.Services;
+using TsiErp.Connector.Services;
 using TsiErp.UretimEkranUI.Services;
 using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
 using TsiErp.UretimEkranUI.Utilities.NavigationUtilities;
@@ -110,6 +111,7 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<IMenusAppService, MenusAppService>();
             builder.Services.AddScoped<IHaltReasonsAppService, HaltReasonsAppService>();
             builder.Services.AddScoped<IGetSQLDateAppService, GetSQLDateAppService>();
+            builder.Services.AddScoped<IProtocolServices, ProtocolServices>();
 
 
 
