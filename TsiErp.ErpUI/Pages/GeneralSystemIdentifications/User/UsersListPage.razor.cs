@@ -243,7 +243,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                         MenuID = t.MenuId.ToString(),
                         MenuName = L[t.MenuName],
                         ParentID = t.ParentID.ToString(),
-                        Id = t.Id
+                        //Id = t.Id
                     }).ToList();
 
                     PermissionModalMenusList.AddRange(parentIdentificationList);
