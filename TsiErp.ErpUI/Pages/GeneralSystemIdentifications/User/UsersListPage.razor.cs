@@ -7,6 +7,7 @@ using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Navigations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.User.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup.Dtos;
@@ -22,8 +23,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
-        public List<UserMenuPermission> PermissionModalMenusList = new List<UserMenuPermission>();
-        public List<Guid> ChangedPermissionsList = new List<Guid>();
+        public List<UserMenuPermission> PermissionModalMenusList;
+        public List<Guid> ChangedPermissionsList ;
 
         DxTreeView treeview;
 
@@ -35,7 +36,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
             public bool isPermitted { get; set; }
             public bool HasChild { get; set; }
             public bool Expanded { get; set; }
-            public Guid Id { get; set; }
+            //public Guid Id { get; set; }
         }
 
         [Inject]
@@ -215,6 +216,9 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 
+                    PermissionModalMenusList = new List<UserMenuPermission>();
+                    ChangedPermissionsList = new List<Guid>();
+
                     var userPermissionList = (await UserPermissionsAppService.GetListAsyncByUserId(DataSource.Id)).Data.ToList();
 
                     //Layout.LoadingSpinnerVisible = true;
@@ -226,7 +230,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                         isPermitted = t.IsUserPermitted,
                         MenuID = t.MenuId.ToString(),
                         MenuName = L[t.MenuName],
-                        Id = t.Id
+                        //Id = t.Id
                     }).ToList();
 
                     PermissionModalMenusList.AddRange(parentList);
@@ -247,7 +251,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                     var subAmountsParentList = userPermissionList.Where(t => t.MenuName.Contains("AmountsChildMenu")).Select(t => new UserMenuPermission
                     {
                         isPermitted = t.IsUserPermitted,
-                        Id = t.Id,
+                        //Id = t.Id,
                         MenuID = t.MenuId.ToString(),
                         MenuName = L[t.MenuName],
                         //Expanded = false,
@@ -260,7 +264,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                     var subParentList = userPermissionList.Where(t => !t.MenuName.Contains("Context") && !t.MenuName.Contains("Parent") && !t.MenuName.Contains("AmountsChildMenu")).Select(t => new UserMenuPermission
                     {
                         isPermitted = t.IsUserPermitted,
-                        Id = t.Id,
+                        //Id = t.Id,
                         MenuID = t.MenuId.ToString(),
                         MenuName = L[t.MenuName],
                         //Expanded = false,
@@ -277,7 +281,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                         isPermitted = t.IsUserPermitted,
                         MenuID = t.MenuId.ToString(),
                         MenuName = L[t.MenuName],
-                        Id = t.Id,
+                        //Id = t.Id,
                         ParentID = t.ParentID.ToString()
                     }).ToList();
 
@@ -417,7 +421,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
             //            ChangedPermissionsList.Add(new Guid(child.MenuID));
             //        }
 
-                   
+
             //    }
             //    else  // Tutar alanlarının childlerı yok ama Context değiller, bu kısım onlar için
             //    {
@@ -444,37 +448,56 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
         void UserPermissionCheckedChanged(TreeViewCheckedChangedEventArgs e)
         {
-            var item = PermissionModalMenusList;
-            //var firstCheckedNode = e.CheckedItems.FirstOrDefault();
-            //FirstChecked = firstCheckedNode != null ? firstCheckedNode.Text : "none";
+            foreach (var item in e.LastUncheckedItems.ToList())
+            {
+                var menu = ((UserMenuPermission)item.DataItem);
+
+                if(menu!=null)
+                {
+                    menu.isPermitted = false;
+                    ChangedPermissionsList.Add(new Guid(menu.MenuID));
+                }
+
+                
+            }
+
+            foreach (var item in e.LastCheckedItems.ToList())
+            {
+                var menu = ((UserMenuPermission)item.DataItem);
+
+                if (menu != null)
+                {
+                    menu.isPermitted = true;
+                    ChangedPermissionsList.Add(new Guid(menu.MenuID));
+                }
+            }
         }
 
         public async void OnPermissionsSubmit()
         {
-            ////Layout.LoadingSpinnerVisible = true;
+            //Layout.LoadingSpinnerVisible = true;
 
-            //foreach (var changedPermissionMenuID in ChangedPermissionsList)
-            //{
-            //    var permission = (await UserPermissionsAppService.GetListAsyncByUserId(DataSource.Id)).Data.Where(t => t.MenuId == changedPermissionMenuID).FirstOrDefault();
+            foreach (var changedPermissionMenuID in ChangedPermissionsList)
+            {
+                var permission = (await UserPermissionsAppService.GetListAsyncByUserId(DataSource.Id)).Data.Where(t => t.MenuId == changedPermissionMenuID).FirstOrDefault();
 
-            //    if (permission != null && permission.Id != Guid.Empty)
-            //    {
-            //        bool permissionStatus = PermissionModalMenusList.Where(t => t.MenuID == changedPermissionMenuID.ToString()).Select(t => t.isPermitted).FirstOrDefault();
+                if (permission != null && permission.Id != Guid.Empty)
+                {
+                    bool permissionStatus = PermissionModalMenusList.Where(t => t.MenuID == changedPermissionMenuID.ToString()).Select(t => t.isPermitted).FirstOrDefault();
 
-            //        permission.IsUserPermitted = permissionStatus;
+                    permission.IsUserPermitted = permissionStatus;
 
-            //        var updatedPermission = ObjectMapper.Map<SelectUserPermissionsDto, UpdateUserPermissionsDto>(permission);
+                    var updatedPermission = ObjectMapper.Map<SelectUserPermissionsDto, UpdateUserPermissionsDto>(permission);
 
-            //        updatedPermission.SelectUserPermissionsList = new List<SelectUserPermissionsDto>();
+                    updatedPermission.SelectUserPermissionsList = new List<SelectUserPermissionsDto>();
 
-            //        updatedPermission.SelectUserPermissionsList.Add(permission);
+                    updatedPermission.SelectUserPermissionsList.Add(permission);
 
-            //        await UserPermissionsAppService.UpdateAsync(updatedPermission);
-            //    }
-            //}
-
-            //HidePermissionModal();
-            ////Layout.LoadingSpinnerVisible = false;
+                    await UserPermissionsAppService.UpdateAsync(updatedPermission);
+                }
+            }
+            HidePermissionModal();
+            //Layout.LoadingSpinnerVisible = false;
         }
 
         #region Kod ButtonEdit
