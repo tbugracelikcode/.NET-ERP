@@ -47,5 +47,15 @@ namespace TsiErp.Connector.Helpers
         /// Geçersiz Konum
         /// </summary>
         public static string ErrorA = "Geçersiz Konum";
+
+        /// <summary>
+        /// Result is null.
+        /// </summary>
+        public static string ErrorResultNull = "Result is null";
+
+        /// <summary>
+        /// TcpClient is null.
+        /// </summary>
+        public static string ErrorTcpClientNull = "TcpClient is null";
     }
 }

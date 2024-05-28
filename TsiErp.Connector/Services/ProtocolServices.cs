@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using TsiErp.Connector.Helpers;
 
 namespace TsiErp.Connector.Services
 {
@@ -20,7 +23,64 @@ namespace TsiErp.Connector.Services
 
         public string M002R(string ipAddress)
         {
-            throw new NotImplementedException();
+            string result = string.Empty;
+            TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+            StreamWriter writer = new StreamWriter(client.GetStream());
+            writer.WriteLine(ProtocolHeaders.M001R);
+            writer.Flush();
+
+            TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+            listener.Start();
+
+            client = listener.AcceptTcpClient();
+
+            if (client != null)
+            {
+                if (client.Connected)
+                {
+                    StreamReader reader = new StreamReader(client.GetStream());
+                    result = reader.ReadLine();
+
+                    switch (result)
+                    {
+                        case "2":
+                            result = ProtocolErrors.Error2;
+                            break;
+                        case "4":
+                            result = ProtocolErrors.Error4;
+                            break;
+                        case "5":
+                            result = ProtocolErrors.Error5;
+                            break;
+                        case "6":
+                            result = ProtocolErrors.Error6;
+                            break;
+                        case "7":
+                            result = ProtocolErrors.Error7;
+                            break;
+                        case "9":
+                            result = ProtocolErrors.Error9;
+                            break;
+                        case "A":
+                            result = ProtocolErrors.ErrorA;
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorResultNull;
+                }
+            }
+            else
+            {
+                result = ProtocolErrors.ErrorTcpClientNull;
+            }
+
+            return result;
         }
 
         public string M003R(string ipAddress)
