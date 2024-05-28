@@ -57,5 +57,10 @@ namespace TsiErp.Connector.Helpers
         /// TcpClient is null.
         /// </summary>
         public static string ErrorTcpClientNull = "TcpClient is null";
+
+        /// <summary>
+        /// An error was encountered while returning the value
+        /// </summary>
+        public static string ErrorGeneral = "An error was encountered while returning the value";
     }
 }
