@@ -54,6 +54,41 @@ else
                                     <GridColumn Field=@nameof(ListPalletRecordsDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPalletRecordsDto.PalletPackageNumber) Type="ColumnType.Number" HeaderText="@L["PalletPackageNumber"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPalletRecordsDto.PackageType) HeaderText="@L["PackageType"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPalletRecordsDto.PalletRecordsStateEnum) HeaderText="@L["PalletRecordsStateEnum"]" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                var palletRecordsStateEnum = (context as ListPalletRecordsDto).PalletRecordsStateEnum;
+                                                string palletRecordsStateEnumStr = string.Empty;
+
+                                                switch(palletRecordsStateEnum)
+                                                {
+                                                    case PalletRecordsStateEnum.Hazirlaniyor: palletRecordsStateEnumStr = L["EnumPreparing"]; break;
+                                                    case PalletRecordsStateEnum.Tamamlandi: palletRecordsStateEnumStr = L["EnumCompleted"]; break;
+                                                    case PalletRecordsStateEnum.Onaylandi: palletRecordsStateEnumStr = L["EnumApproved"]; break;
+
+                                                    default: break;
+                                                }
+                                            }
+                                            @palletRecordsStateEnumStr
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(ListPalletRecordsDto.PalletRecordsTicketStateEnum) HeaderText="@L["PalletRecordsTicketStateEnum"]" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                var palletRecordsTicketStateEnum = (context as ListPalletRecordsDto).PalletRecordsTicketStateEnum;
+                                                string palletRecordsTicketStateEnumStr = string.Empty;
+
+                                                switch (palletRecordsTicketStateEnum)
+                                                {
+                                                    case PalletRecordsTicketStateEnum.Bekliyor: palletRecordsTicketStateEnumStr = L["EnumTicketPending"]; break;
+                                                    case PalletRecordsTicketStateEnum.Tamamlandi: palletRecordsTicketStateEnumStr = L["EnumTicketCompleted"]; break;
+
+                                                    default: break;
+                                                }
+                                            }
+                                            @palletRecordsTicketStateEnumStr
+                                        </Template>
+                                    </GridColumn>
 
 
 
@@ -204,13 +239,14 @@ else
                                     <GridColumn Field=@nameof(SelectPalletRecordLinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="190"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPalletRecordLinesDto.CustomerCode) HeaderText="@L["LineGridCustomerCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPalletRecordLinesDto.PackageType) HeaderText="@L["LineGridPackageType"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
-
                                     <GridColumn Field=@nameof(SelectPalletRecordLinesDto.PackageContent) Type="ColumnType.Number" HeaderText="@L["LineGridPackageContent"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPalletRecordLinesDto.NumberofPackage) Type="ColumnType.Number" HeaderText="@L["LineGridNumberofPackage"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPalletRecordLinesDto.TotalAmount) Type="ColumnType.Number" HeaderText="@L["LineGridTotalAmount"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPalletRecordLinesDto.TotalNetKG) Type="ColumnType.Number" HeaderText="@L["LineGridTotalNetKG"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPalletRecordLinesDto.TotalGrossKG) Type="ColumnType.Number" HeaderText="@L["LineGridTotalGrossKG"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPalletRecordLinesDto.LineApproval) DisplayAsCheckBox="true" HeaderText="@L["LineGridLineApproval"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                 </GridColumns>
+
                             </SfGrid>
                         </Template>
                     </DxGridLayoutItem>

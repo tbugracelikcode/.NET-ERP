@@ -7,6 +7,7 @@ using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos
 {
@@ -69,6 +70,18 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos
         /// Çeki Listesi Kodu
         /// </summary>
         public string PackingListCode { get; set; }
+        /// <summary>
+        /// Durum
+        /// </summary>
+        public PalletRecordsStateEnum PalletRecordsStateEnum { get; set; }
+        /// <summary>
+        /// Etiket Basımı Durumu
+        /// </summary>
+        public PalletRecordsTicketStateEnum PalletRecordsTicketStateEnum { get; set; }
+        /// <summary>
+        /// Etiket Yazdır
+        /// </summary>
+        public PalletRecordsPrintTicketEnum PalletRecordsPrintTicketEnum { get; set; }
 
         [NoDatabaseAction]
         public List<SelectPalletRecordLinesDto> SelectPalletRecordLines { get; set; }

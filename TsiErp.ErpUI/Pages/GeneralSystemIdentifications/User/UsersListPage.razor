@@ -227,20 +227,20 @@ else
                             <Template>
                                 <div class="TSIScrollablePermissionModal">
                                     @*  <SfTreeView TValue="UserMenuPermission" ShowCheckBox="true">
-                                <TreeViewFieldsSettings
-                                TValue="UserMenuPermission"
-                                Id="MenuID"
-                                DataSource="@PermissionModalMenusList"
-                                Text="MenuName"
-                                ParentID="ParentID"
-                                IsChecked="isPermitted"
-                                HasChildren="HasChild"
-                                Expanded="Expanded">
-                                </TreeViewFieldsSettings>
-
-                                <TreeViewEvents
-                                TValue="UserMenuPermission"
-                                NodeChecking="NodeCheckingHandler">
+                                <TreeViewFieldsSettings                                             
+                                TValue="UserMenuPermission"                                         
+                                Id="MenuID"                                                         
+                                DataSource="@PermissionModalMenusList"                              
+                                Text="MenuName"                                                     
+                                ParentID="ParentID"                                                 
+                                IsChecked="isPermitted"                                             
+                                HasChildren="HasChild"                                              
+                                Expanded="Expanded">                                                
+                                </TreeViewFieldsSettings>                                           
+                                                                                                    
+                                <TreeViewEvents                                                     
+                                TValue="UserMenuPermission"                                         
+                                NodeChecking="NodeCheckingHandler">                                 
                                 </TreeViewEvents>
 
                                 </SfTreeView>  *@
@@ -248,13 +248,17 @@ else
                                     <DxTreeView Data="@PermissionModalMenusList"
                                                 CheckMode="TreeViewCheckMode.Recursive"
                                                 AnimationType="LayoutAnimationType.Slide"
-                                                CheckedChanged="UserPermissionCheckedChanged">
+                                                CheckedChanged="UserPermissionCheckedChanged"
+                                    >
+                                     
                                         <DataMappings>
                                             <DxTreeViewDataMapping ParentKey="ParentID"
                                                                    HasChildren="HasChild"
                                                                    Checked="isPermitted"
                                                                    Key="MenuID"
-                                                                   Text="MenuName" />
+                                                                   Text="MenuName" 
+                                                                   
+                                                                    />
                                         </DataMappings>
                                     </DxTreeView>
 
@@ -328,7 +332,11 @@ else
 }
 
 <style>
-
+    .dxbl-treeview .dxbl-treeview-item > .dxbl-treeview-item-content > .dxbl-treeview-item-container .dxbl-treeview-item-text-container > .dxbl-treeview-item-text {
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        /* color:black; */
+    }
 
     .TSIPermissionBackground {
         -webkit-box-pack: start;
@@ -351,7 +359,8 @@ else
     }
 
 
-  
+
+    
 
 </style>
 

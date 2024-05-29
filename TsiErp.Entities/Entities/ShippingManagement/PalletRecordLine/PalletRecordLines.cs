@@ -65,5 +65,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine
         /// Toplam Brüt KG
         /// </summary>
         public decimal TotalGrossKG { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Satır Onay
+        /// </summary>
+        public bool LineApproval { get; set; }
     }
 }

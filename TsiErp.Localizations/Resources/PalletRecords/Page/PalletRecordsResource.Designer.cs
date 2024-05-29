@@ -205,6 +205,78 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Onaylandı.
+        /// </summary>
+        public static string EnumApproved {
+            get {
+                return ResourceManager.GetString("EnumApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Büyük Etiket.
+        /// </summary>
+        public static string EnumBigTicket {
+            get {
+                return ResourceManager.GetString("EnumBigTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tamamlandı.
+        /// </summary>
+        public static string EnumCompleted {
+            get {
+                return ResourceManager.GetString("EnumCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet Etiketi.
+        /// </summary>
+        public static string EnumPalletTicket {
+            get {
+                return ResourceManager.GetString("EnumPalletTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hazırlanıyor.
+        /// </summary>
+        public static string EnumPreparing {
+            get {
+                return ResourceManager.GetString("EnumPreparing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Küçük Etiket.
+        /// </summary>
+        public static string EnumSmallTicket {
+            get {
+                return ResourceManager.GetString("EnumSmallTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tamamlandı.
+        /// </summary>
+        public static string EnumTicketCompleted {
+            get {
+                return ResourceManager.GetString("EnumTicketCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bekliyor.
+        /// </summary>
+        public static string EnumTicketPending {
+            get {
+                return ResourceManager.GetString("EnumTicketPending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
@@ -255,6 +327,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         public static string LineGridCustomerCode {
             get {
                 return ResourceManager.GetString("LineGridCustomerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SATIR ONAYI.
+        /// </summary>
+        public static string LineGridLineApproval {
+            get {
+                return ResourceManager.GetString("LineGridLineApproval", resourceCulture);
             }
         }
         
@@ -619,6 +700,24 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Onayı Ver.
+        /// </summary>
+        public static string PalletRecordLinesContextLineApproval {
+            get {
+                return ResourceManager.GetString("PalletRecordLinesContextLineApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Onayı Kaldır.
+        /// </summary>
+        public static string PalletRecordLinesContextLineApprovalRemove {
+            get {
+                return ResourceManager.GetString("PalletRecordLinesContextLineApprovalRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string PalletRecordLinesContextRefresh {
@@ -664,11 +763,128 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Büyük Etiket.
+        /// </summary>
+        public static string PalletRecordsContextPrintBig {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextPrintBig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet Etiketi.
+        /// </summary>
+        public static string PalletRecordsContextPrintPallet {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextPrintPallet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Küçük Etiket.
+        /// </summary>
+        public static string PalletRecordsContextPrintSmall {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextPrintSmall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Etiket Yazdır.
+        /// </summary>
+        public static string PalletRecordsContextPrintTicket {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextPrintTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string PalletRecordsContextRefresh {
             get {
                 return ResourceManager.GetString("PalletRecordsContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durum.
+        /// </summary>
+        public static string PalletRecordsContextState {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onaylandı.
+        /// </summary>
+        public static string PalletRecordsContextStateApproved {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextStateApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tamamlandı.
+        /// </summary>
+        public static string PalletRecordsContextStateCompleted {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextStateCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hazırlanıyor.
+        /// </summary>
+        public static string PalletRecordsContextStatePreparing {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextStatePreparing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Etiket Basım.
+        /// </summary>
+        public static string PalletRecordsContextTicketState {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextTicketState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tamamlandı.
+        /// </summary>
+        public static string PalletRecordsContextTicketStateCompleted {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextTicketStateCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bekliyor.
+        /// </summary>
+        public static string PalletRecordsContextTicketStatePending {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextTicketStatePending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DURUM.
+        /// </summary>
+        public static string PalletRecordsStateEnum {
+            get {
+                return ResourceManager.GetString("PalletRecordsStateEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ETİKET BASIM.
+        /// </summary>
+        public static string PalletRecordsTicketStateEnum {
+            get {
+                return ResourceManager.GetString("PalletRecordsTicketStateEnum", resourceCulture);
             }
         }
         
@@ -790,6 +1006,24 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır onayı vermek istiyor musunuz?.
+        /// </summary>
+        public static string UILineApprovalConfirmation {
+            get {
+                return ResourceManager.GetString("UILineApprovalConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır onayını kaldırmak istiyor musunuz?.
+        /// </summary>
+        public static string UILineApprovalRemoveConfirmation {
+            get {
+                return ResourceManager.GetString("UILineApprovalRemoveConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçtiğiniz satır kalıcı olarak silinecektir..
         /// </summary>
         public static string UILineDeleteConfirmation {
@@ -826,6 +1060,78 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kaydın etiket yazdır durumunu &quot;Büyük Etiket&quot; yapmak istiyor musunuz?.
+        /// </summary>
+        public static string UIPrintBigCompletedMessage {
+            get {
+                return ResourceManager.GetString("UIPrintBigCompletedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydın etiket yazdır durumunu &quot;Palet Etiketi&quot; yapmak istiyor musunuz?.
+        /// </summary>
+        public static string UIPrintPalletCompletedMessage {
+            get {
+                return ResourceManager.GetString("UIPrintPalletCompletedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydın etiket yazdır durumunu &quot;Küçük Etiket&quot; yapmak istiyor musunuz?.
+        /// </summary>
+        public static string UIPrintSmallCompletedMessage {
+            get {
+                return ResourceManager.GetString("UIPrintSmallCompletedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydın durumunu &quot;Onaylandı&quot; yapmak istiyor musunuz?.
+        /// </summary>
+        public static string UIStateApprovedMessage {
+            get {
+                return ResourceManager.GetString("UIStateApprovedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydın durumunu &quot;Tamamlandı&quot; yapmak istiyor musunuz?.
+        /// </summary>
+        public static string UIStateCompletedMessage {
+            get {
+                return ResourceManager.GetString("UIStateCompletedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydın durumunu &quot;Hazırlanıyor&quot; yapmak istiyor musunuz?.
+        /// </summary>
+        public static string UIStatePreparingMessage {
+            get {
+                return ResourceManager.GetString("UIStatePreparingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydın etiket basım durumunu &quot;Tamamlandı&quot; yapmak istiyor musunuz?.
+        /// </summary>
+        public static string UITicketStateCompletedMessage {
+            get {
+                return ResourceManager.GetString("UITicketStateCompletedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydın etiket basım durumunu &quot;Bekliyor&quot; yapmak istiyor musunuz?.
+        /// </summary>
+        public static string UITicketStatePendingMessage {
+            get {
+                return ResourceManager.GetString("UITicketStatePendingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cari hesap ve koli türü seçmeden paket fişi aktarılamaz..
         /// </summary>
         public static string UIWarninCurrentAccountMessage {
@@ -840,6 +1146,33 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         public static string UIWarninCurrentAccountTitle {
             get {
                 return ResourceManager.GetString("UIWarninCurrentAccountTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydın durumu zaten &quot;Onaylandı&quot;..
+        /// </summary>
+        public static string UIWarningApprovedStateMessage {
+            get {
+                return ResourceManager.GetString("UIWarningApprovedStateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydın durumu zaten &quot;Tamamlandı&quot;..
+        /// </summary>
+        public static string UIWarningCompletedStateMessage {
+            get {
+                return ResourceManager.GetString("UIWarningCompletedStateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydın etiket basım durumu zaten &quot;Tamamlandı&quot;..
+        /// </summary>
+        public static string UIWarningCompletedTicketStateMessage {
+            get {
+                return ResourceManager.GetString("UIWarningCompletedTicketStateMessage", resourceCulture);
             }
         }
         
@@ -862,6 +1195,51 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kaydın etiket basım durumu zaten &quot;Bekliyor&quot;..
+        /// </summary>
+        public static string UIWarningPendingTicketStateMessage {
+            get {
+                return ResourceManager.GetString("UIWarningPendingTicketStateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydın durumu zaten &quot;Hazırlanıyor&quot;..
+        /// </summary>
+        public static string UIWarningPreparingStateMessage {
+            get {
+                return ResourceManager.GetString("UIWarningPreparingStateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydın etiket yazdır durumu zaten &quot;Büyük Etiket&quot;..
+        /// </summary>
+        public static string UIWarningPrintBigStateMessage {
+            get {
+                return ResourceManager.GetString("UIWarningPrintBigStateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydın etiket yazdır durumu zaten &quot;Palet Etiketi&quot;..
+        /// </summary>
+        public static string UIWarningPrintPalletStateMessage {
+            get {
+                return ResourceManager.GetString("UIWarningPrintPalletStateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydın etiket yazdır durumu zaten &quot;Küçük Etiket&quot;..
+        /// </summary>
+        public static string UIWarningPrintSmallStateMessage {
+            get {
+                return ResourceManager.GetString("UIWarningPrintSmallStateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paket fişi aktarmak için en az bir seçim yapılmalıdır..
         /// </summary>
         public static string UIWarningSelectedPackageFicheMessage {
@@ -876,6 +1254,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         public static string UIWarningSelectedPackageFicheTitle {
             get {
                 return ResourceManager.GetString("UIWarningSelectedPackageFicheTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningTitle {
+            get {
+                return ResourceManager.GetString("UIWarningTitle", resourceCulture);
             }
         }
         

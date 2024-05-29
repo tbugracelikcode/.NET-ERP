@@ -58,6 +58,17 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
+            int state = 0;
+
+            if(input.SelectPalletRecordLines.Where(t=>t.LineApproval == true).ToList().Count == input.SelectPalletRecordLines.Count)
+            {
+                state = 3;
+            }
+            else if(input.SelectPalletRecordLines.Where(t => t.LineApproval == true).ToList().Count < input.SelectPalletRecordLines.Count)
+            {
+                state = 1;
+            }
+
             var query = queryFactory.Query().From(Tables.PalletRecords).Insert(new CreatePalletRecordsDto
             {
 
@@ -65,6 +76,9 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 Height_ = input.Height_,
                 Lenght_ = input.Lenght_,
                 MaxPackageNumber = input.MaxPackageNumber,
+                PalletRecordsPrintTicketEnum = input.PalletRecordsPrintTicketEnum,
+                PalletRecordsStateEnum = state,
+                PalletRecordsTicketStateEnum = 1,
                 Name = input.Name,
                 PackageType = input.PackageType,
                 PackingListID = input.PackingListID.GetValueOrDefault(),
@@ -93,6 +107,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                     PackageFicheID = item.PackageFicheID,
                     NumberofPackage = item.NumberofPackage,
                     PackageContent = item.PackageContent,
+                    LineApproval = item.LineApproval,
                     TotalAmount = item.TotalAmount,
                     TotalGrossKG = item.TotalGrossKG,
                     TotalNetKG = item.TotalNetKG,
@@ -332,10 +347,24 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             }
             #endregion
 
+            int state = 0;
+
+            if (input.SelectPalletRecordLines.Where(t => t.LineApproval == true).ToList().Count == input.SelectPalletRecordLines.Count)
+            {
+                state = 3;
+            }
+            else if (input.SelectPalletRecordLines.Where(t => t.LineApproval == true).ToList().Count < input.SelectPalletRecordLines.Count)
+            {
+                state = input.PalletRecordsStateEnum;
+            }
+
             var query = queryFactory.Query().From(Tables.PalletRecords).Update(new UpdatePalletRecordsDto
             {
                 CurrentAccountCardID = input.CurrentAccountCardID,
                 Height_ = input.Height_,
+                PalletRecordsTicketStateEnum = input.PalletRecordsTicketStateEnum,
+                PalletRecordsStateEnum = state,
+                PalletRecordsPrintTicketEnum = input.PalletRecordsPrintTicketEnum,
                 Lenght_ = input.Lenght_,
                 MaxPackageNumber = input.MaxPackageNumber,
                 Name = input.Name,
@@ -370,6 +399,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         PackageContent = item.PackageContent,
                         TotalAmount = item.TotalAmount,
                         TotalGrossKG = item.TotalGrossKG,
+                        LineApproval = item.LineApproval,
                         TotalNetKG = item.TotalNetKG,
                         PalletRecordID = input.Id,
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
@@ -405,6 +435,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                             PackageContent = item.PackageContent,
                             TotalAmount = item.TotalAmount,
                             TotalGrossKG = item.TotalGrossKG,
+                            LineApproval = item.LineApproval,
                             TotalNetKG = item.TotalNetKG,
                             CreationTime = line.CreationTime,
                             CreatorId = line.CreatorId,
@@ -446,6 +477,9 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 Height_ = entity.Height_,
                 Lenght_ = entity.Lenght_,
                 MaxPackageNumber = entity.MaxPackageNumber,
+                PalletRecordsPrintTicketEnum = (int)entity.PalletRecordsPrintTicketEnum,
+                PalletRecordsStateEnum = (int)entity.PalletRecordsStateEnum,
+                PalletRecordsTicketStateEnum = (int)entity.PalletRecordsTicketStateEnum,
                 Name = entity.Name,
                 PackageType = entity.PackageType,
                 PackingListID = entity.PackingListID,
