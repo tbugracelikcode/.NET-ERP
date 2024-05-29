@@ -47,6 +47,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Blazor.Bootstrap" Version="2.2.1" />
+		<PackageReference Include="Blazored.Menu" Version="2.2.0" />
 		<PackageReference Include="Blazored.Modal" Version="7.0.0" />
 		<PackageReference Include="BlazorInputFile" Version="0.2.0" />
 		<PackageReference Include="DevExpress.Blazor" Version="23.2.3" />

@@ -16,5 +16,6 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos
 
         public Guid ParentMenuId { get; set; }
         public int ContextOrderNo { get; set; }
+        public string MenuURL { get; set; }
     }
 }

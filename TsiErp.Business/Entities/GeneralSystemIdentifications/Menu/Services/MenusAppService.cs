@@ -34,6 +34,7 @@ namespace TsiErp.Business.Entities.Menu.Services
                 Id = addedEntityId,
                 MenuName = input.MenuName,
                 ContextOrderNo = input.ContextOrderNo,
+                MenuURL = input.MenuURL,
                 ParentMenuId = input.ParentMenuId
             });
 
@@ -105,6 +106,7 @@ namespace TsiErp.Business.Entities.Menu.Services
             {
                 Id = input.Id,
                 ParentMenuId = input.ParentMenuId,
+                MenuURL = input.MenuURL,
                 ContextOrderNo = input.ContextOrderNo,
                 MenuName = input.MenuName
             }).Where(new { Id = input.Id }, false, false, "");
