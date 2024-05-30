@@ -44,5 +44,6 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.D
         /// Menu Parent Id
         /// </summary>
         public Guid ParentID { get; set; }
+        public string MenuURL { get; set; }
     }
 }

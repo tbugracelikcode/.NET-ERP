@@ -4,6 +4,7 @@
 
 @inject IMenusAppService MenuService
 @inject IUserPermissionsAppService UserPermissionsService
+@using Blazored.Menu
 
 
 <div>
@@ -384,20 +385,58 @@
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.GeneralParametersChildMenu)" Text=@L["GeneralParametersChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                         <DxTreeViewNode NavigateUrl="/insert-menu" Text="Menü Ekle" />
-                        <DxTreeViewNode NavigateUrl="/excel-import-datagrid" Text="Excel'den Grid'e Aktarým" /> 
+                        <DxTreeViewNode NavigateUrl="/insert-menu" Text="Menü Ekle" />
+                        <DxTreeViewNode NavigateUrl="/excel-import-datagrid" Text="Excel'den Grid'e Aktarým" />
                     </Nodes>
                 </DxTreeViewNode>
 
             </Nodes>
 
         </DxTreeView>
+
     </div>
 
 </div>
 
 
+@* <BlazoredMenu>
+  <BlazoredMenuItem>
+    <NavLink Match="NavLinkMatch.All">Home</NavLink>
+  </BlazoredMenuItem>
+    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down" Header="Sub Menu">
+        <HeaderTemplate>
+            <i class="fa fa-warehouse" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">Sub Menu</text>
+        </HeaderTemplate>
+        <MenuTemplate>
+            <BlazoredMenuItem>
+                <NavLink >Counter</NavLink>
+            </BlazoredMenuItem>
+            <BlazoredMenuItem>
+                 <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down" Header="Sub Menu">
+                    <HeaderTemplate>
+                        <text style="padding-left: 25px;">Sub Sub Menu</text>
+                    </HeaderTemplate>
+                     <MenuTemplate>
+                          <BlazoredMenuItem>
+                            <NavLink>Fetch Data</NavLink>
+                          </BlazoredMenuItem>
+                        <BlazoredMenuItem>
+                            <NavLink>Fetch Data 2</NavLink>
+                        </BlazoredMenuItem>
+                     </MenuTemplate>
+                 </BlazoredSubMenu>
+
+               
+            </BlazoredMenuItem>
+        </MenuTemplate>
+    </BlazoredSubMenu>
+</BlazoredMenu> *@
+
 <style>
+
+    .TSINode{
+        color:red !important;
+    }
     .scroller {
         height: calc(100vh - 160px) !important;
         overflow-y: auto;
@@ -427,6 +466,16 @@
         width: 247px;
         margin: 1rem;
         margin-top: 0px;
+    }
+
+
+
+    .blazored-sub-menu-header {
+        display: block;
+        color: #fff;
+        width: 300px !important;
+        font-size: 16px !important;
+        cursor: pointer;
     }
 
 </style>

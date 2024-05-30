@@ -94,6 +94,7 @@
 
 .TSIScrollablePermissionModal {
     max-height: 680px;
+    width: 780px;
     overflow-y: auto;
 }
 

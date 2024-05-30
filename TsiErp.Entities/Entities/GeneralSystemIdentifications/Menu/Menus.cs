@@ -18,5 +18,8 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu
 
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Int)]
         public int ContextOrderNo { get; set; }
+
+        [SqlColumnType(MaxLength =200, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        public string MenuURL { get; set; }
     }
 }

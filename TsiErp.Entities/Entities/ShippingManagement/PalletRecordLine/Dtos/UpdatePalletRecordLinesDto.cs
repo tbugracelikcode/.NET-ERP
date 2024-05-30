@@ -15,6 +15,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos
         /// </summary>
         public Guid PalletRecordID { get; set; }
         /// <summary>
+        /// Satır Onay
+        /// </summary>
+        public bool LineApproval { get; set; }
+        /// <summary>
         /// Paket Fiş ID
         /// </summary>
         public Guid? PackageFicheID { get; set; }

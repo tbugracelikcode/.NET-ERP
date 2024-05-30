@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos
 {
@@ -65,5 +66,17 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos
         /// Çeki Listesi Kodu
         /// </summary>
         public string PackingListCode { get; set; }
+        /// <summary>
+        /// Durum
+        /// </summary>
+        public PalletRecordsStateEnum PalletRecordsStateEnum { get; set; }
+        /// <summary>
+        /// Etiket Basımı Durumu
+        /// </summary>
+        public PalletRecordsTicketStateEnum PalletRecordsTicketStateEnum { get; set; }
+        /// <summary>
+        /// Etiket Yazdır
+        /// </summary>
+        public PalletRecordsPrintTicketEnum PalletRecordsPrintTicketEnum { get; set; }
     }
 }

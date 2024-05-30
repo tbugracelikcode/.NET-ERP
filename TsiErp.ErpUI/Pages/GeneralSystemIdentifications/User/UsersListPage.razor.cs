@@ -223,7 +223,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
                     //Layout.LoadingSpinnerVisible = true;
 
-                    var parentList = userPermissionList.Where(t => t.MenuName.Contains("Parent")).Select(t => new UserMenuPermission
+                    var parentList = userPermissionList.Where(t => t.MenuName.Contains("Parent") && t.MenuName != "GeneralSystemParametersParentMenu").Select(t => new UserMenuPermission
                     {
                         //Expanded = false,
                         HasChild = true,
@@ -234,6 +234,19 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                     }).ToList();
 
                     PermissionModalMenusList.AddRange(parentList);
+
+                    var parentIdentificationList = userPermissionList.Where(t => t.MenuName == "GeneralSystemParametersParentMenu").Select(t => new UserMenuPermission
+                    {
+                        //Expanded = false,
+                        HasChild = true,
+                        isPermitted = t.IsUserPermitted,
+                        MenuID = t.MenuId.ToString(),
+                        MenuName = L[t.MenuName],
+                        ParentID = t.ParentID.ToString(),
+                        //Id = t.Id
+                    }).ToList();
+
+                    PermissionModalMenusList.AddRange(parentIdentificationList);
 
                     var subAmountsParentList = userPermissionList.Where(t => t.MenuName.Contains("AmountsChildMenu")).Select(t => new UserMenuPermission
                     {
