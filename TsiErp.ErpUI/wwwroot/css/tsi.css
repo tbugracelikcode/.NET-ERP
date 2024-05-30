@@ -1461,3 +1461,8 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
     fill: black !important;
     opacity: var(--dxbl-treeview-btn-hover-color,var(--dxbl-image-color,70%));
 }
+
+.dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-checked > .dxbl-checkbox-check-element:not(:hover), .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-indeterminate > .dxbl-checkbox-check-element:not(:hover) {
+    background-color: var(--dxbl-treeview-checkbox-checked-bg, #6c0a0a) !important;
+    opacity: var(--dxbl-treeview-checkbox-checked-bg,80%);
+}
