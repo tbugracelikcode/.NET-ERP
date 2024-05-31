@@ -56,8 +56,8 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 CustomerApproval = input.CustomerApproval,
                 RevisionNo = input.RevisionNo,
                 RevisionDate = input.RevisionDate,
-                ProductID = input.ProductID,
-                CustomerCurrentAccountCardID = input.CustomerCurrentAccountCardID,
+                ProductID = input.ProductID.GetValueOrDefault(),
+                CustomerCurrentAccountCardID = input.CustomerCurrentAccountCardID.GetValueOrDefault(),
                 Drawer = input.Drawer,
                 DrawingDomain = input.DrawingDomain,
                 DrawingFilePath = input.DrawingFilePath,
@@ -121,7 +121,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
-                    .Query().From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(td => new { td.ProductID, td.RevisionDate, td.RevisionNo, td.SampleApproval, td.CustomerApproval, td.DataOpenStatus, td.DataOpenStatusUserId, td.DrawingFilePath, td.Description_, td.Drawer, td.DrawingDomain, td.DrawingNo, td.Id, td.IsApproved, td.CustomerCurrentAccountCardID })
+                    .Query().From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(null)
                         .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -154,7 +154,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(td => new { td.ProductID, td.RevisionDate, td.RevisionNo, td.SampleApproval, td.CustomerApproval, td.DataOpenStatus, td.DataOpenStatusUserId, td.DrawingFilePath, td.Description_, td.Drawer, td.DrawingDomain, td.DrawingNo, td.Id, td.IsApproved, td.CustomerCurrentAccountCardID })
+               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(null)
                         .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -182,7 +182,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(td => new { td.ProductID, td.RevisionDate, td.RevisionNo, td.SampleApproval, td.CustomerApproval, td.DataOpenStatus, td.DataOpenStatusUserId, td.DrawingFilePath, td.Description_, td.Drawer, td.DrawingDomain, td.DrawingNo, td.Id, td.IsApproved, td.CustomerCurrentAccountCardID })
+               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(null)
                         .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -230,8 +230,8 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 CustomerApproval = input.CustomerApproval,
                 RevisionNo = input.RevisionNo,
                 RevisionDate = input.RevisionDate,
-                CustomerCurrentAccountCardID = input.CustomerCurrentAccountCardID,
-                ProductID = input.ProductID,
+                CustomerCurrentAccountCardID = input.CustomerCurrentAccountCardID.GetValueOrDefault(),
+                ProductID = input.ProductID.GetValueOrDefault(),
                 Drawer = input.Drawer,
                 DrawingDomain = input.DrawingDomain,
                 DrawingFilePath = input.DrawingFilePath,

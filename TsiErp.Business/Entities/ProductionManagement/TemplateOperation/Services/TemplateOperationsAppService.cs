@@ -64,7 +64,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
             var query = queryFactory.Query().From(Tables.TemplateOperations).Insert(new CreateTemplateOperationsDto
             {
-                WorkCenterID = input.WorkCenterID,
+                WorkCenterID = input.WorkCenterID.GetValueOrDefault(),
                 IsCanBeDetected = input.IsCanBeDetected,
                 IsCauseExtraCost = input.IsCauseExtraCost,
                 IsHighRepairCost = input.IsHighRepairCost,
@@ -99,7 +99,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                     OperationTime = item.OperationTime,
                     Priority = item.Priority,
                     ProcessQuantity = item.ProcessQuantity,
-                    StationID = item.StationID,
+                    StationID = item.StationID.GetValueOrDefault(),
                     TemplateOperationID = addedEntityId,
                     CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
@@ -227,7 +227,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             var queryLines = queryFactory
                            .Query()
                            .From(Tables.TemplateOperationLines)
-                           .Select<TemplateOperationLines>(tol => new { tol.TemplateOperationID, tol.StationID, tol.ProcessQuantity, tol.Priority, tol.OperationTime, tol.LineNr, tol.Id, tol.DataOpenStatusUserId, tol.DataOpenStatus, tol.Alternative, tol.AdjustmentAndControlTime })
+                           .Select<TemplateOperationLines>(null)
                            .Join<Stations>
                             (
                                 s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
@@ -246,7 +246,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             var queryUnsuitabilityItems = queryFactory
                         .Query()
                         .From(Tables.TemplateOperationUnsuitabilityItems)
-                        .Select<TemplateOperationUnsuitabilityItems>(tol => new { tol.LineNr, tol.Id, tol.DataOpenStatus, tol.DataOpenStatusUserId, tol.TemplateOperationId, tol.ToBeUsed })
+                        .Select<TemplateOperationUnsuitabilityItems>(null)
                         .Join<UnsuitabilityItems>
                         (
                             s => new { UnsuitabilityItemsId = s.Id, UnsuitabilityItemsName = s.Name },
@@ -325,7 +325,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             var queryLines = queryFactory
                          .Query()
                          .From(Tables.TemplateOperationLines)
-                         .Select<TemplateOperationLines>(tol => new { tol.TemplateOperationID, tol.StationID, tol.ProcessQuantity, tol.Priority, tol.OperationTime, tol.LineNr, tol.Id, tol.DataOpenStatusUserId, tol.DataOpenStatus, tol.Alternative, tol.AdjustmentAndControlTime })
+                         .Select<TemplateOperationLines>(null)
                          .Join<Stations>
                           (
                               s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
@@ -359,7 +359,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.TemplateOperationLines)
-                   .Select<TemplateOperationLines>(tol => new { tol.TemplateOperationID, tol.StationID, tol.ProcessQuantity, tol.Priority, tol.OperationTime, tol.LineNr, tol.Id, tol.DataOpenStatusUserId, tol.DataOpenStatus, tol.Alternative, tol.AdjustmentAndControlTime })
+                   .Select<TemplateOperationLines>(null)
                    .Join<Stations>
                     (
                         s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
@@ -377,7 +377,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             var queryUnsuitabilityItems = queryFactory
                         .Query()
                         .From(Tables.TemplateOperationUnsuitabilityItems)
-                        .Select<TemplateOperationUnsuitabilityItems>(tol => new { tol.LineNr, tol.Id, tol.DataOpenStatus, tol.DataOpenStatusUserId, tol.TemplateOperationId, tol.ToBeUsed })
+                        .Select<TemplateOperationUnsuitabilityItems>(null)
                         .Join<UnsuitabilityItems>
                         (
                             s => new { UnsuitabilityItemsId = s.Id, UnsuitabilityItemsName = s.Name },
@@ -407,7 +407,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             var query = queryFactory.Query().From(Tables.TemplateOperations).Update(new UpdateTemplateOperationsDto
             {
                 Name = input.Name,
-                WorkCenterID = input.WorkCenterID,
+                WorkCenterID = input.WorkCenterID.GetValueOrDefault(),
                 IsCanBeDetected = input.IsCanBeDetected,
                 IsCauseExtraCost = input.IsCauseExtraCost,
                 IsHighRepairCost = input.IsHighRepairCost,
@@ -444,7 +444,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                         OperationTime = item.OperationTime,
                         Priority = item.Priority,
                         ProcessQuantity = item.ProcessQuantity,
-                        StationID = item.StationID,
+                        StationID = item.StationID.GetValueOrDefault(),
                         TemplateOperationID = input.Id,
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
@@ -476,7 +476,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                             OperationTime = item.OperationTime,
                             Priority = item.Priority,
                             ProcessQuantity = item.ProcessQuantity,
-                            StationID = item.StationID,
+                            StationID = item.StationID.GetValueOrDefault(),
                             TemplateOperationID = input.Id,
                             CreationTime = line.CreationTime,
                             CreatorId = line.CreatorId,

@@ -62,9 +62,9 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
             var query = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Insert(new CreateOrderAcceptanceRecordsDto
             {
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 ConfirmedLoadingDate = input.ConfirmedLoadingDate,
-                CurrenyID = input.CurrenyID,
+                CurrenyID = input.CurrenyID.GetValueOrDefault(),
                 CustomerOrderNo = input.CustomerOrderNo,
                 CustomerRequestedDate = input.CustomerRequestedDate,
                 Description_ = input.Description_,
@@ -100,7 +100,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                     OrderAmount = item.OrderAmount,
                     OrderUnitPrice = item.OrderUnitPrice,
                     ProductReferanceNumberID = item.ProductReferanceNumberID,
-                    UnitSetID = item.UnitSetID,
+                    UnitSetID = item.UnitSetID.GetValueOrDefault(),
                     OrderAcceptanceRecordID = addedEntityId,
                     CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
@@ -113,7 +113,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
-                    ProductID = item.ProductID,
+                    ProductID = item.ProductID.GetValueOrDefault(),
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -328,9 +328,9 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
             var query = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Update(new UpdateOrderAcceptanceRecordsDto
             {
 
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 ConfirmedLoadingDate = input.ConfirmedLoadingDate,
-                CurrenyID = input.CurrenyID,
+                CurrenyID = input.CurrenyID.GetValueOrDefault(),
                 CustomerOrderNo = input.CustomerOrderNo,
                 Description_ = input.Description_,
                 CustomerRequestedDate = input.CustomerRequestedDate,
@@ -367,7 +367,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         OrderAmount = item.OrderAmount,
                         OrderUnitPrice = item.OrderUnitPrice,
                         ProductReferanceNumberID = item.ProductReferanceNumberID,
-                        UnitSetID = item.UnitSetID,
+                        UnitSetID = item.UnitSetID.GetValueOrDefault(),
                         OrderAcceptanceRecordID = input.Id,
                         PurchaseSupplyDate = item.PurchaseSupplyDate,
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
@@ -381,7 +381,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
-                        ProductID = item.ProductID,
+                        ProductID = item.ProductID.GetValueOrDefault(),
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -406,8 +406,8 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             OrderAmount = item.OrderAmount,
                             PurchaseSupplyDate = item.PurchaseSupplyDate,
                             OrderUnitPrice = item.OrderUnitPrice,
-                            ProductReferanceNumberID = item.ProductReferanceNumberID,
-                            UnitSetID = item.UnitSetID,
+                            ProductReferanceNumberID = item.ProductReferanceNumberID.GetValueOrDefault(),
+                            UnitSetID = item.UnitSetID.GetValueOrDefault(),
                             OrderAcceptanceRecordID = input.Id,
                             CreationTime = line.CreationTime,
                             CreatorId = line.CreatorId,
@@ -420,7 +420,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                            ProductID = item.ProductID,
+                            ProductID = item.ProductID.GetValueOrDefault(),
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;

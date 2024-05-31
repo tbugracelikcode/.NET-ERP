@@ -61,13 +61,13 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
             var query = queryFactory.Query().From(Tables.SalesPrices).Insert(new CreateSalesPricesDto
             {
-                BranchID = input.BranchID,
-                CurrencyID = input.CurrencyID,
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                BranchID = input.BranchID.GetValueOrDefault(),
+                CurrencyID = input.CurrencyID.GetValueOrDefault(),
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 EndDate = input.EndDate,
                 IsApproved = input.IsApproved,
                 StartDate = input.StartDate,
-                WarehouseID = input.WarehouseID,
+                WarehouseID = input.WarehouseID.GetValueOrDefault(),
                 Code = input.Code,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
@@ -89,8 +89,8 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                 {
                     StartDate = item.StartDate,
                     EndDate = item.EndDate,
-                    CurrentAccountCardID = item.CurrentAccountCardID,
-                    CurrencyID = item.CurrencyID,
+                    CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
+                    CurrencyID = item.CurrencyID.GetValueOrDefault(),
                     Linenr = item.Linenr,
                     Price = item.Price,
                     SalesPriceID = addedEntityId,
@@ -104,7 +104,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
-                    ProductID = item.ProductID,
+                    ProductID = item.ProductID.GetValueOrDefault(),
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -374,13 +374,13 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
             var query = queryFactory.Query().From(Tables.SalesPrices).Update(new UpdateSalesPricesDto
             {
-                BranchID = input.BranchID,
-                CurrencyID = input.CurrencyID,
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                BranchID = input.BranchID.GetValueOrDefault(),
+                CurrencyID = input.CurrencyID.GetValueOrDefault(),
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 EndDate = input.EndDate,
                 IsApproved = input.IsApproved,
                 StartDate = input.StartDate,
-                WarehouseID = input.WarehouseID,
+                WarehouseID = input.WarehouseID.GetValueOrDefault(),
                 Code = input.Code,
                 CreationTime = entity.CreationTime,
                 CreatorId = entity.CreatorId,
@@ -404,8 +404,8 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                     {
                         StartDate = item.StartDate,
                         EndDate = item.EndDate,
-                        CurrentAccountCardID = item.CurrentAccountCardID,
-                        CurrencyID = item.CurrencyID,
+                        CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
+                        CurrencyID = item.CurrencyID.GetValueOrDefault(),
                         Linenr = item.Linenr,
                         Price = item.Price,
                         SalesPriceID = input.Id,
@@ -436,9 +436,9 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                         {
                             StartDate = item.StartDate,
                             EndDate = item.EndDate,
-                            CurrentAccountCardID = item.CurrentAccountCardID,
-                            CurrencyID = item.CurrencyID,
-                            ProductID = item.ProductID,
+                            CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
+                            CurrencyID = item.CurrencyID.GetValueOrDefault(),
+                            ProductID = item.ProductID.GetValueOrDefault(),
                             Linenr = item.Linenr,
                             Price = item.Price,
                             SalesPriceID = input.Id,
@@ -473,7 +473,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.SalesPriceLines)
-                   .Select<SalesPriceLines>(spl => new { spl.StartDate, spl.SalesPriceID, spl.ProductID, spl.Price, spl.Linenr, spl.Id, spl.EndDate, spl.DataOpenStatusUserId, spl.DataOpenStatus, spl.CurrentAccountCardID, spl.CurrencyID })
+                   .Select<SalesPriceLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -505,13 +505,13 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
             var query = queryFactory.Query().From(Tables.SalesPrices).Update(new UpdateSalesPricesDto
             {
-                BranchID = entity.BranchID,
+                BranchID = entity.BranchID.GetValueOrDefault(),
                 CurrencyID = entity.CurrencyID,
-                CurrentAccountCardID = entity.CurrentAccountCardID,
+                CurrentAccountCardID = entity.CurrentAccountCardID.GetValueOrDefault(),
                 EndDate = entity.EndDate,
                 IsApproved = entity.IsApproved,
                 StartDate = entity.StartDate,
-                WarehouseID = entity.WarehouseID,
+                WarehouseID = entity.WarehouseID.GetValueOrDefault(),
                 Code = entity.Code,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,

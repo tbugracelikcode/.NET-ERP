@@ -95,7 +95,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                     CurrentSalaryUpperLimit = item.CurrentSalaryUpperLimit,
                     CurrentStartingSalary = item.CurrentStartingSalary,
                     Difference = item.Difference,
-                    SeniorityID = item.SeniorityID,
+                    SeniorityID = item.SeniorityID.GetValueOrDefault(),
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -276,7 +276,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
-                        SeniorityID = item.SeniorityID,
+                        SeniorityID = item.SeniorityID.GetValueOrDefault(),
                         CurrentSalaryLowerLimit = item.CurrentSalaryLowerLimit,
                         CurrentSalaryUpperLimit = item.CurrentSalaryUpperLimit,
                         CurrentStartingSalary = item.CurrentStartingSalary,
@@ -311,7 +311,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                             CurrentStartingSalary = item.CurrentStartingSalary,
                             CurrentSalaryUpperLimit = item.CurrentSalaryUpperLimit,
                             CurrentSalaryLowerLimit = item.CurrentSalaryLowerLimit,
-                            SeniorityID = item.SeniorityID,
+                            SeniorityID = item.SeniorityID.GetValueOrDefault(),
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;

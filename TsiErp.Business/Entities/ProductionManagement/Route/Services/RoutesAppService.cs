@@ -59,7 +59,7 @@ namespace TsiErp.Business.Entities.Route.Services
             var query = queryFactory.Query().From(Tables.Routes).Insert(new CreateRoutesDto
             {
                 Approval = input.Approval,
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
                 ProductionStart = input.ProductionStart,
                 TechnicalApproval = input.TechnicalApproval,
                 Code = input.Code,
@@ -81,7 +81,7 @@ namespace TsiErp.Business.Entities.Route.Services
             {
                 var queryLine = queryFactory.Query().From(Tables.RouteLines).Insert(new CreateRouteLinesDto
                 {
-                    ProductID = item.ProductID,
+                    ProductID = item.ProductID.GetValueOrDefault(),
                     AdjustmentAndControlTime = item.AdjustmentAndControlTime,
                     OperationTime = item.OperationTime,
                     Priority = item.Priority,
@@ -303,7 +303,7 @@ namespace TsiErp.Business.Entities.Route.Services
             var query = queryFactory.Query().From(Tables.Routes).Update(new UpdateRoutesDto
             {
                 Approval = input.Approval,
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
                 ProductionStart = input.ProductionStart,
                 TechnicalApproval = input.TechnicalApproval,
                 Code = input.Code,
@@ -327,7 +327,7 @@ namespace TsiErp.Business.Entities.Route.Services
                 {
                     var queryLine = queryFactory.Query().From(Tables.RouteLines).Insert(new CreateRouteLinesDto
                     {
-                        ProductID = item.ProductID,
+                        ProductID = item.ProductID.GetValueOrDefault(),
                         AdjustmentAndControlTime = item.AdjustmentAndControlTime,
                         OperationTime = item.OperationTime,
                         Priority = item.Priority,
@@ -360,7 +360,7 @@ namespace TsiErp.Business.Entities.Route.Services
                     {
                         var queryLine = queryFactory.Query().From(Tables.RouteLines).Update(new UpdateRouteLinesDto
                         {
-                            ProductID = item.ProductID,
+                            ProductID = item.ProductID.GetValueOrDefault(),
                             AdjustmentAndControlTime = item.AdjustmentAndControlTime,
                             OperationTime = item.OperationTime,
                             Priority = item.Priority,

@@ -71,14 +71,14 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
                 Action_ = input.Action_,
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Description_ = input.Description_,
                 IsUnsuitabilityWorkOrder = input.IsUnsuitabilityWorkOrder,
-                OrderID = input.OrderID,
+                OrderID = input.OrderID.GetValueOrDefault(),
                 PartyNo = input.PartyNo,
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
                 UnsuitableAmount = input.UnsuitableAmount,
-                UnsuitabilityItemsID = input.UnsuitabilityItemsID
+                UnsuitabilityItemsID = input.UnsuitabilityItemsID.GetValueOrDefault()
             });
 
 
@@ -202,15 +202,15 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
                 LastModifierId = LoginedUserService.UserId,
                 Action_ = input.Action_,
                 FicheNo = input.FicheNo,
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 IsUnsuitabilityWorkOrder = input.IsUnsuitabilityWorkOrder,
-                OrderID = input.OrderID,
+                OrderID = input.OrderID.GetValueOrDefault(),
                 PartyNo = input.PartyNo,
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
                 UnsuitableAmount = input.UnsuitableAmount,
-                UnsuitabilityItemsID = input.UnsuitabilityItemsID
+                UnsuitabilityItemsID = input.UnsuitabilityItemsID.GetValueOrDefault()
             }).Where(new { Id = input.Id }, false, false, "");
 
             var purchaseUnsuitabilityReport = queryFactory.Update<SelectPurchaseUnsuitabilityReportsDto>(query, "Id", true);

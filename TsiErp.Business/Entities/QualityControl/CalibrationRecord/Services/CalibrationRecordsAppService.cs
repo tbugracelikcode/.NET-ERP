@@ -63,7 +63,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                 DataOpenStatusUserId = Guid.Empty,
                 DeleterId = Guid.Empty,
                 Date_ = input.Date_,
-                EquipmentID = input.EquipmentID,
+                EquipmentID = input.EquipmentID.GetValueOrDefault(),
                 InfinitiveCertificateNo = input.InfinitiveCertificateNo,
                 NextControl = input.NextControl,
                 ReceiptNo = input.ReceiptNo,
@@ -106,7 +106,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
         public async Task<IDataResult<SelectCalibrationRecordsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
-                    .Query().From(Tables.CalibrationRecords).Select<CalibrationRecords>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date_, c.EquipmentID, c.DataOpenStatus, c.DataOpenStatusUserId, c.InfinitiveCertificateNo })
+                    .Query().From(Tables.CalibrationRecords).Select<CalibrationRecords>(null)
                         .Join<EquipmentRecords>
                         (
                             e => new { Equipment = e.Code, EquipmentID = e.Id },
@@ -132,7 +132,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
             var query = queryFactory
                     .Query()
                     .From(Tables.CalibrationRecords)
-                    .Select<CalibrationRecords>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date_, c.EquipmentID })
+                    .Select<CalibrationRecords>(null)
                         .Join<EquipmentRecords>
                         (
                             e => new { Equipment = e.Code },
@@ -177,7 +177,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                 ReceiptNo = input.ReceiptNo,
                 NextControl = input.NextControl,
                 InfinitiveCertificateNo = input.InfinitiveCertificateNo,
-                EquipmentID = input.EquipmentID,
+                EquipmentID = input.EquipmentID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,

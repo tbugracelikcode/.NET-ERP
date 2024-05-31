@@ -38,7 +38,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
             {
                 Amount = input.Amount,
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
                 TotalConsumption = input.TotalConsumption,
                 TotalGoodsIssue = input.TotalGoodsIssue,
                 TotalGoodsReceipt = input.TotalGoodsReceipt,
@@ -49,8 +49,8 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                 TotalReserved = input.TotalReserved,
                 TotalSalesProposition = input.TotalSalesProposition,
                 TotalWastage = input.TotalWastage,
-                WarehouseID = input.WarehouseID,
-                BranchID = input.BranchID,
+                WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                BranchID = input.BranchID.GetValueOrDefault(),
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
@@ -90,7 +90,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
         public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
-                    .Query().From(Tables.GrandTotalStockMovements).Select<GrandTotalStockMovements>(gt => new { gt.WarehouseID, gt.TotalWastage, gt.TotalSalesProposition, gt.TotalSalesOrder, gt.TotalReserved, gt.TotalPurchaseRequest, gt.TotalPurchaseOrder, gt.TotalProduction, gt.TotalGoodsReceipt, gt.TotalGoodsIssue, gt.TotalConsumption, gt.ProductID, gt.Id, gt.DataOpenStatusUserId, gt.DataOpenStatus, gt.BranchID, gt.Amount })
+                    .Query().From(Tables.GrandTotalStockMovements).Select<GrandTotalStockMovements>(null)
                         .Join<Branches>
                         (
                             b => new { BranchCode = b.Code, BranchID = b.Id },
@@ -171,7 +171,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
             {
                 Amount = input.Amount,
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
                 TotalConsumption = input.TotalConsumption,
                 TotalGoodsIssue = input.TotalGoodsIssue,
                 TotalGoodsReceipt = input.TotalGoodsReceipt,
@@ -182,7 +182,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                 TotalReserved = input.TotalReserved,
                 TotalSalesProposition = input.TotalSalesProposition,
                 TotalWastage = input.TotalWastage,
-                WarehouseID = input.WarehouseID,
+                WarehouseID = input.WarehouseID.GetValueOrDefault(),
                 Id = input.Id,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
@@ -192,7 +192,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                BranchID = input.BranchID,
+                BranchID = input.BranchID.GetValueOrDefault(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, false, false, "");
 

@@ -52,8 +52,8 @@ namespace TsiErp.Business.Entities.StationInventory.Services
 
             var query = queryFactory.Query().From(Tables.StationInventories).Insert(new CreateStationInventoriesDto
             {
-                ProductID = input.ProductID,
-                StationID = input.StationID,
+                ProductID = input.ProductID.GetValueOrDefault(),
+                StationID = input.StationID.GetValueOrDefault(),
                 Amount = input.Amount,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
@@ -158,8 +158,8 @@ namespace TsiErp.Business.Entities.StationInventory.Services
             {
                 Description_ = input.Description_,
                 Amount = input.Amount,
-                ProductID = input.ProductID,
-                StationID = input.StationID,
+                ProductID = input.ProductID.GetValueOrDefault(),
+                StationID = input.StationID.GetValueOrDefault(),
                 Id = input.Id,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,

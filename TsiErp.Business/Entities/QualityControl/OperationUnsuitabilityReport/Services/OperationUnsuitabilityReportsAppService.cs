@@ -71,7 +71,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 FicheNo = input.FicheNo,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
-                UnsuitabilityItemsID = input.UnsuitabilityItemsID,
+                UnsuitabilityItemsID = input.UnsuitabilityItemsID.GetValueOrDefault(),
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
                 DeleterId = Guid.Empty,
@@ -84,14 +84,14 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 Action_ = input.Action_,
                 Description_ = input.Description_,
                 IsUnsuitabilityWorkOrder = input.IsUnsuitabilityWorkOrder,
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
                 UnsuitableAmount = input.UnsuitableAmount,
-                EmployeeID = input.EmployeeID,
-                OperationID = input.OperationID,
-                ProductionOrderID = input.ProductionOrderID,
-                StationGroupID = input.StationGroupID,
-                StationID = input.StationID,
-                WorkOrderID = input.WorkOrderID
+                EmployeeID = input.EmployeeID.GetValueOrDefault(),
+                OperationID = input.OperationID.GetValueOrDefault(),
+                ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
+                StationGroupID = input.StationGroupID.GetValueOrDefault(),
+                StationID = input.StationID.GetValueOrDefault(),
+                WorkOrderID = input.WorkOrderID.GetValueOrDefault()
             });
 
 
@@ -104,24 +104,24 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 CreateWorkOrdersDto createdWorkOrder = new CreateWorkOrdersDto
                 {
                     AdjustmentAndControlTime = workOrder.AdjustmentAndControlTime,
-                    CurrentAccountCardID = workOrder.CurrentAccountCardID,
+                    CurrentAccountCardID = workOrder.CurrentAccountCardID.GetValueOrDefault(),
                     IsCancel = false,
                     WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
                     WorkOrderState = 1,
-                    StationID = workOrder.StationID,
-                    StationGroupID = workOrder.StationGroupID,
-                    RouteID = workOrder.RouteID,
-                    PropositionID = workOrder.PropositionID,
-                    ProductsOperationID = workOrder.ProductsOperationID,
-                    ProductionOrderID = workOrder.ProductionOrderID,
-                    ProductID = workOrder.ProductID,
+                    StationID = workOrder.StationID.GetValueOrDefault(),
+                    StationGroupID = workOrder.StationGroupID.GetValueOrDefault(),
+                    RouteID = workOrder.RouteID.GetValueOrDefault(),
+                    PropositionID = workOrder.PropositionID.GetValueOrDefault(),
+                    ProductsOperationID = workOrder.ProductsOperationID.GetValueOrDefault(),
+                    ProductionOrderID = workOrder.ProductionOrderID.GetValueOrDefault(),
+                    ProductID = workOrder.ProductID.GetValueOrDefault(),
                     ProducedQuantity = 0,
                     PlannedQuantity = workOrder.PlannedQuantity,
                     OrderID = workOrder.OrderID,
                     OperationTime = workOrder.OperationTime,
                     OccuredStartDate = _GetSQLDateAppService.GetDateFromSQL(),
                     OccuredFinishDate = _GetSQLDateAppService.GetDateFromSQL(),
-                    LinkedWorkOrderID = input.WorkOrderID,
+                    LinkedWorkOrderID = input.WorkOrderID.GetValueOrDefault(),
                     LineNr = 1
 
                 };
@@ -274,7 +274,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 DataOpenStatusUserId = Guid.Empty,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                UnsuitabilityItemsID = input.UnsuitabilityItemsID,
+                UnsuitabilityItemsID = input.UnsuitabilityItemsID.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
@@ -283,14 +283,14 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 IsUnsuitabilityWorkOrder = input.IsUnsuitabilityWorkOrder,
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
                 UnsuitableAmount = input.UnsuitableAmount,
-                EmployeeID = input.EmployeeID,
-                OperationID = input.OperationID,
-                ProductionOrderID = input.ProductionOrderID,
-                StationGroupID = input.StationGroupID,
-                StationID = input.StationID,
-                WorkOrderID = input.WorkOrderID
+                EmployeeID = input.EmployeeID.GetValueOrDefault(),
+                OperationID = input.OperationID.GetValueOrDefault(),
+                ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
+                StationGroupID = input.StationGroupID.GetValueOrDefault(),
+                StationID = input.StationID.GetValueOrDefault(),
+                WorkOrderID = input.WorkOrderID.GetValueOrDefault()
             }).Where(new { Id = input.Id }, false, false, "");
 
             var operationUnsuitabilityReport = queryFactory.Update<SelectOperationUnsuitabilityReportsDto>(query, "Id", true);
@@ -302,24 +302,24 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 CreateWorkOrdersDto createdWorkOrder = new CreateWorkOrdersDto
                 {
                     AdjustmentAndControlTime = workOrder.AdjustmentAndControlTime,
-                    CurrentAccountCardID = workOrder.CurrentAccountCardID,
+                    CurrentAccountCardID = workOrder.CurrentAccountCardID.GetValueOrDefault(),
                     IsCancel = false,
                     WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
                     WorkOrderState = 1,
-                    StationID = workOrder.StationID,
-                    StationGroupID = workOrder.StationGroupID,
-                    RouteID = workOrder.RouteID,
-                    PropositionID = workOrder.PropositionID,
-                    ProductsOperationID = workOrder.ProductsOperationID,
-                    ProductionOrderID = workOrder.ProductionOrderID,
-                    ProductID = workOrder.ProductID,
+                    StationID = workOrder.StationID.GetValueOrDefault(),
+                    StationGroupID = workOrder.StationGroupID.GetValueOrDefault(),
+                    RouteID = workOrder.RouteID.GetValueOrDefault(),
+                    PropositionID = workOrder.PropositionID.GetValueOrDefault(),
+                    ProductsOperationID = workOrder.ProductsOperationID.GetValueOrDefault(),
+                    ProductionOrderID = workOrder.ProductionOrderID.GetValueOrDefault(),
+                    ProductID = workOrder.ProductID.GetValueOrDefault(),
                     ProducedQuantity = 0,
                     PlannedQuantity = workOrder.PlannedQuantity,
                     OrderID = workOrder.OrderID,
                     OperationTime = workOrder.OperationTime,
                     OccuredStartDate = _GetSQLDateAppService.GetDateFromSQL(),
                     OccuredFinishDate = _GetSQLDateAppService.GetDateFromSQL(),
-                    LinkedWorkOrderID = input.WorkOrderID,
+                    LinkedWorkOrderID = input.WorkOrderID.GetValueOrDefault(),
                     LineNr = 1
 
                 };

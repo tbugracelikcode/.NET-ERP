@@ -60,13 +60,13 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
 
             var query = queryFactory.Query().From(Tables.PurchasePrices).Insert(new CreatePurchasePricesDto
             {
-                BranchID = input.BranchID,
-                CurrencyID = input.CurrencyID,
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                BranchID = input.BranchID.GetValueOrDefault(),
+                CurrencyID = input.CurrencyID.GetValueOrDefault(),
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 EndDate = input.EndDate,
                 IsApproved = input.IsApproved,
                 StartDate = input.StartDate,
-                WarehouseID = input.WarehouseID,
+                WarehouseID = input.WarehouseID.GetValueOrDefault(),
                 Code = input.Code,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
@@ -88,8 +88,8 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 {
                     StartDate = item.StartDate,
                     EndDate = item.EndDate,
-                    CurrentAccountCardID = item.CurrentAccountCardID,
-                    CurrencyID = item.CurrencyID,
+                    CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
+                    CurrencyID = item.CurrencyID.GetValueOrDefault(),
                     SupplyDateDay = item.SupplyDateDay,
                     Linenr = item.Linenr,
                     Price = item.Price,
@@ -104,7 +104,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
-                    ProductID = item.ProductID,
+                    ProductID = item.ProductID.GetValueOrDefault(),
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -382,13 +382,13 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
 
             var query = queryFactory.Query().From(Tables.PurchasePrices).Update(new UpdatePurchasePricesDto
             {
-                BranchID = input.BranchID,
-                CurrencyID = input.CurrencyID,
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                BranchID = input.BranchID.GetValueOrDefault(),
+                CurrencyID = input.CurrencyID.GetValueOrDefault(),
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 EndDate = input.EndDate,
                 IsApproved = input.IsApproved,
                 StartDate = input.StartDate,
-                WarehouseID = input.WarehouseID,
+                WarehouseID = input.WarehouseID.GetValueOrDefault(),
                 Code = input.Code,
                 CreationTime = entity.CreationTime,
                 CreatorId = entity.CreatorId,
@@ -412,8 +412,8 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                     {
                         StartDate = item.StartDate,
                         EndDate = item.EndDate,
-                        CurrentAccountCardID = item.CurrentAccountCardID,
-                        CurrencyID = item.CurrencyID,
+                        CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
+                        CurrencyID = item.CurrencyID.GetValueOrDefault(),
                         Linenr = item.Linenr,
                         SupplyDateDay = item.SupplyDateDay,
                         Price = item.Price,
@@ -428,7 +428,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         IsDeleted = false,
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
-                        ProductID = item.ProductID,
+                        ProductID = item.ProductID.GetValueOrDefault(),
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -444,11 +444,11 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         var queryLine = queryFactory.Query().From(Tables.PurchasePriceLines).Update(new UpdatePurchasePriceLinesDto
                         {
                             StartDate = item.StartDate,
-                            ProductID = item.ProductID,
+                            ProductID = item.ProductID.GetValueOrDefault(),
                             EndDate = item.EndDate,
                             SupplyDateDay = item.SupplyDateDay,
-                            CurrentAccountCardID = item.CurrentAccountCardID,
-                            CurrencyID = item.CurrencyID,
+                            CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
+                            CurrencyID = item.CurrencyID.GetValueOrDefault(),
                             Linenr = item.Linenr,
                             Price = item.Price,
                             PurchasePriceID = input.Id,

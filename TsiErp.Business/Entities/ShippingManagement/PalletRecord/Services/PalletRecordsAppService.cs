@@ -60,11 +60,11 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
 
             int state = 0;
 
-            if(input.SelectPalletRecordLines.Where(t=>t.LineApproval == true).ToList().Count == input.SelectPalletRecordLines.Count)
+            if (input.SelectPalletRecordLines.Where(t => t.LineApproval == true).ToList().Count == input.SelectPalletRecordLines.Count)
             {
                 state = 3;
             }
-            else if(input.SelectPalletRecordLines.Where(t => t.LineApproval == true).ToList().Count < input.SelectPalletRecordLines.Count)
+            else if (input.SelectPalletRecordLines.Where(t => t.LineApproval == true).ToList().Count < input.SelectPalletRecordLines.Count)
             {
                 state = 1;
             }
@@ -72,7 +72,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             var query = queryFactory.Query().From(Tables.PalletRecords).Insert(new CreatePalletRecordsDto
             {
 
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Height_ = input.Height_,
                 Lenght_ = input.Lenght_,
                 MaxPackageNumber = input.MaxPackageNumber,
@@ -103,8 +103,8 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 var queryLine = queryFactory.Query().From(Tables.PalletRecordLines).Insert(new CreatePalletRecordLinesDto
                 {
                     PackageType = item.PackageType,
-                    CurrentAccountCardID = item.CurrentAccountCardID,
-                    PackageFicheID = item.PackageFicheID,
+                    CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
+                    PackageFicheID = item.PackageFicheID.GetValueOrDefault(),
                     NumberofPackage = item.NumberofPackage,
                     PackageContent = item.PackageContent,
                     LineApproval = item.LineApproval,
@@ -123,7 +123,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
-                    ProductID = item.ProductID,
+                    ProductID = item.ProductID.GetValueOrDefault(),
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -360,7 +360,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
 
             var query = queryFactory.Query().From(Tables.PalletRecords).Update(new UpdatePalletRecordsDto
             {
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Height_ = input.Height_,
                 PalletRecordsTicketStateEnum = input.PalletRecordsTicketStateEnum,
                 PalletRecordsStateEnum = state,
@@ -369,7 +369,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 MaxPackageNumber = input.MaxPackageNumber,
                 Name = input.Name,
                 PackageType = input.PackageType,
-                PackingListID = input.PackingListID,
+                PackingListID = input.PackingListID.GetValueOrDefault(),
                 PalletPackageNumber = input.PalletPackageNumber,
                 PlannedLoadingTime = input.PlannedLoadingTime,
                 Width_ = input.Width_,
@@ -393,8 +393,8 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                     var queryLine = queryFactory.Query().From(Tables.PalletRecordLines).Insert(new CreatePalletRecordLinesDto
                     {
                         PackageType = item.PackageType,
-                        CurrentAccountCardID = item.CurrentAccountCardID,
-                        PackageFicheID = item.PackageFicheID,
+                        CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
+                        PackageFicheID = item.PackageFicheID.GetValueOrDefault(),
                         NumberofPackage = item.NumberofPackage,
                         PackageContent = item.PackageContent,
                         TotalAmount = item.TotalAmount,
@@ -413,7 +413,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
-                        ProductID = item.ProductID,
+                        ProductID = item.ProductID.GetValueOrDefault(),
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -430,9 +430,10 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         {
                             PalletRecordID = input.Id,
                             PackageType = item.PackageType,
-                            CurrentAccountCardID = item.CurrentAccountCardID,
+                            CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
                             NumberofPackage = item.NumberofPackage,
                             PackageContent = item.PackageContent,
+                            PackageFicheID = item.PackageFicheID.GetValueOrDefault(),
                             TotalAmount = item.TotalAmount,
                             TotalGrossKG = item.TotalGrossKG,
                             LineApproval = item.LineApproval,
@@ -448,7 +449,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                            ProductID = item.ProductID,
+                            ProductID = item.ProductID.GetValueOrDefault(),
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;

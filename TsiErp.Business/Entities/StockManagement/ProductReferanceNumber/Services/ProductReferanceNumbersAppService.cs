@@ -54,8 +54,8 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
             var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Insert(new CreateProductReferanceNumbersDto
             {
                 ReferanceNo = input.ReferanceNo,
-                CurrentAccountCardID = input.CurrentAccountCardID,
-                ProductID = input.ProductID,
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                ProductID = input.ProductID.GetValueOrDefault(),
                 CustomerBarcodeNo = input.CustomerBarcodeNo,
                 CustomerReferanceNo = input.CustomerReferanceNo,
                 MinOrderAmount = input.MinOrderAmount,
@@ -209,8 +209,8 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
             var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Update(new UpdateProductReferanceNumbersDto
             {
                 ReferanceNo = input.ReferanceNo,
-                CurrentAccountCardID = input.CurrentAccountCardID,
-                ProductID = input.ProductID,
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                ProductID = input.ProductID.GetValueOrDefault(),
                 Description_ = input.Description_,
                 CustomerBarcodeNo = input.CustomerBarcodeNo,
                 CustomerReferanceNo = input.CustomerReferanceNo,

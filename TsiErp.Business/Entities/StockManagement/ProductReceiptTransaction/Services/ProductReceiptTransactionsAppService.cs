@@ -46,11 +46,11 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
 
             var query = queryFactory.Query().From(Tables.ProductReceiptTransactions).Insert(new CreateProductReceiptTransactionsDto
             {
-                CurrentAccountCardID = input.CurrentAccountCardID,
-                ProductID = input.ProductID,
-                PurchaseOrderID = input.PurchaseOrderID,
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                ProductID = input.ProductID.GetValueOrDefault(),
+                PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
                 ProductReceiptTransactionStateEnum = 1,
-                PurchaseOrderLineID = input.PurchaseOrderLineID,
+                PurchaseOrderLineID = input.PurchaseOrderLineID.GetValueOrDefault(),
                 PurchaseOrderQuantity = input.PurchaseOrderQuantity,
                 SupplierProductCode = input.SupplierProductCode,
                 WarehouseReceiptQuantity = input.WarehouseReceiptQuantity,
@@ -197,8 +197,8 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
 
             var query = queryFactory.Query().From(Tables.ProductReceiptTransactions).Update(new UpdateProductReceiptTransactionsDto
             {
-                CurrentAccountCardID = input.CurrentAccountCardID,
-                ProductID = input.ProductID,
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                ProductID = input.ProductID.GetValueOrDefault(),
                 Description_ = input.Description_,
                 PurchaseOrderQuantity = input.PurchaseOrderQuantity,
                 WaybillQuantity = input.WaybillQuantity,
@@ -207,9 +207,9 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
                 WaybillDate = input.WaybillDate,
                 WarehouseReceiptQuantity = input.WarehouseReceiptQuantity,
                 SupplierProductCode = input.SupplierProductCode,
-                PurchaseOrderLineID = input.PurchaseOrderLineID,
+                PurchaseOrderLineID = input.PurchaseOrderLineID.GetValueOrDefault(),
                 ProductReceiptTransactionStateEnum = input.ProductReceiptTransactionStateEnum,
-                PurchaseOrderID = input.PurchaseOrderID,
+                PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
                 Id = input.Id,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,

@@ -46,7 +46,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             {
                 Score = input.Score,
                 Code = input.Code,
-                GeneralSkillID = input.GeneralSkillID,
+                GeneralSkillID = input.GeneralSkillID.GetValueOrDefault(),
                 Description_ = input.Description_,
                 Id = addedEntityId,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
@@ -144,7 +144,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             var query = queryFactory.Query().From(Tables.GeneralSkillRecordPriorities).Update(new UpdateGeneralSkillRecordPrioritiesDto
             {
 
-                GeneralSkillID = input.GeneralSkillID,
+                GeneralSkillID = input.GeneralSkillID.GetValueOrDefault(),
                 Description_ = input.Description_,
                 Code = input.Code,
                 Score = input.Score,

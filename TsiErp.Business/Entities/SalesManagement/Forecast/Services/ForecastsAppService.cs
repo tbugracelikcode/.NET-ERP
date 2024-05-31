@@ -59,12 +59,12 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
             var query = queryFactory.Query().From(Tables.Forecasts).Insert(new CreateForecastsDto
             {
-                BranchID = input.BranchID,
+                BranchID = input.BranchID.GetValueOrDefault(),
                 CreationDate_ = _GetSQLDateAppService.GetDateFromSQL(),
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Description_ = input.Description_,
                 LineNumber = input.LineNumber,
-                PeriodID = input.PeriodID,
+                PeriodID = input.PeriodID.GetValueOrDefault(),
                 ValidityEndDate = input.ValidityEndDate,
                 ValidityStartDate = input.ValidityStartDate,
                 Total = input.Total,
@@ -99,7 +99,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
-                    ProductID = item.ProductID,
+                    ProductID = item.ProductID.GetValueOrDefault(),
                     StartDate = item.StartDate,
                     EndDate = item.EndDate
                 });
@@ -154,7 +154,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Forecasts)
-                   .Select<Forecasts>(f => new { f.ValidityStartDate, f.ValidityEndDate, f.Total, f.PeriodID, f.LineNumber, f.Id, f.Description_, f.DataOpenStatusUserId, f.DataOpenStatus, f.CurrentAccountCardID, f.Code, f.BranchID })
+                   .Select<Forecasts>(null)
                    .Join<Periods>
                     (
                         p => new { PeriodID = p.Id, PeriodCode = p.Code, PeriodName = p.Name },
@@ -183,7 +183,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.ForecastLines)
-                   .Select<ForecastLines>(fl => new { fl.ProductID, fl.LineNr, fl.Id, fl.ForecastID, fl.DataOpenStatus, fl.DataOpenStatusUserId, fl.CustomerProductCode, fl.Amount, fl.StartDate, fl.EndDate })
+                   .Select<ForecastLines>(null)
                    .Join<Products>
                     (
                         pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
@@ -210,7 +210,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Forecasts)
-                   .Select<Forecasts>(f => new { f.ValidityStartDate, f.ValidityEndDate, f.Total, f.PeriodID, f.LineNumber, f.Id, f.Description_, f.DataOpenStatusUserId, f.DataOpenStatus, f.CurrentAccountCardID, f.Code, f.BranchID })
+                   .Select<Forecasts>(null)
                     .Join<Periods>
                     (
                         p => new { PeriodCode = p.Code, PeriodName = p.Name },
@@ -277,7 +277,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.ForecastLines)
-                   .Select<ForecastLines>(fl => new { fl.ProductID, fl.LineNr, fl.Id, fl.ForecastID, fl.DataOpenStatus, fl.DataOpenStatusUserId, fl.CustomerProductCode, fl.Amount, fl.StartDate, fl.EndDate })
+                   .Select<ForecastLines>(null)
                   .Join<Products>
                     (
                         pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
@@ -329,12 +329,12 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
             var query = queryFactory.Query().From(Tables.Forecasts).Update(new UpdateForecastsDto
             {
-                BranchID = input.BranchID,
+                BranchID = input.BranchID.GetValueOrDefault(),
                 CreationDate_ = entity.CreationDate_,
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Description_ = input.Description_,
                 LineNumber = input.LineNumber,
-                PeriodID = input.PeriodID,
+                PeriodID = input.PeriodID.GetValueOrDefault(),
                 ValidityEndDate = input.ValidityEndDate,
                 ValidityStartDate = input.ValidityStartDate,
                 Total = input.Total,
@@ -371,7 +371,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
-                        ProductID = item.ProductID,
+                        ProductID = item.ProductID.GetValueOrDefault(),
                         EndDate = item.EndDate,
                         StartDate = item.StartDate
                     });
@@ -402,7 +402,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                            ProductID = item.ProductID,
+                            ProductID = item.ProductID.GetValueOrDefault(),
                             EndDate = item.EndDate,
                             StartDate = item.StartDate
                         }).Where(new { Id = line.Id }, false, false, "");

@@ -12,20 +12,14 @@ using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRPII.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRPII.Validations;
-using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
-using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.PlanningManagement.MRPII;
 using TsiErp.Entities.Entities.PlanningManagement.MRPII.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPIILine;
 using TsiErp.Entities.Entities.PlanningManagement.MRPIILine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
-using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
-using TsiErp.Entities.Entities.StockManagement.UnitSet;
-using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.MRPIIs.Page;
 
@@ -90,13 +84,13 @@ namespace TsiErp.Business.Entities.MRPII.Services
                     EstimatedProductionEndDate = item.EstimatedProductionEndDate,
                     EstimatedProductionStartDate = item.EstimatedProductionStartDate,
                     EstimatedPurchaseSupplyDate = item.EstimatedPurchaseSupplyDate,
-                    LinkedProductID = item.LinkedProductID,
-                    OrderAcceptanceID = item.OrderAcceptanceID,
+                    LinkedProductID = item.LinkedProductID.GetValueOrDefault(),
+                    OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
                     ReferanceDate = item.ReferanceDate,
                     Description_ = item.Description_,
-                    SalesOrderID = item.SalesOrderID,
+                    SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
                     LineNr = item.LineNr,
-                    ProductID = item.ProductID,
+                    ProductID = item.ProductID.GetValueOrDefault(),
                     MRPIIID = addedEntityId,
                     CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
@@ -309,15 +303,15 @@ namespace TsiErp.Business.Entities.MRPII.Services
                     var queryLine = queryFactory.Query().From(Tables.MRPIILines).Insert(new CreateMRPIILinesDto
                     {
                         LineNr = item.LineNr,
-                        LinkedProductID = item.LinkedProductID,
+                        LinkedProductID = item.LinkedProductID.GetValueOrDefault(),
                         EstimatedPurchaseSupplyDate = item.EstimatedPurchaseSupplyDate,
                         EstimatedProductionStartDate = item.EstimatedProductionStartDate,
                         EstimatedProductionEndDate = item.EstimatedProductionEndDate,
-                        OrderAcceptanceID = item.OrderAcceptanceID,
+                        OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
                         Description_ = item.Description_,
                         ReferanceDate = item.ReferanceDate,
-                        SalesOrderID = item.SalesOrderID,
-                        ProductID = item.ProductID,
+                        SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
+                        ProductID = item.ProductID.GetValueOrDefault(),
                         MRPIIID = input.Id,
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
@@ -347,12 +341,12 @@ namespace TsiErp.Business.Entities.MRPII.Services
                             EstimatedProductionEndDate = item.EstimatedProductionEndDate,
                             EstimatedProductionStartDate = item.EstimatedProductionStartDate,
                             EstimatedPurchaseSupplyDate = item.EstimatedPurchaseSupplyDate,
-                            LinkedProductID = item.LinkedProductID,
-                            OrderAcceptanceID = item.OrderAcceptanceID,
+                            LinkedProductID = item.LinkedProductID.GetValueOrDefault(),
+                            OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
                             ReferanceDate = item.ReferanceDate,
                             Description_ = item.Description_,
-                            SalesOrderID = item.SalesOrderID,
-                            ProductID = item.ProductID,
+                            SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
+                            ProductID = item.ProductID.GetValueOrDefault(),
                             MRPIIID = input.Id,
                             CreationTime = line.CreationTime,
                             CreatorId = line.CreatorId,

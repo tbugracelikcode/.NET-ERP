@@ -64,7 +64,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     {
                         Amount = 0,
                         Date_ = createdEntity.Date_,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = 0,
                         TotalGoodsIssue = 0,
                         TotalGoodsReceipt = 0,
@@ -76,8 +76,8 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalSalesOrder = 0,
                         TotalSalesProposition = 0,
                         TotalWastage = 0,
-                        WarehouseID = createdEntity.WarehouseID,
-                        BranchID = createdEntity.BranchID,
+                        WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                        BranchID = createdEntity.BranchID.GetValueOrDefault(),
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
@@ -99,7 +99,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     {
                         Amount = entityByDate.Amount,
                         Date_ = entityByDate.Date_,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityByDate.TotalConsumption,
                         TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                         TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
@@ -142,7 +142,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                     {
                         Amount = 0,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = 0,
                         TotalGoodsIssue = 0,
                         TotalGoodsReceipt = 0,
@@ -155,8 +155,8 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalReserved = 0,
                         TotalSalesProposition = 0,
                         TotalWastage = 0,
-                        WarehouseID = createdEntity.WarehouseID,
-                        BranchID = createdEntity.BranchID,
+                        WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                        BranchID = createdEntity.BranchID.GetValueOrDefault(),
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
@@ -177,7 +177,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                     {
                         Amount = entityGrandTotal.Amount,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityGrandTotal.TotalConsumption,
                         TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                         TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
@@ -190,7 +190,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalReserved = entityGrandTotal.TotalReserved,
                         TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
                         TotalWastage = entityGrandTotal.TotalWastage,
-                        WarehouseID = createdEntity.WarehouseID,
+                        WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
                         Id = entityGrandTotal.Id,
                         CreationTime = entityGrandTotal.CreationTime.Value,
                         CreatorId = entityGrandTotal.CreatorId.Value,
@@ -240,7 +240,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDateDecreasing.Amount,
                             Date_ = entityByDateDecreasing.Date_,
-                            ProductID = previousline.ProductID,
+                            ProductID = previousline.ProductID.GetValueOrDefault(),
                             TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
                             TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
                             TotalConsumption = entityByDateDecreasing.TotalConsumption,
@@ -272,7 +272,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = 0,
                             Date_ = currentEntity.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
@@ -284,8 +284,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalSalesOrder = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = currentEntity.WarehouseID,
-                            BranchID = currentEntity.BranchID,
+                            WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = currentEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -315,7 +315,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                             TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -352,7 +352,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
@@ -404,7 +404,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotalDecreasing.Amount,
-                            ProductID = previousLine.ProductID,
+                            ProductID = previousLine.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
@@ -417,7 +417,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = entityGrandTotalDecreasing.TotalReserved,
                             TotalSalesProposition = entityGrandTotalDecreasing.TotalSalesProposition,
                             TotalWastage = entityGrandTotalDecreasing.TotalWastage,
-                            WarehouseID = previousEntity.WarehouseID,
+                            WarehouseID = previousEntity.WarehouseID.GetValueOrDefault(),
                             Id = entityGrandTotalDecreasing.Id,
                             CreationTime = entityGrandTotalDecreasing.CreationTime.Value,
                             CreatorId = entityGrandTotalDecreasing.CreatorId.Value,
@@ -427,7 +427,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotalDecreasing.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                            BranchID = previousEntity.BranchID,
+                            BranchID = previousEntity.BranchID.GetValueOrDefault(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
 
@@ -436,7 +436,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                         {
                             Amount = 0,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
@@ -449,8 +449,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = currentEntity.WarehouseID,
-                            BranchID = currentEntity.BranchID,
+                            WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = currentEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -478,7 +478,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
@@ -515,7 +515,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseOutput,
@@ -560,7 +560,7 @@ namespace TsiErp.Business.Entities.StockMovement
             var query = queryFactory
                  .Query()
                  .From(Tables.PurchaseRequests)
-                 .Select<PurchaseRequests>(pr => new { pr.WarehouseID, pr.ValidityDate_, pr.TotalVatExcludedAmount, pr.TotalVatAmount, pr.TotalDiscountAmount, pr.Time_, pr.SpecialCode, pr.RevisionTime, pr.RevisionDate, pr.PurchaseRequestState, pr.PropositionRevisionNo, pr.ProductionOrderID, pr.PaymentPlanID, pr.NetAmount, pr.LinkedPurchaseRequestID, pr.Id, pr.GrossAmount, pr.FicheNo, pr.ExchangeRate, pr.Description_, pr.Date_, pr.DataOpenStatusUserId, pr.DataOpenStatus, pr.CurrentAccountCardID, pr.CurrencyID, pr.BranchID })
+                 .Select<PurchaseRequests>(null)
                  .Join<PaymentPlans>
                   (
                       pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
@@ -652,7 +652,7 @@ namespace TsiErp.Business.Entities.StockMovement
             var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
             {
                 Amount = entityGrandTotal.Amount,
-                ProductID = deletedLine.ProductID,
+                ProductID = deletedLine.ProductID.GetValueOrDefault(),
                 TotalConsumption = entityGrandTotal.TotalConsumption,
                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
@@ -693,7 +693,7 @@ namespace TsiErp.Business.Entities.StockMovement
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.PurchaseRequestLines)
-                   .Select<PurchaseRequestLines>(prl => new { prl.VATrate, prl.VATamount, prl.UnitSetID, prl.UnitPrice, prl.Quantity, prl.PurchaseRequestLineState, prl.PurchaseRequestID, prl.ProductionOrderID, prl.ProductID, prl.PaymentPlanID, prl.OrderConversionDate, prl.LineTotalAmount, prl.LineNr, prl.LineDescription, prl.LineAmount, prl.Id, prl.ExchangeRate, prl.DiscountRate, prl.DiscountAmount, prl.DataOpenStatusUserId, prl.DataOpenStatus })
+                   .Select<PurchaseRequestLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -739,7 +739,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     {
                         Amount = entityByDate.Amount,
                         Date_ = entityByDate.Date_,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityByDate.TotalConsumption,
                         TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                         TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
@@ -781,7 +781,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                     {
                         Amount = entityGrandTotal.Amount,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityGrandTotal.TotalConsumption,
                         TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                         TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
@@ -914,7 +914,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                     {
                         Amount = 0,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = 0,
                         TotalGoodsIssue = 0,
                         TotalGoodsReceipt = 0,
@@ -927,8 +927,8 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalReserved = 0,
                         TotalSalesProposition = 0,
                         TotalWastage = 0,
-                        WarehouseID = createdEntity.WarehouseID,
-                        BranchID = createdEntity.BranchID,
+                        WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                        BranchID = createdEntity.BranchID.GetValueOrDefault(),
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
@@ -949,7 +949,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                     {
                         Amount = entityGrandTotal.Amount,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityGrandTotal.TotalConsumption,
                         TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                         TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -962,7 +962,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalReserved = entityGrandTotal.TotalReserved,
                         TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
                         TotalWastage = entityGrandTotal.TotalWastage,
-                        WarehouseID = createdEntity.WarehouseID,
+                        WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
                         Id = entityGrandTotal.Id,
                         CreationTime = entityGrandTotal.CreationTime.Value,
                         CreatorId = entityGrandTotal.CreatorId.Value,
@@ -972,7 +972,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityGrandTotal.IsDeleted,
                         LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                        BranchID = createdEntity.BranchID,
+                        BranchID = createdEntity.BranchID.GetValueOrDefault(),
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
@@ -1011,7 +1011,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDateDecreasing.Amount,
                             Date_ = entityByDateDecreasing.Date_,
-                            ProductID = previousline.ProductID,
+                            ProductID = previousline.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDateDecreasing.TotalConsumption,
                             TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
                             TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
@@ -1043,7 +1043,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = 0,
                             Date_ = currentEntity.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
@@ -1055,8 +1055,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalSalesOrder = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = currentEntity.WarehouseID,
-                            BranchID = currentEntity.BranchID,
+                            WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = currentEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -1085,7 +1085,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
@@ -1122,7 +1122,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
@@ -1174,7 +1174,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotalDecreasing.Amount,
-                            ProductID = previousLine.ProductID,
+                            ProductID = previousLine.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
@@ -1187,7 +1187,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = entityGrandTotalDecreasing.TotalReserved,
                             TotalSalesProposition = entityGrandTotalDecreasing.TotalSalesProposition,
                             TotalWastage = entityGrandTotalDecreasing.TotalWastage,
-                            WarehouseID = previousEntity.WarehouseID,
+                            WarehouseID = previousEntity.WarehouseID.GetValueOrDefault(),
                             Id = entityGrandTotalDecreasing.Id,
                             CreationTime = entityGrandTotalDecreasing.CreationTime.Value,
                             CreatorId = entityGrandTotalDecreasing.CreatorId.Value,
@@ -1197,7 +1197,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeletionTime = entityGrandTotalDecreasing.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotalDecreasing.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                            BranchID = previousEntity.BranchID,
+                            BranchID = previousEntity.BranchID.GetValueOrDefault(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotalDecreasing.Id }, false, false, "");
 
@@ -1206,7 +1206,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                         {
                             Amount = 0,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
@@ -1219,8 +1219,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = currentEntity.WarehouseID,
-                            BranchID = currentEntity.BranchID,
+                            WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = currentEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -1248,7 +1248,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
@@ -1286,7 +1286,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
@@ -1331,7 +1331,7 @@ namespace TsiErp.Business.Entities.StockMovement
             var query = queryFactory
                   .Query()
                   .From(Tables.PurchaseOrders)
-                  .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate, po.WarehouseID, po.TotalVatExcludedAmount, po.TotalVatAmount, po.TotalDiscountAmount, po.Time_, po.SpecialCode, po.ShippingAdressID, po.PurchaseOrderState, po.ProductionOrderID, po.PaymentPlanID, po.NetAmount, po.LinkedPurchaseRequestID, po.Id, po.GrossAmount, po.FicheNo, po.ExchangeRate, po.Description_, po.Date_, po.DataOpenStatusUserId, po.DataOpenStatus, po.CurrentAccountCardID, po.CurrencyID, po.BranchID })
+                  .Select<PurchaseOrders>(null)
                   .Join<PaymentPlans>
                    (
                        pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
@@ -1429,7 +1429,7 @@ namespace TsiErp.Business.Entities.StockMovement
             var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
             {
                 Amount = entityGrandTotal.Amount,
-                ProductID = deletedLine.ProductID,
+                ProductID = deletedLine.ProductID.GetValueOrDefault(),
                 TotalConsumption = entityGrandTotal.TotalConsumption,
                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -1470,7 +1470,7 @@ namespace TsiErp.Business.Entities.StockMovement
             var queryLines = queryFactory
                     .Query()
                     .From(Tables.PurchaseOrderLines)
-                    .Select<PurchaseOrderLines>(pol => new { pol.WorkOrderCreationDate, pol.VATrate, pol.VATamount, pol.UnitSetID, pol.UnitPrice, pol.Quantity, pol.PurchaseOrderLineStateEnum, pol.PurchaseOrderID, pol.ProductionOrderID, pol.ProductID, pol.PaymentPlanID, pol.LinkedPurchaseRequestID, pol.LineTotalAmount, pol.LikedPurchaseRequestLineID, pol.Id, pol.ExchangeRate, pol.DiscountRate, pol.DiscountAmount, pol.DataOpenStatusUserId, pol.DataOpenStatus })
+                    .Select<PurchaseOrderLines>(null)
                     .Join<Products>
                      (
                          p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -1515,7 +1515,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     {
                         Amount = entityByDate.Amount,
                         Date_ = entityByDate.Date_,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityByDate.TotalConsumption,
                         TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                         TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
@@ -1557,7 +1557,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                     {
                         Amount = entityGrandTotal.Amount,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityGrandTotal.TotalConsumption,
                         TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                         TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
@@ -1614,7 +1614,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     {
                         Amount = 0,
                         Date_ = createdEntity.Date_,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = 0,
                         TotalGoodsIssue = 0,
                         TotalGoodsReceipt = 0,
@@ -1626,8 +1626,8 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalSalesOrder = 0,
                         TotalSalesProposition = line.Quantity,
                         TotalWastage = 0,
-                        WarehouseID = createdEntity.WarehouseID,
-                        BranchID = createdEntity.BranchID,
+                        WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                        BranchID = createdEntity.BranchID.GetValueOrDefault(),
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
@@ -1649,7 +1649,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     {
                         Amount = entityByDate.Amount,
                         Date_ = entityByDate.Date_,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityByDate.TotalConsumption,
                         TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                         TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
@@ -1692,7 +1692,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                     {
                         Amount = 0,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = 0,
                         TotalGoodsIssue = 0,
                         TotalGoodsReceipt = 0,
@@ -1705,8 +1705,8 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalReserved = 0,
                         TotalSalesProposition = line.Quantity,
                         TotalWastage = 0,
-                        WarehouseID = createdEntity.WarehouseID,
-                        BranchID = createdEntity.BranchID,
+                        WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                        BranchID = createdEntity.BranchID.GetValueOrDefault(),
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
@@ -1727,7 +1727,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                     {
                         Amount = entityGrandTotal.Amount,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityGrandTotal.TotalConsumption,
                         TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                         TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -1740,7 +1740,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalReserved = entityGrandTotal.TotalReserved,
                         TotalSalesProposition = entityGrandTotal.TotalSalesProposition + line.Quantity,
                         TotalWastage = entityGrandTotal.TotalWastage,
-                        WarehouseID = createdEntity.WarehouseID,
+                        WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
                         Id = entityGrandTotal.Id,
                         CreationTime = entityGrandTotal.CreationTime.Value,
                         CreatorId = entityGrandTotal.CreatorId.Value,
@@ -1750,7 +1750,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityGrandTotal.IsDeleted,
                         LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                        BranchID = createdEntity.BranchID,
+                        BranchID = createdEntity.BranchID.GetValueOrDefault(),
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
@@ -1789,7 +1789,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDateDecreasing.Amount,
                             Date_ = entityByDateDecreasing.Date_,
-                            ProductID = previousline.ProductID,
+                            ProductID = previousline.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDateDecreasing.TotalConsumption,
                             TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
                             TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
@@ -1821,7 +1821,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = 0,
                             Date_ = currentEntity.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalWarehouseInput = 0,
                             TotalWarehouseOutput = 0,
@@ -1833,8 +1833,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalSalesOrder = 0,
                             TotalSalesProposition = line.Quantity,
                             TotalWastage = 0,
-                            WarehouseID = currentEntity.WarehouseID,
-                            BranchID = currentEntity.BranchID,
+                            WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = currentEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -1864,7 +1864,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                             TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -1901,7 +1901,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                             TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -1953,7 +1953,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotalDecreasing.Amount,
-                            ProductID = previousLine.ProductID,
+                            ProductID = previousLine.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
                             TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
@@ -1985,7 +1985,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                         {
                             Amount = 0,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalWarehouseOutput = 0,
                             TotalWarehouseInput = 0,
@@ -1998,8 +1998,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = 0,
                             TotalSalesProposition = line.Quantity,
                             TotalWastage = 0,
-                            WarehouseID = currentEntity.WarehouseID,
-                            BranchID = currentEntity.BranchID,
+                            WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = currentEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -2027,7 +2027,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -2064,7 +2064,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
@@ -2109,7 +2109,7 @@ namespace TsiErp.Business.Entities.StockMovement
             var query = queryFactory
                   .Query()
                   .From(Tables.SalesPropositions)
-                  .Select<SalesPropositions>(sp => new { sp.WarehouseID, sp.ValidityDate_, sp.TotalVatExcludedAmount, sp.TotalVatAmount, sp.TotalDiscountAmount, sp.Time_, sp.SpecialCode, sp.ShippingAdressID, sp.RevisionTime, sp.RevisionDate, sp.SalesPropositionState, sp.PropositionRevisionNo, sp.PaymentPlanID, sp.NetAmount, sp.LinkedSalesPropositionID, sp.Id, sp.GrossAmount, sp.FicheNo, sp.ExchangeRate, sp.Description_, sp.Date_, sp.DataOpenStatusUserId, sp.DataOpenStatus, sp.CurrentAccountCardID, sp.CurrencyID, sp.BranchID })
+                  .Select<SalesPropositions>(null)
                   .Join<PaymentPlans>
                    (
                        pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
@@ -2207,7 +2207,7 @@ namespace TsiErp.Business.Entities.StockMovement
             var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
             {
                 Amount = entityGrandTotal.Amount,
-                ProductID = deletedLine.ProductID,
+                ProductID = deletedLine.ProductID.GetValueOrDefault(),
                 TotalConsumption = entityGrandTotal.TotalConsumption,
                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -2248,7 +2248,7 @@ namespace TsiErp.Business.Entities.StockMovement
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.SalesPropositionLines)
-                   .Select<SalesPropositionLines>(spl => new { spl.VATrate, spl.VATamount, spl.UnitSetID, spl.UnitPrice, spl.Quantity, spl.SalesPropositionLineState, spl.SalesPropositionID, spl.ProductID, spl.PaymentPlanID, spl.OrderConversionDate, spl.LineTotalAmount, spl.LineNr, spl.LineDescription, spl.LineAmount, spl.Id, spl.ExchangeRate, spl.DiscountRate, spl.DiscountAmount, spl.DataOpenStatusUserId, spl.DataOpenStatus })
+                   .Select<SalesPropositionLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -2293,7 +2293,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     {
                         Amount = entityByDate.Amount,
                         Date_ = entityByDate.Date_,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityByDate.TotalConsumption,
                         TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                         TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -2335,7 +2335,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                     {
                         Amount = entityGrandTotal.Amount,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityGrandTotal.TotalConsumption,
                         TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                         TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -2392,7 +2392,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = 0,
                             Date_ = createdEntity.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalWarehouseOutput = 0,
@@ -2404,8 +2404,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalSalesOrder = line.Quantity,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -2426,7 +2426,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
@@ -2469,7 +2469,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                         {
                             Amount = 0,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
@@ -2482,8 +2482,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -2504,7 +2504,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -2517,7 +2517,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = entityGrandTotal.TotalReserved,
                             TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
                             TotalWastage = entityGrandTotal.TotalWastage,
-                            WarehouseID = createdEntity.WarehouseID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
                             Id = entityGrandTotal.Id,
                             CreationTime = entityGrandTotal.CreationTime.Value,
                             CreatorId = entityGrandTotal.CreatorId.Value,
@@ -2527,7 +2527,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                            BranchID = createdEntity.BranchID,
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
@@ -2598,7 +2598,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = 0,
                                 Date_ = currentEntity.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = 0,
                                 TotalWarehouseInput = 0,
                                 TotalWarehouseOutput = 0,
@@ -2641,7 +2641,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -2679,7 +2679,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -2731,7 +2731,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotalDecreasing.Amount,
-                                ProductID = previousLine.ProductID,
+                                ProductID = previousLine.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
@@ -2763,7 +2763,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                             {
                                 Amount = 0,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = 0,
                                 TotalWarehouseOutput = 0,
                                 TotalWarehouseInput = 0,
@@ -2805,7 +2805,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -2842,7 +2842,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -2887,7 +2887,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var query = queryFactory
                       .Query()
                       .From(Tables.SalesOrders)
-                      .Select<SalesOrders>(so => new { so.WorkOrderCreationDate, so.WarehouseID, so.TotalVatExcludedAmount, so.TotalVatAmount, so.TotalDiscountAmount, so.Time_, so.SpecialCode, so.ShippingAdressID, so.SalesOrderState, so.PaymentPlanID, so.NetAmount, so.LinkedSalesPropositionID, so.Id, so.GrossAmount, so.FicheNo, so.ExchangeRate, so.Description_, so.Date_, so.DataOpenStatusUserId, so.DataOpenStatus, so.CurrentAccountCardID, so.CurrencyID, so.BranchID })
+                      .Select<SalesOrders>(null)
                       .Join<PaymentPlans>
                        (
                            pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
@@ -2985,7 +2985,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                 {
                     Amount = entityGrandTotal.Amount,
-                    ProductID = deletedLine.ProductID,
+                    ProductID = deletedLine.ProductID.GetValueOrDefault(),
                     TotalConsumption = entityGrandTotal.TotalConsumption,
                     TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                     TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -3026,7 +3026,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.SalesOrderLines)
-                       .Select<SalesOrderLines>(sol => new { sol.WorkOrderCreationDate, sol.VATrate, sol.VATamount, sol.UnitSetID, sol.UnitPrice, sol.Quantity, sol.SalesOrderLineStateEnum, sol.SalesOrderID, sol.ProductID, sol.PaymentPlanID, sol.LikedPropositionLineID, sol.LineTotalAmount, sol.Id, sol.ExchangeRate, sol.DiscountRate, sol.DiscountAmount, sol.DataOpenStatusUserId, sol.DataOpenStatus })
+                       .Select<SalesOrderLines>(null)
                        .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -3079,7 +3079,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                             TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -3121,7 +3121,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -3178,7 +3178,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = line.Quantity * (-1),
                             Date_ = createdEntity.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = line.Quantity,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
@@ -3190,8 +3190,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalSalesOrder = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -3213,7 +3213,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount - line.Quantity,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption + line.Quantity,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -3256,7 +3256,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                         {
                             Amount = line.Quantity * (-1),
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = line.Quantity,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
@@ -3269,8 +3269,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -3291,7 +3291,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount - line.Quantity,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption + line.Quantity,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
@@ -3304,7 +3304,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = entityGrandTotal.TotalReserved,
                             TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
                             TotalWastage = entityGrandTotal.TotalWastage,
-                            WarehouseID = createdEntity.WarehouseID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
                             Id = entityGrandTotal.Id,
                             CreationTime = entityGrandTotal.CreationTime.Value,
                             CreatorId = entityGrandTotal.CreatorId.Value,
@@ -3314,7 +3314,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                            BranchID = createdEntity.BranchID,
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
@@ -3353,7 +3353,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDateDecreasing.Amount + decreasingAmount,
                                 Date_ = entityByDateDecreasing.Date_,
-                                ProductID = previousline.ProductID,
+                                ProductID = previousline.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDateDecreasing.TotalConsumption - decreasingAmount,
                                 TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
                                 TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
@@ -3385,7 +3385,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = line.Quantity * (-1),
                                 Date_ = currentEntity.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = line.Quantity,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
@@ -3397,8 +3397,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalSalesOrder = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = 0,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
+                                WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                                BranchID = currentEntity.BranchID.GetValueOrDefault(),
                                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
@@ -3428,7 +3428,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount - addedPR,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption + addedPR,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
@@ -3465,7 +3465,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount + decreasedPR,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption - decreasedPR,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
@@ -3517,7 +3517,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotalDecreasing.Amount + decreasingAmount,
-                                ProductID = previousLine.ProductID,
+                                ProductID = previousLine.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotalDecreasing.TotalConsumption - decreasingAmount,
                                 TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
@@ -3549,7 +3549,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                             {
                                 Amount = line.Quantity * (-1),
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = line.Quantity,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
@@ -3562,8 +3562,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalReserved = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = 0,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
+                                WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                                BranchID = currentEntity.BranchID.GetValueOrDefault(),
                                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
@@ -3591,7 +3591,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount - addedPR,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption + addedPR,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
@@ -3628,7 +3628,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount + decreasedPR,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption - decreasedPR,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
@@ -3673,7 +3673,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var query = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(sf => new { sf.Id, sf.FicheNo, sf.InputOutputCode, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID })
+                       .Select<StockFiches>(null)
                        .Join<Branches>
                         (
                             b => new { BranchCode = b.Code, BranchID = b.Id },
@@ -3743,7 +3743,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                 {
                     Amount = entityGrandTotal.Amount + deletedLine.Quantity,
-                    ProductID = deletedLine.ProductID,
+                    ProductID = deletedLine.ProductID.GetValueOrDefault(),
                     TotalConsumption = entityGrandTotal.TotalConsumption - deletedLine.Quantity,
                     TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                     TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
@@ -3784,8 +3784,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var queryLines = queryFactory
                         .Query()
                         .From(Tables.StockFicheLines)
-                        .Select<StockFicheLines>(sfl => new
-                        { sfl.UnitSetID, sfl.UnitPrice, sfl.StockFicheID, sfl.Quantity, sfl.ProductID, sfl.LineNr, sfl.LineDescription, sfl.LineAmount, sfl.Id, sfl.FicheType, sfl.DataOpenStatusUserId, sfl.DataOpenStatus })
+                        .Select<StockFicheLines>(null)
                         .Join<Products>
                          (
                              p => new { ProductCode = p.Code, ProductName = p.Name },
@@ -3823,7 +3822,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount + line.Quantity,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption - line.Quantity,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
@@ -3865,7 +3864,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount + line.Quantity,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption - line.Quantity,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
@@ -3924,7 +3923,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = line.Quantity * (-1),
                             Date_ = createdEntity.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
@@ -3936,8 +3935,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalSalesOrder = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = line.Quantity,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -3959,7 +3958,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount - line.Quantity,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
@@ -4002,7 +4001,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                         {
                             Amount = line.Quantity * (-1),
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
@@ -4015,8 +4014,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = line.Quantity,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -4037,7 +4036,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount - line.Quantity,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -4050,7 +4049,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = entityGrandTotal.TotalReserved,
                             TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
                             TotalWastage = entityGrandTotal.TotalWastage + line.Quantity,
-                            WarehouseID = createdEntity.WarehouseID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
                             Id = entityGrandTotal.Id,
                             CreationTime = entityGrandTotal.CreationTime.Value,
                             CreatorId = entityGrandTotal.CreatorId.Value,
@@ -4060,7 +4059,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                            BranchID = createdEntity.BranchID,
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
@@ -4100,7 +4099,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDateDecreasing.Amount + decreasingAmount,
                                 Date_ = entityByDateDecreasing.Date_,
-                                ProductID = previousline.ProductID,
+                                ProductID = previousline.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDateDecreasing.TotalConsumption,
                                 TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
@@ -4132,7 +4131,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = line.Quantity * (-1),
                                 Date_ = currentEntity.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
@@ -4144,8 +4143,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalSalesOrder = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = line.Quantity,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
+                                WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                                BranchID = currentEntity.BranchID.GetValueOrDefault(),
                                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
@@ -4175,7 +4174,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount - addedPR,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -4212,7 +4211,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount + decreasedPR,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -4264,7 +4263,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotalDecreasing.Amount + decreasingAmount,
-                                ProductID = previousLine.ProductID,
+                                ProductID = previousLine.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
@@ -4296,7 +4295,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                             {
                                 Amount = line.Quantity * (-1),
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
                                 TotalWarehouseOutput = 0,
@@ -4309,8 +4308,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalReserved = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = line.Quantity,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
+                                WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                                BranchID = currentEntity.BranchID.GetValueOrDefault(),
                                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
@@ -4338,7 +4337,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount - addedPR,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -4375,7 +4374,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount + decreasedPR,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -4420,7 +4419,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var query = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(sf => new { sf.Id, sf.FicheNo, sf.InputOutputCode, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID })
+                       .Select<StockFiches>(null)
                        .Join<Branches>
                         (
                             b => new { BranchCode = b.Code, BranchID = b.Id },
@@ -4490,7 +4489,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                 {
                     Amount = entityGrandTotal.Amount + deletedLine.Quantity,
-                    ProductID = deletedLine.ProductID,
+                    ProductID = deletedLine.ProductID.GetValueOrDefault(),
                     TotalConsumption = entityGrandTotal.TotalConsumption,
                     TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                     TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -4531,8 +4530,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var queryLines = queryFactory
                         .Query()
                         .From(Tables.StockFicheLines)
-                        .Select<StockFicheLines>(sfl => new
-                        { sfl.UnitSetID, sfl.UnitPrice, sfl.StockFicheID, sfl.Quantity, sfl.ProductID, sfl.LineNr, sfl.LineDescription, sfl.LineAmount, sfl.Id, sfl.FicheType, sfl.DataOpenStatusUserId, sfl.DataOpenStatus })
+                        .Select<StockFicheLines>(null)
                         .Join<Products>
                          (
                              p => new { ProductCode = p.Code, ProductName = p.Name },
@@ -4570,7 +4568,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount + line.Quantity,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                             TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -4612,7 +4610,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount + line.Quantity,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -4671,7 +4669,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                     {
                         Amount = line.Quantity * (-1),
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = 0,
                         TotalGoodsIssue = 0,
                         TotalGoodsReceipt = 0,
@@ -4684,8 +4682,8 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalReserved = line.Quantity,
                         TotalSalesProposition = 0,
                         TotalWastage = 0,
-                        WarehouseID = createdEntity.WarehouseID,
-                        BranchID = createdEntity.BranchID,
+                        WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                        BranchID = createdEntity.BranchID.GetValueOrDefault(),
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
@@ -4706,7 +4704,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                     {
                         Amount = entityGrandTotal.Amount - line.Quantity,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityGrandTotal.TotalConsumption,
                         TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                         TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -4719,7 +4717,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         TotalReserved = entityGrandTotal.TotalReserved + line.Quantity,
                         TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
                         TotalWastage = entityGrandTotal.TotalWastage,
-                        WarehouseID = createdEntity.WarehouseID,
+                        WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
                         Id = entityGrandTotal.Id,
                         CreationTime = entityGrandTotal.CreationTime.Value,
                         CreatorId = entityGrandTotal.CreatorId.Value,
@@ -4729,7 +4727,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                         IsDeleted = entityGrandTotal.IsDeleted,
                         LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                        BranchID = createdEntity.BranchID,
+                        BranchID = createdEntity.BranchID.GetValueOrDefault(),
                         LastModifierId = LoginedUserService.UserId
                     }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
@@ -4769,7 +4767,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotalDecreasing.Amount + decreasingAmount,
-                            ProductID = previousLine.ProductID,
+                            ProductID = previousLine.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
                             TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
@@ -4801,7 +4799,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                         {
                             Amount = line.Quantity * (-1),
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalWarehouseOutput = 0,
@@ -4814,8 +4812,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = line.Quantity,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = currentEntity.WarehouseID,
-                            BranchID = currentEntity.BranchID,
+                            WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = currentEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -4843,7 +4841,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount - addedPR,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -4880,7 +4878,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount + decreasedPR,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -4955,7 +4953,7 @@ namespace TsiErp.Business.Entities.StockMovement
             var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
             {
                 Amount = entityGrandTotal.Amount + deletedLine.Quantity,
-                ProductID = deletedLine.ProductID,
+                ProductID = deletedLine.ProductID.GetValueOrDefault(),
                 TotalConsumption = entityGrandTotal.TotalConsumption,
                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -5032,7 +5030,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                     {
                         Amount = entityGrandTotal.Amount + line.Quantity,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityGrandTotal.TotalConsumption,
                         TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                         TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -5089,7 +5087,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = line.Quantity,
                             Date_ = createdEntity.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalWarehouseOutput = 0,
@@ -5101,8 +5099,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalSalesOrder = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -5124,7 +5122,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount + line.Quantity,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalWarehouseInput = entityByDate.TotalConsumption,
                             TotalWarehouseOutput = entityByDate.TotalConsumption,
@@ -5167,7 +5165,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                         {
                             Amount = line.Quantity,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalWarehouseOutput = 0,
                             TotalWarehouseInput = 0,
@@ -5180,8 +5178,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -5202,7 +5200,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount + line.Quantity,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -5215,7 +5213,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = entityGrandTotal.TotalReserved,
                             TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
                             TotalWastage = entityGrandTotal.TotalWastage,
-                            WarehouseID = createdEntity.WarehouseID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
                             Id = entityGrandTotal.Id,
                             CreationTime = entityGrandTotal.CreationTime.Value,
                             CreatorId = entityGrandTotal.CreatorId.Value,
@@ -5225,7 +5223,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                            BranchID = createdEntity.BranchID,
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
@@ -5265,7 +5263,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDateDecreasing.Amount - decreasingAmount,
                                 Date_ = entityByDateDecreasing.Date_,
-                                ProductID = previousline.ProductID,
+                                ProductID = previousline.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDateDecreasing.TotalConsumption,
                                 TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
@@ -5297,7 +5295,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = line.Quantity,
                                 Date_ = currentEntity.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
                                 TotalWarehouseInput = 0,
@@ -5309,8 +5307,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalSalesOrder = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = 0,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
+                                WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                                BranchID = currentEntity.BranchID.GetValueOrDefault(),
                                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
@@ -5340,7 +5338,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount + addedPR,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -5378,7 +5376,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount - decreasedPR,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -5430,7 +5428,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotalDecreasing.Amount - decreasingAmount,
-                                ProductID = previousLine.ProductID,
+                                ProductID = previousLine.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
@@ -5462,7 +5460,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                             {
                                 Amount = line.Quantity,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = 0,
                                 TotalWarehouseOutput = 0,
                                 TotalWarehouseInput = 0,
@@ -5475,8 +5473,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalReserved = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = 0,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
+                                WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                                BranchID = currentEntity.BranchID.GetValueOrDefault(),
                                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
@@ -5504,7 +5502,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount + addedPR,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -5542,7 +5540,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount - decreasedPR,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -5587,7 +5585,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var query = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(sf => new { sf.Id, sf.InputOutputCode, sf.FicheNo, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID })
+                       .Select<StockFiches>(null)
                        .Join<Branches>
                         (
                             b => new { BranchCode = b.Code, BranchID = b.Id },
@@ -5657,7 +5655,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                 {
                     Amount = entityGrandTotal.Amount - deletedLine.Quantity,
-                    ProductID = deletedLine.ProductID,
+                    ProductID = deletedLine.ProductID.GetValueOrDefault(),
                     TotalConsumption = entityGrandTotal.TotalConsumption,
                     TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                     TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -5698,8 +5696,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var queryLines = queryFactory
                         .Query()
                         .From(Tables.StockFicheLines)
-                        .Select<StockFicheLines>(sfl => new
-                        { sfl.UnitSetID, sfl.UnitPrice, sfl.StockFicheID, sfl.Quantity, sfl.ProductID, sfl.LineNr, sfl.LineDescription, sfl.LineAmount, sfl.Id, sfl.FicheType, sfl.DataOpenStatusUserId, sfl.DataOpenStatus })
+                        .Select<StockFicheLines>(null)
                         .Join<Products>
                          (
                              p => new { ProductCode = p.Code, ProductName = p.Name },
@@ -5737,7 +5734,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount - line.Quantity,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                             TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -5779,7 +5776,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount - line.Quantity,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -5835,7 +5832,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = line.Quantity,
                             Date_ = createdEntity.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalWarehouseOutput = 0,
@@ -5847,8 +5844,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalSalesOrder = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -5870,7 +5867,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount + line.Quantity,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
@@ -5913,7 +5910,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                         {
                             Amount = line.Quantity,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = line.Quantity,
@@ -5926,8 +5923,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -5948,7 +5945,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount + line.Quantity,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -5961,7 +5958,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = entityGrandTotal.TotalReserved,
                             TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
                             TotalWastage = entityGrandTotal.TotalWastage,
-                            WarehouseID = createdEntity.WarehouseID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
                             Id = entityGrandTotal.Id,
                             CreationTime = entityGrandTotal.CreationTime.Value,
                             CreatorId = entityGrandTotal.CreatorId.Value,
@@ -5971,7 +5968,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                            BranchID = createdEntity.BranchID,
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
@@ -6011,7 +6008,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDateDecreasing.Amount - decreasingAmount,
                                 Date_ = entityByDateDecreasing.Date_,
-                                ProductID = previousline.ProductID,
+                                ProductID = previousline.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDateDecreasing.TotalConsumption,
                                 TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
@@ -6043,7 +6040,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = line.Quantity,
                                 Date_ = currentEntity.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = line.Quantity,
@@ -6055,8 +6052,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalSalesOrder = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = 0,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
+                                WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                                BranchID = currentEntity.BranchID.GetValueOrDefault(),
                                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
@@ -6086,7 +6083,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount + addedPR,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -6124,7 +6121,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount - decreasedPR,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -6176,7 +6173,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotalDecreasing.Amount - decreasingAmount,
-                                ProductID = previousLine.ProductID,
+                                ProductID = previousLine.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
@@ -6208,7 +6205,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                             {
                                 Amount = line.Quantity,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = 0,
                                 TotalWarehouseOutput = 0,
                                 TotalWarehouseInput = 0,
@@ -6221,8 +6218,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalReserved = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = 0,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
+                                WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                                BranchID = currentEntity.BranchID.GetValueOrDefault(),
                                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
@@ -6250,7 +6247,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount + addedPR,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -6288,7 +6285,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount - decreasedPR,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -6335,7 +6332,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var query = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(sf => new { sf.Id, sf.InputOutputCode, sf.FicheNo, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID })
+                       .Select<StockFiches>(null)
                        .Join<Branches>
                         (
                             b => new { BranchCode = b.Code, BranchID = b.Id },
@@ -6405,7 +6402,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                 {
                     Amount = entityGrandTotal.Amount - deletedLine.Quantity,
-                    ProductID = deletedLine.ProductID,
+                    ProductID = deletedLine.ProductID.GetValueOrDefault(),
                     TotalConsumption = entityGrandTotal.TotalConsumption,
                     TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                     TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -6446,8 +6443,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var queryLines = queryFactory
                         .Query()
                         .From(Tables.StockFicheLines)
-                        .Select<StockFicheLines>(sfl => new
-                        { sfl.UnitSetID, sfl.UnitPrice, sfl.StockFicheID, sfl.Quantity, sfl.ProductID, sfl.LineNr, sfl.LineDescription, sfl.LineAmount, sfl.Id, sfl.FicheType, sfl.DataOpenStatusUserId, sfl.DataOpenStatus })
+                        .Select<StockFicheLines>(null)
                         .Join<Products>
                          (
                              p => new { ProductCode = p.Code, ProductName = p.Name },
@@ -6485,7 +6481,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount - line.Quantity,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                             TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -6527,7 +6523,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount - line.Quantity,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -6583,7 +6579,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = line.Quantity * (-1),
                             Date_ = createdEntity.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalGoodsIssue = line.Quantity,
                             TotalGoodsReceipt = 0,
@@ -6593,8 +6589,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalSalesOrder = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -6615,7 +6611,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount - line.Quantity,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue + line.Quantity,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
@@ -6656,7 +6652,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                         {
                             Amount = line.Quantity * (-1),
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = 0,
                             TotalGoodsIssue = line.Quantity,
                             TotalGoodsReceipt = 0,
@@ -6667,8 +6663,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = 0,
                             TotalSalesProposition = 0,
                             TotalWastage = 0,
-                            WarehouseID = createdEntity.WarehouseID,
-                            BranchID = createdEntity.BranchID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
@@ -6689,7 +6685,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount - line.Quantity,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue + line.Quantity,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
@@ -6700,7 +6696,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalReserved = entityGrandTotal.TotalReserved,
                             TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
                             TotalWastage = entityGrandTotal.TotalWastage,
-                            WarehouseID = createdEntity.WarehouseID,
+                            WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
                             Id = entityGrandTotal.Id,
                             CreationTime = entityGrandTotal.CreationTime.Value,
                             CreatorId = entityGrandTotal.CreatorId.Value,
@@ -6710,7 +6706,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                             IsDeleted = entityGrandTotal.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                            BranchID = createdEntity.BranchID,
+                            BranchID = createdEntity.BranchID.GetValueOrDefault(),
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
@@ -6750,7 +6746,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDateDecreasing.Amount + decreasingAmount,
                                 Date_ = entityByDateDecreasing.Date_,
-                                ProductID = previousline.ProductID,
+                                ProductID = previousline.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDateDecreasing.TotalConsumption,
                                 TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
@@ -6782,7 +6778,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = line.Quantity * (-1),
                                 Date_ = currentEntity.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = line.Quantity,
                                 TotalGoodsReceipt = 0,
@@ -6794,8 +6790,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalSalesOrder = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = 0,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
+                                WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                                BranchID = currentEntity.BranchID.GetValueOrDefault(),
                                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
@@ -6825,7 +6821,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount - addedPR,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -6863,7 +6859,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount + decreasedPR,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -6915,7 +6911,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotalDecreasing.Amount + decreasingAmount,
-                                ProductID = previousLine.ProductID,
+                                ProductID = previousLine.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
@@ -6947,7 +6943,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                             {
                                 Amount = line.Quantity * (-1),
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = line.Quantity,
                                 TotalGoodsReceipt = 0,
@@ -6960,8 +6956,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalReserved = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = 0,
-                                WarehouseID = currentEntity.WarehouseID,
-                                BranchID = currentEntity.BranchID,
+                                WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                                BranchID = currentEntity.BranchID.GetValueOrDefault(),
                                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
@@ -6989,7 +6985,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount - addedPR,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -7027,7 +7023,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount + decreasedPR,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -7072,7 +7068,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var query = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(sf => new { sf.Id, sf.InputOutputCode, sf.FicheNo, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID })
+                       .Select<StockFiches>(null)
                        .Join<Branches>
                         (
                             b => new { BranchCode = b.Code, BranchID = b.Id },
@@ -7142,7 +7138,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                 {
                     Amount = entityGrandTotal.Amount + deletedLine.Quantity,
-                    ProductID = deletedLine.ProductID,
+                    ProductID = deletedLine.ProductID.GetValueOrDefault(),
                     TotalConsumption = entityGrandTotal.TotalConsumption,
                     TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                     TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -7183,8 +7179,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var queryLines = queryFactory
                         .Query()
                         .From(Tables.StockFicheLines)
-                        .Select<StockFicheLines>(sfl => new
-                        { sfl.UnitSetID, sfl.UnitPrice, sfl.StockFicheID, sfl.Quantity, sfl.ProductID, sfl.LineNr, sfl.LineDescription, sfl.LineAmount, sfl.Id, sfl.FicheType, sfl.DataOpenStatusUserId, sfl.DataOpenStatus })
+                        .Select<StockFicheLines>(null)
                         .Join<Products>
                          (
                              p => new { ProductCode = p.Code, ProductName = p.Name },
@@ -7222,7 +7217,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityByDate.Amount + line.Quantity,
                             Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                             TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -7264,7 +7259,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {
                             Amount = entityGrandTotal.Amount + line.Quantity,
-                            ProductID = line.ProductID,
+                            ProductID = line.ProductID.GetValueOrDefault(),
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -7322,7 +7317,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = line.Quantity * (-1),
                                 Date_ = createdEntity.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
@@ -7334,8 +7329,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalSalesOrder = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = 0,
-                                WarehouseID = createdEntity.WarehouseID,
-                                BranchID = createdEntity.BranchID,
+                                WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                                BranchID = createdEntity.BranchID.GetValueOrDefault(),
                                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
@@ -7357,7 +7352,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = line.Quantity,
                                 Date_ = createdEntity.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
@@ -7369,8 +7364,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalSalesOrder = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = 0,
-                                WarehouseID = createdEntity.WarehouseID,
-                                BranchID = createdEntity.BranchID,
+                                WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                                BranchID = createdEntity.BranchID.GetValueOrDefault(),
                                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
@@ -7396,7 +7391,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount - line.Quantity,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput + line.Quantity,
@@ -7431,7 +7426,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount + line.Quantity,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput + line.Quantity,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
@@ -7478,7 +7473,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                             {
                                 Amount = line.Quantity * (-1),
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
@@ -7491,8 +7486,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalReserved = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = 0,
-                                WarehouseID = createdEntity.WarehouseID,
-                                BranchID = createdEntity.BranchID,
+                                WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                                BranchID = createdEntity.BranchID.GetValueOrDefault(),
                                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
@@ -7513,7 +7508,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                             {
                                 Amount = line.Quantity,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
@@ -7526,8 +7521,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalReserved = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = 0,
-                                WarehouseID = createdEntity.WarehouseID,
-                                BranchID = createdEntity.BranchID,
+                                WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
+                                BranchID = createdEntity.BranchID.GetValueOrDefault(),
                                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 CreatorId = LoginedUserService.UserId,
                                 DataOpenStatus = false,
@@ -7552,7 +7547,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount - line.Quantity,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput + line.Quantity,
@@ -7565,7 +7560,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalReserved = entityGrandTotal.TotalReserved,
                                 TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
                                 TotalWastage = entityGrandTotal.TotalWastage,
-                                WarehouseID = createdEntity.WarehouseID,
+                                WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
                                 Id = entityGrandTotal.Id,
                                 CreationTime = entityGrandTotal.CreationTime.Value,
                                 CreatorId = entityGrandTotal.CreatorId.Value,
@@ -7575,7 +7570,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
                                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                                BranchID = createdEntity.BranchID,
+                                BranchID = createdEntity.BranchID.GetValueOrDefault(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
@@ -7588,7 +7583,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount + line.Quantity,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput + line.Quantity,
                                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -7601,7 +7596,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalReserved = entityGrandTotal.TotalReserved,
                                 TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
                                 TotalWastage = entityGrandTotal.TotalWastage,
-                                WarehouseID = createdEntity.WarehouseID,
+                                WarehouseID = createdEntity.WarehouseID.GetValueOrDefault(),
                                 Id = entityGrandTotal.Id,
                                 CreationTime = entityGrandTotal.CreationTime.Value,
                                 CreatorId = entityGrandTotal.CreatorId.Value,
@@ -7611,7 +7606,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 DeletionTime = entityGrandTotal.DeletionTime.GetValueOrDefault(),
                                 IsDeleted = entityGrandTotal.IsDeleted,
                                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                                BranchID = createdEntity.BranchID,
+                                BranchID = createdEntity.BranchID.GetValueOrDefault(),
                                 LastModifierId = LoginedUserService.UserId
                             }).Where(new { Id = entityGrandTotal.Id }, false, false, "");
 
@@ -7655,7 +7650,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 {
                                     Amount = entityByDateDecreasing.Amount + decreasingAmount,
                                     Date_ = entityByDateDecreasing.Date_,
-                                    ProductID = previousline.ProductID,
+                                    ProductID = previousline.ProductID.GetValueOrDefault(),
                                     TotalConsumption = entityByDateDecreasing.TotalConsumption,
                                     TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput - decreasingAmount,
                                     TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
@@ -7687,7 +7682,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 {
                                     Amount = line.Quantity * (-1),
                                     Date_ = currentEntity.Date_,
-                                    ProductID = line.ProductID,
+                                    ProductID = line.ProductID.GetValueOrDefault(),
                                     TotalConsumption = 0,
                                     TotalGoodsIssue = 0,
                                     TotalGoodsReceipt = 0,
@@ -7699,8 +7694,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                     TotalSalesOrder = 0,
                                     TotalSalesProposition = 0,
                                     TotalWastage = 0,
-                                    WarehouseID = currentEntity.WarehouseID,
-                                    BranchID = currentEntity.BranchID,
+                                    WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                                    BranchID = currentEntity.BranchID.GetValueOrDefault(),
                                     CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     CreatorId = LoginedUserService.UserId,
                                     DataOpenStatus = false,
@@ -7731,7 +7726,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 {
                                     Amount = entityByDateDecreasing.Amount - decreasingAmount,
                                     Date_ = entityByDateDecreasing.Date_,
-                                    ProductID = previousline.ProductID,
+                                    ProductID = previousline.ProductID.GetValueOrDefault(),
                                     TotalConsumption = entityByDateDecreasing.TotalConsumption,
                                     TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
                                     TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput - decreasingAmount,
@@ -7763,7 +7758,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 {
                                     Amount = line.Quantity,
                                     Date_ = currentEntity.Date_,
-                                    ProductID = line.ProductID,
+                                    ProductID = line.ProductID.GetValueOrDefault(),
                                     TotalConsumption = 0,
                                     TotalGoodsIssue = 0,
                                     TotalGoodsReceipt = 0,
@@ -7775,8 +7770,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                     TotalSalesOrder = 0,
                                     TotalSalesProposition = 0,
                                     TotalWastage = 0,
-                                    WarehouseID = currentEntity.WarehouseID,
-                                    BranchID = currentEntity.BranchID,
+                                    WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                                    BranchID = currentEntity.BranchID.GetValueOrDefault(),
                                     CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     CreatorId = LoginedUserService.UserId,
                                     DataOpenStatus = false,
@@ -7810,7 +7805,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 {
                                     Amount = entityByDate.Amount - addedPR,
                                     Date_ = entityByDate.Date_,
-                                    ProductID = line.ProductID,
+                                    ProductID = line.ProductID.GetValueOrDefault(),
                                     TotalConsumption = entityByDate.TotalConsumption,
                                     TotalWarehouseOutput = entityByDate.TotalWarehouseOutput + addedPR,
                                     TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -7848,7 +7843,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 {
                                     Amount = entityByDate.Amount + decreasedPR,
                                     Date_ = entityByDate.Date_,
-                                    ProductID = line.ProductID,
+                                    ProductID = line.ProductID.GetValueOrDefault(),
                                     TotalConsumption = entityByDate.TotalConsumption,
                                     TotalWarehouseOutput = entityByDate.TotalWarehouseOutput - decreasedPR,
                                     TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -7888,7 +7883,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 {
                                     Amount = entityByDate.Amount + addedPR,
                                     Date_ = entityByDate.Date_,
-                                    ProductID = line.ProductID,
+                                    ProductID = line.ProductID.GetValueOrDefault(),
                                     TotalConsumption = entityByDate.TotalConsumption,
                                     TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                     TotalWarehouseInput = entityByDate.TotalWarehouseInput + addedPR,
@@ -7926,7 +7921,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 {
                                     Amount = entityByDate.Amount - decreasedPR,
                                     Date_ = entityByDate.Date_,
-                                    ProductID = line.ProductID,
+                                    ProductID = line.ProductID.GetValueOrDefault(),
                                     TotalConsumption = entityByDate.TotalConsumption,
                                     TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                     TotalWarehouseInput = entityByDate.TotalWarehouseInput - decreasedPR,
@@ -7983,7 +7978,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                                 {
                                     Amount = entityGrandTotalDecreasing.Amount + decreasingAmount,
-                                    ProductID = previousLine.ProductID,
+                                    ProductID = previousLine.ProductID.GetValueOrDefault(),
                                     TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
                                     TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
                                     TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput - decreasingAmount,
@@ -8015,7 +8010,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                                 {
                                     Amount = line.Quantity * (-1),
-                                    ProductID = line.ProductID,
+                                    ProductID = line.ProductID.GetValueOrDefault(),
                                     TotalConsumption = 0,
                                     TotalGoodsIssue = 0,
                                     TotalWarehouseOutput = line.Quantity,
@@ -8028,8 +8023,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                     TotalReserved = 0,
                                     TotalSalesProposition = 0,
                                     TotalWastage = 0,
-                                    WarehouseID = currentEntity.WarehouseID,
-                                    BranchID = currentEntity.BranchID,
+                                    WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                                    BranchID = currentEntity.BranchID.GetValueOrDefault(),
                                     CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     CreatorId = LoginedUserService.UserId,
                                     DataOpenStatus = false,
@@ -8059,7 +8054,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 var queryDecreasing = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                                 {
                                     Amount = entityGrandTotalDecreasing.Amount - decreasingAmount,
-                                    ProductID = previousLine.ProductID,
+                                    ProductID = previousLine.ProductID.GetValueOrDefault(),
                                     TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
                                     TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput - decreasingAmount,
                                     TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
@@ -8091,7 +8086,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                                 {
                                     Amount = line.Quantity,
-                                    ProductID = line.ProductID,
+                                    ProductID = line.ProductID.GetValueOrDefault(),
                                     TotalConsumption = 0,
                                     TotalGoodsIssue = 0,
                                     TotalWarehouseOutput = 0,
@@ -8104,8 +8099,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                     TotalReserved = 0,
                                     TotalSalesProposition = 0,
                                     TotalWastage = 0,
-                                    WarehouseID = currentEntity.WarehouseID,
-                                    BranchID = currentEntity.BranchID,
+                                    WarehouseID = currentEntity.WarehouseID.GetValueOrDefault(),
+                                    BranchID = currentEntity.BranchID.GetValueOrDefault(),
                                     CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                     CreatorId = LoginedUserService.UserId,
                                     DataOpenStatus = false,
@@ -8137,7 +8132,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                                 {
                                     Amount = entityGrandTotal.Amount - addedPR,
-                                    ProductID = line.ProductID,
+                                    ProductID = line.ProductID.GetValueOrDefault(),
                                     TotalConsumption = entityGrandTotal.TotalConsumption,
                                     TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                     TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput + addedPR,
@@ -8175,7 +8170,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                                 {
                                     Amount = entityGrandTotal.Amount + decreasedPR,
-                                    ProductID = line.ProductID,
+                                    ProductID = line.ProductID.GetValueOrDefault(),
                                     TotalConsumption = entityGrandTotal.TotalConsumption,
                                     TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                     TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput - decreasedPR,
@@ -8215,7 +8210,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                                 {
                                     Amount = entityGrandTotal.Amount + addedPR,
-                                    ProductID = line.ProductID,
+                                    ProductID = line.ProductID.GetValueOrDefault(),
                                     TotalConsumption = entityGrandTotal.TotalConsumption,
                                     TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput + addedPR,
                                     TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -8253,7 +8248,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                                 {
                                     Amount = entityGrandTotal.Amount - decreasedPR,
-                                    ProductID = line.ProductID,
+                                    ProductID = line.ProductID.GetValueOrDefault(),
                                     TotalConsumption = entityGrandTotal.TotalConsumption,
                                     TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput - decreasedPR,
                                     TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -8299,7 +8294,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var query = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(sf => new { sf.Id, sf.InputOutputCode, sf.FicheNo, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID })
+                       .Select<StockFiches>(null)
                        .Join<Branches>
                         (
                             b => new { BranchCode = b.Code, BranchID = b.Id },
@@ -8409,7 +8404,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                     {
                         Amount = entityGrandTotal.Amount + deletedLine.Quantity,
-                        ProductID = deletedLine.ProductID,
+                        ProductID = deletedLine.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityGrandTotal.TotalConsumption,
                         TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                         TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput - deletedLine.Quantity,
@@ -8444,7 +8439,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     var queryDecreasingGrand = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                     {
                         Amount = entityGrandTotal.Amount - deletedLine.Quantity,
-                        ProductID = deletedLine.ProductID,
+                        ProductID = deletedLine.ProductID.GetValueOrDefault(),
                         TotalConsumption = entityGrandTotal.TotalConsumption,
                         TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput - deletedLine.Quantity,
                         TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
@@ -8484,8 +8479,7 @@ namespace TsiErp.Business.Entities.StockMovement
                 var queryLines = queryFactory
                         .Query()
                         .From(Tables.StockFicheLines)
-                        .Select<StockFicheLines>(sfl => new
-                        { sfl.UnitSetID, sfl.UnitPrice, sfl.StockFicheID, sfl.Quantity, sfl.ProductID, sfl.LineNr, sfl.LineDescription, sfl.LineAmount, sfl.Id, sfl.FicheType, sfl.DataOpenStatusUserId, sfl.DataOpenStatus })
+                        .Select<StockFicheLines>(null)
                         .Join<Products>
                          (
                              p => new { ProductCode = p.Code, ProductName = p.Name },
@@ -8525,7 +8519,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount + line.Quantity,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput - line.Quantity,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput,
@@ -8560,7 +8554,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityByDate.Amount - line.Quantity,
                                 Date_ = entityByDate.Date_,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                                 TotalWarehouseInput = entityByDate.TotalWarehouseInput - line.Quantity,
@@ -8606,7 +8600,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                             {
                                 Amount = entityGrandTotal.Amount + line.Quantity,
-                                ProductID = line.ProductID,
+                                ProductID = line.ProductID.GetValueOrDefault(),
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                                 TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput - line.Quantity,

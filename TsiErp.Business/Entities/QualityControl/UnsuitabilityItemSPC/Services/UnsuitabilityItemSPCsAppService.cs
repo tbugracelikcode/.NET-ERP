@@ -7,32 +7,21 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Entities.UnsuitabilityItemSPC.Validations;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.PurchaseRequest.Services;
-using TsiErp.Business.Entities.StockMovement;
+using TsiErp.Business.Entities.UnsuitabilityItemSPC.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
-using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
-using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPC;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPC.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPCLine;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPCLine.Dtos;
-using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
-using TsiErp.Entities.Entities.StockManagement.Product;
-using TsiErp.Entities.Entities.StockManagement.UnitSet;
-using TsiErp.Entities.Entities.StockManagement.WareHouse;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.UnsuitabilityItemSPCs.Page;
-using TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
-using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 
 namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
 {
@@ -102,15 +91,15 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                 var queryLine = queryFactory.Query().From(Tables.UnsuitabilityItemSPCLines).Insert(new CreateUnsuitabilityItemSPCLinesDto
                 {
                     TotalUnsuitableReport = item.TotalUnsuitableReport,
-                    UnsuitabilityItemID = item.UnsuitabilityItemID,
-                    UnsuitabilityTypeID = item.UnsuitabilityTypeID,
+                    UnsuitabilityItemID = item.UnsuitabilityItemID.GetValueOrDefault(),
+                    UnsuitabilityTypeID = item.UnsuitabilityTypeID.GetValueOrDefault(),
                     UnsuitableComponentPerReport = item.UnsuitableComponentPerReport,
                     Detectability = item.Detectability,
                     Frequency = item.Frequency,
                     LineNr = item.LineNr,
                     RPN = item.RPN,
                     TotalUnsuitableComponent = item.TotalUnsuitableComponent,
-                    WorkCenterID = item.WorkCenterID,
+                    WorkCenterID = item.WorkCenterID.GetValueOrDefault(),
                     UnsuitabilitySPCID = addedEntityId,
                     CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
@@ -327,15 +316,15 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                     var queryLine = queryFactory.Query().From(Tables.UnsuitabilityItemSPCLines).Insert(new CreateUnsuitabilityItemSPCLinesDto
                     {
                         TotalUnsuitableReport = item.TotalUnsuitableReport,
-                        UnsuitabilityItemID = item.UnsuitabilityItemID,
-                        UnsuitabilityTypeID = item.UnsuitabilityTypeID,
+                        UnsuitabilityItemID = item.UnsuitabilityItemID.GetValueOrDefault(),
+                        UnsuitabilityTypeID = item.UnsuitabilityTypeID.GetValueOrDefault(),
                         UnsuitableComponentPerReport = item.UnsuitableComponentPerReport,
                         Detectability = item.Detectability,
                         Frequency = item.Frequency,
                         LineNr = item.LineNr,
                         RPN = item.RPN,
                         TotalUnsuitableComponent = item.TotalUnsuitableComponent,
-                        WorkCenterID = item.WorkCenterID,
+                        WorkCenterID = item.WorkCenterID.GetValueOrDefault(),
                         UnsuitabilitySPCID = input.Id,
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
@@ -362,15 +351,15 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                         var queryLine = queryFactory.Query().From(Tables.UnsuitabilityItemSPCLines).Update(new UpdateUnsuitabilityItemSPCLinesDto
                         {
                             TotalUnsuitableReport = item.TotalUnsuitableReport,
-                            UnsuitabilityItemID = item.UnsuitabilityItemID,
-                            UnsuitabilityTypeID = item.UnsuitabilityTypeID,
+                            UnsuitabilityItemID = item.UnsuitabilityItemID.GetValueOrDefault(),
+                            UnsuitabilityTypeID = item.UnsuitabilityTypeID.GetValueOrDefault(),
                             UnsuitableComponentPerReport = item.UnsuitableComponentPerReport,
                             Detectability = item.Detectability,
                             Frequency = item.Frequency,
                             LineNr = item.LineNr,
                             RPN = item.RPN,
                             TotalUnsuitableComponent = item.TotalUnsuitableComponent,
-                            WorkCenterID = item.WorkCenterID,
+                            WorkCenterID = item.WorkCenterID.GetValueOrDefault(),
                             UnsuitabilitySPCID = input.Id,
                             CreationTime = line.CreationTime,
                             CreatorId = line.CreatorId,

@@ -60,7 +60,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
             var query = queryFactory.Query().From(Tables.EquipmentRecords).Insert(new CreateEquipmentRecordsDto
             {
                 Code = input.Code,
-                Department = input.Department,
+                Department = input.Department.GetValueOrDefault(),
                 Cancel = input.Cancel,
                 CancellationDate = input.CancellationDate,
                 CancellationReason = input.CancellationReason,
@@ -132,7 +132,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
         public async Task<IDataResult<SelectEquipmentRecordsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
-                    .Query().From(Tables.EquipmentRecords).Select<EquipmentRecords>(e => new { e.Cancel, e.CancellationDate, e.CancellationReason, e.RecordDate, e.Code, e.DataOpenStatus, e.DataOpenStatusUserId, e.Department, e.EquipmentSerialNo, e.Frequency, e.MeasuringAccuracy, e.MeasuringRange, e.Name, e.Responsible, e.IsActive, e.Id })
+                    .Query().From(Tables.EquipmentRecords).Select<EquipmentRecords>(null)
                         .Join<Departments>
                         (
                             d => new { DepartmentName = d.Name, Department = d.Id },
@@ -160,7 +160,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
             var query = queryFactory
                .Query()
                .From(Tables.EquipmentRecords)
-               .Select<EquipmentRecords>(e => new { e.Cancel, e.CancellationDate, e.CancellationReason, e.RecordDate, e.Code, e.DataOpenStatus, e.DataOpenStatusUserId, e.Department, e.EquipmentSerialNo, e.Frequency, e.MeasuringAccuracy, e.MeasuringRange, e.Name, e.Responsible, e.IsActive, e.Id })
+               .Select<EquipmentRecords>(null)
                    .Join<Departments>
                    (
                        d => new { DepartmentName = d.Name },
@@ -209,7 +209,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
                 Cancel = input.Cancel,
                 CancellationDate = input.CancellationDate,
                 CancellationReason = input.CancellationReason,
-                Department = input.Department,
+                Department = input.Department.GetValueOrDefault(),
                 EquipmentSerialNo = input.EquipmentSerialNo,
                 RecordDate = input.RecordDate,
                 CreationTime = entity.CreationTime.Value,

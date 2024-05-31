@@ -59,13 +59,13 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
             var query = queryFactory.Query().From(Tables.UnplannedMaintenances).Insert(new CreateUnplannedMaintenancesDto
             {
                 RegistrationNo = input.RegistrationNo,
-                StationID = input.StationID,
+                StationID = input.StationID.GetValueOrDefault(),
                 CompletionDate = input.CompletionDate,
                 Caregiver = input.Caregiver,
                 Note_ = input.Note_,
                 NumberofCaregivers = input.NumberofCaregivers,
                 OccuredTime = input.OccuredTime,
-                PeriodID = input.PeriodID,
+                PeriodID = input.PeriodID.GetValueOrDefault(),
                 PeriodTime = input.PeriodTime,
                 UnplannedDate = input.UnplannedDate,
                 UnplannedTime = input.UnplannedTime,
@@ -103,8 +103,8 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
-                    ProductID = item.ProductID,
-                    UnitSetID = item.UnitSetID,
+                    ProductID = item.ProductID.GetValueOrDefault(),
+                    UnitSetID = item.UnitSetID.GetValueOrDefault(),
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -156,7 +156,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.UnplannedMaintenances)
-                   .Select<UnplannedMaintenances>(pm => new { pm.Status, pm.StationID, pm.StartDate, pm.RemainingTime, pm.RegistrationNo, pm.UnplannedDate, pm.UnplannedTime, pm.PeriodTime, pm.PeriodID, pm.OccuredTime, pm.NumberofCaregivers, pm.Note_, pm.Id, pm.DataOpenStatusUserId, pm.DataOpenStatus, pm.CompletionDate, pm.Caregiver })
+                   .Select<UnplannedMaintenances>(null)
                    .Join<Stations>
                     (
                         s => new { StationID = s.Id, StationCode = s.Code },
@@ -178,7 +178,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.UnplannedMaintenanceLines)
-                   .Select<UnplannedMaintenanceLines>(pml => new { pml.UnitSetID, pml.ProductID, pml.UnplannedMaintenanceID, pml.MaintenanceNote, pml.LineNr, pml.InstructionDescription, pml.Id, pml.DataOpenStatusUserId, pml.DataOpenStatus, pml.Amount })
+                   .Select<UnplannedMaintenanceLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -211,7 +211,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
             var query = queryFactory
                    .Query()
                  .From(Tables.UnplannedMaintenances)
-                   .Select<UnplannedMaintenances>(pm => new { pm.Status, pm.StationID, pm.StartDate, pm.RemainingTime, pm.RegistrationNo, pm.UnplannedDate, pm.UnplannedTime, pm.PeriodTime, pm.PeriodID, pm.OccuredTime, pm.NumberofCaregivers, pm.Note_, pm.Id, pm.DataOpenStatusUserId, pm.DataOpenStatus, pm.CompletionDate, pm.Caregiver })
+                   .Select<UnplannedMaintenances>(null)
                    .Join<Stations>
                     (
                         s => new { StationCode = s.Code },
@@ -262,7 +262,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
             var queryLines = queryFactory
                    .Query()
                     .From(Tables.UnplannedMaintenanceLines)
-                   .Select<UnplannedMaintenanceLines>(pml => new { pml.UnitSetID, pml.ProductID, pml.UnplannedMaintenanceID, pml.MaintenanceNote, pml.LineNr, pml.InstructionDescription, pml.Id, pml.DataOpenStatusUserId, pml.DataOpenStatus, pml.Amount })
+                   .Select<UnplannedMaintenanceLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -315,13 +315,13 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
             var query = queryFactory.Query().From(Tables.UnplannedMaintenances).Update(new UpdateUnplannedMaintenancesDto
             {
                 RegistrationNo = input.RegistrationNo,
-                StationID = input.StationID,
+                StationID = input.StationID.GetValueOrDefault(),
                 CompletionDate = input.CompletionDate,
                 Caregiver = input.Caregiver,
                 Note_ = input.Note_,
                 NumberofCaregivers = input.NumberofCaregivers,
                 OccuredTime = input.OccuredTime,
-                PeriodID = input.PeriodID,
+                PeriodID = input.PeriodID.GetValueOrDefault(),
                 PeriodTime = input.PeriodTime,
                 UnplannedDate = input.UnplannedDate,
                 UnplannedTime = input.UnplannedTime,
@@ -361,8 +361,8 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
-                        ProductID = item.ProductID,
-                        UnitSetID = item.UnitSetID,
+                        ProductID = item.ProductID.GetValueOrDefault(),
+                        UnitSetID = item.UnitSetID.GetValueOrDefault(),
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -392,8 +392,8 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                            ProductID = item.ProductID,
-                            UnitSetID = item.UnitSetID,
+                            ProductID = item.ProductID.GetValueOrDefault(),
+                            UnitSetID = item.UnitSetID.GetValueOrDefault(),
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;

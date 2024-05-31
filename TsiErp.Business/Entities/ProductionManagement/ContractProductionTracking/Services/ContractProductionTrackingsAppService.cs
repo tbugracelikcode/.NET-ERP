@@ -43,8 +43,8 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 
                 var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Insert(new CreateContractProductionTrackingsDto
                 {
-                    CurrentAccountID = input.CurrentAccountID,
-                    EmployeeID = input.EmployeeID,
+                    CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
+                    EmployeeID = input.EmployeeID.GetValueOrDefault(),
                     IsFinished = input.IsFinished,
                     OperationEndDate = input.OperationEndDate,
                     OperationEndTime = input.OperationEndTime,
@@ -53,9 +53,9 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                     OperationTime = input.OperationTime,
                     PlannedQuantity = input.PlannedQuantity,
                     ProducedQuantity = input.ProducedQuantity,
-                    ProductID = input.ProductID,
-                    ShiftID = input.ShiftID,
-                    StationID = input.StationID,
+                    ProductID = input.ProductID.GetValueOrDefault(),
+                    ShiftID = input.ShiftID.GetValueOrDefault(),
+                    StationID = input.StationID.GetValueOrDefault(),
                     WorkOrderID = input.WorkOrderID,
                     CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
@@ -96,7 +96,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
         public async Task<IDataResult<SelectContractProductionTrackingsDto>> GetAsync(Guid id)
         {
                 var query = queryFactory
-                        .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(c => new { c.Id, c.StationID, c.StationCode, c.CurrentAccountCardID, c.EmployeeID,c.EmployeeName,c.OperationEndDate,c.OperationEndTime,c.OperationStartDate,c.OperationStartTime,c.OperationTime,c.PlannedQuantity,c.ProducedQuantity,c.ProductID,c.ShiftCode,c.ShiftID,c.WorkOrderID, c.DataOpenStatus, c.DataOpenStatusUserId })
+                        .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(null)
                             .Join<WorkOrders>
                             (
                                 w => new { WorkOrderCode = w.WorkOrderNo, WorkOrderID = w.Id },
@@ -154,7 +154,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
         public async Task<IDataResult<IList<ListContractProductionTrackingsDto>>> GetListAsync(ListContractProductionTrackingsParameterDto input)
         {
                 var query = queryFactory
-                       .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(c => new { c.Id, c.StationID, c.StationCode, c.CurrentAccountCardID, c.EmployeeID, c.EmployeeName, c.OperationEndDate, c.OperationEndTime, c.OperationStartDate, c.OperationStartTime, c.OperationTime, c.PlannedQuantity, c.ProducedQuantity, c.ProductID, c.ShiftCode, c.ShiftID, c.WorkOrderID })
+                       .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(null)
                            .Join<WorkOrders>
                            (
                                w => new { WorkOrderCode = w.WorkOrderNo, WorkOrderID = w.Id },
@@ -215,8 +215,8 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 
                 var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Update(new UpdateContractProductionTrackingsDto
                 {
-                    CurrentAccountID = input.CurrentAccountID,
-                    EmployeeID = input.EmployeeID,
+                    CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
+                    EmployeeID = input.EmployeeID.GetValueOrDefault(),
                     IsFinished = input.IsFinished,
                     OperationEndDate = input.OperationEndDate,
                     OperationEndTime = input.OperationEndTime,
@@ -225,9 +225,9 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                     OperationTime = input.OperationTime,
                     PlannedQuantity = input.PlannedQuantity,
                     ProducedQuantity = input.ProducedQuantity,
-                    ProductID = input.ProductID,
-                    ShiftID = input.ShiftID,
-                    StationID = input.StationID,
+                    ProductID = input.ProductID.GetValueOrDefault(),
+                    ShiftID = input.ShiftID.GetValueOrDefault(),
+                    StationID = input.StationID.GetValueOrDefault(),
                     WorkOrderID = input.WorkOrderID,
                     Id = input.Id,
                     CreationTime = entity.CreationTime.Value,
@@ -255,7 +255,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
         public async Task<IDataResult<IList<SelectContractProductionTrackingsDto>>> GetSelectListAsync(Guid productId)
         {
                 var query = queryFactory
-                       .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(c => new { c.Id, c.StationID, c.StationCode, c.CurrentAccountCardID, c.EmployeeID, c.EmployeeName, c.OperationEndDate, c.OperationEndTime, c.OperationStartDate, c.OperationStartTime, c.OperationTime, c.PlannedQuantity, c.ProducedQuantity, c.ProductID, c.ShiftCode, c.ShiftID, c.WorkOrderID })
+                       .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(null)
                            .Join<WorkOrders>
                            (
                                w => new { WorkOrderCode = w.WorkOrderNo, WorkOrderID = w.Id },

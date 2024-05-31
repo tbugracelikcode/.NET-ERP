@@ -50,7 +50,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
 
             var query = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Insert(new CreatePurchaseOrdersAwaitingApprovalsDto
             {
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
                 PurchaseOrdersAwaitingApprovalStateEnum = 1,
                 ApprovedQuantity = input.ApprovedQuantity,
                 Description_ = input.Description_,
@@ -283,8 +283,8 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
 
             var query = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Update(new UpdatePurchaseOrdersAwaitingApprovalsDto
             {
-                ProductID = input.ProductID,
-                ApproverID = input.ApproverID,
+                ProductID = input.ProductID.GetValueOrDefault(),
+                ApproverID = input.ApproverID.GetValueOrDefault(),
                 PurchaseOrderLineID = input.PurchaseOrderLineID.GetValueOrDefault(),
                 PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),

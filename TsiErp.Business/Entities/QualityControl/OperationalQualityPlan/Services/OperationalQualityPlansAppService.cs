@@ -74,8 +74,8 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                 Id = addedEntityId,
                 Description_ = input.Description_,
                 DocumentNumber = input.DocumentNumber,
-                ProductID = input.ProductID,
-                ProductsOperationID = input.ProductsOperationID,
+                ProductID = input.ProductID.GetValueOrDefault(),
+                ProductsOperationID = input.ProductsOperationID.GetValueOrDefault(),
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
@@ -233,7 +233,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.OperationalQualityPlans)
-                   .Select<OperationalQualityPlans>(oqp => new { oqp.ProductsOperationID, oqp.ProductID, oqp.Id, oqp.DocumentNumber, oqp.Description_, oqp.DataOpenStatusUserId, oqp.DataOpenStatus })
+                   .Select<OperationalQualityPlans>(null)
                    .Join<Products>
                     (
                         pr => new { ProductCode = pr.Code, ProductName = pr.Name, ProductID = pr.Id },
@@ -257,7 +257,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.OperationalQualityPlanLines)
-                   .Select<OperationalQualityPlanLines>(oqpl => new { oqpl.WorkCenterID, oqpl.UpperTolerance, oqpl.ProductsOperationID, oqpl.PeriodicControlMeasure, oqpl.OperationalQualityPlanID, oqpl.MeasureNumberInPicture, oqpl.LineNr, oqpl.IdealMeasure, oqpl.Id, oqpl.Equipment, oqpl.Description_, oqpl.Date_, oqpl.DataOpenStatusUserId, oqpl.DataOpenStatus, oqpl.ControlTypesID, oqpl.ControlManager, oqpl.ControlFrequency, oqpl.ControlConditionsID, oqpl.Code, oqpl.BottomTolerance })
+                   .Select<OperationalQualityPlanLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -328,7 +328,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.OperationalQualityPlans)
-                   .Select<OperationalQualityPlans>(oqp => new { oqp.ProductsOperationID, oqp.ProductID, oqp.Id, oqp.DocumentNumber, oqp.Description_, oqp.DataOpenStatusUserId, oqp.DataOpenStatus })
+                   .Select<OperationalQualityPlans>(null)
                    .Join<Products>
                     (
                         pr => new { ProductCode = pr.Code, ProductName = pr.Name , ProductID = pr.Id },
@@ -382,8 +382,8 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 Description_ = input.Description_,
                 DocumentNumber = input.DocumentNumber,
-                ProductID = input.ProductID,
-                ProductsOperationID = input.ProductsOperationID,
+                ProductID = input.ProductID.GetValueOrDefault(),
+                ProductsOperationID = input.ProductsOperationID.GetValueOrDefault(),
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, false, false, "");
 

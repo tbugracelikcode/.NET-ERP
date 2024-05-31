@@ -53,9 +53,9 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
 
                     var query = queryFactory.Query().From(Tables.PackageFiches).Insert(new CreatePackageFichesDto
                     {
-                        CurrentAccountID = input.CurrentAccountID,
-                        ProductID = input.ProductID,
-                        SalesOrderID = input.SalesOrderID,
+                        CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
+                        ProductID = input.ProductID.GetValueOrDefault(),
+                        SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
                         Date_ = input.Date_,
                         NumberofPackage = input.NumberofPackage,
                         PackageContent = input.PackageContent,
@@ -79,7 +79,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                     var queryLine = queryFactory.Query().From(Tables.PackageFicheLines).Insert(new CreatePackageFicheLinesDto
                     {
                         PackingDate = line.PackingDate,
-                        ProductionOrderID = line.ProductionOrderID,
+                        ProductionOrderID = line.ProductionOrderID.GetValueOrDefault(),
                         PackageFicheID = addedEntityId,
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
@@ -92,7 +92,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = 1,
-                        ProductID = line.ProductID,
+                        ProductID = line.ProductID.GetValueOrDefault(),
                         Quantity = line.Quantity,
                         NumberofPackage = line.NumberofPackage,
                         PackageContent = line.PackageContent,
@@ -346,9 +346,9 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
 
             var query = queryFactory.Query().From(Tables.PackageFiches).Update(new UpdatePackageFichesDto
             {
-                CurrentAccountID = input.CurrentAccountID,
-                ProductID = input.ProductID,
-                SalesOrderID = input.SalesOrderID,
+                CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
+                ProductID = input.ProductID.GetValueOrDefault(),
+                SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 NumberofPackage = input.NumberofPackage,
                 PackageContent = input.PackageContent,
@@ -380,7 +380,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         ProductionOrderFicheNo = item.ProductionOrderFicheNo,
                         PackageContent = item.PackageContent,
                         NumberofPackage = item.NumberofPackage,
-                        ProductionOrderID = item.ProductionOrderID,
+                        ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                         Status_ = item.Status_,
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
@@ -393,7 +393,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
-                        ProductID = item.ProductID,
+                        ProductID = item.ProductID.GetValueOrDefault(),
                         Quantity = item.Quantity,
                     });
 
@@ -411,7 +411,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         {
                             PackageFicheID = input.Id,
                             PackingDate = item.PackingDate,
-                            ProductionOrderID = item.ProductionOrderID,
+                            ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                             NumberofPackage = item.NumberofPackage,
                             PackageContent = item.PackageContent,
                             ProductionOrderFicheNo = item.ProductionOrderFicheNo,
@@ -427,7 +427,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                            ProductID = item.ProductID,
+                            ProductID = item.ProductID.GetValueOrDefault(),
                             Quantity = item.Quantity,
                         }).Where(new { Id = line.Id }, false, false, "");
 

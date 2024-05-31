@@ -67,7 +67,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
                 DeleterId = Guid.Empty,
-                CurrentAccountCardID = input.CurrentAccountCardID,
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 DeletionTime = null,
                 Id = addedEntityId,
                 IsActive = true,
@@ -75,7 +75,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
                 Name = input.Name,
-                FinishedProductID = input.FinishedProductID,
+                FinishedProductID = input.FinishedProductID.GetValueOrDefault(),
                 _Description = input._Description
             });
 
@@ -90,17 +90,17 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
-                    FinishedProductID = item.FinishedProductID,
+                    FinishedProductID = item.FinishedProductID.GetValueOrDefault(),
                     Id = GuidGenerator.CreateGuid(),
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
                     MaterialType = (int)item.MaterialType,
-                    ProductID = item.ProductID,
+                    ProductID = item.ProductID.GetValueOrDefault(),
                     Quantity = item.Quantity,
                     Size = item.Size,
-                    UnitSetID = item.UnitSetID,
+                    UnitSetID = item.UnitSetID.GetValueOrDefault(),
                     _Description = item._Description
                 });
 
@@ -359,7 +359,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.BillsofMaterials)
-                   .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
+                   .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
                         pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
@@ -484,9 +484,9 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
-                FinishedProductID = input.FinishedProductID,
+                FinishedProductID = input.FinishedProductID.GetValueOrDefault(),
                 _Description = input._Description,
-                CurrentAccountCardID = input.CurrentAccountCardID
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault()
             }).Where(new { Id = input.Id }, true, true, "");
 
             foreach (var item in input.SelectBillsofMaterialLines)
@@ -502,17 +502,17 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         DataOpenStatusUserId = Guid.Empty,
                         DeleterId = Guid.Empty,
                         DeletionTime = null,
-                        FinishedProductID = item.FinishedProductID,
+                        FinishedProductID = item.FinishedProductID.GetValueOrDefault(),
                         Id = GuidGenerator.CreateGuid(),
                         IsDeleted = false,
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
                         MaterialType = (int)item.MaterialType,
-                        ProductID = item.ProductID,
+                        ProductID = item.ProductID.GetValueOrDefault(),
                         Quantity = item.Quantity,
                         Size = item.Size,
-                        UnitSetID = item.UnitSetID,
+                        UnitSetID = item.UnitSetID.GetValueOrDefault(),
                         _Description = item._Description
                     });
 
@@ -535,17 +535,17 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                             DataOpenStatusUserId = Guid.Empty,
                             DeleterId = line.DeleterId.GetValueOrDefault(),
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
-                            FinishedProductID = item.FinishedProductID,
+                            FinishedProductID = item.FinishedProductID.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             MaterialType = (int)item.MaterialType,
-                            ProductID = item.ProductID,
+                            ProductID = item.ProductID.GetValueOrDefault(),
                             Quantity = item.Quantity,
                             Size = item.Size,
-                            UnitSetID = item.UnitSetID,
+                            UnitSetID = item.UnitSetID.GetValueOrDefault(),
                             _Description = item._Description
                         }).Where(new { Id = line.Id }, false, false, "");
 

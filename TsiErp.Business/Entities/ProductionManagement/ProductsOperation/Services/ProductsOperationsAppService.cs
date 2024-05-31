@@ -66,9 +66,9 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             var query = queryFactory.Query().From(Tables.ProductsOperations).Insert(new CreateProductsOperationsDto
             {
                 Name = input.Name,
-                ProductID = input.ProductID,
-                TemplateOperationID = input.TemplateOperationID,
-                WorkCenterID = input.WorkCenterID,
+                ProductID = input.ProductID.GetValueOrDefault(),
+                TemplateOperationID = input.TemplateOperationID.GetValueOrDefault(),
+                WorkCenterID = input.WorkCenterID.GetValueOrDefault(),
                 Code = input.Code,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
@@ -92,7 +92,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                     Alternative = item.Alternative,
                     Priority = item.Priority,
                     ProcessQuantity = item.ProcessQuantity,
-                    StationID = item.StationID,
+                    StationID = item.StationID.GetValueOrDefault(),
                     ProductsOperationID = addedEntityId,
                     CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
@@ -213,7 +213,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ProductsOperations)
-                   .Select<ProductsOperations>(po => new { po.WorkCenterID, po.TemplateOperationID, po.ProductID, po.Name, po.IsActive, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code })
+                   .Select<ProductsOperations>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -243,7 +243,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             var queryLines = queryFactory
                            .Query()
                            .From(Tables.ProductsOperationLines)
-                           .Select<ProductsOperationLines>(pol => new { pol.StationID, pol.ProductsOperationID, pol.ProcessQuantity, pol.Priority, pol.OperationTime, pol.LineNr, pol.Id, pol.DataOpenStatusUserId, pol.DataOpenStatus, pol.Alternative, pol.AdjustmentAndControlTime })
+                           .Select<ProductsOperationLines>(null)
                            .Join<Stations>
                             (
                                 s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
@@ -262,7 +262,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             var contractOfProductionOperationQuery = queryFactory
                         .Query()
                         .From(Tables.ContractOfProductsOperations)
-                        .Select<ContractOfProductsOperations>(s => new { s.ProductsOperationID, s.Id, s.DataOpenStatus, s.DataOpenStatusUserId, s.LineNr })
+                        .Select<ContractOfProductsOperations>(null)
                         .Join<CurrentAccountCards>
                         (
                             s => new { CurrentAccountCardID = s.Id, CurrentAccountCardName = s.Name },
@@ -337,7 +337,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             var queryLines = queryFactory
                            .Query()
                            .From(Tables.ProductsOperationLines)
-                           .Select<ProductsOperationLines>(pol => new { pol.StationID, pol.ProductsOperationID, pol.ProcessQuantity, pol.Priority, pol.OperationTime, pol.LineNr, pol.Id, pol.DataOpenStatusUserId, pol.DataOpenStatus, pol.Alternative, pol.AdjustmentAndControlTime })
+                           .Select<ProductsOperationLines>(null)
                            .Join<Stations>
                             (
                                 s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
@@ -356,7 +356,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             var contractOfProductionOperationQuery = queryFactory
                         .Query()
                         .From(Tables.ContractOfProductsOperations)
-                        .Select<ContractOfProductsOperations>(s => new { s.ProductsOperationID, s.Id, s.DataOpenStatus, s.DataOpenStatusUserId, s.LineNr })
+                        .Select<ContractOfProductsOperations>(null)
                         .Join<CurrentAccountCards>
                         (
                             s => new { CurrentAccountCardID = s.Id, CurrentAccountCardName = s.Name },
@@ -395,9 +395,9 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
             var query = queryFactory.Query().From(Tables.ProductsOperations).Update(new UpdateProductsOperationsDto
             {
-                ProductID = input.ProductID,
-                TemplateOperationID = input.TemplateOperationID,
-                WorkCenterID = input.WorkCenterID,
+                ProductID = input.ProductID.GetValueOrDefault(),
+                TemplateOperationID = input.TemplateOperationID.GetValueOrDefault(),
+                WorkCenterID = input.WorkCenterID.GetValueOrDefault(),
                 Code = input.Code,
                 CreationTime = entity.CreationTime,
                 CreatorId = entity.CreatorId,
@@ -425,7 +425,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                         OperationTime = item.OperationTime,
                         Priority = item.Priority,
                         ProcessQuantity = item.ProcessQuantity,
-                        StationID = item.StationID,
+                        StationID = item.StationID.GetValueOrDefault(),
                         ProductsOperationID = input.Id,
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
@@ -457,7 +457,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                             OperationTime = item.OperationTime,
                             Priority = item.Priority,
                             ProcessQuantity = item.ProcessQuantity,
-                            StationID = item.StationID,
+                            StationID = item.StationID.GetValueOrDefault(),
                             ProductsOperationID = input.Id,
                             CreationTime = line.CreationTime,
                             CreatorId = line.CreatorId,

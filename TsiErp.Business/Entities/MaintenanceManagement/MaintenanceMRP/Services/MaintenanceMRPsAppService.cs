@@ -100,8 +100,8 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
-                    ProductID = item.ProductID,
-                    UnitSetID = item.UnitSetID,
+                    ProductID = item.ProductID.GetValueOrDefault(),
+                    UnitSetID = item.UnitSetID.GetValueOrDefault(),
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -323,8 +323,8 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
-                        ProductID = item.ProductID,
-                        UnitSetID = item.UnitSetID,
+                        ProductID = item.ProductID.GetValueOrDefault(),
+                        UnitSetID = item.UnitSetID.GetValueOrDefault(),
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -354,8 +354,8 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                            ProductID = item.ProductID,
-                            UnitSetID = item.UnitSetID,
+                            ProductID = item.ProductID.GetValueOrDefault(),
+                            UnitSetID = item.UnitSetID.GetValueOrDefault(),
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;

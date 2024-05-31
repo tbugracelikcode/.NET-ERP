@@ -61,7 +61,7 @@ namespace TsiErp.Business.Entities.Station.Services
                 AreaCovered = input.AreaCovered,
                 Brand = input.Brand,
                 Capacity = input.Capacity,
-                GroupID = input.GroupID,
+                GroupID = input.GroupID.GetValueOrDefault(),
                 IsContract = input.IsContract,
                 IsFixtures = input.IsFixtures,
                 KWA = input.KWA,
@@ -105,7 +105,7 @@ namespace TsiErp.Business.Entities.Station.Services
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
-                    ProductID = item.ProductID,
+                    ProductID = item.ProductID.GetValueOrDefault(),
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -183,7 +183,7 @@ namespace TsiErp.Business.Entities.Station.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Stations)
-                   .Select<Stations>(s => new { s.Y, s.X, s.UsageArea, s.ShiftWorkingTime, s.Shift, s.PowerFactor, s.Name, s.Model, s.MachineCost, s.KWA, s.IsFixtures, s.IsContract, s.IsActive, s.Id, s.GroupID, s.DataOpenStatusUserId, s.DataOpenStatus, s.Code, s.Capacity, s.Brand, s.AreaCovered, s.Amortization })
+                   .Select<Stations>(null)
                    .Join<StationGroups>
                     (
                         sg => new { GroupID = sg.Id, StationGroup = sg.Name },
@@ -216,7 +216,7 @@ namespace TsiErp.Business.Entities.Station.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Stations)
-                   .Select<Stations>(s => new { s.Y, s.X, s.UsageArea, s.ShiftWorkingTime, s.Shift, s.PowerFactor, s.Name, s.Model, s.MachineCost, s.KWA, s.IsFixtures, s.IsContract, s.IsActive, s.Id, s.GroupID, s.DataOpenStatusUserId, s.DataOpenStatus, s.Code, s.Capacity, s.Brand, s.AreaCovered, s.Amortization })
+                   .Select<Stations>(null)
                    .Join<StationGroups>
                     (
                         sg => new { StationGroup = sg.Name, GroupID = sg.Id },
@@ -285,7 +285,7 @@ namespace TsiErp.Business.Entities.Station.Services
                 AreaCovered = input.AreaCovered,
                 Brand = input.Brand,
                 Capacity = input.Capacity,
-                GroupID = input.GroupID,
+                GroupID = input.GroupID.GetValueOrDefault(),
                 IsContract = input.IsContract,
                 IsFixtures = input.IsFixtures,
                 KWA = input.KWA,
@@ -331,7 +331,7 @@ namespace TsiErp.Business.Entities.Station.Services
                         IsDeleted = false,
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
-                        ProductID = item.ProductID,
+                        ProductID = item.ProductID.GetValueOrDefault(),
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -359,7 +359,7 @@ namespace TsiErp.Business.Entities.Station.Services
                             IsDeleted = item.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
-                            ProductID = item.ProductID,
+                            ProductID = item.ProductID.GetValueOrDefault(),
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
