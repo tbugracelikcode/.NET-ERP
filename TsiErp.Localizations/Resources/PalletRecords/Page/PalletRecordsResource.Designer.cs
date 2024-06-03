@@ -61,6 +61,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Onaylanan Birim Fiyat:.
+        /// </summary>
+        public static string ApprovedUnitPriceDetailLabel {
+            get {
+                return ResourceManager.GetString("ApprovedUnitPriceDetailLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Büyük Koli.
         /// </summary>
         public static string BigPackage {
@@ -192,6 +201,177 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         public static string DeleteSuccessMessage {
             get {
                 return ResourceManager.GetString("DeleteSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ONAYLANAN BİRİM FİYAT.
+        /// </summary>
+        public static string DetailGridApprovedUnitPrice {
+            get {
+                return ResourceManager.GetString("DetailGridApprovedUnitPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ KODU.
+        /// </summary>
+        public static string DetailGridCustomerCode {
+            get {
+                return ResourceManager.GetString("DetailGridCustomerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ SİPARİŞ NO.
+        /// </summary>
+        public static string DetailGridCustomerReferenceNo {
+            get {
+                return ResourceManager.GetString("DetailGridCustomerReferenceNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İNGİLİZCE TANIM.
+        /// </summary>
+        public static string DetailGridEnglishDefinition {
+            get {
+                return ResourceManager.GetString("DetailGridEnglishDefinition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SON SİPARİŞ FİYATI.
+        /// </summary>
+        public static string DetailGridLastOrderPrice {
+            get {
+                return ResourceManager.GetString("DetailGridLastOrderPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SATIR TUTARI.
+        /// </summary>
+        public static string DetailGridLineAmount {
+            get {
+                return ResourceManager.GetString("DetailGridLineAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAKSİMUM ÜRETİM MİKTARI.
+        /// </summary>
+        public static string DetailGridMaxProductionQuantity {
+            get {
+                return ResourceManager.GetString("DetailGridMaxProductionQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ NO.
+        /// </summary>
+        public static string DetailGridOrderNo {
+            get {
+                return ResourceManager.GetString("DetailGridOrderNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ MİKTARI.
+        /// </summary>
+        public static string DetailGridOrderQuantity {
+            get {
+                return ResourceManager.GetString("DetailGridOrderQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ REFERANS NO.
+        /// </summary>
+        public static string DetailGridOrderReferenceNo {
+            get {
+                return ResourceManager.GetString("DetailGridOrderReferenceNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ BİRİM FİYAT.
+        /// </summary>
+        public static string DetailGridOrderunitPrice {
+            get {
+                return ResourceManager.GetString("DetailGridOrderunitPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRÜN AĞIRLIK.
+        /// </summary>
+        public static string DetailGridPackageFicheProductWeight {
+            get {
+                return ResourceManager.GetString("DetailGridPackageFicheProductWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KOLİ TOPLAM ADET.
+        /// </summary>
+        public static string DetailGridPackageTotalQuantity {
+            get {
+                return ResourceManager.GetString("DetailGridPackageTotalQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÇEKİ LİSTESİ NO.
+        /// </summary>
+        public static string DetailGridPackingListNo {
+            get {
+                return ResourceManager.GetString("DetailGridPackingListNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK ADI.
+        /// </summary>
+        public static string DetailGridProductName {
+            get {
+                return ResourceManager.GetString("DetailGridProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LİSTE FİYATI.
+        /// </summary>
+        public static string DetailGridSalesPriceListPrice {
+            get {
+                return ResourceManager.GetString("DetailGridSalesPriceListPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ETİKET NO.
+        /// </summary>
+        public static string DetailGridTicketNo {
+            get {
+                return ResourceManager.GetString("DetailGridTicketNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM BRÜT KG.
+        /// </summary>
+        public static string DetailGridTotalGrossKG {
+            get {
+                return ResourceManager.GetString("DetailGridTotalGrossKG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM NET KG.
+        /// </summary>
+        public static string DetailGridTotalNetKG {
+            get {
+                return ResourceManager.GetString("DetailGridTotalNetKG", resourceCulture);
             }
         }
         
@@ -646,6 +826,24 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Birim Fiyatı Onayla.
+        /// </summary>
+        public static string PalletDetailApproveUnitPrice {
+            get {
+                return ResourceManager.GetString("PalletDetailApproveUnitPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet Detayı.
+        /// </summary>
+        public static string PalletDetailModalTitle {
+            get {
+                return ResourceManager.GetString("PalletDetailModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PALET KOLİ ADET.
         /// </summary>
         public static string PalletPackageNumber {
@@ -759,6 +957,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         public static string PalletRecordsContextDelete {
             get {
                 return ResourceManager.GetString("PalletRecordsContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet Detayı.
+        /// </summary>
+        public static string PalletRecordsContextPalletDetail {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextPalletDetail", resourceCulture);
             }
         }
         

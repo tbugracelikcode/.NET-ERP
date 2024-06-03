@@ -13,6 +13,12 @@
 @inject IFicheNumbersAppService FicheNumbersAppService
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
+@inject IProductsAppService ProductsAppService
+@inject IProductReferanceNumbersAppService ProductReferanceNumbersAppService
+@inject IPackingListsAppService PackingListsAppService
+@inject IPackageFichesAppService PackageFichesAppService
+@inject ISalesOrdersAppService SalesOrdersAppService
+@inject ISalesPricesAppService SalesPricesAppService
 
 @if (!base.IsLoaded)
 {
@@ -348,6 +354,120 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="PalletDetailPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["PalletDetailModalTitle"]"
+             Width="87%"
+             Height="50%"
+             MinWidth="1500px"
+             MinHeight="540px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="90%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <SfGrid @ref=_PalletDetailGrid ID="PalletDetailGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@PalletDetailGridList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@PalletDetailGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnPalletDetailContextMenuClick" TValue="PalletDetailGrid"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.ProductName) HeaderText="@L["DetailGridProductName"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.EnglishDefinition) HeaderText="@L["DetailGridEnglishDefinition"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.OrderReferenceNo) HeaderText="@L["DetailGridOrderReferenceNo"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.CustomerReferenceNo) HeaderText="@L["DetailGridCustomerReferenceNo"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.PackingListNo) HeaderText="@L["DetailGridPackingListNo"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.TicketNo) HeaderText="@L["DetailGridTicketNo"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.OrderNo) HeaderText="@L["DetailGridOrderNo"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.CustomerCode) HeaderText="@L["DetailGridCustomerCode"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.PackageFicheProductWeight) Type="ColumnType.Number" HeaderText="@L["DetailGridPackageFicheProductWeight"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.OrderQuantity) Type="ColumnType.Number" HeaderText="@L["DetailGridOrderQuantity"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.MaxProductionQuantity) Type="ColumnType.Number" HeaderText="@L["DetailGridMaxProductionQuantity"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.PackageTotalQuantity) Type="ColumnType.Number" HeaderText="@L["DetailGridPackageTotalQuantity"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.OrderunitPrice) Type="ColumnType.Number" HeaderText="@L["DetailGridOrderunitPrice"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.ApprovedUnitPrice) Type="ColumnType.Number" HeaderText="@L["DetailGridApprovedUnitPrice"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.SalesPriceListPrice) Type="ColumnType.Number" HeaderText="@L["DetailGridSalesPriceListPrice"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.LastOrderPrice) Type="ColumnType.Number" HeaderText="@L["DetailGridLastOrderPrice"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.TotalNetKG) Type="ColumnType.Number" HeaderText="@L["DetailGridTotalNetKG"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.TotalGrossKG) Type="ColumnType.Number" HeaderText="@L["DetailGridTotalGrossKG"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletDetailGrid.LineAmount) Type="ColumnType.Number" HeaderText="@L["DetailGridLineAmount"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+
+                                </GridColumns>
+
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HidePalletDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="PalletDetailCrudPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["PalletDetailModalTitle"]"
+             Width="22%"
+             Height="21%"
+             MinWidth="380px"
+             MinHeight="230px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="90%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="90%" />
+                    <DxGridLayoutColumn Width="5%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ApprovedUnitPriceDetailLabel"] </strong></label>
+                           <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="PalletDetailDataSource.ApprovedUnitPrice"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnPalletDetailSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HidePalletDetailCrudPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

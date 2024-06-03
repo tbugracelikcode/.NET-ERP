@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApprovedUnitPriceDetailLabel" xml:space="preserve">
+    <value>Onaylanan Birim Fiyat:</value>
+  </data>
   <data name="BigPackage" xml:space="preserve">
     <value>Büyük Koli</value>
   </data>
@@ -161,6 +164,63 @@
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
+  </data>
+  <data name="DetailGridApprovedUnitPrice" xml:space="preserve">
+    <value>ONAYLANAN BİRİM FİYAT</value>
+  </data>
+  <data name="DetailGridCustomerCode" xml:space="preserve">
+    <value>MÜŞTERİ KODU</value>
+  </data>
+  <data name="DetailGridCustomerReferenceNo" xml:space="preserve">
+    <value>MÜŞTERİ SİPARİŞ NO</value>
+  </data>
+  <data name="DetailGridEnglishDefinition" xml:space="preserve">
+    <value>İNGİLİZCE TANIM</value>
+  </data>
+  <data name="DetailGridLastOrderPrice" xml:space="preserve">
+    <value>SON SİPARİŞ FİYATI</value>
+  </data>
+  <data name="DetailGridLineAmount" xml:space="preserve">
+    <value>SATIR TUTARI</value>
+  </data>
+  <data name="DetailGridMaxProductionQuantity" xml:space="preserve">
+    <value>MAKSİMUM ÜRETİM MİKTARI</value>
+  </data>
+  <data name="DetailGridOrderNo" xml:space="preserve">
+    <value>SİPARİŞ NO</value>
+  </data>
+  <data name="DetailGridOrderQuantity" xml:space="preserve">
+    <value>SİPARİŞ MİKTARI</value>
+  </data>
+  <data name="DetailGridOrderReferenceNo" xml:space="preserve">
+    <value>SİPARİŞ REFERANS NO</value>
+  </data>
+  <data name="DetailGridOrderunitPrice" xml:space="preserve">
+    <value>SİPARİŞ BİRİM FİYAT</value>
+  </data>
+  <data name="DetailGridPackageFicheProductWeight" xml:space="preserve">
+    <value>ÜRÜN AĞIRLIK</value>
+  </data>
+  <data name="DetailGridPackageTotalQuantity" xml:space="preserve">
+    <value>KOLİ TOPLAM ADET</value>
+  </data>
+  <data name="DetailGridPackingListNo" xml:space="preserve">
+    <value>ÇEKİ LİSTESİ NO</value>
+  </data>
+  <data name="DetailGridProductName" xml:space="preserve">
+    <value>STOK ADI</value>
+  </data>
+  <data name="DetailGridSalesPriceListPrice" xml:space="preserve">
+    <value>LİSTE FİYATI</value>
+  </data>
+  <data name="DetailGridTicketNo" xml:space="preserve">
+    <value>ETİKET NO</value>
+  </data>
+  <data name="DetailGridTotalGrossKG" xml:space="preserve">
+    <value>TOPLAM BRÜT KG</value>
+  </data>
+  <data name="DetailGridTotalNetKG" xml:space="preserve">
+    <value>TOPLAM NET KG</value>
   </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Palet Kayıtları</value>
@@ -312,6 +372,12 @@
   <data name="PackingListsModalTitle" xml:space="preserve">
     <value>Çeki Listeleri</value>
   </data>
+  <data name="PalletDetailApproveUnitPrice" xml:space="preserve">
+    <value>Birim Fiyatı Onayla</value>
+  </data>
+  <data name="PalletDetailModalTitle" xml:space="preserve">
+    <value>Palet Detayı</value>
+  </data>
   <data name="PalletPackageNumber" xml:space="preserve">
     <value>PALET KOLİ ADET</value>
   </data>
@@ -350,6 +416,9 @@
   </data>
   <data name="PalletRecordsContextDelete" xml:space="preserve">
     <value>Sil</value>
+  </data>
+  <data name="PalletRecordsContextPalletDetail" xml:space="preserve">
+    <value>Palet Detayı</value>
   </data>
   <data name="PalletRecordsContextPrintBig" xml:space="preserve">
     <value>Büyük Etiket</value>

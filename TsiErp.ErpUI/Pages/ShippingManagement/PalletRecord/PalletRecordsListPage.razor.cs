@@ -17,6 +17,8 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.DataAccess.Services.Login;
 using Syncfusion.Blazor.Navigations;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 {
@@ -24,6 +26,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
     {
         private SfGrid<SelectPalletRecordLinesDto> _LineGrid;
         private SfGrid<PackageFicheSelectionGrid> _PackageFichesGrid;
+        private SfGrid<PalletDetailGrid> _PalletDetailGrid;
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -33,13 +36,18 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         ModalManager ModalManager { get; set; }
 
         SelectPalletRecordLinesDto LineDataSource = new();
+        PalletDetailGrid PalletDetailDataSource = new();
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> PalletDetailGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectPalletRecordLinesDto> GridLineList = new List<SelectPalletRecordLinesDto>();
         List<ListPackageFichesDto> PackageFichesList = new List<ListPackageFichesDto>();
         List<PackageFicheSelectionGrid> PackageFichesSelectionList = new List<PackageFicheSelectionGrid>();
         List<SelectPackageFicheLinesDto> PackageFicheLinesList = new List<SelectPackageFicheLinesDto>();
+        List<PalletDetailGrid> PalletDetailGridList = new List<PalletDetailGrid>();
+
+        #region UI Classlar
 
         public class PackageFicheSelectionGrid
         {
@@ -48,6 +56,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             public string SalesOrderFicheNo { get; set; }
             public string ProductCode { get; set; }
             public Guid? ProductID { get; set; }
+            public Guid? SalesOrderID { get; set; }
             public string CustomerCode { get; set; }
             public int PackageContent { get; set; }
             public int NumberofPackage { get; set; }
@@ -55,9 +64,43 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         }
 
+        public class PalletDetailGrid
+        {
+            public Guid Id { get; set; }
+            public Guid ProductID { get; set; }
+            public string ProductName { get; set; }
+            public string EnglishDefinition { get; set; }
+            public Guid ProductReferenceNumberID { get; set; }
+            public string OrderReferenceNo { get; set; }
+            public string CustomerReferenceNo { get; set; }
+            public Guid PackingListID { get; set; }
+            public string PackingListNo { get; set; }
+            public string TicketNo { get; set; }
+            public string OrderNo { get; set; }
+            public Guid CurrentAccountID { get; set; }
+            public string CustomerCode { get; set; }
+            public Guid PackageFicheID { get; set; }
+            public decimal PackageFicheProductWeight { get; set; }
+            public decimal OrderQuantity { get; set; }
+            public decimal MaxProductionQuantity { get; set; }
+            public decimal PackageTotalQuantity { get; set; }
+            public decimal OrderunitPrice { get; set; }
+            public decimal ApprovedUnitPrice { get; set; }
+            public Guid SalesPriceID { get; set; }
+            public decimal SalesPriceListPrice { get; set; }
+            public decimal LastOrderPrice { get; set; }
+            public decimal TotalNetKG { get; set; }
+            public decimal TotalGrossKG { get; set; }
+            public decimal LineAmount { get; set; }
+        }
+
+        #endregion
+
         private bool LineCrudPopup = false;
         public bool SelectPackageFichesModal = false;
         public int selectedNumberofPackages = 0;
+        public bool PalletDetailPopupVisible = false;
+        public bool PalletDetailCrudPopupVisible = false;
 
         protected override async void OnInitialized()
         {
@@ -74,6 +117,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             #endregion
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+            CreatePalletDetailContextMenuItems();
 
         }
 
@@ -231,7 +275,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 }
 
 
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextTicketState"], Id = "ticketstate", Items =subTicketMenus }); break;
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextTicketState"], Id = "ticketstate", Items = subTicketMenus }); break;
 
                             case "PalletRecordsContextPrintTicket":
 
@@ -260,12 +304,21 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 }
 
 
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextPrintTicket"], Id = "printticket", Items =subPrintTicketMenus }); break;
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextPrintTicket"], Id = "printticket", Items = subPrintTicketMenus }); break;
+
+                            case "PalletRecordsContextPalletDetail":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextPalletDetail"], Id = "palletdetail" }); break;
+
                             default: break;
                         }
                     }
                 }
             }
+        }
+
+        protected void CreatePalletDetailContextMenuItems()
+        {
+            PalletDetailGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletDetailApproveUnitPrice"], Id = "approve" });
         }
 
         public async void MainContextMenuClick(ContextMenuClickEventArgs<ListPalletRecordsDto> args)
@@ -288,7 +341,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 case "preparing":
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if(DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Hazirlaniyor)
+                    if (DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Hazirlaniyor)
                     {
                         var resState = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStatePreparingMessage"]);
 
@@ -307,7 +360,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
                         await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPreparingStateMessage"]);
                     }
-                    
+
 
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -315,7 +368,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 case "completed":
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if(DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Tamamlandi)
+                    if (DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Tamamlandi)
                     {
                         var resState2 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStateCompletedMessage"]);
 
@@ -337,7 +390,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                         await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningCompletedStateMessage"]);
                     }
 
-                    
+
 
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -514,6 +567,145 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     await InvokeAsync(StateHasChanged);
                     break;
 
+                case "palletdetail":
+                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    foreach (var line in DataSource.SelectPalletRecordLines)
+                    {
+                        #region Değişkenler
+
+                        var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
+
+                        var productReferenceNoList = (await ProductReferanceNumbersAppService.GetSelectListAsync(line.ProductID.GetValueOrDefault())).Data;
+
+                        string customerReferenceNo = string.Empty;
+
+                        string orderReferenceNo = string.Empty;
+
+                        Guid productRefNoID = Guid.Empty;
+
+                        var productRefNo = productReferenceNoList.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).FirstOrDefault();
+
+                        if(productRefNo != null && productRefNo.Id != Guid.Empty)
+                        {
+                            orderReferenceNo = productRefNo.OrderReferanceNo;
+                            customerReferenceNo = productRefNo.CustomerReferanceNo;
+                            productRefNoID = productRefNo.Id;
+                        }
+
+                        var currentAccount = (await CurrentAccountCardsAppService.GetAsync(line.CurrentAccountCardID.GetValueOrDefault())).Data;
+
+                        string ticketNo = customerReferenceNo;
+
+                        if (currentAccount != null && currentAccount.Id != Guid.Empty)
+                        {
+                            if (currentAccount.CustomerCode == "049")
+                            {
+                                if (customerReferenceNo != "-")
+                                {
+                                    int lenght = customerReferenceNo.Length;
+
+                                    ticketNo = customerReferenceNo.Remove(lenght - 2, 2) + "000";
+                                    ticketNo = ticketNo.Replace(" ", string.Empty);
+                                }
+                            }
+                        }
+
+                        string orderNo = string.Empty;
+
+                        var packingList = (await PackingListsAppService.GetAsync(DataSource.PackingListID.GetValueOrDefault())).Data;
+
+                        if (packingList != null && packingList.Id != Guid.Empty)
+                        {
+                            orderNo = packingList.OrderNo;
+                        }
+
+                        decimal productWeight = 0;
+
+                        var packageFiche = (await PackageFichesAppService.GetAsync(line.PackageFicheID.GetValueOrDefault())).Data;
+
+                        if (packageFiche != null && packageFiche.Id != Guid.Empty)
+                        {
+                            productWeight = packageFiche.UnitWeight;
+                        }
+
+                        var salesOrder = new SelectSalesOrderDto();
+
+                        decimal orderQuantity = 0;
+
+                        decimal maxProductionQuantity = 0;
+
+                        decimal orderUnitPrice = 0;
+
+                        var salesPrice = new SelectSalesPricesDto();
+
+                        decimal listPrice = 0;
+
+                        var lastOrderID = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).Select(t => t.Id).FirstOrDefault();
+
+                        decimal lastOrderPrice = (await SalesOrdersAppService.GetAsync(lastOrderID)).Data.SelectSalesOrderLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).Select(t => t.UnitPrice).FirstOrDefault();
+
+                        salesOrder = (await SalesOrdersAppService.GetAsync(line.SalesOrderID.GetValueOrDefault())).Data;
+
+                        if (salesOrder != null && salesOrder.Id != Guid.Empty)
+                        {
+                            var salesOrderLinesList = salesOrder.SelectSalesOrderLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).ToList();
+
+                            orderQuantity = salesOrderLinesList.Select(t => t.Quantity).Sum();
+
+                            maxProductionQuantity = Math.Ceiling(orderQuantity + (orderQuantity / 10));
+
+                            orderUnitPrice = salesOrderLinesList.Select(t => t.UnitPrice).FirstOrDefault();
+
+                            Guid salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID && t.CurrencyCode == salesOrder.CurrencyCode && t.StartDate <= DataSource.PlannedLoadingTime && t.EndDate >= DataSource.PlannedLoadingTime && t.CustomerCode == currentAccount.CustomerCode && t.IsActive == true).Select(t => t.Id).FirstOrDefault();
+
+                            salesPrice = (await SalesPricesAppService.GetAsync(salesPriceID)).Data;
+
+                            listPrice = salesPrice.SelectSalesPriceLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).Select(t => t.Price).FirstOrDefault();
+                        }
+
+                        decimal lineAmount = line.TotalAmount * line.ApprovedUnitPrice;
+
+                        #endregion
+
+                        PalletDetailGrid palletDetailModel = new PalletDetailGrid
+                        {
+                            Id = line.Id,
+                            ProductID = line.ProductID.GetValueOrDefault(),
+                            ProductName = line.ProductName,
+                            EnglishDefinition = product.EnglishDefinition,
+                            CustomerReferenceNo = customerReferenceNo,
+                            OrderReferenceNo = orderReferenceNo,
+                            PackingListID = DataSource.PackingListID.GetValueOrDefault(),
+                            PackingListNo = DataSource.PackingListCode,
+                            TicketNo = ticketNo,
+                            OrderNo = orderNo,
+                            CurrentAccountID = currentAccount.Id,
+                            CustomerCode = currentAccount.CustomerCode,
+                            PackageFicheID = line.PackageFicheID.GetValueOrDefault(),
+                            PackageFicheProductWeight = productWeight,
+                            OrderQuantity = orderQuantity,
+                            MaxProductionQuantity = maxProductionQuantity,
+                            PackageTotalQuantity = line.TotalAmount,
+                            OrderunitPrice = orderUnitPrice,
+                            ApprovedUnitPrice = line.ApprovedUnitPrice,
+                            SalesPriceListPrice = listPrice,
+                            LastOrderPrice = lastOrderPrice,
+                            TotalNetKG = line.TotalNetKG,
+                            TotalGrossKG = line.TotalGrossKG,
+                            SalesPriceID = salesPrice.Id,
+                            ProductReferenceNumberID = productRefNoID,
+                            LineAmount = lineAmount
+                        };
+
+                        PalletDetailGridList.Add(palletDetailModel);
+                    }
+
+                    PalletDetailPopupVisible = true;
+                    await InvokeAsync(StateHasChanged);
+
+                    break;
+
 
 
                 case "delete":
@@ -557,6 +749,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                             PackageFicheSelectionGrid packageFicheSelectionModel = new PackageFicheSelectionGrid
                             {
                                 Code = packageFiche.Code,
+                                SalesOrderID = packageFiche.SalesOrderID.GetValueOrDefault(),
                                 CustomerCode = packageFiche.CustomerCode,
                                 ProductID = packageFiche.ProductID,
                                 Id = packageFiche.Id,
@@ -656,11 +849,62 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             }
         }
 
+        public async void OnPalletDetailContextMenuClick(ContextMenuClickEventArgs<PalletDetailGrid> args)
+        {
+            switch (args.Item.Id)
+            {
+
+                case "approve":
+
+                    PalletDetailDataSource = args.RowInfo.RowData;
+                    PalletDetailCrudPopupVisible = true;
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         public void HideLinesPopup()
         {
             LineCrudPopup = false;
         }
+        public void HidePalletDetailPopup()
+        {
+            PalletDetailPopupVisible = false;
+            PalletDetailGridList.Clear();
+        }
+        public void HidePalletDetailCrudPopup()
+        {
+            PalletDetailCrudPopupVisible = false;
+        }
+        protected async Task OnPalletDetailSubmit()
+        {
+            int index = PalletDetailGridList.IndexOf(PalletDetailDataSource);
 
+            PalletDetailGridList[index].LineAmount = PalletDetailDataSource.ApprovedUnitPrice * PalletDetailDataSource.PackageTotalQuantity;
+
+            PalletDetailGridList[index].ApprovedUnitPrice = PalletDetailDataSource.ApprovedUnitPrice;
+
+            var updatedLine = DataSource.SelectPalletRecordLines.Where(t => t.Id == PalletDetailDataSource.Id).FirstOrDefault();
+
+            if (updatedLine != null)
+            {
+                int lineIndex = DataSource.SelectPalletRecordLines.IndexOf(updatedLine);
+
+                DataSource.SelectPalletRecordLines[lineIndex].ApprovedUnitPrice = PalletDetailDataSource.ApprovedUnitPrice;
+
+                var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+
+                await PalletRecordsAppService.UpdateAsync(updatedEntity);
+            }
+
+            await _PalletDetailGrid.Refresh();
+            HidePalletDetailCrudPopup();
+            await InvokeAsync(StateHasChanged);
+        }
         protected async Task OnLineSubmit()
         {
 
@@ -716,11 +960,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                 selectedNumberofPackages = selectedNumberofPackages + (packageFiche.SelectPackageFicheLines.Count * selectedPackageFiche.NumberofPackage);
 
-                if(selectedNumberofPackages > DataSource.MaxPackageNumber)
+                if (selectedNumberofPackages > DataSource.MaxPackageNumber)
                 {
-                    var res =  await ModalManager.WarningPopupAsync(L["UIWarningNumberofPackagesTitle"], L["UIWarningNumberofPackagesMessage"]);
+                    var res = await ModalManager.WarningPopupAsync(L["UIWarningNumberofPackagesTitle"], L["UIWarningNumberofPackagesMessage"]);
 
-                    if(res == true)
+                    if (res == true)
                     {
                         selectedNumberofPackages = selectedNumberofPackages - (packageFiche.SelectPackageFicheLines.Count * selectedPackageFiche.NumberofPackage);
                         PackageFichesSelectionList[selectedIndex].SelectedLine = false;
@@ -736,7 +980,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         public async void TransferSelectedPackageFichesClicked()
         {
-            if(PackageFichesSelectionList.Where(t=>t.SelectedLine == true).Count() > 0)
+            if (PackageFichesSelectionList.Where(t => t.SelectedLine == true).Count() > 0)
             {
 
                 foreach (var selecteditem in PackageFichesSelectionList)
@@ -772,6 +1016,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 ProductID = line.ProductID,
                                 ProductCode = line.ProductCode,
                                 ProductName = line.ProductName,
+                                SalesOrderID = selecteditem.SalesOrderID,
                                 CustomerCode = customerCode,
                                 PackageType = L["LinePackageType"],
                                 PackageContent = selecteditem.PackageContent,
@@ -794,7 +1039,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 HidePackageFichesPopup();
                 await InvokeAsync(StateHasChanged);
             }
-            else if(PackageFichesSelectionList.Where(t=>t.SelectedLine == true).Count() == 0)
+            else if (PackageFichesSelectionList.Where(t => t.SelectedLine == true).Count() == 0)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningSelectedPackageFicheTitle"], L["UIWarningSelectedPackageFicheMessage"]);
             }
