@@ -264,8 +264,11 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Üretim Yönetimi &gt; Hareketler</value>
   </data>
-  <data name="UIWarningCreateOccuredAmountFicheMessage" xml:space="preserve">
-    <value>Miktar ve Üretim tarihi Referansı alanlarının doldurulması gerekmektedir.</value>
+  <data name="UIWarningCreateOccuredAmountFicheMessageQuantity" xml:space="preserve">
+    <value>Miktar alanının doldurulması gerekmektedir.</value>
+  </data>
+  <data name="UIWarningCreateOccuredAmountFicheMessageRefNo" xml:space="preserve">
+    <value>Üretim Tarihi Referansı alanının doldurulması gerekmektedir.</value>
   </data>
   <data name="UIWarningCreateOccuredAmountFicheTitle" xml:space="preserve">
     <value>Uyarı</value>

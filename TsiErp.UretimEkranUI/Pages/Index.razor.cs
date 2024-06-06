@@ -33,9 +33,11 @@ namespace TsiErp.UretimEkranUI.Pages
 
             //StartSystemIdleTimer();
 
-            string data = "";
+            //string data = "";
 
-            ConnectorService.SendAndRead("M014W", out data, "127.0.0.1", 1644, 4416);
+            //ConnectorService.SendAndRead("M014W", out data, "127.0.0.1", 1644, 4416);
+
+            //string sonuc = ProtocolServices.M001R("127.0.0.1");
 
         }
 

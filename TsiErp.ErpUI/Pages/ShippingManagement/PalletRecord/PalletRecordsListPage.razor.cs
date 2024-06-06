@@ -17,6 +17,10 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.DataAccess.Services.Login;
 using Syncfusion.Blazor.Navigations;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Business.Entities.ProductReferanceNumber.Services;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.LargePalletLabelDtos;
+using DevExpress.XtraReports.UI;
+using TsiErp.ErpUI.Reports.ShippingManagement.PalletReports.PalletLabels;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 {
@@ -231,7 +235,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 }
 
 
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextTicketState"], Id = "ticketstate", Items =subTicketMenus }); break;
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextTicketState"], Id = "ticketstate", Items = subTicketMenus }); break;
 
                             case "PalletRecordsContextPrintTicket":
 
@@ -260,7 +264,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 }
 
 
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextPrintTicket"], Id = "printticket", Items =subPrintTicketMenus }); break;
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextPrintTicket"], Id = "printticket", Items = subPrintTicketMenus }); break;
                             default: break;
                         }
                     }
@@ -288,7 +292,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 case "preparing":
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if(DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Hazirlaniyor)
+                    if (DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Hazirlaniyor)
                     {
                         var resState = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStatePreparingMessage"]);
 
@@ -307,7 +311,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
                         await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPreparingStateMessage"]);
                     }
-                    
+
 
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -315,7 +319,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 case "completed":
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if(DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Tamamlandi)
+                    if (DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Tamamlandi)
                     {
                         var resState2 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStateCompletedMessage"]);
 
@@ -337,7 +341,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                         await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningCompletedStateMessage"]);
                     }
 
-                    
+
 
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -431,29 +435,29 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     break;
 
                 case "printsmall":
-                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    //DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if (DataSource.PalletRecordsPrintTicketEnum != Entities.Enums.PalletRecordsPrintTicketEnum.KucukEtiket)
-                    {
-                        var resState6 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIPrintSmallCompletedMessage"]);
+                    //if (DataSource.PalletRecordsPrintTicketEnum != Entities.Enums.PalletRecordsPrintTicketEnum.KucukEtiket)
+                    //{
+                    //    var resState6 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIPrintSmallCompletedMessage"]);
 
-                        if (resState6 == true)
-                        {
-                            DataSource.PalletRecordsPrintTicketEnum = Entities.Enums.PalletRecordsPrintTicketEnum.KucukEtiket;
+                    //    if (resState6 == true)
+                    //    {
+                    //        DataSource.PalletRecordsPrintTicketEnum = Entities.Enums.PalletRecordsPrintTicketEnum.KucukEtiket;
 
-                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
-                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
-                            await GetListDataSourceAsync();
+                    //        var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                    //        await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                    //        await GetListDataSourceAsync();
 
-                            await _grid.Refresh();
-                            await InvokeAsync(StateHasChanged);
-                        }
-                    }
+                    //        await _grid.Refresh();
+                    //        await InvokeAsync(StateHasChanged);
+                    //    }
+                    //}
 
-                    else
-                    {
-                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPrintSmallStateMessage"]);
-                    }
+                    //else
+                    //{
+                    //    await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPrintSmallStateMessage"]);
+                    //}
 
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -461,55 +465,57 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 case "printbig":
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if (DataSource.PalletRecordsPrintTicketEnum != Entities.Enums.PalletRecordsPrintTicketEnum.BuyukEtiket)
-                    {
-                        var resState7 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIPrintBigCompletedMessage"]);
+                    CreateLargePalletLabelReport(DataSource);
 
-                        if (resState7 == true)
-                        {
-                            DataSource.PalletRecordsPrintTicketEnum = Entities.Enums.PalletRecordsPrintTicketEnum.BuyukEtiket;
+                    //if (DataSource.PalletRecordsPrintTicketEnum != Entities.Enums.PalletRecordsPrintTicketEnum.BuyukEtiket)
+                    //{
+                    //    var resState7 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIPrintBigCompletedMessage"]);
 
-                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
-                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
-                            await GetListDataSourceAsync();
+                    //    if (resState7 == true)
+                    //    {
+                    //        DataSource.PalletRecordsPrintTicketEnum = Entities.Enums.PalletRecordsPrintTicketEnum.BuyukEtiket;
 
-                            await _grid.Refresh();
-                            await InvokeAsync(StateHasChanged);
-                        }
-                    }
+                    //        var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                    //        await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                    //        await GetListDataSourceAsync();
 
-                    else
-                    {
-                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPrintBigStateMessage"]);
-                    }
+                    //        await _grid.Refresh();
+                    //        await InvokeAsync(StateHasChanged);
+                    //    }
+                    //}
+
+                    //else
+                    //{
+                    //    await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPrintBigStateMessage"]);
+                    //}
 
                     await InvokeAsync(StateHasChanged);
                     break;
 
                 case "printpallet":
-                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    //DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if (DataSource.PalletRecordsPrintTicketEnum != Entities.Enums.PalletRecordsPrintTicketEnum.PaletEtiketi)
-                    {
-                        var resState7 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIPrintPalletCompletedMessage"]);
+                    //if (DataSource.PalletRecordsPrintTicketEnum != Entities.Enums.PalletRecordsPrintTicketEnum.PaletEtiketi)
+                    //{
+                    //    var resState7 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIPrintPalletCompletedMessage"]);
 
-                        if (resState7 == true)
-                        {
-                            DataSource.PalletRecordsPrintTicketEnum = Entities.Enums.PalletRecordsPrintTicketEnum.PaletEtiketi;
+                    //    if (resState7 == true)
+                    //    {
+                    //        DataSource.PalletRecordsPrintTicketEnum = Entities.Enums.PalletRecordsPrintTicketEnum.PaletEtiketi;
 
-                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
-                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
-                            await GetListDataSourceAsync();
+                    //        var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                    //        await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                    //        await GetListDataSourceAsync();
 
-                            await _grid.Refresh();
-                            await InvokeAsync(StateHasChanged);
-                        }
-                    }
+                    //        await _grid.Refresh();
+                    //        await InvokeAsync(StateHasChanged);
+                    //    }
+                    //}
 
-                    else
-                    {
-                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPrintPalletStateMessage"]);
-                    }
+                    //else
+                    //{
+                    //    await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPrintPalletStateMessage"]);
+                    //}
 
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -716,11 +722,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                 selectedNumberofPackages = selectedNumberofPackages + (packageFiche.SelectPackageFicheLines.Count * selectedPackageFiche.NumberofPackage);
 
-                if(selectedNumberofPackages > DataSource.MaxPackageNumber)
+                if (selectedNumberofPackages > DataSource.MaxPackageNumber)
                 {
-                    var res =  await ModalManager.WarningPopupAsync(L["UIWarningNumberofPackagesTitle"], L["UIWarningNumberofPackagesMessage"]);
+                    var res = await ModalManager.WarningPopupAsync(L["UIWarningNumberofPackagesTitle"], L["UIWarningNumberofPackagesMessage"]);
 
-                    if(res == true)
+                    if (res == true)
                     {
                         selectedNumberofPackages = selectedNumberofPackages - (packageFiche.SelectPackageFicheLines.Count * selectedPackageFiche.NumberofPackage);
                         PackageFichesSelectionList[selectedIndex].SelectedLine = false;
@@ -736,7 +742,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         public async void TransferSelectedPackageFichesClicked()
         {
-            if(PackageFichesSelectionList.Where(t=>t.SelectedLine == true).Count() > 0)
+            if (PackageFichesSelectionList.Where(t => t.SelectedLine == true).Count() > 0)
             {
 
                 foreach (var selecteditem in PackageFichesSelectionList)
@@ -794,7 +800,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 HidePackageFichesPopup();
                 await InvokeAsync(StateHasChanged);
             }
-            else if(PackageFichesSelectionList.Where(t=>t.SelectedLine == true).Count() == 0)
+            else if (PackageFichesSelectionList.Where(t => t.SelectedLine == true).Count() == 0)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningSelectedPackageFicheTitle"], L["UIWarningSelectedPackageFicheMessage"]);
             }
@@ -1138,6 +1144,135 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     default: break;
                 }
             }
+        }
+
+        #endregion
+
+        #region Etiket Rapor Metotları
+
+        async void CreateLargePalletLabelReport(SelectPalletRecordsDto pallet)
+        {
+            #region Çeki Listesi Bilgisi
+
+            var packingList = (await PackingListsAppService.GetAsync(pallet.PackingListID.GetValueOrDefault())).Data;
+
+            if (packingList.Id != Guid.Empty)
+            {
+                Guid sentCompanyId = packingList.TransmitterID.GetValueOrDefault();
+                var sentCurrentAccountCard = (await CurrentAccountCardsAppService.GetAsync(sentCompanyId)).Data;
+                string supplierNo = sentCurrentAccountCard.SupplierNo;
+                string sentCompany = sentCurrentAccountCard.Name;
+                string sentCompanyAddress1 = sentCurrentAccountCard.Address1;
+                string sentCompanyAddress2 = sentCurrentAccountCard.Address2;
+                string sender = sentCompany + Environment.NewLine + sentCompanyAddress1 + Environment.NewLine + sentCompanyAddress2;
+
+
+                Guid recieverCompanyId = packingList.RecieverID.GetValueOrDefault();
+                var recieverCurrentAccountCard = (await CurrentAccountCardsAppService.GetAsync(recieverCompanyId)).Data;
+                string recieverCompany = recieverCurrentAccountCard.Name;
+                string recieverCompanyAddress1 = recieverCurrentAccountCard.Address1;
+                string reciever = recieverCompany + ", " + recieverCompanyAddress1;
+                string shippingAddress = recieverCurrentAccountCard.ShippingAddress;
+
+
+                string areksPackingListNo = packingList.Code;
+                string billNo = packingList.BillNo;
+
+                string customerOrderNo = "";
+                string mainLoad = sentCurrentAccountCard.CustomerCode;
+
+                XtraReport report1 = new XtraReport();
+                report1.ShowPrintMarginsWarning = false;
+                report1.CreateDocument();
+
+                for (int i = 0; i < pallet.SelectPalletRecordLines.Count; i++)
+                {
+                    var line = pallet.SelectPalletRecordLines[i];
+
+                    if (line != null)
+                    {
+                        var packageFiche = (await PackageFichesAppService.GetAsync(line.PackageFicheID.GetValueOrDefault())).Data;
+
+                        if (packageFiche.Id != Guid.Empty)
+                        {
+                            string packageNo = packageFiche.Code;
+                            int startPackageNo = 0;
+                            int endPackageNo = 0;
+
+                            if (packageNo.Contains("-"))
+                            {
+                                string[] packageArray = packageNo.Split('-');
+                                startPackageNo = Convert.ToInt32(packageArray[0]);
+                                endPackageNo = Convert.ToInt32(packageArray[1]);
+                            }
+                            else
+                            {
+                                startPackageNo = Convert.ToInt32(packageNo);
+                                endPackageNo = Convert.ToInt32(packageNo);
+                            }
+
+                            decimal numberofPackage = line.NumberofPackage;
+                            Guid productId = line.ProductID.GetValueOrDefault();
+
+                            if (mainLoad == "049")
+                            {
+                                var productReferenceNoList = (await ProductReferanceNumbersAppService.GetSelectListAsync(productId)).Data;
+
+                                string customerReferenceNo = string.Empty;
+
+                                string orderReferenceNo = string.Empty;
+
+                                Guid productRefNoID = Guid.Empty;
+
+                                var productRefNo = productReferenceNoList.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).FirstOrDefault();
+
+
+                                string markingRefNo = productRefNo.CustomerReferanceNo;
+                                string barcodeNo = productRefNo.CustomerBarcodeNo;
+                                markingRefNo = markingRefNo.Replace(" ", "");
+                                markingRefNo = markingRefNo.Substring(0, markingRefNo.Length - 2) + "000";
+                                decimal netKg = line.TotalNetKG;
+                                decimal grossKg = line.TotalGrossKG;
+                                decimal quantity = line.PackageContent;
+                                //customerOrderNo = 
+
+                                for (int start = startPackageNo; start <= endPackageNo; start++)
+                                {
+                                    List<LargePalletLabelReportDto> reportSource = new List<LargePalletLabelReportDto>();
+
+                                    LargePalletLabelReportDto p = new LargePalletLabelReportDto
+                                    {
+                                        Quantity = quantity,
+                                        GrossKg = grossKg / numberofPackage,
+                                        BillNo = billNo,
+                                        AreksPackingNo = areksPackingListNo,
+                                        MarkingRefNo = markingRefNo,
+                                        NetKg = netKg / numberofPackage,
+                                        PackageNo = start.ToString(),
+                                        PackingListNo = packingList.Code2,
+                                        SupplierNo = supplierNo,
+                                        ShippingAddress = shippingAddress,
+                                        SenderCompany = sentCompany,
+                                        SentCompany = recieverCompany,
+                                        CustomerOrderNo = customerOrderNo
+                                    };
+
+
+                                    LargePalletLabelReport rpr = new LargePalletLabelReport();
+                                    rpr.BarcodeNo = barcodeNo;
+                                    rpr.ShowPrintMarginsWarning = false;
+                                    rpr.DataSource = reportSource;
+                                    rpr.CreateDocument();
+                                    report1.Pages.AddRange(rpr.Pages);
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            #endregion
         }
 
         #endregion

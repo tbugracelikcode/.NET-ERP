@@ -60,7 +60,7 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// <summary>
         /// Üretim Emri ID
         /// </summary>
-        public Guid ProductionOrderID { get; set; }
+        public Guid? ProductionOrderID { get; set; }
         /// <summary>
         /// Para Birimi ID
         /// </summary>

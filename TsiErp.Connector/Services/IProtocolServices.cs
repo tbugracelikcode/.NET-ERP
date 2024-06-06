@@ -16,7 +16,7 @@ namespace TsiErp.Connector.Services
         /// <summary>
         /// PLC Saatini Değiştir
         /// </summary>
-        string M001W(string ipAddress);
+        string M001W(string ipAddress,string data);
 
         /// <summary>
         /// PLC Durumunu Oku
@@ -34,34 +34,9 @@ namespace TsiErp.Connector.Services
         string M004R(string ipAddress);
 
         /// <summary>
-        /// Duruş Süresi
-        /// </summary>
-        string M005R(string ipAddress);
-
-        /// <summary>
-        /// Duruş Başlama Bilgisi
-        /// </summary>
-        string M006R(string ipAddress);
-
-        /// <summary>
-        /// Duruş Bitiş Bilgisi
-        /// </summary>
-        string M007R(string ipAddress);
-
-        /// <summary>
         /// İş Emri Değiştir
         /// </summary>
         string M008W(string ipAddress);
-
-        /// <summary>
-        /// Hızlı Sayıcı Durumunu Oku
-        /// </summary>
-        string M009R(string ipAddress);
-
-        /// <summary>
-        /// Hızlı Sayıcı Durumu Değiştir
-        /// </summary>
-        string M009W(string ipAddress);
 
         /// <summary>
         /// Vardiya Toplam Üretim Adeti
@@ -124,58 +99,13 @@ namespace TsiErp.Connector.Services
         string M021R(string ipAddress);
 
         /// <summary>
-        /// Program ID1 Yaz
-        /// </summary>
-        string M022W(string ipAddress);
-
-        /// <summary>
-        /// Program ID1 Oku
-        /// </summary>
-        string M022R(string ipAddress);
-
-        /// <summary>
-        /// Program ID2 Yaz
-        /// </summary>
-        string M023W(string ipAddress);
-
-        /// <summary>
-        /// Program ID2 Oku
-        /// </summary>
-        string M023R(string ipAddress);
-
-        /// <summary>
-        /// Program ID3 Yaz
-        /// </summary>
-        string M024W(string ipAddress);
-
-        /// <summary>
-        /// Program ID3 Oku
-        /// </summary>
-        string M024R(string ipAddress);
-
-        /// <summary>
-        /// Program ID4 Yaz
-        /// </summary>
-        string M025W(string ipAddress);
-
-        /// <summary>
-        /// Program ID4 Oku
-        /// </summary>
-        string M025R(string ipAddress);
-
-        /// <summary>
         /// Üretilecek Adeti Yaz
         /// </summary>
-        string M026W(string ipAddress);
+        string M026W(string ipAddress,string data);
 
         /// <summary>
         /// Üretilecek Adeti Oku
         /// </summary>
         string M026R(string ipAddress);
-
-        /// <summary>
-        /// Toplu Veri Okuma
-        /// </summary>
-        string M027R(string ipAddress);
     }
 }

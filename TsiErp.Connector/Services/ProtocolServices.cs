@@ -13,71 +13,142 @@ namespace TsiErp.Connector.Services
     {
         public string M001R(string ipAddress)
         {
-            throw new NotImplementedException();
-        }
+            string result;
 
-        public string M001W(string ipAddress)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string M002R(string ipAddress)
-        {
-            string result = string.Empty;
-            TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
-
-            StreamWriter writer = new StreamWriter(client.GetStream());
-            writer.WriteLine(ProtocolHeaders.M001R);
-            writer.Flush();
-
-            TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
-            listener.Start();
-
-            client = listener.AcceptTcpClient();
-
-            if (client != null)
+            try
             {
-                if (client.Connected)
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M001R);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
                 {
-                    StreamReader reader = new StreamReader(client.GetStream());
-                    result = reader.ReadLine();
-
-                    switch (result)
+                    if (client.Connected)
                     {
-                        case "2":
-                            result = ProtocolErrors.Error2;
-                            break;
-                        case "4":
-                            result = ProtocolErrors.Error4;
-                            break;
-                        case "5":
-                            result = ProtocolErrors.Error5;
-                            break;
-                        case "6":
-                            result = ProtocolErrors.Error6;
-                            break;
-                        case "7":
-                            result = ProtocolErrors.Error7;
-                            break;
-                        case "9":
-                            result = ProtocolErrors.Error9;
-                            break;
-                        case "A":
-                            result = ProtocolErrors.ErrorA;
-                            break;
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
 
-                        default:
-                            break;
+                        result = result.Substring(5);
+
+                        if (result == "0")
+                        {
+                            result = ProtocolErrors.ErrorGeneral;
+                        }
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
                     }
                 }
                 else
                 {
-                    result = ProtocolErrors.ErrorResultNull;
+                    result = ProtocolErrors.ErrorTcpClientNull;
                 }
             }
-            else
+            catch (Exception exp)
             {
-                result = ProtocolErrors.ErrorTcpClientNull;
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
+        }
+
+        public string M001W(string ipAddress, string data)
+        {
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M001W + data);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+
+                        if (result != "0")
+                        {
+                            result = ProtocolErrors.ErrorGeneral;
+                        }
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
+        }
+
+        public string M002R(string ipAddress)
+        {
+
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M002R);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
             }
 
             return result;
@@ -85,157 +156,781 @@ namespace TsiErp.Connector.Services
 
         public string M003R(string ipAddress)
         {
-            throw new NotImplementedException();
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M003R);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
         public string M004R(string ipAddress)
         {
-            throw new NotImplementedException();
-        }
+            string result;
 
-        public string M005R(string ipAddress)
-        {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
 
-        public string M006R(string ipAddress)
-        {
-            throw new NotImplementedException();
-        }
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M004R);
+                writer.Flush();
 
-        public string M007R(string ipAddress)
-        {
-            throw new NotImplementedException();
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
         public string M008W(string ipAddress)
         {
-            throw new NotImplementedException();
-        }
+            string result;
 
-        public string M009R(string ipAddress)
-        {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
 
-        public string M009W(string ipAddress)
-        {
-            throw new NotImplementedException();
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M008W);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+
+                        if (result != "0")
+                        {
+                            result = ProtocolErrors.ErrorGeneral;
+                        }
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
         public string M010R(string ipAddress)
         {
-            throw new NotImplementedException();
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M010R);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
         public string M011W(string ipAddress)
         {
-            throw new NotImplementedException();
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M011W);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+
+                        if (result != "0")
+                        {
+                            result = ProtocolErrors.ErrorGeneral;
+                        }
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
         public string M012R(string ipAddress)
         {
-            throw new NotImplementedException();
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M012R);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
         public string M013R(string ipAddress)
         {
-            throw new NotImplementedException();
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M013R);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
         public string M014W(string ipAddress)
         {
-            throw new NotImplementedException();
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M014W);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+
+                        if (result != "0")
+                        {
+                            result = ProtocolErrors.ErrorGeneral;
+                        }
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
         public string M015R(string ipAddress)
         {
-            throw new NotImplementedException();
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M015R);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
         public string M016W(string ipAddress)
         {
-            throw new NotImplementedException();
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M016W);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+
+                        if (result != "0")
+                        {
+                            result = ProtocolErrors.ErrorGeneral;
+                        }
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
         public string M017W(string ipAddress)
         {
-            throw new NotImplementedException();
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M017W);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+
+                        if (result != "0")
+                        {
+                            result = ProtocolErrors.ErrorGeneral;
+                        }
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
         public string M018R(string ipAddress)
         {
-            throw new NotImplementedException();
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M018R);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
         public string M019R(string ipAddress)
         {
-            throw new NotImplementedException();
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M019R);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
         public string M020R(string ipAddress)
         {
-            throw new NotImplementedException();
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M020R);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
         public string M021R(string ipAddress)
         {
-            throw new NotImplementedException();
-        }
+            string result;
 
-        public string M022R(string ipAddress)
-        {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
 
-        public string M022W(string ipAddress)
-        {
-            throw new NotImplementedException();
-        }
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M021R);
+                writer.Flush();
 
-        public string M023R(string ipAddress)
-        {
-            throw new NotImplementedException();
-        }
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
 
-        public string M023W(string ipAddress)
-        {
-            throw new NotImplementedException();
-        }
+                client = listener.AcceptTcpClient();
 
-        public string M024R(string ipAddress)
-        {
-            throw new NotImplementedException();
-        }
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
 
-        public string M024W(string ipAddress)
-        {
-            throw new NotImplementedException();
-        }
+                        result = result.Substring(5);
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
 
-        public string M025R(string ipAddress)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string M025W(string ipAddress)
-        {
-            throw new NotImplementedException();
+            return result;
         }
 
         public string M026R(string ipAddress)
         {
-            throw new NotImplementedException();
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M026R);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
-        public string M026W(string ipAddress)
+        public string M026W(string ipAddress, string data)
         {
-            throw new NotImplementedException();
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M026W + data);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+
+                        if (result != "0")
+                        {
+                            result = ProtocolErrors.ErrorGeneral;
+                        }
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+            return result;
         }
 
-        public string M027R(string ipAddress)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
