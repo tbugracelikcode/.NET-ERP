@@ -59,7 +59,7 @@ namespace TsiErp.Business.Entities.Department.Services
             {
                 Code = input.Code,
                 Name = input.Name,
-                SeniorityID = input.SeniorityID,
+                SeniorityID = input.SeniorityID.GetValueOrDefault(),
                 IsActive = true,
                 Id = addedEntityId,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
@@ -179,7 +179,7 @@ namespace TsiErp.Business.Entities.Department.Services
             {
                 Code = input.Code,
                 Name = input.Name,
-                SeniorityID = input.SeniorityID,
+                SeniorityID = input.SeniorityID.GetValueOrDefault(),
                 Id = input.Id,
                 IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,

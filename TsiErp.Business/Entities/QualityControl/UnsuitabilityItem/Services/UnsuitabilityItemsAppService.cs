@@ -125,7 +125,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
         public async Task<IDataResult<SelectUnsuitabilityItemsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
-                    .Query().From(Tables.UnsuitabilityItems).Select<UnsuitabilityItems>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.Description_, p.LifeThreatening, p.LossOfPrestige, p.StationGroupId, p.ExtraCost, p.ProductLifeShortening, p.Detectability, p.ToBeUsedAs, p.IntensityRange, p.IntensityCoefficient })
+                    .Query().From(Tables.UnsuitabilityItems).Select<UnsuitabilityItems>(null)
                         .Join<UnsuitabilityTypesItems>
                         (
                             b => new { UnsuitabilityTypesItemsName = b.Name, UnsuitabilityTypesItemsId = b.Id },
@@ -156,7 +156,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
         public async Task<IDataResult<IList<ListUnsuitabilityItemsDto>>> GetListAsync(ListUnsuitabilityItemsParameterDto input)
         {
             var query = queryFactory
-                    .Query().From(Tables.UnsuitabilityItems).Select<UnsuitabilityItems>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.IntensityRange, p.IntensityCoefficient })
+                    .Query().From(Tables.UnsuitabilityItems).Select<UnsuitabilityItems>(null)
                         .Join<UnsuitabilityTypesItems>
                         (
                             b => new { UnsuitabilityTypesItemsName = b.Name },

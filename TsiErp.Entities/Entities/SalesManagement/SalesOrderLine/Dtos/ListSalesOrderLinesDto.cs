@@ -11,6 +11,14 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos
     public class ListSalesOrderLinesDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceRecordID { get; set; }
+        /// <summary>
+        /// Sipariş Kabul Satır ID
+        /// </summary>
+        public Guid? OrderAcceptanceRecordLineID { get; set; }
+        /// <summary>
         /// İşlem Dövizi Birim Fiyat
         /// </summary>
         public decimal TransactionExchangeUnitPrice { get; set; }

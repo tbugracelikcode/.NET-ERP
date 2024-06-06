@@ -52,7 +52,7 @@ namespace TsiErp.Business.Entities.ProductCost.Services
                 Overheads = input.Overheads,
                 ProductionCost = input.ProductionCost,
                 UnsuitabilityCost = input.UnsuitabilityCost,
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
                 StartDate = input.StartDate,
                 UnitCost = input.UnitCost
             });
@@ -65,7 +65,7 @@ namespace TsiErp.Business.Entities.ProductCost.Services
                 {
                     Id = cost.Id,
                     EndDate = cost.EndDate,
-                    ProductID = cost.ProductID,
+                    ProductID = cost.ProductID.GetValueOrDefault(),
                     StartDate = cost.StartDate,
                     UnitCost = cost.UnitCost
                 };
@@ -178,7 +178,7 @@ namespace TsiErp.Business.Entities.ProductCost.Services
                 UnsuitabilityCost = input.UnsuitabilityCost,
                 StartDate = input.StartDate,
                 UnitCost = input.UnitCost,
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
             }).Where(new { Id = input.Id }, false, false, "");
 
             var ProductCosts = queryFactory.Update<SelectProductCostsDto>(query, "Id", true);

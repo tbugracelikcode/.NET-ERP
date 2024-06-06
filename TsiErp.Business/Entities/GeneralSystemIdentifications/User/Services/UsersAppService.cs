@@ -62,7 +62,7 @@ namespace TsiErp.Business.Entities.User.Services
             {
                 Code = input.Code,
                 Email = input.Email,
-                GroupID = input.GroupID,
+                GroupID = input.GroupID.GetValueOrDefault(),
                 NameSurname = input.NameSurname,
                 Password = input.Password,
                 UserName = input.UserName,
@@ -184,7 +184,7 @@ namespace TsiErp.Business.Entities.User.Services
                 Code = input.Code,
                 Id = input.Id,
                 Email = input.Email,
-                GroupID = input.GroupID,
+                GroupID = input.GroupID.GetValueOrDefault(),
                 NameSurname = input.NameSurname,
                 Password = input.Password,
                 UserName = input.UserName,

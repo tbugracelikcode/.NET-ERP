@@ -135,15 +135,16 @@
 </CascadingValue>
 
 <style>
+
+    .e-sidebar.e-left.e-open.e-disable-animation, .e-sidebar.e-right.e-open.e-disable-animation, .e-sidebar.e-right.e-close.e-disable-animation, .e-sidebar.e-left.e-close.e-disable-animation {
+        transition: none;
+        background-image: linear-gradient(301deg, rgb(70 70 70) 0%, #0e0e0e 70%) !important;
+    }
      .dxbl-treeview .dxbl-treeview-item > .dxbl-treeview-item-content > .dxbl-treeview-item-container .dxbl-treeview-item-text-container > .dxbl-treeview-item-text {
         overflow-x: hidden;
         text-overflow: ellipsis;
     }
 
- .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-checked>.dxbl-checkbox-check-element:not(:hover), .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-indeterminate>.dxbl-checkbox-check-element:not(:hover) {
-        background-color: var(--dxbl-treeview-checkbox-checked-bg, #ff0606) !important;
-    opacity: var(--dxbl-treeview-checkbox-checked-bg,80%);
-}
 .dxbl-treeview {
     --dxbl-treeview-spacing-x: 0.25rem;
     --dxbl-treeview-spacing-y: 0;

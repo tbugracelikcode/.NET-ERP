@@ -103,9 +103,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
-                CurrencyID = input.CurrencyID,
+                CurrencyID = input.CurrencyID.GetValueOrDefault(),
                 TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
-                BranchID = input.BranchID,
+                BranchID = input.BranchID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
@@ -114,7 +114,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                 SpecialCode = input.SpecialCode,
                 Time_ = input.Time_,
-                WarehouseID = input.WarehouseID
+                WarehouseID = input.WarehouseID.GetValueOrDefault()
             });
 
             foreach (var item in input.SelectStockFicheLines)

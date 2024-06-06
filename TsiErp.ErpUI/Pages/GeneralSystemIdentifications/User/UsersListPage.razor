@@ -211,8 +211,6 @@ else
              MinHeight="800px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
-
-            <SfCard CssClass="TSIPermissionBackground">
                 <DxGridLayout CssClass="TSIPermissionGridLayout">
                     <Rows>
                         <DxGridLayoutRow Height="95%" />
@@ -226,24 +224,6 @@ else
                         <DxGridLayoutItem Row="0" Column="1">
                             <Template>
                                 <div class="TSIScrollablePermissionModal">
-                                    @*  <SfTreeView TValue="UserMenuPermission" ShowCheckBox="true">
-                                <TreeViewFieldsSettings                                             
-                                TValue="UserMenuPermission"                                         
-                                Id="MenuID"                                                         
-                                DataSource="@PermissionModalMenusList"                              
-                                Text="MenuName"                                                     
-                                ParentID="ParentID"                                                 
-                                IsChecked="isPermitted"                                             
-                                HasChildren="HasChild"                                              
-                                Expanded="Expanded">                                                
-                                </TreeViewFieldsSettings>                                           
-                                                                                                    
-                                <TreeViewEvents                                                     
-                                TValue="UserMenuPermission"                                         
-                                NodeChecking="NodeCheckingHandler">                                 
-                                </TreeViewEvents>
-
-                                </SfTreeView>  *@
 
                                     <DxTreeView Data="@PermissionModalMenusList"
                                                 CheckMode="TreeViewCheckMode.Recursive"
@@ -257,21 +237,16 @@ else
                                                                    Checked="isPermitted"
                                                                    Key="MenuID"
                                                                    Text="MenuName" 
-                                                                   
                                                                     />
                                         </DataMappings>
                                     </DxTreeView>
 
                                 </div>
-
-
-
                             </Template>
                         </DxGridLayoutItem>
 
                     </Items>
                 </DxGridLayout>
-            </SfCard>
         </BodyTemplate>
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnPermissionsSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
@@ -330,41 +305,5 @@ else
         </FooterContentTemplate>
     </DxPopup>
 }
-
-<style>
-    .dxbl-treeview .dxbl-treeview-item > .dxbl-treeview-item-content > .dxbl-treeview-item-container .dxbl-treeview-item-text-container > .dxbl-treeview-item-text {
-        overflow-x: hidden;
-        text-overflow: ellipsis;
-        /* color:black; */
-    }
-
-    .TSIPermissionBackground {
-        -webkit-box-pack: start;
-        -webkit-justify-content: flex-start;
-        -ms-flex-pack: start;
-        justify-content: flex-start;
-        -webkit-box-align: stretch;
-        -webkit-align-items: stretch;
-        -ms-flex-align: stretch;
-        align-items: stretch;
-        background-image: linear-gradient(314deg, rgb(116 115 115) 0%, #3b3a3a 70%) !important;
-        width: 100%;
-        height: 105%;
-        display: grid;
-    }
-
-    .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-checked > .dxbl-checkbox-check-element:not(:hover), .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-indeterminate > .dxbl-checkbox-check-element:not(:hover) {
-        background-color: var(--dxbl-treeview-checkbox-checked-bg, #ffffff) !important;
-        opacity: var(--dxbl-treeview-checkbox-checked-bg,80%);
-    }
-
-
-
-    
-
-</style>
-
-
-
 
 

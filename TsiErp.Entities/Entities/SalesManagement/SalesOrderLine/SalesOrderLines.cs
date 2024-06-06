@@ -152,5 +152,15 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrderLine
         /// İşlem Dövizi İndirim Tutarı
         /// </summary>
         public decimal TransactionExchangeDiscountAmount { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceRecordID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Sipariş Kabul Satır ID
+        /// </summary>
+        public Guid? OrderAcceptanceRecordLineID { get; set; }
     }
 }

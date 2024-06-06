@@ -44,7 +44,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             var query = queryFactory.Query().From(Tables.TaskScorings).Insert(new CreateTaskScoringsDto
             {
-                SeniorityID = input.SeniorityID,
+                SeniorityID = input.SeniorityID.GetValueOrDefault(),
                 Score = input.Score,
                 Code = input.Code,
                 IsAdjustment = input.IsAdjustment,
@@ -147,7 +147,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             var query = queryFactory.Query().From(Tables.TaskScorings).Update(new UpdateTaskScoringsDto
             {
-                SeniorityID = input.SeniorityID,
+                SeniorityID = input.SeniorityID.GetValueOrDefault(),
                 IsTaskSharing = input.IsTaskSharing,
                 IsTaskDone = input.IsTaskDone,
                 IsDeveloperIdea = input.IsDeveloperIdea,

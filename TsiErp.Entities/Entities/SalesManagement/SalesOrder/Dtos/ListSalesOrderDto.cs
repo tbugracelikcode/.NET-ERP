@@ -123,7 +123,12 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// </summary>
         public decimal NetAmount { get; set; }
         /// <summary>
-        /// Geçerlilik Tarihi
+        /// Sipariş Kabul ID
         /// </summary>
+        public Guid? OrderAcceptanceRecordID { get; set; }
+        /// <summary>
+        /// Teyit Edilen Yükleme Tarihi
+        /// </summary>
+        public DateTime ConfirmedLoadingDate { get; set; }
     }
 }

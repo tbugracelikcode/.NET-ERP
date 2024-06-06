@@ -27,6 +27,11 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine
         public Guid PackageFicheID { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid SalesOrderID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
         /// Cari Hesap ID
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
@@ -70,5 +75,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine
         /// Satır Onay
         /// </summary>
         public bool LineApproval { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Onaylanan Birim Fiyat
+        /// </summary>
+        public decimal ApprovedUnitPrice { get; set; }
     }
 }

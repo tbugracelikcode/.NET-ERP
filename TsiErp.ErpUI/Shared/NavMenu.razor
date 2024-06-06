@@ -7,488 +7,928 @@
 @using Blazored.Menu
 
 
-<div>
 
-    <div class="sidebar">
-        <DxTreeView @ref=treeView AllowSelectNodes="true" style="min-height: 90vh;" CssClass=" app-sidebar" NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick">
+<BlazoredMenu>
 
-            <Nodes>
-
-                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementParentMenu)" Text=@L["StockManagementParentMenu"] Name="StockManagementParentMenu" IconCssClass="fa fa-warehouse">
-                    <Nodes>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementMainRecordsMenu)" Text=@L["StockManagementMainRecordsMenu"] Name="StockManagementMainRecordsMenu">
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductGroupsChildMenu)" NavigateUrl="/product-groups" Text=@L["ProductGroupsChildMenu"] Name="ProductGroupsChildMenu" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnitSetsChildMenu)" NavigateUrl="/unitsets" Text=@L["UnitSetsChildMenu"] Name="UnitSetsChildMenu" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.WarehousesChildMenu)" NavigateUrl="/warehouses" Text=@L["WarehousesChildMenu"] Name="WarehousesChildMenu" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductsChildMenu)" NavigateUrl="/products" Text=@L["ProductsChildMenu"] Name="ProductsChildMenu" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.TechnicalDrawingsChildMenu)" NavigateUrl="/technical-drawings" Text=@L["TechnicalDrawingsChildMenu"] Name="TechnicalDrawingsChildMenu" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductRefNumbersChildMenu)" NavigateUrl="/product-referance-numbers" Text=@L["ProductRefNumbersChildMenu"] Name="ProductRefNumbersChildMenu" />
-
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockAddressesMenu)" Text=@L["StockAddressesMenu"] Name="StockAddressesMenu">
-                                    <Nodes>
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockAddressesChildMenu)" NavigateUrl="/stock-addresses" Text=@L["StockAddressesChildMenu"] Name="StockAddressesChildMenu" />
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockSectionsChildMenu)" NavigateUrl="/stock-sections" Text=@L["StockSectionsChildMenu"] Name="StockSectionsChildMenu" />
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockShelfsChildMenu)" NavigateUrl="/stock-shelfs" Text=@L["StockShelfsChildMenu"] Name="StockShelfsChildMenu" />
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockColumnsChildMenu)" NavigateUrl="/stock-columns" Text=@L["StockColumnsChildMenu"] Name="StockColumnsChildMenu" />
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockNumbersChildMenu)" NavigateUrl="/stock-numbers" Text=@L["StockNumbersChildMenu"] Name="StockNumbersChildMenu" />
-                                    </Nodes>
-                                </DxTreeViewNode>
-
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementTransactionsMenu)" Text=@L["StockManagementTransactionsMenu"] Name="StockManagementTransactionsMenu">
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockFichesChildMenu)" Text=@L["StockFichesChildMenu"] Name="StockFichesChildMenu" NavigateUrl="/stock-fiches" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductReceiptTransactionsChildMenu)" Text=@L["ProductReceiptTransactionsChildMenu"] Name="ProductReceiptTransactionsChildMenu" NavigateUrl="/product-receipt-transactions" />
-                                <DxTreeViewNode Text=@L["ProductCostsChildMenu"] NavigateUrl="/product-costs" />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementReportsMenu)" Text=@L["StockManagementReportsMenu"] Name="StockManagementReportsMenu">
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ListofMaterialsChildMenu)" Text=@L["ListofMaterialsChildMenu"] Name="ListofMaterialsChildMenu" NavigateUrl="/products-list-report" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MaterialWarehouseStatusChildMenu)" Text=@L["MaterialWarehouseStatusChildMenu"] Name="MaterialWarehouseStatusChildMenu" NavigateUrl="/products-warehouse-status-report" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.InventoryListChildMenu)" Text=@L["InventoryListChildMenu"] Name="InventoryListChildMenu" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByProdGrpPerfAnalysisChildMenu)" Text=@L["ByProdGrpPerfAnalysisChildMenu"] Name="ByProdGrpPerfAnalysisChildMenu" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByProdGrpScrapAnalysisChildMenu)" Text=@L["ByProdGrpScrapAnalysisChildMenu"] Name="ByProdGrpScrapAnalysisChildMenu" />
-                            </Nodes>
-                        </DxTreeViewNode>
-                    </Nodes>
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Visible="@(NavBarPermissionsModel.FinanceManagementParentMenu)" Text=@L["FinanceManagementParentMenu"] IconCssClass="fa fa-euro-sign">
-                    <Nodes>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.FinanceManagementMainRecordsMenu)" Text=@L["FinanceManagementMainRecordsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.CurrentAccountsChildMenu)" NavigateUrl="/current-account-cards" Text=@L["CurrentAccountsChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PaymentPlansChildMenu)" NavigateUrl="/payment-plans" Text=@L["PaymentPlansChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                    </Nodes>
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseManagementParentMenu)" Text=@L["PurchaseManagementParentMenu"] IconCssClass="fa fa-euro-sign">
-                    <Nodes>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseManagementMainRecordsMenu)" Text=@L["PurchaseManagementMainRecordsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchasePricesChildMenu)" NavigateUrl="/purchase-prices" Text=@L["PurchasePricesChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseManagementTransactionsMenu)" Text=@L["PurchaseManagementTransactionsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseRequestsChildMenu)" NavigateUrl="/purchase-requests" Text=@L["PurchaseRequestsChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseOrdersChildMenu)" NavigateUrl="/purchase-orders" Text=@L["PurchaseOrdersChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseManagementReportsMenu)" Text=@L["PurchaseManagementReportsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseRequestFicheListChildMenu)" Text=@L["PurchaseRequestFicheListChildMenu"] NavigateUrl="/purchase-request-list-report" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseOrderFicheListChildMenu)" Text=@L["PurchaseOrderFicheListChildMenu"] NavigateUrl="/purchase-order-list-report" />
-                            </Nodes>
-                        </DxTreeViewNode>
-                    </Nodes>
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesManagementParentMenu)" Text=@L["SalesManagementParentMenu"] IconCssClass="fa fa-euro-sign">
-                    <Nodes>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesManagementMainRecordsMenu)" Text=@L["SalesManagementMainRecordsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesPricesChildMenu)" NavigateUrl="/sales-prices" Text=@L["SalesPricesChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesManagementTransactionsMenu)" Text=@L["SalesManagementTransactionsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesPropositionsChildMenu)" NavigateUrl="/sales-propositions" Text=@L["SalesPropositionsChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesOrdersChildMenu)" NavigateUrl="/sales-orders" Text=@L["SalesOrdersChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ForecastsChildMenu)" NavigateUrl="/forecasts" Text=@L["ForecastsChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.OrderAcceptanceRecordsChildMenu)" NavigateUrl="/order-acceptance-records" Text=@L["OrderAcceptanceRecordsChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.CostMenu)" Text=@L["CostMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.CPRChildMenu)" Text=@L["CPRChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesManagementReportsMenu)" Text=@L["SalesManagementReportsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesPropositionFicheListChildMenu)" Text=@L["SalesPropositionFicheListChildMenu"] NavigateUrl="/sales-proposition-list-report" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesOrderFicheListChildMenu)" Text=@L["SalesOrderFicheListChildMenu"] NavigateUrl="/sales-order-list-report" />
-                            </Nodes>
-                        </DxTreeViewNode>
-                    </Nodes>
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PlanningParentMenu)" Text=@L["PlanningParentMenu"] IconCssClass="fa fa-list">
-                    <Nodes>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionPlanningMenu)" Text=@L["ProductionPlanningMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MRPChildMenu)" NavigateUrl="/mrp" Text=@L["MRPChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MRPIIChildMenu)" NavigateUrl="/mrpII" Text=@L["MRPIIChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.CalendarMenu)" Text=@L["CalendarMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.CalendarChildMenu)" NavigateUrl="/calendars" Text=@L["CalendarChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShipmentPlanningChildMenu)" NavigateUrl="/shipment-planning-lists" Text=@L["ShipmentPlanningChildMenu"] />
-                    </Nodes>
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShipmentParentMenu)" Text=@L["ShipmentParentMenu"] IconCssClass="fa fa-truck">
-                    <Nodes>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShipmentManagementMainRecordsMenu)" Text=@L["ShipmentManagementMainRecordsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShippingAdressesChildMenu)" NavigateUrl="/shipping-adresses" Text=@L["ShippingAdressesChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShipmentManagementTransactionsMenu)" Text=@L["ShipmentManagementTransactionsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PackageFichesChildMenu)" NavigateUrl="/package-fiches" Text=@L["PackageFichesChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PalletRecordsChildMenu)" NavigateUrl="/pallet-records" Text=@L["PalletRecordsChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PackingListsChildMenu)" NavigateUrl="/packing-lists" Text=@L["PackingListsChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShipmentManagementReportsMenu)" Text=@L["ShipmentManagementReportsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PackageFichesListChildMenu)" Text=@L["PackageFichesListChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PalletRecordsListChildMenu)" Text=@L["PalletRecordsListChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PackingListChildMenu)" Text=@L["PackingListChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                    </Nodes>
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MachWorkForceManagementParentMenu)" Text=@L["MachWorkForceManagementParentMenu"] IconCssClass="fa fa-users">
-                    <Nodes>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.MachWorkForceManagementMainRecordsMenu)" Text=@L["MachWorkForceManagementMainRecordsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StationGroupChildMenu)" NavigateUrl="/station-groups" Text=@L["StationGroupChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StationsChildMenu)" NavigateUrl="/stations" Text=@L["StationsChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeesChildMenu)" NavigateUrl="/employees" Text=@L["EmployeesChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.DepartmentsChildMenu)" NavigateUrl="/departments" Text=@L["DepartmentsChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeeSenioritiesChildMenu)" NavigateUrl="/employee-seniorities" Text=@L["EmployeeSenioritiesChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeeAnnualSeniorityDifferencesChildMenu)" NavigateUrl="/employee-annual-seniority-differences" Text=@L["EmployeeAnnualSeniorityDifferencesChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EducationLevelScoresChildMenu)" NavigateUrl="/education-level-scores" Text=@L["EducationLevelScoresChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeeGeneralSkillRecordsChildMenu)" NavigateUrl="/employee-general-skill-records" Text=@L["EmployeeGeneralSkillRecordsChildMenu"] />
-                                @*  <DxTreeViewNode NavigateUrl="/task-scorings" Text=@L["TaskScoringsChildMenu"] /> *@
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.GeneralSkillRecordPrioritiesChildMenu)" NavigateUrl="/general-skill-record-priorities" Text=@L["GeneralSkillRecordPrioritiesChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StartingSalariesChildMenu)" NavigateUrl="/starting-salaries" Text=@L["StartingSalariesChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.MachWorkForceManagementTransactionsMenu)" Text=@L["MachWorkForceManagementTransactionsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeeScoreChildMenu)" NavigateUrl="/employee-scorings" Text=@L["EmployeeScoreChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StationCostChildMenu)" Text=@L["StationCostChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.MachWorkForceManagementReportsMenu)" Text=@L["MachWorkForceManagementReportsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StationListChildMenu)" Text=@L["StationListChildMenu"] NavigateUrl="/station-list-report" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeeListChildMenu)" Text=@L["EmployeeListChildMenu"] NavigateUrl="/employee-list-report" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeeScoreListChildMenu)" Text=@L["EmployeeScoreListChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StationCostListChildMenu)" Text=@L["StationCostListChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EmployeeProductivityChildMenu)" Text=@L["EmployeeProductivityChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByHaltEmpProductivityChildMenu)" Text=@L["ByHaltEmpProductivityChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByHaltStationChildMenu)" Text=@L["ByHaltStationChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByHaltStationPerfChildMenu)" Text=@L["ByHaltStationPerfChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByEmpStationProductivityChildMenu)" Text=@L["ByEmpStationProductivityChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                    </Nodes>
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionManagementParentMenu)" Text=@L["ProductionManagementParentMenu"] IconCssClass="fa fa-industry">
-                    <Nodes>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionManagementMainRecordsMenu)" Text=@L["ProductionManagementMainRecordsMenu"]>
-                            <Nodes>
-
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.OperationsMenu)" Text=@L["OperationsMenu"]>
-                                    <Nodes>
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.TempOperationsChildMenu)" NavigateUrl="/template-operations" Text=@L["TempOperationsChildMenu"] />
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProdOperationsChildMenu)" NavigateUrl="/products-operations" Text=@L["ProdOperationsChildMenu"] />
-                                    </Nodes>
-                                </DxTreeViewNode>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.BOMChildMenu)" NavigateUrl="/bills-of-materials" Text=@L["BOMChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.RoutesChildMenu)" NavigateUrl="/routes" Text=@L["RoutesChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.HaltReasonsChildMenu)" NavigateUrl="/halt-reasons" Text=@L["HaltReasonsChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionManagementTransactionsMenu)" Text=@L["ProductionManagementTransactionsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionOrdersChildMenu)" NavigateUrl="/production-orders" Text=@L["ProductionOrdersChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ContractTrackingFichesChildMenu)" NavigateUrl="/contract-tracking-fiches" Text=@L["ContractTrackingFichesChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.WorkOrdersChildMenu)" NavigateUrl="/work-orders" Text=@L["WorkOrdersChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionTrackingRecordsMenu)" Text=@L["ProductionTrackingRecordsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProdTrackingsChildMenu)" NavigateUrl="/production-tracking" Text=@L["ProdTrackingsChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.IoTProdTrackingsChildMenu)" NavigateUrl="/production-tracking-iot" Text=@L["IoTProdTrackingsChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ContractProdTrackingsChildMenu)" NavigateUrl="/contract-production-tracking" Text=@L["ContractProdTrackingsChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionManagementReportsMenu)" Text=@L["ProductionManagementReportsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.GeneralOEEChildMenu)" Text=@L["GeneralOEEChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StationOEEChildMenu)" Text=@L["StationOEEChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProdTrackingListChildMenu)" Text=@L["ProdTrackingListChildMenu"] NavigateUrl="/production-tracking-list-report" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.WorkOrderListChildMenu)" Text=@L["WorkOrderListChildMenu"] NavigateUrl="/work-order-list-report" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionOrderListChildMenu)" Text=@L["ProductionOrderListChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                    </Nodes>
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MaintenanceManagementParentMenu)" Text=@L["MaintenanceManagementParentMenu"] IconCssClass="fa fa-euro-sign">
-                    <Nodes>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.MaintenanceManagementMainRecordsMenu)" Text=@L["MaintenanceManagementMainRecordsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MainPeriodsChildMenu)" NavigateUrl="/maintenance-periods" Text=@L["MainPeriodsChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MainInstructionsChildMenu)" NavigateUrl="/maintenance-instructions" Text=@L["MainInstructionsChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.MaintenanceManagementTransactionsMenu)" Text=@L["MaintenanceManagementTransactionsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PlannedMainChildMenu)" NavigateUrl="/planned-maintenances" Text=@L["PlannedMainChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnplannedMainChildMenu)" NavigateUrl="/unplanned-maintenances" Text=@L["UnplannedMainChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MainMatReqPlanningChildMenu)" NavigateUrl="/maintenance-mrps" Text=@L["MainMatReqPlanningChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MainMatPurchaseTrackingChildMenu)" NavigateUrl="/maintenance-material-purchase-trackings" Text=@L["MainMatPurchaseTrackingChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                    </Nodes>
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlParentMenu)" Text=@L["QualityControlParentMenu"] IconCssClass="fa fa-clipboard">
-                    <Nodes>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlMainRecordsMenu)" Text=@L["QualityControlMainRecordsMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnsTypesItemsChildMenu)" Text=@L["UnsTypesItemsChildMenu"] NavigateUrl="/unsuitability-types-items" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ControlTypesChildMenu)" Text=@L["ControlTypesChildMenu"] NavigateUrl="/control-types" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ControlConditionsChildMenu)" Text=@L["ControlConditionsChildMenu"] NavigateUrl="/control-conditions" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnsItemsChildMenu)" Text=@L["UnsItemsChildMenu"] NavigateUrl="/unsuitability-items" />
+    <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StockManagementParentMenu)">
+        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+            <HeaderTemplate>
+                <i class="fa fa-warehouse" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["StockManagementParentMenu"]</text>
+            </HeaderTemplate>
+            <MenuTemplate>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StockManagementMainRecordsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i><text style="padding-left: 25px;">@L["StockManagementMainRecordsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductGroupsChildMenu)">
+                                <NavLink href="product-groups">@L["ProductGroupsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.UnitSetsChildMenu)">
+                                <NavLink href="unitsets">@L["UnitSetsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.WarehousesChildMenu)">
+                                <NavLink href="warehouses">@L["WarehousesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductsChildMenu)">
+                                <NavLink href="products">@L["ProductsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.TechnicalDrawingsChildMenu)">
+                                <NavLink href="technical-drawings">@L["TechnicalDrawingsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductRefNumbersChildMenu)">
+                                <NavLink href="product-referance-numbers">@L["ProductRefNumbersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StockAddressesMenu)">
+                                <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                                    <HeaderTemplate>
+                                        <i class="fa fa-circle TSIListItemIcon"></i><text style="padding-left: 25px;">@L["StockAddressesMenu"]</text>
+                                    </HeaderTemplate>
+                                    <MenuTemplate>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StockAddressesChildMenu)">
+                                            <NavLink href="stock-addresses">@L["StockAddressesChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StockSectionsChildMenu)">
+                                            <NavLink href="stock-sections">@L["StockSectionsChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StockShelfsChildMenu)">
+                                            <NavLink href="stock-shelfs">@L["StockShelfsChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StockColumnsChildMenu)">
+                                            <NavLink href="stock-columns">@L["StockColumnsChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StockNumbersChildMenu)">
+                                            <NavLink href="stock-numbers">@L["StockNumbersChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
 
 
-                                @*  <DxTreeViewNode Text=@L["EquipmentManagementMenu"]>
-                                <Nodes> *@
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EquipmentRecordsChildMenu)" NavigateUrl="/equipment-records" Text=@L["EquipmentRecordsChildMenu"] />
-                                @*  </Nodes>
-                                </DxTreeViewNode> *@
-
-                            </Nodes>
-                        </DxTreeViewNode>
-
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityPlansMenu)" Text=@L["QualityPlansMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.OperationalQualityPlansChildMenu)" NavigateUrl="/operational-quality-plans" Text=@L["OperationalQualityPlansChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ContractQualityPlansChildMenu)" NavigateUrl="/contract-quality-plans" Text=@L["ContractQualityPlansChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseQualityPlansChildMenu)" NavigateUrl="/purchase-quality-plans" Text=@L["PurchaseQualityPlansChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.FinalControlPlans)" Text=@L["FinalControlPlans"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlTransactionsMenu)" Text=@L["QualityControlTransactionsMenu"]>
-                            <Nodes>
-
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.FirstProductApprovalChildMenu)" NavigateUrl="/first-product-approvals" Text=@L["FirstProductApprovalChildMenu"] />
-
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnsRecordsMenu)" Text=@L["UnsRecordsMenu"]>
-                                    <Nodes>
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchUnsRecordsChildMenu)" NavigateUrl="/purchase-unsuitability-reports" Text=@L["PurchUnsRecordsChildMenu"] />
-                                        @* <DxTreeViewNode Text=@L["ProdOrderRecordsChildMenu"] /> *@
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.OprUnsRecordsChildMenu)" NavigateUrl="/operation-unsuitability-reports" Text=@L["OprUnsRecordsChildMenu"] />
-                                        @* <DxTreeViewNode Text=@L["FinalControlUnsRecordsChildMenu"] />*@
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ContUnsRecordsChildMenu)" NavigateUrl="/contract-unsuitability-reports" Text=@L["ContUnsRecordsChildMenu"] />
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.CustCompRecordsChildMenu)" NavigateUrl="/customer-complaint-reports" Text=@L["CustCompRecordsChildMenu"] />
-
-                                    </Nodes>
-                                </DxTreeViewNode>
-
-                                @* <DxTreeViewNode Text=@L["MidControlRecordsChildMenu"] />
-                                <DxTreeViewNode Text=@L["FinalControlRecordsChildMenu"] /> *@
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.EquipmentOperationsMenu)" Text=@L["EquipmentOperationsMenu"]>
-                                    <Nodes>
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.CalRecordsChildMenu)" NavigateUrl="/calibration-records" Text=@L["CalRecordsChildMenu"] />
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.CalVerificationsChildMenu)" NavigateUrl="/calibration-verifications" Text=@L["CalVerificationsChildMenu"] />
-                                    </Nodes>
-                                </DxTreeViewNode>
-
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseOrdersAwaitingApprovalsChildMenu)" NavigateUrl="/purchase-orders-awaiting-approvals" Text=@L["PurchaseOrdersAwaitingApprovalsChildMenu"] />
+                                    </MenuTemplate>
+                                </BlazoredSubMenu>
+                            </BlazoredMenuItem>
 
 
-                                @*  <DxTreeViewNode Text=@L["QualityControlReportsMenu"]>
-                                </DxTreeViewNode> *@
-                                @*  <DxTreeViewNode Text=@L["TechAnlChildMenu"]>
-                                <DxTreeViewNode Text=@L["SPCFMEAChildMenu"] />
-                                <DxTreeViewNode Text=@L["PurcUnsAnlChildMenu"] />
-                                <DxTreeViewNode Text=@L["ContUnsAnlChildMenu"] />
-                                <DxTreeViewNode Text=@L["ProdOrderUnsAnlChildMenu"] />
-                                </DxTreeViewNode> *@
-                            </Nodes>
-                        </DxTreeViewNode>
-
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlSPCMenu)" Text=@L["QualityControlSPCMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.OperationalSPCChildMenu)" NavigateUrl="/operational-spc" Text=@L["OperationalSPCChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnsuitabilityItemSPSChildMenu)" NavigateUrl="/unsuitability-item-spc" Text=@L["UnsuitabilityItemSPSChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlFMEAMenu)" Text=@L["QualityControlFMEAMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PFMEAChildMenu)" NavigateUrl="/p-fmea" Text=@L["PFMEAChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlAnalysisMenu)" Text=@L["QualityControlAnalysisMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlSPCAnalysisMenu)" Text=@L["QualityControlSPCAnalysisMenu"]>
-                                    <Nodes>
-
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.OperationalSPCComparingChildMenu)" NavigateUrl="/operational-spc-comparing" Text=@L["OperationalSPCComparingChildMenu"] />
-                                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnsuitabilityItemSPSComparingChildMenu)" NavigateUrl="/unsuitability-item-spc-comparing" Text=@L["UnsuitabilityItemSPSComparingChildMenu"] />
-
-                                    </Nodes>
-                                </DxTreeViewNode>
-
-                            </Nodes>
-                        </DxTreeViewNode>
-
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.Report8DChildMenu)" NavigateUrl="/report-8d" Text=@L["Report8DChildMenu"] />
-                    </Nodes>
-                </DxTreeViewNode>
-
-                <DxTreeViewNode Visible="@(NavBarPermissionsModel.GeneralSystemIdentificationsParentMenu)" Text=@L["GeneralSystemIdentificationsParentMenu"] IconCssClass="fa fa-newspaper">
-                    <Nodes>
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.PeriodsChildMenu)" NavigateUrl="/periods" Text=@L["PeriodsChildMenu"] />
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.BranchesChildMenu)" NavigateUrl="/branches" Text=@L["BranchesChildMenu"] />
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.CurrenciesChildMenu)" NavigateUrl="/currencies" Text=@L["CurrenciesChildMenu"] />
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ExRatesChildMenu)" NavigateUrl="/exchange-rates" Text=@L["ExRatesChildMenu"] />
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShiftsChildMenu)" NavigateUrl="/shifts" Text=@L["ShiftsChildMenu"] />
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.UsersChildMenu)" NavigateUrl="/users" Text=@L["UsersChildMenu"] />
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.UserGrpChildMenu)" NavigateUrl="/user-groups" Text=@L["UserGrpChildMenu"] />
-                        @* <DxTreeViewNode Visible="@(NavBarPermissionsModel.RoleDefinitionsChildMenu)" NavigateUrl="" Text=@L["RoleDefinitionsChildMenu"] /> *@
-                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.GeneralSystemParametersParentMenu)" Text=@L["GeneralSystemParametersParentMenu"]>
-                            <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.FinanceManagementParametersChildMenu)" NavigateUrl="/finance-management-parameters" Text=@L["FinanceManagementParametersChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MachineAndWorkforceManagementParametersChildMenu)" Text=@L["MachineAndWorkforceManagementParametersChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MaintenanceManagementParametersChildMenu)" Text=@L["MaintenanceManagementParametersChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PlanningManagementParametersChildMenu)" NavigateUrl="/planning-management-parameters" Text=@L["PlanningManagementParametersChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductionManagementParametersChildMenu)" Text=@L["ProductionManagementParametersChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.PurchaseManagementParametersChildMenu)" NavigateUrl="/purchase-management-parameters" Text=@L["PurchaseManagementParametersChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.QualityControlParametersChildMenu)" Text=@L["QualityControlParametersChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.SalesManagementParametersChildMenu)" NavigateUrl="/sales-management-parameters" Text=@L["SalesManagementParametersChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ShippingManagementParametersChildMenu)" Text=@L["ShippingManagementParametersChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementParametersChildMenu)" NavigateUrl="/stock-management-parameters" Text=@L["StockManagementParametersChildMenu"] />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.GeneralParametersChildMenu)" Text=@L["GeneralParametersChildMenu"] />
-                            </Nodes>
-                        </DxTreeViewNode>
-                        <DxTreeViewNode NavigateUrl="/insert-menu" Text="Menü Ekle" />
-                        <DxTreeViewNode NavigateUrl="/excel-import-datagrid" Text="Excel'den Grid'e Aktarým" />
-                    </Nodes>
-                </DxTreeViewNode>
-
-            </Nodes>
-
-        </DxTreeView>
-
-    </div>
-
-</div>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
 
 
-@* <BlazoredMenu>
-  <BlazoredMenuItem>
-    <NavLink Match="NavLinkMatch.All">Home</NavLink>
-  </BlazoredMenuItem>
-    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down" Header="Sub Menu">
-        <HeaderTemplate>
-            <i class="fa fa-warehouse" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">Sub Menu</text>
-        </HeaderTemplate>
-        <MenuTemplate>
-            <BlazoredMenuItem>
-                <NavLink >Counter</NavLink>
-            </BlazoredMenuItem>
-            <BlazoredMenuItem>
-                 <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down" Header="Sub Menu">
-                    <HeaderTemplate>
-                        <text style="padding-left: 25px;">Sub Sub Menu</text>
-                    </HeaderTemplate>
-                     <MenuTemplate>
-                          <BlazoredMenuItem>
-                            <NavLink>Fetch Data</NavLink>
-                          </BlazoredMenuItem>
-                        <BlazoredMenuItem>
-                            <NavLink>Fetch Data 2</NavLink>
-                        </BlazoredMenuItem>
-                     </MenuTemplate>
-                 </BlazoredSubMenu>
+                </BlazoredMenuItem>
 
-               
-            </BlazoredMenuItem>
-        </MenuTemplate>
-    </BlazoredSubMenu>
-</BlazoredMenu> *@
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StockManagementTransactionsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["StockManagementTransactionsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StockFichesChildMenu)">
+                                <NavLink href="stock-fiches">@L["StockFichesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductReceiptTransactionsChildMenu)">
+                                <NavLink href="product-receipt-transactions">@L["ProductReceiptTransactionsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            @*  <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductCostsChildMenu)">
+                            <NavLink href="product-receipt-transactions">@L["ProductCostsChildMenu"]</NavLink>
+                            </BlazoredMenuItem> *@
+                            <BlazoredMenuItem>
+                                <NavLink href="product-costs">@L["ProductCostsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StockManagementReportsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["StockManagementReportsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ListofMaterialsChildMenu)">
+                                <NavLink href="products-list-report">@L["ListofMaterialsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MaterialWarehouseStatusChildMenu)">
+                                <NavLink href="products-warehouse-status-report">@L["MaterialWarehouseStatusChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.InventoryListChildMenu)">
+                                <NavLink>@L["InventoryListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ByProdGrpPerfAnalysisChildMenu)">
+                                <NavLink>@L["ByProdGrpPerfAnalysisChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ByProdGrpScrapAnalysisChildMenu)">
+                                <NavLink>@L["ByProdGrpScrapAnalysisChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Stok Yönetimi*@
+
+    <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.FinanceManagementParentMenu)">
+        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+            <HeaderTemplate>
+                <i class="fa fa-euro-sign" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["FinanceManagementParentMenu"]</text>
+            </HeaderTemplate>
+            <MenuTemplate>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.FinanceManagementMainRecordsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["FinanceManagementMainRecordsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CurrentAccountsChildMenu)">
+                                <NavLink href="current-account-cards">@L["CurrentAccountsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PaymentPlansChildMenu)">
+                                <NavLink href="payment-plans">@L["PaymentPlansChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Finans Yönetimi*@
+
+    <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseManagementParentMenu)">
+        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+            <HeaderTemplate>
+                <i class="fa fa-euro-sign" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["PurchaseManagementParentMenu"]</text>
+            </HeaderTemplate>
+            <MenuTemplate>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseManagementMainRecordsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["PurchaseManagementMainRecordsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchasePricesChildMenu)">
+                                <NavLink href="purchase-prices">@L["PurchasePricesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseManagementTransactionsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["PurchaseManagementTransactionsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseRequestsChildMenu)">
+                                <NavLink href="purchase-requests">@L["PurchaseRequestsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseOrdersChildMenu)">
+                                <NavLink href="purchase-orders">@L["PurchaseOrdersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseManagementReportsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i>  <text style="padding-left: 25px;">@L["PurchaseManagementReportsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseRequestFicheListChildMenu)">
+                                <NavLink href="purchase-request-list-report">@L["PurchaseRequestFicheListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseOrderFicheListChildMenu)">
+                                <NavLink href="purchase-order-list-report">@L["PurchaseOrderFicheListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Satýn Alma Yönetimi*@
+
+    <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.SalesManagementParentMenu)">
+        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+            <HeaderTemplate>
+                <i class="fa fa-euro-sign" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["SalesManagementParentMenu"]</text>
+            </HeaderTemplate>
+            <MenuTemplate>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.SalesManagementMainRecordsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i>  <text style="padding-left: 25px;">@L["SalesManagementMainRecordsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.SalesPricesChildMenu)">
+                                <NavLink href="sales-prices">@L["SalesPricesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.SalesManagementTransactionsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i>  <text style="padding-left: 25px;">@L["SalesManagementTransactionsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.SalesPropositionsChildMenu)">
+                                <NavLink href="sales-propositions">@L["SalesPropositionsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.SalesOrdersChildMenu)">
+                                <NavLink href="sales-orders">@L["SalesOrdersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ForecastsChildMenu)">
+                                <NavLink href="forecasts">@L["ForecastsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.OrderAcceptanceRecordsChildMenu)">
+                                <NavLink href="order-acceptance-records">@L["OrderAcceptanceRecordsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CostMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["CostMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CPRChildMenu)">
+                                <NavLink>@L["CPRChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.SalesManagementReportsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i>  <text style="padding-left: 25px;">@L["SalesManagementReportsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.SalesPropositionFicheListChildMenu)">
+                                <NavLink href="sales-proposition-list-report">@L["SalesPropositionFicheListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.SalesOrderFicheListChildMenu)">
+                                <NavLink href="sales-order-list-report">@L["SalesOrderFicheListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Satýþ Yönetimi*@
+
+    <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PlanningParentMenu)">
+        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+            <HeaderTemplate>
+                <i class="fa fa-list" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["PlanningParentMenu"]</text>
+            </HeaderTemplate>
+            <MenuTemplate>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductionPlanningMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["ProductionPlanningMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MRPChildMenu)">
+                                <NavLink href="mrp">@L["MRPChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MRPIIChildMenu)">
+                                <NavLink href="mrpII">@L["MRPIIChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CalendarMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i>  <text style="padding-left: 25px;">@L["CalendarMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CalendarChildMenu)">
+                                <NavLink href="calendars">@L["CalendarChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ShipmentPlanningChildMenu)">
+                                <NavLink href="shipment-planning-lists">@L["ShipmentPlanningChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Planlama Yönetimi*@
+
+    <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ShipmentParentMenu)">
+        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+            <HeaderTemplate>
+                <i class="fa fa-truck" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["ShipmentParentMenu"]</text>
+            </HeaderTemplate>
+            <MenuTemplate>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ShipmentManagementMainRecordsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["ShipmentManagementMainRecordsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ShippingAdressesChildMenu)">
+                                <NavLink href="shipping-adresses">@L["ShippingAdressesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ShipmentManagementTransactionsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["ShipmentManagementTransactionsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PackageFichesChildMenu)">
+                                <NavLink href="package-fiches">@L["PackageFichesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PalletRecordsChildMenu)">
+                                <NavLink href="pallet-records">@L["PalletRecordsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PackingListsChildMenu)">
+                                <NavLink href="packing-lists">@L["PackingListsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ShipmentManagementReportsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["ShipmentManagementReportsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PackageFichesListChildMenu)">
+                                <NavLink>@L["PackageFichesListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PalletRecordsListChildMenu)">
+                                <NavLink>@L["PalletRecordsListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PackingListChildMenu)">
+                                <NavLink>@L["PackingListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Sevkiyat Yönetimi*@
+
+    <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MachWorkForceManagementParentMenu)">
+        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+            <HeaderTemplate>
+                <i class="fa fa-users" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["MachWorkForceManagementParentMenu"]</text>
+            </HeaderTemplate>
+            <MenuTemplate>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MachWorkForceManagementMainRecordsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i>  <text style="padding-left: 25px;">@L["MachWorkForceManagementMainRecordsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StationGroupChildMenu)">
+                                <NavLink href="station-groups">@L["StationGroupChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StationsChildMenu)">
+                                <NavLink href="stations">@L["StationsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.EmployeesChildMenu)">
+                                <NavLink href="employees">@L["EmployeesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.DepartmentsChildMenu)">
+                                <NavLink href="departments">@L["DepartmentsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.EmployeeSenioritiesChildMenu)">
+                                <NavLink href="employee-seniorities">@L["EmployeeSenioritiesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.EmployeeAnnualSeniorityDifferencesChildMenu)">
+                                <NavLink href="employee-annual-seniority-differences">@L["EmployeeAnnualSeniorityDifferencesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.EducationLevelScoresChildMenu)">
+                                <NavLink href="education-level-scores">@L["EducationLevelScoresChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.EmployeeGeneralSkillRecordsChildMenu)">
+                                <NavLink href="employee-general-skill-records">@L["EmployeeGeneralSkillRecordsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.GeneralSkillRecordPrioritiesChildMenu)">
+                                <NavLink href="general-skill-record-priorities">@L["GeneralSkillRecordPrioritiesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StartingSalariesChildMenu)">
+                                <NavLink href="starting-salaries">@L["StartingSalariesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MachWorkForceManagementTransactionsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i>  <text style="padding-left: 25px;">@L["MachWorkForceManagementTransactionsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.EmployeeScoreChildMenu)">
+                                <NavLink href="employee-scorings">@L["EmployeeScoreChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StationCostChildMenu)">
+                                <NavLink>@L["StationCostChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MachWorkForceManagementReportsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["MachWorkForceManagementReportsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StationListChildMenu)">
+                                <NavLink href="station-list-report">@L["StationListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.EmployeeListChildMenu)">
+                                <NavLink href="employee-list-report">@L["EmployeeListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.EmployeeScoreListChildMenu)">
+                                <NavLink>@L["EmployeeScoreListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StationCostListChildMenu)">
+                                <NavLink>@L["StationCostListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.EmployeeProductivityChildMenu)">
+                                <NavLink>@L["EmployeeProductivityChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ByHaltEmpProductivityChildMenu)">
+                                <NavLink>@L["ByHaltEmpProductivityChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ByHaltStationChildMenu)">
+                                <NavLink>@L["ByHaltStationChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ByHaltStationPerfChildMenu)">
+                                <NavLink>@L["ByHaltStationPerfChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ByEmpStationProductivityChildMenu)">
+                                <NavLink>@L["ByEmpStationProductivityChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Makina ve Ýþ Gücü Yönetimi*@
+
+    <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductionManagementParentMenu)">
+        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+            <HeaderTemplate>
+                <i class="fa fa-industry" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["ProductionManagementParentMenu"]</text>
+            </HeaderTemplate>
+            <MenuTemplate>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MachWorkForceManagementMainRecordsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i>  <text style="padding-left: 25px;">@L["ProductionManagementMainRecordsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.OperationsMenu)">
+                                <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                                    <HeaderTemplate>
+                                        <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["OperationsMenu"]</text>
+                                    </HeaderTemplate>
+                                    <MenuTemplate>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.TempOperationsChildMenu)">
+                                            <NavLink href="template-operations">@L["TempOperationsChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProdOperationsChildMenu)">
+                                            <NavLink href="products-operations">@L["ProdOperationsChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                    </MenuTemplate>
+                                </BlazoredSubMenu>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.BOMChildMenu)">
+                                <NavLink href="bills-of-materials">@L["BOMChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.RoutesChildMenu)">
+                                <NavLink href="routes">@L["RoutesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.HaltReasonsChildMenu)">
+                                <NavLink href="halt-reasons">@L["HaltReasonsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductionManagementTransactionsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i><text style="padding-left: 25px;">@L["ProductionManagementTransactionsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductionOrdersChildMenu)">
+                                <NavLink href="production-orders">@L["ProductionOrdersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ContractTrackingFichesChildMenu)">
+                                <NavLink href="contract-tracking-fiches">@L["ContractTrackingFichesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.WorkOrdersChildMenu)">
+                                <NavLink href="work-orders">@L["WorkOrdersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductionTrackingRecordsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i><text style="padding-left: 25px;">@L["ProductionTrackingRecordsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProdTrackingsChildMenu)">
+                                <NavLink href="production-tracking">@L["ProdTrackingsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.IoTProdTrackingsChildMenu)">
+                                <NavLink href="production-tracking-iot">@L["IoTProdTrackingsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ContractProdTrackingsChildMenu)">
+                                <NavLink href="contract-production-tracking">@L["ContractProdTrackingsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductionManagementReportsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i>  <text style="padding-left: 25px;">@L["ProductionManagementReportsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.GeneralOEEChildMenu)">
+                                <NavLink>@L["GeneralOEEChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StationOEEChildMenu)">
+                                <NavLink>@L["StationOEEChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProdTrackingListChildMenu)">
+                                <NavLink href="production-tracking-list-report">@L["ProdTrackingListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.WorkOrderListChildMenu)">
+                                <NavLink href="work-order-list-report">@L["WorkOrderListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductionOrderListChildMenu)">
+                                <NavLink>@L["ProductionOrderListChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Üretim Yönetimi*@
+
+    <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MaintenanceManagementParentMenu)">
+        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+            <HeaderTemplate>
+                <i class="fa fa-euro-sign" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["MaintenanceManagementParentMenu"]</text>
+            </HeaderTemplate>
+            <MenuTemplate>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MaintenanceManagementMainRecordsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["MaintenanceManagementMainRecordsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MainPeriodsChildMenu)">
+                                <NavLink href="maintenance-periods">@L["MainPeriodsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MainInstructionsChildMenu)">
+                                <NavLink href="maintenance-instructions">@L["MainInstructionsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MaintenanceManagementTransactionsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["MaintenanceManagementTransactionsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PlannedMainChildMenu)">
+                                <NavLink href="planned-maintenances">@L["PlannedMainChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.UnplannedMainChildMenu)">
+                                <NavLink href="unplanned-maintenances">@L["UnplannedMainChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MainMatReqPlanningChildMenu)">
+                                <NavLink href="maintenance-mrps">@L["MainMatReqPlanningChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MainMatPurchaseTrackingChildMenu)">
+                                <NavLink href="maintenance-material-purchase-trackings">@L["MainMatPurchaseTrackingChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Bakým Yönetimi*@
+
+    <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.QualityControlParentMenu)">
+        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+            <HeaderTemplate>
+                <i class="fa fa-clipboard" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["QualityControlParentMenu"]</text>
+            </HeaderTemplate>
+            <MenuTemplate>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.QualityControlMainRecordsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["QualityControlMainRecordsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.UnsTypesItemsChildMenu)">
+                                <NavLink href="unsuitability-types-items">@L["UnsTypesItemsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ControlTypesChildMenu)">
+                                <NavLink href="control-types">@L["ControlTypesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ControlConditionsChildMenu)">
+                                <NavLink href="control-conditions">@L["ControlConditionsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.UnsItemsChildMenu)">
+                                <NavLink href="unsuitability-items">@L["UnsItemsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.EquipmentRecordsChildMenu)">
+                                <NavLink href="equipment-records">@L["EquipmentRecordsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.QualityPlansMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i>  <text style="padding-left: 25px;">@L["QualityPlansMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.OperationalQualityPlansChildMenu)">
+                                <NavLink href="operational-quality-plans">@L["OperationalQualityPlansChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ContractQualityPlansChildMenu)">
+                                <NavLink href="contract-quality-plans">@L["ContractQualityPlansChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseQualityPlansChildMenu)">
+                                <NavLink href="purchase-quality-plans">@L["PurchaseQualityPlansChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.FinalControlPlans)">
+                                <NavLink>@L["FinalControlPlans"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.QualityControlTransactionsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i>  <text style="padding-left: 25px;">@L["QualityControlTransactionsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.FirstProductApprovalChildMenu)">
+                                <NavLink href="first-product-approvals">@L["FirstProductApprovalChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.UnsRecordsMenu)">
+                                <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                                    <HeaderTemplate>
+                                        <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["UnsRecordsMenu"]</text>
+                                    </HeaderTemplate>
+                                    <MenuTemplate>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchUnsRecordsChildMenu)">
+                                            <NavLink href="purchase-unsuitability-reports">@L["PurchUnsRecordsChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.OprUnsRecordsChildMenu)">
+                                            <NavLink href="operation-unsuitability-reports">@L["OprUnsRecordsChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ContUnsRecordsChildMenu)">
+                                            <NavLink href="contract-unsuitability-reports">@L["ContUnsRecordsChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CustCompRecordsChildMenu)">
+                                            <NavLink href="customer-complaint-reports">@L["CustCompRecordsChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                    </MenuTemplate>
+                                </BlazoredSubMenu>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.EquipmentOperationsMenu)">
+                                <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                                    <HeaderTemplate>
+                                        <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["EquipmentOperationsMenu"]</text>
+                                    </HeaderTemplate>
+                                    <MenuTemplate>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CalRecordsChildMenu)">
+                                            <NavLink href="calibration-records">@L["CalRecordsChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CalVerificationsChildMenu)">
+                                            <NavLink href="calibration-verifications">@L["CalVerificationsChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                    </MenuTemplate>
+                                </BlazoredSubMenu>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseOrdersAwaitingApprovalsChildMenu)">
+                                <NavLink href="purchase-orders-awaiting-approvals">@L["PurchaseOrdersAwaitingApprovalsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            @* <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.QualityControlReportsMenu)">
+                            <NavLink >@L["QualityControlReportsMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.TechAnlChildMenu)">
+                            <NavLink >@L["TechAnlChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.SPCFMEAChildMenu)">
+                            <NavLink >@L["SPCFMEAChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurcUnsAnlChildMenu)">
+                            <NavLink>@L["PurcUnsAnlChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ContUnsAnlChildMenu)">
+                            <NavLink>@L["ContUnsAnlChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProdOrderUnsAnlChildMenu)">
+                            <NavLink>@L["ProdOrderUnsAnlChildMenu"]</NavLink>
+                            </BlazoredMenuItem> *@
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.QualityControlFMEAMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["QualityControlFMEAMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PFMEAChildMenu)">
+                                <NavLink href="p-fmea">@L["PFMEAChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.QualityControlAnalysisMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i>  <text style="padding-left: 25px;">@L["QualityControlAnalysisMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.QualityControlSPCAnalysisMenu)">
+                                <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                                    <HeaderTemplate>
+                                        <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["QualityControlSPCAnalysisMenu"]</text>
+                                    </HeaderTemplate>
+                                    <MenuTemplate>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.OperationalSPCComparingChildMenu)">
+                                            <NavLink href="operational-spc-comparing">@L["OperationalSPCComparingChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.UnsuitabilityItemSPSComparingChildMenu)">
+                                            <NavLink href="unsuitability-item-spc-comparing">@L["UnsuitabilityItemSPSComparingChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                    </MenuTemplate>
+                                </BlazoredSubMenu>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.Report8DChildMenu)">
+                                <NavLink href="report-8d">@L["Report8DChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Kalite Kontrol*@
+
+    <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.GeneralSystemIdentificationsParentMenu)">
+        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+            <HeaderTemplate>
+                <i class="fa fa-newspaper" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["GeneralSystemIdentificationsParentMenu"]</text>
+            </HeaderTemplate>
+            <MenuTemplate>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PeriodsChildMenu)">
+                    <NavLink href="periods">@L["PeriodsChildMenu"]</NavLink>
+                </BlazoredMenuItem>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.BranchesChildMenu)">
+                    <NavLink href="branches">@L["BranchesChildMenu"]</NavLink>
+                </BlazoredMenuItem>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CurrenciesChildMenu)">
+                    <NavLink href="currencies">@L["CurrenciesChildMenu"]</NavLink>
+                </BlazoredMenuItem>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ExRatesChildMenu)">
+                    <NavLink href="exchange-rates">@L["ExRatesChildMenu"]</NavLink>
+                </BlazoredMenuItem>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ShiftsChildMenu)">
+                    <NavLink href="shifts">@L["ShiftsChildMenu"]</NavLink>
+                </BlazoredMenuItem>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.UsersChildMenu)">
+                    <NavLink href="users">@L["UsersChildMenu"]</NavLink>
+                </BlazoredMenuItem>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.UserGrpChildMenu)">
+                    <NavLink href="user-groups">@L["UserGrpChildMenu"]</NavLink>
+                </BlazoredMenuItem>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.GeneralSystemParametersParentMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["GeneralSystemParametersParentMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.FinanceManagementParametersChildMenu)">
+                                <NavLink href="finance-management-parameters">@L["FinanceManagementParametersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MachineAndWorkforceManagementParametersChildMenu)">
+                                <NavLink>@L["MachineAndWorkforceManagementParametersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MaintenanceManagementParametersChildMenu)">
+                                <NavLink>@L["MaintenanceManagementParametersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PlanningManagementParametersChildMenu)">
+                                <NavLink href="planning-management-parameters">@L["PlanningManagementParametersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductionManagementParametersChildMenu)">
+                                <NavLink>@L["ProductionManagementParametersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseManagementParametersChildMenu)">
+                                <NavLink href="purchase-management-parameters">@L["PurchaseManagementParametersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.QualityControlParametersChildMenu)">
+                                <NavLink>@L["QualityControlParametersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.SalesManagementParametersChildMenu)">
+                                <NavLink href="sales-management-parameters">@L["SalesManagementParametersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ShippingManagementParametersChildMenu)">
+                                <NavLink>@L["ShippingManagementParametersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StockManagementParametersChildMenu)">
+                                <NavLink href="stock-management-parameters">@L["StockManagementParametersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.GeneralParametersChildMenu)">
+                                <NavLink>@L["GeneralParametersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Genel Sistem Tanýmlamalarý*@
+
+</BlazoredMenu>
 
 <style>
 
-    .TSINode{
-        color:red !important;
-    }
-    .scroller {
-        height: calc(100vh - 160px) !important;
-        overflow-y: auto;
-        width: 287px;
-    }
-
-        .scroller::-webkit-scrollbar, scrollbar-thumb
-        .scroller::-webkit-scrollbar-thumb {
-            width: 8px;
-            height: 110px;
-            border-radius: 4px;
-            position: center;
-        }
-
-        .scroller::-webkit-scrollbar-thumb {
-            box-shadow: inset 0 0 0 10px #313C75;
-            border-radius: 4px;
-        }
-
-        .scroller::-webkit-scrollbar-track {
-            width: 28px;
-        }
-
-    .separator {
-        border: 1px solid #FFFFFF;
-        opacity: 0.14;
-        width: 247px;
-        margin: 1rem;
-        margin-top: 0px;
-    }
-
-
+    /*  --------------------BLAZORED NAVBAR-------------------- */
 
     .blazored-sub-menu-header {
         display: block;
         color: #fff;
         width: 300px !important;
-        font-size: 16px !important;
+        font-size: 15px !important;
         cursor: pointer;
+        text-decoration: none !important;
     }
+
+        .blazored-sub-menu-header:hover {
+            color: #B70000 !important;
+        }
+
+    .blazored-menu li a {
+        display: block;
+        padding: .75rem 2.5rem !important;
+        color: #fffbfb !important;
+        cursor: pointer;
+        text-decoration: none !important;
+    }
+
+        .blazored-menu li a:hover {
+            color: #B70000 !important;
+        }
+
+    .blazored-sub-menu-header span {
+        display: block;
+        padding: .75rem 1rem;
+        position: relative;
+        text-decoration: none !important;
+    }
+
+    .TSIListItemIcon {
+        left: 0;
+        padding-left: 20px;
+        padding-top: 8px;
+        font-size: 7px;
+    }
+
+
+    /*  ------------------------------------------------------ */
 
 </style>
 
 
 @code {
-    private bool collapsevisible = true;
-    //private bool StockManagementParentMenuVisible;
-    private bool collapseparametersvisible = true;
-    public bool SidebarToggle = true;
-    public bool SidebarToggleFixed = true;
-
-    DxTreeView treeView;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

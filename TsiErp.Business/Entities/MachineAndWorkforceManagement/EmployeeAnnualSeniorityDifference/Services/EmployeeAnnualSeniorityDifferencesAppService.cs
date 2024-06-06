@@ -45,7 +45,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             var query = queryFactory.Query().From(Tables.EmployeeAnnualSeniorityDifferences).Insert(new CreateEmployeeAnnualSeniorityDifferencesDto
             {
                 Description_ = input.Description_,
-                SeniorityID = input.SeniorityID,
+                SeniorityID = input.SeniorityID.GetValueOrDefault(),
                 Difference = input.Difference,
                 Year_ = input.Year_,
                 Id = addedEntityId,
@@ -144,7 +144,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 Description_ = input.Description_,
                 Year_ = input.Year_,
                 Difference = input.Difference,
-                SeniorityID = input.SeniorityID,
+                SeniorityID = input.SeniorityID.GetValueOrDefault(),
                 Id = input.Id,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,

@@ -55,7 +55,7 @@ namespace TsiErp.Business.Entities.Period.Services
             var query = queryFactory.Query().From(Tables.Periods).Insert(new CreatePeriodsDto
             {
                 Code = input.Code,
-                BranchID = input.BranchID,
+                BranchID = input.BranchID.GetValueOrDefault(),
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
@@ -191,7 +191,7 @@ namespace TsiErp.Business.Entities.Period.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                BranchID = input.BranchID,
+                BranchID = input.BranchID.GetValueOrDefault(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, true, true, "");
 

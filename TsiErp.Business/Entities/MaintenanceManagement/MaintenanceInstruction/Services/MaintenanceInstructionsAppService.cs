@@ -63,7 +63,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                 PeriodID = input.PeriodID,
                 PeriodTime = input.PeriodTime,
                 PlannedMaintenanceTime = input.PlannedMaintenanceTime,
-                StationID = input.StationID,
+                StationID = input.StationID.GetValueOrDefault(),
                 Code = input.Code,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
@@ -203,7 +203,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.MaintenanceInstructions)
-                   .Select<MaintenanceInstructions>(mi => new { mi.StationID, mi.PlannedMaintenanceTime, mi.PeriodTime, mi.PeriodID, mi.Note_, mi.InstructionName, mi.Id, mi.DataOpenStatusUserId, mi.DataOpenStatus, mi.Code })
+                   .Select<MaintenanceInstructions>(null)
                    .Join<Stations>
                     (
                         s => new { StationCode = s.Code },
@@ -253,7 +253,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.MaintenanceInstructionLines)
-                   .Select<MaintenanceInstructionLines>(mil => new { mil.UnitSetID, mil.ProductID, mil.LineNr, mil.InstructionID, mil.InstructionDescription, mil.Id, mil.DataOpenStatusUserId, mil.DataOpenStatus, mil.Amount })
+                   .Select<MaintenanceInstructionLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Code, ProductCode = p.Code },
@@ -310,7 +310,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                 PeriodID = input.PeriodID,
                 PeriodTime = input.PeriodTime,
                 PlannedMaintenanceTime = input.PlannedMaintenanceTime,
-                StationID = input.StationID,
+                StationID = input.StationID.GetValueOrDefault(),
                 Code = input.Code,
                 CreationTime = entity.CreationTime,
                 CreatorId = entity.CreatorId,

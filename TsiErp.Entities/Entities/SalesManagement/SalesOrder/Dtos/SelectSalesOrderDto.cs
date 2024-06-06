@@ -180,6 +180,14 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         ///Fiyatlandırma Dövizi Adı
         /// </summary>
         public string PricingCurrencyName { get; set; }
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceRecordID { get; set; }
+        /// <summary>
+        /// Teyit Edilen Yükleme Tarihi
+        /// </summary>
+        public DateTime ConfirmedLoadingDate { get; set; }
 
 
         [NoDatabaseAction]

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApprovedUnitPriceDetailLabel" xml:space="preserve">
+    <value>Approved Unit Price:</value>
+  </data>
   <data name="BigPackage" xml:space="preserve">
     <value>Big Package</value>
   </data>
@@ -161,6 +164,63 @@
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
+  </data>
+  <data name="DetailGridApprovedUnitPrice" xml:space="preserve">
+    <value>APPROVED UNIT PRICE</value>
+  </data>
+  <data name="DetailGridCustomerCode" xml:space="preserve">
+    <value>CUSTOMER CODE</value>
+  </data>
+  <data name="DetailGridCustomerReferenceNo" xml:space="preserve">
+    <value>CUSTOMER REFERENCE NO</value>
+  </data>
+  <data name="DetailGridEnglishDefinition" xml:space="preserve">
+    <value>ENGLISH DEFINITION</value>
+  </data>
+  <data name="DetailGridLastOrderPrice" xml:space="preserve">
+    <value>LAST ORDER PRICE</value>
+  </data>
+  <data name="DetailGridLineAmount" xml:space="preserve">
+    <value>LINE AMOUNT</value>
+  </data>
+  <data name="DetailGridMaxProductionQuantity" xml:space="preserve">
+    <value>MAX PRODUCTION QUANTITY</value>
+  </data>
+  <data name="DetailGridOrderNo" xml:space="preserve">
+    <value>ORDER NO</value>
+  </data>
+  <data name="DetailGridOrderQuantity" xml:space="preserve">
+    <value>ORDER QUANTITY</value>
+  </data>
+  <data name="DetailGridOrderReferenceNo" xml:space="preserve">
+    <value>ORDER REFERENCE NO</value>
+  </data>
+  <data name="DetailGridOrderunitPrice" xml:space="preserve">
+    <value>ORDER UNIT PRICE</value>
+  </data>
+  <data name="DetailGridPackageFicheProductWeight" xml:space="preserve">
+    <value>PRODUCT WEIGHT</value>
+  </data>
+  <data name="DetailGridPackageTotalQuantity" xml:space="preserve">
+    <value>PACKAGE TOTAL QUANTITY</value>
+  </data>
+  <data name="DetailGridPackingListNo" xml:space="preserve">
+    <value>PACKING LIST NO</value>
+  </data>
+  <data name="DetailGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="DetailGridSalesPriceListPrice" xml:space="preserve">
+    <value>LIST PRICE</value>
+  </data>
+  <data name="DetailGridTicketNo" xml:space="preserve">
+    <value>TICKET NO</value>
+  </data>
+  <data name="DetailGridTotalGrossKG" xml:space="preserve">
+    <value>TOTAL GROSS KG</value>
+  </data>
+  <data name="DetailGridTotalNetKG" xml:space="preserve">
+    <value>TOTAL NET KG</value>
   </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Pallet Records</value>
@@ -312,6 +372,12 @@
   <data name="PackingListsModalTitle" xml:space="preserve">
     <value>Packing Lists</value>
   </data>
+  <data name="PalletDetailApproveUnitPrice" xml:space="preserve">
+    <value>Approve Unit Price</value>
+  </data>
+  <data name="PalletDetailModalTitle" xml:space="preserve">
+    <value>Pallet Detail</value>
+  </data>
   <data name="PalletPackageNumber" xml:space="preserve">
     <value>PALLET PACKAGE NUMBER</value>
   </data>
@@ -350,6 +416,12 @@
   </data>
   <data name="PalletRecordsContextDelete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="PalletRecordsContextLoadingDetail" xml:space="preserve">
+    <value>Loading Detail</value>
+  </data>
+  <data name="PalletRecordsContextPalletDetail" xml:space="preserve">
+    <value>Pallet Detail</value>
   </data>
   <data name="PalletRecordsContextPrintBig" xml:space="preserve">
     <value>Big Ticket</value>

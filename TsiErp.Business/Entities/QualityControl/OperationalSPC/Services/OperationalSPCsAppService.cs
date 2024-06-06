@@ -12,23 +12,14 @@ using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.OperationalSPC.Validations;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.PurchaseRequest.Services;
-using TsiErp.Business.Entities.StockMovement;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
-using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPC;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPC.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPCLine;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPCLine.Dtos;
-using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
-using TsiErp.Entities.Entities.StockManagement.Product;
-using TsiErp.Entities.Entities.StockManagement.UnitSet;
-using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.OperationalSPCs.Page;
 
@@ -103,7 +94,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                     Frequency = item.Frequency,
                     LineNr = item.LineNr,
                     OperationBasedMidControlFrequency = item.OperationBasedMidControlFrequency,
-                    OperationID = item.OperationID,
+                    OperationID = item.OperationID.GetValueOrDefault(),
                     RPN = item.RPN,
                     Severity = item.Severity,
                     TotalComponent = item.TotalComponent,
@@ -113,7 +104,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                     UnsuitableComponentPerOperation = item.UnsuitableComponentPerOperation,
                     UnsuitableComponentRate = item.UnsuitableComponentRate,
                     UnsuitableOperationRate = item.UnsuitableOperationRate,
-                    WorkCenterID = item.WorkCenterID,
+                    WorkCenterID = item.WorkCenterID.GetValueOrDefault(),
                     OperationalSPCID = addedEntityId,
                     CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
@@ -340,7 +331,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                         Frequency = item.Frequency,
                         LineNr = item.LineNr,
                         OperationBasedMidControlFrequency = item.OperationBasedMidControlFrequency,
-                        OperationID = item.OperationID,
+                        OperationID = item.OperationID.GetValueOrDefault(),
                         RPN = item.RPN,
                         Severity = item.Severity,
                         TotalComponent = item.TotalComponent,
@@ -350,7 +341,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                         UnsuitableComponentPerOperation = item.UnsuitableComponentPerOperation,
                         UnsuitableComponentRate = item.UnsuitableComponentRate,
                         UnsuitableOperationRate = item.UnsuitableOperationRate,
-                        WorkCenterID = item.WorkCenterID,
+                        WorkCenterID = item.WorkCenterID.GetValueOrDefault(),
                         OperationalSPCID = input.Id,
                         CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                         CreatorId = LoginedUserService.UserId,
@@ -380,7 +371,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                             Frequency = item.Frequency,
                             LineNr = item.LineNr,
                             OperationBasedMidControlFrequency = item.OperationBasedMidControlFrequency,
-                            OperationID = item.OperationID,
+                            OperationID = item.OperationID.GetValueOrDefault(),
                             RPN = item.RPN,
                             Severity = item.Severity,
                             TotalComponent = item.TotalComponent,

@@ -74,7 +74,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                 LastModifierId = Guid.Empty,
                 Description_ = input.Description_,
                 Code = input.Code,
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
             });
 
             foreach (var item in input.SelectStockAddressLines)
@@ -320,7 +320,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 Description_ = input.Description_,
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
                 Code = input.Code,
 
             }).Where(new { Id = input.Id }, false, false, "");

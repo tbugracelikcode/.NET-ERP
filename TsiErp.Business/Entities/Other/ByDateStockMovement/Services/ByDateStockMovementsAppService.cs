@@ -40,7 +40,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
             {
                 Amount = input.Amount,
                 Date_ = input.Date_,
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
                 TotalConsumption = input.TotalConsumption,
                 TotalGoodsIssue = input.TotalGoodsIssue,
                 TotalGoodsReceipt = input.TotalGoodsReceipt,
@@ -50,8 +50,8 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
                 TotalSalesOrder = input.TotalSalesOrder,
                 TotalSalesProposition = input.TotalSalesProposition,
                 TotalWastage = input.TotalWastage,
-                WarehouseID = input.WarehouseID,
-                BranchID = input.BranchID,
+                WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                BranchID = input.BranchID.GetValueOrDefault(),
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
@@ -89,7 +89,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
         public async Task<IDataResult<SelectByDateStockMovementsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
-                    .Query().From(Tables.ByDateStockMovements).Select<ByDateStockMovements>(bd => new { bd.WarehouseID, bd.TotalWastage, bd.TotalSalesProposition, bd.TotalSalesOrder, bd.TotalPurchaseRequest, bd.TotalPurchaseOrder, bd.TotalProduction, bd.TotalGoodsReceipt, bd.TotalGoodsIssue, bd.TotalConsumption, bd.ProductID, bd.Id, bd.Date_, bd.DataOpenStatusUserId, bd.DataOpenStatus, bd.BranchID, bd.Amount })
+                    .Query().From(Tables.ByDateStockMovements).Select<ByDateStockMovements>(null)
                         .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -126,7 +126,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ByDateStockMovements).Select<ByDateStockMovements>(bd => new { bd.WarehouseID, bd.TotalWastage, bd.TotalSalesProposition, bd.TotalSalesOrder, bd.TotalPurchaseRequest, bd.TotalPurchaseOrder, bd.TotalProduction, bd.TotalGoodsReceipt, bd.TotalGoodsIssue, bd.TotalConsumption, bd.ProductID, bd.Id, bd.Date_, bd.DataOpenStatusUserId, bd.DataOpenStatus, bd.BranchID, bd.Amount })
+               .From(Tables.ByDateStockMovements).Select<ByDateStockMovements>(null)
                         .Join<Products>
                         (
                             p => new { ProductCode = p.Code, ProductName = p.Name, ProductID = p.Id },
@@ -166,7 +166,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
             {
                 Amount = input.Amount,
                 Date_ = input.Date_,
-                ProductID = input.ProductID,
+                ProductID = input.ProductID.GetValueOrDefault(),
                 TotalConsumption = input.TotalConsumption,
                 TotalGoodsIssue = input.TotalGoodsIssue,
                 TotalGoodsReceipt = input.TotalGoodsReceipt,
@@ -176,8 +176,8 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
                 TotalSalesOrder = input.TotalSalesOrder,
                 TotalSalesProposition = input.TotalSalesProposition,
                 TotalWastage = input.TotalWastage,
-                WarehouseID = input.WarehouseID,
-                BranchID = input.BranchID,
+                WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                BranchID = input.BranchID.GetValueOrDefault(),
                 Id = input.Id,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,

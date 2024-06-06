@@ -106,10 +106,10 @@ namespace TsiErp.Business.Entities.Calendar.Services
                     AvailableTime = item.AvailableTime,
                     Date_ = item.Date_,
                     PlannedHaltTimes = item.PlannedHaltTimes,
-                    ShiftID = item.ShiftID.Value,
+                    ShiftID = item.ShiftID.GetValueOrDefault(),
                     ShiftOverTime = item.ShiftOverTime,
                     ShiftTime = item.ShiftTime,
-                    StationID = item.StationID.Value
+                    StationID = item.StationID.GetValueOrDefault()
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -418,10 +418,10 @@ namespace TsiErp.Business.Entities.Calendar.Services
                         AvailableTime = item.AvailableTime,
                         Date_ = item.Date_,
                         PlannedHaltTimes = item.PlannedHaltTimes,
-                        ShiftID = item.ShiftID.Value,
+                        ShiftID = item.ShiftID.GetValueOrDefault(),
                         ShiftOverTime = item.ShiftOverTime,
                         ShiftTime = item.ShiftTime,
-                        StationID = item.StationID.Value
+                        StationID = item.StationID.GetValueOrDefault()
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -452,11 +452,11 @@ namespace TsiErp.Business.Entities.Calendar.Services
                             AvailableTime = item.AvailableTime,
                             Date_ = item.Date_,
                             PlannedHaltTimes = item.PlannedHaltTimes,
-                            ShiftID = item.ShiftID.Value,
+                            ShiftID = item.ShiftID.GetValueOrDefault(),
                             ShiftOverTime = item.ShiftOverTime,
                             WorkStatus = item.WorkStatus,
                             ShiftTime = item.ShiftTime,
-                            StationID = item.StationID.Value
+                            StationID = item.StationID.GetValueOrDefault()
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;

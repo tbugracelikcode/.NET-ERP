@@ -490,6 +490,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         CurrencyID = localCurrency.Id,
                         CurrentAccountCardID = DataSource.CurrentAccountCardID,
                         CustomerRequestedDate = DataSource.CustomerRequestedDate,
+                        OrderAcceptanceRecordID = DataSource.Id,
                         CustomerOrderNr = string.Empty,
                         Date_ = GetSQLDateAppService.GetDateFromSQL(),
                         Description_ = string.Empty,
@@ -541,6 +542,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                             CurrentAccountCardCode = DataSource.CurrentAccountCardCode,
                             CurrentAccountCardID = DataSource.CurrentAccountCardID.GetValueOrDefault(),
                             CurrentAccountCardName = DataSource.CurrentAccountCardName,
+                            OrderAcceptanceRecordID = DataSource.Id,
+                            OrderAcceptanceRecordLineID = line.Id,
                             PurchaseSupplyDate = line.PurchaseSupplyDate,
                             Date_ = DataSource.Date_,
                             TransactionExchangeDiscountAmount = 0,
@@ -1101,7 +1104,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         public void HideOrderLinePopup()
         {
-            OrderLineCrudPopup = false; 
+            OrderLineCrudPopup = false;
             GridOrderLineList.Clear();
         }
 

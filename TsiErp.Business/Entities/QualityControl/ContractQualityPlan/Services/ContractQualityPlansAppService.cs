@@ -75,8 +75,8 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 Id = addedEntityId,
                 Description_ = input.Description_,
                 DocumentNumber = input.DocumentNumber,
-                ProductID = input.ProductID,
-                CurrrentAccountCardID = input.CurrrentAccountCardID,
+                ProductID = input.ProductID.GetValueOrDefault(),
+                CurrrentAccountCardID = input.CurrrentAccountCardID.GetValueOrDefault(),
                 AcceptableNumberofDefectiveProduct = input.AcceptableNumberofDefectiveProduct,
                 NumberofSampleinPart = input.NumberofSampleinPart,
                 IsDeleted = false,
@@ -164,7 +164,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
-                     OperationID = item.OperationID
+                     OperationID = item.OperationID.GetValueOrDefault()
 
                 });
 
@@ -260,7 +260,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ContractQualityPlans)
-                   .Select<ContractQualityPlans>(cqp => new { cqp.CurrrentAccountCardID, cqp.ProductID, cqp.Id, cqp.DocumentNumber, cqp.Description_, cqp.DataOpenStatusUserId, cqp.DataOpenStatus, cqp.AcceptableNumberofDefectiveProduct, cqp.NumberofSampleinPart })
+                   .Select<ContractQualityPlans>(null)
                    .Join<Products>
                     (
                         pr => new { ProductCode = pr.Code, ProductName = pr.Name, ProductID = pr.Id },
@@ -284,7 +284,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.ContractQualityPlanLines)
-                   .Select<ContractQualityPlanLines>(cqpl => new { cqpl.WorkCenterID, cqpl.UpperTolerance, cqpl.PeriodicControlMeasure, cqpl.ContractQualityPlanID, cqpl.MeasureNumberInPicture, cqpl.LineNr, cqpl.IdealMeasure, cqpl.Id, cqpl.Equipment, cqpl.Description_, cqpl.Date_, cqpl.DataOpenStatusUserId, cqpl.DataOpenStatus, cqpl.ControlTypesID, cqpl.ControlManager, cqpl.ControlFrequency, cqpl.ControlConditionsID, cqpl.Code, cqpl.BottomTolerance })
+                   .Select<ContractQualityPlanLines>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -362,7 +362,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ContractQualityPlans)
-                   .Select<ContractQualityPlans>(cqp => new { cqp.CurrrentAccountCardID, cqp.ProductID, cqp.Id, cqp.DocumentNumber, cqp.Description_, cqp.DataOpenStatusUserId, cqp.DataOpenStatus, cqp.AcceptableNumberofDefectiveProduct, cqp.NumberofSampleinPart })
+                   .Select<ContractQualityPlans>(null)
                    .Join<Products>
                     (
                         pr => new { ProductCode = pr.Code, ProductName = pr.Name },
@@ -416,8 +416,8 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 Description_ = input.Description_,
                 DocumentNumber = input.DocumentNumber,
-                ProductID = input.ProductID,
-                CurrrentAccountCardID = input.CurrrentAccountCardID,
+                ProductID = input.ProductID.GetValueOrDefault(),
+                CurrrentAccountCardID = input.CurrrentAccountCardID.GetValueOrDefault(),
                 NumberofSampleinPart = input.NumberofSampleinPart,
                 AcceptableNumberofDefectiveProduct = input.AcceptableNumberofDefectiveProduct,
                 LastModifierId = LoginedUserService.UserId,

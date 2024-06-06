@@ -12,10 +12,6 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
-using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
-using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport;
 using TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
@@ -63,9 +59,9 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
             var query = queryFactory.Query().From(Tables.CustomerComplaintReports).Insert(new CreateCustomerComplaintReportsDto
             {
                 ReportNo = input.ReportNo,
-                UnsuitqabilityItemsID = input.UnsuitqabilityItemsID,
-                SalesOrderID = input.SalesOrderID,
-                ProductID = input.ProductID,
+                UnsuitqabilityItemsID = input.UnsuitqabilityItemsID.GetValueOrDefault(),
+                SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
+                ProductID = input.ProductID.GetValueOrDefault(),
                 DefectedQuantity = input.DefectedQuantity,
                 DeliveredQuantity = input.DeliveredQuantity,
                 Description_ = input.Description_,
@@ -189,9 +185,9 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
             var query = queryFactory.Query().From(Tables.CustomerComplaintReports).Update(new UpdateCustomerComplaintReportsDto
             {
                 ReportNo = input.ReportNo,
-                UnsuitqabilityItemsID = input.UnsuitqabilityItemsID,
-                SalesOrderID = input.SalesOrderID,
-                ProductID = input.ProductID,
+                UnsuitqabilityItemsID = input.UnsuitqabilityItemsID.GetValueOrDefault(),
+                SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
+                ProductID = input.ProductID.GetValueOrDefault(),
                 DefectedQuantity = input.DefectedQuantity,
                 DeliveredQuantity = input.DeliveredQuantity,
                 Description_ = input.Description_,

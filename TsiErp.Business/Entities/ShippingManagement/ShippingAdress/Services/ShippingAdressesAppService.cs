@@ -60,7 +60,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
                 Adress2 = input.Adress2,
                 City = input.City,
                 Country = input.Country,
-                CustomerCardID = input.CustomerCardID,
+                CustomerCardID = input.CustomerCardID.GetValueOrDefault(),
                 District = input.District,
                 EMail = input.EMail,
                 Fax = input.Fax,
@@ -128,7 +128,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
         public async Task<IDataResult<SelectShippingAdressesDto>> GetAsync(Guid id)
         {
             var query = queryFactory
-                    .Query().From(Tables.ShippingAdresses).Select<ShippingAdresses>(sh => new { sh._Default, sh.PostCode, sh.Phone, sh.Name, sh.Id, sh.Fax, sh.EMail, sh.District, sh.DataOpenStatusUserId, sh.DataOpenStatus, sh.CustomerCardID, sh.Country, sh.Code, sh.City, sh.Adress2, sh.Adress1 })
+                    .Query().From(Tables.ShippingAdresses).Select<ShippingAdresses>(null)
                         .Join<CurrentAccountCards>
                         (
                             ca => new { CustomerCardID = ca.Id, CustomerCardCode = ca.Code, CustomerCardName = ca.Name },
@@ -155,7 +155,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
 
             var query = queryFactory
                .Query()
-               .From(Tables.ShippingAdresses).Select<ShippingAdresses>(sh => new { sh._Default, sh.PostCode, sh.Phone, sh.Name, sh.Id, sh.Fax, sh.EMail, sh.District, sh.DataOpenStatusUserId, sh.DataOpenStatus, sh.CustomerCardID, sh.Country, sh.Code, sh.City, sh.Adress2, sh.Adress1 })
+               .From(Tables.ShippingAdresses).Select<ShippingAdresses>(null)
                         .Join<CurrentAccountCards>
                         (
                             ca => new { CustomerCardCode = ca.Code, CustomerCardName = ca.Name },
@@ -198,7 +198,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
                 Adress2 = input.Adress2,
                 City = input.City,
                 Country = input.Country,
-                CustomerCardID = input.CustomerCardID,
+                CustomerCardID = input.CustomerCardID.GetValueOrDefault(),
                 District = input.District,
                 EMail = input.EMail,
                 Fax = input.Fax,
@@ -241,7 +241,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
                 Adress2 = entity.Adress2,
                 City = entity.City,
                 Country = entity.Country,
-                CustomerCardID = entity.CustomerCardID,
+                CustomerCardID = entity.CustomerCardID.GetValueOrDefault(),
                 District = entity.District,
                 EMail = entity.EMail,
                 Fax = entity.Fax,

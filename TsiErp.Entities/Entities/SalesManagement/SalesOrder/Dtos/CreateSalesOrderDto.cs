@@ -10,6 +10,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
      /// İşlem Dövizi Brüt Tutar
      /// </summary>
         public decimal TransactionExchangeGrossAmount { get; set; }
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceRecordID { get; set; }
 
         /// <summary>
         /// İşlem Dövizi Toplam İndirimli Tutar
