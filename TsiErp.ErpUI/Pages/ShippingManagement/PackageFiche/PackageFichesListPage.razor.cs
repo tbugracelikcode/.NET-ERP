@@ -225,6 +225,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             }
             else
             {
+                GridLineList.Clear();
+
                 decimal numberOfLines = 0;
                 int mod = 0;
                 int numberOfPackage = 0;
@@ -233,21 +235,83 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                 {
                     numberOfPackage = 18;
                     decimal a = DataSource.NumberofPackage / numberOfPackage;
-                    numberOfLines = Math.Ceiling(a);
+
+                    if (a == 1)
+                    {
+                        numberOfLines = a;
+                    }
+                    else
+                    {
+                        numberOfLines = Math.Ceiling(a);
+                    }
                     mod = DataSource.NumberofPackage % numberOfPackage;
                 }
                 else if (DataSource.PackageType == L["SmallPackage"].Value)
                 {
                     numberOfPackage = 30;
                     decimal a = DataSource.NumberofPackage / numberOfPackage;
-                    numberOfLines = Math.Ceiling(a);
+
+                    if (a == 1)
+                    {
+                        numberOfLines = a;
+                    }
+                    else
+                    {
+                        numberOfLines = Math.Ceiling(a);
+                    }
                     mod = DataSource.NumberofPackage % numberOfPackage;
                 }
 
-
-                for (int i = 0; i <= numberOfLines; i++)
+                if (mod != 0)
                 {
-                    if (i != numberOfLines)
+
+                    for (int i = 0; i <= numberOfLines; i++)
+                    {
+                        if (i != numberOfLines)
+                        {
+                            SelectPackageFicheLinesDto packageFicheLineModel = new SelectPackageFicheLinesDto
+                            {
+                                PackingDate = DataSource.Date_,
+                                LineNr = GridLineList.Count + 1,
+                                ProductID = DataSource.ProductID,
+                                ProductName = DataSource.ProductName,
+                                ProductCode = DataSource.ProductCode,
+                                Quantity = DataSource.PackageContent * numberOfPackage,
+                                ProductionOrderID = ProductionOrdersID,
+                                ProductionOrderFicheNo = ProductionOrdersNo,
+                                Status_ = string.Empty,
+                                NumberofPackage = numberOfPackage,
+                                PackageContent = DataSource.PackageContent,
+                            };
+
+                            GridLineList.Add(packageFicheLineModel);
+                        }
+                        else
+                        {
+                            SelectPackageFicheLinesDto packageFicheLineModel = new SelectPackageFicheLinesDto
+                            {
+                                PackingDate = DataSource.Date_,
+                                LineNr = GridLineList.Count + 1,
+                                ProductID = DataSource.ProductID,
+                                ProductName = DataSource.ProductName,
+                                ProductCode = DataSource.ProductCode,
+                                Quantity = DataSource.PackageContent * mod,
+                                ProductionOrderID = ProductionOrdersID,
+                                ProductionOrderFicheNo = ProductionOrdersNo,
+                                Status_ = string.Empty,
+                                NumberofPackage = mod,
+                                PackageContent = DataSource.PackageContent,
+                            };
+
+                            GridLineList.Add(packageFicheLineModel);
+                        }
+
+                    }
+                }
+                else
+                {
+
+                    for (int i = 1; i <= numberOfLines; i++)
                     {
                         SelectPackageFicheLinesDto packageFicheLineModel = new SelectPackageFicheLinesDto
                         {
@@ -265,28 +329,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                         };
 
                         GridLineList.Add(packageFicheLineModel);
-                    }
-                    else
-                    {
-                        SelectPackageFicheLinesDto packageFicheLineModel = new SelectPackageFicheLinesDto
-                        {
-                            PackingDate = DataSource.Date_,
-                            LineNr = GridLineList.Count + 1,
-                            ProductID = DataSource.ProductID,
-                            ProductName = DataSource.ProductName,
-                            ProductCode = DataSource.ProductCode,
-                            Quantity = DataSource.PackageContent * mod,
-                            ProductionOrderID = ProductionOrdersID,
-                            ProductionOrderFicheNo = ProductionOrdersNo,
-                            Status_ = string.Empty,
-                            NumberofPackage = mod,
-                            PackageContent = DataSource.PackageContent,
-                        };
 
-                        GridLineList.Add(packageFicheLineModel);
-                    }
 
+                    }
                 }
+
 
 
 
@@ -364,7 +411,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
         {
             var productionOrderID = GridLineList.Select(t => t.ProductionOrderID).FirstOrDefault();
 
-            if(productionOrderID != null && productionOrderID != Guid.Empty)
+            if (productionOrderID != null && productionOrderID != Guid.Empty)
             {
                 //var stockFicheLineList = (await StockFichesAppService.GetbyProductionOrderAsync(productionOrderID.GetValueOrDefault())).Data.SelectStockFicheLines.Where(t=>t.ProductID == DataSource.ProductID).ToList();
 
@@ -372,7 +419,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
                 if (stockFicheLineList != null && stockFicheLineList.Count > 0)
                 {
-                    if(stockFicheLineList.Select(t=>t.Quantity).Sum() < GridLineList.Select(T => T.Quantity).Sum())
+                    if (stockFicheLineList.Select(t => t.Quantity).Sum() < GridLineList.Select(T => T.Quantity).Sum())
                     {
                         await ModalManager.WarningPopupAsync(L["UIWarningQuantityTitle"], L["UIWarningQuantityMessage"]);
                     }
@@ -435,7 +482,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
 
         #endregion
-
 
         #region Satış Siparişi ButtonEdit
 
@@ -679,8 +725,12 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                 DataSource.ProductName = selectedProduct.Name;
                 DataSource.ProductUnitWeight = selectedProduct.UnitWeight;
                 var productionOrder = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.FinishedProductID == selectedProduct.Id && t.OrderID == DataSource.SalesOrderID).FirstOrDefault();
-                ProductionOrdersID = productionOrder.Id;
-                ProductionOrdersNo = productionOrder.FicheNo;
+
+                if (productionOrder != null && productionOrder.Id != Guid.Empty)
+                {
+                    ProductionOrdersID = productionOrder.Id;
+                    ProductionOrdersNo = productionOrder.FicheNo;
+                }
 
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
