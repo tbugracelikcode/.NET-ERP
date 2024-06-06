@@ -961,6 +961,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yükleme Detayı.
+        /// </summary>
+        public static string PalletRecordsContextLoadingDetail {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextLoadingDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Palet Detayı.
         /// </summary>
         public static string PalletRecordsContextPalletDetail {

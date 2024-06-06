@@ -512,5 +512,13 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
 
 
         }
+
+        public async Task<List<SelectPalletRecordLinesDto>> GetPalletLines()
+        {
+            var query = queryFactory.Query().From(Tables.PalletRecordLines).Select("*").Where(null, false, false, Tables.PalletRecordLines);
+            var lines = queryFactory.GetList<SelectPalletRecordLinesDto>(query).ToList();
+            await Task.CompletedTask;
+            return lines;
+        }
     }
 }

@@ -47,6 +47,11 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLi
         public Guid SalesOrderLineID { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
+        /// Paket Fiş ID
+        /// </summary>
+        public Guid PackageFicheID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
         /// Üretim Emri ID
         /// </summary>
         public Guid ProductionOrderID { get; set; }

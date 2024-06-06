@@ -294,7 +294,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     GridLinePalletList = DataSource.SelectPackingListPalletLines;
                     GridLinePalletPackageList = DataSource.SelectPackingListPalletPackageLines;
 
-                    foreach(var item in GridLinePalletPackageList)
+                    foreach (var item in GridLinePalletPackageList)
                     {
                         var salesOrder = (await SalesOrdersAppService.GetAsync(item.SalesOrderID.GetValueOrDefault())).Data;
                         var salesOrderLine = salesOrder.SelectSalesOrderLines.Where(t => t.Id == item.SalesOrderLineID.GetValueOrDefault()).FirstOrDefault();
@@ -499,6 +499,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                         SelectPackingListPalletPackageLinesDto palletPackageLineModel = new SelectPackingListPalletPackageLinesDto
                         {
                             PackageType = palletLine.PackageType,
+                            PackageFicheID = palletLine.PackageFicheID.GetValueOrDefault(),
                             ProductID = palletLine.ProductID,
                             ProductCode = palletLine.ProductCode,
                             ProductName = palletLine.ProductName,

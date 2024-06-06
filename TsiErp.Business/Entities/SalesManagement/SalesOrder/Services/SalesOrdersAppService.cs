@@ -18,6 +18,7 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
+using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
@@ -86,6 +87,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 TransactionExchangeNetAmount = input.TransactionExchangeNetAmount,
                 TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
                 CustomerOrderNr = input.CustomerOrderNr,
+                OrderAcceptanceRecordID = input.OrderAcceptanceRecordID.GetValueOrDefault(),
                 FicheNo = input.FicheNo,
                 BranchID = input.BranchID.GetValueOrDefault(),
                 CurrencyID = input.CurrencyID.GetValueOrDefault(),
@@ -140,6 +142,8 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     LineDescription = item.LineDescription,
                     LineTotalAmount = item.LineTotalAmount,
                     PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
+                    OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
+                    OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
                     PurchaseSupplyDate = item.PurchaseSupplyDate,
                     UnitPrice = item.UnitPrice,
                     VATamount = item.VATamount,
@@ -207,6 +211,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 TransactionExchangeTotalDiscountAmount = input.TransactionExchangeTotalDiscountAmount,
                 TransactionExchangeTotalVatAmount = input.TransactionExchangeTotalVatAmount,
                 TransactionExchangeTotalVatExcludedAmount = input.TransactionExchangeTotalVatExcludedAmount,
+                OrderAcceptanceRecordID = input.OrderAcceptanceRecordID.GetValueOrDefault(),
                 FicheNo = input.FicheNo,
                 BranchID = input.BranchID.GetValueOrDefault(),
                 CurrencyID = input.CurrencyID.GetValueOrDefault(),
@@ -238,7 +243,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
-                 PricingCurrency= input.PricingCurrency
+                PricingCurrency = input.PricingCurrency
             });
 
             foreach (var item in input.SelectSalesOrderLines)
@@ -254,6 +259,8 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
                     TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
                     TransactionExchangeVATamount = item.TransactionExchangeVATamount,
+                    OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
+                    OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
                     DiscountRate = item.DiscountRate,
                     ExchangeRate = item.ExchangeRate,
                     LineAmount = item.LineAmount,
@@ -368,6 +375,13 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
                         nameof(SalesOrders.WarehouseID),
                         nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<OrderAcceptanceRecords>
+                    (
+                        c => new { OrderAcceptanceRecordID = c.Id, ConfirmedLoadingDate = c.ConfirmedLoadingDate },
+                        nameof(SalesOrders.OrderAcceptanceRecordID),
+                        nameof(OrderAcceptanceRecords.Id),
                         JoinType.Left
                     )
                      .Join<Currencies>
@@ -488,6 +502,13 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         b => new { BranchCode = b.Code, BranchName = b.Name },
                         nameof(SalesOrders.BranchID),
                         nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<OrderAcceptanceRecords>
+                    (
+                        c => new { OrderAcceptanceRecordID = c.Id, ConfirmedLoadingDate = c.ConfirmedLoadingDate },
+                        nameof(SalesOrders.OrderAcceptanceRecordID),
+                        nameof(OrderAcceptanceRecords.Id),
                         JoinType.Left
                     )
                      .Join<Warehouses>
@@ -625,6 +646,13 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
                         nameof(SalesOrders.WarehouseID),
                         nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<OrderAcceptanceRecords>
+                    (
+                        c => new { OrderAcceptanceRecordID = c.Id, ConfirmedLoadingDate = c.ConfirmedLoadingDate },
+                        nameof(SalesOrders.OrderAcceptanceRecordID),
+                        nameof(OrderAcceptanceRecords.Id),
                         JoinType.Left
                     )
                      .Join<Currencies>
@@ -786,6 +814,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 TransactionExchangeTotalDiscountAmount = input.TransactionExchangeTotalDiscountAmount,
                 TransactionExchangeNetAmount = input.TransactionExchangeNetAmount,
                 TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
+                OrderAcceptanceRecordID = input.OrderAcceptanceRecordID.GetValueOrDefault(),
                 BranchID = input.BranchID,
                 CurrencyID = input.CurrencyID,
                 CurrentAccountCardID = input.CurrentAccountCardID,
@@ -816,7 +845,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-                 PricingCurrency = input.PricingCurrency
+                PricingCurrency = input.PricingCurrency
             }).Where(new { Id = input.Id }, false, false, "");
 
             foreach (var item in input.SelectSalesOrderLines)
@@ -835,6 +864,8 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
                         TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
                         TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
+                        OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
+                        OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
                         ExchangeRate = item.ExchangeRate,
                         LineAmount = item.LineAmount,
                         LineDescription = item.LineDescription,
@@ -886,6 +917,8 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                             TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
                             TransactionExchangeVATamount = item.TransactionExchangeVATamount,
                             WorkOrderCreationDate = item.WorkOrderCreationDate.GetValueOrDefault(),
+                            OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
+                            OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
                             DiscountRate = item.DiscountRate,
                             ExchangeRate = item.ExchangeRate,
                             LineAmount = item.LineAmount,
@@ -950,6 +983,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 TransactionExchangeTotalDiscountAmount = entity.TransactionExchangeTotalDiscountAmount,
                 TransactionExchangeTotalVatAmount = entity.TransactionExchangeTotalVatAmount,
                 TransactionExchangeTotalVatExcludedAmount = entity.TransactionExchangeTotalVatExcludedAmount,
+                OrderAcceptanceRecordID = entity.OrderAcceptanceRecordID.GetValueOrDefault(),
                 CurrencyID = entity.CurrencyID,
                 CustomerOrderNr = entity.CustomerOrderNr,
                 CurrentAccountCardID = entity.CurrentAccountCardID,
@@ -979,7 +1013,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-                 PricingCurrency = (int)entity.PricingCurrency
+                PricingCurrency = (int)entity.PricingCurrency
             }).Where(new { Id = id }, false, false, "");
 
             var salesOrdersDto = queryFactory.Update<SelectSalesOrderDto>(query, "Id", true);

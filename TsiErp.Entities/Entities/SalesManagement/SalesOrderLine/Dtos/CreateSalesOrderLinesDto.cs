@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos
@@ -136,5 +137,13 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos
         /// Satın Alma Temin Tarihi
         /// </summary>
         public DateTime? PurchaseSupplyDate { get; set; }
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceRecordID { get; set; }
+        /// <summary>
+        /// Sipariş Kabul Satır ID
+        /// </summary>
+        public Guid? OrderAcceptanceRecordLineID { get; set; }
     }
 }

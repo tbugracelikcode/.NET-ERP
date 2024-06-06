@@ -8,6 +8,7 @@
 @inject IPalletRecordsAppService PalletRecordsAppService
 @inject IPackageFichesAppService PackageFichesAppService
 @inject IProductsAppService ProductsAppService
+@inject IProductGroupsAppService ProductGroupsAppService
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
 @inject IPackingListsAppService PackingListsAppService
 @inject IFicheNumbersAppService FicheNumbersAppService
@@ -19,6 +20,7 @@
 @inject IPackageFichesAppService PackageFichesAppService
 @inject ISalesOrdersAppService SalesOrdersAppService
 @inject ISalesPricesAppService SalesPricesAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
 
 @if (!base.IsLoaded)
 {

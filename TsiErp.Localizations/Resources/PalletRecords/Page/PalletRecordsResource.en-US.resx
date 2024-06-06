@@ -417,6 +417,9 @@
   <data name="PalletRecordsContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PalletRecordsContextLoadingDetail" xml:space="preserve">
+    <value>Loading Detail</value>
+  </data>
   <data name="PalletRecordsContextPalletDetail" xml:space="preserve">
     <value>Pallet Detail</value>
   </data>

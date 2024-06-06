@@ -9,6 +9,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLi
         /// </summary>
         public Guid PackingListID { get; set; }
         /// <summary>
+        /// Paket Fiş ID
+        /// </summary>
+        public Guid PackageFicheID { get; set; }
+        /// <summary>
         /// Satır No
         /// </summary>
         public int LineNr { get; set; }

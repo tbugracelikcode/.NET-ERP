@@ -157,6 +157,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                 {
                     CustomerID = item.CustomerID.GetValueOrDefault(),
                     ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
+                    PackageFicheID = item.PackageFicheID,
                     SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
                     SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                     OnePackageGrossKG = item.OnePackageGrossKG,
@@ -734,6 +735,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         PackingListID = input.Id,
                         ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                         SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
+                        PackageFicheID = item.PackageFicheID,
                         SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                         NumberofPackage = item.NumberofPackage,
                         CustomerID = item.CustomerID.GetValueOrDefault(),
@@ -774,6 +776,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                             PackingListID = input.Id,
                             ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                             SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
+                            PackageFicheID = item.PackageFicheID,
                             SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                             NumberofPackage = item.NumberofPackage,
                             CustomerID = item.CustomerID.GetValueOrDefault(),

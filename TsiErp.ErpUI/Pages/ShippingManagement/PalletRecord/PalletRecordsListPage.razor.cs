@@ -19,6 +19,7 @@ using Syncfusion.Blazor.Navigations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 {
@@ -27,6 +28,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         private SfGrid<SelectPalletRecordLinesDto> _LineGrid;
         private SfGrid<PackageFicheSelectionGrid> _PackageFichesGrid;
         private SfGrid<PalletDetailGrid> _PalletDetailGrid;
+        private SfGrid<LoadingDetailGrid> _LoadingDetailGrid;
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -37,6 +39,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         SelectPalletRecordLinesDto LineDataSource = new();
         PalletDetailGrid PalletDetailDataSource = new();
+        LoadingDetailGrid LoadingDetailDataSource = new();
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> PalletDetailGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -46,6 +49,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         List<PackageFicheSelectionGrid> PackageFichesSelectionList = new List<PackageFicheSelectionGrid>();
         List<SelectPackageFicheLinesDto> PackageFicheLinesList = new List<SelectPackageFicheLinesDto>();
         List<PalletDetailGrid> PalletDetailGridList = new List<PalletDetailGrid>();
+        List<LoadingDetailGrid> LoadingDetailGridList = new List<LoadingDetailGrid>();
 
         #region UI Classlar
 
@@ -94,6 +98,37 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             public decimal LineAmount { get; set; }
         }
 
+        public class LoadingDetailGrid
+        {
+            public string SupplierRefNo { get; set; }
+            public string CustomerRefNo { get; set; }
+            public string ProductCode { get; set; }
+            public string PalletName { get; set; }
+            public string PackageOrderNo { get; set; }
+            public int QuantityInPackage { get; set; }
+            public int PackageQuantity { get; set; }
+            public int TotalPackageQuantity { get; set; }
+            public decimal OrderUnitPrice { get; set; }
+            public decimal LineAmount { get; set; }
+            public string ProductGroupName { get; set; }
+            public string CustomerCode { get; set; }
+            public string OrderNo { get; set; }
+            public DateTime ConfirmedShippingDate { get; set; }
+            public decimal ProductWeight { get; set; }
+            public int OrderQuantity { get; set; }
+            public int MaxProductionQuantity { get; set; }
+            public decimal ApprovedUnitPrice { get; set; }
+            public decimal SalesPriceListPrice { get; set; }
+            public decimal LastOrderPrice { get; set; }
+            public decimal TotalNetKG { get; set; }
+            public decimal TotalGrossKG { get; set; }
+            public string ProductName { get; set; }
+            public string EnglishDefinition { get; set; }
+            public string CustomerReferenceNo { get; set; }
+            public string TicketNo { get; set; }
+            public string CurrentAccountName { get; set; }
+        }
+
         #endregion
 
         private bool LineCrudPopup = false;
@@ -101,6 +136,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         public int selectedNumberofPackages = 0;
         public bool PalletDetailPopupVisible = false;
         public bool PalletDetailCrudPopupVisible = false;
+        public bool LoadingDetailPopupVisible = false;
+
+        public string PalletNameFilter = string.Empty;
+        public string PackageTypeFilter = string.Empty;
+        public DateTime? LoadingDateFilter;
+        public string CurrentAccountNameFilter = string.Empty;
+        public Guid CurrentAccountIDFilter = Guid.Empty;
+
 
         protected override async void OnInitialized()
         {
@@ -308,6 +351,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                             case "PalletRecordsContextPalletDetail":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextPalletDetail"], Id = "palletdetail" }); break;
+
+                            case "PalletRecordsContextLoadingDetail":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextLoadingDetail"], Id = "loadingdetail" }); break;
 
                             default: break;
                         }
@@ -586,7 +632,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                         var productRefNo = productReferenceNoList.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).FirstOrDefault();
 
-                        if(productRefNo != null && productRefNo.Id != Guid.Empty)
+                        if (productRefNo != null && productRefNo.Id != Guid.Empty)
                         {
                             orderReferenceNo = productRefNo.OrderReferanceNo;
                             customerReferenceNo = productRefNo.CustomerReferanceNo;
@@ -706,7 +752,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                     break;
 
+                case "loadingdetail":
+                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    LoadingDetailDataSource = new LoadingDetailGrid { };
+                    //LoadingDateFilter = GetSQLDateAppService.GetDateFromSQL();
+                    LoadingDetailPopupVisible = true;
+                    await InvokeAsync(StateHasChanged);
 
+                    break;
 
                 case "delete":
                     var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
@@ -876,6 +929,16 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             PalletDetailPopupVisible = false;
             PalletDetailGridList.Clear();
         }
+        public void HideLoadingDetailPopup()
+        {
+            LoadingDetailPopupVisible = false;
+            PalletNameFilter = string.Empty;
+            PackageTypeFilter = string.Empty;
+            LoadingDateFilter = DateTime.Today;
+            CurrentAccountNameFilter = string.Empty;
+            CurrentAccountIDFilter = Guid.Empty;
+            LoadingDetailGridList.Clear();
+        }
         public void HidePalletDetailCrudPopup()
         {
             PalletDetailCrudPopupVisible = false;
@@ -941,6 +1004,205 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             await InvokeAsync(StateHasChanged);
         }
 
+        public async void LoadingDetailFilterClicked()
+        {
+            #region Filtreleme 
+
+            var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.AsQueryable();
+
+            //var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.Where(t => t.PlannedLoadingTime == LoadingDateFilter).ToList();
+
+            if (LoadingDateFilter.HasValue)
+            {
+                palletList = palletList.Where(t => t.PlannedLoadingTime == LoadingDateFilter);
+            }
+
+            if (!string.IsNullOrEmpty(PalletNameFilter))
+            {
+                palletList = palletList.Where(t => t.Name == PalletNameFilter);
+            }
+            if (!string.IsNullOrEmpty(PackageTypeFilter))
+            {
+                string packageTypeFilter = L[PackageTypeFilter].Value;
+                palletList = palletList.Where(t => t.PackageType == packageTypeFilter);
+            }
+            if (CurrentAccountIDFilter != Guid.Empty)
+            {
+                palletList = palletList.Where(t => t.CurrentAccountCardID == CurrentAccountIDFilter);
+            }
+
+            #endregion
+
+            #region Grid Verilerini Çekme
+
+            //var palletLines = (await PalletRecordsAppService.GetPalletLines()).ToList();
+
+            //var lines = (from pallet in palletList
+            //             join line in palletLines on pallet.Id equals line.PalletRecordID
+            //             select new 
+            //             {
+            //                 Id = pallet.Id,
+            //                 supplierRefNo=""
+            //             }
+            //            ).ToList();
+
+
+
+            foreach (var pallet in palletList)
+            {
+                var palletRecord = (await PalletRecordsAppService.GetAsync(pallet.Id)).Data;
+
+                var packingList = (await PackingListsAppService.GetAsync(pallet.PackingListID.GetValueOrDefault())).Data;
+
+                foreach (var line in palletRecord.SelectPalletRecordLines)
+                {
+                    string supplierRefNo = string.Empty;
+                    string customerRefNo = string.Empty;
+
+                    var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductID == line.ProductID.GetValueOrDefault() && t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).FirstOrDefault();
+
+                    if (productRefNo != null && productRefNo.Id != Guid.Empty)
+                    {
+                        supplierRefNo = productRefNo.ReferanceNo;
+                        customerRefNo = productRefNo.CustomerReferanceNo;
+                    }
+
+                    string packageOrderNo = string.Empty;
+                    int quantityInPackage = 0;
+                    int packageQuantity = 0;
+
+                    if (packingList != null && packingList.Id != Guid.Empty)
+                    {
+                        var packingListPalletPackageLine = packingList.SelectPackingListPalletPackageLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault() && t.CustomerID == line.CurrentAccountCardID.GetValueOrDefault() && t.PackageFicheID == line.PackageFicheID.GetValueOrDefault()).FirstOrDefault();
+
+                        packageOrderNo = packingListPalletPackageLine.PackageNo;
+                        quantityInPackage = packingListPalletPackageLine.PackageContent;
+                        packageQuantity = packingListPalletPackageLine.NumberofPackage;
+                    }
+
+                    var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
+
+                    var productGroup = (await ProductGroupsAppService.GetAsync(product.ProductGrpID)).Data;
+
+                    var currentAccount = (await CurrentAccountCardsAppService.GetAsync(line.CurrentAccountCardID.GetValueOrDefault())).Data;
+
+                    string ticketNo = customerRefNo;
+
+                    if (currentAccount != null && currentAccount.Id != Guid.Empty)
+                    {
+                        if (currentAccount.CustomerCode == "049")
+                        {
+                            if (customerRefNo != "-")
+                            {
+                                int lenght = customerRefNo.Length;
+
+                                ticketNo = customerRefNo.Remove(lenght - 2, 2) + "000";
+                                ticketNo = ticketNo.Replace(" ", string.Empty);
+                            }
+                        }
+                    }
+
+                    decimal productWeight = 0;
+
+                    var packageFiche = (await PackageFichesAppService.GetAsync(line.PackageFicheID.GetValueOrDefault())).Data;
+
+                    if (packageFiche != null && packageFiche.Id != Guid.Empty)
+                    {
+                        productWeight = packageFiche.UnitWeight;
+                    }
+
+                    var salesOrder = new SelectSalesOrderDto();
+
+                    decimal orderQuantity = 0;
+
+                    decimal maxProductionQuantity = 0;
+
+                    decimal orderUnitPrice = 0;
+
+                    string orderNo = string.Empty;
+
+                    var salesPrice = new SelectSalesPricesDto();
+
+                    decimal listPrice = 0;
+
+                    DateTime? confirmedShippingDate = null;
+
+                    var lastOrderID = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).Select(t => t.Id).FirstOrDefault();
+
+                    decimal lastOrderPrice = (await SalesOrdersAppService.GetAsync(lastOrderID)).Data.SelectSalesOrderLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).Select(t => t.UnitPrice).FirstOrDefault();
+
+                    salesOrder = (await SalesOrdersAppService.GetAsync(line.SalesOrderID.GetValueOrDefault())).Data;
+
+                    if (salesOrder != null && salesOrder.Id != Guid.Empty)
+                    {
+                        var salesOrderLinesList = salesOrder.SelectSalesOrderLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).ToList();
+
+                        orderQuantity = salesOrderLinesList.Select(t => t.Quantity).Sum();
+
+                        maxProductionQuantity = Math.Ceiling(orderQuantity + (orderQuantity / 10));
+
+                        orderUnitPrice = salesOrderLinesList.Select(t => t.UnitPrice).FirstOrDefault();
+
+                        orderNo = salesOrder.FicheNo;
+
+                        confirmedShippingDate = salesOrder.ConfirmedLoadingDate;
+
+                        Guid salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID && t.CurrencyCode == salesOrder.CurrencyCode && t.StartDate <= DataSource.PlannedLoadingTime && t.EndDate >= DataSource.PlannedLoadingTime && t.CustomerCode == currentAccount.CustomerCode && t.IsActive == true).Select(t => t.Id).FirstOrDefault();
+
+                        salesPrice = (await SalesPricesAppService.GetAsync(salesPriceID)).Data;
+
+                        listPrice = salesPrice.SelectSalesPriceLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).Select(t => t.Price).FirstOrDefault();
+                    }
+
+                    LoadingDetailGrid loadingDetailGridModel = new LoadingDetailGrid
+                    {
+                        SupplierRefNo = supplierRefNo,
+                        CustomerReferenceNo = customerRefNo,
+                        ProductCode = line.ProductCode,
+                        PalletName = pallet.Name,
+                        PackageOrderNo = packageOrderNo,
+                        QuantityInPackage = quantityInPackage,
+                        PackageQuantity = packageQuantity,
+                        TotalPackageQuantity = quantityInPackage * packageQuantity,
+                        OrderUnitPrice = orderUnitPrice,
+                        LineAmount = orderUnitPrice * quantityInPackage * packageQuantity,
+                        ProductGroupName = productGroup.Name,
+                        CustomerCode = currentAccount.CustomerCode,
+                        OrderNo = orderNo,
+                        ConfirmedShippingDate = confirmedShippingDate.GetValueOrDefault(),
+                        ProductWeight = productWeight,
+                        OrderQuantity = (int)orderQuantity,
+                        MaxProductionQuantity = (int)maxProductionQuantity,
+                        ApprovedUnitPrice = line.ApprovedUnitPrice,
+                        SalesPriceListPrice = listPrice,
+                        LastOrderPrice = lastOrderPrice,
+                        TotalNetKG = line.TotalNetKG,
+                        TotalGrossKG = line.TotalGrossKG,
+                        ProductName = product.Name,
+                        EnglishDefinition = product.EnglishDefinition,
+                        CustomerRefNo = customerRefNo,
+                        TicketNo = ticketNo,
+                        CurrentAccountName = currentAccount.Name,
+                    };
+
+                    LoadingDetailGridList.Add(loadingDetailGridModel);
+
+                }
+            }
+
+            await _LoadingDetailGrid.Refresh();
+
+            #endregion
+        }
+
+        public void ClearButtonClicked()
+        {
+            PalletNameFilter = string.Empty;
+            PackageTypeFilter = string.Empty;
+            LoadingDateFilter = DateTime.Today;
+            CurrentAccountNameFilter = string.Empty;
+            CurrentAccountIDFilter = Guid.Empty;
+        }
 
 
         #endregion

@@ -158,5 +158,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder
         ///Fiyatlandırma Dövizi
         /// </summary>
         public PricingCurrencyEnum PricingCurrency { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Sipariş Kabul ID
+        /// </summary>
+        public Guid? OrderAcceptanceRecordID { get; set; }
     }
 }
