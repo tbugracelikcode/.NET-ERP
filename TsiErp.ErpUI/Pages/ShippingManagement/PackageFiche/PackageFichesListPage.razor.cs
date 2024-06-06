@@ -89,6 +89,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             DataSource.SelectPackageFicheLines = new List<SelectPackageFicheLinesDto>();
             GridLineList = DataSource.SelectPackageFicheLines;
 
+
+            ProductionOrdersID = Guid.Empty;
+            ProductionOrdersNo = string.Empty;
+            ProductionOrdersReferenceNo = string.Empty;
+
             foreach (var item in _packageTypeComboBox)
             {
                 item.Text = L[item.Text];
