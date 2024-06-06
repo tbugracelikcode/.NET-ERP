@@ -366,9 +366,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
             if(productionOrderID != null && productionOrderID != Guid.Empty)
             {
-                var stockFicheLineList = (await StockFichesAppService.GetbyProductionOrderAsync(productionOrderID.GetValueOrDefault())).Data.SelectStockFicheLines.Where(t=>t.ProductID == DataSource.ProductID).ToList();
+                //var stockFicheLineList = (await StockFichesAppService.GetbyProductionOrderAsync(productionOrderID.GetValueOrDefault())).Data.SelectStockFicheLines.Where(t=>t.ProductID == DataSource.ProductID).ToList();
 
-                if(stockFicheLineList != null && stockFicheLineList.Count > 0)
+                var stockFicheLineList = (await StockFichesAppService.GetbyProductionOrderAsync(ProductionOrdersID));
+
+                if (stockFicheLineList != null && stockFicheLineList.Count > 0)
                 {
                     if(stockFicheLineList.Select(t=>t.Quantity).Sum() < GridLineList.Select(T => T.Quantity).Sum())
                     {
@@ -508,7 +510,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             {
                 ProductionOrderReferenceNoList.Clear();
 
-                var stockFicheLines = (await StockFichesAppService.GetbyProductionOrderAsync(ProductionOrdersID)).Data.SelectStockFicheLines.Where(t=>t.ProductID == DataSource.ProductID).ToList();
+                var stockFicheLines = (await StockFichesAppService.GetbyProductionOrderAsync(ProductionOrdersID));
 
                 foreach (var line in stockFicheLines)
                 {
@@ -524,6 +526,23 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                         ProductionOrderReferenceNoList.Add(referenceModel);
                     }
                 }
+
+                //var stockFicheLines = (await StockFichesAppService.GetbyProductionOrderAsync(ProductionOrdersID)).Data.SelectStockFicheLines.Where(t=>t.ProductID == DataSource.ProductID).ToList();
+
+                //foreach (var line in stockFicheLines)
+                //{
+                //    if (!ProductionOrderReferenceNoList.Any(t => t.ProductionOrderReferenceNo == line.ProductionDateReferance))
+                //    {
+                //        ProductionOrderReferanceNumber referenceModel = new ProductionOrderReferanceNumber
+                //        {
+                //            ProductionOrderID = ProductionOrdersID,
+                //            ProductionOrderNo = ProductionOrdersNo,
+                //            ProductionOrderReferenceNo = line.ProductionDateReferance
+                //        };
+
+                //        ProductionOrderReferenceNoList.Add(referenceModel);
+                //    }
+                //}
 
                 SelectProductionOrdersPopupVisible = true;
 

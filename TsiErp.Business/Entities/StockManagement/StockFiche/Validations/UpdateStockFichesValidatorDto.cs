@@ -19,9 +19,9 @@ namespace TsiErp.Business.Entities.StockFiche.Validations
                .WithMessage("ValidatorCodeMaxLength");
 
 
-            RuleFor(x => x.CurrencyID)
-                .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("ValidatorCurrencyID");
+            //RuleFor(x => x.CurrencyID)
+            //    .Must(x => x.HasValue && x.Value != Guid.Empty)
+            //   .WithMessage("ValidatorCurrencyID");
 
             RuleFor(x => x.WarehouseID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
@@ -32,11 +32,11 @@ namespace TsiErp.Business.Entities.StockFiche.Validations
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("ValidatorBranchID");
 
-            RuleFor(x => x.ExchangeRate)
-                .NotNull()
-                .WithMessage("ValidatorExchangeRateEmpty")
-                .GreaterThanOrEqualTo(1)
-                .WithMessage("ValidatorExchangeRateMin");
+            //RuleFor(x => x.ExchangeRate)
+            //    .NotNull()
+            //    .WithMessage("ValidatorExchangeRateEmpty")
+            //    .GreaterThanOrEqualTo(1)
+            //    .WithMessage("ValidatorExchangeRateMin");
         }
     }
 }

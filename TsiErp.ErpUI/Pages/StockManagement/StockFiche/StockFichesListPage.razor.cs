@@ -463,7 +463,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             {
                 Date_ = DateTime.Now,
                 Time_ = DateTime.Now.TimeOfDay,
-                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu")
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                ProductionOrderID = Guid.Empty,
+                CurrencyID = Guid.Empty
             };
 
             DataSource.SelectStockFicheLines = new List<SelectStockFicheLinesDto>();
@@ -544,15 +546,15 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
                                     }
                                 }
 
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFichesGeneralConAdd"], Id = "add",Items=subMenus }); break;
-                            
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFichesGeneralConAdd"], Id = "add", Items = subMenus }); break;
+
                             case "StockFicheContextChange":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextChange"], Id = "changed" }); break;
                             case "StockFicheContextDelete":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextDelete"], Id = "delete" }); break;
                             case "StockFicheContextRefresh":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextRefresh"], Id = "refresh" }); break;
-                           
+
                             default: break;
                         }
                     }

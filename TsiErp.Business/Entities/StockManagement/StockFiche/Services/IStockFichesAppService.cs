@@ -9,6 +9,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
     {
         Task<List<SelectStockFicheLinesDto>> GetInputList(Guid productId, DateTime? startDate = null, DateTime? endDate = null);
         Task<List<SelectStockFicheLinesDto>> GetOutputList(Guid productId, DateTime? startDate = null, DateTime? endDate = null);
-        Task<IDataResult<SelectStockFichesDto>> GetbyProductionOrderAsync(Guid ProductionOrderID);
+        //Task<IDataResult<SelectStockFichesDto>> GetbyProductionOrderAsync(Guid ProductionOrderID);
+        Task<List<SelectStockFicheLinesDto>> GetbyProductionOrderAsync(Guid ProductionOrderID);
     }
 }

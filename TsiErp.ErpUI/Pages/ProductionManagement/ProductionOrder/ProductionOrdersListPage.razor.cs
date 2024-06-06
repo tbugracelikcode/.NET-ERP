@@ -28,7 +28,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         [Inject]
         ModalManager ModalManager { get; set; }
 
-        List<SelectStockFicheLinesDto> StockFicheLineList = new List<SelectStockFicheLinesDto>();
+        List<SelectStockFicheLinesDto> StockFicheLineList;
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
@@ -58,6 +58,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
+
             CreateMainContextMenuItems();
 
         }
@@ -128,18 +129,25 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
             }
         }
 
-        public void HideOccuredAmountPopup()
+        public async void HideOccuredAmountPopup()
         {
             OccuredAmountPopup = false;
             quantity = 0;
             productionDateReferance = string.Empty;
+            await GetListDataSourceAsync();
         }
 
         public async Task CreateFiche()
         {
-            if (string.IsNullOrEmpty(productionDateReferance) || quantity! > 0)
+            if (quantity == 0)
             {
-                await ModalManager.WarningPopupAsync(L["UIWarningCreateOccuredAmountFicheTitle"], L["UIWarningCreateOccuredAmountFicheMessage"]);
+                await ModalManager.WarningPopupAsync(L["UIWarningCreateOccuredAmountFicheTitle"], L["UIWarningCreateOccuredAmountFicheMessageQuantity"]);
+                return;
+            }
+            else if (string.IsNullOrEmpty(productionDateReferance))
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningCreateOccuredAmountFicheTitle"], L["UIWarningCreateOccuredAmountFicheMessageRefNo"]);
+                return;
             }
             else
             {
@@ -147,7 +155,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                 var updateInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(DataSource);
 
-                await UpdateAsync(updateInput);
+                await ProductionOrdersAppService.UpdateAsync(updateInput);
+
+                StockFicheLineList = new List<SelectStockFicheLinesDto>();
 
                 SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
                 {
@@ -186,10 +196,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     CurrencyID = Guid.Empty,
                     Date_ = DateTime.Now,
                     Description_ = string.Empty,
-                    ExchangeRate = 0,
-
-
-
+                    ExchangeRate = 0
                 };
 
                 stockFicheModel.SelectStockFicheLines = StockFicheLineList;
@@ -197,8 +204,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                 await StockFichesAppService.CreateAsync(stockFicheModel);
 
                 HideOccuredAmountPopup();
-                await InvokeAsync(StateHasChanged);
 
+                await InvokeAsync(StateHasChanged);
             }
         }
 

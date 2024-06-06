@@ -264,8 +264,11 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Production Management &gt; Transactions</value>
   </data>
-  <data name="UIWarningCreateOccuredAmountFicheMessage" xml:space="preserve">
-    <value>Quantity and Production Date Reference fields must be filled.</value>
+  <data name="UIWarningCreateOccuredAmountFicheMessageQuantity" xml:space="preserve">
+    <value>Quantity field must be filled.</value>
+  </data>
+  <data name="UIWarningCreateOccuredAmountFicheMessageRefNo" xml:space="preserve">
+    <value>Production Date Reference field must be filled.</value>
   </data>
   <data name="UIWarningCreateOccuredAmountFicheTitle" xml:space="preserve">
     <value>Warning</value>
