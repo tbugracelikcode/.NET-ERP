@@ -502,11 +502,20 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Miktar ve Üretim tarihi Referansı alanlarının doldurulması gerekmektedir..
+        ///   Looks up a localized string similar to Miktar alanının doldurulması gerekmektedir..
         /// </summary>
-        public static string UIWarningCreateOccuredAmountFicheMessage {
+        public static string UIWarningCreateOccuredAmountFicheMessageQuantity {
             get {
-                return ResourceManager.GetString("UIWarningCreateOccuredAmountFicheMessage", resourceCulture);
+                return ResourceManager.GetString("UIWarningCreateOccuredAmountFicheMessageQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Tarihi Referansı alanının doldurulması gerekmektedir..
+        /// </summary>
+        public static string UIWarningCreateOccuredAmountFicheMessageRefNo {
+            get {
+                return ResourceManager.GetString("UIWarningCreateOccuredAmountFicheMessageRefNo", resourceCulture);
             }
         }
         

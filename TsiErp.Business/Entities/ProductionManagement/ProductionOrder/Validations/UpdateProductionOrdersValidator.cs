@@ -24,7 +24,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Validations
 
             RuleFor(x => x.RouteID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorRouteID");
 
-            RuleFor(x => x.PropositionID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorPropositionID");
+            //RuleFor(x => x.PropositionID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorPropositionID");
 
             RuleFor(x => x.CurrentAccountID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorCurrentAccountID");
         }

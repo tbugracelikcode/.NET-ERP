@@ -12,12 +12,12 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementParameter.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
-using TsiErp.Business.Entities.ProductCost.Services;
 using TsiErp.Business.Entities.StockFiche.Validations;
 using TsiErp.Business.Entities.StockMovement;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
@@ -111,7 +111,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 ExchangeRate = input.ExchangeRate,
                 FicheType = input.FicheType,
                 NetAmount = input.NetAmount,
-                ProductionOrderID = Guid.Empty,
+                ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                 SpecialCode = input.SpecialCode,
                 Time_ = input.Time_,
                 WarehouseID = input.WarehouseID
@@ -320,6 +320,13 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         nameof(StockFiches.TransactionExchangeCurrencyID),
                         nameof(Currencies.Id),
                         "TransactionExchangeCurrency",
+                        JoinType.Left
+                    )
+                     .Join<ProductionOrders>
+                    (
+                        w => new { ProductionOrderCode = w.FicheNo },
+                        nameof(StockFiches.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
                         JoinType.Left
                     )
                     .Where(new { Id = id }, false, false, Tables.StockFiches);
@@ -605,8 +612,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         DataOpenStatusUserId = Guid.Empty,
                         PurchaseOrderID = item.PurchaseOrderID.GetValueOrDefault(),
                         PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
-                         TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
-                          TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
+                        TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                        TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
                         MRPID = item.MRPID.GetValueOrDefault(),
                         MRPLineID = item.MRPID.GetValueOrDefault(),
                         DeleterId = Guid.Empty,
@@ -925,93 +932,39 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             return productCost;
         }
 
-        public async Task<IDataResult<SelectStockFichesDto>> GetbyProductionOrderAsync(Guid ProductionOrderID)
+        public async Task<List<SelectStockFicheLinesDto>> GetbyProductionOrderAsync(Guid ProductionOrderID)
         {
-            var query = queryFactory
-                   .Query()
-                   .From(Tables.StockFiches)
-                   .Select<StockFiches>(null)
-                   .Join<Branches>
-                    (
-                        b => new { BranchCode = b.Code, BranchID = b.Id },
-                        nameof(StockFiches.BranchID),
-                        nameof(Branches.Id),
-                        JoinType.Left
-                    )
-                    .Join<PurchaseOrders>
-                    (
-                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
-                        nameof(StockFiches.PurchaseOrderID),
-                        nameof(PurchaseOrders.Id),
-                        JoinType.Left
-                    )
-                   .Join<Warehouses>
-                    (
-                        w => new { WarehouseCode = w.Code, WarehouseID = w.Id },
-                        nameof(StockFiches.WarehouseID),
-                        nameof(Warehouses.Id),
-                        JoinType.Left
-                    )
-                     .Join<Currencies>
-                    (
-                        w => new { CurrencyCode = w.Code, CurrencyID = w.Id },
-                        nameof(StockFiches.CurrencyID),
-                        nameof(Currencies.Id),
-                        JoinType.Left
-                    )
-                     .Join<Currencies>
-                    (
-                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
-                        nameof(StockFiches.TransactionExchangeCurrencyID),
-                        nameof(Currencies.Id),
-                        "TransactionExchangeCurrency",
-                        JoinType.Left
-                    )
-                    .Where(new { ProductionOrderID = ProductionOrderID }, false, false, Tables.StockFiches);
+            var IdQuery = queryFactory.Query().From(Tables.StockFiches).Select<StockFiches>(null).Where(new { ProductionOrderID = ProductionOrderID }, false, false, "");
+            var stockFicheIds = queryFactory.GetList<SelectStockFichesDto>(IdQuery).ToList();
 
-            var stockFiches = queryFactory.Get<SelectStockFichesDto>(query);
+            string ficheIds = "";
 
-            var queryLines = queryFactory
-                   .Query()
-                   .From(Tables.StockFicheLines)
-                   .Select<StockFicheLines>(null)
-                   .Join<Products>
-                    (
-                        p => new { ProductCode = p.Code, ProductName = p.Name },
-                        nameof(StockFicheLines.ProductID),
-                        nameof(Products.Id),
-                        JoinType.Left
-                    )
-                     .Join<PurchaseOrders>
-                    (
-                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
-                        nameof(StockFicheLines.PurchaseOrderID),
-                        nameof(PurchaseOrders.Id),
-                        "PurchaseOrderLine",
-                        JoinType.Left
-                    )
-                     .Join<PurchaseOrderLines>
-                    (
-                        b => new { PurchaseOrderLineID = b.Id },
-                        nameof(StockFicheLines.PurchaseOrderLineID),
-                        nameof(PurchaseOrderLines.Id),
-                        JoinType.Left
-                    )
-                   .Join<UnitSets>
-                    (
-                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
-                        nameof(StockFicheLines.UnitSetID),
-                        nameof(UnitSets.Id),
-                        JoinType.Left
-                    )
-                    .Where(new { StockFicheID = stockFiches.Id }, false, false, Tables.StockFicheLines);
+            for (int i = 0; i < stockFicheIds.Count; i++)
+            {
+                if (i == 0)
+                {
+                    ficheIds = "'" + stockFicheIds[i].Id.ToString() + "'";
+                }
+                else
+                {
+                    ficheIds = ficheIds + "," + "'" + stockFicheIds[i].Id.ToString() + "'";
+                }
+            }
 
-            var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(queryLines).ToList();
+            string where = " StockFicheID In (" + ficheIds + ")";
 
-            stockFiches.SelectStockFicheLines = stockFicheLine;
+            string resultQuery = "SELECT * FROM " + Tables.StockFicheLines;
+            Query query = new Query();
+            query.Sql = resultQuery;
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = false;
 
+            var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(query).ToList();
             await Task.CompletedTask;
-            return new SuccessDataResult<SelectStockFichesDto>(stockFiches);
+
+            return stockFicheLine;
+
+
         }
     }
 }
