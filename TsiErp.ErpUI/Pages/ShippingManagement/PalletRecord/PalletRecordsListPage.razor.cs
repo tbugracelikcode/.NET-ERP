@@ -176,7 +176,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("PalletRecordsChildMenu"),
                 MaxPackageNumber = 0,
-                Lenght_ = 100
+                Lenght_ = 100,
+                Height_ = 120,
+                Width_ = 80
             };
 
             DataSource.SelectPalletRecordLines = new List<SelectPalletRecordLinesDto>();
