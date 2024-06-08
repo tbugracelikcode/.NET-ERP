@@ -628,11 +628,56 @@ namespace TsiErp.Localizations.Resources.PackageFiches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Satırları oluşturmak için sipariş, stok, koli türü, koli içeriği, koli sayısı ve üretim emri referans numarası alanları dolu olmalıdır..
+        ///   Looks up a localized string similar to Satırları oluşturmak için  koli sayısı alanı dolu olmalıdır..
         /// </summary>
-        public static string UIWarningPackageMessage {
+        public static string UIWarningPackageMessageNumberofPackage {
             get {
-                return ResourceManager.GetString("UIWarningPackageMessage", resourceCulture);
+                return ResourceManager.GetString("UIWarningPackageMessageNumberofPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satırları oluşturmak için koli içeriği alanı dolu olmalıdır..
+        /// </summary>
+        public static string UIWarningPackageMessagePackageContent {
+            get {
+                return ResourceManager.GetString("UIWarningPackageMessagePackageContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satırları oluşturmak için koli türü, alanı dolu olmalıdır..
+        /// </summary>
+        public static string UIWarningPackageMessagePackageType {
+            get {
+                return ResourceManager.GetString("UIWarningPackageMessagePackageType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satırları oluşturmak için stok kartı alanı dolu olmalıdır..
+        /// </summary>
+        public static string UIWarningPackageMessageProduct {
+            get {
+                return ResourceManager.GetString("UIWarningPackageMessageProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satırları oluşturmak için üretim emri referans numarası alanı dolu olmalıdır..
+        /// </summary>
+        public static string UIWarningPackageMessageProductionOrders {
+            get {
+                return ResourceManager.GetString("UIWarningPackageMessageProductionOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satırları oluşturmak için sipariş alanı dolu olmalıdır..
+        /// </summary>
+        public static string UIWarningPackageMessageSalesOrder {
+            get {
+                return ResourceManager.GetString("UIWarningPackageMessageSalesOrder", resourceCulture);
             }
         }
         

@@ -797,13 +797,17 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             switch (args.Item.Id)
             {
                 case "addpackagefiche":
-                    if (DataSource.CurrentAccountCardID == null || DataSource.CurrentAccountCardID == Guid.Empty || string.IsNullOrEmpty(DataSource.PackageType))
+                    if (DataSource.CurrentAccountCardID == null || DataSource.CurrentAccountCardID == Guid.Empty)
                     {
                         await ModalManager.WarningPopupAsync(L["UIWarninCurrentAccountTitle"], L["UIWarninCurrentAccountMessage"]);
                     }
-
+                    else if (string.IsNullOrEmpty(DataSource.PackageType))
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarninCurrentAccountTitle"], L["UIWarninPackageTypeMessage"]);
+                    }
                     else
                     {
+                        selectedNumberofPackages = 0;
                         PackageFichesList = (await PackageFichesAppService.GetListAsync(new ListPackageFichesParameterDto())).Data.Where(t => t.PackageType == DataSource.PackageType && t.CurrentAccountID == DataSource.CurrentAccountCardID).ToList();
 
                         foreach (var packageFiche in PackageFichesList)
@@ -855,6 +859,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 DataSource.SelectPalletRecordLines.Remove(line);
                             }
                         }
+
+                        DataSource.PalletPackageNumber = GridLineList.Select(t => t.NumberofPackage).Sum();
 
                         await _LineGrid.Refresh();
                         GetTotal();
@@ -1303,7 +1309,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     }
                 }
 
-                DataSource.PalletPackageNumber = GridLineList.Select(t => t.TotalAmount).Sum();
+                DataSource.PalletPackageNumber = GridLineList.Select(t => t.NumberofPackage).Sum();
 
                 await _LineGrid.Refresh();
 
@@ -1506,8 +1512,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         {
             if (args.ItemData != null)
             {
-
-
                 switch (args.ItemData.ID)
                 {
                     case "Big":
@@ -1523,6 +1527,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                     default: break;
                 }
+            }
+            else
+            {
+                DataSource.PackageType = string.Empty;
+                DataSource.MaxPackageNumber = 0;
             }
         }
 
