@@ -547,7 +547,7 @@
     <value>Do you want to change the ticket status of the recording to "Pending"?</value>
   </data>
   <data name="UIWarninCurrentAccountMessage" xml:space="preserve">
-    <value>Package fiches cannot be transferred without selecting a current account and package type.</value>
+    <value>Package fiches cannot be transferred without selecting a current account.</value>
   </data>
   <data name="UIWarninCurrentAccountTitle" xml:space="preserve">
     <value>Warning</value>
@@ -590,6 +590,9 @@
   </data>
   <data name="UIWarningTitle" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="UIWarninPackageTypeMessage" xml:space="preserve">
+    <value>Package fiches cannot be transferred without selecting a package type.</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

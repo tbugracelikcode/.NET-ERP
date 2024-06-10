@@ -112,14 +112,12 @@ else
                 </Columns>
 
                 <Items>
-                   @*  <DxGridLayoutItem Row="0" Column="1">
+                    <DxGridLayoutItem Row="0" Column="1">
                         <Template><br />
                             <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
-                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> 
-
                             <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                         </Template>
-                    </DxGridLayoutItem> *@
+                    </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
