@@ -432,14 +432,26 @@
   <data name="PackageFichesGridCustomerCode" xml:space="preserve">
     <value>VARIANT CODE</value>
   </data>
+  <data name="PackageFichesGridLoadingDate" xml:space="preserve">
+    <value>LOADING DATE</value>
+  </data>
   <data name="PackageFichesGridNumberofPackage" xml:space="preserve">
     <value>NUMBER OF PACKAGES</value>
   </data>
   <data name="PackageFichesGridPackageContent" xml:space="preserve">
     <value>PACKAGE CONTENT</value>
   </data>
+  <data name="PackageFichesGridPackageType" xml:space="preserve">
+    <value>PACKAGE TYPE</value>
+  </data>
+  <data name="PackageFichesGridPalletNo" xml:space="preserve">
+    <value>PALLET NO</value>
+  </data>
   <data name="PackageFichesGridProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
+  </data>
+  <data name="PackageFichesGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
   </data>
   <data name="PackageFichesGridSalesOrderFicheNo" xml:space="preserve">
     <value>SALES ORDER FICHE NO</value>

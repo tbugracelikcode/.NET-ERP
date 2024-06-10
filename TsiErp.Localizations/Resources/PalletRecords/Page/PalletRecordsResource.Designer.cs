@@ -1006,6 +1006,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to YÜKLEME TARİHİ.
+        /// </summary>
+        public static string PackageFichesGridLoadingDate {
+            get {
+                return ResourceManager.GetString("PackageFichesGridLoadingDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PAKET SAYISI.
         /// </summary>
         public static string PackageFichesGridNumberofPackage {
@@ -1024,11 +1033,38 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KOLİ TÜRÜ.
+        /// </summary>
+        public static string PackageFichesGridPackageType {
+            get {
+                return ResourceManager.GetString("PackageFichesGridPackageType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PALET NO.
+        /// </summary>
+        public static string PackageFichesGridPalletNo {
+            get {
+                return ResourceManager.GetString("PackageFichesGridPalletNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string PackageFichesGridProductCode {
             get {
                 return ResourceManager.GetString("PackageFichesGridProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK AÇIKLAMASI.
+        /// </summary>
+        public static string PackageFichesGridProductName {
+            get {
+                return ResourceManager.GetString("PackageFichesGridProductName", resourceCulture);
             }
         }
         

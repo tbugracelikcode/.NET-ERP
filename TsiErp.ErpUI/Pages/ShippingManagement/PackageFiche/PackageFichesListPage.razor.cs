@@ -251,49 +251,103 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             }
             else
             {
-                GridLineList.Clear();
 
-                decimal numberOfLines = 0;
-                int mod = 0;
-                int numberOfPackage = 0;
+                int quantityInProductionOrder = (int)(await StockFichesAppService.GetbyProductionOrderAsync(ProductionOrdersID)).Sum(x => x.Quantity);
 
-                if (DataSource.PackageType == L["BigPackage"].Value)
+                if(quantityInProductionOrder < DataSource.NumberofPackage * DataSource.PackageContent)
                 {
-                    numberOfPackage = 18;
-                    decimal a = DataSource.NumberofPackage / numberOfPackage;
+                    await ModalManager.WarningPopupAsync(L["UIWarningProdRefQuantityTitle"], L["UIWarningProdRefQuantityMessage"]);
+                }
+                else
+                {
+                    GridLineList.Clear();
 
-                    if (a == 1)
+                    decimal numberOfLines = 0;
+                    int mod = 0;
+                    int numberOfPackage = 0;
+
+                    if (DataSource.PackageType == L["BigPackage"].Value)
                     {
-                        numberOfLines = a;
+                        numberOfPackage = 18;
+                        decimal a = DataSource.NumberofPackage / numberOfPackage;
+
+                        if (a == 1)
+                        {
+                            numberOfLines = a;
+                        }
+                        else
+                        {
+                            numberOfLines = Math.Ceiling(a);
+                        }
+                        mod = DataSource.NumberofPackage % numberOfPackage;
                     }
+                    else if (DataSource.PackageType == L["SmallPackage"].Value)
+                    {
+                        numberOfPackage = 30;
+                        decimal a = DataSource.NumberofPackage / numberOfPackage;
+
+                        if (a == 1)
+                        {
+                            numberOfLines = a;
+                        }
+                        else
+                        {
+                            numberOfLines = Math.Ceiling(a);
+                        }
+                        mod = DataSource.NumberofPackage % numberOfPackage;
+                    }
+
+                    if (mod != 0)
+                    {
+
+                        for (int i = 0; i <= numberOfLines; i++)
+                        {
+                            if (i != numberOfLines)
+                            {
+                                SelectPackageFicheLinesDto packageFicheLineModel = new SelectPackageFicheLinesDto
+                                {
+                                    PackingDate = DataSource.Date_,
+                                    LineNr = GridLineList.Count + 1,
+                                    ProductID = DataSource.ProductID,
+                                    ProductName = DataSource.ProductName,
+                                    ProductCode = DataSource.ProductCode,
+                                    Quantity = DataSource.PackageContent * numberOfPackage,
+                                    ProductionOrderID = ProductionOrdersID,
+                                    ProductionOrderFicheNo = ProductionOrdersNo,
+                                    Status_ = string.Empty,
+                                    NumberofPackage = numberOfPackage,
+                                    PackageContent = DataSource.PackageContent,
+                                };
+
+                                GridLineList.Add(packageFicheLineModel);
+                            }
+                            else
+                            {
+                                SelectPackageFicheLinesDto packageFicheLineModel = new SelectPackageFicheLinesDto
+                                {
+                                    PackingDate = DataSource.Date_,
+                                    LineNr = GridLineList.Count + 1,
+                                    ProductID = DataSource.ProductID,
+                                    ProductName = DataSource.ProductName,
+                                    ProductCode = DataSource.ProductCode,
+                                    Quantity = DataSource.PackageContent * mod,
+                                    ProductionOrderID = ProductionOrdersID,
+                                    ProductionOrderFicheNo = ProductionOrdersNo,
+                                    Status_ = string.Empty,
+                                    NumberofPackage = mod,
+                                    PackageContent = DataSource.PackageContent,
+                                };
+
+                                GridLineList.Add(packageFicheLineModel);
+                            }
+
+                        }
+                    }
+
                     else
                     {
-                        numberOfLines = Math.Ceiling(a);
-                    }
-                    mod = DataSource.NumberofPackage % numberOfPackage;
-                }
-                else if (DataSource.PackageType == L["SmallPackage"].Value)
-                {
-                    numberOfPackage = 30;
-                    decimal a = DataSource.NumberofPackage / numberOfPackage;
 
-                    if (a == 1)
-                    {
-                        numberOfLines = a;
-                    }
-                    else
-                    {
-                        numberOfLines = Math.Ceiling(a);
-                    }
-                    mod = DataSource.NumberofPackage % numberOfPackage;
-                }
-
-                if (mod != 0)
-                {
-
-                    for (int i = 0; i <= numberOfLines; i++)
-                    {
-                        if (i != numberOfLines)
+                        for (int i = 1; i <= numberOfLines; i++)
                         {
                             SelectPackageFicheLinesDto packageFicheLineModel = new SelectPackageFicheLinesDto
                             {
@@ -311,55 +365,15 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                             };
 
                             GridLineList.Add(packageFicheLineModel);
+
+
                         }
-                        else
-                        {
-                            SelectPackageFicheLinesDto packageFicheLineModel = new SelectPackageFicheLinesDto
-                            {
-                                PackingDate = DataSource.Date_,
-                                LineNr = GridLineList.Count + 1,
-                                ProductID = DataSource.ProductID,
-                                ProductName = DataSource.ProductName,
-                                ProductCode = DataSource.ProductCode,
-                                Quantity = DataSource.PackageContent * mod,
-                                ProductionOrderID = ProductionOrdersID,
-                                ProductionOrderFicheNo = ProductionOrdersNo,
-                                Status_ = string.Empty,
-                                NumberofPackage = mod,
-                                PackageContent = DataSource.PackageContent,
-                            };
-
-                            GridLineList.Add(packageFicheLineModel);
-                        }
-
                     }
+
+                    await _LineGrid.Refresh();
                 }
-                else
-                {
 
-                    for (int i = 1; i <= numberOfLines; i++)
-                    {
-                        SelectPackageFicheLinesDto packageFicheLineModel = new SelectPackageFicheLinesDto
-                        {
-                            PackingDate = DataSource.Date_,
-                            LineNr = GridLineList.Count + 1,
-                            ProductID = DataSource.ProductID,
-                            ProductName = DataSource.ProductName,
-                            ProductCode = DataSource.ProductCode,
-                            Quantity = DataSource.PackageContent * numberOfPackage,
-                            ProductionOrderID = ProductionOrdersID,
-                            ProductionOrderFicheNo = ProductionOrdersNo,
-                            Status_ = string.Empty,
-                            NumberofPackage = numberOfPackage,
-                            PackageContent = DataSource.PackageContent,
-                        };
-
-                        GridLineList.Add(packageFicheLineModel);
-
-
-                    }
-                }
-                await _LineGrid.Refresh();
+              
             }
 
 
@@ -396,36 +410,76 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
         protected async Task OnLineSubmit()
         {
-            if (LineDataSource.Id == Guid.Empty)
-            {
-                if (DataSource.SelectPackageFicheLines.Contains(LineDataSource))
-                {
-                    int selectedLineIndex = DataSource.SelectPackageFicheLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+            int totalQuantity = 0;
 
-                    if (selectedLineIndex > -1)
+            int dataSourceIndex = GridLineList.IndexOf(LineDataSource);
+
+            int quantityInProductionOrder = (int)(await StockFichesAppService.GetbyProductionOrderAsync(ProductionOrdersID)).Sum(x => x.Quantity);
+
+            foreach (var line in GridLineList)
+            {
+                int lineIndex = GridLineList.IndexOf(line);
+
+                if(lineIndex != dataSourceIndex)
+                {
+                    totalQuantity = totalQuantity + line.Quantity;
+                }
+            }
+
+            int updatedQuantity = LineDataSource.PackageContent * LineDataSource.NumberofPackage;
+
+            if(quantityInProductionOrder < totalQuantity + updatedQuantity)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningProdRefQuantityTitle"], L["UIWarningProdRefQuantityMessage"]);
+            }
+
+            else
+            {
+                if (totalQuantity + updatedQuantity <= DataSource.PackageContent * DataSource.NumberofPackage)
+                {
+                    LineDataSource.Quantity = updatedQuantity;
+
+                    if (LineDataSource.Id == Guid.Empty)
                     {
-                        DataSource.SelectPackageFicheLines[selectedLineIndex] = LineDataSource;
+                        if (DataSource.SelectPackageFicheLines.Contains(LineDataSource))
+                        {
+                            int selectedLineIndex = DataSource.SelectPackageFicheLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+
+                            if (selectedLineIndex > -1)
+                            {
+                                DataSource.SelectPackageFicheLines[selectedLineIndex] = LineDataSource;
+                            }
+                        }
+                        else
+                        {
+                            DataSource.SelectPackageFicheLines.Add(LineDataSource);
+                        }
                     }
+                    else
+                    {
+                        int selectedLineIndex = DataSource.SelectPackageFicheLines.FindIndex(t => t.Id == LineDataSource.Id);
+
+                        if (selectedLineIndex > -1)
+                        {
+                            DataSource.SelectPackageFicheLines[selectedLineIndex] = LineDataSource;
+                        }
+                    }
+
+                    GridLineList = DataSource.SelectPackageFicheLines;
+                    await _LineGrid.Refresh();
+
+                    HideLinesPopup();
                 }
                 else
                 {
-                    DataSource.SelectPackageFicheLines.Add(LineDataSource);
-                }
-            }
-            else
-            {
-                int selectedLineIndex = DataSource.SelectPackageFicheLines.FindIndex(t => t.Id == LineDataSource.Id);
-
-                if (selectedLineIndex > -1)
-                {
-                    DataSource.SelectPackageFicheLines[selectedLineIndex] = LineDataSource;
+                    await ModalManager.WarningPopupAsync(L["UIWarningLineQuantityTitle"], L["UIWarningLineQuantityMessage"]);
                 }
             }
 
-            GridLineList = DataSource.SelectPackageFicheLines;
-            await _LineGrid.Refresh();
+            
 
-            HideLinesPopup();
+
+            
             await InvokeAsync(StateHasChanged);
 
 

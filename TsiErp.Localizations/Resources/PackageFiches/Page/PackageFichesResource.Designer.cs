@@ -628,6 +628,24 @@ namespace TsiErp.Localizations.Resources.PackageFiches.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır miktarı, ana kayıttaki toplam miktardan fazla olamaz..
+        /// </summary>
+        public static string UIWarningLineQuantityMessage {
+            get {
+                return ResourceManager.GetString("UIWarningLineQuantityMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningLineQuantityTitle {
+            get {
+                return ResourceManager.GetString("UIWarningLineQuantityTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satırları oluşturmak için  koli sayısı alanı dolu olmalıdır..
         /// </summary>
         public static string UIWarningPackageMessageNumberofPackage {
@@ -687,6 +705,24 @@ namespace TsiErp.Localizations.Resources.PackageFiches.Page {
         public static string UIWarningPackageTitle {
             get {
                 return ResourceManager.GetString("UIWarningPackageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam miktar, üretim emri referans numarasına ait stok giriş miktarından fazla olamaz..
+        /// </summary>
+        public static string UIWarningProdRefQuantityMessage {
+            get {
+                return ResourceManager.GetString("UIWarningProdRefQuantityMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningProdRefQuantityTitle {
+            get {
+                return ResourceManager.GetString("UIWarningProdRefQuantityTitle", resourceCulture);
             }
         }
         

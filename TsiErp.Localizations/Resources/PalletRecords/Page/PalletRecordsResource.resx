@@ -432,14 +432,26 @@
   <data name="PackageFichesGridCustomerCode" xml:space="preserve">
     <value>VARYANT KODU</value>
   </data>
+  <data name="PackageFichesGridLoadingDate" xml:space="preserve">
+    <value>YÜKLEME TARİHİ</value>
+  </data>
   <data name="PackageFichesGridNumberofPackage" xml:space="preserve">
     <value>PAKET SAYISI</value>
   </data>
   <data name="PackageFichesGridPackageContent" xml:space="preserve">
     <value>PAKET İÇERİK</value>
   </data>
+  <data name="PackageFichesGridPackageType" xml:space="preserve">
+    <value>KOLİ TÜRÜ</value>
+  </data>
+  <data name="PackageFichesGridPalletNo" xml:space="preserve">
+    <value>PALET NO</value>
+  </data>
   <data name="PackageFichesGridProductCode" xml:space="preserve">
     <value>STOK KODU</value>
+  </data>
+  <data name="PackageFichesGridProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
   </data>
   <data name="PackageFichesGridSalesOrderFicheNo" xml:space="preserve">
     <value>SATIŞ SİPARİŞ FİŞ NO</value>

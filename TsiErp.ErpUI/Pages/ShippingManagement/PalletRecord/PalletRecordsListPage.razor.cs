@@ -67,12 +67,17 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             public string Code { get; set; }
             public string SalesOrderFicheNo { get; set; }
             public string ProductCode { get; set; }
+            public string ProductName { get; set; }
             public Guid? ProductID { get; set; }
             public Guid? SalesOrderID { get; set; }
             public string CustomerCode { get; set; }
             public int PackageContent { get; set; }
             public int NumberofPackage { get; set; }
             public bool SelectedLine { get; set; }
+            public string PackageType { get; set; }
+            public string PalletNo { get; set; }
+            public DateTime LoadingDate { get; set; }
+            public int TotalQuantity { get; set; }
 
         }
 
@@ -829,6 +834,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                         foreach (var packageFiche in PackageFichesList)
                         {
+                            int totalQuantity = (await PackageFichesAppService.GetAsync(packageFiche.Id)).Data.SelectPackageFicheLines.Select(t => t.Quantity).Sum();
+
                             PackageFicheSelectionGrid packageFicheSelectionModel = new PackageFicheSelectionGrid
                             {
                                 Code = packageFiche.Code,
@@ -840,6 +847,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 PackageContent = packageFiche.PackageContent,
                                 ProductCode = packageFiche.ProductCode,
                                 SalesOrderFicheNo = packageFiche.SalesOrderFicheNo,
+                                LoadingDate = DataSource.PlannedLoadingTime.GetValueOrDefault(),
+                                PackageType = packageFiche.PackageType,
+                                PalletNo = packageFiche.PalletNumber,
+                                ProductName = packageFiche.ProductName,
+                                TotalQuantity = totalQuantity,
                                 SelectedLine = false
                             };
                             PackageFichesSelectionList.Add(packageFicheSelectionModel);
@@ -1098,7 +1110,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
                         var packingListPalletPackageLine = packingList.SelectPackingListPalletPackageLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault() && t.CustomerID == line.CurrentAccountCardID.GetValueOrDefault() && t.PackageFicheID == line.PackageFicheID.GetValueOrDefault()).FirstOrDefault();
 
-                        if(packingListPalletPackageLine != null && packingListPalletPackageLine.Id != Guid.Empty)
+                        if (packingListPalletPackageLine != null && packingListPalletPackageLine.Id != Guid.Empty)
                         {
                             packageOrderNo = packingListPalletPackageLine.PackageNo;
                             quantityInPackage = packingListPalletPackageLine.PackageContent;
@@ -1154,7 +1166,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                     DateTime? confirmedShippingDate = null;
 
-                    decimal lastOrderPrice = ( SalesOrdersAppService.GetLastOrderPriceByCurrentAccountProduct(line.CurrentAccountCardID.Value, line.ProductID.Value));
+                    decimal lastOrderPrice = (SalesOrdersAppService.GetLastOrderPriceByCurrentAccountProduct(line.CurrentAccountCardID.Value, line.ProductID.Value));
 
                     salesOrder = (await SalesOrdersAppService.GetAsync(line.SalesOrderID.GetValueOrDefault())).Data;
 
@@ -1172,7 +1184,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                         confirmedShippingDate = salesOrder.ConfirmedLoadingDate;
 
-                        salesPrice = (await SalesPricesAppService.GetbyCurrentAccountCurrencyDateAsync(line.CurrentAccountCardID.Value,salesOrder.CurrencyID, DataSource.PlannedLoadingTime.Value)).Data;
+                        salesPrice = (await SalesPricesAppService.GetbyCurrentAccountCurrencyDateAsync(line.CurrentAccountCardID.Value, salesOrder.CurrencyID, DataSource.PlannedLoadingTime.Value)).Data;
 
                         listPrice = salesPrice.SelectSalesPriceLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).Select(t => t.Price).FirstOrDefault();
                     }
@@ -1349,7 +1361,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             }
         }
 
-
         public void HidePackageFichesPopup()
         {
             PackageFichesSelectionList.Clear();
@@ -1478,7 +1489,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             }
         }
         #endregion
-
 
         #region Çeki Listesi Button Edit
 
