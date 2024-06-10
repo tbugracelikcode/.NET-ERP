@@ -306,6 +306,12 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Shipment Management &gt; Transactions</value>
   </data>
+  <data name="UIWarningLineQuantityMessage" xml:space="preserve">
+    <value>The line quantity cannot exceed the total quantity in the package fiche record.</value>
+  </data>
+  <data name="UIWarningLineQuantityTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UIWarningPackageMessageNumberofPackage" xml:space="preserve">
     <value>To create the lines,  number of packages field must be filled.</value>
   </data>
@@ -325,6 +331,12 @@
     <value>To create the lines, the sales order field must be filled.</value>
   </data>
   <data name="UIWarningPackageTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningProdRefQuantityMessage" xml:space="preserve">
+    <value>The total quantity cannot be more than the stock entry quantity of the production order reference number.</value>
+  </data>
+  <data name="UIWarningProdRefQuantityTitle" xml:space="preserve">
     <value>Warning</value>
   </data>
   <data name="UIWarningQuantityMessage" xml:space="preserve">

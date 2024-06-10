@@ -1021,5 +1021,133 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             return new SuccessDataResult<SelectSalesOrderDto>(salesOrdersDto);
 
         }
+
+        public decimal GetLastOrderPriceByCurrentAccountProduct(Guid CurrentAccountID, Guid ProductID)
+        {
+            var query = queryFactory
+                  .Query()
+                  .From(Tables.SalesOrders)
+                  .Select<SalesOrders>(null)
+                  .Join<PaymentPlans>
+                   (
+                       pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
+                       nameof(SalesOrders.PaymentPlanID),
+                       nameof(PaymentPlans.Id),
+                       JoinType.Left
+                   )
+                   .Join<Branches>
+                   (
+                       b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                       nameof(SalesOrders.BranchID),
+                       nameof(Branches.Id),
+                       JoinType.Left
+                   )
+                    .Join<Warehouses>
+                   (
+                       w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                       nameof(SalesOrders.WarehouseID),
+                       nameof(Warehouses.Id),
+                       JoinType.Left
+                   )
+                   .Join<OrderAcceptanceRecords>
+                   (
+                       c => new { OrderAcceptanceRecordID = c.Id, ConfirmedLoadingDate = c.ConfirmedLoadingDate },
+                       nameof(SalesOrders.OrderAcceptanceRecordID),
+                       nameof(OrderAcceptanceRecords.Id),
+                       JoinType.Left
+                   )
+                    .Join<Currencies>
+                   (
+                       c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                       nameof(SalesOrders.CurrencyID),
+                       nameof(Currencies.Id),
+                       JoinType.Left
+                   )
+                     .Join<Currencies>
+                   (
+                       w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                       nameof(SalesOrders.TransactionExchangeCurrencyID),
+                       nameof(Currencies.Id),
+                       "TransactionExchangeCurrency",
+                       JoinType.Left
+                   )
+                    .Join<CurrentAccountCards>
+                   (
+                       ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
+                       nameof(SalesOrders.CurrentAccountCardID),
+                       nameof(CurrentAccountCards.Id),
+                       JoinType.Left)
+
+                        .Join<ShippingAdresses>
+                   (
+                       sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
+                       nameof(SalesOrders.ShippingAdressID),
+                       nameof(ShippingAdresses.Id),
+                       JoinType.Left
+                   )
+                   .Where(new { CurrentAccountCardID = CurrentAccountID }, false, false, Tables.SalesOrders);
+
+            var salesOrders = queryFactory.Get<SelectSalesOrderDto>(query);
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.SalesOrderLines)
+                   .Select<SalesOrderLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(SalesOrderLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(SalesOrderLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                        nameof(SalesOrderLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                      .Join<SalesPropositionLines>
+                    (
+                        spl => new { LikedPropositionLineID = spl.Id, LinkedSalesPropositionID = spl.SalesPropositionID },
+                        nameof(SalesOrderLines.LikedPropositionLineID),
+                        nameof(SalesPropositionLines.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(SalesOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(SalesOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { SalesOrderID = salesOrders.Id }, false, false, Tables.SalesOrderLines)
+                    .Where(new { ProductID = ProductID }, false, false, Tables.SalesOrderLines);
+
+            var salesOrderLine = queryFactory.Get<SelectSalesOrderLinesDto>(queryLines);
+
+            return salesOrderLine.UnitPrice;
+        }
     }
 }

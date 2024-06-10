@@ -24,6 +24,10 @@ using TsiErp.ErpUI.Reports.ShippingManagement.PalletReports.PalletLabels;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackingList;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFiche;
+using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 {
@@ -63,12 +67,17 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             public string Code { get; set; }
             public string SalesOrderFicheNo { get; set; }
             public string ProductCode { get; set; }
+            public string ProductName { get; set; }
             public Guid? ProductID { get; set; }
             public Guid? SalesOrderID { get; set; }
             public string CustomerCode { get; set; }
             public int PackageContent { get; set; }
             public int NumberofPackage { get; set; }
             public bool SelectedLine { get; set; }
+            public string PackageType { get; set; }
+            public string PalletNo { get; set; }
+            public DateTime LoadingDate { get; set; }
+            public int TotalQuantity { get; set; }
 
         }
 
@@ -147,6 +156,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         public DateTime? LoadingDateFilter;
         public string CurrentAccountNameFilter = string.Empty;
         public Guid CurrentAccountIDFilter = Guid.Empty;
+
+        public bool isAllColumns = false;
+
+
+        public List<ItemModel> LoadingDetailGridToolbarItems { get; set; } = new List<ItemModel>();
 
 
         protected override async void OnInitialized()
@@ -360,8 +374,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                             case "PalletRecordsContextLoadingDetail":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextLoadingDetail"], Id = "loadingdetail" }); break;
-
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletRecordsContextPrintTicket"], Id = "printticket", Items = subPrintTicketMenus }); break;
                             default: break;
                         }
                     }
@@ -764,6 +776,16 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 case "loadingdetail":
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     LoadingDetailDataSource = new LoadingDetailGrid { };
+                    isAllColumns = false;
+
+                    foreach (var item in _packageTypeFilterComboBox)
+                    {
+                        item.Text = L[item.Text];
+                    }
+
+
+                    LoadingDetailGridToolbarItems.Add(new ItemModel() { Id = "ExcelExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIExcelIcon", TooltipText = LoadingDateFilter.ToString() + "-LoadingDetail" });
+
                     //LoadingDateFilter = GetSQLDateAppService.GetDateFromSQL();
                     LoadingDetailPopupVisible = true;
                     await InvokeAsync(StateHasChanged);
@@ -812,6 +834,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                         foreach (var packageFiche in PackageFichesList)
                         {
+                            int totalQuantity = (await PackageFichesAppService.GetAsync(packageFiche.Id)).Data.SelectPackageFicheLines.Select(t => t.Quantity).Sum();
+
                             PackageFicheSelectionGrid packageFicheSelectionModel = new PackageFicheSelectionGrid
                             {
                                 Code = packageFiche.Code,
@@ -823,6 +847,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 PackageContent = packageFiche.PackageContent,
                                 ProductCode = packageFiche.ProductCode,
                                 SalesOrderFicheNo = packageFiche.SalesOrderFicheNo,
+                                LoadingDate = DataSource.PlannedLoadingTime.GetValueOrDefault(),
+                                PackageType = packageFiche.PackageType,
+                                PalletNo = packageFiche.PalletNumber,
+                                ProductName = packageFiche.ProductName,
+                                TotalQuantity = totalQuantity,
                                 SelectedLine = false
                             };
                             PackageFichesSelectionList.Add(packageFicheSelectionModel);
@@ -949,7 +978,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             LoadingDetailPopupVisible = false;
             PalletNameFilter = string.Empty;
             PackageTypeFilter = string.Empty;
-            LoadingDateFilter = DateTime.Today;
+            LoadingDateFilter = null;
             CurrentAccountNameFilter = string.Empty;
             CurrentAccountIDFilter = Guid.Empty;
             LoadingDetailGridList.Clear();
@@ -1018,52 +1047,43 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             HideLinesPopup();
             await InvokeAsync(StateHasChanged);
         }
-
         public async void LoadingDetailFilterClicked()
         {
             #region Filtreleme 
 
             var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.AsQueryable();
 
-            //var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.Where(t => t.PlannedLoadingTime == LoadingDateFilter).ToList();
+            //var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.ToList();
 
             if (LoadingDateFilter.HasValue)
             {
                 palletList = palletList.Where(t => t.PlannedLoadingTime == LoadingDateFilter);
+                //palletList = palletList.Where(t => t.PlannedLoadingTime == LoadingDateFilter.Value).ToList();
             }
 
             if (!string.IsNullOrEmpty(PalletNameFilter))
             {
                 palletList = palletList.Where(t => t.Name == PalletNameFilter);
+                //palletList = palletList.Where(t => t.Name == PalletNameFilter).ToList();
             }
             if (!string.IsNullOrEmpty(PackageTypeFilter))
             {
                 string packageTypeFilter = L[PackageTypeFilter].Value;
                 palletList = palletList.Where(t => t.PackageType == packageTypeFilter);
+                //palletList = palletList.Where(t => t.PackageType == packageTypeFilter).ToList();
             }
             if (CurrentAccountIDFilter != Guid.Empty)
             {
                 palletList = palletList.Where(t => t.CurrentAccountCardID == CurrentAccountIDFilter);
+                //palletList = palletList.Where(t => t.CurrentAccountCardID == CurrentAccountIDFilter).ToList();
             }
 
             #endregion
 
             #region Grid Verilerini Çekme
 
-            //var palletLines = (await PalletRecordsAppService.GetPalletLines()).ToList();
 
-            //var lines = (from pallet in palletList
-            //             join line in palletLines on pallet.Id equals line.PalletRecordID
-            //             select new 
-            //             {
-            //                 Id = pallet.Id,
-            //                 supplierRefNo=""
-            //             }
-            //            ).ToList();
-
-
-
-            foreach (var pallet in palletList)
+            foreach (var pallet in palletList.ToList())
             {
                 var palletRecord = (await PalletRecordsAppService.GetAsync(pallet.Id)).Data;
 
@@ -1090,9 +1110,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
                         var packingListPalletPackageLine = packingList.SelectPackingListPalletPackageLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault() && t.CustomerID == line.CurrentAccountCardID.GetValueOrDefault() && t.PackageFicheID == line.PackageFicheID.GetValueOrDefault()).FirstOrDefault();
 
-                        packageOrderNo = packingListPalletPackageLine.PackageNo;
-                        quantityInPackage = packingListPalletPackageLine.PackageContent;
-                        packageQuantity = packingListPalletPackageLine.NumberofPackage;
+                        if (packingListPalletPackageLine != null && packingListPalletPackageLine.Id != Guid.Empty)
+                        {
+                            packageOrderNo = packingListPalletPackageLine.PackageNo;
+                            quantityInPackage = packingListPalletPackageLine.PackageContent;
+                            packageQuantity = packingListPalletPackageLine.NumberofPackage;
+                        }
+
                     }
 
                     var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
@@ -1142,9 +1166,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                     DateTime? confirmedShippingDate = null;
 
-                    var lastOrderID = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).Select(t => t.Id).FirstOrDefault();
-
-                    decimal lastOrderPrice = (await SalesOrdersAppService.GetAsync(lastOrderID)).Data.SelectSalesOrderLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).Select(t => t.UnitPrice).FirstOrDefault();
+                    decimal lastOrderPrice = (SalesOrdersAppService.GetLastOrderPriceByCurrentAccountProduct(line.CurrentAccountCardID.Value, line.ProductID.Value));
 
                     salesOrder = (await SalesOrdersAppService.GetAsync(line.SalesOrderID.GetValueOrDefault())).Data;
 
@@ -1162,9 +1184,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                         confirmedShippingDate = salesOrder.ConfirmedLoadingDate;
 
-                        Guid salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID && t.CurrencyCode == salesOrder.CurrencyCode && t.StartDate <= DataSource.PlannedLoadingTime && t.EndDate >= DataSource.PlannedLoadingTime && t.CustomerCode == currentAccount.CustomerCode && t.IsActive == true).Select(t => t.Id).FirstOrDefault();
-
-                        salesPrice = (await SalesPricesAppService.GetAsync(salesPriceID)).Data;
+                        salesPrice = (await SalesPricesAppService.GetbyCurrentAccountCurrencyDateAsync(line.CurrentAccountCardID.Value, salesOrder.CurrencyID, DataSource.PlannedLoadingTime.Value)).Data;
 
                         listPrice = salesPrice.SelectSalesPriceLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).Select(t => t.Price).FirstOrDefault();
                     }
@@ -1172,7 +1192,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     LoadingDetailGrid loadingDetailGridModel = new LoadingDetailGrid
                     {
                         SupplierRefNo = supplierRefNo,
-                        CustomerReferenceNo = customerRefNo,
+                        CustomerRefNo = ticketNo,
                         ProductCode = line.ProductCode,
                         PalletName = pallet.Name,
                         PackageOrderNo = packageOrderNo,
@@ -1195,7 +1215,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                         TotalGrossKG = line.TotalGrossKG,
                         ProductName = product.Name,
                         EnglishDefinition = product.EnglishDefinition,
-                        CustomerRefNo = customerRefNo,
+                        CustomerReferenceNo = customerRefNo,
                         TicketNo = ticketNo,
                         CurrentAccountName = currentAccount.Name,
                     };
@@ -1206,17 +1226,36 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             }
 
             await _LoadingDetailGrid.Refresh();
+            await InvokeAsync(StateHasChanged);
 
             #endregion
         }
-
         public void ClearButtonClicked()
         {
             PalletNameFilter = string.Empty;
             PackageTypeFilter = string.Empty;
-            LoadingDateFilter = DateTime.Today;
+            LoadingDateFilter = null;
             CurrentAccountNameFilter = string.Empty;
             CurrentAccountIDFilter = Guid.Empty;
+        }
+
+        public async void LoadingDetailToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+        {
+            if (args.Item.Id == "ExcelExport")
+            {
+                ExcelExportProperties ExcelExportProperties = new ExcelExportProperties();
+
+                if (!isAllColumns)
+                {
+                    ExcelExportProperties.Columns = _LoadingDetailGrid.Columns.Where(t => t.Index <= 13).ToList();
+                }
+
+
+
+                ExcelExportProperties.FileName = LoadingDateFilter.GetValueOrDefault().ToShortDateString() + "-LoadingDetails" + ".xlsx";
+                await this._LoadingDetailGrid.ExportToExcelAsync(ExcelExportProperties);
+
+            }
         }
 
 
@@ -1321,7 +1360,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 await ModalManager.WarningPopupAsync(L["UIWarningSelectedPackageFicheTitle"], L["UIWarningSelectedPackageFicheMessage"]);
             }
         }
-
 
         public void HidePackageFichesPopup()
         {
@@ -1451,7 +1489,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             }
         }
         #endregion
-
 
         #region Çeki Listesi Button Edit
 
@@ -1665,6 +1702,216 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             }
         }
 
+        #endregion
+
+        #region Palet Adı Filtre ComboBox
+        public class NameFilterComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<NameFilterComboBox> _nameFilterComboBox = new List<NameFilterComboBox>
+        {
+            new NameFilterComboBox(){ID = "A-1"  , Text="A-1"  },
+            new NameFilterComboBox(){ID = "B-2"  , Text="B-2"  },
+            new NameFilterComboBox(){ID = "C-3"  , Text="C-3"  },
+            new NameFilterComboBox(){ID = "D-4"  , Text="D-4"  },
+            new NameFilterComboBox(){ID = "E-5"  , Text="E-5"  },
+            new NameFilterComboBox(){ID = "F-6"  , Text="F-6"  },
+            new NameFilterComboBox(){ID = "G-7"  , Text="G-7"  },
+            new NameFilterComboBox(){ID = "H-8"  , Text="H-8"  },
+            new NameFilterComboBox(){ID = "I-9"  , Text="I-9"  },
+            new NameFilterComboBox(){ID = "J-10" , Text="J-10" },
+            new NameFilterComboBox(){ID = "K-11" , Text="K-11" },
+            new NameFilterComboBox(){ID = "L-12" , Text="L-12" },
+            new NameFilterComboBox(){ID = "M-13" , Text="M-13" },
+            new NameFilterComboBox(){ID = "N-14" , Text="N-14" },
+            new NameFilterComboBox(){ID = "O-15" , Text="O-15" },
+            new NameFilterComboBox(){ID = "P-16" , Text="P-16" },
+            new NameFilterComboBox(){ID = "Q-17" , Text="Q-17" },
+            new NameFilterComboBox(){ID = "R-18" , Text="R-18" },
+            new NameFilterComboBox(){ID = "S-19" , Text="S-19" },
+            new NameFilterComboBox(){ID = "T-20" , Text="T-20" },
+            new NameFilterComboBox(){ID = "U-21" , Text="U-21" },
+            new NameFilterComboBox(){ID = "V-22" , Text="V-22" },
+            new NameFilterComboBox(){ID = "W-23" , Text="W-23" },
+            new NameFilterComboBox(){ID = "X-24" , Text="X-24" },
+            new NameFilterComboBox(){ID = "Y-25" , Text="Y-25" },
+            new NameFilterComboBox(){ID = "Z-26" , Text="Z-26" },
+            new NameFilterComboBox(){ID = "AA-27", Text="AA-27"},
+            new NameFilterComboBox(){ID = "BB-28", Text="BB-28"},
+            new NameFilterComboBox(){ID = "CC-29", Text="CC-29"},
+            new NameFilterComboBox(){ID = "DD-30", Text="DD-30"},
+            new NameFilterComboBox(){ID = "EE-31", Text="EE-31"},
+            new NameFilterComboBox(){ID = "FF-32", Text="FF-32"},
+            new NameFilterComboBox(){ID = "GG-33", Text="GG-33"},
+            new NameFilterComboBox(){ID = "HH-34", Text="HH-34"},
+            new NameFilterComboBox(){ID = "II-35", Text="II-35"},
+            new NameFilterComboBox(){ID = "JJ-36", Text="JJ-36"},
+            new NameFilterComboBox(){ID = "KK-37", Text="KK-37"},
+            new NameFilterComboBox(){ID = "LL-38", Text="LL-38"},
+            new NameFilterComboBox(){ID = "MM-39", Text="MM-39"},
+            new NameFilterComboBox(){ID = "NN-40", Text="NN-40"},
+            new NameFilterComboBox(){ID = "OO-41", Text="OO-41"},
+            new NameFilterComboBox(){ID = "PP-42", Text="PP-42"},
+            new NameFilterComboBox(){ID = "QQ-43", Text="QQ-43"},
+            new NameFilterComboBox(){ID = "RR-44", Text="RR-44"},
+            new NameFilterComboBox(){ID = "SS-45", Text="SS-45"},
+            new NameFilterComboBox(){ID = "TT-46", Text="TT-46"},
+            new NameFilterComboBox(){ID = "UU-47", Text="UU-47"},
+            new NameFilterComboBox(){ID = "VV-48", Text="VV-48"},
+            new NameFilterComboBox(){ID = "WW-49", Text="WW-49"},
+            new NameFilterComboBox(){ID = "XX-50", Text="XX-50"},
+            new NameFilterComboBox(){ID = "YY-51", Text="YY-51"},
+            new NameFilterComboBox(){ID = "ZZ-52", Text="ZZ-52"},
+        };
+
+        private void NameFilterComboBoxValueChangeHandler(ChangeEventArgs<string, NameFilterComboBox> args)
+        {
+            if (args.ItemData != null)
+            {
+                switch (args.ItemData.ID)
+                {
+                    case "A-1": PalletNameFilter = "A-1"; break;
+                    case "B-2": PalletNameFilter = "B-2"; break;
+                    case "C-3": PalletNameFilter = "C-3"; break;
+                    case "D-4": PalletNameFilter = "D-4"; break;
+                    case "E-5": PalletNameFilter = "E-5"; break;
+                    case "F-6": PalletNameFilter = "F-6"; break;
+                    case "G-7": PalletNameFilter = "G-7"; break;
+                    case "H-8": PalletNameFilter = "H-8"; break;
+                    case "I-9": PalletNameFilter = "I-9"; break;
+                    case "J-10": PalletNameFilter = "J-10"; break;
+                    case "K-11": PalletNameFilter = "K-11"; break;
+                    case "L-12": PalletNameFilter = "L-12"; break;
+                    case "M-13": PalletNameFilter = "M-13"; break;
+                    case "N-14": PalletNameFilter = "N-14"; break;
+                    case "O-15": PalletNameFilter = "O-15"; break;
+                    case "P-16": PalletNameFilter = "P-16"; break;
+                    case "Q-17": PalletNameFilter = "Q-17"; break;
+                    case "R-18": PalletNameFilter = "R-18"; break;
+                    case "S-19": PalletNameFilter = "S-19"; break;
+                    case "T-20": PalletNameFilter = "T-20"; break;
+                    case "U-21": PalletNameFilter = "U-21"; break;
+                    case "V-22": PalletNameFilter = "V-22"; break;
+                    case "W-23": PalletNameFilter = "W-23"; break;
+                    case "X-24": PalletNameFilter = "X-24"; break;
+                    case "Y-25": PalletNameFilter = "Y-25"; break;
+                    case "Z-26": PalletNameFilter = "Z-26"; break;
+                    case "AA-27": PalletNameFilter = "AA-27"; break;
+                    case "BB-28": PalletNameFilter = "BB-28"; break;
+                    case "CC-29": PalletNameFilter = "CC-29"; break;
+                    case "DD-30": PalletNameFilter = "DD-30"; break;
+                    case "EE-31": PalletNameFilter = "EE-31"; break;
+                    case "FF-32": PalletNameFilter = "FF-32"; break;
+                    case "GG-33": PalletNameFilter = "GG-33"; break;
+                    case "HH-34": PalletNameFilter = "HH-34"; break;
+                    case "II-35": PalletNameFilter = "II-35"; break;
+                    case "JJ-36": PalletNameFilter = "JJ-36"; break;
+                    case "KK-37": PalletNameFilter = "KK-37"; break;
+                    case "LL-38": PalletNameFilter = "LL-38"; break;
+                    case "MM-39": PalletNameFilter = "MM-39"; break;
+                    case "NN-40": PalletNameFilter = "NN-40"; break;
+                    case "OO-41": PalletNameFilter = "OO-41"; break;
+                    case "PP-42": PalletNameFilter = "PP-42"; break;
+                    case "QQ-43": PalletNameFilter = "QQ-43"; break;
+                    case "RR-44": PalletNameFilter = "RR-44"; break;
+                    case "SS-45": PalletNameFilter = "SS-45"; break;
+                    case "TT-46": PalletNameFilter = "TT-46"; break;
+                    case "UU-47": PalletNameFilter = "UU-47"; break;
+                    case "VV-48": PalletNameFilter = "VV-48"; break;
+                    case "WW-49": PalletNameFilter = "WW-49"; break;
+                    case "XX-50": PalletNameFilter = "XX-50"; break;
+                    case "YY-51": PalletNameFilter = "YY-51"; break;
+                    case "ZZ-52": PalletNameFilter = "ZZ-52"; break;
+
+
+                    default: break;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Koli Türü Filtre ComboBox
+        public class PackageTypeFilterComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<PackageTypeFilterComboBox> _packageTypeFilterComboBox = new List<PackageTypeFilterComboBox>
+        {
+            new PackageTypeFilterComboBox(){ID = "Big", Text="BigPackage"},
+            new PackageTypeFilterComboBox(){ID = "Small", Text="SmallPackage"}
+        };
+
+        private void PackageTypeFilterComboBoxValueChangeHandler(ChangeEventArgs<string, PackageTypeFilterComboBox> args)
+        {
+            if (args.ItemData != null)
+            {
+
+
+                switch (args.ItemData.ID)
+                {
+                    case "Big":
+                        PackageTypeFilter = L["BigPackage"].Value;
+                        break;
+
+                    case "Small":
+                        PackageTypeFilter = L["SmallPackage"].Value;
+                        break;
+
+
+                    default: break;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Cari Hesap Filtre ButtonEdit
+
+        SfTextBox CurrentAccountCardsFilterButtonEdit;
+        bool SelectCurrentAccountCardsFilterPopupVisible = false;
+        List<ListCurrentAccountCardsDto> CurrentAccountCardsFilterList = new List<ListCurrentAccountCardsDto>();
+
+        public async Task CurrentAccountCardsFilterCodeOnCreateIcon()
+        {
+            var CurrentAccountCardsFilterCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsFilterButtonClickEvent);
+            await CurrentAccountCardsFilterButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsFilterCodeButtonClick } });
+        }
+
+        public async void CurrentAccountCardsFilterButtonClickEvent()
+        {
+            SelectCurrentAccountCardsFilterPopupVisible = true;
+            CurrentAccountCardsFilterList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void CurrentAccountCardsFilterOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                CurrentAccountNameFilter = string.Empty;
+                CurrentAccountIDFilter = Guid.Empty;
+            }
+        }
+
+        public async void CurrentAccountCardsFilterDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
+        {
+            var selectedCurrentAccountCard = args.RowData;
+
+            if (selectedCurrentAccountCard != null)
+            {
+                CurrentAccountIDFilter = selectedCurrentAccountCard.Id;
+                CurrentAccountNameFilter = selectedCurrentAccountCard.Name;
+                SelectCurrentAccountCardsFilterPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
         #endregion
 
         #region Etiket Rapor Metotları

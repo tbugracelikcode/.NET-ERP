@@ -306,6 +306,12 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sevkiyat Yönetimi &gt; Hareketler</value>
   </data>
+  <data name="UIWarningLineQuantityMessage" xml:space="preserve">
+    <value>Satır miktarı, ana kayıttaki toplam miktardan fazla olamaz.</value>
+  </data>
+  <data name="UIWarningLineQuantityTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
   <data name="UIWarningPackageMessageNumberofPackage" xml:space="preserve">
     <value>Satırları oluşturmak için  koli sayısı alanı dolu olmalıdır.</value>
   </data>
@@ -325,6 +331,12 @@
     <value>Satırları oluşturmak için sipariş alanı dolu olmalıdır.</value>
   </data>
   <data name="UIWarningPackageTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningProdRefQuantityMessage" xml:space="preserve">
+    <value>Toplam miktar, üretim emri referans numarasına ait stok giriş miktarından fazla olamaz.</value>
+  </data>
+  <data name="UIWarningProdRefQuantityTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>
   <data name="UIWarningQuantityMessage" xml:space="preserve">

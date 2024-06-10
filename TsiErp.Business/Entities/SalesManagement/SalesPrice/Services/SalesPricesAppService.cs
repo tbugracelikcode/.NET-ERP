@@ -533,5 +533,73 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
 
         }
+
+        public async Task<IDataResult<SelectSalesPricesDto>> GetbyCurrentAccountCurrencyDateAsync(Guid CurrentAccountID, Guid CurrencyID, DateTime LoadingDate)
+        {
+            var query = queryFactory
+                  .Query()
+                  .From(Tables.SalesPrices)
+                  .Select<SalesPrices>(null)
+                  .Join<Currencies>
+                   (
+                       c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                       nameof(SalesPrices.CurrencyID),
+                       nameof(Currencies.Id),
+                       JoinType.Left
+                   )
+                   .Join<Branches>
+                   (
+                       b => new { BranchID = b.Id, BranchCode = b.Code },
+                       nameof(SalesPrices.BranchID),
+                       nameof(Branches.Id),
+                       JoinType.Left
+                   )
+                   .Join<Warehouses>
+                   (
+                       w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                       nameof(SalesPrices.WarehouseID),
+                       nameof(Warehouses.Id),
+                       JoinType.Left
+                   )
+                   .Join<CurrentAccountCards>
+                   (
+                       ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
+                       nameof(SalesPrices.CurrentAccountCardID),
+                       nameof(CurrentAccountCards.Id),
+                       JoinType.Left
+                   )
+                   .Where(new { CurrentAccountCardID = CurrentAccountID }, true, true, Tables.SalesPrices)
+                   .Where(new { CurrencyID = CurrencyID }, true, true, Tables.SalesPrices);
+
+            var salesPrices = queryFactory.GetList<SelectSalesPricesDto>(query).Where(t=>t.StartDate<=LoadingDate && t.EndDate >= LoadingDate).FirstOrDefault();
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.SalesPriceLines)
+                   .Select<SalesPriceLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(SalesPriceLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<Currencies>
+                    (
+                        cr => new { CurrencyID = cr.Id, CurrencyCode = cr.Code },
+                        nameof(SalesPriceLines.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { SalesPriceID = salesPrices.Id }, false, false, Tables.SalesPriceLines);
+
+            var salesPriceLine = queryFactory.GetList<SelectSalesPriceLinesDto>(queryLines).ToList();
+
+            salesPrices.SelectSalesPriceLines = salesPriceLine;
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectSalesPricesDto>(salesPrices);
+
+        }
     }
 }

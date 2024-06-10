@@ -68,7 +68,7 @@ else
                                                 var palletRecordsStateEnum = (context as ListPalletRecordsDto).PalletRecordsStateEnum;
                                                 string palletRecordsStateEnumStr = string.Empty;
 
-                                                switch(palletRecordsStateEnum)
+                                                switch (palletRecordsStateEnum)
                                                 {
                                                     case PalletRecordsStateEnum.Hazirlaniyor: palletRecordsStateEnumStr = L["EnumPreparing"]; break;
                                                     case PalletRecordsStateEnum.Tamamlandi: palletRecordsStateEnumStr = L["EnumCompleted"]; break;
@@ -459,7 +459,7 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ApprovedUnitPriceDetailLabel"] </strong></label>
-                           <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="PalletDetailDataSource.ApprovedUnitPrice"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="PalletDetailDataSource.ApprovedUnitPrice"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -470,6 +470,227 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnPalletDetailSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HidePalletDetailCrudPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="LoadingDetailPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["LoadingDetailModalTitle"]"
+             Width="81%"
+             Height="83%"
+             MinWidth="1400px"
+             MinHeight="900px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="65%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
+                            <SfComboBox TValue="string" TItem="NameFilterComboBox" DataSource="@_nameFilterComboBox">
+                                <ComboBoxEvents TItem="NameFilterComboBox" TValue="string" ValueChange="@NameFilterComboBoxValueChangeHandler"></ComboBoxEvents>
+                                <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PackageTypeLabel"] </strong></label><br />
+                            <SfComboBox TValue="string" TItem="PackageTypeFilterComboBox" DataSource="@_packageTypeFilterComboBox">
+                                <ComboBoxEvents TItem="PackageTypeFilterComboBox" TValue="string" ValueChange="@PackageTypeFilterComboBoxValueChangeHandler"></ComboBoxEvents>
+                                <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <br /><center>
+                                <SfButton CssClass="TSICancelButton" OnClick="LoadingDetailFilterClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Filter"></SfIcon>&nbsp;@L["FilterButton"]</SfButton>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="7">
+                        <Template>
+                            <br />
+                            <SfButton CssClass="TSICancelButton" OnClick="ClearButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.FilterClear"></SfIcon>&nbsp;@L["ClearButton"]</SfButton>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PlannedLoadingTimeLabel"] </strong></label><br />
+                            <SfDatePicker @bind-Value="LoadingDateFilter"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["CurrentAccountCardNameLabel"] </strong></label><br />
+                            <SfTextBox @ref="@CurrentAccountCardsFilterButtonEdit" Created="@CurrentAccountCardsFilterCodeOnCreateIcon" @bind-Value="CurrentAccountNameFilter" ShowClearButton=true ValueChange="CurrentAccountCardsFilterOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <center>
+                                <label class="TSIModalLabel"><strong>@L["IsAllColumnsLabel"] </strong></label><br />
+                                <SfSwitch @bind-Checked="isAllColumns"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="7">
+                        <Template>
+                            <SfGrid @ref=_LoadingDetailGrid ID="LoadingDetailGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@LoadingDetailGridList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="true" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" Toolbar=@LoadingDetailGridToolbarItems>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                @*         <GridAggregates>
+                            <GridAggregate>
+                            <GridAggregateColumns>
+                            <GridAggregateColumn Field=@nameof(LoadingDetailGrid.QuantityInPackage) Type="AggregateType.Sum" Context="loadingContext">
+                            <GroupFooterTemplate>
+                            @{
+                            var aggregate = (loadingContext as AggregateTemplateContext);
+                            <div>
+                            <p>@L["SUMLABEL"]</p>
+                            </div>
+                            }
+                            </GroupFooterTemplate>
+                            </GridAggregateColumn>
+                            </GridAggregateColumns>
+                            </GridAggregate>
+                            <GridAggregate>
+                            <GridAggregateColumns>
+                            <GridAggregateColumn Field=@nameof(LoadingDetailGrid.PackageQuantity) Type="AggregateType.Sum" Context="loadingContext">
+                            <GroupFooterTemplate>
+                            @{
+                            var aggregate = (loadingContext as AggregateTemplateContext);
+                            <div>
+                            <p>@aggregate.Sum</p>
+                            </div>
+                            }
+                            </GroupFooterTemplate>
+                            </GridAggregateColumn>
+                            </GridAggregateColumns>
+                            </GridAggregate>
+
+                            <GridAggregate>
+                            <GridAggregateColumns>
+                            <GridAggregateColumn Field=@nameof(LoadingDetailGrid.TotalPackageQuantity) Type="AggregateType.Sum" Context="loadingContext">
+                            <GroupFooterTemplate>
+                            @{
+                            var aggregate = (loadingContext as AggregateTemplateContext);
+                            <div>
+                            <p>@aggregate.Sum</p>
+                            </div>
+                            }
+                            </GroupFooterTemplate>
+                            </GridAggregateColumn>
+                            </GridAggregateColumns>
+                            </GridAggregate>
+
+                            <GridAggregate>
+                            <GridAggregateColumns>
+                            <GridAggregateColumn Field=@nameof(LoadingDetailGrid.LineAmount) Type="AggregateType.Sum" Context="loadingContext">
+                            <GroupFooterTemplate>
+                            @{
+                            var aggregate = (loadingContext as AggregateTemplateContext);
+                            <div>
+                            <p>@aggregate.Sum</p>
+                            </div>
+                            }
+                            </GroupFooterTemplate>
+                            </GridAggregateColumn>
+                            </GridAggregateColumns>
+                            </GridAggregate>
+
+                            <GridAggregate>
+                            <GridAggregateColumns>
+                            <GridAggregateColumn Field=@nameof(LoadingDetailGrid.ProductGroupName) Type="AggregateType.Sum" Context="loadingContext">
+                            <GroupFooterTemplate>
+                            @{
+                            var aggregate = (loadingContext as AggregateTemplateContext);
+                            <div>
+                            <p>@L["MIDSUMLABEL"]</p>
+                            </div>
+                            }
+                            </GroupFooterTemplate>
+                            </GridAggregateColumn>
+                            </GridAggregateColumns>
+                            </GridAggregate>
+                            </GridAggregates> *@
+
+                                <GridEvents OnToolbarClick="@LoadingDetailToolbarClickHandler" TValue="LoadingDetailGrid"></GridEvents>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.SupplierRefNo) HeaderText="@L["LoadingDetailGridSupplierRefNo"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.CustomerRefNo) HeaderText="@L["LoadingDetailGridCustomerRefNo"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.ProductCode) HeaderText="@L["LoadingDetailGridProductCode"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.PalletName) HeaderText="@L["LoadingDetailGridPalletName"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.PackageOrderNo) HeaderText="@L["LoadingDetailGridPackageOrderNo"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.QuantityInPackage) Type="ColumnType.Number" HeaderText="@L["LoadingDetailGridQuantityInPackage"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.PackageQuantity) Type="ColumnType.Number" HeaderText="@L["LoadingDetailGridPackageQuantity"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.TotalPackageQuantity) Type="ColumnType.Number" HeaderText="@L["LoadingDetailGridTotalPackageQuantity"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.OrderUnitPrice) Type="ColumnType.Number" HeaderText="@L["LoadingDetailGridOrderUnitPrice"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.LineAmount) Type="ColumnType.Number" HeaderText="@L["LoadingDetailGridLineAmount"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.ProductGroupName) HeaderText="@L["LoadingDetailGridProductGroupName"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.CustomerCode) HeaderText="@L["LoadingDetailGridCustomerCode"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.OrderNo) HeaderText="@L["LoadingDetailGridOrderNo"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.ConfirmedShippingDate) Type="ColumnType.DateTime" HeaderText="@L["LoadingDetailGridConfirmedShippingDate"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.ProductWeight) Type="ColumnType.Number" HeaderText="@L["LoadingDetailGridProductWeight"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.OrderQuantity) Type="ColumnType.Number" HeaderText="@L["LoadingDetailGridOrderQuantity"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.MaxProductionQuantity) Type="ColumnType.Number" HeaderText="@L["LoadingDetailGridMaxProductionQuantity"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.ApprovedUnitPrice) Type="ColumnType.Number" HeaderText="@L["LoadingDetailGridApprovedUnitPrice"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.SalesPriceListPrice) Type="ColumnType.Number" HeaderText="@L["LoadingDetailGridSalesPriceListPrice"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.LastOrderPrice) Type="ColumnType.Number" HeaderText="@L["LoadingDetailGridLastOrderPrice"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.TotalNetKG) Type="ColumnType.Number" HeaderText="@L["LoadingDetailGridTotalNetKG"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.TotalGrossKG) Type="ColumnType.Number" HeaderText="@L["LoadingDetailGridTotalGrossKG"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.ProductName) HeaderText="@L["LoadingDetailGridProductName"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.EnglishDefinition) HeaderText="@L["LoadingDetailGridEnglishDefinition"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.CustomerReferenceNo) HeaderText="@L["LoadingDetailGridCustomerReferenceNo"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.TicketNo) HeaderText="@L["LoadingDetailGridTicketNo"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(LoadingDetailGrid.CurrentAccountName) HeaderText="@L["LoadingDetailGridCurrentAccountName"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                </GridColumns>
+
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLoadingDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -562,7 +783,7 @@ else
                                     </SfGrid>
                                 </CardContent>
                                 <CardFooter>
-                                </CardFooter> 
+                                </CardFooter>
                             </SfCard>
                         </Template>
                     </DxGridLayoutItem>
@@ -671,20 +892,24 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(PackageFicheSelectionGrid.SelectedLine) DisplayAsCheckBox="true" HeaderText="@L["PackageFichesGridSelectedLine"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.Code) HeaderText="@L["PackageFichesGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.SalesOrderFicheNo) HeaderText="@L["PackageFichesGridSalesOrderFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.ProductCode) HeaderText="@L["PackageFichesGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.PackageType) HeaderText="@L["PackageFichesGridPackageType"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.PalletNo) HeaderText="@L["PackageFichesGridPalletNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.LoadingDate) HeaderText="@L["PackageFichesGridLoadingDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.ProductCode) HeaderText="@L["PackageFichesGridProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.ProductName) HeaderText="@L["PackageFichesGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.CustomerCode) HeaderText="@L["PackageFichesGridCustomerCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.SalesOrderFicheNo) HeaderText="@L["PackageFichesGridSalesOrderFicheNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.PackageContent) Type="ColumnType.Number" HeaderText="@L["PackageFichesGridPackageContent"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.NumberofPackage) Type="ColumnType.Number" HeaderText="@L["PackageFichesGridNumberofPackage"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.CustomerCode) HeaderText="@L["PackageFichesGridCustomerCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.PackageContent) Type="ColumnType.Number" HeaderText="@L["PackageFichesGridPackageContent"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.NumberofPackage) Type="ColumnType.Number" HeaderText="@L["PackageFichesGridNumberofPackage"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
                                 </GridColumns>
 
                             </SfGrid>
                         </Template>
                     </DxGridLayoutItem> <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                           
+
                             <label class="TSIModalLabel"><strong>@L["SelectedNumberofPackageLabel"] @selectedNumberofPackages.ToString() </strong></label>
                         </Template>
                     </DxGridLayoutItem>
@@ -697,6 +922,58 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="TransferSelectedPackageFichesClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["TransferPackageFicheButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HidePackageFichesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectCurrentAccountCardsFilterPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectCurrentAccountCardsFilterPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["CurrentAccountModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="CurrentAccountCardsFilterGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CurrentAccountCardsFilterList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@CurrentAccountCardsFilterDoubleClickHandler" TValue="ListCurrentAccountCardsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Code) HeaderText="@L["CurrentAccountCardCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Name) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.CustomerCode) HeaderText="@L["CurrentAccountCardCustomerCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
         </FooterContentTemplate>
     </DxPopup>
 }
