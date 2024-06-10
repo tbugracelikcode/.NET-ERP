@@ -83,7 +83,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             {
                 Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 PackageContent = 0,
-                NumberofPackage = 0
+                NumberofPackage = 0,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("PackageFichesChildMenu")
             };
 
             DataSource.SelectPackageFicheLines = new List<SelectPackageFicheLinesDto>();
@@ -224,9 +225,29 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
         public async void CreateLines()
         {
-            if (DataSource.PackageContent == 0 || DataSource.NumberofPackage == 0 || DataSource.SalesOrderID == null || DataSource.SalesOrderID == Guid.Empty || DataSource.ProductID == null || DataSource.ProductID == Guid.Empty || string.IsNullOrEmpty(DataSource.PackageType) || ProductionOrdersID == Guid.Empty)
+            if (DataSource.SalesOrderID == null || DataSource.SalesOrderID == Guid.Empty)
             {
-                await ModalManager.WarningPopupAsync(L["UIWarningPackageTitle"], L["UIWarningPackageMessage"]);
+                await ModalManager.WarningPopupAsync(L["UIWarningPackageTitle"], L["UIWarningPackageMessageSalesOrder"]);
+            }
+            else if (DataSource.ProductID == null || DataSource.ProductID == Guid.Empty)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningPackageTitle"], L["UIWarningPackageMessageProduct"]);
+            }
+            else if (DataSource.PackageContent == 0)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningPackageTitle"], L["UIWarningPackageMessagePackageContent"]);
+            }
+            else if (DataSource.NumberofPackage == 0)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningPackageTitle"], L["UIWarningPackageMessageNumberofPackage"]);
+            }
+            else if (string.IsNullOrEmpty(DataSource.PackageType))
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningPackageTitle"], L["UIWarningPackageMessagePackageType"]);
+            }
+            else if (string.IsNullOrEmpty(ProductionOrdersReferenceNo))
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningPackageTitle"], L["UIWarningPackageMessageProductionOrders"]);
             }
             else
             {
@@ -338,13 +359,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
                     }
                 }
-
-
-
-
                 await _LineGrid.Refresh();
-                await InvokeAsync(StateHasChanged);
             }
+
+
+            await InvokeAsync(StateHasChanged);
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectPackageFicheLinesDto> args)
@@ -430,55 +449,55 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                     }
                     else
                     {
-                        decimal bottomLimit = DataSource.ProductUnitWeight - (DataSource.ProductUnitWeight * (2 / 100));
-                        decimal upperLimit = DataSource.ProductUnitWeight + (DataSource.ProductUnitWeight * (2 / 100));
+                        //decimal bottomLimit = DataSource.ProductUnitWeight - ((DataSource.ProductUnitWeight * 2) / 100);
+                        //decimal upperLimit = DataSource.ProductUnitWeight + ((DataSource.ProductUnitWeight * 2) / 100);
 
-                        if (DataSource.UnitWeight >= bottomLimit && DataSource.UnitWeight <= upperLimit)
+                        //if (DataSource.UnitWeight >= bottomLimit && DataSource.UnitWeight <= upperLimit)
+                        //{
+                        SelectPackageFichesDto result;
+
+                        if (DataSource.Id == Guid.Empty)
                         {
-                            SelectPackageFichesDto result;
+                            var createInput = ObjectMapper.Map<SelectPackageFichesDto, CreatePackageFichesDto>(DataSource);
 
-                            if (DataSource.Id == Guid.Empty)
-                            {
-                                var createInput = ObjectMapper.Map<SelectPackageFichesDto, CreatePackageFichesDto>(DataSource);
+                            result = (await CreateAsync(createInput)).Data;
 
-                                result = (await CreateAsync(createInput)).Data;
-
-                                if (result != null)
-                                    DataSource.Id = result.Id;
-                            }
-                            else
-                            {
-                                var updateInput = ObjectMapper.Map<SelectPackageFichesDto, UpdatePackageFichesDto>(DataSource);
-
-                                result = (await UpdateAsync(updateInput)).Data;
-                            }
-
-                            if (result == null)
-                            {
-
-                                return;
-                            }
-
-                            await GetListDataSourceAsync();
-
-                            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
-
-                            HideEditPage();
-
-                            if (DataSource.Id == Guid.Empty)
-                            {
+                            if (result != null)
                                 DataSource.Id = result.Id;
-                            }
-
-                            if (savedEntityIndex > -1)
-                                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
-                            else
-                                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
                         }
-                        else if (DataSource.UnitWeight < bottomLimit || DataSource.UnitWeight > upperLimit)
+                        else
                         {
-                            await ModalManager.WarningPopupAsync(L["UIWarningUnitWeightTitle"], L["UIWarningUnitWeightMessage"]);
+                            var updateInput = ObjectMapper.Map<SelectPackageFichesDto, UpdatePackageFichesDto>(DataSource);
+
+                            result = (await UpdateAsync(updateInput)).Data;
                         }
+
+                        if (result == null)
+                        {
+
+                            return;
+                        }
+
+                        await GetListDataSourceAsync();
+
+                        var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+                        HideEditPage();
+
+                        if (DataSource.Id == Guid.Empty)
+                        {
+                            DataSource.Id = result.Id;
+                        }
+
+                        if (savedEntityIndex > -1)
+                            SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+                        else
+                            SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+                        //}
+                        //else if (DataSource.UnitWeight < bottomLimit || DataSource.UnitWeight > upperLimit)
+                        //{
+                        //    await ModalManager.WarningPopupAsync(L["UIWarningUnitWeightTitle"], L["UIWarningUnitWeightMessage"]);
+                        //}
                     }
                 }
             }
@@ -577,23 +596,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                         ProductionOrderReferenceNoList.Add(referenceModel);
                     }
                 }
-
-                //var stockFicheLines = (await StockFichesAppService.GetbyProductionOrderAsync(ProductionOrdersID)).Data.SelectStockFicheLines.Where(t=>t.ProductID == DataSource.ProductID).ToList();
-
-                //foreach (var line in stockFicheLines)
-                //{
-                //    if (!ProductionOrderReferenceNoList.Any(t => t.ProductionOrderReferenceNo == line.ProductionDateReferance))
-                //    {
-                //        ProductionOrderReferanceNumber referenceModel = new ProductionOrderReferanceNumber
-                //        {
-                //            ProductionOrderID = ProductionOrdersID,
-                //            ProductionOrderNo = ProductionOrdersNo,
-                //            ProductionOrderReferenceNo = line.ProductionDateReferance
-                //        };
-
-                //        ProductionOrderReferenceNoList.Add(referenceModel);
-                //    }
-                //}
 
                 SelectProductionOrdersPopupVisible = true;
 

@@ -646,7 +646,7 @@
     <value>Kaydın etiket basım durumunu "Bekliyor" yapmak istiyor musunuz?</value>
   </data>
   <data name="UIWarninCurrentAccountMessage" xml:space="preserve">
-    <value>Cari hesap ve koli türü seçmeden paket fişi aktarılamaz.</value>
+    <value>Cari hesap seçmeden paket fişi aktarılamaz.</value>
   </data>
   <data name="UIWarninCurrentAccountTitle" xml:space="preserve">
     <value>Uyarı</value>
@@ -689,6 +689,9 @@
   </data>
   <data name="UIWarningTitle" xml:space="preserve">
     <value>Uyarı</value>
+  </data>
+  <data name="UIWarninPackageTypeMessage" xml:space="preserve">
+    <value>Koli Türü seçmeden paket fişi aktarılamaz.</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

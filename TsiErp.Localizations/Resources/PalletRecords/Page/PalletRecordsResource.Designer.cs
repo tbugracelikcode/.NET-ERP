@@ -1645,7 +1645,7 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cari hesap ve koli türü seçmeden paket fişi aktarılamaz..
+        ///   Looks up a localized string similar to Cari hesap seçmeden paket fişi aktarılamaz..
         /// </summary>
         public static string UIWarninCurrentAccountMessage {
             get {
@@ -1776,6 +1776,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         public static string UIWarningTitle {
             get {
                 return ResourceManager.GetString("UIWarningTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Koli Türü seçmeden paket fişi aktarılamaz..
+        /// </summary>
+        public static string UIWarninPackageTypeMessage {
+            get {
+                return ResourceManager.GetString("UIWarninPackageTypeMessage", resourceCulture);
             }
         }
         

@@ -306,8 +306,23 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sevkiyat Yönetimi &gt; Hareketler</value>
   </data>
-  <data name="UIWarningPackageMessage" xml:space="preserve">
-    <value>Satırları oluşturmak için sipariş, stok, koli türü, koli içeriği, koli sayısı ve üretim emri referans numarası alanları dolu olmalıdır.</value>
+  <data name="UIWarningPackageMessageNumberofPackage" xml:space="preserve">
+    <value>Satırları oluşturmak için  koli sayısı alanı dolu olmalıdır.</value>
+  </data>
+  <data name="UIWarningPackageMessagePackageContent" xml:space="preserve">
+    <value>Satırları oluşturmak için koli içeriği alanı dolu olmalıdır.</value>
+  </data>
+  <data name="UIWarningPackageMessagePackageType" xml:space="preserve">
+    <value>Satırları oluşturmak için koli türü, alanı dolu olmalıdır.</value>
+  </data>
+  <data name="UIWarningPackageMessageProduct" xml:space="preserve">
+    <value>Satırları oluşturmak için stok kartı alanı dolu olmalıdır.</value>
+  </data>
+  <data name="UIWarningPackageMessageProductionOrders" xml:space="preserve">
+    <value>Satırları oluşturmak için üretim emri referans numarası alanı dolu olmalıdır.</value>
+  </data>
+  <data name="UIWarningPackageMessageSalesOrder" xml:space="preserve">
+    <value>Satırları oluşturmak için sipariş alanı dolu olmalıdır.</value>
   </data>
   <data name="UIWarningPackageTitle" xml:space="preserve">
     <value>Uyarı</value>
