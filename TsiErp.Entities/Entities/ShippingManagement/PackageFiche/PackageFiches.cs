@@ -65,5 +65,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackageFiche
         /// Birim Ağırlık
         /// </summary>
         public decimal UnitWeight { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid ProductionOrderID { get; set; }
     }
 }
