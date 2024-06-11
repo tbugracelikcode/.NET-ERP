@@ -430,7 +430,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
             if(quantityInProductionOrder < totalQuantity + updatedQuantity)
             {
-                await ModalManager.WarningPopupAsync(L["UIWarningProdRefQuantityTitle"], L["UIWarningProdRefQuantityMessage"]);
+                
             }
 
             else
