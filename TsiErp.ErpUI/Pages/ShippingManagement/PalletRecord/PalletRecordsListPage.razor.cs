@@ -1340,7 +1340,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 TotalAmount = selecteditem.PackageContent * selecteditem.NumberofPackage,
                                 TotalGrossKG = totalGrossKG,
                                 TotalNetKG = totalNetKG,
-                                LineNr = GridLineList.Count + 1,
+                                LineNr = GridLineList.Count + 1, 
+                                PackageFicheID = line.PackageFicheID
                             };
 
                             GridLineList.Add(palletLineModel);
@@ -1961,7 +1962,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                         if (packageFiche.Id != Guid.Empty)
                         {
-                            string packageNo = packageFiche.Code;
+                            string packageNo = (await PackingListsAppService.GetLinePalletPackageListAsync(packageFiche.Id)).Data.Select(t=>t.PackageNo).FirstOrDefault();
                             int startPackageNo = 0;
                             int endPackageNo = 0;
 

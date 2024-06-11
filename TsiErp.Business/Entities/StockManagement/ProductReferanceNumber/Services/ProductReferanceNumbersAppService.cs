@@ -36,7 +36,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> CreateAsync(CreateProductReferanceNumbersDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { ReferanceNo = input.ReferanceNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { ReferanceNo = input.ReferanceNo, ProductID = input.ProductID.Value, CurrentAccountCardID = input.CurrentAccountCardID.Value }, false, false, "");
 
             var list = queryFactory.ControlList<ProductReferanceNumbers>(listQuery).ToList();
 
@@ -97,7 +97,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
         }
 
-       
+
 
 
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> GetAsync(Guid id)
@@ -291,11 +291,11 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                            nameof(CurrentAccountCards.Id),
                            JoinType.Left
                        )
-                       .Where(new { ProductID = ProductID , CurrentAccountCardID = CurrentAccountID }, false, false, Tables.ProductReferanceNumbers);
+                       .Where(new { ProductID = ProductID, CurrentAccountCardID = CurrentAccountID }, false, false, Tables.ProductReferanceNumbers);
 
             var productReferanceNumber = queryFactory.GetList<SelectProductReferanceNumbersDto>(query).ToList().LastOrDefault();
 
-            if(productReferanceNumber != null && productReferanceNumber.Id != Guid.Empty )
+            if (productReferanceNumber != null && productReferanceNumber.Id != Guid.Empty)
             {
                 return !string.IsNullOrEmpty(productReferanceNumber.ReferanceNo) ? productReferanceNumber.ReferanceNo : "-";
 

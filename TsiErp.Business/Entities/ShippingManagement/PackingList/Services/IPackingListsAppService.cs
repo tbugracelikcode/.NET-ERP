@@ -11,5 +11,6 @@ namespace TsiErp.Business.Entities.PackingList.Services
         Task<IResult> DeleteLinePalletAsync(Guid id);
         Task<IResult> DeleteLinePalletPackageAsync(Guid id);
         Task<IDataResult<IList<SelectPackingListPalletPackageLinesDto>>> GetLinePalletPackageListAsync();
+        Task<IDataResult<IList<SelectPackingListPalletPackageLinesDto>>> GetLinePalletPackageListAsync(Guid PackageFicheId);
     }
 }
