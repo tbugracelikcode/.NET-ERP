@@ -18,6 +18,18 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos
         /// </summary>
         public string Code { get; set; }
         /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid? ProductionOrderID { get; set; }
+        /// <summary>
+        /// Üretim Emri Referans No
+        /// </summary>
+        public string ProductionOrderFicheNo { get; set; }
+        /// <summary>
+        /// Üretim Emri Referans No
+        /// </summary>
+        public string ProductionOrderReferenceNo { get; set; }
+        /// <summary>
         /// Paket Fişi Tarihi
         /// </summary>
         public DateTime? Date_ { get; set; }

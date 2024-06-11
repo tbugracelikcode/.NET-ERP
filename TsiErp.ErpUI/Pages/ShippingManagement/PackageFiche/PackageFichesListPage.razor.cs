@@ -20,6 +20,7 @@ using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 {
@@ -89,11 +90,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
             DataSource.SelectPackageFicheLines = new List<SelectPackageFicheLinesDto>();
             GridLineList = DataSource.SelectPackageFicheLines;
-
-
-            ProductionOrdersID = Guid.Empty;
-            ProductionOrdersNo = string.Empty;
-            ProductionOrdersReferenceNo = string.Empty;
 
             foreach (var item in _packageTypeComboBox)
             {
@@ -245,18 +241,26 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningPackageTitle"], L["UIWarningPackageMessagePackageType"]);
             }
-            else if (string.IsNullOrEmpty(ProductionOrdersReferenceNo))
+            else if (DataSource.ProductionOrderID == null || DataSource.ProductionOrderID == Guid.Empty)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningPackageTitle"], L["UIWarningPackageMessageProductionOrders"]);
             }
             else
             {
 
-                int quantityInProductionOrder = (int)(await StockFichesAppService.GetbyProductionOrderAsync(ProductionOrdersID)).Sum(x => x.Quantity);
+                int quantityInProductionOrder = (int)(await StockFichesAppService.GetbyProductionOrderDateReferenceAsync(DataSource.ProductionOrderReferenceNo, DataSource.ProductionOrderID.GetValueOrDefault())).Sum(x => x.Quantity);
 
-                if(quantityInProductionOrder < DataSource.NumberofPackage * DataSource.PackageContent)
+                int previousNumberofPackages = ListDataSource.Where(t=>t.ProductID == DataSource.ProductID && t.ProductionOrderID == DataSource.ProductionOrderID && t.ProductionOrderReferenceNo == DataSource.ProductionOrderReferenceNo).Sum(t=>t.NumberofPackage);
+                int previousPackageContents = ListDataSource.Where(t=>t.ProductID == DataSource.ProductID && t.ProductionOrderID == DataSource.ProductionOrderID && t.ProductionOrderReferenceNo == DataSource.ProductionOrderReferenceNo).Sum(t=>t.PackageContent);
+
+                int previousTotalQuantity = previousNumberofPackages * previousPackageContents;
+
+                int usableQuantity = quantityInProductionOrder - previousTotalQuantity;
+
+                if(usableQuantity < DataSource.NumberofPackage * DataSource.PackageContent)
                 {
-                    await ModalManager.WarningPopupAsync(L["UIWarningProdRefQuantityTitle"], L["UIWarningProdRefQuantityMessage"]); 
+                    await ModalManager.WarningPopupAsync(L["UIWarningProdRefQuantityTitle"], L["UIWarningProdRefQuantityMessage"]);
+                    await InvokeAsync(StateHasChanged);
                 }
                 else
                 {
@@ -312,8 +316,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                                     ProductName = DataSource.ProductName,
                                     ProductCode = DataSource.ProductCode,
                                     Quantity = DataSource.PackageContent * numberOfPackage,
-                                    ProductionOrderID = ProductionOrdersID,
-                                    ProductionOrderFicheNo = ProductionOrdersNo,
+                                    ProductionOrderID = DataSource.ProductionOrderID.GetValueOrDefault(),
+                                    ProductionOrderFicheNo = DataSource.ProductionOrderFicheNo,
                                     Status_ = string.Empty,
                                     NumberofPackage = numberOfPackage,
                                     PackageContent = DataSource.PackageContent,
@@ -331,8 +335,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                                     ProductName = DataSource.ProductName,
                                     ProductCode = DataSource.ProductCode,
                                     Quantity = DataSource.PackageContent * mod,
-                                    ProductionOrderID = ProductionOrdersID,
-                                    ProductionOrderFicheNo = ProductionOrdersNo,
+                                    ProductionOrderID = DataSource.ProductionOrderID.GetValueOrDefault(),
+                                    ProductionOrderFicheNo = DataSource.ProductionOrderFicheNo,
                                     Status_ = string.Empty,
                                     NumberofPackage = mod,
                                     PackageContent = DataSource.PackageContent,
@@ -357,8 +361,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                                 ProductName = DataSource.ProductName,
                                 ProductCode = DataSource.ProductCode,
                                 Quantity = DataSource.PackageContent * numberOfPackage,
-                                ProductionOrderID = ProductionOrdersID,
-                                ProductionOrderFicheNo = ProductionOrdersNo,
+                                ProductionOrderID = DataSource.ProductionOrderID.GetValueOrDefault(),
+                                ProductionOrderFicheNo = DataSource.ProductionOrderFicheNo,
                                 Status_ = string.Empty,
                                 NumberofPackage = numberOfPackage,
                                 PackageContent = DataSource.PackageContent,
@@ -412,9 +416,18 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
         {
             int totalQuantity = 0;
 
+            int numberofPackage = 0;
+
             int dataSourceIndex = GridLineList.IndexOf(LineDataSource);
 
-            int quantityInProductionOrder = (int)(await StockFichesAppService.GetbyProductionOrderAsync(ProductionOrdersID)).Sum(x => x.Quantity);
+            int quantityInProductionOrder = (int)(await StockFichesAppService.GetbyProductionOrderDateReferenceAsync(DataSource.ProductionOrderReferenceNo, DataSource.ProductionOrderID.GetValueOrDefault())).Sum(x => x.Quantity);
+
+            int previousNumberofPackages = ListDataSource.Where(t => t.ProductID == DataSource.ProductID && t.ProductionOrderID == DataSource.ProductionOrderID && t.ProductionOrderReferenceNo == DataSource.ProductionOrderReferenceNo).Sum(t => t.NumberofPackage);
+            int previousPackageContents = ListDataSource.Where(t => t.ProductID == DataSource.ProductID && t.ProductionOrderID == DataSource.ProductionOrderID && t.ProductionOrderReferenceNo == DataSource.ProductionOrderReferenceNo).Sum(t => t.PackageContent);
+
+            int previousTotalQuantity = previousNumberofPackages * previousPackageContents;
+
+            int usableQuantity = quantityInProductionOrder - previousTotalQuantity;
 
             foreach (var line in GridLineList)
             {
@@ -423,14 +436,15 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                 if(lineIndex != dataSourceIndex)
                 {
                     totalQuantity = totalQuantity + line.Quantity;
+                    numberofPackage = numberofPackage + line.NumberofPackage;
                 }
             }
 
             int updatedQuantity = LineDataSource.PackageContent * LineDataSource.NumberofPackage;
 
-            if(quantityInProductionOrder < totalQuantity + updatedQuantity)
+            if(usableQuantity < totalQuantity + updatedQuantity)
             {
-                
+                await ModalManager.WarningPopupAsync(L["UIWarningProdRefQuantityTitle"], L["UIWarningProdRefQuantityMessage"]);
             }
 
             else
@@ -472,7 +486,39 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                 }
                 else
                 {
-                    await ModalManager.WarningPopupAsync(L["UIWarningLineQuantityTitle"], L["UIWarningLineQuantityMessage"]);
+                    LineDataSource.Quantity = updatedQuantity;
+
+                    if (LineDataSource.Id == Guid.Empty)
+                    {
+                        if (DataSource.SelectPackageFicheLines.Contains(LineDataSource))
+                        {
+                            int selectedLineIndex = DataSource.SelectPackageFicheLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+
+                            if (selectedLineIndex > -1)
+                            {
+                                DataSource.SelectPackageFicheLines[selectedLineIndex] = LineDataSource;
+                            }
+                        }
+                        else
+                        {
+                            DataSource.SelectPackageFicheLines.Add(LineDataSource);
+                        }
+                    }
+                    else
+                    {
+                        int selectedLineIndex = DataSource.SelectPackageFicheLines.FindIndex(t => t.Id == LineDataSource.Id);
+
+                        if (selectedLineIndex > -1)
+                        {
+                            DataSource.SelectPackageFicheLines[selectedLineIndex] = LineDataSource;
+                        }
+                    }
+
+                    GridLineList = DataSource.SelectPackageFicheLines;
+                    await _LineGrid.Refresh();
+
+                    DataSource.NumberofPackage = numberofPackage + LineDataSource.NumberofPackage;
+                    HideLinesPopup();
                 }
             }
 
@@ -493,7 +539,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             {
                 //var stockFicheLineList = (await StockFichesAppService.GetbyProductionOrderAsync(productionOrderID.GetValueOrDefault())).Data.SelectStockFicheLines.Where(t=>t.ProductID == DataSource.ProductID).ToList();
 
-                var stockFicheLineList = (await StockFichesAppService.GetbyProductionOrderAsync(ProductionOrdersID));
+                var stockFicheLineList = (await StockFichesAppService.GetbyProductionOrderAsync(DataSource.ProductionOrderID.GetValueOrDefault()));
 
                 if (stockFicheLineList != null && stockFicheLineList.Count > 0)
                 {
@@ -618,9 +664,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
         SfTextBox ProductionOrdersButtonEdit;
         bool SelectProductionOrdersPopupVisible = false;
-        Guid ProductionOrdersID = Guid.Empty;
-        string ProductionOrdersNo = string.Empty;
-        string ProductionOrdersReferenceNo = string.Empty;
 
         public async Task ProductionOrdersOnCreateIcon()
         {
@@ -634,22 +677,27 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
             {
                 ProductionOrderReferenceNoList.Clear();
 
-                var stockFicheLines = (await StockFichesAppService.GetbyProductionOrderAsync(ProductionOrdersID));
+                var stockFicheLines = (await StockFichesAppService.GetbyProductionOrderAsync(DataSource.ProductionOrderID.GetValueOrDefault()));
 
-                foreach (var line in stockFicheLines)
+                if(stockFicheLines != null && stockFicheLines.Count > 0)
                 {
-                    if (!ProductionOrderReferenceNoList.Any(t => t.ProductionOrderReferenceNo == line.ProductionDateReferance))
+                    foreach (var line in stockFicheLines)
                     {
-                        ProductionOrderReferanceNumber referenceModel = new ProductionOrderReferanceNumber
+                        if (!ProductionOrderReferenceNoList.Any(t => t.ProductionOrderReferenceNo == line.ProductionDateReferance))
                         {
-                            ProductionOrderID = ProductionOrdersID,
-                            ProductionOrderNo = ProductionOrdersNo,
-                            ProductionOrderReferenceNo = line.ProductionDateReferance
-                        };
+                            ProductionOrderReferanceNumber referenceModel = new ProductionOrderReferanceNumber
+                            {
+                                ProductionOrderID = DataSource.ProductionOrderID.GetValueOrDefault(),
+                                ProductionOrderNo = DataSource.ProductionOrderFicheNo,
+                                ProductionOrderReferenceNo = line.ProductionDateReferance
+                            };
 
-                        ProductionOrderReferenceNoList.Add(referenceModel);
+                            ProductionOrderReferenceNoList.Add(referenceModel);
+                        }
                     }
                 }
+
+               
 
                 SelectProductionOrdersPopupVisible = true;
 
@@ -663,7 +711,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
         {
             if (args.Value == null)
             {
-                ProductionOrdersReferenceNo = string.Empty;
 
                 foreach (var line in GridLineList)
                 {
@@ -671,6 +718,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                     GridLineList[lineIndex].ProductionOrderID = Guid.Empty;
                     GridLineList[lineIndex].ProductionOrderFicheNo = string.Empty;
                 }
+
+                DataSource.ProductionOrderID = Guid.Empty;
+                DataSource.ProductionOrderFicheNo = string.Empty;
+                DataSource.ProductionOrderReferenceNo = string.Empty;
 
                 await _LineGrid.Refresh();
                 await InvokeAsync(StateHasChanged);
@@ -684,14 +735,18 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
             if (selectedProductionOrder != null)
             {
-                ProductionOrdersReferenceNo = selectedProductionOrder.ProductionOrderReferenceNo;
 
                 foreach (var line in GridLineList)
                 {
                     int lineIndex = GridLineList.IndexOf(line);
-                    GridLineList[lineIndex].ProductionOrderID = ProductionOrdersID;
+                    GridLineList[lineIndex].ProductionOrderID = selectedProductionOrder.ProductionOrderID;
                     GridLineList[lineIndex].ProductionOrderFicheNo = selectedProductionOrder.ProductionOrderReferenceNo;
                 }
+
+                DataSource.ProductionOrderID = selectedProductionOrder.ProductionOrderID;
+                DataSource.ProductionOrderFicheNo = selectedProductionOrder.ProductionOrderNo;
+                DataSource.ProductionOrderReferenceNo = selectedProductionOrder.ProductionOrderReferenceNo;
+
                 await _LineGrid.Refresh();
                 SelectProductionOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
@@ -789,8 +844,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
                 if (productionOrder != null && productionOrder.Id != Guid.Empty)
                 {
-                    ProductionOrdersID = productionOrder.Id;
-                    ProductionOrdersNo = productionOrder.FicheNo;
+                    DataSource.ProductionOrderID = productionOrder.Id;
+                    DataSource.ProductionOrderFicheNo = productionOrder.FicheNo;
                 }
 
                 SelectProductsPopupVisible = false;

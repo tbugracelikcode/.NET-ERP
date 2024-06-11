@@ -54,6 +54,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos
         /// </summary>
         public string ProductPalletOrder { get; set; }
         /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid? ProductionOrderID { get; set; }
+        /// <summary>
         /// Birim Ağırlık
         /// </summary>
         public decimal UnitWeight { get; set; }

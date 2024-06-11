@@ -43,9 +43,9 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
         public async Task<IDataResult<SelectPackageFichesDto>> CreateAsync(CreatePackageFichesDto input)
         {
 
-            if(input.SelectPackageFicheLines != null && input.SelectPackageFicheLines.Count > 0)
+            if (input.SelectPackageFicheLines != null && input.SelectPackageFicheLines.Count > 0)
             {
-                foreach(var line in input.SelectPackageFicheLines)
+                foreach (var line in input.SelectPackageFicheLines)
                 {
                     string code = FicheNumbersAppService.GetFicheNumberAsync("PackageFichesChildMenu");
 
@@ -56,6 +56,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
                         ProductID = input.ProductID.GetValueOrDefault(),
                         SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
+                        ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                         Date_ = input.Date_,
                         NumberofPackage = input.NumberofPackage,
                         PackageContent = input.PackageContent,
@@ -171,6 +172,13 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         nameof(SalesOrders.Id),
                         JoinType.Left
                     )
+                     .Join<ProductionOrders>
+                    (
+                        pr => new { ProductionOrderFicheNo = pr.FicheNo, ProductionOrderID = pr.Id },
+                        nameof(PackageFiches.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
                     .Join<CurrentAccountCards>
                     (
                         pr => new { CustomerCode = pr.CustomerCode, CurrentAccountID = pr.Id },
@@ -228,6 +236,14 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
+
+                     .Join<ProductionOrders>
+                    (
+                        pr => new { ProductionOrderFicheNo = pr.FicheNo, ProductionOrderID = pr.Id },
+                        nameof(PackageFiches.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
                      .Join<SalesOrders>
                     (
                         pr => new { SalesOrderFicheNo = pr.FicheNo, SalesOrderCustomerOrderNo = pr.CustomerOrderNr, SalesOrderID = pr.Id },
@@ -263,6 +279,14 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         pr => new { ProductCode = pr.Code, ProducName = pr.Name, ProductID = pr.Id, ProductUnitWeight = pr.UnitWeight },
                         nameof(PackageFiches.ProductID),
                         nameof(Products.Id),
+                        JoinType.Left
+                    )
+
+                     .Join<ProductionOrders>
+                    (
+                        pr => new { ProductionOrderFicheNo = pr.FicheNo, ProductionOrderID = pr.Id },
+                        nameof(PackageFiches.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
                         JoinType.Left
                     )
                      .Join<SalesOrders>
@@ -349,6 +373,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                 CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
                 ProductID = input.ProductID.GetValueOrDefault(),
                 SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
+                ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 NumberofPackage = input.NumberofPackage,
                 PackageContent = input.PackageContent,
@@ -454,6 +479,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
             var query = queryFactory.Query().From(Tables.PackageFiches).Update(new UpdatePackageFichesDto
             {
                 CurrentAccountID = entity.CurrentAccountID,
+                ProductionOrderID = entity.ProductionOrderID,
                 ProductID = entity.ProductID,
                 SalesOrderID = entity.SalesOrderID,
                 Date_ = entity.Date_,
