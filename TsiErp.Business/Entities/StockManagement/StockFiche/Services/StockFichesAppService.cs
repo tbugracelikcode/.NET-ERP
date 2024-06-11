@@ -966,5 +966,38 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
 
         }
+
+        public async Task<List<SelectStockFicheLinesDto>> GetbyProductionOrderDateReferenceAsync(string DateReference, Guid ProductionOrderID)
+        {
+            var IdQuery = queryFactory.Query().From(Tables.StockFiches).Select<StockFiches>(null).Where(new { ProductionDateReferance = DateReference }, false, false, "").Where(new { ProductionOrderID = ProductionOrderID }, false, false, "");
+            var stockFicheIds = queryFactory.GetList<SelectStockFichesDto>(IdQuery).ToList();
+
+            string ficheIds = "";
+
+            for (int i = 0; i < stockFicheIds.Count; i++)
+            {
+                if (i == 0)
+                {
+                    ficheIds = "'" + stockFicheIds[i].Id.ToString() + "'";
+                }
+                else
+                {
+                    ficheIds = ficheIds + "," + "'" + stockFicheIds[i].Id.ToString() + "'";
+                }
+            }
+
+            string where = " StockFicheID In (" + ficheIds + ")";
+
+            string resultQuery = "SELECT * FROM " + Tables.StockFicheLines;
+            Query query = new Query();
+            query.Sql = resultQuery;
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = false;
+
+            var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(query).ToList();
+            await Task.CompletedTask;
+
+            return stockFicheLine;
+        }
     }
 }

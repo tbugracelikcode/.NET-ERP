@@ -130,7 +130,7 @@ else
                     <DxGridLayoutItem Row="9" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductionOrdersNoLabel"] </strong></label><br />
-                            <SfTextBox @ref="@ProductionOrdersButtonEdit" Created="@ProductionOrdersOnCreateIcon" @bind-Value="ProductionOrdersReferenceNo" ShowClearButton=true ValueChange="ProductionOrdersOnValueChange"></SfTextBox>
+                            <SfTextBox @ref="@ProductionOrdersButtonEdit" Created="@ProductionOrdersOnCreateIcon" @bind-Value="DataSource.ProductionOrderReferenceNo" ShowClearButton=true ValueChange="ProductionOrdersOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
