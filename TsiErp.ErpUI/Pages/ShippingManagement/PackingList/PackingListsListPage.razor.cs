@@ -117,6 +117,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             PalletSelectionList = new List<PalletSelectionModal>();
 
+            PalletSelectionList.Clear();
+
             #region Enum Combobox Localization
 
             foreach (var item in salesTypes)
@@ -179,6 +181,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 }
                 else
                 {
+                    PalletSelectionList.Clear();
                     EditPageVisible = true;
                     await InvokeAsync(StateHasChanged);
                 }
@@ -231,8 +234,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
         {
             if (PalletPackageGridContextMenu.Count() == 0)
             {
-                if (PalletGridContextMenu.Count() == 0)
-                {
+                
                     var contextID = contextsList.Where(t => t.MenuName == "PackingListsPalletPackageLineContextEnumarate").Select(t => t.Id).FirstOrDefault();
                     var permission = UserPermissionsList.Where(t => t.MenuId == contextID).Select(t => t.IsUserPermitted).FirstOrDefault();
                     if (permission)
@@ -240,7 +242,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                         PalletPackageGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsPalletPackageLineContextEnumarate"], Id = "enumarate" });
                     }
 
-                }
+                
             }
         }
 
@@ -343,7 +345,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     }
                     else
                     {
-
+                        PalletSelectionList.Clear();
                         PalletRecordsList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.Where(t => t.PackingListID == DataSource.Id).ToList();
 
                         PalletRecordsList = PalletRecordsList.OrderBy(t => t.Name).ToList();
@@ -391,7 +393,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                     bool notLastSelectedLine = false;
 
-                    for (int i = selectedPalletIndex; i <= 0; i--)
+                    for (int i = selectedPalletIndex; i <= -1; i--)
                     {
                         if (!PalletSelectionList[i].SelectedPallet)
                         {
@@ -410,6 +412,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                         await _LinePalletSelectionGrid.Refresh();
                     }
 
+                    await InvokeAsync(StateHasChanged);
 
                     break;
 
@@ -423,6 +426,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                     await _LinePalletSelectionGrid.Refresh();
 
+                    await InvokeAsync(StateHasChanged);
                     break;
 
                 case "remove":
@@ -433,6 +437,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                     await _LinePalletSelectionGrid.Refresh();
 
+                    await InvokeAsync(StateHasChanged);
                     break;
 
                 default:
@@ -517,8 +522,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                             SalesOrderID = productionOrder.OrderID,
                             SalesOrderLineID = productionOrder.OrderLineID
                         };
-                    }
 
+
+                        GridLinePalletPackageList.Add(palletPackageLineModel);
+                    }
 
                     #endregion
 
@@ -552,9 +559,15 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             #endregion
 
+
+
+            await _LinePalletGrid.Refresh();
+
             PalletSelectionList.Clear();
 
             ShowPalletsModal = false;
+
+            await InvokeAsync(StateHasChanged);
         }
 
         public async void PalletPackageLineContextMenuClick(ContextMenuClickEventArgs<SelectPackingListPalletPackageLinesDto> args)
@@ -581,6 +594,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                             packageNo = packageNo + line.NumberofPackage;
                         }
                     }
+
+                    await _LinePalletPackageGrid.Refresh();
                     break;
 
                 default:

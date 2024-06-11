@@ -488,13 +488,14 @@ else
                         <Template>
                             <br />
                              <SfGrid @ref=_LinePalletSelectionGrid ID="LinePalletSelectionGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@PalletSelectionList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@PalletSelectionGridContextMenu">
-                                        <GridEvents ContextMenuItemClicked="@CreatePalletSelectionContextMenuItems" TValue="PalletSelectionModal"></GridEvents>
+                                <GridEvents ContextMenuItemClicked="@PalletSelectionLineContextMenuClick" TValue="PalletSelectionModal"></GridEvents>
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                   
                                         <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>   
-                                        <GridColumns>   
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(PalletSelectionModal.SelectedPallet) DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="155"></GridColumn>
                                             <GridColumn Field=@nameof(PalletSelectionModal.PalletCode) HeaderText="@L["PalletSelectionPalletCode"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
                                             <GridColumn Field=@nameof(PalletSelectionModal.PalletName) HeaderText="@L["PalletSelectionPalletName"]" TextAlign="TextAlign.Center" Width="190"></GridColumn>
                                             <GridColumn Field=@nameof(PalletSelectionModal.NumberofPackage) Type="ColumnType.Number" HeaderText="@L["PalletSelectionNumberofPackage"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
