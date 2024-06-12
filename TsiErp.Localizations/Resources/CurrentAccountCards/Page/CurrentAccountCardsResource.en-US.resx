@@ -123,6 +123,9 @@
   <data name="Address2Label" xml:space="preserve">
     <value>Address 2:</value>
   </data>
+  <data name="BigPackageKGLabel" xml:space="preserve">
+    <value>Big Package Kg.:</value>
+  </data>
   <data name="CityLabel" xml:space="preserve">
     <value>City:</value>
   </data>
@@ -278,6 +281,15 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="ShippingAddressLabel" xml:space="preserve">
+    <value>Shipping Address:</value>
+  </data>
+  <data name="ShippingCompanyLabel" xml:space="preserve">
+    <value>Shipping Company:</value>
+  </data>
+  <data name="SmallPackageKGLabel" xml:space="preserve">
+    <value>Small Package Kg.:</value>
   </data>
   <data name="SoleProprietorshipLabel" xml:space="preserve">
     <value>Sole Proprietorship:</value>

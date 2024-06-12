@@ -214,6 +214,11 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard
         /// Küçük Koli KG
         /// </summary>
         public decimal SmallPackageKG { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Nakliye Firması
+        /// </summary>
+        public string ShippingCompany { get; set; }
 
     }
 }

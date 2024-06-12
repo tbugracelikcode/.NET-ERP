@@ -62,6 +62,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 Code = input.Code,
                 Address1 = input.Address1,
                 CustomerCode = input.CustomerCode,
+                ShippingCompany = input.ShippingCompany,
                 Address2 = input.Address2,
                 City = input.City,
                 CoatingCustomer = input.CoatingCustomer,
@@ -168,7 +169,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 
             bool control = DeleteControl.Control(queryFactory, id);
 
-            if(!control)
+            if (!control)
             {
                 throw new Exception(L["DeleteControlManager"]);
             }
@@ -220,7 +221,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                .Select<CurrentAccountCards>(null)
                    .Join<Currencies>
                    (
-                       c => new { Currency = c.Code, CurrencyID = c.Id},
+                       c => new { Currency = c.Code, CurrencyID = c.Id },
                        nameof(CurrentAccountCards.CurrencyID),
                        nameof(Currencies.Id),
                        JoinType.Left
@@ -261,6 +262,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 PostCode = input.PostCode,
                 Address1 = input.Address1,
                 PrivateCode1 = input.PrivateCode1,
+                ShippingCompany = input.ShippingCompany,
                 EORINr = input.EORINr,
                 PrivateCode2 = input.PrivateCode2,
                 Address2 = input.Address2,
@@ -329,6 +331,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             {
                 Code = entity.Code,
                 CustomerCode = entity.CustomerCode,
+                ShippingCompany = entity.ShippingCompany,
                 Name = entity.Name,
                 IsActive = entity.IsActive,
                 PlusPercentage = entity.PlusPercentage,
