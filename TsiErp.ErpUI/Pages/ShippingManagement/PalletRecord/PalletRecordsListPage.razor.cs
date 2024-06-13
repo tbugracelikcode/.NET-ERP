@@ -18,7 +18,7 @@ using TsiErp.DataAccess.Services.Login;
 using Syncfusion.Blazor.Navigations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Business.Entities.ProductReferanceNumber.Services;
-using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.LargePalletLabelDtos;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.BigPalletLabelDtos;
 using DevExpress.XtraReports.UI;
 using TsiErp.ErpUI.Reports.ShippingManagement.PalletReports.PalletLabels;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
@@ -1925,9 +1925,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         #region Etiket Rapor Metotları
 
-        DxReportViewer LargeLabelReportViewer { get; set; }
-        XtraReport LargeLabelReport { get; set; }
-        bool LargeLabelReportVisible { get; set; }
+        DxReportViewer BigLabelReportViewer { get; set; }
+        XtraReport BigLabelReport { get; set; }
+        bool BigLabelReportVisible { get; set; }
 
         async void CreateLargePalletLabelReport(SelectPalletRecordsDto pallet)
         {
@@ -1960,9 +1960,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 string customerOrderNo = "";
                 string mainLoad = sentCurrentAccountCard.CustomerCode;
 
-                LargeLabelReport = new XtraReport();
-                LargeLabelReport.ShowPrintMarginsWarning = false;
-                LargeLabelReport.CreateDocument();
+                BigLabelReport = new XtraReport();
+                BigLabelReport.ShowPrintMarginsWarning = false;
+                BigLabelReport.CreateDocument();
 
                 for (int i = 0; i < pallet.SelectPalletRecordLines.Count; i++)
                 {
@@ -2019,9 +2019,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 for (int start = startPackageNo; start <= endPackageNo; start++)
                                 {
 
-                                    List<LargePalletLabelReportDto> reportSource = new List<LargePalletLabelReportDto>();
+                                    List<BigPalletLabelReportDto> reportSource = new List<BigPalletLabelReportDto>();
 
-                                    LargePalletLabelReportDto p = new LargePalletLabelReportDto
+                                    BigPalletLabelReportDto p = new BigPalletLabelReportDto
                                     {
                                         Quantity = quantity,
                                         GrossKg = grossKg / numberofPackage,
@@ -2040,20 +2040,20 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                                     reportSource.Add(p);
 
-                                    LargePalletLabelReport rpr = new LargePalletLabelReport();
+                                    BigPalletLabelReport rpr = new BigPalletLabelReport();
                                     rpr.BarcodeNo = barcodeNo;
                                     rpr.ShowPrintMarginsWarning = false;
                                     rpr.DataSource = reportSource;
                                     rpr.CreateDocument();
-                                    LargeLabelReport.Pages.AddRange(rpr.Pages);
+                                    BigLabelReport.Pages.AddRange(rpr.Pages);
                                 }
                             }
                         }
                     }
                 }
 
-                LargeLabelReportVisible = true;
-                LargeLabelReport.ShowPreviewMarginLines = false;
+                BigLabelReportVisible = true;
+                BigLabelReport.ShowPreviewMarginLines = false;
                 await (InvokeAsync(StateHasChanged));
                 
             }

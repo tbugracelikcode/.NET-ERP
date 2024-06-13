@@ -696,11 +696,11 @@ else
 
 
 
-    <DxPopup @bind-Visible="LargeLabelReportVisible"
+    <DxPopup @bind-Visible="BigLabelReportVisible"
              ShowFooter="true"
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
-             HeaderText="@L["LoadingDetailModalTitle"]"
+             HeaderText="@L["BigPalletLabelModalTitle"]"
              Width="81%"
              Height="83%"
              MinWidth="1400px"
@@ -725,7 +725,7 @@ else
                     <br />
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <DxReportViewer @ref="LargeLabelReportViewer" Report="@LargeLabelReport">
+                            <DxReportViewer @ref="BigLabelReportViewer" Report="@BigLabelReport">
                             </DxReportViewer>
                         </Template>
                     </DxGridLayoutItem>
