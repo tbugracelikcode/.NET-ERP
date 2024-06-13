@@ -1,6 +1,6 @@
 ﻿namespace TsiErp.ErpUI.Reports.ShippingManagement.PalletReports.PalletLabels
 {
-    partial class LargePalletLabelReport
+    partial class BigPalletLabelReport
     {
         /// <summary>
         /// Required designer variable.
@@ -815,7 +815,7 @@
             // 
             // objectDataSource1
             // 
-            this.objectDataSource1.DataSource = typeof(global::TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.LargePalletLabelDtos.LargePalletLabelReportDto);
+            this.objectDataSource1.DataSource = typeof(global::TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.BigPalletLabelDtos.BigPalletLabelReportDto);
             this.objectDataSource1.Name = "objectDataSource1";
             // 
             // LargePalletLabelReport

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.LargePalletLabelDtos
+namespace TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.BigPalletLabelDtos
 {
-    public class LargePalletLabelReportDto
+    public class BigPalletLabelReportDto
     {
         /// <summary>
         /// Çeki Listesi No

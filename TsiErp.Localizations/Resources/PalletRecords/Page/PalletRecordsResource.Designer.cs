@@ -79,6 +79,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Büyük Etiket.
+        /// </summary>
+        public static string BigPalletLabelModalTitle {
+            get {
+                return ResourceManager.GetString("BigPalletLabelModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Temizle.
         /// </summary>
         public static string ClearButton {
