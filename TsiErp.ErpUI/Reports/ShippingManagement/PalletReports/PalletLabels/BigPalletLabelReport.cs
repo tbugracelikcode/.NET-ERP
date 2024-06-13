@@ -6,13 +6,13 @@ using System.Drawing;
 
 namespace TsiErp.ErpUI.Reports.ShippingManagement.PalletReports.PalletLabels
 {
-    public partial class LargePalletLabelReport : DevExpress.XtraReports.UI.XtraReport
+    public partial class BigPalletLabelReport : DevExpress.XtraReports.UI.XtraReport
     {
         public string PackageNo { get; set; }
         public string MarkingRefNo { get; set; }
         public string BarcodeNo { get; set; }
 
-        public LargePalletLabelReport()
+        public BigPalletLabelReport()
         {
             InitializeComponent();
         }

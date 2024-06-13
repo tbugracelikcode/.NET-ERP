@@ -696,6 +696,49 @@ else
     </DxPopup>
 
 
+
+    <DxPopup @bind-Visible="BigLabelReportVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["BigPalletLabelModalTitle"]"
+             Width="81%"
+             Height="83%"
+             MinWidth="1400px"
+             MinHeight="900px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="2%" />
+                    <DxGridLayoutRow Height="98%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="94%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <DxReportViewer @ref="BigLabelReportViewer" Report="@BigLabelReport">
+                            </DxReportViewer>
+                        </Template>
+                    </DxGridLayoutItem>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLoadingDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+
     <DxPopup @bind-Visible="TicketListPopupVisible"
              ShowFooter="true"
              CloseOnEscape="false"

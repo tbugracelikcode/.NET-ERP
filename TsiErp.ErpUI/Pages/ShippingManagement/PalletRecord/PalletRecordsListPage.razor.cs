@@ -18,7 +18,7 @@ using TsiErp.DataAccess.Services.Login;
 using Syncfusion.Blazor.Navigations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Business.Entities.ProductReferanceNumber.Services;
-using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.LargePalletLabelDtos;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.BigPalletLabelDtos;
 using DevExpress.XtraReports.UI;
 using TsiErp.ErpUI.Reports.ShippingManagement.PalletReports.PalletLabels;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
@@ -28,6 +28,7 @@ using TsiErp.Entities.Entities.ShippingManagement.PackingList;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFiche;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
+using DevExpress.Blazor.Reporting;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
@@ -1528,6 +1529,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 TotalGrossKG = totalGrossKG,
                                 TotalNetKG = totalNetKG,
                                 LineNr = GridLineList.Count + 1,
+                                PackageFicheID = line.PackageFicheID,
+                                CurrentAccountCardID = DataSource.CurrentAccountCardID.GetValueOrDefault()
                             };
 
                             GridLineList.Add(palletLineModel);
@@ -1671,6 +1674,12 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 DataSource.CurrentAccountCardID = selectedCurrentAccountCard.Id;
                 DataSource.CurrentAccountCardCode = selectedCurrentAccountCard.Code;
                 DataSource.CurrentAccountCardName = selectedCurrentAccountCard.Name;
+
+                foreach (var item in GridLineList)
+                {
+                    item.CurrentAccountCardID = DataSource.CurrentAccountCardID.GetValueOrDefault();
+                }
+
                 SelectCurrentAccountCardsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -2103,6 +2112,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         #region Etiket Rapor Metotları
 
+        DxReportViewer BigLabelReportViewer { get; set; }
+        XtraReport BigLabelReport { get; set; }
+        bool BigLabelReportVisible { get; set; }
+
         async void CreateLargePalletLabelReport(SelectPalletRecordsDto pallet)
         {
             #region Çeki Listesi Bilgisi
@@ -2134,9 +2147,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 string customerOrderNo = "";
                 string mainLoad = sentCurrentAccountCard.CustomerCode;
 
-                XtraReport report1 = new XtraReport();
-                report1.ShowPrintMarginsWarning = false;
-                report1.CreateDocument();
+                BigLabelReport = new XtraReport();
+                BigLabelReport.ShowPrintMarginsWarning = false;
+                BigLabelReport.CreateDocument();
 
                 for (int i = 0; i < pallet.SelectPalletRecordLines.Count; i++)
                 {
@@ -2148,20 +2161,20 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                         if (packageFiche.Id != Guid.Empty)
                         {
-                            string packageNo = packageFiche.Code;
+                            var packageInfo = (await PackingListsAppService.GetPackingListLineByPackageId(packageFiche.Id)).Data.FirstOrDefault();
                             int startPackageNo = 0;
                             int endPackageNo = 0;
 
-                            if (packageNo.Contains("-"))
+                            if (packageInfo.PackageNo.Contains("-"))
                             {
-                                string[] packageArray = packageNo.Split('-');
+                                string[] packageArray = packageInfo.PackageNo.Split('-');
                                 startPackageNo = Convert.ToInt32(packageArray[0]);
                                 endPackageNo = Convert.ToInt32(packageArray[1]);
                             }
                             else
                             {
-                                startPackageNo = Convert.ToInt32(packageNo);
-                                endPackageNo = Convert.ToInt32(packageNo);
+                                startPackageNo = Convert.ToInt32(packageInfo.PackageNo);
+                                endPackageNo = Convert.ToInt32(packageInfo.PackageNo);
                             }
 
                             decimal numberofPackage = line.NumberofPackage;
@@ -2187,13 +2200,15 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 decimal netKg = line.TotalNetKG;
                                 decimal grossKg = line.TotalGrossKG;
                                 decimal quantity = line.PackageContent;
-                                //customerOrderNo = 
+                                customerOrderNo = (await SalesOrdersAppService.GetAsync(packageFiche.SalesOrderID.Value)).Data.CustomerOrderNr;
+
 
                                 for (int start = startPackageNo; start <= endPackageNo; start++)
                                 {
-                                    List<LargePalletLabelReportDto> reportSource = new List<LargePalletLabelReportDto>();
 
-                                    LargePalletLabelReportDto p = new LargePalletLabelReportDto
+                                    List<BigPalletLabelReportDto> reportSource = new List<BigPalletLabelReportDto>();
+
+                                    BigPalletLabelReportDto p = new BigPalletLabelReportDto
                                     {
                                         Quantity = quantity,
                                         GrossKg = grossKg / numberofPackage,
@@ -2210,19 +2225,24 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                         CustomerOrderNo = customerOrderNo
                                     };
 
+                                    reportSource.Add(p);
 
-                                    LargePalletLabelReport rpr = new LargePalletLabelReport();
+                                    BigPalletLabelReport rpr = new BigPalletLabelReport();
                                     rpr.BarcodeNo = barcodeNo;
                                     rpr.ShowPrintMarginsWarning = false;
                                     rpr.DataSource = reportSource;
                                     rpr.CreateDocument();
-                                    report1.Pages.AddRange(rpr.Pages);
+                                    BigLabelReport.Pages.AddRange(rpr.Pages);
                                 }
                             }
-
                         }
                     }
                 }
+
+                BigLabelReportVisible = true;
+                BigLabelReport.ShowPreviewMarginLines = false;
+                await (InvokeAsync(StateHasChanged));
+                
             }
 
             #endregion

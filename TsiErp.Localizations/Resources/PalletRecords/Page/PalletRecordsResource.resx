@@ -123,6 +123,9 @@
   <data name="BigPackage" xml:space="preserve">
     <value>Büyük Koli</value>
   </data>
+  <data name="BigPalletLabelModalTitle" xml:space="preserve">
+    <value>Büyük Etiket</value>
+  </data>
   <data name="ClearButton" xml:space="preserve">
     <value>Temizle</value>
   </data>
