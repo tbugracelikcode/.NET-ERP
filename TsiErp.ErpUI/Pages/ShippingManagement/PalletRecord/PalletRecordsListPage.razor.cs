@@ -28,6 +28,7 @@ using TsiErp.Entities.Entities.ShippingManagement.PackingList;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFiche;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
+using DevExpress.Blazor.Reporting;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 {
@@ -1340,8 +1341,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 TotalAmount = selecteditem.PackageContent * selecteditem.NumberofPackage,
                                 TotalGrossKG = totalGrossKG,
                                 TotalNetKG = totalNetKG,
-                                LineNr = GridLineList.Count + 1, 
-                                PackageFicheID = line.PackageFicheID
+                                LineNr = GridLineList.Count + 1,
+                                PackageFicheID = line.PackageFicheID,
+                                CurrentAccountCardID = DataSource.CurrentAccountCardID.GetValueOrDefault()
                             };
 
                             GridLineList.Add(palletLineModel);
@@ -1485,6 +1487,12 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 DataSource.CurrentAccountCardID = selectedCurrentAccountCard.Id;
                 DataSource.CurrentAccountCardCode = selectedCurrentAccountCard.Code;
                 DataSource.CurrentAccountCardName = selectedCurrentAccountCard.Name;
+
+                foreach (var item in GridLineList)
+                {
+                    item.CurrentAccountCardID = DataSource.CurrentAccountCardID.GetValueOrDefault();
+                }
+
                 SelectCurrentAccountCardsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -1917,6 +1925,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         #region Etiket Rapor Metotları
 
+        DxReportViewer LargeLabelReportViewer { get; set; }
+        XtraReport LargeLabelReport { get; set; }
+        bool LargeLabelReportVisible { get; set; }
+
         async void CreateLargePalletLabelReport(SelectPalletRecordsDto pallet)
         {
             #region Çeki Listesi Bilgisi
@@ -1948,9 +1960,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 string customerOrderNo = "";
                 string mainLoad = sentCurrentAccountCard.CustomerCode;
 
-                XtraReport report1 = new XtraReport();
-                report1.ShowPrintMarginsWarning = false;
-                report1.CreateDocument();
+                LargeLabelReport = new XtraReport();
+                LargeLabelReport.ShowPrintMarginsWarning = false;
+                LargeLabelReport.CreateDocument();
 
                 for (int i = 0; i < pallet.SelectPalletRecordLines.Count; i++)
                 {
@@ -1962,20 +1974,20 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                         if (packageFiche.Id != Guid.Empty)
                         {
-                            string packageNo = (await PackingListsAppService.GetLinePalletPackageListAsync(packageFiche.Id)).Data.Select(t=>t.PackageNo).FirstOrDefault();
+                            var packageInfo = (await PackingListsAppService.GetPackingListLineByPackageId(packageFiche.Id)).Data.FirstOrDefault();
                             int startPackageNo = 0;
                             int endPackageNo = 0;
 
-                            if (packageNo.Contains("-"))
+                            if (packageInfo.PackageNo.Contains("-"))
                             {
-                                string[] packageArray = packageNo.Split('-');
+                                string[] packageArray = packageInfo.PackageNo.Split('-');
                                 startPackageNo = Convert.ToInt32(packageArray[0]);
                                 endPackageNo = Convert.ToInt32(packageArray[1]);
                             }
                             else
                             {
-                                startPackageNo = Convert.ToInt32(packageNo);
-                                endPackageNo = Convert.ToInt32(packageNo);
+                                startPackageNo = Convert.ToInt32(packageInfo.PackageNo);
+                                endPackageNo = Convert.ToInt32(packageInfo.PackageNo);
                             }
 
                             decimal numberofPackage = line.NumberofPackage;
@@ -2001,10 +2013,12 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                 decimal netKg = line.TotalNetKG;
                                 decimal grossKg = line.TotalGrossKG;
                                 decimal quantity = line.PackageContent;
-                                //customerOrderNo = 
+                                customerOrderNo = (await SalesOrdersAppService.GetAsync(packageFiche.SalesOrderID.Value)).Data.CustomerOrderNr;
+
 
                                 for (int start = startPackageNo; start <= endPackageNo; start++)
                                 {
+
                                     List<LargePalletLabelReportDto> reportSource = new List<LargePalletLabelReportDto>();
 
                                     LargePalletLabelReportDto p = new LargePalletLabelReportDto
@@ -2024,19 +2038,24 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                         CustomerOrderNo = customerOrderNo
                                     };
 
+                                    reportSource.Add(p);
 
                                     LargePalletLabelReport rpr = new LargePalletLabelReport();
                                     rpr.BarcodeNo = barcodeNo;
                                     rpr.ShowPrintMarginsWarning = false;
                                     rpr.DataSource = reportSource;
                                     rpr.CreateDocument();
-                                    report1.Pages.AddRange(rpr.Pages);
+                                    LargeLabelReport.Pages.AddRange(rpr.Pages);
                                 }
                             }
-
                         }
                     }
                 }
+
+                LargeLabelReportVisible = true;
+                LargeLabelReport.ShowPreviewMarginLines = false;
+                await (InvokeAsync(StateHasChanged));
+                
             }
 
             #endregion

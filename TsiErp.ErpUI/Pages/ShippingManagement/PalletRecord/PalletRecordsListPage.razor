@@ -694,6 +694,49 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
+
+
+    <DxPopup @bind-Visible="LargeLabelReportVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["LoadingDetailModalTitle"]"
+             Width="81%"
+             Height="83%"
+             MinWidth="1400px"
+             MinHeight="900px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="2%" />
+                    <DxGridLayoutRow Height="98%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="94%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <DxReportViewer @ref="LargeLabelReportViewer" Report="@LargeLabelReport">
+                            </DxReportViewer>
+                        </Template>
+                    </DxGridLayoutItem>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLoadingDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
 }
 
 

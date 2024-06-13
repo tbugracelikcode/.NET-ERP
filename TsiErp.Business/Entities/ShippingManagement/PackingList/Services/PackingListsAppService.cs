@@ -869,7 +869,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
 
         }
 
-        public async Task<IDataResult<IList<SelectPackingListPalletPackageLinesDto>>> GetLinePalletPackageListAsync(Guid PackageFicheId)
+        public async Task<IDataResult<IList<SelectPackingListPalletPackageLinesDto>>> GetPackingListLineByPackageId(Guid PackageFicheId)
         {
             var query = queryFactory
                    .Query()
@@ -890,7 +890,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                          "PalletPackageCustomer",
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.PackingListPalletPackageLines);
+                    .Where(new { PackageFicheID = PackageFicheId }, false, false, Tables.PackingListPalletPackageLines);
 
             var packingListPalletPackageLines = queryFactory.GetList<SelectPackingListPalletPackageLinesDto>(query).ToList();
             await Task.CompletedTask;
