@@ -4,6 +4,7 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Entities.CurrentAccountCard.Services;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
@@ -13,6 +14,7 @@ using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
@@ -35,6 +37,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
         List<SelectBillsofMaterialLinesDto> GridLineList = new List<SelectBillsofMaterialLinesDto>();
 
         private bool LineCrudPopup = false;
+
+        public bool isCustomerCodeAvailable = false;
 
         #region Birim Setleri ButtonEdit
         SfTextBox UnitSetsButtonEdit;
@@ -91,6 +95,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
 
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
+
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
@@ -361,6 +366,110 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
            
         }
 
+        protected override async Task OnSubmit()
+        {
+            if (isCustomerCodeAvailable)
+            {
+                if(DataSource.CurrentAccountCardID == Guid.Empty && DataSource.CurrentAccountCardID == null)
+                {
+                    await ModalManager.WarningPopupAsync(L["UIWarningCustomerTitle"], L["UIWarningCustomerMessage"]);
+                }
+                else
+                {
+                    #region OnSubmit Kodları
+
+                    SelectBillsofMaterialsDto result;
+
+                    if (DataSource.Id == Guid.Empty)
+                    {
+                        var createInput = ObjectMapper.Map<SelectBillsofMaterialsDto, CreateBillsofMaterialsDto>(DataSource);
+
+                        result = (await CreateAsync(createInput)).Data;
+
+                        if (result != null)
+                            DataSource.Id = result.Id;
+                    }
+                    else
+                    {
+                        var updateInput = ObjectMapper.Map<SelectBillsofMaterialsDto, UpdateBillsofMaterialsDto>(DataSource);
+
+                        result = (await UpdateAsync(updateInput)).Data;
+                    }
+
+                    if (result == null)
+                    {
+
+                        return;
+                    }
+
+                    await GetListDataSourceAsync();
+
+                    var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+                    HideEditPage();
+
+                    if (DataSource.Id == Guid.Empty)
+                    {
+                        DataSource.Id = result.Id;
+                    }
+
+                    if (savedEntityIndex > -1)
+                        SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+                    else
+                        SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+                    #endregion
+                }
+            }
+            else
+            {
+                #region OnSubmit Kodları
+
+                SelectBillsofMaterialsDto result;
+
+                if (DataSource.Id == Guid.Empty)
+                {
+                    var createInput = ObjectMapper.Map<SelectBillsofMaterialsDto, CreateBillsofMaterialsDto>(DataSource);
+
+                    result = (await CreateAsync(createInput)).Data;
+
+                    if (result != null)
+                        DataSource.Id = result.Id;
+                }
+                else
+                {
+                    var updateInput = ObjectMapper.Map<SelectBillsofMaterialsDto, UpdateBillsofMaterialsDto>(DataSource);
+
+                    result = (await UpdateAsync(updateInput)).Data;
+                }
+
+                if (result == null)
+                {
+
+                    return;
+                }
+
+                await GetListDataSourceAsync();
+
+                var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+                HideEditPage();
+
+                if (DataSource.Id == Guid.Empty)
+                {
+                    DataSource.Id = result.Id;
+                }
+
+                if (savedEntityIndex > -1)
+                    SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+                else
+                    SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+                #endregion
+            }
+
+        }
+
         #endregion
 
         #region Stok Kartı Button Edit
@@ -422,6 +531,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                 LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
                 LineDataSource.MaterialType = selectedProduct.ProductType;
                 LineDataSource.ProductSupplyType = (int)selectedProduct.SupplyForm;
+
+
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -549,6 +660,16 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                 DataSource.FinishedProductID = selectedFinishedProduct.Id;
                 DataSource.FinishedProductCode = selectedFinishedProduct.Code;
                 DataSource.FinishedProducName = selectedFinishedProduct.Name;
+
+                if(selectedFinishedProduct.ProductType == ProductTypeEnum.MM)
+                {
+                    isCustomerCodeAvailable = true;
+                }
+                else if(selectedFinishedProduct.ProductType == ProductTypeEnum.YM)
+                {
+                    isCustomerCodeAvailable = false;    
+                }
+
                 SelectFinishedProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

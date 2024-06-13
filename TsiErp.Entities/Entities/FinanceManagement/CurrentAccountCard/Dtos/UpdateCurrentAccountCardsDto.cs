@@ -10,6 +10,10 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos
     public class UpdateCurrentAccountCardsDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Nakliye Firması
+        /// </summary>
+        public string ShippingCompany { get; set; }
+        /// <summary>
         /// Cari Kod
         /// </summary>
         public string Code { get; set; }

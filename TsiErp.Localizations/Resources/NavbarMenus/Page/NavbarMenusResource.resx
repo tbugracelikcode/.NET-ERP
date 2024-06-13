@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BOMChildMenu" xml:space="preserve">
-    <value>Üretim Reçeteleri</value>
+    <value>Ürün Reçeteleri</value>
   </data>
   <data name="BranchesChildMenu" xml:space="preserve">
     <value>Şube Tanımlamaları</value>
@@ -532,7 +532,7 @@
     <value>Rol Tanımlamaları</value>
   </data>
   <data name="RoutesChildMenu" xml:space="preserve">
-    <value>Üretim Rotaları</value>
+    <value>Ürün Rotaları</value>
   </data>
   <data name="SalesManagementMainRecordsMenu" xml:space="preserve">
     <value>Ana Kayıtlar</value>

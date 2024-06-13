@@ -80,6 +80,15 @@ namespace TsiErp.Localizations.Resources.CurrentAccountCards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Büyük Koli Kg. :.
+        /// </summary>
+        public static string BigPackageKGLabel {
+            get {
+                return ResourceManager.GetString("BigPackageKGLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İl:.
         /// </summary>
         public static string CityLabel {
@@ -535,6 +544,33 @@ namespace TsiErp.Localizations.Resources.CurrentAccountCards.Page {
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sevkiyat Adresi:.
+        /// </summary>
+        public static string ShippingAddressLabel {
+            get {
+                return ResourceManager.GetString("ShippingAddressLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nakliye Firması:.
+        /// </summary>
+        public static string ShippingCompanyLabel {
+            get {
+                return ResourceManager.GetString("ShippingCompanyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Küçük Koli Kg. :.
+        /// </summary>
+        public static string SmallPackageKGLabel {
+            get {
+                return ResourceManager.GetString("SmallPackageKGLabel", resourceCulture);
             }
         }
         

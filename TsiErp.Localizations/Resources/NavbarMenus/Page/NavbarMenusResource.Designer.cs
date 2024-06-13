@@ -61,7 +61,7 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Üretim Reçeteleri.
+        ///   Looks up a localized string similar to Ürün Reçeteleri.
         /// </summary>
         public static string BOMChildMenu {
             get {
@@ -1303,7 +1303,7 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Üretim Rotaları.
+        ///   Looks up a localized string similar to Ürün Rotaları.
         /// </summary>
         public static string RoutesChildMenu {
             get {

@@ -29,6 +29,7 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFiche;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using DevExpress.Blazor.Reporting;
+using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 {
@@ -38,6 +39,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         private SfGrid<PackageFicheSelectionGrid> _PackageFichesGrid;
         private SfGrid<PalletDetailGrid> _PalletDetailGrid;
         private SfGrid<LoadingDetailGrid> _LoadingDetailGrid;
+        private SfGrid<TicketListGrid> _TicketListGrid;
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -49,9 +51,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         SelectPalletRecordLinesDto LineDataSource = new();
         PalletDetailGrid PalletDetailDataSource = new();
         LoadingDetailGrid LoadingDetailDataSource = new();
+        TicketListGrid TicketListlDataSource = new();
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> PalletDetailGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> TicketListGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectPalletRecordLinesDto> GridLineList = new List<SelectPalletRecordLinesDto>();
         List<ListPackageFichesDto> PackageFichesList = new List<ListPackageFichesDto>();
@@ -59,6 +63,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         List<SelectPackageFicheLinesDto> PackageFicheLinesList = new List<SelectPackageFicheLinesDto>();
         List<PalletDetailGrid> PalletDetailGridList = new List<PalletDetailGrid>();
         List<LoadingDetailGrid> LoadingDetailGridList = new List<LoadingDetailGrid>();
+        List<TicketListGrid> TicketListGridList = new List<TicketListGrid>();
 
         #region UI Classlar
 
@@ -143,6 +148,21 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             public string CurrentAccountName { get; set; }
         }
 
+        public class TicketListGrid
+        {
+            public string PalletNo { get; set; }
+            public string ProductCode { get; set; }
+            public string PackageOrderNo { get; set; }
+            public int QuantityInPackage { get; set; }
+            public int PackageQuantity { get; set; }
+            public int TotalPackageQuantity { get; set; }
+            public string PackageType { get; set; }
+            public string OrderRefNo { get; set; }
+            public string CustomerRefNo { get; set; }
+            public string CustomerCode { get; set; }
+            public string Status { get; set; }
+        }
+
         #endregion
 
         private bool LineCrudPopup = false;
@@ -151,6 +171,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         public bool PalletDetailPopupVisible = false;
         public bool PalletDetailCrudPopupVisible = false;
         public bool LoadingDetailPopupVisible = false;
+        public bool TicketListPopupVisible = false;
 
         public string PalletNameFilter = string.Empty;
         public string PackageTypeFilter = string.Empty;
@@ -162,6 +183,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
 
         public List<ItemModel> LoadingDetailGridToolbarItems { get; set; } = new List<ItemModel>();
+        public List<ItemModel> TicketListGridToolbarItems { get; set; } = new List<ItemModel>();
 
 
         protected override async void OnInitialized()
@@ -180,6 +202,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             CreatePalletDetailContextMenuItems();
+            CreateTicketListContextMenuItems();
 
         }
 
@@ -361,6 +384,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                                 subPrintTicketMenus.Add(new MenuItem { Text = L["PalletRecordsContextPrintBig"], Id = "printbig" }); break;
                                             case "PalletRecordsContextPrintPallet":
                                                 subPrintTicketMenus.Add(new MenuItem { Text = L["PalletRecordsContextPrintPallet"], Id = "printpallet" }); break;
+                                            case "PalletRecordsContextTicketList":
+                                                subPrintTicketMenus.Add(new MenuItem { Text = L["PalletRecordsContextTicketList"], Id = "ticketlist" }); break;
                                             default:
                                                 break;
                                         }
@@ -385,6 +410,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         protected void CreatePalletDetailContextMenuItems()
         {
             PalletDetailGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletDetailApproveUnitPrice"], Id = "approve" });
+        }
+
+        protected void CreateTicketListContextMenuItems()
+        {
+            TicketListGridContextMenu.Add(new ContextMenuItemModel { Text = L["TicketListPrint"], Id = "print" });
         }
 
         public async void MainContextMenuClick(ContextMenuClickEventArgs<ListPalletRecordsDto> args)
@@ -603,6 +633,130 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     //{
                     //    await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPrintBigStateMessage"]);
                     //}
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "ticketlist":
+
+                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.ToList();
+
+                    foreach (var pallet in palletList)
+                    {
+                        var palletRecord = (await PalletRecordsAppService.GetAsync(pallet.Id)).Data;
+
+                        var packingList = (await PackingListsAppService.GetAsync(pallet.PackingListID.GetValueOrDefault())).Data;
+
+                        string palletNo = palletRecord.Name;
+
+                        foreach (var line in palletRecord.SelectPalletRecordLines)
+                        {
+
+                            #region Değişkenler
+
+                            var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
+
+                            string productCode = product.Code;
+
+                            string packageOrderNo = string.Empty;
+
+                            int quantityInPackage = 0;
+
+                            int packageQuantity = 0;
+
+                            if (packingList != null && packingList.Id != Guid.Empty)
+                            {
+                                var packingListPalletPackageLine = packingList.SelectPackingListPalletPackageLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault() && t.CustomerID == line.CurrentAccountCardID.GetValueOrDefault() && t.PackageFicheID == line.PackageFicheID.GetValueOrDefault()).FirstOrDefault();
+
+                                if (packingListPalletPackageLine != null && packingListPalletPackageLine.Id != Guid.Empty)
+                                {
+                                    packageOrderNo = packingListPalletPackageLine.PackageNo;
+                                    quantityInPackage = packingListPalletPackageLine.PackageContent;
+                                    packageQuantity = packingListPalletPackageLine.NumberofPackage;
+                                }
+                            }
+
+                            int totalPackageQuantity = quantityInPackage * packageQuantity;
+
+                            string packageType = line.PackageType;
+
+                            string orderRefNo = string.Empty;
+
+                            string supplierRefNo = string.Empty;
+
+                            string customerRefNo = string.Empty;
+
+                            var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductID == line.ProductID.GetValueOrDefault() && t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).FirstOrDefault();
+
+                            if (productRefNo != null && productRefNo.Id != Guid.Empty)
+                            {
+                                supplierRefNo = productRefNo.ReferanceNo;
+                                customerRefNo = productRefNo.CustomerReferanceNo;
+                                orderRefNo = productRefNo.OrderReferanceNo;
+                            }
+
+                            var currentAccount = (await CurrentAccountCardsAppService.GetAsync(line.CurrentAccountCardID.GetValueOrDefault())).Data;
+
+                            string customerCode = currentAccount.CustomerCode;
+
+                            string ticketNo = customerRefNo;
+
+                            if (currentAccount != null && currentAccount.Id != Guid.Empty)
+                            {
+                                if (currentAccount.CustomerCode == "049")
+                                {
+                                    if (customerRefNo != "-")
+                                    {
+                                        int lenght = customerRefNo.Length;
+
+                                        ticketNo = customerRefNo.Remove(lenght - 2, 2) + "000";
+                                        ticketNo = ticketNo.Replace(" ", string.Empty);
+                                    }
+                                }
+                            }
+
+                            string status = string.Empty;
+
+                            int statusInt = (int)pallet.PalletRecordsStateEnum;
+
+                            switch (statusInt)
+                            {
+                                case 1: status = L["EnumPreparing"]; break;
+                                case 2: status = L["EnumCompleted"]; break;
+                                case 3: status = L["EnumApproved"]; break;
+                                default: break;
+                            }
+
+                            #endregion
+
+                            TicketListGrid ticketListModel = new TicketListGrid
+                            {
+                                PalletNo = palletNo,
+                                ProductCode = productCode,
+                                PackageOrderNo = packageOrderNo,
+                                QuantityInPackage = quantityInPackage,
+                                PackageQuantity = packageQuantity,
+                                TotalPackageQuantity = totalPackageQuantity,
+                                PackageType = packageType,
+                                OrderRefNo = orderRefNo,
+                                CustomerCode = customerCode,
+                                CustomerRefNo = ticketNo,
+                                Status = status,
+                            };
+
+                            TicketListGridList.Add(ticketListModel);
+
+                            await InvokeAsync(StateHasChanged);
+
+                        }
+
+                    }
+
+                    TicketListGridToolbarItems.Add(new ItemModel() { Id = "ExcelExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIExcelIcon", TooltipText = GetSQLDateAppService.GetDateFromSQL().ToShortDateString() + "-TicketList" });
+
+                    TicketListPopupVisible = true;
 
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -965,6 +1119,23 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             }
         }
 
+        public async void OnTicketListContextMenuClick(ContextMenuClickEventArgs<TicketListGrid> args)
+        {
+            switch (args.Item.Id)
+            {
+
+                case "print":
+
+                    TicketListlDataSource = args.RowInfo.RowData;
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         public void HideLinesPopup()
         {
             LineCrudPopup = false;
@@ -987,6 +1158,12 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         public void HidePalletDetailCrudPopup()
         {
             PalletDetailCrudPopupVisible = false;
+        }
+        public void HideTicketList()
+        {
+            TicketListGridList.Clear();
+
+            TicketListPopupVisible = false;
         }
         protected async Task OnPalletDetailSubmit()
         {
@@ -1054,14 +1231,12 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
             var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.AsQueryable();
 
-            //var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.ToList();
 
             if (LoadingDateFilter.HasValue)
             {
                 palletList = palletList.Where(t => t.PlannedLoadingTime == LoadingDateFilter);
                 //palletList = palletList.Where(t => t.PlannedLoadingTime == LoadingDateFilter.Value).ToList();
             }
-
             if (!string.IsNullOrEmpty(PalletNameFilter))
             {
                 palletList = palletList.Where(t => t.Name == PalletNameFilter);
@@ -1239,7 +1414,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             CurrentAccountNameFilter = string.Empty;
             CurrentAccountIDFilter = Guid.Empty;
         }
-
         public async void LoadingDetailToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
         {
             if (args.Item.Id == "ExcelExport")
@@ -1252,8 +1426,21 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 }
 
 
+                //ExcelExportProperties.Footer = ExcelFooter{ };
+
 
                 ExcelExportProperties.FileName = LoadingDateFilter.GetValueOrDefault().ToShortDateString() + "-LoadingDetails" + ".xlsx";
+                await this._LoadingDetailGrid.ExportToExcelAsync(ExcelExportProperties);
+
+            }
+        }
+        public async void TicketListToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+        {
+            if (args.Item.Id == "ExcelExport")
+            {
+                ExcelExportProperties ExcelExportProperties = new ExcelExportProperties();
+
+                ExcelExportProperties.FileName = DataSource.PlannedLoadingTime.GetValueOrDefault().ToShortDateString() + "-TicketList" + ".xlsx";
                 await this._LoadingDetailGrid.ExportToExcelAsync(ExcelExportProperties);
 
             }
