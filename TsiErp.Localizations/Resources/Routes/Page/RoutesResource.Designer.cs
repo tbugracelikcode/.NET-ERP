@@ -466,7 +466,7 @@ namespace TsiErp.Localizations.Resources.Routes.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Üretim Rotaları.
+        ///   Looks up a localized string similar to Ürün Rotaları.
         /// </summary>
         public static string UICurrentMenu {
             get {

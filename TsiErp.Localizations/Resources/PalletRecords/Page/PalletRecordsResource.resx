@@ -541,7 +541,7 @@
     <value>Küçük Etiket</value>
   </data>
   <data name="PalletRecordsContextPrintTicket" xml:space="preserve">
-    <value>Etiket Yazdır</value>
+    <value>Yazdır</value>
   </data>
   <data name="PalletRecordsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
@@ -557,6 +557,9 @@
   </data>
   <data name="PalletRecordsContextStatePreparing" xml:space="preserve">
     <value>Hazırlanıyor</value>
+  </data>
+  <data name="PalletRecordsContextTicketList" xml:space="preserve">
+    <value>Etiket Listesi</value>
   </data>
   <data name="PalletRecordsContextTicketState" xml:space="preserve">
     <value>Etiket Basım</value>
@@ -599,6 +602,45 @@
   </data>
   <data name="SUMLABEL" xml:space="preserve">
     <value>TOPLAM</value>
+  </data>
+  <data name="TicketListGridCustomerCode" xml:space="preserve">
+    <value>MÜŞTERİ KODU</value>
+  </data>
+  <data name="TicketListGridCustomerRefNo" xml:space="preserve">
+    <value>MÜŞTERİ REF NO</value>
+  </data>
+  <data name="TicketListGridOrderRefNo" xml:space="preserve">
+    <value>SİPARİŞ REF NO</value>
+  </data>
+  <data name="TicketListGridPackageOrderNo" xml:space="preserve">
+    <value>KOLİ SIRA NO</value>
+  </data>
+  <data name="TicketListGridPackageQuantity" xml:space="preserve">
+    <value>KOLİ ADEDİ</value>
+  </data>
+  <data name="TicketListGridPackageType" xml:space="preserve">
+    <value>KOLİ TÜRÜ</value>
+  </data>
+  <data name="TicketListGridPalletNo" xml:space="preserve">
+    <value>PALET NO</value>
+  </data>
+  <data name="TicketListGridProductCode" xml:space="preserve">
+    <value>AR-EKS REF NO</value>
+  </data>
+  <data name="TicketListGridQuantityInPackage" xml:space="preserve">
+    <value>KOLİDEKİ ADET </value>
+  </data>
+  <data name="TicketListGridStatus" xml:space="preserve">
+    <value>DURUM</value>
+  </data>
+  <data name="TicketListGridTotalPackageQuantity" xml:space="preserve">
+    <value>KOLİDEKİ TOPLAM ADET</value>
+  </data>
+  <data name="TicketListModalTitle" xml:space="preserve">
+    <value>Etiket Listesi</value>
+  </data>
+  <data name="TicketListPrint" xml:space="preserve">
+    <value>Yazdır</value>
   </data>
   <data name="TotalAmountLabel" xml:space="preserve">
     <value>Toplam Adet:</value>

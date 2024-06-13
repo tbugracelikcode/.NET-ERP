@@ -610,7 +610,7 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Üretim Reçeteleri.
+        ///   Looks up a localized string similar to Ürün Reçeteleri.
         /// </summary>
         public static string UICurrentMenu {
             get {
@@ -687,6 +687,24 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         public static string UIPreviousMenus {
             get {
                 return ResourceManager.GetString("UIPreviousMenus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mamül içeren kayıtlarda müşteri kodu zorunludur..
+        /// </summary>
+        public static string UIWarningCustomerMessage {
+            get {
+                return ResourceManager.GetString("UIWarningCustomerMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningCustomerTitle {
+            get {
+                return ResourceManager.GetString("UIWarningCustomerTitle", resourceCulture);
             }
         }
         

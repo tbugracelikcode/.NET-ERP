@@ -150,6 +150,15 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                 DataSource.ProductID = selectedProduct.Id;
                 DataSource.ProductCode = selectedProduct.Code;
                 DataSource.ProductName = selectedProduct.Name;
+
+                if (DataSource.TemplateOperationID != Guid.Empty && DataSource.ProductID != Guid.Empty)
+                {
+                    if (DataSource.TemplateOperationID != null && DataSource.ProductID != null)
+                    {
+                        DataSource.Name = DataSource.ProductCode + " / " + DataSource.TemplateOperationName;
+                    }
+                }
+
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -257,6 +266,14 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                 DataSource.TemplateOperationName = selectedTemplateOperation.Name;
                 DataSource.WorkCenterID = selectedTemplateOperation.WorkCenterID;
                 DataSource.WorkCenterName = selectedTemplateOperation.WorkCenterName;
+
+                if(DataSource.TemplateOperationID != Guid.Empty && DataSource.ProductID != Guid.Empty)
+                {
+                    if(DataSource.TemplateOperationID != null && DataSource.ProductID != null)
+                    {
+                        DataSource.Name = DataSource.ProductCode + " / " + DataSource.TemplateOperationName;
+                    }
+                }
 
                 foreach (var line in selectedTemplateOperation.SelectTemplateOperationLines)
                 {

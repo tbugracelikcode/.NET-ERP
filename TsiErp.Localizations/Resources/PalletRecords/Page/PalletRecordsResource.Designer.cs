@@ -1330,7 +1330,7 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etiket Yazdır.
+        ///   Looks up a localized string similar to Yazdır.
         /// </summary>
         public static string PalletRecordsContextPrintTicket {
             get {
@@ -1380,6 +1380,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         public static string PalletRecordsContextStatePreparing {
             get {
                 return ResourceManager.GetString("PalletRecordsContextStatePreparing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Etiket Listesi.
+        /// </summary>
+        public static string PalletRecordsContextTicketList {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextTicketList", resourceCulture);
             }
         }
         
@@ -1506,6 +1515,123 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         public static string SUMLABEL {
             get {
                 return ResourceManager.GetString("SUMLABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ KODU.
+        /// </summary>
+        public static string TicketListGridCustomerCode {
+            get {
+                return ResourceManager.GetString("TicketListGridCustomerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ REF NO.
+        /// </summary>
+        public static string TicketListGridCustomerRefNo {
+            get {
+                return ResourceManager.GetString("TicketListGridCustomerRefNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ REF NO.
+        /// </summary>
+        public static string TicketListGridOrderRefNo {
+            get {
+                return ResourceManager.GetString("TicketListGridOrderRefNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KOLİ SIRA NO.
+        /// </summary>
+        public static string TicketListGridPackageOrderNo {
+            get {
+                return ResourceManager.GetString("TicketListGridPackageOrderNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KOLİ ADEDİ.
+        /// </summary>
+        public static string TicketListGridPackageQuantity {
+            get {
+                return ResourceManager.GetString("TicketListGridPackageQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KOLİ TÜRÜ.
+        /// </summary>
+        public static string TicketListGridPackageType {
+            get {
+                return ResourceManager.GetString("TicketListGridPackageType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PALET NO.
+        /// </summary>
+        public static string TicketListGridPalletNo {
+            get {
+                return ResourceManager.GetString("TicketListGridPalletNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AR-EKS REF NO.
+        /// </summary>
+        public static string TicketListGridProductCode {
+            get {
+                return ResourceManager.GetString("TicketListGridProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KOLİDEKİ ADET .
+        /// </summary>
+        public static string TicketListGridQuantityInPackage {
+            get {
+                return ResourceManager.GetString("TicketListGridQuantityInPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DURUM.
+        /// </summary>
+        public static string TicketListGridStatus {
+            get {
+                return ResourceManager.GetString("TicketListGridStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KOLİDEKİ TOPLAM ADET.
+        /// </summary>
+        public static string TicketListGridTotalPackageQuantity {
+            get {
+                return ResourceManager.GetString("TicketListGridTotalPackageQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Etiket Listesi.
+        /// </summary>
+        public static string TicketListModalTitle {
+            get {
+                return ResourceManager.GetString("TicketListModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yazdır.
+        /// </summary>
+        public static string TicketListPrint {
+            get {
+                return ResourceManager.GetString("TicketListPrint", resourceCulture);
             }
         }
         
