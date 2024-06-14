@@ -18,7 +18,7 @@ using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
-{
+{ 
     public partial class BillsofMaterialsListPage : IDisposable
     {
 
