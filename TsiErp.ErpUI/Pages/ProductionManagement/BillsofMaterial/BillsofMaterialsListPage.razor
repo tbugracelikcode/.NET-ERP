@@ -16,11 +16,11 @@
 
 @if (!base.IsLoaded)
 {
-    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" /> 
 }
 else
 {
-    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")"> 
         <GridLayoutItems>
             <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
                 <Template>

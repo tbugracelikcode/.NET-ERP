@@ -21,8 +21,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 {
     public partial class ProductionOrdersListPage : IDisposable
-    {
-
+    { 
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         [Inject]
