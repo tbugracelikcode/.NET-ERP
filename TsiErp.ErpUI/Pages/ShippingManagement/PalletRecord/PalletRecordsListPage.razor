@@ -5,6 +5,7 @@
 @inherits BaseListPage<SelectPalletRecordsDto, ListPalletRecordsDto, CreatePalletRecordsDto, UpdatePalletRecordsDto, ListPalletRecordsParameterDto>
 
 @inject IStringLocalizer<PalletRecordsResource> L
+@inject IStringLocalizer<ReportsResource> ReportLocalizer
 @inject IPalletRecordsAppService PalletRecordsAppService
 @inject IPackageFichesAppService PackageFichesAppService
 @inject IProductsAppService ProductsAppService
@@ -709,29 +710,85 @@ else
              HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
-            <DxGridLayout CssClass="TSIGridLayout">
+            <DevGridLayoutFilterRow ColumnCount="1" RowCount="2" RowHeights="@RowHeights("*")">
+                <GridLayoutItems>
 
-                <Rows>
-                    <DxGridLayoutRow Height="2%" />
-                    <DxGridLayoutRow Height="98%" />
-                </Rows>
-
-                <Columns>
-                    <DxGridLayoutColumn Width="3%" />
-                    <DxGridLayoutColumn Width="94%" />
-                    <DxGridLayoutColumn Width="3%" />
-                </Columns>
-
-                <Items>
-                    <br />
-                    <DxGridLayoutItem Row="1" Column="1">
+                    <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
                         <Template>
-                            <DxReportViewer @ref="BigLabelReportViewer" Report="@BigLabelReport">
-                            </DxReportViewer>
+
+                            <SfCard class="TSIReportFilterCard" style="height:100px !important;">
+
+                                <CardContent>
+
+                                    <DxGridLayout CssClass="TSIGridLayout">
+                                        <Rows>
+                                            <DxGridLayoutRow Height="48%" />
+                                            <DxGridLayoutRow Height="48%" />
+                                        </Rows>
+                                        <Columns>
+                                            <DxGridLayoutColumn Width="2%" />
+                                            <DxGridLayoutColumn Width="30%" />
+                                            <DxGridLayoutColumn Width="4%" />
+                                            <DxGridLayoutColumn Width="30%" />
+                                            <DxGridLayoutColumn Width="4%" />
+                                            <DxGridLayoutColumn Width="28%" />
+                                            <DxGridLayoutColumn Width="2%" />
+                                        </Columns>
+                                        <Items>
+
+                                            <DxGridLayoutItem Row="0" Column="1">
+                                                <Template>
+
+                                                    <br />
+                                                    <label class="TSIModalLabel"><strong>@ReportLocalizer["BigPalletLabelPalletFilterLabel"] </strong></label><br />
+
+                                                    <SfMultiSelect @bind-Value="@BindingPalletRecords"
+                                                                   DataSource="@PalletRecords"
+                                                                   AllowFiltering=true
+                                                                   Mode="VisualMode.CheckBox"
+                                                                   ShowSelectAll=true
+                                                                   SelectAllText=@ReportLocalizer["SelectAllText"]
+                                                                   UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
+                                                                   ShowDropDownIcon="true">
+
+                                                        <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                                    </SfMultiSelect>
+
+                                                </Template>
+                                            </DxGridLayoutItem>
+
+                                            <DxGridLayoutItem Row="0" Column="3">
+                                                <Template>
+                                                    <br />
+                                                    <br />
+                                                    <SfButton CssClass="TSISaveButton" OnClick="CreateLargePalletLabelReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["CreateReport"]</SfButton>
+                                                </Template>
+                                            </DxGridLayoutItem>
+
+                                        </Items>
+                                    </DxGridLayout>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
                         </Template>
                     </DxGridLayoutItem>
-                </Items>
-            </DxGridLayout>
+
+
+                    <DxGridLayoutItem Row="1" Column="0" ColumnSpan="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+                                <CardContent>
+                                    <DxReportViewer @ref="BigLabelReportViewer" Report="@BigLabelReport">
+                                    </DxReportViewer>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayoutFilterRow>
         </BodyTemplate>
         <FooterContentTemplate>
             <SfButton CssClass="TSICancelButton" OnClick="HideLoadingDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
@@ -772,7 +829,7 @@ else
 
 
                                 <GridEvents ContextMenuItemClicked="@OnTicketListContextMenuClick" OnToolbarClick="@TicketListToolbarClickHandler" TValue="TicketListGrid"></GridEvents>
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal" ></GridEditSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
