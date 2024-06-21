@@ -32,6 +32,9 @@ using DevExpress.Blazor.Reporting;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.PalletLabelDtos;
+using DevExpress.XtraReports;
+using DevExpress.XtraCharts.Native;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 {
@@ -721,30 +724,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     break;
 
                 case "printpallet":
-                    //DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-
-                    //if (DataSource.PalletRecordsPrintTicketEnum != Entities.Enums.PalletRecordsPrintTicketEnum.PaletEtiketi)
-                    //{
-                    //    var resState7 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIPrintPalletCompletedMessage"]);
-
-                    //    if (resState7 == true)
-                    //    {
-                    //        DataSource.PalletRecordsPrintTicketEnum = Entities.Enums.PalletRecordsPrintTicketEnum.PaletEtiketi;
-
-                    //        var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
-                    //        await PalletRecordsAppService.UpdateAsync(updatedEntity);
-                    //        await GetListDataSourceAsync();
-
-                    //        await _grid.Refresh();
-                    //        await InvokeAsync(StateHasChanged);
-                    //    }
-                    //}
-
-                    //else
-                    //{
-                    //    await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPrintPalletStateMessage"]);
-                    //}
-
+                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    PalletLabelReport = new XtraReport();
+                    await CreatePalletLabelReport(DataSource);
+                    PalletLabelReportVisible = true;
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -2079,15 +2062,12 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         XtraReport BigLabelReport { get; set; }
         bool BigLabelReportVisible { get; set; }
 
-        async void CreateLargePalletLabelReport()
+        async void CreateBigPalletLabelReport()
         {
             #region Çeki Listesi Bilgisi
 
-           
-                
-                BigLabelReport.ShowPrintMarginsWarning = false;
-                BigLabelReport.CreateDocument();
-            
+            BigLabelReport.ShowPrintMarginsWarning = false;
+            BigLabelReport.CreateDocument();
 
             foreach (var bindingPallet in BindingPalletRecords)
             {
@@ -2202,7 +2182,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
 
                                             BigPalletLabelReport rpr = new BigPalletLabelReport();
-                                            
+
 
                                             rpr.BarcodeNo = barcodeNo;
                                             rpr.ShowPrintMarginsWarning = false;
@@ -2234,6 +2214,135 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         #endregion
 
         #region Palet Etiketi
+
+        bool PalletLabelReportVisible { get; set; }
+
+        DxReportViewer PalletLabelReportViewer { get; set; }
+
+        XtraReport PalletLabelReport { get; set; }
+
+        async Task CreatePalletLabelReport(SelectPalletRecordsDto pallet)
+        {
+            #region Çeki Listesi Bilgisi
+
+            PalletLabelReport.ShowPrintMarginsWarning = false;
+            PalletLabelReport.CreateDocument();
+
+            if (pallet.Id != Guid.Empty)
+            {
+                string orderNr = "";
+                string palletNo=pallet.Name;
+                decimal netKg = pallet.SelectPalletRecordLines.Sum(t => t.TotalNetKG);
+                decimal grossKg = pallet.SelectPalletRecordLines.Sum(t => t.TotalGrossKG);
+                decimal quantity = pallet.SelectPalletRecordLines.Sum(t => t.TotalAmount);
+
+                var packingList = (await PackingListsAppService.GetAsync(pallet.PackingListID.GetValueOrDefault())).Data;
+                string packingListNo = packingList.Code2 ;
+
+                Guid sentCompanyId = packingList.TransmitterID.GetValueOrDefault();
+                var sentCurrentAccountCard = (await CurrentAccountCardsAppService.GetAsync(sentCompanyId)).Data;
+                string supplierNo = sentCurrentAccountCard.SupplierNo;
+                string sentCompany = sentCurrentAccountCard.Name;
+                string sentCompanyAddress1 = sentCurrentAccountCard.Address1;
+                string sentCompanyAddress2 = sentCurrentAccountCard.Address2; 
+                string sender = sentCompany + Environment.NewLine + sentCompanyAddress1 + Environment.NewLine + sentCompanyAddress2;
+                Guid recieverCompanyId = packingList.RecieverID.GetValueOrDefault();
+                var recieverCurrentAccountCard = (await CurrentAccountCardsAppService.GetAsync(recieverCompanyId)).Data;
+                string recieverCompany = recieverCurrentAccountCard.Name;
+                string recieverCompanyAddress1 = recieverCurrentAccountCard.Address1;
+                string reciever = recieverCompany + ", " + recieverCompanyAddress1;
+                string shippingAddress = recieverCurrentAccountCard.ShippingAddress;
+                string mainLoad = sentCurrentAccountCard.CustomerCode;
+                string areksPackingListNo = packingList.Code;
+                string billNo = packingList.BillNo;
+
+                string deliveryDate = packingList.DeliveryDate.Value.ToShortDateString();
+
+                orderNr = packingList.OrderNo.Replace(" ", "");
+
+                List<PalletLabelDto> reportSource = new List<PalletLabelDto>();
+                PalletLabelDto p = new PalletLabelDto();
+                p.Quantity = quantity;
+                p.GrossKg = grossKg;
+                p.PackingListNo = packingListNo;
+                p.SenderCompany = sender;
+                p.SentCompany= reciever;
+                p.SupplierNo = supplierNo;
+                p.ShippingAddress = shippingAddress;
+                p.AreksPackingNo = areksPackingListNo;
+                p.BillNo = billNo;
+                p.MarkingRefNo = "";
+                p.NetKg = netKg;
+                p.PalletNo= palletNo.Split('-').FirstOrDefault();
+                p.OrderNo = orderNr;
+                p.DeliveryDate = deliveryDate;
+                reportSource.Add(p);
+
+                XtraReport rpr = new PalletLabelReport();
+                rpr.ShowPrintMarginsWarning = false;
+                rpr.DataSource = reportSource;
+                rpr.CreateDocument();
+                PalletLabelReport.Pages.AddRange(rpr.Pages);
+
+
+                DateTime loadingDate = pallet.PlannedLoadingTime.Value;
+
+
+                List<PalletLabelListDto> list = new List<PalletLabelListDto>();
+
+                for (int i = 0; i < pallet.SelectPalletRecordLines.Count; i++)
+                {
+                    var line = pallet.SelectPalletRecordLines[i];
+
+                    Guid productId = line.ProductID.GetValueOrDefault();
+                    var product = (await ProductsAppService.GetAsync(productId)).Data;
+                    string customerOrderNo = "";
+
+                    string englishDefinition = product.EnglishDefinition;
+                    string engDefCusOrderNo = englishDefinition + " " + customerOrderNo;
+
+                    PalletLabelListDto p2 = new PalletLabelListDto();
+                    p2.EnglishDefinition = engDefCusOrderNo;
+                    p2.UnitSet = "Stück";
+
+                    var productReferenceNoList = (await ProductReferanceNumbersAppService.GetSelectListAsync(productId)).Data;
+                    var productRefNo = productReferenceNoList.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).FirstOrDefault();
+                    string markingRefNo = productRefNo.CustomerReferanceNo;
+
+                    markingRefNo = markingRefNo.Replace(" ", "");
+                    markingRefNo = markingRefNo.Substring(0, markingRefNo.Length - 2) + "000";
+                    p2.CustomerReferenceNo = markingRefNo;
+                    p2.ReferenceNo= productRefNo.ReferanceNo.Substring(0, productRefNo.ReferanceNo.Length - 2) + "15";
+
+                    var packageFiche = (await PackageFichesAppService.GetAsync(line.PackageFicheID.GetValueOrDefault())).Data;
+                    var packageInfo = (await PackingListsAppService.GetPackingListLineByPackageId(packageFiche.Id)).Data.FirstOrDefault();
+
+                    p2.ProductId = productId;
+                    p2.PalletNo = palletNo;
+                    p2.ShippingAddress = shippingAddress;
+                    p2.PackingListNo = packingListNo;
+                    p2.SupplierNo = supplierNo;
+                    p2.PackageQuantity = line.NumberofPackage;
+                    p2.PackageNo = packageInfo.PackageNo;
+                    p2.TotalQuantity = line.TotalAmount;
+                    list.Add(p2);
+                }
+
+                PalletLabelListReport rpr2 = new PalletLabelListReport();
+                rpr2.ShowPrintMarginsWarning = false;
+                //rpr2.Varyant = anaYukleme;
+                rpr2.DataSource = list;
+                rpr2.CreateDocument();
+                PalletLabelReport.Pages.AddRange(rpr2.Pages);
+
+                PalletLabelReport.PrintingSystem.ContinuousPageNumbering = true;
+
+                PalletLabelReport.ShowPreviewMarginLines = false;
+                await (InvokeAsync(StateHasChanged));
+            }
+
+            #endregion
+        }
 
         #endregion
 

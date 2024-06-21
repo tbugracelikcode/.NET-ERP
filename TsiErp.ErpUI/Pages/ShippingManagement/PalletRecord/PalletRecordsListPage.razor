@@ -761,7 +761,7 @@ else
                                                 <Template>
                                                     <br />
                                                     <br />
-                                                    <SfButton CssClass="TSISaveButton" OnClick="CreateLargePalletLabelReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["CreateReport"]</SfButton>
+                                                    <SfButton CssClass="TSISaveButton" OnClick="CreateBigPalletLabelReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["CreateReport"]</SfButton>
                                                 </Template>
                                             </DxGridLayoutItem>
 
@@ -789,6 +789,47 @@ else
                     </DxGridLayoutItem>
                 </GridLayoutItems>
             </DevGridLayoutFilterRow>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLoadingDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="PalletLabelReportVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["PalletLabelModalTitle"]"
+             Width="81%"
+             Height="83%"
+             MinWidth="1400px"
+             MinHeight="900px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="2%" />
+                    <DxGridLayoutRow Height="98%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="94%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <DxReportViewer @ref="PalletLabelReportViewer" Report="@PalletLabelReport">
+                            </DxReportViewer>
+                        </Template>
+                    </DxGridLayoutItem>
+                </Items>
+            </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
             <SfButton CssClass="TSICancelButton" OnClick="HideLoadingDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
