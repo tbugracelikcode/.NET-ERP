@@ -2330,7 +2330,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                 PalletLabelListReport rpr2 = new PalletLabelListReport();
                 rpr2.ShowPrintMarginsWarning = false;
-                //rpr2.Varyant = anaYukleme;
                 rpr2.DataSource = list;
                 rpr2.CreateDocument();
                 PalletLabelReport.Pages.AddRange(rpr2.Pages);
