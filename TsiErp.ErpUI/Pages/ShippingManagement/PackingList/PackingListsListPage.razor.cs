@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Lists;
@@ -10,6 +11,7 @@ using TsiErp.Business.Entities.PackageFiche.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
@@ -669,6 +671,12 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             await Task.CompletedTask;
         }
 
+        public async void DateValueChangeHandler(ChangedEventArgs<DateTime?> args)
+        {
+            DataSource.BillDate = DataSource.BillDate.Value.AddDays(DataSource.TransmitterPaymentTermDay);
+            await InvokeAsync(StateHasChanged);
+        }
+
         #endregion
 
         #region Gönderici ButtonEdit
@@ -695,12 +703,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
         {
             if (args.Value == null)
             {
+
                 DataSource.TransmitterID = Guid.Empty;
                 DataSource.TransmitterCode = string.Empty;
                 DataSource.TransmitterName = string.Empty;
                 DataSource.TransmitterSupplierNo = string.Empty;
                 DataSource.TransmitterEORINo = string.Empty;
                 DataSource.RecieverCustomerCode = string.Empty;
+                DataSource.TransmitterPaymentTermDay = 0;
             }
         }
 
@@ -710,12 +720,15 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             if (selectedTransmitter != null)
             {
+
                 DataSource.TransmitterID = selectedTransmitter.Id;
                 DataSource.TransmitterCode = selectedTransmitter.Code;
                 DataSource.TransmitterName = selectedTransmitter.Name;
                 DataSource.TransmitterSupplierNo = selectedTransmitter.SupplierNo;
                 DataSource.TransmitterEORINo = selectedTransmitter.EORINr;
                 DataSource.RecieverCustomerCode = selectedTransmitter.CustomerCode;
+                DataSource.TransmitterPaymentTermDay = selectedTransmitter.PaymentTermDay;
+
                 SelectTransmittersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

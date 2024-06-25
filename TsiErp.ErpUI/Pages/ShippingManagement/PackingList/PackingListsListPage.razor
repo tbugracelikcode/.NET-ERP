@@ -201,7 +201,9 @@ else
                     <DxGridLayoutItem Row="6" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["BillDateLabel"] </strong></label>
-                            <SfDatePicker @bind-Value="DataSource.BillDate"></SfDatePicker>
+                            <SfDatePicker TValue="DateTime?" @bind-Value="DataSource.BillDate">
+                                <DatePickerEvents TValue="DateTime?" ValueChange="DateValueChangeHandler"></DatePickerEvents>
+                            </SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 

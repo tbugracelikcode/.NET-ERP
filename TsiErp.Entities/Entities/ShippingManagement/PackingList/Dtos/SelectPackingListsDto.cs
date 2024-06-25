@@ -29,6 +29,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos
         /// </summary>
         public Guid? TransmitterID { get; set; }
         /// <summary>
+        /// Gönderici Ödeme Vade Günü
+        /// </summary>
+        public int TransmitterPaymentTermDay { get; set; }
+        /// <summary>
         /// Gönderici Kod
         /// </summary>
         public string TransmitterCode { get; set; }

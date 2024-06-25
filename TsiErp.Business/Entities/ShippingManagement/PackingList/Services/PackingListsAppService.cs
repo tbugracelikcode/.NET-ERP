@@ -278,7 +278,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                    .Select<PackingLists>(null)
                     .Join<CurrentAccountCards>
                     (
-                        pr => new { TransmitterCode = pr.Code, TransmitterID = pr.Id, TransmitterName = pr.Name, TransmitterSupplierNo = pr.SupplierNo, TransmitterEORINo = pr.EORINr },
+                        pr => new { TransmitterCode = pr.Code, TransmitterID = pr.Id, TransmitterName = pr.Name, TransmitterSupplierNo = pr.SupplierNo, TransmitterEORINo = pr.EORINr, TransmitterPaymentTermDay = pr.PaymentTermDay },
                         nameof(PackingLists.TransmitterID),
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
@@ -382,7 +382,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                    .Select<PackingLists>(null)
                     .Join<CurrentAccountCards>
                     (
-                        pr => new { TransmitterCode = pr.Code, TransmitterID = pr.Id, TransmitterName = pr.Name, TransmitterSupplierNo = pr.SupplierNo, TransmitterEORINo = pr.EORINr },
+                        pr => new { TransmitterCode = pr.Code, TransmitterID = pr.Id, TransmitterName = pr.Name, TransmitterSupplierNo = pr.SupplierNo, TransmitterEORINo = pr.EORINr, TransmitterPaymentTermDay = pr.PaymentTermDay },
                         nameof(PackingLists.TransmitterID),
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left

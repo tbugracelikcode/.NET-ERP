@@ -447,7 +447,9 @@ else
 
                                                 <Columns>
                                                     <DxGridLayoutColumn Width="20%" />
-                                                    <DxGridLayoutColumn Width="80%" />
+                                                    <DxGridLayoutColumn Width="3%" />
+                                                    <DxGridLayoutColumn Width="20%" />
+                                                    <DxGridLayoutColumn Width="57%" />
                                                 </Columns>
 
                                                 <Items>
@@ -459,6 +461,16 @@ else
                                                             @*<SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.IDnumber"></SfTextBox>*@
 
                                                             <SfMaskedTextBox CssClass="TSITxtBox" Mask="00000000000" @bind-Value="DataSource.IDnumber"></SfMaskedTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="0" Column="2">
+                                                        <Template>
+                                                            <br />
+                                                            <label class="TSIModalLabel"><strong>@L["PaymentTermDayLabel"] </strong></label>
+                                                            @*<SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.IDnumber"></SfTextBox>*@
+
+                                                            <SfNumericTextBox CssClass="TSITxtBox" Min="0" TValue="int" @bind-Value="DataSource.PaymentTermDay"></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 

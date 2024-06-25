@@ -458,6 +458,15 @@ namespace TsiErp.Localizations.Resources.CurrentAccountCards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ödeme Vade Günü:.
+        /// </summary>
+        public static string PaymentTermDayLabel {
+            get {
+                return ResourceManager.GetString("PaymentTermDayLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Artı Yüzde Oran:.
         /// </summary>
         public static string PlusPercentageLabel {

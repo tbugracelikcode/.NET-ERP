@@ -220,5 +220,12 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard
         /// </summary>
         public string ShippingCompany { get; set; }
 
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Ödeme Vadesi Günü
+        /// </summary>
+        public int PaymentTermDay { get; set; }
+
     }
 }
