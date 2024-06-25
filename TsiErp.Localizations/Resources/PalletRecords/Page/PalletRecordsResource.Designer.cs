@@ -1177,6 +1177,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Palet Etiketi.
+        /// </summary>
+        public static string PalletLabelModalTitle {
+            get {
+                return ResourceManager.GetString("PalletLabelModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PALET KOLİ ADET.
         /// </summary>
         public static string PalletPackageNumber {

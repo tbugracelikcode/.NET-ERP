@@ -61,6 +61,15 @@ namespace TsiErp.Localizations.Resources.Reports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Palet.
+        /// </summary>
+        public static string BigPalletLabelPalletFilterLabel {
+            get {
+                return ResourceManager.GetString("BigPalletLabelPalletFilterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Raporla.
         /// </summary>
         public static string CreateReport {

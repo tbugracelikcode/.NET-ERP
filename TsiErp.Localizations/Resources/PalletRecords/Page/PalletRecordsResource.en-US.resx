@@ -489,6 +489,9 @@
   <data name="PalletDetailModalTitle" xml:space="preserve">
     <value>Pallet Detail</value>
   </data>
+  <data name="PalletLabelModalTitle" xml:space="preserve">
+    <value>Pallet Label</value>
+  </data>
   <data name="PalletPackageNumber" xml:space="preserve">
     <value>PALLET PACKAGE NUMBER</value>
   </data>
