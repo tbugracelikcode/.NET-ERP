@@ -57,6 +57,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         ProductID = input.ProductID.GetValueOrDefault(),
                         SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
                         ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
+                        PackingListID = input.PackingListID.GetValueOrDefault(),
                         Date_ = input.Date_,
                         NumberofPackage = input.NumberofPackage,
                         PackageContent = input.PackageContent,
@@ -372,6 +373,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
             {
                 CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
                 ProductID = input.ProductID.GetValueOrDefault(),
+                PackingListID = input.PackingListID.GetValueOrDefault(),
                 SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
                 ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                 Date_ = input.Date_,
@@ -479,6 +481,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
             var query = queryFactory.Query().From(Tables.PackageFiches).Update(new UpdatePackageFichesDto
             {
                 CurrentAccountID = entity.CurrentAccountID,
+                PackingListID = entity.PackingListID,
                 ProductionOrderID = entity.ProductionOrderID,
                 ProductID = entity.ProductID,
                 SalesOrderID = entity.SalesOrderID,

@@ -150,6 +150,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         public class TicketListGrid
         {
+            public bool IsApproved { get; set; }
             public string PalletNo { get; set; }
             public string ProductCode { get; set; }
             public string PackageOrderNo { get; set; }
@@ -641,117 +642,128 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.ToList();
+                    var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.Where(t=>t.PackingListID == DataSource.PackingListID).ToList();
 
-                    foreach (var pallet in palletList)
+                    if(palletList.Count >0 && palletList != null)
                     {
-                        var palletRecord = (await PalletRecordsAppService.GetAsync(pallet.Id)).Data;
-
-                        var packingList = (await PackingListsAppService.GetAsync(pallet.PackingListID.GetValueOrDefault())).Data;
-
-                        string palletNo = palletRecord.Name;
-
-                        foreach (var line in palletRecord.SelectPalletRecordLines)
+                        foreach (var pallet in palletList)
                         {
+                            var palletRecord = (await PalletRecordsAppService.GetAsync(pallet.Id)).Data;
 
-                            #region Değişkenler
+                            var packingList = (await PackingListsAppService.GetAsync(pallet.PackingListID.GetValueOrDefault())).Data;
 
-                            var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
+                            string palletNo = palletRecord.Name;
 
-                            string productCode = product.Code;
-
-                            string packageOrderNo = string.Empty;
-
-                            int quantityInPackage = 0;
-
-                            int packageQuantity = 0;
-
-                            if (packingList != null && packingList.Id != Guid.Empty)
+                            foreach (var line in palletRecord.SelectPalletRecordLines)
                             {
-                                var packingListPalletPackageLine = packingList.SelectPackingListPalletPackageLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault() && t.CustomerID == line.CurrentAccountCardID.GetValueOrDefault() && t.PackageFicheID == line.PackageFicheID.GetValueOrDefault()).FirstOrDefault();
 
-                                if (packingListPalletPackageLine != null && packingListPalletPackageLine.Id != Guid.Empty)
+                                #region Değişkenler
+
+                                var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
+
+                                string productCode = product.Code;
+
+                                string packageOrderNo = string.Empty;
+
+                                int quantityInPackage = 0;
+
+                                int packageQuantity = 0;
+
+                                if (packingList != null && packingList.Id != Guid.Empty)
                                 {
-                                    packageOrderNo = packingListPalletPackageLine.PackageNo;
-                                    quantityInPackage = packingListPalletPackageLine.PackageContent;
-                                    packageQuantity = packingListPalletPackageLine.NumberofPackage;
-                                }
-                            }
+                                    var packingListPalletPackageLine = packingList.SelectPackingListPalletPackageLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault() && t.CustomerID == line.CurrentAccountCardID.GetValueOrDefault() && t.PackageFicheID == line.PackageFicheID.GetValueOrDefault()).FirstOrDefault();
 
-                            int totalPackageQuantity = quantityInPackage * packageQuantity;
-
-                            string packageType = line.PackageType;
-
-                            string orderRefNo = string.Empty;
-
-                            string supplierRefNo = string.Empty;
-
-                            string customerRefNo = string.Empty;
-
-                            var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductID == line.ProductID.GetValueOrDefault() && t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).FirstOrDefault();
-
-                            if (productRefNo != null && productRefNo.Id != Guid.Empty)
-                            {
-                                supplierRefNo = productRefNo.ReferanceNo;
-                                customerRefNo = productRefNo.CustomerReferanceNo;
-                                orderRefNo = productRefNo.OrderReferanceNo;
-                            }
-
-                            var currentAccount = (await CurrentAccountCardsAppService.GetAsync(line.CurrentAccountCardID.GetValueOrDefault())).Data;
-
-                            string customerCode = currentAccount.CustomerCode;
-
-                            string ticketNo = customerRefNo;
-
-                            if (currentAccount != null && currentAccount.Id != Guid.Empty)
-                            {
-                                if (currentAccount.CustomerCode == "049")
-                                {
-                                    if (customerRefNo != "-")
+                                    if (packingListPalletPackageLine != null && packingListPalletPackageLine.Id != Guid.Empty)
                                     {
-                                        int lenght = customerRefNo.Length;
-
-                                        ticketNo = customerRefNo.Remove(lenght - 2, 2) + "000";
-                                        ticketNo = ticketNo.Replace(" ", string.Empty);
+                                        packageOrderNo = packingListPalletPackageLine.PackageNo;
+                                        quantityInPackage = packingListPalletPackageLine.PackageContent;
+                                        packageQuantity = packingListPalletPackageLine.NumberofPackage;
                                     }
                                 }
+
+                                int totalPackageQuantity = quantityInPackage * packageQuantity;
+
+                                string packageType = line.PackageType;
+
+                                string orderRefNo = string.Empty;
+
+                                string supplierRefNo = string.Empty;
+
+                                string customerRefNo = string.Empty;
+
+                                var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductID == line.ProductID.GetValueOrDefault() && t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).FirstOrDefault();
+
+                                if (productRefNo != null && productRefNo.Id != Guid.Empty)
+                                {
+                                    supplierRefNo = productRefNo.ReferanceNo;
+                                    customerRefNo = productRefNo.CustomerReferanceNo;
+                                    orderRefNo = productRefNo.OrderReferanceNo;
+                                }
+
+                                var currentAccount = (await CurrentAccountCardsAppService.GetAsync(line.CurrentAccountCardID.GetValueOrDefault())).Data;
+
+                                string customerCode = currentAccount.CustomerCode;
+
+                                string ticketNo = customerRefNo;
+
+                                if (currentAccount != null && currentAccount.Id != Guid.Empty)
+                                {
+                                    if (currentAccount.CustomerCode == "049")
+                                    {
+                                        if (customerRefNo != "-")
+                                        {
+                                            int lenght = customerRefNo.Length;
+
+                                            ticketNo = customerRefNo.Remove(lenght - 2, 2) + "000";
+                                            ticketNo = ticketNo.Replace(" ", string.Empty);
+                                        }
+                                    }
+                                }
+
+                                string status = string.Empty;
+
+                                int statusInt = (int)pallet.PalletRecordsStateEnum;
+
+                                switch (statusInt)
+                                {
+                                    case 1: status = L["EnumPreparing"]; break;
+                                    case 2: status = L["EnumCompleted"]; break;
+                                    case 3: status = L["EnumApproved"]; break;
+                                    default: break;
+                                }
+
+                                bool isApproved = false;
+
+                                if(statusInt == 3)
+                                {
+                                    isApproved = true;
+                                }
+
+                                #endregion
+
+                                TicketListGrid ticketListModel = new TicketListGrid
+                                {
+                                    PalletNo = palletNo,
+                                    ProductCode = productCode,
+                                    PackageOrderNo = packageOrderNo,
+                                    QuantityInPackage = quantityInPackage,
+                                    PackageQuantity = packageQuantity,
+                                    TotalPackageQuantity = totalPackageQuantity,
+                                    PackageType = packageType,
+                                    OrderRefNo = orderRefNo,
+                                    CustomerCode = customerCode,
+                                    CustomerRefNo = ticketNo,
+                                    Status = status,
+                                    IsApproved = isApproved,
+                                };
+
+                                TicketListGridList.Add(ticketListModel);
+
+                                await InvokeAsync(StateHasChanged);
+
                             }
-
-                            string status = string.Empty;
-
-                            int statusInt = (int)pallet.PalletRecordsStateEnum;
-
-                            switch (statusInt)
-                            {
-                                case 1: status = L["EnumPreparing"]; break;
-                                case 2: status = L["EnumCompleted"]; break;
-                                case 3: status = L["EnumApproved"]; break;
-                                default: break;
-                            }
-
-                            #endregion
-
-                            TicketListGrid ticketListModel = new TicketListGrid
-                            {
-                                PalletNo = palletNo,
-                                ProductCode = productCode,
-                                PackageOrderNo = packageOrderNo,
-                                QuantityInPackage = quantityInPackage,
-                                PackageQuantity = packageQuantity,
-                                TotalPackageQuantity = totalPackageQuantity,
-                                PackageType = packageType,
-                                OrderRefNo = orderRefNo,
-                                CustomerCode = customerCode,
-                                CustomerRefNo = ticketNo,
-                                Status = status,
-                            };
-
-                            TicketListGridList.Add(ticketListModel);
-
-                            await InvokeAsync(StateHasChanged);
 
                         }
-
                     }
 
                     TicketListGridToolbarItems.Add(new ItemModel() { Id = "ExcelExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIExcelIcon", TooltipText = GetSQLDateAppService.GetDateFromSQL().ToShortDateString() + "-TicketList" });
@@ -987,30 +999,36 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                         selectedNumberofPackages = 0;
                         PackageFichesList = (await PackageFichesAppService.GetListAsync(new ListPackageFichesParameterDto())).Data.Where(t => t.PackageType == DataSource.PackageType && t.CurrentAccountID == DataSource.CurrentAccountCardID).ToList();
 
-                        foreach (var packageFiche in PackageFichesList)
-                        {
-                            int totalQuantity = (await PackageFichesAppService.GetAsync(packageFiche.Id)).Data.SelectPackageFicheLines.Select(t => t.Quantity).Sum();
+                        PackageFichesList = PackageFichesList.Where(t=>t.PackingListID == Guid.Empty || t.PackingListID == null).ToList();
 
-                            PackageFicheSelectionGrid packageFicheSelectionModel = new PackageFicheSelectionGrid
+                        if(PackageFichesList.Count >0 && PackageFichesList != null)
+                        {
+                            foreach (var packageFiche in PackageFichesList)
                             {
-                                Code = packageFiche.Code,
-                                SalesOrderID = packageFiche.SalesOrderID.GetValueOrDefault(),
-                                CustomerCode = packageFiche.CustomerCode,
-                                ProductID = packageFiche.ProductID,
-                                Id = packageFiche.Id,
-                                NumberofPackage = packageFiche.NumberofPackage,
-                                PackageContent = packageFiche.PackageContent,
-                                ProductCode = packageFiche.ProductCode,
-                                SalesOrderFicheNo = packageFiche.SalesOrderFicheNo,
-                                LoadingDate = DataSource.PlannedLoadingTime.GetValueOrDefault(),
-                                PackageType = packageFiche.PackageType,
-                                PalletNo = packageFiche.PalletNumber,
-                                ProductName = packageFiche.ProductName,
-                                TotalQuantity = totalQuantity,
-                                SelectedLine = false
-                            };
-                            PackageFichesSelectionList.Add(packageFicheSelectionModel);
+                                int totalQuantity = (await PackageFichesAppService.GetAsync(packageFiche.Id)).Data.SelectPackageFicheLines.Select(t => t.Quantity).Sum();
+
+                                PackageFicheSelectionGrid packageFicheSelectionModel = new PackageFicheSelectionGrid
+                                {
+                                    Code = packageFiche.Code,
+                                    SalesOrderID = packageFiche.SalesOrderID.GetValueOrDefault(),
+                                    CustomerCode = packageFiche.CustomerCode,
+                                    ProductID = packageFiche.ProductID,
+                                    Id = packageFiche.Id,
+                                    NumberofPackage = packageFiche.NumberofPackage,
+                                    PackageContent = packageFiche.PackageContent,
+                                    ProductCode = packageFiche.ProductCode,
+                                    SalesOrderFicheNo = packageFiche.SalesOrderFicheNo,
+                                    LoadingDate = DataSource.PlannedLoadingTime.GetValueOrDefault(),
+                                    PackageType = packageFiche.PackageType,
+                                    PalletNo = packageFiche.PalletNumber,
+                                    ProductName = packageFiche.ProductName,
+                                    TotalQuantity = totalQuantity,
+                                    SelectedLine = false
+                                };
+                                PackageFichesSelectionList.Add(packageFicheSelectionModel);
+                            }
                         }
+
                         SelectPackageFichesModal = true;
                     }
 

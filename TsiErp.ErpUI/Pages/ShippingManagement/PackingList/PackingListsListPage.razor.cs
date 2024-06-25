@@ -391,26 +391,33 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     var pallet = args.RowInfo.RowData;
                     int selectedPalletIndex = PalletSelectionList.IndexOf(pallet);
 
-                    bool notLastSelectedLine = false;
+                    bool isAdded = false;
 
-                    for (int i = selectedPalletIndex; i <= -1; i--)
+                    foreach(var pal in PalletSelectionList)
                     {
-                        if (!PalletSelectionList[i].SelectedPallet)
+                        int palIndex = PalletSelectionList.IndexOf(pal);
+
+                        if(palIndex < selectedPalletIndex)
                         {
-                            await ModalManager.WarningPopupAsync(L["UIWarningSelectedIndexTitle"], L["UIWarningSelectedIndexMessage"]);
-                            notLastSelectedLine = true;
+                            if (!pal.SelectedPallet)
+                            {
+                                await ModalManager.WarningPopupAsync(L["UIWarningSelectedIndexTitle"], L["UIWarningSelectedIndexMessage"]);
+                                break;
+                            }
                         }
-                        if (notLastSelectedLine)
+                        else
                         {
+                            isAdded = true;
                             break;
                         }
                     }
-                    if (!notLastSelectedLine)
-                    {
 
+                    if (isAdded)
+                    {
                         PalletSelectionList[selectedPalletIndex].SelectedPallet = true;
                         await _LinePalletSelectionGrid.Refresh();
                     }
+
 
                     await InvokeAsync(StateHasChanged);
 
@@ -559,7 +566,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             #endregion
 
+            GridLinePalletList = GridLinePalletList.OrderBy(t=>t.PalletName).ToList();
 
+            DataSource.SelectPackingListPalletLines = GridLinePalletList;
 
             await _LinePalletGrid.Refresh();
 

@@ -10,6 +10,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos
         /// </summary>
         public string Code { get; set; }
         /// <summary>
+        /// Çeki Listesi ID
+        /// </summary>
+        public Guid? PackingListID { get; set; }
+        /// <summary>
         /// Paket Fişi Tarihi
         /// </summary>
         public DateTime? Date_ { get; set; }

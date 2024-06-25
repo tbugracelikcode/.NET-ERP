@@ -19,6 +19,17 @@ namespace TsiErp.Business.Entities.ShippingManagement.PalletRecord.Validations
               .MaximumLength(17)
               .WithMessage("ValidatorNameMaxLenght");
 
+            RuleFor(x => x.CurrentAccountCardID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorCurrentAccountCardID");
+
+            RuleFor(x => x.PackingListID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorPackingListID");
+
+            RuleFor(x => x.PackageType)
+             .NotEmpty()
+             .WithMessage("ValidatorPackageTypeEmpty");
+
+            RuleFor(x => x.PlannedLoadingTime)
+               .NotEmpty()
+               .WithMessage("ValidatorPlannedLoadingTime");
         }
     }
 }

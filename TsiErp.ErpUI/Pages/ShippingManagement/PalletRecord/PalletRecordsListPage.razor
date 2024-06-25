@@ -776,192 +776,41 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
+                                    <GridColumn Field=@nameof(TicketListGrid.IsApproved) DisplayAsCheckBox=true HeaderText="@L["TicketListGridIsApproved"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
+                                       
+                                    </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.PalletNo) HeaderText="@L["TicketListGridPalletNo"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        <Template>
-                                            @{
-                                                TicketListGrid ticket = (ticketContext as TicketListGrid);
-
-                                                if (ticket.Status == L["EnumApproved"])
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@ticket.PalletNo</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #f75252;width: 100%;height: 100%;">@ticket.PalletNo</div>
-                                                }
-                                            }
-
-                                        </Template>
+                                       
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.ProductCode) HeaderText="@L["TicketListGridProductCode"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        <Template>
-                                            @{
-                                                TicketListGrid ticket = (ticketContext as TicketListGrid);
-
-                                                if (ticket.Status == L["EnumApproved"])
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@ticket.ProductCode</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #f75252;width: 100%;height: 100%;">@ticket.ProductCode</div>
-                                                }
-                                            }
-
-                                        </Template>
+                                        
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.PackageOrderNo) HeaderText="@L["TicketListGridPackageOrderNo"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        <Template>
-                                            @{
-                                                TicketListGrid ticket = (ticketContext as TicketListGrid);
-
-                                                if (ticket.Status == L["EnumApproved"])
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@ticket.PackageOrderNo</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #f75252;width: 100%;height: 100%;">@ticket.PackageOrderNo</div>
-                                                }
-                                            }
-
-                                        </Template>
+                                        
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.QuantityInPackage) HeaderText="@L["TicketListGridQuantityInPackage"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        <Template>
-                                            @{
-                                                TicketListGrid ticket = (ticketContext as TicketListGrid);
-
-                                                if (ticket.Status == L["EnumApproved"])
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@ticket.QuantityInPackage</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #f75252;width: 100%;height: 100%;">@ticket.QuantityInPackage</div>
-                                                }
-                                            }
-
-                                        </Template>
+                                      
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.PackageQuantity) HeaderText="@L["TicketListGridPackageQuantity"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        <Template>
-                                            @{
-                                                TicketListGrid ticket = (ticketContext as TicketListGrid);
-
-                                                if (ticket.Status == L["EnumApproved"])
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@ticket.PackageQuantity</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #f75252;width: 100%;height: 100%;">@ticket.PackageQuantity</div>
-                                                }
-                                            }
-
-                                        </Template>
+                                       
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.TotalPackageQuantity) HeaderText="@L["TicketListGridTotalPackageQuantity"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        <Template>
-                                            @{
-                                                TicketListGrid ticket = (ticketContext as TicketListGrid);
-
-                                                if (ticket.Status == L["EnumApproved"])
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@ticket.TotalPackageQuantity</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #f75252;width: 100%;height: 100%;">@ticket.TotalPackageQuantity</div>
-                                                }
-                                            }
-
-                                        </Template>
+                                       
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.PackageType) HeaderText="@L["TicketListGridPackageType"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        <Template>
-                                            @{
-                                                TicketListGrid ticket = (ticketContext as TicketListGrid);
-
-                                                if (ticket.Status == L["EnumApproved"])
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@ticket.PackageType</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #f75252;width: 100%;height: 100%;">@ticket.PackageType</div>
-                                                }
-                                            }
-
-                                        </Template>
+                                        
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.OrderRefNo) HeaderText="@L["TicketListGridOrderRefNo"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        <Template>
-                                            @{
-                                                TicketListGrid ticket = (ticketContext as TicketListGrid);
-
-                                                if (ticket.Status == L["EnumApproved"])
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@ticket.OrderRefNo</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #f75252;width: 100%;height: 100%;">@ticket.OrderRefNo</div>
-                                                }
-                                            }
-
-                                        </Template>
+                                       
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.CustomerRefNo) HeaderText="@L["TicketListGridCustomerRefNo"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        <Template>
-                                            @{
-                                                TicketListGrid ticket = (ticketContext as TicketListGrid);
-
-                                                if (ticket.Status == L["EnumApproved"])
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@ticket.CustomerRefNo</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #f75252;width: 100%;height: 100%;">@ticket.CustomerRefNo</div>
-                                                }
-                                            }
-
-                                        </Template>
+                                       
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.CustomerCode) HeaderText="@L["TicketListGridCustomerCode"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        <Template>
-                                            @{
-                                                TicketListGrid ticket = (ticketContext as TicketListGrid);
-
-                                                if (ticket.Status == L["EnumApproved"])
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@ticket.CustomerCode</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #f75252;width: 100%;height: 100%;">@ticket.CustomerCode</div>
-                                                }
-                                            }
-
-                                        </Template>
+                                       
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.Status) HeaderText="@L["TicketListGridStatus"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        <Template>
-                                            @{
-                                                TicketListGrid ticket = (ticketContext as TicketListGrid);
-
-                                                if (ticket.Status == L["EnumApproved"])
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@ticket.Status</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #f75252;width: 100%;height: 100%;">@ticket.Status</div>
-                                                }
-                                            }
-
-                                        </Template>
+                                        
                                     </GridColumn>
 
                                 </GridColumns>

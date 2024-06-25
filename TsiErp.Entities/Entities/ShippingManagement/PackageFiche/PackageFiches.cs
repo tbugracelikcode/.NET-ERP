@@ -35,6 +35,11 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackageFiche
         /// Cari Hesap ID
         /// </summary>
         public Guid CurrentAccountID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Çeki Listesi ID
+        /// </summary>
+        public Guid PackingListID { get; set; }
         [SqlColumnType(MaxLength = 250, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Koli Türü

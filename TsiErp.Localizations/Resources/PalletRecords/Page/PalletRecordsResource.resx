@@ -612,6 +612,9 @@
   <data name="TicketListGridCustomerRefNo" xml:space="preserve">
     <value>MÜŞTERİ REF NO</value>
   </data>
+  <data name="TicketListGridIsApproved" xml:space="preserve">
+    <value>ONAYLANAN</value>
+  </data>
   <data name="TicketListGridOrderRefNo" xml:space="preserve">
     <value>SİPARİŞ REF NO</value>
   </data>
@@ -759,11 +762,23 @@
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
     <value>Palet kodu 17 karakterden fazla olamaz.</value>
   </data>
+  <data name="ValidatorCurrentAccountCardID" xml:space="preserve">
+    <value>Lütfen bir cari hesap seçin.</value>
+  </data>
   <data name="ValidatorNameEmpty" xml:space="preserve">
     <value>Lütfen palet adını yazın.</value>
   </data>
   <data name="ValidatorNameMaxLenght" xml:space="preserve">
     <value>Palet adı 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorPackageTypeEmpty" xml:space="preserve">
+    <value>Lütfen koli türü seçin.</value>
+  </data>
+  <data name="ValidatorPackingListID" xml:space="preserve">
+    <value>Lütfen bir çeki listesi seçin.</value>
+  </data>
+  <data name="ValidatorPlannedLoadingTime" xml:space="preserve">
+    <value>Lütfen planlanan yükleme tarihi seçin.</value>
   </data>
   <data name="Width_Label" xml:space="preserve">
     <value>En:</value>
