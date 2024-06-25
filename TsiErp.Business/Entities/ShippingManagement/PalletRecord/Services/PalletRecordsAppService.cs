@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
+using System.Runtime.Serialization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -10,10 +11,12 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.PackageFiche.Services;
 using TsiErp.Business.Entities.ShippingManagement.PalletRecord.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList;
@@ -24,6 +27,7 @@ using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PalletRecords.Page;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
 
 namespace TsiErp.Business.Entities.PalletRecord.Services
 {
@@ -33,11 +37,13 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly IPackageFichesAppService _PackageFichesAppService;
 
-        public PalletRecordsAppService(IStringLocalizer<PalletRecordsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public PalletRecordsAppService(IStringLocalizer<PalletRecordsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, IPackageFichesAppService packageFichesAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _PackageFichesAppService = packageFichesAppService;
         }
 
         [ValidationAspect(typeof(CreatePalletRecordsValidator), Priority = 1)]
@@ -68,6 +74,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             {
                 state = 1;
             }
+
 
             var query = queryFactory.Query().From(Tables.PalletRecords).Insert(new CreatePalletRecordsDto
             {
@@ -136,6 +143,33 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("PalletRecordsChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PalletRecords, LogType.Insert, addedEntityId);
+
+
+            #region Paket Fişlerinin Çeki Listesi ID Kısımlarını Update İşlemleri
+
+            var packageFicheIDList = input.SelectPalletRecordLines.Select(t => t.PackageFicheID).Distinct().ToList();
+
+            if (packageFicheIDList.Count > 0 && packageFicheIDList != null)
+            {
+                foreach (var packageFicheID in packageFicheIDList)
+                {
+                    if (packageFicheID != null && packageFicheID != Guid.Empty)
+                    {
+                        var selectedPackageFiche = (await _PackageFichesAppService.GetAsync(packageFicheID.GetValueOrDefault())).Data;
+
+                        if (selectedPackageFiche != null)
+                        {
+                            selectedPackageFiche.PackingListID = input.PackingListID;
+
+                            var updatedPackageFicheEntity = ObjectMapper.Map<SelectPackageFichesDto, UpdatePackageFichesDto>(selectedPackageFiche);
+
+                            await _PackageFichesAppService.UpdateAsync(updatedPackageFicheEntity);
+                        }
+                    }
+                }
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectPalletRecordsDto>(PalletRecord);
@@ -464,6 +498,32 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             }
 
             var billOfMaterial = queryFactory.Update<SelectPalletRecordsDto>(query, "Id", true);
+
+            #region Paket Fişlerinin Çeki Listesi ID Kısımlarını Update İşlemleri
+
+            var packageFicheIDList = input.SelectPalletRecordLines.Select(t => t.PackageFicheID).Distinct().ToList();
+
+            if (packageFicheIDList.Count > 0 && packageFicheIDList != null)
+            {
+                foreach (var packageFicheID in packageFicheIDList)
+                {
+                    if (packageFicheID != null && packageFicheID != Guid.Empty)
+                    {
+                        var selectedPackageFiche = (await _PackageFichesAppService.GetAsync(packageFicheID.GetValueOrDefault())).Data;
+
+                        if (selectedPackageFiche != null)
+                        {
+                            selectedPackageFiche.PackingListID = input.PackingListID;
+
+                            var updatedPackageFicheEntity = ObjectMapper.Map<SelectPackageFichesDto, UpdatePackageFichesDto>(selectedPackageFiche);
+
+                            await _PackageFichesAppService.UpdateAsync(updatedPackageFicheEntity);
+                        }
+                    }
+                }
+            }
+
+            #endregion
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PalletRecords, LogType.Update, billOfMaterial.Id);
 

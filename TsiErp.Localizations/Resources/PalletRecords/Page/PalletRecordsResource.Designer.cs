@@ -1555,6 +1555,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ONAYLANAN.
+        /// </summary>
+        public static string TicketListGridIsApproved {
+            get {
+                return ResourceManager.GetString("TicketListGridIsApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SİPARİŞ REF NO.
         /// </summary>
         public static string TicketListGridOrderRefNo {
@@ -1996,6 +2005,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen bir cari hesap seçin..
+        /// </summary>
+        public static string ValidatorCurrentAccountCardID {
+            get {
+                return ResourceManager.GetString("ValidatorCurrentAccountCardID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen palet adını yazın..
         /// </summary>
         public static string ValidatorNameEmpty {
@@ -2010,6 +2028,33 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         public static string ValidatorNameMaxLenght {
             get {
                 return ResourceManager.GetString("ValidatorNameMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen koli türü seçin..
+        /// </summary>
+        public static string ValidatorPackageTypeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorPackageTypeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen bir çeki listesi seçin..
+        /// </summary>
+        public static string ValidatorPackingListID {
+            get {
+                return ResourceManager.GetString("ValidatorPackingListID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen planlanan yükleme tarihi seçin..
+        /// </summary>
+        public static string ValidatorPlannedLoadingTime {
+            get {
+                return ResourceManager.GetString("ValidatorPlannedLoadingTime", resourceCulture);
             }
         }
         

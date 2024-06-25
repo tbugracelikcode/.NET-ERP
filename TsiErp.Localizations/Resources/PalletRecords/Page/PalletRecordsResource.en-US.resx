@@ -615,6 +615,9 @@
   <data name="TicketListGridCustomerRefNo" xml:space="preserve">
     <value>CUSTOMER REF NO</value>
   </data>
+  <data name="TicketListGridIsApproved" xml:space="preserve">
+    <value>APPROVED</value>
+  </data>
   <data name="TicketListGridOrderRefNo" xml:space="preserve">
     <value>ORDER REF NO</value>
   </data>
@@ -762,11 +765,23 @@
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
     <value>Pallet code cannot exceed 17 characters.</value>
   </data>
+  <data name="ValidatorCurrentAccountCardID" xml:space="preserve">
+    <value>Please select a current account card.</value>
+  </data>
   <data name="ValidatorNameEmpty" xml:space="preserve">
     <value>Please enter the pallet name.</value>
   </data>
   <data name="ValidatorNameMaxLenght" xml:space="preserve">
     <value>Pallet code cannot exceed 200 characters.</value>
+  </data>
+  <data name="ValidatorPackageTypeEmpty" xml:space="preserve">
+    <value>Please select a package type.</value>
+  </data>
+  <data name="ValidatorPackingListID" xml:space="preserve">
+    <value>Please select a packing list.</value>
+  </data>
+  <data name="ValidatorPlannedLoadingTime" xml:space="preserve">
+    <value>Please select a planned loading time.</value>
   </data>
   <data name="Width_Label" xml:space="preserve">
     <value>Width:</value>

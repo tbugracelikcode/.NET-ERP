@@ -18,6 +18,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos
         /// </summary>
         public string Code { get; set; }
         /// <summary>
+        /// Çeki Listesi ID
+        /// </summary>
+        public Guid? PackingListID { get; set; }
+        /// <summary>
         /// Üretim Emri ID
         /// </summary>
         public Guid? ProductionOrderID { get; set; }
