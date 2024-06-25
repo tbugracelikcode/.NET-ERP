@@ -330,6 +330,12 @@
   <data name="PackingListsContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="PackingListsContextPackingList" xml:space="preserve">
+    <value>Çeki Listesi</value>
+  </data>
+  <data name="PackingListsContextPrint" xml:space="preserve">
+    <value>Yazdır</value>
+  </data>
   <data name="PackingListsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
@@ -350,6 +356,18 @@
   </data>
   <data name="PackingListStateLabel" xml:space="preserve">
     <value>Durum:</value>
+  </data>
+  <data name="PalletRecordsContextCommercialInvoice" xml:space="preserve">
+    <value>Commercial Invoice</value>
+  </data>
+  <data name="PalletRecordsContextCustomClearanceInstruction" xml:space="preserve">
+    <value>Gümrükleme Talimatı</value>
+  </data>
+  <data name="PalletRecordsContextShippingInstruction" xml:space="preserve">
+    <value>Nakliye Talimatı</value>
+  </data>
+  <data name="PalletRecordsContextUploadConfirmation" xml:space="preserve">
+    <value>Yükleme Teyidi</value>
   </data>
   <data name="PalletRecordsModalTitle" xml:space="preserve">
     <value>Palet Kayıtları</value>

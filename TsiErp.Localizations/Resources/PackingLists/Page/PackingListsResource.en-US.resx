@@ -330,6 +330,12 @@
   <data name="PackingListsContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PackingListsContextPackingList" xml:space="preserve">
+    <value>Packing List</value>
+  </data>
+  <data name="PackingListsContextPrint" xml:space="preserve">
+    <value>Print</value>
+  </data>
   <data name="PackingListsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
@@ -350,6 +356,18 @@
   </data>
   <data name="PackingListStateLabel" xml:space="preserve">
     <value>Status:</value>
+  </data>
+  <data name="PalletRecordsContextCommercialInvoice" xml:space="preserve">
+    <value>Commercial Invoice</value>
+  </data>
+  <data name="PalletRecordsContextCustomClearanceInstruction" xml:space="preserve">
+    <value>Custom Clearance Instruction</value>
+  </data>
+  <data name="PalletRecordsContextShippingInstruction" xml:space="preserve">
+    <value>Shipping Instruction</value>
+  </data>
+  <data name="PalletRecordsContextUploadConfirmation" xml:space="preserve">
+    <value>Upload Confirmation</value>
   </data>
   <data name="PalletRecordsModalTitle" xml:space="preserve">
     <value>Pallet Records</value>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Lists;
+using Syncfusion.Blazor.Navigations;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using TsiErp.Business.Entities.PackageFiche.Services;
@@ -209,6 +210,39 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsContextDelete"], Id = "delete" }); break;
                             case "PackingListsContextRefresh":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsContextRefresh"], Id = "refresh" }); break;
+                            case "PackingListsContextPrint":
+
+                                List<MenuItem> subMenus = new List<MenuItem>();
+
+                                var subList = MenusList.Where(t => t.ParentMenuId == context.Id).OrderBy(t => t.ContextOrderNo).ToList();
+
+                                foreach (var subMenu in subList)
+                                {
+                                    var subPermission = UserPermissionsList.Where(t => t.MenuId == subMenu.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+
+                                    if (subPermission)
+                                    {
+                                        switch (subMenu.MenuName)
+                                        {
+                                            case "PackingListsContextPackingList":
+                                                subMenus.Add(new MenuItem { Text = L["PackingListsContextPackingList"], Id = "packinglist" }); break;
+                                            case "PalletRecordsContextCommercialInvoice":
+                                                subMenus.Add(new MenuItem { Text = L["PalletRecordsContextCommercialInvoice"], Id = "commercialinvoice" }); break;
+                                            case "PalletRecordsContextCustomClearanceInstruction":
+                                                subMenus.Add(new MenuItem { Text = L["PalletRecordsContextCustomClearanceInstruction"], Id = "custominstruction" }); break;
+                                            case "PalletRecordsContextShippingInstruction":
+                                                subMenus.Add(new MenuItem { Text = L["PalletRecordsContextShippingInstruction"], Id = "shippinginstruction" }); break;
+                                            case "PalletRecordsContextUploadConfirmation":
+                                                subMenus.Add(new MenuItem { Text = L["PalletRecordsContextUploadConfirmation"], Id = "uploadconfirmation" }); break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+
+
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsContextPrint"], Id = "print", Items = subMenus }); break;
+
                             default: break;
                         }
                     }
@@ -325,6 +359,26 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 case "refresh":
                     await GetListDataSourceAsync();
                     await _grid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "print":
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "packinglist":
+                    await InvokeAsync(StateHasChanged);
+                    break;
+                case "commercialinvoice":
+                    await InvokeAsync(StateHasChanged);
+                    break;
+                case "custominstruction":
+                    await InvokeAsync(StateHasChanged);
+                    break;
+                case "shippinginstruction":
+                    await InvokeAsync(StateHasChanged);
+                    break;
+                case "uploadconfirmation":
                     await InvokeAsync(StateHasChanged);
                     break;
 

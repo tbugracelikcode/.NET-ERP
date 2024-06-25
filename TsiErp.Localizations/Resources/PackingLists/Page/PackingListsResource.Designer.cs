@@ -700,6 +700,24 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çeki Listesi.
+        /// </summary>
+        public static string PackingListsContextPackingList {
+            get {
+                return ResourceManager.GetString("PackingListsContextPackingList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yazdır.
+        /// </summary>
+        public static string PackingListsContextPrint {
+            get {
+                return ResourceManager.GetString("PackingListsContextPrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string PackingListsContextRefresh {
@@ -759,6 +777,42 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         public static string PackingListStateLabel {
             get {
                 return ResourceManager.GetString("PackingListStateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commercial Invoice.
+        /// </summary>
+        public static string PalletRecordsContextCommercialInvoice {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextCommercialInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gümrükleme Talimatı.
+        /// </summary>
+        public static string PalletRecordsContextCustomClearanceInstruction {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextCustomClearanceInstruction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nakliye Talimatı.
+        /// </summary>
+        public static string PalletRecordsContextShippingInstruction {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextShippingInstruction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yükleme Teyidi.
+        /// </summary>
+        public static string PalletRecordsContextUploadConfirmation {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextUploadConfirmation", resourceCulture);
             }
         }
         
