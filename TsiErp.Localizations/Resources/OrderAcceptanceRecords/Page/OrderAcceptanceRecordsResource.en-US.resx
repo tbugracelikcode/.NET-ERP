@@ -450,6 +450,9 @@
   <data name="OrderAcceptanceRecordsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextTechnicalApproval" xml:space="preserve">
     <value>Technical Approval</value>
   </data>
