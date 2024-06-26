@@ -17,6 +17,10 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos
         /// </summary>
         public string BankAccountName { get; set; }
         /// <summary>
+        /// Banka Talimat Açıklaması
+        /// </summary>
+        public string BankInstructionDescription { get; set; }
+        /// <summary>
         /// Hesap No
         /// </summary>
         public string AccountNo { get; set; }
