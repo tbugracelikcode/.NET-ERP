@@ -1,26 +1,13 @@
 ﻿using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagementParameter.Services;
-using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
-using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.FinanceManagementParameter.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.FicheNumber.Page;
-using TsiErp.Localizations.Resources.FinanceManagementParameter.Page;
 
 namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 {

@@ -18,6 +18,7 @@
 @inject ISalesOrdersAppService SalesOrdersAppService
 @inject IPackageFichesAppService PackageFichesAppService
 @inject IStockManagementParametersAppService StockManagementParametersAppService
+@inject IBankAccountsAppService BankAccountsAppService
 
 @if (!base.IsLoaded)
 {
@@ -232,7 +233,7 @@ else
                     <DxGridLayoutItem Row="4" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["BankNameLabel"]</strong></label><br />
-                            <SfTextBox Multiline=false @bind-Value="DataSource.BankName"></SfTextBox>
+                            <SfTextBox @ref="@BankAccountsButtonEdit" Created="@BankAccountOnCreateIcon" @bind-Value="DataSource.BankName" ShowClearButton=true ValueChange="BankAccountsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -615,6 +616,61 @@ else
                                             <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Code) HeaderText="@L["CurrentAccountModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Name) HeaderText="@L["CurrentAccountModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Responsible) HeaderText="@L["CurrentAccountModalGridResponsible"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectBankAccountsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectBankAccountsPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["BankAccountModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="BankAccountsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@BankAccountsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@BankAccountsDoubleClickHandler" TValue="ListBankAccountsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListBankAccountsDto.Code) HeaderText="@L["BankAccountGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListBankAccountsDto.Name) HeaderText="@L["BankAccountGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListBankAccountsDto.BankAccountName) HeaderText="@L["BankAccountGridBankAccountName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListBankAccountsDto.BankBranchName) HeaderText="@L["BankAccountGridBankBranchName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListBankAccountsDto.BankBranchNo) HeaderText="@L["BankAccountGridBankBranchNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListBankAccountsDto.AccountNo) HeaderText="@L["BankAccountGridAccountNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
 
                                     </SfGrid>

@@ -13,6 +13,7 @@ using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.ShippingManagement.PackingList.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
@@ -298,6 +299,13 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         nameof(ShippingAdresses.Id),
                         JoinType.Left
                     )
+                      .Join<BankAccounts>
+                    (
+                        pr => new { BankID = pr.Id, BankName = pr.Name },
+                        nameof(PackingLists.BankID),
+                        nameof(BankAccounts.Id),
+                        JoinType.Left
+                    )
                     .Where(new { Id = id }, false, false, Tables.PackingLists);
 
             var packingLists = queryFactory.Get<SelectPackingListsDto>(query);
@@ -395,6 +403,13 @@ namespace TsiErp.Business.Entities.PackingList.Services
                          "Sent",
                         JoinType.Left
                     )
+                       .Join<BankAccounts>
+                    (
+                        pr => new { BankID = pr.Id, BankName = pr.Name },
+                        nameof(PackingLists.BankID),
+                        nameof(BankAccounts.Id),
+                        JoinType.Left
+                    )
                      .Join<ShippingAdresses>
                     (
                         pr => new { ShippingAddressAddress = pr.Adress1, ShippingAddressID = pr.Id },
@@ -460,6 +475,13 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         nameof(PackingLists.RecieverID),
                         nameof(CurrentAccountCards.Id),
                          "Sent",
+                        JoinType.Left
+                    )
+                       .Join<BankAccounts>
+                    (
+                        pr => new { BankID = pr.Id, BankName = pr.Name },
+                        nameof(PackingLists.BankID),
+                        nameof(BankAccounts.Id),
                         JoinType.Left
                     )
                      .Join<ShippingAdresses>
@@ -547,6 +569,13 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         nameof(PackingLists.RecieverID),
                         nameof(CurrentAccountCards.Id),
                          "Sent",
+                        JoinType.Left
+                    )
+                       .Join<BankAccounts>
+                    (
+                        pr => new { BankID = pr.Id, BankName = pr.Name },
+                        nameof(PackingLists.BankID),
+                        nameof(BankAccounts.Id),
                         JoinType.Left
                     )
                      .Join<ShippingAdresses>

@@ -10,6 +10,7 @@ using System.Reflection;
 using TsiErp.Business.Entities.PackageFiche.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
@@ -675,6 +676,53 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
         {
             DataSource.BillDate = DataSource.BillDate.Value.AddDays(DataSource.TransmitterPaymentTermDay);
             await InvokeAsync(StateHasChanged);
+        }
+
+        #endregion
+
+
+        #region Banka ButtonEdit
+
+        SfTextBox BankAccountsButtonEdit;
+        bool SelectBankAccountsPopupVisible = false;
+        List<ListBankAccountsDto> BankAccountsList = new List<ListBankAccountsDto>();
+
+        public async Task BankAccountOnCreateIcon()
+        {
+            var BankAccountButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, BankAccountsButtonClickEvent);
+            await BankAccountsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", BankAccountButtonClick } });
+        }
+
+        public async void BankAccountsButtonClickEvent()
+        {
+            SelectBankAccountsPopupVisible = true;
+            BankAccountsList = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void BankAccountsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.BankID = Guid.Empty;
+                DataSource.BankName = string.Empty;
+            }
+        }
+
+        public async void BankAccountsDoubleClickHandler(RecordDoubleClickEventArgs<ListBankAccountsDto> args)
+        {
+            var selectedBankAccount = args.RowData;
+
+            if (selectedBankAccount != null)
+            {
+
+                DataSource.BankID = selectedBankAccount.Id;
+                DataSource.BankName = selectedBankAccount.Name;
+
+                SelectBankAccountsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
         }
 
         #endregion

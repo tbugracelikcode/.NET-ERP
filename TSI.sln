@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui-UretimEkran", "ui-Uretim
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.UretimEkranUI", "TsiErp.UretimEkranUI\TsiErp.UretimEkranUI.csproj", "{9CDFE520-7609-4820-BA9E-F5F35F954F9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TsiErp.Connector", "TsiErp.Connector\TsiErp.Connector.csproj", "{6E240E7C-CA1F-45AD-BBB1-AE74FA12C469}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.Connector", "TsiErp.Connector\TsiErp.Connector.csproj", "{6E240E7C-CA1F-45AD-BBB1-AE74FA12C469}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

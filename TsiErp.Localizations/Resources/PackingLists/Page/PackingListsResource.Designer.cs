@@ -61,6 +61,69 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HESAP NUMARASI.
+        /// </summary>
+        public static string BankAccountGridAccountNo {
+            get {
+                return ResourceManager.GetString("BankAccountGridAccountNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BANKA HESAP ADI.
+        /// </summary>
+        public static string BankAccountGridBankAccountName {
+            get {
+                return ResourceManager.GetString("BankAccountGridBankAccountName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞUBE ADI.
+        /// </summary>
+        public static string BankAccountGridBankBranchName {
+            get {
+                return ResourceManager.GetString("BankAccountGridBankBranchName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞUBE NUMARASI.
+        /// </summary>
+        public static string BankAccountGridBankBranchNo {
+            get {
+                return ResourceManager.GetString("BankAccountGridBankBranchNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BANKA KODU.
+        /// </summary>
+        public static string BankAccountGridCode {
+            get {
+                return ResourceManager.GetString("BankAccountGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BANKA ADI.
+        /// </summary>
+        public static string BankAccountGridName {
+            get {
+                return ResourceManager.GetString("BankAccountGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banka Hesapları.
+        /// </summary>
+        public static string BankAccountModalTitle {
+            get {
+                return ResourceManager.GetString("BankAccountModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ödeme Bankası:.
         /// </summary>
         public static string BankNameLabel {

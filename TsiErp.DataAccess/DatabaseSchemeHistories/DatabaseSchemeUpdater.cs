@@ -6,6 +6,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.DatabaseSchemes;
 using TsiErp.DataAccess.Utilities;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
@@ -5707,6 +5708,40 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
             }
             #endregion
 
+            #region BankAccounts Table Created
+            Table BankAccountsTable = model.CreateTable(Tables.BankAccounts);
+
+            if (BankAccountsTable != null)
+            {
+                var properties = (typeof(BankAccounts)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(BankAccountsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(BankAccountsTable, "PK_" + BankAccountsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        BankAccountsTable.Indexes.Add(pkIndex);
+                    }
+
+                    BankAccountsTable.Columns.Add(column);
+                }
+
+                BankAccountsTable.Create();
+            }
+            #endregion
 
             return true;
         }
