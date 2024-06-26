@@ -349,6 +349,15 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Sipariş Numarası:.
+        /// </summary>
+        public static string CustomerOrderNrLabel {
+            get {
+                return ResourceManager.GetString("CustomerOrderNrLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşterinin İstediği Tarih:.
         /// </summary>
         public static string CustomerRequestedDateLabel {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Lists;
@@ -9,7 +10,9 @@ using System.Reflection;
 using TsiErp.Business.Entities.PackageFiche.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
@@ -669,6 +672,59 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             await Task.CompletedTask;
         }
 
+        public async void DateValueChangeHandler(ChangedEventArgs<DateTime?> args)
+        {
+            DataSource.BillDate = DataSource.BillDate.Value.AddDays(DataSource.TransmitterPaymentTermDay);
+            await InvokeAsync(StateHasChanged);
+        }
+
+        #endregion
+
+
+        #region Banka ButtonEdit
+
+        SfTextBox BankAccountsButtonEdit;
+        bool SelectBankAccountsPopupVisible = false;
+        List<ListBankAccountsDto> BankAccountsList = new List<ListBankAccountsDto>();
+
+        public async Task BankAccountOnCreateIcon()
+        {
+            var BankAccountButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, BankAccountsButtonClickEvent);
+            await BankAccountsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", BankAccountButtonClick } });
+        }
+
+        public async void BankAccountsButtonClickEvent()
+        {
+            SelectBankAccountsPopupVisible = true;
+            BankAccountsList = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void BankAccountsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.BankID = Guid.Empty;
+                DataSource.BankName = string.Empty;
+            }
+        }
+
+        public async void BankAccountsDoubleClickHandler(RecordDoubleClickEventArgs<ListBankAccountsDto> args)
+        {
+            var selectedBankAccount = args.RowData;
+
+            if (selectedBankAccount != null)
+            {
+
+                DataSource.BankID = selectedBankAccount.Id;
+                DataSource.BankName = selectedBankAccount.Name;
+
+                SelectBankAccountsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
         #endregion
 
         #region Gönderici ButtonEdit
@@ -695,12 +751,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
         {
             if (args.Value == null)
             {
+
                 DataSource.TransmitterID = Guid.Empty;
                 DataSource.TransmitterCode = string.Empty;
                 DataSource.TransmitterName = string.Empty;
                 DataSource.TransmitterSupplierNo = string.Empty;
                 DataSource.TransmitterEORINo = string.Empty;
                 DataSource.RecieverCustomerCode = string.Empty;
+                DataSource.TransmitterPaymentTermDay = 0;
             }
         }
 
@@ -710,12 +768,15 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             if (selectedTransmitter != null)
             {
+
                 DataSource.TransmitterID = selectedTransmitter.Id;
                 DataSource.TransmitterCode = selectedTransmitter.Code;
                 DataSource.TransmitterName = selectedTransmitter.Name;
                 DataSource.TransmitterSupplierNo = selectedTransmitter.SupplierNo;
                 DataSource.TransmitterEORINo = selectedTransmitter.EORINr;
                 DataSource.RecieverCustomerCode = selectedTransmitter.CustomerCode;
+                DataSource.TransmitterPaymentTermDay = selectedTransmitter.PaymentTermDay;
+
                 SelectTransmittersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

@@ -1025,7 +1025,7 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sipariş Fiyat Onayı .
+        ///   Looks up a localized string similar to Sipariş Fiyat Onayı Verildi.
         /// </summary>
         public static string OrderAcceptanceRecordsContextOrderApproval {
             get {
@@ -1043,7 +1043,7 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beklemeye Al.
+        ///   Looks up a localized string similar to Beklemede.
         /// </summary>
         public static string OrderAcceptanceRecordsContextPending {
             get {
@@ -1061,7 +1061,16 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Teknik Onay .
+        ///   Looks up a localized string similar to Durum.
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextStatus {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teknik Onay Verildi.
         /// </summary>
         public static string OrderAcceptanceRecordsContextTechnicalApproval {
             get {

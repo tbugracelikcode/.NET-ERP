@@ -61,6 +61,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Banka Hesapları.
+        /// </summary>
+        public static string BankAccountsChildMenu {
+            get {
+                return ResourceManager.GetString("BankAccountsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Reçeteleri.
         /// </summary>
         public static string BOMChildMenu {

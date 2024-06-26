@@ -214,6 +214,6 @@
     <value>Please enter the branch name.</value>
   </data>
   <data name="ValidatorNameMaxLenght" xml:space="preserve">
-    <value>Branch code cannot exceed 200 characters.</value>
+    <value>Branch name cannot exceed 200 characters.</value>
   </data>
 </root>

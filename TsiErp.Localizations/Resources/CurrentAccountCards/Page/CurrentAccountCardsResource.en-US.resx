@@ -252,6 +252,9 @@
   <data name="NumberOfStationsLabel" xml:space="preserve">
     <value>Number Of Stations</value>
   </data>
+  <data name="PaymentTermDayLabel" xml:space="preserve">
+    <value>Payment Term Day:</value>
+  </data>
   <data name="PlusPercentageLabel" xml:space="preserve">
     <value>Plus Percentage:</value>
   </data>

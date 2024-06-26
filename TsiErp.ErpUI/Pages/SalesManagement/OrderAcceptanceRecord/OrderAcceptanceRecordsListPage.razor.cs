@@ -1,50 +1,34 @@
-﻿using DevExpress.XtraRichEdit.Model;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.Navigations;
 using Syncfusion.XlsIO;
 using System.Data;
 using System.Dynamic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using Tsi.Core.Utilities.Guids;
-using TsiErp.Business.Entities.Branch.Services;
-using TsiErp.Business.Entities.Forecast.Services;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
-using TsiErp.Business.Entities.PurchasePrice.Services;
-using TsiErp.Business.Entities.SalesOrder.Services;
-using TsiErp.Business.Entities.Warehouse.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
-using TsiErp.Entities.Entities.SalesManagement.Forecast.Dtos;
-using TsiErp.Entities.Entities.SalesManagement.ForecastLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
-using TsiErp.Entities.Entities.SalesManagement.SalesPriceLine;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
-using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using static TsiErp.ErpUI.Pages.PlanningManagement.MRP.MRPsListPage;
-using TsiErp.ErpUI.Models;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 {
@@ -198,12 +182,35 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextRefresh"], Id = "refresh" }); break;
                             case "OrderAcceptanceRecordsContextMRP":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextMRP"], Id = "mrp" }); break;
-                            case "OrderAcceptanceRecordsContextTechnicalApproval":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextTechnicalApproval"], Id = "techapproval" }); break;
-                            case "OrderAcceptanceRecordsContextOrderApproval":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextOrderApproval"], Id = "orderapproval" }); break;
-                            case "OrderAcceptanceRecordsContextPending":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextPending"], Id = "pending" }); break;
+
+                            case "OrderAcceptanceRecordsContextStatus":
+
+                                List<MenuItem> subMenus = new List<MenuItem>();
+
+                                var subList = MenusList.Where(t => t.ParentMenuId == context.Id).OrderBy(t => t.ContextOrderNo).ToList();
+
+                                foreach (var subMenu in subList)
+                                {
+                                    var subPermission = UserPermissionsList.Where(t => t.MenuId == subMenu.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+
+                                    if (subPermission)
+                                    {
+                                        switch (subMenu.MenuName)
+                                        {
+                                            case "OrderAcceptanceRecordsContextTechnicalApproval":
+                                                subMenus.Add(new MenuItem { Text = L["OrderAcceptanceRecordsContextTechnicalApproval"], Id = "techapproval" }); break;
+                                            case "OrderAcceptanceRecordsContextOrderApproval":
+                                                subMenus.Add(new MenuItem { Text = L["OrderAcceptanceRecordsContextOrderApproval"], Id = "orderapproval" }); break;
+                                            case "OrderAcceptanceRecordsContextPending":
+                                                subMenus.Add(new MenuItem { Text = L["OrderAcceptanceRecordsContextPending"], Id = "pending" }); break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextStatus"], Id = "status", Items = subMenus }); break;
+
                             case "OrderAcceptanceRecordsContextControl":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderAcceptanceRecordsContextControl"], Id = "control" }); break;
                             case "OrderAcceptanceRecordsContextOrderLines":

@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BankAccountGridAccountNo" xml:space="preserve">
+    <value>HESAP NUMARASI</value>
+  </data>
+  <data name="BankAccountGridBankAccountName" xml:space="preserve">
+    <value>BANKA HESAP ADI</value>
+  </data>
+  <data name="BankAccountGridBankBranchName" xml:space="preserve">
+    <value>ŞUBE ADI</value>
+  </data>
+  <data name="BankAccountGridBankBranchNo" xml:space="preserve">
+    <value>ŞUBE NUMARASI</value>
+  </data>
+  <data name="BankAccountGridCode" xml:space="preserve">
+    <value>BANKA KODU</value>
+  </data>
+  <data name="BankAccountGridName" xml:space="preserve">
+    <value>BANKA ADI</value>
+  </data>
+  <data name="BankAccountModalTitle" xml:space="preserve">
+    <value>Banka Hesapları</value>
+  </data>
   <data name="BankNameLabel" xml:space="preserve">
     <value>Ödeme Bankası:</value>
   </data>

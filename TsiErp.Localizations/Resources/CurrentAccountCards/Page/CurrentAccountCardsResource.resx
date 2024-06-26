@@ -249,6 +249,9 @@
   <data name="NumberOfStationsLabel" xml:space="preserve">
     <value>İş İstasyonu Sayısı:</value>
   </data>
+  <data name="PaymentTermDayLabel" xml:space="preserve">
+    <value>Ödeme Vade Günü:</value>
+  </data>
   <data name="PlusPercentageLabel" xml:space="preserve">
     <value>Artı Yüzde Oran:</value>
   </data>

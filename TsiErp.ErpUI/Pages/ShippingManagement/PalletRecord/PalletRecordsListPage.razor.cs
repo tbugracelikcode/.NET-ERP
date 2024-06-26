@@ -35,6 +35,7 @@ using TsiErp.Entities.Entities.StockManagement.ProductGroup;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.PalletLabelDtos;
 using DevExpress.XtraReports;
 using DevExpress.XtraCharts.Native;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 {
@@ -157,6 +158,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         {
             public bool IsApproved { get; set; }
             public string PalletNo { get; set; }
+            public string ProductionOrderNo { get; set; }
             public string ProductCode { get; set; }
             public string PackageOrderNo { get; set; }
             public int QuantityInPackage { get; set; }
@@ -604,9 +606,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.Where(t=>t.PackingListID == DataSource.PackingListID).ToList();
+                    var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.Where(t => t.PackingListID == DataSource.PackingListID).ToList();
 
-                    if(palletList.Count >0 && palletList != null)
+                    if (palletList.Count > 0 && palletList != null)
                     {
                         foreach (var pallet in palletList)
                         {
@@ -682,6 +684,16 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                     }
                                 }
 
+                                var productionOrder = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.OrderID == line.SalesOrderID.Value && t.FinishedProductID == line.ProductID.Value && t.CurrentAccountID == line.CurrentAccountCardID.Value).FirstOrDefault();
+
+                                string productionOrderNo = string.Empty;
+
+                                if (productionOrder != null && productionOrder.Id != Guid.Empty)
+                                {
+
+                                    productionOrderNo = productionOrder.FicheNo;
+                                }
+
                                 string status = string.Empty;
 
                                 int statusInt = (int)pallet.PalletRecordsStateEnum;
@@ -696,7 +708,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                                 bool isApproved = false;
 
-                                if(statusInt == 3)
+                                if (statusInt == 3)
                                 {
                                     isApproved = true;
                                 }
@@ -717,6 +729,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                                     CustomerRefNo = ticketNo,
                                     Status = status,
                                     IsApproved = isApproved,
+                                    ProductionOrderNo = productionOrderNo,
                                 };
 
                                 TicketListGridList.Add(ticketListModel);
@@ -941,9 +954,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                         selectedNumberofPackages = 0;
                         PackageFichesList = (await PackageFichesAppService.GetListAsync(new ListPackageFichesParameterDto())).Data.Where(t => t.PackageType == DataSource.PackageType && t.CurrentAccountID == DataSource.CurrentAccountCardID).ToList();
 
-                        PackageFichesList = PackageFichesList.Where(t=>t.PackingListID == Guid.Empty || t.PackingListID == null).ToList();
+                        PackageFichesList = PackageFichesList.Where(t => t.PackingListID == Guid.Empty || t.PackingListID == null).ToList();
 
-                        if(PackageFichesList.Count >0 && PackageFichesList != null)
+                        if (PackageFichesList.Count > 0 && PackageFichesList != null)
                         {
                             foreach (var packageFiche in PackageFichesList)
                             {
@@ -2249,20 +2262,20 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             if (pallet.Id != Guid.Empty)
             {
                 string orderNr = "";
-                string palletNo=pallet.Name;
+                string palletNo = pallet.Name;
                 decimal netKg = pallet.SelectPalletRecordLines.Sum(t => t.TotalNetKG);
                 decimal grossKg = pallet.SelectPalletRecordLines.Sum(t => t.TotalGrossKG);
                 decimal quantity = pallet.SelectPalletRecordLines.Sum(t => t.TotalAmount);
 
                 var packingList = (await PackingListsAppService.GetAsync(pallet.PackingListID.GetValueOrDefault())).Data;
-                string packingListNo = packingList.Code2 ;
+                string packingListNo = packingList.Code2;
 
                 Guid sentCompanyId = packingList.TransmitterID.GetValueOrDefault();
                 var sentCurrentAccountCard = (await CurrentAccountCardsAppService.GetAsync(sentCompanyId)).Data;
                 string supplierNo = sentCurrentAccountCard.SupplierNo;
                 string sentCompany = sentCurrentAccountCard.Name;
                 string sentCompanyAddress1 = sentCurrentAccountCard.Address1;
-                string sentCompanyAddress2 = sentCurrentAccountCard.Address2; 
+                string sentCompanyAddress2 = sentCurrentAccountCard.Address2;
                 string sender = sentCompany + Environment.NewLine + sentCompanyAddress1 + Environment.NewLine + sentCompanyAddress2;
                 Guid recieverCompanyId = packingList.RecieverID.GetValueOrDefault();
                 var recieverCurrentAccountCard = (await CurrentAccountCardsAppService.GetAsync(recieverCompanyId)).Data;
@@ -2284,14 +2297,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 p.GrossKg = grossKg;
                 p.PackingListNo = packingListNo;
                 p.SenderCompany = sender;
-                p.SentCompany= reciever;
+                p.SentCompany = reciever;
                 p.SupplierNo = supplierNo;
                 p.ShippingAddress = shippingAddress;
                 p.AreksPackingNo = areksPackingListNo;
                 p.BillNo = billNo;
                 p.MarkingRefNo = "";
                 p.NetKg = netKg;
-                p.PalletNo= palletNo.Split('-').FirstOrDefault();
+                p.PalletNo = palletNo.Split('-').FirstOrDefault();
                 p.OrderNo = orderNr;
                 p.DeliveryDate = deliveryDate;
                 reportSource.Add(p);
@@ -2330,7 +2343,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     markingRefNo = markingRefNo.Replace(" ", "");
                     markingRefNo = markingRefNo.Substring(0, markingRefNo.Length - 2) + "000";
                     p2.CustomerReferenceNo = markingRefNo;
-                    p2.ReferenceNo= productRefNo.ReferanceNo.Substring(0, productRefNo.ReferanceNo.Length - 2) + "15";
+                    p2.ReferenceNo = productRefNo.ReferanceNo.Substring(0, productRefNo.ReferanceNo.Length - 2) + "15";
 
                     var packageFiche = (await PackageFichesAppService.GetAsync(line.PackageFicheID.GetValueOrDefault())).Data;
                     var packageInfo = (await PackingListsAppService.GetPackingListLineByPackageId(packageFiche.Id)).Data.FirstOrDefault();

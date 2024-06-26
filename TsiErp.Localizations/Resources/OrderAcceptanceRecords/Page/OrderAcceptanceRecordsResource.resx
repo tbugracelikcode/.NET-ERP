@@ -439,19 +439,22 @@
     <value>Malzeme İhtiyaç Listesi</value>
   </data>
   <data name="OrderAcceptanceRecordsContextOrderApproval" xml:space="preserve">
-    <value>Sipariş Fiyat Onayı </value>
+    <value>Sipariş Fiyat Onayı Verildi</value>
   </data>
   <data name="OrderAcceptanceRecordsContextOrderLines" xml:space="preserve">
     <value>Sipariş Satırları</value>
   </data>
   <data name="OrderAcceptanceRecordsContextPending" xml:space="preserve">
-    <value>Beklemeye Al</value>
+    <value>Beklemede</value>
   </data>
   <data name="OrderAcceptanceRecordsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextStatus" xml:space="preserve">
+    <value>Durum</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextTechnicalApproval" xml:space="preserve">
-    <value>Teknik Onay </value>
+    <value>Teknik Onay Verildi</value>
   </data>
   <data name="OrderAcceptanceRecordState" xml:space="preserve">
     <value>DURUM</value>

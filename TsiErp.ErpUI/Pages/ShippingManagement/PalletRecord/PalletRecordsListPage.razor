@@ -23,6 +23,7 @@
 @inject ISalesPricesAppService SalesPricesAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
 @inject IOrderAcceptanceRecordsAppService OrderAcceptanceRecordsAppService
+@inject IProductionOrdersAppService ProductionOrdersAppService
 
 @if (!base.IsLoaded)
 {
@@ -905,6 +906,9 @@ else
                                        
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.CustomerCode) HeaderText="@L["TicketListGridCustomerCode"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
+                                       
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(TicketListGrid.ProductionOrderNo) HeaderText="@L["TicketListGridProductionOrderNo"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
                                        
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.Status) HeaderText="@L["TicketListGridStatus"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">

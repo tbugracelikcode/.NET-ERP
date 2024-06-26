@@ -636,6 +636,9 @@
   <data name="TicketListGridProductCode" xml:space="preserve">
     <value>AR-EKS REF NO</value>
   </data>
+  <data name="TicketListGridProductionOrderNo" xml:space="preserve">
+    <value>PRODUCTION ORDER NO</value>
+  </data>
   <data name="TicketListGridQuantityInPackage" xml:space="preserve">
     <value>QUANTITY IN PACKAGE</value>
   </data>

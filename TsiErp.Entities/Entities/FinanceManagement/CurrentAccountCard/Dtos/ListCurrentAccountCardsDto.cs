@@ -18,6 +18,10 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos
         /// </summary>
         public string Code { get; set; }
         /// <summary>
+        /// Ödeme Vadesi Günü
+        /// </summary>
+        public int PaymentTermDay { get; set; }
+        /// <summary>
         /// Cari Ünvan
         /// </summary>
         public string Name { get; set; }

@@ -859,6 +859,10 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 else
                 {
                     EditPageVisible = true;
+                    foreach (var item in PricingCurrencyList)
+                    {
+                        item.PricingCurrencyName = L[item.PricingCurrencyName];
+                    }
                     await InvokeAsync(StateHasChanged);
                 }
             }

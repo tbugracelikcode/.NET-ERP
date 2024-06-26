@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
+using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
@@ -487,6 +489,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectDepartmentsDto, CreateDepartmentsDto>();
             CreateMap<UpdateDepartmentsDto, Departments>();
             CreateMap<SelectDepartmentsDto, UpdateDepartmentsDto>();
+
+            CreateMap<BankAccounts, SelectBankAccountsDto>();
+            CreateMap<BankAccounts, ListBankAccountsDto>();
+            CreateMap<CreateBankAccountsDto, BankAccounts>();
+            CreateMap<SelectBankAccountsDto, CreateBankAccountsDto>();
+            CreateMap<UpdateBankAccountsDto, BankAccounts>();
+            CreateMap<SelectBankAccountsDto, UpdateBankAccountsDto>();
 
             CreateMap<Employees, SelectEmployeesDto>();
             CreateMap<Employees, ListEmployeesDto>();

@@ -1618,6 +1618,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ÜRETİM EMRİ NO.
+        /// </summary>
+        public static string TicketListGridProductionOrderNo {
+            get {
+                return ResourceManager.GetString("TicketListGridProductionOrderNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KOLİDEKİ ADET .
         /// </summary>
         public static string TicketListGridQuantityInPackage {
