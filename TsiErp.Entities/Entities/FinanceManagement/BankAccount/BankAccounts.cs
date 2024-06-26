@@ -55,5 +55,10 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankAccount
         /// Adres
         /// </summary>
         public string Address { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Banka Talimat Açıklaması
+        /// </summary>
+        public string BankInstructionDescription { get; set; }
     }
 }

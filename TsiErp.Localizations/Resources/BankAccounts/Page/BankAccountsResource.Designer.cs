@@ -178,6 +178,15 @@ namespace TsiErp.Localizations.Resources.BankAccounts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Banka Talimat Açıklaması:.
+        /// </summary>
+        public static string BankInstructionDescriptionLabel {
+            get {
+                return ResourceManager.GetString("BankInstructionDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {

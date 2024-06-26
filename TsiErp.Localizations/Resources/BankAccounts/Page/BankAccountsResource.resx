@@ -156,6 +156,9 @@
   <data name="BankBranchNoLabel" xml:space="preserve">
     <value>Şube Numarası:</value>
   </data>
+  <data name="BankInstructionDescriptionLabel" xml:space="preserve">
+    <value>Banka Talimat Açıklaması:</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
