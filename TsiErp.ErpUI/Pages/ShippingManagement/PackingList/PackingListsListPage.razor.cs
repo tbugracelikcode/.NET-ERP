@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DevExpress.Blazor.Reporting;
+using DevExpress.XtraReports.UI;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
@@ -6,6 +8,7 @@ using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Lists;
 using Syncfusion.Blazor.Navigations;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Reflection;
 using TsiErp.Business.Entities.PackageFiche.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
@@ -27,6 +30,8 @@ using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine.D
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.CustomsInstruction;
+using TsiErp.ErpUI.Reports.ShippingManagement.PalletReports.PalletLabels;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using static TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord.PalletRecordsListPage;
 
@@ -376,7 +381,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     await InvokeAsync(StateHasChanged);
                     break;
                 case "custominstruction":
+                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    CustomsInstructionReport = new XtraReport();
+                    CustomsInstructionReportVisible = true;
+                    await CreateCustomsInstructionReport(DataSource);
+
                     await InvokeAsync(StateHasChanged);
+
                     break;
                 case "shippinginstruction":
                     await InvokeAsync(StateHasChanged);
@@ -914,6 +925,76 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("PackingListsChildMenu");
             await InvokeAsync(StateHasChanged);
         }
+        #endregion
+
+        #region Yazdır
+
+        #region Gümrükleme Talimatı
+
+        bool CustomsInstructionReportVisible { get; set; }
+
+        DxReportViewer CustomsInstructionReportViewer { get; set; }
+
+        XtraReport CustomsInstructionReport { get; set; }
+
+        async Task CreateCustomsInstructionReport(SelectPackingListsDto packingList)
+        {
+            CustomsInstructionReport.ShowPrintMarginsWarning = false;
+            CustomsInstructionReport.CreateDocument();
+
+            if(packingList.Id!=Guid.Empty)
+            {
+                int toplamPaletAdedi = packingList.SelectPackingListPalletCubageLines.Sum(t => t.NumberofPallet);
+                string yetkili = packingList.CustomsOfficial;
+                string teslimSekli = packingList.SalesTypeName;
+                teslimSekli = teslimSekli.Substring(0, teslimSekli.Length - 3);
+                DateTime teslimTarihi = packingList.DeliveryDate.GetValueOrDefault();
+                DateTime faturaTarihi = packingList.BillDate.GetValueOrDefault();
+
+                string ay = faturaTarihi.Month.ToString();
+
+                if (ay.Length == 1)
+                {
+                    ay = "0" + ay;
+                }
+
+                string gun = faturaTarihi.Day.ToString();
+
+                if (gun.Length == 1)
+                {
+                    gun = "0" + gun;
+                }
+
+                string yil = faturaTarihi.Year.ToString().Substring(2, faturaTarihi.Year.ToString().Length - 2);
+
+                string refNo = yil + ay + gun + "/" + yil;
+
+                XtraReport mainReport = new XtraReport();
+                mainReport.ShowPrintMarginsWarning = false;
+                mainReport.CreateDocument();
+
+                var bank = (await BankAccountsAppService.GetAsync(packingList.BankID.GetValueOrDefault())).Data;
+
+                CustomsInstructionReport customsInstructionReport = new CustomsInstructionReport();
+                customsInstructionReport.RefNo.Text = refNo;
+                customsInstructionReport.ToplamPaletAdedi.Text = toplamPaletAdedi.ToString();
+                customsInstructionReport.Yetkili.Text = yetkili;
+                customsInstructionReport.TeslimSekli.Text = teslimSekli;
+                customsInstructionReport.Tarih.Text = faturaTarihi.ToShortDateString();
+                customsInstructionReport.GumruklemeTarihi.Text = teslimTarihi.ToShortDateString() + " " + CultureInfo.CurrentCulture.DateTimeFormat.DayNames[(int)teslimTarihi.DayOfWeek];
+                //customsInstructionReport.AraciBanka.Text = bank
+                customsInstructionReport.ShowPreviewMarginLines = false;
+                customsInstructionReport.CreateDocument();
+
+                mainReport.Pages.AddRange(customsInstructionReport.Pages);
+
+            }
+
+            await Task.CompletedTask;
+        }
+
+        #endregion
+
         #endregion
 
         public void Dispose()
