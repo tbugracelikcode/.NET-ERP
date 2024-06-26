@@ -66,9 +66,9 @@ else
              CloseOnOutsideClick="false"
              HeaderText="@L["EditModalTitle"]"
              Width="62%"
-             Height="46%"
+             Height="56%"
              MinWidth="1060px"
-             MinHeight="500px"
+             MinHeight="600px"
              HeaderCssClass="HeaderTitleCss"
              Showing="CrudModalShowing"
              Closing="CrudModalClosing">
@@ -77,10 +77,11 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
+                    <DxGridLayoutRow Height="16%" />
+                    <DxGridLayoutRow Height="16%" />
+                    <DxGridLayoutRow Height="16%" />
                     <DxGridLayoutRow Height="22%" />
-                    <DxGridLayoutRow Height="20%" />
-                    <DxGridLayoutRow Height="20%" />
-                    <DxGridLayoutRow Height="20%" />
+                    <DxGridLayoutRow Height="18%" />
                 </Rows>
 
                 <Columns>
@@ -156,7 +157,14 @@ else
                     <DxGridLayoutItem Row="3" Column="1" ColumnSpan="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["AddressLabel"] </strong></label>
-                            <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.Address"></SfTextBox>
+                            <SfTextBox Multiline=true CssClass="TSIMemoBox80" @bind-Value="DataSource.Address"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["BankInstructionDescriptionLabel"] </strong></label>
+                            <SfTextBox Multiline=true CssClass="TSIMemoBox80" @bind-Value="DataSource.BankInstructionDescription"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

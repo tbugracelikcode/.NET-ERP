@@ -680,7 +680,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
         #endregion
 
-
         #region Banka ButtonEdit
 
         SfTextBox BankAccountsButtonEdit;
