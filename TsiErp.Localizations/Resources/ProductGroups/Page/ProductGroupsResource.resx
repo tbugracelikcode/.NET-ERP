@@ -147,6 +147,9 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
+  <data name="GTIPLabel" xml:space="preserve">
+    <value>GTIP:</value>
+  </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Aktiflik:</value>
   </data>

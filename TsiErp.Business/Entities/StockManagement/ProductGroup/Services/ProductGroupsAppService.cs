@@ -58,6 +58,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
             {
                 Code = input.Code,
                 Name = input.Name,
+                GTIP = input.GTIP,
                 IsActive = true,
                 Id = addedEntityId,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
@@ -94,7 +95,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
                 Tables.Products
             });
 
-            
+
 
             bool control = DeleteControl.Control(queryFactory, id);
 
@@ -168,6 +169,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
             {
                 Code = input.Code,
                 Name = input.Name,
+                GTIP = input.GTIP,
                 Id = input.Id,
                 IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
@@ -200,6 +202,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
             {
                 Code = entity.Code,
                 Name = entity.Name,
+                GTIP = entity.GTIP,
                 IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,

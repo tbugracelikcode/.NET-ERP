@@ -151,6 +151,15 @@ namespace TsiErp.Localizations.Resources.ProductGroups.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GTIP:.
+        /// </summary>
+        public static string GTIPLabel {
+            get {
+                return ResourceManager.GetString("GTIPLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aktiflik:.
         /// </summary>
         public static string IsActiveLabel {

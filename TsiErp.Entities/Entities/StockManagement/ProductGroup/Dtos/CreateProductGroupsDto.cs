@@ -14,6 +14,10 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos
         /// </summary>
         public string Code { get; set; }
         /// <summary>
+        /// GTIP
+        /// </summary>
+        public string GTIP { get; set; }
+        /// <summary>
         /// Açıklama
         /// </summary>
         public string Name { get; set; }
