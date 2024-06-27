@@ -15,6 +15,7 @@ using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLine.Dtos;
@@ -25,6 +26,7 @@ using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine.D
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.ProductGroup;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PackingLists.Page;
 
@@ -183,6 +185,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
+                    ProductGroupID = item.ProductGroupID
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -356,6 +359,20 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         pr => new { ProductName = pr.Name, ProductID = pr.Id, ProductCode = pr.Code },
                         nameof(PackingListPalletPackageLines.ProductID),
                         nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductGroups>
+                    (
+                        pr => new { ProductGroupID = pr.Id, ProductGroupName = pr.Name },
+                        nameof(PackingListPalletPackageLines.ProductGroupID),
+                        nameof(ProductGroups.Id),
+                        JoinType.Left
+                    )
+                    .Join<SalesOrderLines>
+                    (
+                        pr => new { TransactionExchangeUnitPrice = pr.TransactionExchangeUnitPrice },
+                        nameof(PackingListPalletPackageLines.SalesOrderLineID),
+                        nameof(SalesOrderLines.Id),
                         JoinType.Left
                     )
                      .Join<CurrentAccountCards>
@@ -788,6 +805,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
+                         ProductGroupID=item.ProductGroupID
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -829,6 +847,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
+                            ProductGroupID = item.ProductGroupID
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;

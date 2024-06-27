@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DevExpress.Blazor.Reporting;
+using DevExpress.CodeParser;
+using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.XtraReports.UI;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
@@ -6,6 +10,7 @@ using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Lists;
 using Syncfusion.Blazor.Navigations;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Reflection;
 using TsiErp.Business.Entities.PackageFiche.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
@@ -27,6 +32,8 @@ using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine.D
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.CustomsInstruction;
+using TsiErp.ErpUI.Reports.ShippingManagement.PalletReports.PalletLabels;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using static TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord.PalletRecordsListPage;
 
@@ -271,15 +278,15 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
         {
             if (PalletPackageGridContextMenu.Count() == 0)
             {
-                
-                    var contextID = contextsList.Where(t => t.MenuName == "PackingListsPalletPackageLineContextEnumarate").Select(t => t.Id).FirstOrDefault();
-                    var permission = UserPermissionsList.Where(t => t.MenuId == contextID).Select(t => t.IsUserPermitted).FirstOrDefault();
-                    if (permission)
-                    {
-                        PalletPackageGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsPalletPackageLineContextEnumarate"], Id = "enumarate" });
-                    }
 
-                
+                var contextID = contextsList.Where(t => t.MenuName == "PackingListsPalletPackageLineContextEnumarate").Select(t => t.Id).FirstOrDefault();
+                var permission = UserPermissionsList.Where(t => t.MenuId == contextID).Select(t => t.IsUserPermitted).FirstOrDefault();
+                if (permission)
+                {
+                    PalletPackageGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsPalletPackageLineContextEnumarate"], Id = "enumarate" });
+                }
+
+
             }
         }
 
@@ -376,7 +383,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     await InvokeAsync(StateHasChanged);
                     break;
                 case "custominstruction":
+                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    CustomsInstructionReport = new XtraReport();
+                    CustomsInstructionReportVisible = true;
+                    await CreateCustomsInstructionReport(DataSource);
+
                     await InvokeAsync(StateHasChanged);
+
                     break;
                 case "shippinginstruction":
                     await InvokeAsync(StateHasChanged);
@@ -403,6 +416,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     else
                     {
                         PalletSelectionList.Clear();
+                        PalletLineIndex = GridLinePalletList.Count;
                         PalletRecordsList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.Where(t => t.PackingListID == DataSource.Id).ToList();
 
                         PalletRecordsList = PalletRecordsList.OrderBy(t => t.Name).ToList();
@@ -450,11 +464,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                     bool isAdded = false;
 
-                    foreach(var pal in PalletSelectionList)
+                    foreach (var pal in PalletSelectionList)
                     {
                         int palIndex = PalletSelectionList.IndexOf(pal);
 
-                        if(palIndex < selectedPalletIndex)
+                        if (palIndex < selectedPalletIndex)
                         {
                             if (!pal.SelectedPallet)
                             {
@@ -509,18 +523,20 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             }
         }
 
+
+        public int PalletLineIndex { get; set; }
+
         public async void OnTransferSelectedPalletButtonClicked()
         {
-            PalletSelectionList = PalletSelectionList.OrderBy(t => t.PalletName).ToList();
+            PalletSelectionList = PalletSelectionList.Where(t => t.SelectedPallet == true).OrderBy(t => t.PalletName).ToList();
 
+            int packageNo = 1;
             foreach (var pallet in PalletSelectionList)
             {
-                if (pallet.SelectedPallet)
+                #region Palet Line İşlemleri
+
+                if (GridLinePalletList.Count == 0)
                 {
-                    #region Palet Line İşlemleri
-
-                    int packageNo = 1;
-
                     SelectPackingListPalletLinesDto palletLineModel = new SelectPackingListPalletLinesDto
                     {
                         LineNr = GridLinePalletList.Count + 1,
@@ -534,67 +550,89 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     packageNo += pallet.NumberofPackage;
 
                     GridLinePalletList.Add(palletLineModel);
-
-                    #endregion
-
-                    #region Palet Paket Line İşlemleri
-
-                    var palletLineList = (await PalletRecordsAppService.GetAsync(pallet.PalletID)).Data.SelectPalletRecordLines;
-                    decimal packageKG = 0;
-                    var currentAccountDataSource = (await CurrentAccountCardsAppService.GetAsync(pallet.CurrentAccountCardID.GetValueOrDefault())).Data;
-
-                    if (pallet.PackageType == L["BigPackage"].Value)
-                    {
-                        packageKG = currentAccountDataSource.BigPackageKG;
-                    }
-                    else if (pallet.PackageType == L["SmallPackage"].Value)
-                    {
-                        packageKG = currentAccountDataSource.SmallPackageKG;
-                    }
-
-                    foreach (var palletLine in palletLineList)
-                    {
-                        var unitKG = (await ProductsAppService.GetAsync(palletLine.ProductID.GetValueOrDefault())).Data.UnitWeight;
-
-                        var packageFiche = (await PackageFichesAppService.GetAsync(palletLine.PackageFicheID.GetValueOrDefault())).Data;
-
-                        var productionOrderListDto = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.FinishedProductID == packageFiche.ProductID && t.OrderID == packageFiche.SalesOrderID).FirstOrDefault();
-
-                        var productionOrder = (await ProductionOrdersAppService.GetAsync(productionOrderListDto.Id)).Data;
-
-                        decimal onePackageNetKG = palletLine.PackageContent * unitKG;
-                        decimal onePackageGrossKG = onePackageNetKG + packageKG;
-
-                        SelectPackingListPalletPackageLinesDto palletPackageLineModel = new SelectPackingListPalletPackageLinesDto
-                        {
-                            PackageType = palletLine.PackageType,
-                            PackageFicheID = palletLine.PackageFicheID.GetValueOrDefault(),
-                            ProductID = palletLine.ProductID,
-                            ProductCode = palletLine.ProductCode,
-                            ProductName = palletLine.ProductName,
-                            CustomerCode = palletLine.CustomerCode,
-                            CustomerID = palletLine.CurrentAccountCardID,
-                            NumberofPackage = palletLine.NumberofPackage,
-                            TotalAmount = palletLine.TotalAmount,
-                            TotalGrossKG = palletLine.TotalGrossKG,
-                            TotalNetKG = palletLine.TotalNetKG,
-                            OnePackageGrossKG = onePackageGrossKG,
-                            OnePackageNetKG = onePackageNetKG,
-                            PackageContent = palletLine.PackageContent,
-                            PackageNo = string.Empty,
-                            ProductionOrderID = productionOrder.Id,
-                            SalesOrderID = productionOrder.OrderID,
-                            SalesOrderLineID = productionOrder.OrderLineID
-                        };
-
-
-                        GridLinePalletPackageList.Add(palletPackageLineModel);
-                    }
-
-                    #endregion
-
-
+                    PalletLineIndex = PalletLineIndex + 1;
                 }
+                else
+                {
+                    string firstPackageNo = Convert.ToString(Convert.ToInt32(GridLinePalletList[PalletLineIndex - 1].LastPackageNo) + 1);
+
+                    SelectPackingListPalletLinesDto palletLineModel = new SelectPackingListPalletLinesDto
+                    {
+                        LineNr = GridLinePalletList.Count + 1,
+                        PalletID = pallet.PalletID,
+                        PalletName = pallet.PalletName.Split("-")[0],
+                        NumberofPackage = pallet.NumberofPackage,
+                        FirstPackageNo = firstPackageNo,
+                        LastPackageNo = (Convert.ToInt32(firstPackageNo) + pallet.NumberofPackage - 1).ToString(),
+                    };
+
+                    packageNo += pallet.NumberofPackage;
+
+                    GridLinePalletList.Add(palletLineModel);
+                    PalletLineIndex = PalletLineIndex + 1;
+                }
+
+
+                #endregion
+
+                #region Palet Paket Line İşlemleri
+
+                var palletLineList = (await PalletRecordsAppService.GetAsync(pallet.PalletID)).Data.SelectPalletRecordLines;
+                decimal packageKG = 0;
+                var currentAccountDataSource = (await CurrentAccountCardsAppService.GetAsync(pallet.CurrentAccountCardID.GetValueOrDefault())).Data;
+
+                if (pallet.PackageType == L["BigPackage"].Value)
+                {
+                    packageKG = currentAccountDataSource.BigPackageKG;
+                }
+                else if (pallet.PackageType == L["SmallPackage"].Value)
+                {
+                    packageKG = currentAccountDataSource.SmallPackageKG;
+                }
+
+                foreach (var palletLine in palletLineList)
+                {
+                    var unitKG = (await ProductsAppService.GetAsync(palletLine.ProductID.GetValueOrDefault())).Data.UnitWeight;
+
+                    var packageFiche = (await PackageFichesAppService.GetAsync(palletLine.PackageFicheID.GetValueOrDefault())).Data;
+
+                    var productionOrderListDto = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.FinishedProductID == packageFiche.ProductID && t.OrderID == packageFiche.SalesOrderID).FirstOrDefault();
+
+                    var productionOrder = (await ProductionOrdersAppService.GetAsync(productionOrderListDto.Id)).Data;
+
+                    decimal onePackageNetKG = palletLine.PackageContent * unitKG;
+                    decimal onePackageGrossKG = onePackageNetKG + packageKG;
+
+                    var product = (await ProductsAppService.GetAsync(palletLine.ProductID.GetValueOrDefault())).Data;
+
+                    SelectPackingListPalletPackageLinesDto palletPackageLineModel = new SelectPackingListPalletPackageLinesDto
+                    {
+                        PackageType = palletLine.PackageType,
+                        PackageFicheID = palletLine.PackageFicheID.GetValueOrDefault(),
+                        ProductID = palletLine.ProductID,
+                        ProductCode = palletLine.ProductCode,
+                        ProductName = palletLine.ProductName,
+                        CustomerCode = palletLine.CustomerCode,
+                        CustomerID = palletLine.CurrentAccountCardID,
+                        NumberofPackage = palletLine.NumberofPackage,
+                        TotalAmount = palletLine.TotalAmount,
+                        TotalGrossKG = palletLine.TotalGrossKG,
+                        TotalNetKG = palletLine.TotalNetKG,
+                        OnePackageGrossKG = onePackageGrossKG,
+                        OnePackageNetKG = onePackageNetKG,
+                        PackageContent = palletLine.PackageContent,
+                        PackageNo = string.Empty,
+                        ProductionOrderID = productionOrder.Id,
+                        SalesOrderID = productionOrder.OrderID,
+                        SalesOrderLineID = productionOrder.OrderLineID,
+                        ProductGroupID = product.ProductGrpID
+                    };
+
+
+                    GridLinePalletPackageList.Add(palletPackageLineModel);
+                }
+
+                #endregion
             }
 
             #region Palet Kübaj İşlemleri
@@ -607,23 +645,38 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 int width = pallet.Pallet.Select(t => t.Width_).FirstOrDefault();
                 int lenght = pallet.Pallet.Select(t => t.Length_).FirstOrDefault();
 
-                SelectPackingListPalletCubageLinesDto palletCubageLineModel = new SelectPackingListPalletCubageLinesDto
+                if (!GridLineCubageList.Any(t => t.Height_ == height && t.Width_ == width && t.Load_ == lenght))
                 {
-                    NumberofPallet = pallet.Pallet.Count,
-                    Height_ = height,
-                    Width_ = width,
-                    Load_ = lenght,
-                    Cubage = (height * width * lenght * pallet.Pallet.Count) / 1000000
-                };
+                    SelectPackingListPalletCubageLinesDto palletCubageLineModel = new SelectPackingListPalletCubageLinesDto
+                    {
+                        NumberofPallet = pallet.Pallet.Count,
+                        Height_ = height,
+                        Width_ = width,
+                        Load_ = lenght,
+                        Cubage = (height * width * lenght * pallet.Pallet.Count) / 1000000
+                    };
 
-                GridLineCubageList.Add(palletCubageLineModel);
+                    GridLineCubageList.Add(palletCubageLineModel);
+                }
+                else
+                {
+                    var updatedCubageLine = GridLineCubageList.FirstOrDefault(t => t.Height_ == height && t.Width_ == width && t.Load_ == lenght);
+                    updatedCubageLine.NumberofPallet = updatedCubageLine.NumberofPallet + pallet.Pallet.Count;
+                    updatedCubageLine.Height_ = height;
+                    updatedCubageLine.Width_ = width;
+                    updatedCubageLine.Load_ = lenght;
+                    updatedCubageLine.Cubage = (height * width * lenght * pallet.Pallet.Count) / 1000000;
+
+                }
+
+
             }
 
             await _LineCubageGrid.Refresh();
 
             #endregion
 
-            GridLinePalletList = GridLinePalletList.OrderBy(t=>t.PalletName).ToList();
+            GridLinePalletList = GridLinePalletList.OrderBy(t => t.PalletName).ToList();
 
             DataSource.SelectPackingListPalletLines = GridLinePalletList;
 
@@ -915,10 +968,301 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
         }
         #endregion
 
+        #region Yazdır
+
+        #region Gümrükleme Talimatı
+
+        bool CustomsInstructionReportVisible { get; set; }
+
+        DxReportViewer CustomsInstructionReportViewer { get; set; }
+
+        XtraReport CustomsInstructionReport { get; set; }
+
+        async Task CreateCustomsInstructionReport(SelectPackingListsDto packingList)
+        {
+            CustomsInstructionReport.ShowPrintMarginsWarning = false;
+            CustomsInstructionReport.CreateDocument();
+
+            #region Enum Combobox Localization
+
+            foreach (var item in salesTypes)
+            {
+                packingList.SalesTypeName = L[item.SalesTypeName];
+            }
+
+            foreach (var item in tIRTypes)
+            {
+                packingList.TIRTypeName = L[item.TIRTypeName];
+            }
+
+            foreach (var item in packingListStates)
+            {
+                packingList.PackingListStateName = L[item.PackingListStateName];
+            }
+
+            #endregion
+
+            if (packingList.Id != Guid.Empty)
+            {
+                int toplamPaletAdedi = packingList.SelectPackingListPalletCubageLines.Sum(t => t.NumberofPallet);
+                string yetkili = packingList.CustomsOfficial;
+                string teslimSekli = packingList.SalesTypeName;
+                teslimSekli = teslimSekli.Substring(0, teslimSekli.Length - 3);
+                DateTime teslimTarihi = packingList.DeliveryDate.GetValueOrDefault();
+                DateTime faturaTarihi = packingList.BillDate.GetValueOrDefault();
+
+                string ay = faturaTarihi.Month.ToString();
+
+                if (ay.Length == 1)
+                {
+                    ay = "0" + ay;
+                }
+
+                string gun = faturaTarihi.Day.ToString();
+
+                if (gun.Length == 1)
+                {
+                    gun = "0" + gun;
+                }
+
+                string yil = faturaTarihi.Year.ToString().Substring(2, faturaTarihi.Year.ToString().Length - 2);
+
+                string refNo = yil + ay + gun + "/" + yil;
+
+                //XtraReport mainReport = new XtraReport();
+                //mainReport.ShowPrintMarginsWarning = false;
+                //mainReport.CreateDocument();
+
+                var bank = (await BankAccountsAppService.GetAsync(packingList.BankID.GetValueOrDefault())).Data;
+
+                CustomsInstructionReport customsInstructionReport = new CustomsInstructionReport();
+                customsInstructionReport.RefNo.Text = refNo;
+                customsInstructionReport.ToplamPaletAdedi.Text = toplamPaletAdedi.ToString();
+                customsInstructionReport.Yetkili.Text = yetkili;
+                customsInstructionReport.TeslimSekli.Text = teslimSekli;
+                customsInstructionReport.Tarih.Text = faturaTarihi.ToShortDateString();
+                customsInstructionReport.GumruklemeTarihi.Text = teslimTarihi.ToShortDateString() + " " + CultureInfo.CurrentCulture.DateTimeFormat.DayNames[(int)teslimTarihi.DayOfWeek];
+                customsInstructionReport.AraciBanka.Text = bank.BankInstructionDescription;
+                customsInstructionReport.ShowPreviewMarginLines = false;
+                customsInstructionReport.CreateDocument();
+
+                CustomsInstructionReport.Pages.AddRange(customsInstructionReport.Pages);
+
+                string PackListNo = packingList.Code2;
+
+                List<string> siraListe = new List<string>()
+                        {
+                            "VİRAJ ROTU",
+                            "ROT MİLİ",
+                            "BURÇ",
+                            "OYNAR BURÇ",
+                            "ROTİL",
+                            "ROT BAŞI",
+                            "YAN ROT",
+                            "BURÇ TAKIMI",
+                            "DENGE KOLU",
+                            "MONTAJ TAKIMI",
+                            "CİVATA TAKIMI",
+                            "BASKILI TORBA, PE",
+                            "DEBRİYAJ CIRCIRI",
+                            "ŞAFT ASKISI",
+                            "AMORTİSÖR YAYI",
+                            "SOMUN",
+                            "BOŞ KOLİ",
+                            "TAMİR TAKIMI"
+                        };
+
+                var satirlar = packingList.SelectPackingListPalletPackageLines;
+
+                var malCinsileri = satirlar.Select(t => t.ProductGroupName).Distinct().ToList();
+
+                List<FaxMessage> faksMesaji = new List<FaxMessage>();
+                faksMesaji.Add(new FaxMessage()
+                {
+                    PackingListNo = "",
+                    FaxMessageLines = new List<FaxMessageLines>(),
+                    FaxMessageGTIPTable = new List<FaxMessageGTIPTable>()
+                });
+
+
+
+
+                for (int i = 0; i < siraListe.Count; i++)
+                {
+                    string baslik = siraListe[i];
+
+                    for (int j = 0; j < malCinsileri.Count; j++)
+                    {
+                        string malCinsi = malCinsileri[j];
+
+                        if (baslik == malCinsi)
+                        {
+                            FaxMessageLines satir = new FaxMessageLines
+                            {
+                                MalCinsiTurkce = malCinsi,
+                                MalCinsiIngilizce = MalCinsiIngilizce(malCinsi),
+                                TutarDagilimiEuro = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.TotalAmount * t.TransactionExchangeUnitPrice),
+                                AdetDagilimi = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.TotalAmount),
+                                NetKgDagilimi = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.TotalNetKG),
+                                BrutKgDagilimi = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.TotalGrossKG),
+                                KoliSayisi = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.NumberofPackage),
+                                CesitDagilimi = satirlar.Where(t => t.ProductGroupName == malCinsi).Select(t => t.ProductID).Distinct().Count()
+                            };
+
+                            faksMesaji[0].FaxMessageLines.Add(satir);
+
+                            faksMesaji[0].FaxMessageGTIPTable.Add(new FaxMessageGTIPTable
+                            {
+                                MalCinsiTurkce = malCinsi,
+                                MalCinsiIngilizce = MalCinsiIngilizce(malCinsi),
+                                //GtipKodu = entities.TUR_STOK_GRUP.Where(t => t.ACIKLAMA == malCinsi).Select(t => t.GTIP).FirstOrDefault()
+                            });
+                        }
+                    }
+                }
+
+                faksMesaji[0].PackingListNo = PackListNo;
+
+
+                CustomsInstructionFaxMessage report = new CustomsInstructionFaxMessage();
+
+                report.FillDataSource();
+                report.DataSource = faksMesaji;
+                report.ShowPreviewMarginLines = false;
+
+                XRSubreport subReport = report.FindControl("xrSubreport1", true) as XRSubreport;
+                XtraReport reportSource = subReport.ReportSource as XtraReport;
+                (reportSource.DataSource as ObjectDataSource).DataSource = faksMesaji[0].FaxMessageGTIPTable;
+                reportSource.CreateDocument();
+
+
+                report.CreateDocument();
+                CustomsInstructionReport.Pages.AddRange(report.Pages);
+
+                CustomsInstructionReport.PrintingSystem.ContinuousPageNumbering = true;
+            }
+
+            await Task.CompletedTask;
+        }
+
+        #endregion
+
+        private string MalCinsiIngilizce(string malCinsi)
+        {
+            string result = "";
+
+            switch (malCinsi)
+            {
+                case "VİRAJ ROTU":
+                    result = "STABILIZER LINK";
+                    break;
+                case "ROT MİLİ":
+                    result = "AXIAL JOINT";
+                    break;
+                case "BURÇ":
+                    result = "BUSH";
+                    break;
+                case "OYNAR BURÇ":
+                    result = "BALL JOINT";
+                    break;
+                case "ROTİL":
+                    result = "BALL JOINT";
+                    break;
+                case "ROT BAŞI":
+                    result = "TIE ROD END";
+                    break;
+                case "YAN ROT":
+                    result = "ROD ASSEMBLY";
+                    break;
+                case "BURÇ TAKIMI":
+                    result = "REPAIR KIT";
+                    break;
+                case "DENGE KOLU":
+                    result = "CONTROL ARM";
+                    break;
+                case "MONTAJ TAKIMI":
+                    result = "REPAIR KIT";
+                    break;
+                case "CİVATA TAKIMI":
+                    result = "REPAIR KIT";
+                    break;
+                case "BASKILI TORBA, PE":
+                    result = "PRINTED PE BAG";
+                    break;
+                case "DEBRİYAJ CIRCIRI":
+                    result = "QUADRANT REPAIR KIT";
+                    break;
+                case "ŞAFT ASKISI":
+                    result = "SHAFT COUPLING";
+                    break;
+                case "AMORTİSÖR YAYI":
+                    result = "SUSPENSION SPRING";
+                    break;
+                case "SOMUN":
+                    result = "NUT";
+                    break;
+                case "BOŞ KOLİ":
+                    result = "EMPTY CART0ON BOX";
+                    break;
+                case "TAMİR TAKIMI":
+                    result = "REPAIR KIT";
+                    break;
+                default:
+                    break;
+            }
+
+            return result;
+        }
+
+        #endregion
+
         public void Dispose()
         {
             GC.Collect();
             GC.SuppressFinalize(this);
         }
+    }
+
+    public class FaxMessage
+    {
+        public string PackingListNo { get; set; }
+
+        public List<FaxMessageLines> FaxMessageLines { get; set; }
+
+        public List<FaxMessageGTIPTable> FaxMessageGTIPTable { get; set; }
+
+        public FaxMessage()
+        {
+            FaxMessageLines = new List<FaxMessageLines>();
+            FaxMessageGTIPTable = new List<FaxMessageGTIPTable>();
+        }
+    }
+
+    public class FaxMessageLines
+    {
+        public string MalCinsiTurkce { get; set; }
+
+        public string MalCinsiIngilizce { get; set; }
+
+        public decimal TutarDagilimiEuro { get; set; }
+
+        public decimal AdetDagilimi { get; set; }
+
+        public decimal NetKgDagilimi { get; set; }
+
+        public decimal BrutKgDagilimi { get; set; }
+
+        public decimal KoliSayisi { get; set; }
+
+        public int CesitDagilimi { get; set; }
+    }
+
+    public class FaxMessageGTIPTable
+    {
+        public string MalCinsiTurkce { get; set; }
+
+        public string MalCinsiIngilizce { get; set; }
+
+        public string GtipKodu { get; set; }
     }
 }
