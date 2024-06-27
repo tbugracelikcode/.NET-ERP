@@ -95,5 +95,11 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLi
         /// Toplam Brüt KG
         /// </summary>
         public decimal TotalGrossKG { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        ///  Stok Grup ID
+        /// </summary>
+        public Guid ProductGroupID { get; set; }
     }
 }
