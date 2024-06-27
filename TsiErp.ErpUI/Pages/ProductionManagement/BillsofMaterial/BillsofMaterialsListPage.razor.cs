@@ -511,7 +511,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                 LineDataSource.ProductID = Guid.Empty;
                 LineDataSource.ProductCode = string.Empty;
                 LineDataSource.ProductName = string.Empty;
-                LineDataSource.ProductSupplyType = 0;
+                LineDataSource.SupplyForm = 0;
                 LineDataSource.UnitSetCode = string.Empty;
                 LineDataSource.MaterialType = 0;
                 LineDataSource.UnitSetID = Guid.Empty;
@@ -530,7 +530,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                 LineDataSource.UnitSetID = selectedProduct.UnitSetID;
                 LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
                 LineDataSource.MaterialType = selectedProduct.ProductType;
-                LineDataSource.ProductSupplyType = (int)selectedProduct.SupplyForm;
+                LineDataSource.SupplyForm = selectedProduct.SupplyForm;
 
 
                 SelectProductsPopupVisible = false;
@@ -593,6 +593,15 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
             {
                 DataSource.CurrentAccountCardID = Guid.Empty;
                 DataSource.CustomerCode = string.Empty;
+
+                if (DataSource.FinishedProductID != Guid.Empty && DataSource.FinishedProductID != null)
+                {
+                    DataSource.Name = DataSource.FinishedProductCode + " / " + DataSource.FinishedProducName;
+                }
+                else
+                {
+                    DataSource.Name = string.Empty;
+                }
             }
         }
 
@@ -605,6 +614,12 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                 DataSource.CurrentAccountCardID = selectedUnitSet.Id;;
                 DataSource.CustomerCode = selectedUnitSet.CustomerCode;
                 SelectCurrentAccountCardsPopupVisible = false;
+
+                if(DataSource.FinishedProductID != Guid.Empty && DataSource.FinishedProductID != null && !string.IsNullOrEmpty(DataSource.CustomerCode))
+                {
+                    DataSource.Name = DataSource.Name + " / " + DataSource.CustomerCode;
+                }
+
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -648,6 +663,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                 DataSource.FinishedProductID = Guid.Empty;
                 DataSource.FinishedProductCode = string.Empty;
                 DataSource.FinishedProducName = string.Empty;
+                DataSource.CustomerCode = string.Empty;
+                DataSource.CurrentAccountCardID = Guid.Empty;
+                DataSource.Name = string.Empty;
+                isCustomerCodeAvailable = false;
             }
         }
 
@@ -660,15 +679,18 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                 DataSource.FinishedProductID = selectedFinishedProduct.Id;
                 DataSource.FinishedProductCode = selectedFinishedProduct.Code;
                 DataSource.FinishedProducName = selectedFinishedProduct.Name;
+                DataSource.ProductType = selectedFinishedProduct.ProductType;
 
-                if(selectedFinishedProduct.ProductType == ProductTypeEnum.MM)
+                if(DataSource.ProductType == ProductTypeEnum.MM)
                 {
                     isCustomerCodeAvailable = true;
                 }
-                else if(selectedFinishedProduct.ProductType == ProductTypeEnum.YM)
+                else if(DataSource.ProductType == ProductTypeEnum.YM)
                 {
                     isCustomerCodeAvailable = false;    
                 }
+
+                DataSource.Name = DataSource.FinishedProductCode + " / " + DataSource.FinishedProducName;
 
                 SelectFinishedProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);

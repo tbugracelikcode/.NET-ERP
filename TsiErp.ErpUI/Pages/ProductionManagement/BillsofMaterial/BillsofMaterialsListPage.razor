@@ -4,7 +4,7 @@
 
 @inherits BaseListPage<SelectBillsofMaterialsDto, ListBillsofMaterialsDto, CreateBillsofMaterialsDto, UpdateBillsofMaterialsDto, ListBillsofMaterialsParameterDto>
 
-@inject IStringLocalizer<BillsofMaterialsResource> L 
+@inject IStringLocalizer<BillsofMaterialsResource> L
 @inject IBillsofMaterialsAppService BillsofMaterialsAppService
 @inject IProductsAppService ProductsAppService
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
@@ -16,11 +16,11 @@
 
 @if (!base.IsLoaded)
 {
-    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" /> 
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
 }
 else
 {
-    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")"> 
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
         <GridLayoutItems>
             <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
                 <Template>
@@ -41,9 +41,9 @@ else
                         <CardContent>
                             <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-                                
 
-                                    <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListBillsofMaterialsDto"></GridEvents>
+
+                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListBillsofMaterialsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
@@ -69,17 +69,17 @@ else
     </DevGridLayout>
 
     <DxPopup @bind-Visible="base.EditPageVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EditModalTitle"]"
-         Width="60%"
-         Height="60%"
-         MinWidth="1120px"
-         MinHeight="670px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="60%"
+             Height="60%"
+             MinWidth="1120px"
+             MinHeight="670px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -113,7 +113,7 @@ else
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Name"></SfTextBox>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -130,7 +130,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="2" Column="1">
+                    <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["FinishedProductCodeLabel"] </strong></label><br />
                             <SfTextBox @ref="@FinishedProductsCodeButtonEdit" Created="@FinishedProductsCodeOnCreateIcon" @bind-Value="DataSource.FinishedProductCode" ShowClearButton=true ValueChange="FinishedProductsOnValueChange"></SfTextBox>
@@ -157,7 +157,6 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.FinishedProductCode) HeaderText="@L["LineGridFinishedProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.MaterialType) Context="linecontext" HeaderText="@L["LineGridMaterialType"]" TextAlign="TextAlign.Center" Width="120">
@@ -177,37 +176,54 @@ else
                                                     case ProductTypeEnum.APRT: type = L["EnumAparatus"]; break;
                                                     default: break;
                                                 }
+                                            }
+                                            @type
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.SupplyForm) HeaderText="@L["LineGridSupplyForm"]" TextAlign="TextAlign.Center" Width="120" Context="linecontext">
+                                        <Template>
+                                            @{
+                                                ProductSupplyFormEnum productsupplyform = (linecontext as SelectBillsofMaterialLinesDto).SupplyForm;
+                                                string supplyForm = "";
+                                                if (productsupplyform == ProductSupplyFormEnum.Satınalma)
+                                                {
+                                                    supplyForm = L["EnumPurchase"];
+                                                }
+                                                else if (productsupplyform == ProductSupplyFormEnum.Üretim)
+                                                {
+                                                    supplyForm = L["EnumProduction"];
+                                                }
                                         }
-                                        @type
+                                        @supplyForm
                                     </Template>
                                 </GridColumn>
-                                <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.Size) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridSize"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                            </GridColumns>
-                        </SfGrid>
-                    </Template>
-                </DxGridLayoutItem>
+                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.Size) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridSize"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
 
 
-            </Items>
-        </DxGridLayout>
-    </BodyTemplate>
-    <FooterContentTemplate>
-        <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
-    </FooterContentTemplate>
-</DxPopup>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
 
     <DxPopup @bind-Visible="LineCrudPopup"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["LineModalTitle"]"
-         Width="56%"
-         Height="32%"
-         MinWidth="1060px"
-         MinHeight="350px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["LineModalTitle"]"
+             Width="56%"
+             Height="32%"
+             MinWidth="1060px"
+             MinHeight="350px"
+             HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -297,15 +313,15 @@ else
 @if (SelectUnitSetsPopupVisible)
 {
     <DxPopup @bind-Visible="SelectUnitSetsPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["UnitSetModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["UnitSetModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
@@ -316,7 +332,7 @@ else
 
                                 <CardContent>
                                     <SfGrid ID="UnitSetGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnitSetsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@UnitSetsDoubleClickHandler" TValue="ListUnitSetsDto"></GridEvents>
@@ -350,15 +366,15 @@ else
 @if (SelectProductsPopupVisible)
 {
     <DxPopup @bind-Visible="SelectProductsPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["ProductModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["ProductModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
@@ -369,7 +385,7 @@ else
 
                                 <CardContent>
                                     <SfGrid ID="ProductsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@ProductsDoubleClickHandler" TValue="ListProductsDto"></GridEvents>
@@ -380,6 +396,27 @@ else
                                         <GridColumns>
                                             <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["ProductPopupGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["ProductPopupGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductsDto.ProductType) HeaderText="@L["ProductPopupGridProductType"]" TextAlign="TextAlign.Center" Width="120" Context="productContext">
+                                                <Template>
+                                                    @{
+                                                        ProductTypeEnum producttype = (productContext as ListProductsDto).ProductType;
+                                                        string type = "";
+                                                        switch (producttype)
+                                                        {
+                                                            case ProductTypeEnum.TM: type = L["EnumCommercialProduct"]; break;
+                                                            case ProductTypeEnum.HM: type = L["EnumMaterial"]; break;
+                                                            case ProductTypeEnum.YM: type = L["EnumSemiProduct"]; break;
+                                                            case ProductTypeEnum.MM: type = L["EnumProduct"]; break;
+                                                            case ProductTypeEnum.BP: type = L["EnumSparePart"]; break;
+                                                            case ProductTypeEnum.TK: type = L["EnumKit"]; break;
+                                                            case ProductTypeEnum.KLP: type = L["EnumMold"]; break;
+                                                            case ProductTypeEnum.APRT: type = L["EnumAparatus"]; break;
+                                                            default: break;
+                                                        }
+                                                    }
+                                                    @type
+                                                </Template>
+                                            </GridColumn>
                                         </GridColumns>
 
                                     </SfGrid>
@@ -401,15 +438,15 @@ else
 @if (SelectFinishedProductsPopupVisible)
 {
     <DxPopup @bind-Visible="SelectFinishedProductsPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["FinishedProductModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["FinishedProductModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
@@ -420,7 +457,7 @@ else
 
                                 <CardContent>
                                     <SfGrid ID="FinishedProductsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@FinishedProductsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@FinishedProductsDoubleClickHandler" TValue="ListProductsDto"></GridEvents>
@@ -431,6 +468,27 @@ else
                                         <GridColumns>
                                             <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["FinishedProductPopupGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["FinishedProductPopupGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductsDto.ProductType) HeaderText="@L["ProductPopupGridProductType"]" TextAlign="TextAlign.Center" Width="120" Context="productContext">
+                                                <Template>
+                                                    @{
+                                                        ProductTypeEnum producttype = (productContext as ListProductsDto).ProductType;
+                                                        string type = "";
+                                                        switch (producttype)
+                                                        {
+                                                            case ProductTypeEnum.TM: type = L["EnumCommercialProduct"]; break;
+                                                            case ProductTypeEnum.HM: type = L["EnumMaterial"]; break;
+                                                            case ProductTypeEnum.YM: type = L["EnumSemiProduct"]; break;
+                                                            case ProductTypeEnum.MM: type = L["EnumProduct"]; break;
+                                                            case ProductTypeEnum.BP: type = L["EnumSparePart"]; break;
+                                                            case ProductTypeEnum.TK: type = L["EnumKit"]; break;
+                                                            case ProductTypeEnum.KLP: type = L["EnumMold"]; break;
+                                                            case ProductTypeEnum.APRT: type = L["EnumAparatus"]; break;
+                                                            default: break;
+                                                        }
+                                                    }
+                                                    @type
+                                                </Template>
+                                            </GridColumn>
                                         </GridColumns>
 
                                     </SfGrid>

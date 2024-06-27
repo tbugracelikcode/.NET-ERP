@@ -24,6 +24,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos
         /// </summary>
         public string FinishedProductCode { get; set; }
         /// <summary>
+        /// Temin Şekli
+        /// </summary>
+        public ProductSupplyFormEnum SupplyForm { get; set; }
+        /// <summary>
         /// Malzeme Türü
         /// </summary>
         public ProductTypeEnum MaterialType { get; set; }
@@ -39,10 +43,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos
         /// Ürün Açıklaması
         /// </summary>
         public string ProductName { get; set; }
-        /// <summary>
-        /// Ürün Temin Şekli
-        /// </summary>
-        public int ProductSupplyType { get; set; }
         /// <summary>
         /// Miktar
         /// </summary>

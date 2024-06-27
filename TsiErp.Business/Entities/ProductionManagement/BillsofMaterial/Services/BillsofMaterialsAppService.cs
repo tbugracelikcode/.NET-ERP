@@ -68,6 +68,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 DataOpenStatusUserId = Guid.Empty,
                 DeleterId = Guid.Empty,
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                ProductType = input.ProductType,
                 DeletionTime = null,
                 Id = addedEntityId,
                 IsActive = true,
@@ -100,6 +101,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     ProductID = item.ProductID.GetValueOrDefault(),
                     Quantity = item.Quantity,
                     Size = item.Size,
+                     SupplyForm = (int)item.SupplyForm,
                     UnitSetID = item.UnitSetID.GetValueOrDefault(),
                     _Description = item._Description
                 });
@@ -172,7 +174,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                    .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
-                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },
                         nameof(BillsofMaterials.FinishedProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -201,7 +203,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     )
                    .Join<Products>
                     (
-                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, ProductSupplyType = p.SupplyForm },
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, SupplyForm = p.SupplyForm },
                         nameof(BillsofMaterialLines.ProductID),
                         nameof(Products.Id),
                         "ProductLine",
@@ -235,7 +237,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                    .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
-                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },
                         nameof(BillsofMaterials.FinishedProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -264,7 +266,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     )
                    .Join<Products>
                     (
-                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, ProductSupplyType = p.SupplyForm },
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, SupplyForm = p.SupplyForm },
                         nameof(BillsofMaterialLines.ProductID),
                         nameof(Products.Id),
                         "ProductLine",
@@ -298,7 +300,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                    .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
-                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },
                         nameof(BillsofMaterials.FinishedProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -327,7 +329,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     )
                    .Join<Products>
                     (
-                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, ProductSupplyType = p.SupplyForm },
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, SupplyForm = p.SupplyForm },
                         nameof(BillsofMaterialLines.ProductID),
                         nameof(Products.Id),
                         "ProductLine",
@@ -362,7 +364,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                    .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
-                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },
                         nameof(BillsofMaterials.FinishedProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -392,7 +394,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                    .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
-                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },
                         nameof(BillsofMaterials.FinishedProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -421,7 +423,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     )
                    .Join<Products>
                     (
-                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, ProductSupplyType = p.SupplyForm },
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, SupplyForm = p.SupplyForm },
                         nameof(BillsofMaterialLines.ProductID),
                         nameof(Products.Id),
                         "ProductLine",
@@ -447,7 +449,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                            .Select<BillsofMaterials>(null)
                            .Join<Products>
                             (
-                                pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                                pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },
                                 nameof(BillsofMaterials.FinishedProductID),
                                 nameof(Products.Id),
                                 JoinType.Left
@@ -478,6 +480,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 DataOpenStatusUserId = Guid.Empty,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                ProductType = input.ProductType,
                 Id = input.Id,
                 IsActive = input.IsActive,
                 IsDeleted = entity.IsDeleted,
@@ -509,6 +512,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
                         MaterialType = (int)item.MaterialType,
+                         SupplyForm = (int)item.SupplyForm,
                         ProductID = item.ProductID.GetValueOrDefault(),
                         Quantity = item.Quantity,
                         Size = item.Size,
@@ -537,6 +541,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             FinishedProductID = item.FinishedProductID.GetValueOrDefault(),
                             Id = item.Id,
+                            SupplyForm = (int)item.SupplyForm,
                             IsDeleted = item.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
@@ -574,6 +579,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 Code = entity.Code,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
+                ProductType = (int)entity.ProductType,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),

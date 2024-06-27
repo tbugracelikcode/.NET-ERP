@@ -207,6 +207,12 @@
   <data name="EnumProduct" xml:space="preserve">
     <value>(FP) Finished Product</value>
   </data>
+  <data name="EnumProduction" xml:space="preserve">
+    <value>Production</value>
+  </data>
+  <data name="EnumPurchase" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
   <data name="EnumSemiProduct" xml:space="preserve">
     <value>(SP) Semi-Product</value>
   </data>
@@ -255,6 +261,9 @@
   <data name="LineGridSize" xml:space="preserve">
     <value>SIZE</value>
   </data>
+  <data name="LineGridSupplyForm" xml:space="preserve">
+    <value>SUPPLY TYPE</value>
+  </data>
   <data name="LineGridUnitSetCode" xml:space="preserve">
     <value>UNIT SET</value>
   </data>
@@ -293,6 +302,9 @@
   </data>
   <data name="ProductPopupGridName" xml:space="preserve">
     <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductPopupGridProductType" xml:space="preserve">
+    <value>PRODUCT TYPE</value>
   </data>
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Quantity:</value>

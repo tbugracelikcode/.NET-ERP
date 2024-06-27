@@ -19,6 +19,12 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductGroup
         /// Açıklama
         /// </summary>
         public string Name { get; set; }
+
+        [SqlColumnType(MaxLength = 50, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// GTIP
+        /// </summary>
+        public string GTIP { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// Aktiflik

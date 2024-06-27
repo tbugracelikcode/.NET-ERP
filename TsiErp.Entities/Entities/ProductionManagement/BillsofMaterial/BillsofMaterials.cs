@@ -1,5 +1,6 @@
 ﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using TsiErp.Entities.Enums;
 using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial
@@ -41,6 +42,12 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial
         /// Cari Hesap ID
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Stok Türü
+        /// </summary>
+        public ProductTypeEnum ProductType { get; set; }
 
 
     }

@@ -665,7 +665,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                         foreach (var bomLine in bomLineList)
                         {
-                            if (bomLine.ProductSupplyType == 2)
+                            if ((int)bomLine.SupplyForm == 2)
                             {
                                 var bomLineList2 = (await BillsofMaterialsAppService.GetbyProductIDAsync(bomLine.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.ToList();
 
@@ -837,7 +837,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         {
             foreach (var bomline in bomLineList)
             {
-                if (bomline.ProductSupplyType == 1)
+                if ((int)bomline.SupplyForm == 1)
                 {
                     #region Mamül Reçete satırdaki Temin Şekli Satınalma
                     int calculatedAmount = Convert.ToInt32(bomline.Quantity);

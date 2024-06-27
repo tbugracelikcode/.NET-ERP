@@ -240,6 +240,15 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="StationGroupModalGridCode" xml:space="preserve">
+    <value>WORK CENTER CODE</value>
+  </data>
+  <data name="StationGroupModalGridName" xml:space="preserve">
+    <value>WORK CENTER NAME</value>
+  </data>
+  <data name="StationGroupModalTitle" xml:space="preserve">
+    <value>Work Centers</value>
+  </data>
   <data name="TechnicalApproval" xml:space="preserve">
     <value>TECHNICAL APPROVAL</value>
   </data>
@@ -263,6 +272,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Production Management &gt; Main Records</value>
+  </data>
+  <data name="UIWarningSameProductMessage" xml:space="preserve">
+    <value>A new route cannot be created for product for which a route has already been created.</value>
+  </data>
+  <data name="UIWarningSameProductTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

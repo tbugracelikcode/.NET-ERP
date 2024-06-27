@@ -24,6 +24,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.Route
         /// Ana Ürün ID
         /// </summary>
         public Guid ProductID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// İş Merkezi ID
+        /// </summary>
+        public Guid StationGroupID { get; set; }
         [SqlColumnType(MaxLength = 200, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Üretim Başlangıç
