@@ -84,5 +84,18 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLi
         /// Toplam Brüt KG
         /// </summary>
         public decimal TotalGrossKG { get; set; }
+        /// <summary>
+        ///  Stok Grup ID
+        /// </summary>
+        public Guid ProductGroupID { get; set; }
+        /// <summary>
+        ///  Stok Grup Adı
+        /// </summary>
+        public string ProductGroupName { get; set; }
+
+        /// <summary>
+        /// Dövizli Birim Fiyat
+        /// </summary>
+        public decimal TransactionExchangeUnitPrice { get; set; }
     }
 }
