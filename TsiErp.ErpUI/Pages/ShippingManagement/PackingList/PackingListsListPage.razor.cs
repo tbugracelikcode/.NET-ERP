@@ -632,9 +632,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     GridLinePalletPackageList.Add(palletPackageLineModel);
                 }
 
-                    #endregion
-                }
-            }
                 #endregion
             }
 
