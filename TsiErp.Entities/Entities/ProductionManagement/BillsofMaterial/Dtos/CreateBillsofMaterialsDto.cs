@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos
 {
@@ -19,6 +20,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos
         /// Reçete Adı
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Stok Türü
+        /// </summary>
+        public int ProductType { get; set; }
         /// <summary>
         /// Mamül ID
         /// </summary>

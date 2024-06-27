@@ -204,6 +204,12 @@
   <data name="EnumProduct" xml:space="preserve">
     <value>(MM) Mamül</value>
   </data>
+  <data name="EnumProduction" xml:space="preserve">
+    <value>Üretim</value>
+  </data>
+  <data name="EnumPurchase" xml:space="preserve">
+    <value>Satın Alma</value>
+  </data>
   <data name="EnumSemiProduct" xml:space="preserve">
     <value>(YM) Yarı Mamül</value>
   </data>
@@ -214,31 +220,31 @@
     <value>Hata</value>
   </data>
   <data name="FinishedProductCode" xml:space="preserve">
-    <value>MAMÜL KODU</value>
+    <value>STOK KODU</value>
   </data>
   <data name="FinishedProductCodeLabel" xml:space="preserve">
-    <value>Mamül Kodu:</value>
+    <value>Stok Kodu:</value>
   </data>
   <data name="FinishedProductCodeLineLabel" xml:space="preserve">
-    <value>Mamül Kodu:</value>
+    <value>Stok Kodu:</value>
   </data>
   <data name="FinishedProductModalTitle" xml:space="preserve">
-    <value>Mamüller</value>
+    <value>Stok Kartları</value>
   </data>
   <data name="FinishedProductNameLabel" xml:space="preserve">
-    <value>Mamül Açıklaması:</value>
+    <value>Stok Açıklaması:</value>
   </data>
   <data name="FinishedProductPopupGridCode" xml:space="preserve">
-    <value>MAMÜL KODU</value>
+    <value>STOK KODU</value>
   </data>
   <data name="FinishedProductPopupGridName" xml:space="preserve">
-    <value>MAMÜL AÇIKLAMASI</value>
+    <value>STOK AÇIKLAMASI</value>
   </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Aktiflik:</value>
   </data>
   <data name="LineGridFinishedProductCode" xml:space="preserve">
-    <value>MAMÜL KODU</value>
+    <value>STOK KODU</value>
   </data>
   <data name="LineGridMaterialType" xml:space="preserve">
     <value>MALZEME TÜRÜ</value>
@@ -251,6 +257,9 @@
   </data>
   <data name="LineGridSize" xml:space="preserve">
     <value>BOY</value>
+  </data>
+  <data name="LineGridSupplyForm" xml:space="preserve">
+    <value>TEMİN ŞEKLİ</value>
   </data>
   <data name="LineGridUnitSetCode" xml:space="preserve">
     <value>BİRİM SETİ</value>
@@ -291,6 +300,9 @@
   <data name="ProductPopupGridName" xml:space="preserve">
     <value>STOK AÇIKLAMASI</value>
   </data>
+  <data name="ProductPopupGridProductType" xml:space="preserve">
+    <value>STOK TÜRÜ</value>
+  </data>
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Miktar:</value>
   </data>
@@ -313,7 +325,7 @@
     <value>Dikkat</value>
   </data>
   <data name="UILineNewContextWarning" xml:space="preserve">
-    <value>Mamül seçmeden satır eklenemez.</value>
+    <value>Stok seçmeden satır eklenemez.</value>
   </data>
   <data name="UILineSubmitQuantityZero" xml:space="preserve">
     <value>Miktar 0 olduğu için satır kaydetme işlemi yapılamamaktadır.</value>
@@ -325,7 +337,7 @@
     <value>Üretim Yönetimi &gt; Ana Kayıtlar</value>
   </data>
   <data name="UIWarningCustomerMessage" xml:space="preserve">
-    <value>Mamül içeren kayıtlarda müşteri kodu zorunludur.</value>
+    <value>Stok içeren kayıtlarda müşteri kodu zorunludur.</value>
   </data>
   <data name="UIWarningCustomerTitle" xml:space="preserve">
     <value>Uyarı</value>
@@ -355,7 +367,7 @@
     <value>Lütfen müşteri kodu seçin.</value>
   </data>
   <data name="ValidatorFinishedProductID" xml:space="preserve">
-    <value>Lütfen mamül seçin.</value>
+    <value>Lütfen stok kartı seçin.</value>
   </data>
   <data name="ValidatorNameEmpty" xml:space="preserve">
     <value>Lütfen reçete adını yazın.</value>

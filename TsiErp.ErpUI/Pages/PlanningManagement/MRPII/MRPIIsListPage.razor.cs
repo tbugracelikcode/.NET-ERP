@@ -262,7 +262,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
                     {
                         var orderAcceptanceLineAmount = (await OrderAcceptanceRecordsAppService.GetAsync(LineDataSource.OrderAcceptanceID.GetValueOrDefault())).Data.SelectOrderAcceptanceRecordLines.Where(t => t.ProductID == LineDataSource.ProductID).Select(t => t.OrderAmount).FirstOrDefault();
 
-                        var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(LineDataSource.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.Where(t => t.ProductSupplyType == 2).ToList();
+                        var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(LineDataSource.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.Where(t => (int)t.SupplyForm == 2).ToList();
 
                         if (bomLineList != null && bomLineList.Count > 0)
                         {
@@ -298,7 +298,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
                     {
                         var salesOrderLineAmount = (await SalesOrdersAppService.GetAsync(LineDataSource.SalesOrderID.GetValueOrDefault())).Data.SelectSalesOrderLines.Where(t => t.ProductID == LineDataSource.ProductID).Select(t => t.Quantity).FirstOrDefault();
 
-                        var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(LineDataSource.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.Where(t => t.ProductSupplyType == 2).ToList();
+                        var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(LineDataSource.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.Where(t => (int)t.SupplyForm == 2).ToList();
 
                         if (bomLineList != null && bomLineList.Count > 0)
                         {
@@ -439,7 +439,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
 
                                     int indexFinishedProduct = GridLineList.IndexOf(mrpIILineModel1);
 
-                                    var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(product.Id)).Data.SelectBillsofMaterialLines.Where(t => t.ProductSupplyType == 2).ToList();
+                                    var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(product.Id)).Data.SelectBillsofMaterialLines.Where(t => (int)t.SupplyForm == 2).ToList();
 
                                     if (bomLineList != null && bomLineList.Count > 0)
                                     {
@@ -534,7 +534,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
 
                                     int indexFinishedProduct = GridLineList.IndexOf(mrpIILineModel1);
 
-                                    var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(product.Id)).Data.SelectBillsofMaterialLines.Where(t => t.ProductSupplyType == 2).ToList();
+                                    var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(product.Id)).Data.SelectBillsofMaterialLines.Where(t => (int)t.SupplyForm == 2).ToList();
 
                                     if (bomLineList != null && bomLineList.Count > 0)
                                     {
@@ -594,7 +594,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
                 {
                     var orderAcceptanceLineAmount = (await OrderAcceptanceRecordsAppService.GetAsync(line.OrderAcceptanceID.GetValueOrDefault())).Data.SelectOrderAcceptanceRecordLines.Where(t => t.ProductID == line.ProductID).Select(t => t.OrderAmount).FirstOrDefault();
 
-                    var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(line.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.Where(t => t.ProductSupplyType == 2).ToList();
+                    var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(line.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.Where(t => (int)t.SupplyForm == 2).ToList();
 
                     if (bomLineList != null && bomLineList.Count > 0)
                     {
@@ -629,7 +629,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
                 {
                     var salesOrderLineAmount = (await SalesOrdersAppService.GetAsync(line.SalesOrderID.GetValueOrDefault())).Data.SelectSalesOrderLines.Where(t => t.ProductID == line.ProductID).Select(t => t.Quantity).FirstOrDefault();
 
-                    var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(line.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.Where(t => t.ProductSupplyType == 2).ToList();
+                    var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(line.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.Where(t => (int)t.SupplyForm == 2).ToList();
 
                     if (bomLineList != null && bomLineList.Count > 0)
                     {

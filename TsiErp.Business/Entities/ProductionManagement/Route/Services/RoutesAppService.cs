@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -13,6 +14,7 @@ using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Route.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.Route;
@@ -59,6 +61,7 @@ namespace TsiErp.Business.Entities.Route.Services
             var query = queryFactory.Query().From(Tables.Routes).Insert(new CreateRoutesDto
             {
                 Approval = input.Approval,
+                StationGroupID = input.StationGroupID.GetValueOrDefault(),
                 ProductID = input.ProductID.GetValueOrDefault(),
                 ProductionStart = input.ProductionStart,
                 TechnicalApproval = input.TechnicalApproval,
@@ -177,6 +180,13 @@ namespace TsiErp.Business.Entities.Route.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
+                     .Join<StationGroups>
+                    (
+                        p => new { StationGroupID = p.Id, ProductionStart = p.Name },
+                        nameof(Routes.StationGroupID),
+                        nameof(StationGroups.Id),
+                        JoinType.Left
+                    )
                     .Where(new { Id = id }, true, true, Tables.Routes);
 
             var routes = queryFactory.Get<SelectRoutesDto>(query);
@@ -226,6 +236,13 @@ namespace TsiErp.Business.Entities.Route.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
+                       .Join<StationGroups>
+                    (
+                        p => new { StationGroupID = p.Id, ProductionStart = p.Name },
+                        nameof(Routes.StationGroupID),
+                        nameof(StationGroups.Id),
+                        JoinType.Left
+                    )
                     .Where(null, true, true, Tables.Routes);
 
             var routes = queryFactory.GetList<ListRoutesDto>(query).ToList();
@@ -248,6 +265,13 @@ namespace TsiErp.Business.Entities.Route.Services
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
                         nameof(Routes.ProductID),
                         nameof(Products.Id),
+                        JoinType.Left
+                    )
+                       .Join<StationGroups>
+                    (
+                        p => new { StationGroupID = p.Id, ProductionStart = p.Name },
+                        nameof(Routes.StationGroupID),
+                        nameof(StationGroups.Id),
                         JoinType.Left
                     )
                     .Where(new { Id = input.Id }, true, true, Tables.Routes);
@@ -282,12 +306,19 @@ namespace TsiErp.Business.Entities.Route.Services
             var listQuery = queryFactory
                    .Query()
                     .From(Tables.Routes)
-                   .Select<Routes>(r => new { r.TechnicalApproval, r.ProductionStart, r.ProductID, r.Name, r.IsActive, r.Id, r.DataOpenStatusUserId, r.DataOpenStatus, r.Code, r.Approval })
+                   .Select<Routes>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
                         nameof(Routes.ProductID),
                         nameof(Products.Id),
+                        JoinType.Left
+                    )
+                       .Join<StationGroups>
+                    (
+                        p => new { StationGroupID = p.Id, ProductionStart = p.Name },
+                        nameof(Routes.StationGroupID),
+                        nameof(StationGroups.Id),
                         JoinType.Left
                     )
                             .Where(new { Code = input.Code }, false, false, Tables.Routes);
@@ -304,6 +335,7 @@ namespace TsiErp.Business.Entities.Route.Services
             {
                 Approval = input.Approval,
                 ProductID = input.ProductID.GetValueOrDefault(),
+                StationGroupID = input.StationGroupID.GetValueOrDefault(),
                 ProductionStart = input.ProductionStart,
                 TechnicalApproval = input.TechnicalApproval,
                 Code = input.Code,
@@ -429,6 +461,7 @@ namespace TsiErp.Business.Entities.Route.Services
                 Approval = entity.Approval,
                 ProductID = entity.ProductID,
                 ProductionStart = entity.ProductionStart,
+                StationGroupID = entity.StationGroupID,
                 TechnicalApproval = entity.TechnicalApproval,
                 Code = entity.Code,
                 CreationTime = entity.CreationTime.Value,
@@ -450,6 +483,34 @@ namespace TsiErp.Business.Entities.Route.Services
             return new SuccessDataResult<SelectRoutesDto>(routesDto);
 
 
+        }
+
+        public async Task<IDataResult<SelectRouteLinesDto>> GetLinebyProductsOperationIDAsync(Guid productsOperationID)
+        {
+            var queryLines = queryFactory
+                  .Query()
+                  .From(Tables.RouteLines)
+                  .Select<RouteLines>(null)
+                  .Join<Products>
+                   (
+                       pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
+                       nameof(RouteLines.ProductID),
+                       nameof(Products.Id),
+                       JoinType.Left
+                   )
+                  .Join<ProductsOperations>
+                   (
+                       po => new { ProductsOperationID = po.Id, OperationName = po.Name, OperationCode = po.Code },
+                       nameof(RouteLines.ProductsOperationID),
+                       nameof(ProductsOperations.Id),
+                       JoinType.Left
+                   )
+                   .Where(new { ProductsOperationID = productsOperationID }, false, false, Tables.RouteLines);
+
+            var routeLine = queryFactory.Get<SelectRouteLinesDto>(queryLines);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectRouteLinesDto>(routeLine);
         }
     }
 }

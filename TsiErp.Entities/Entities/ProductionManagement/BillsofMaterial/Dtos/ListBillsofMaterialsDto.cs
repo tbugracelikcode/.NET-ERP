@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos
 {
@@ -17,6 +18,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos
         /// Reçete Adı
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Stok Türü
+        /// </summary>
+        public ProductTypeEnum ProductType { get; set; }
         /// <summary>
         /// Mamül ID
         /// </summary>

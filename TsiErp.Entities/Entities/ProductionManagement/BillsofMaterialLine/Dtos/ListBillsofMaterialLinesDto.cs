@@ -15,6 +15,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos
         /// Mamül Kodu
         /// </summary>
         public string FinishedProductCode { get; set; }
+        /// <summary>
+        /// Temin Şekli
+        /// </summary>
+        public ProductSupplyFormEnum SupplyForm { get; set; }
 
         /// <summary>
         /// Malzeme Türü

@@ -20,6 +20,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos
         /// </summary>
         public Guid? FinishedProductID { get; set; }
         /// <summary>
+        /// Temin Şekli
+        /// </summary>
+        public int SupplyForm { get; set; }
+        /// <summary>
         /// Malzeme Türü
         /// </summary>
         public int MaterialType { get; set; }

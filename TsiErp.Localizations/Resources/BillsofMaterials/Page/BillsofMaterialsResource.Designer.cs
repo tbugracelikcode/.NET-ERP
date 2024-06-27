@@ -331,6 +331,24 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim.
+        /// </summary>
+        public static string EnumProduction {
+            get {
+                return ResourceManager.GetString("EnumProduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma.
+        /// </summary>
+        public static string EnumPurchase {
+            get {
+                return ResourceManager.GetString("EnumPurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (YM) Yarı Mamül.
         /// </summary>
         public static string EnumSemiProduct {
@@ -358,7 +376,7 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MAMÜL KODU.
+        ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string FinishedProductCode {
             get {
@@ -367,7 +385,7 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mamül Kodu:.
+        ///   Looks up a localized string similar to Stok Kodu:.
         /// </summary>
         public static string FinishedProductCodeLabel {
             get {
@@ -376,7 +394,7 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mamül Kodu:.
+        ///   Looks up a localized string similar to Stok Kodu:.
         /// </summary>
         public static string FinishedProductCodeLineLabel {
             get {
@@ -385,7 +403,7 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mamüller.
+        ///   Looks up a localized string similar to Stok Kartları.
         /// </summary>
         public static string FinishedProductModalTitle {
             get {
@@ -394,7 +412,7 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mamül Açıklaması:.
+        ///   Looks up a localized string similar to Stok Açıklaması:.
         /// </summary>
         public static string FinishedProductNameLabel {
             get {
@@ -403,7 +421,7 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MAMÜL KODU.
+        ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string FinishedProductPopupGridCode {
             get {
@@ -412,7 +430,7 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MAMÜL AÇIKLAMASI.
+        ///   Looks up a localized string similar to STOK AÇIKLAMASI.
         /// </summary>
         public static string FinishedProductPopupGridName {
             get {
@@ -430,7 +448,7 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MAMÜL KODU.
+        ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string LineGridFinishedProductCode {
             get {
@@ -471,6 +489,15 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         public static string LineGridSize {
             get {
                 return ResourceManager.GetString("LineGridSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TEMİN ŞEKLİ.
+        /// </summary>
+        public static string LineGridSupplyForm {
+            get {
+                return ResourceManager.GetString("LineGridSupplyForm", resourceCulture);
             }
         }
         
@@ -592,6 +619,15 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to STOK TÜRÜ.
+        /// </summary>
+        public static string ProductPopupGridProductType {
+            get {
+                return ResourceManager.GetString("ProductPopupGridProductType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Miktar:.
         /// </summary>
         public static string QuantityLineLabel {
@@ -655,7 +691,7 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mamül seçmeden satır eklenemez..
+        ///   Looks up a localized string similar to Stok seçmeden satır eklenemez..
         /// </summary>
         public static string UILineNewContextWarning {
             get {
@@ -691,7 +727,7 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mamül içeren kayıtlarda müşteri kodu zorunludur..
+        ///   Looks up a localized string similar to Stok içeren kayıtlarda müşteri kodu zorunludur..
         /// </summary>
         public static string UIWarningCustomerMessage {
             get {
@@ -781,7 +817,7 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lütfen mamül seçin..
+        ///   Looks up a localized string similar to Lütfen stok kartı seçin..
         /// </summary>
         public static string ValidatorFinishedProductID {
             get {

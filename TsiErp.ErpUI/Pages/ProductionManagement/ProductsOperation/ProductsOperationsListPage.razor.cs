@@ -138,6 +138,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                 DataSource.ProductID = Guid.Empty;
                 DataSource.ProductCode = string.Empty;
                 DataSource.ProductName = string.Empty;
+                DataSource.Name = string.Empty;
             }
         }
 
@@ -252,6 +253,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                 DataSource.TemplateOperationName = string.Empty;
                 DataSource.WorkCenterID = Guid.Empty;
                 DataSource.WorkCenterName = string.Empty;
+                DataSource.Name = string.Empty;
             }
         }
 

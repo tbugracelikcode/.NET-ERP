@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using AutoMapper.Internal.Mappers;
+using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -11,11 +12,13 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.ProductsOperation.Validations;
+using TsiErp.Business.Entities.Route.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation.Dtos;
@@ -28,6 +31,7 @@ using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ProductsOperations.Page;
+using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 
 namespace TsiErp.Business.Entities.ProductsOperation.Services
 {
@@ -38,11 +42,13 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly IRoutesAppService _RoutesAppService;
 
-        public ProductsOperationsAppService(IStringLocalizer<ProductsOperationsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public ProductsOperationsAppService(IStringLocalizer<ProductsOperationsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, IRoutesAppService routesAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _RoutesAppService = routesAppService;
         }
 
         [ValidationAspect(typeof(CreateProductsOperationsValidatorDto), Priority = 1)]
@@ -441,7 +447,12 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+
+                    
+
+
                 }
+
                 else
                 {
                     var lineGetQuery = queryFactory.Query().From(Tables.ProductsOperationLines).Select("*").Where(new { Id = item.Id }, false, false, "");
@@ -473,7 +484,29 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+
+                    
                     }
+                }
+
+                if (item.Priority == 1)
+                {
+                    #region Rota Satır Update
+
+                    var routeLine = (await _RoutesAppService.GetLinebyProductsOperationIDAsync(input.Id)).Data;
+
+                    var route = (await _RoutesAppService.GetAsync(routeLine.RouteID)).Data;
+
+                    int updatedLineIndex = route.SelectRouteLines.IndexOf(routeLine);
+
+                    route.SelectRouteLines[updatedLineIndex].AdjustmentAndControlTime = (int)item.AdjustmentAndControlTime;
+                    route.SelectRouteLines[updatedLineIndex].OperationTime = (int)item.OperationTime;
+
+                    var updatedEntity = ObjectMapper.Map<SelectRoutesDto, UpdateRoutesDto>(route);
+
+                    await _RoutesAppService.UpdateAsync(updatedEntity);
+
+                    #endregion
                 }
             }
             #endregion
@@ -536,6 +569,8 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             var productsOperation = queryFactory.Update<SelectProductsOperationsDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.ProductsOperations, LogType.Update, entity.Id);
+
+           
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectProductsOperationsDto>(productsOperation);

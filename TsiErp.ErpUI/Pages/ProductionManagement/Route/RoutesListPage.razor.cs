@@ -3,14 +3,17 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.RouteLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
@@ -135,6 +138,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
                 case "changed":
                     IsChanged = true;
                     DataSource = (await RoutesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    DataSource.SelectRouteLines = DataSource.SelectRouteLines.OrderBy(t=>t.LineNr).ToList();
                     GridLineList = DataSource.SelectRouteLines;
                     GridProductsOperationList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID).ToList();
                    
@@ -307,7 +311,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
 
             var index = Convert.ToInt32(_LineGrid.SelectedRowIndexes.FirstOrDefault());
 
-            if (!(index == GridLineList.Count()))
+            if (!(index == GridLineList.Count()-1))
             {
                 GridLineList[index].Priority += 1;
                 GridLineList[index + 1].Priority -= 1;
@@ -321,6 +325,101 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
                 await _LineGrid.Refresh();
                 await InvokeAsync(StateHasChanged);
             }
+        }
+
+        protected override async  Task OnSubmit()
+        {
+            
+            #region OnSubmit İşlemleri
+
+            SelectRoutesDto result;
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                if (ListDataSource.Any(t => t.ProductID == DataSource.ProductID))
+                {
+                    await ModalManager.WarningPopupAsync(L["UIWarningSameProductTitle"], L["UIWarningSameProductMessage"]);
+                }
+                else
+                {
+
+                    var createInput = ObjectMapper.Map<SelectRoutesDto, CreateRoutesDto>(DataSource);
+
+                    result = (await CreateAsync(createInput)).Data;
+
+                    if (result != null)
+                        DataSource.Id = result.Id;
+
+                    if (result == null)
+                    {
+
+                        return;
+                    }
+
+                    await GetListDataSourceAsync();
+
+                    var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+                    HideEditPage();
+
+                    if (DataSource.Id == Guid.Empty)
+                    {
+                        DataSource.Id = result.Id;
+                    }
+
+                    if (savedEntityIndex > -1)
+                        SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+                    else
+                        SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+                }
+
+
+
+            }
+            else
+            {
+                if (ListDataSource.Any(t => t.ProductID == DataSource.ProductID && t.Id != DataSource.Id))
+                {
+                    await ModalManager.WarningPopupAsync(L["UIWarningSameProductTitle"], L["UIWarningSameProductMessage"]);
+                }
+                else
+                {
+
+                    var updateInput = ObjectMapper.Map<SelectRoutesDto, UpdateRoutesDto>(DataSource);
+
+                    result = (await UpdateAsync(updateInput)).Data;
+
+                    if (result == null)
+                    {
+
+                        return;
+                    }
+
+                    await GetListDataSourceAsync();
+
+                    var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+                    HideEditPage();
+
+                    if (DataSource.Id == Guid.Empty)
+                    {
+                        DataSource.Id = result.Id;
+                    }
+
+                    if (savedEntityIndex > -1)
+                        SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+                    else
+                        SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+                }
+
+            }
+
+          
+
+            
+
+            #endregion
         }
 
         #endregion
@@ -363,6 +462,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
                 DataSource.ProductID = Guid.Empty;
                 DataSource.ProductCode = string.Empty;
                 DataSource.ProductName = string.Empty;
+                DataSource.Name = string.Empty;
             }
         }
 
@@ -375,11 +475,54 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
                 DataSource.ProductID = selectedProduct.Id;
                 DataSource.ProductCode = selectedProduct.Code;
                 DataSource.ProductName = selectedProduct.Name;
+                DataSource.Name = selectedProduct.Code + " / " +  selectedProduct.Name;
 
                 GridProductsOperationList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.ToList();
                 GridProductsOperationList = GridProductsOperationList.Where(t => t.ProductID == selectedProduct.Id).ToList();
                 await _ProductsOperationGrid.Refresh();
                 SelectProductsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region İş Merkezi Button Edit
+
+        SfTextBox StationGroupsButtonEdit;
+        bool SelectStationGroupsPopupVisible = false;
+        List<ListStationGroupsDto> StationGroupsList = new List<ListStationGroupsDto>();
+        public async Task StationGroupsOnCreateIcon()
+        {
+            var StationGroupsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationGroupsButtonClickEvent);
+            await StationGroupsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationGroupsButtonClick } });
+        }
+
+        public async void StationGroupsButtonClickEvent()
+        {
+            SelectStationGroupsPopupVisible = true;
+            StationGroupsList = (await StationGroupsAppService.GetListAsync(new ListStationGroupsParameterDto())).Data.ToList();    
+            await InvokeAsync(StateHasChanged);
+        }
+        public void StationGroupsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.StationGroupID = Guid.Empty;
+                DataSource.ProductionStart = string.Empty;
+            }
+        }
+
+        public async void StationGroupsDoubleClickHandler(RecordDoubleClickEventArgs<ListStationGroupsDto> args)
+        {
+            var selectedStationGroup = args.RowData;
+
+            if (selectedStationGroup != null)
+            {
+                DataSource.StationGroupID  = selectedStationGroup.Id;
+                DataSource.ProductionStart = selectedStationGroup.Name;
+
+                SelectStationGroupsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
         }

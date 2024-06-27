@@ -214,7 +214,7 @@ namespace TsiErp.Localizations.Resources.Routes.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ÜRÜN KODU.
+        ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string LineGridProductCode {
             get {
@@ -223,7 +223,7 @@ namespace TsiErp.Localizations.Resources.Routes.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ÜRÜN AÇIKLAMASI.
+        ///   Looks up a localized string similar to STOK AÇIKLAMASI.
         /// </summary>
         public static string LineGridProductName {
             get {
@@ -304,7 +304,7 @@ namespace TsiErp.Localizations.Resources.Routes.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ÜRÜN KODU.
+        ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string ProductCode {
             get {
@@ -313,7 +313,7 @@ namespace TsiErp.Localizations.Resources.Routes.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ürün Kodu:.
+        ///   Looks up a localized string similar to Stok Kodu:.
         /// </summary>
         public static string ProductCodeLabel {
             get {
@@ -367,7 +367,7 @@ namespace TsiErp.Localizations.Resources.Routes.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ÜRÜN AÇIKLAMASI.
+        ///   Looks up a localized string similar to STOK AÇIKLAMASI.
         /// </summary>
         public static string ProductName {
             get {
@@ -376,7 +376,7 @@ namespace TsiErp.Localizations.Resources.Routes.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ürün Açıklaması:.
+        ///   Looks up a localized string similar to Stok Açıklaması:.
         /// </summary>
         public static string ProductNameLabel {
             get {
@@ -426,6 +426,33 @@ namespace TsiErp.Localizations.Resources.Routes.Page {
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞ MERKEZİ KODU.
+        /// </summary>
+        public static string StationGroupModalGridCode {
+            get {
+                return ResourceManager.GetString("StationGroupModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞ MERKEZİ ADI.
+        /// </summary>
+        public static string StationGroupModalGridName {
+            get {
+                return ResourceManager.GetString("StationGroupModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş Merkezleri.
+        /// </summary>
+        public static string StationGroupModalTitle {
+            get {
+                return ResourceManager.GetString("StationGroupModalTitle", resourceCulture);
             }
         }
         
@@ -502,6 +529,24 @@ namespace TsiErp.Localizations.Resources.Routes.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Daha önceden rotası oluşturulmuş stok için yeni bir rota oluşturulamaz..
+        /// </summary>
+        public static string UIWarningSameProductMessage {
+            get {
+                return ResourceManager.GetString("UIWarningSameProductMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningSameProductTitle {
+            get {
+                return ResourceManager.GetString("UIWarningSameProductTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
         /// </summary>
         public static string UpdateControlManager {
@@ -547,7 +592,7 @@ namespace TsiErp.Localizations.Resources.Routes.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lütfen ürün seçin..
+        ///   Looks up a localized string similar to Lütfen stok kartı seçin..
         /// </summary>
         public static string ValidatorProductID {
             get {

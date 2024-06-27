@@ -25,6 +25,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine
         /// Malzeme Türü
         /// </summary>
         public ProductTypeEnum MaterialType { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Temin Şekli
+        /// </summary>
+        public ProductSupplyFormEnum SupplyForm { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Ürün ID

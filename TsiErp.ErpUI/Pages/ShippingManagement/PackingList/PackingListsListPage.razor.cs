@@ -592,8 +592,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     }
 
                     #endregion
-
-
                 }
             }
 
@@ -624,8 +622,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             #endregion
 
             GridLinePalletList = GridLinePalletList.OrderBy(t=>t.PalletName).ToList();
-
-            DataSource.SelectPackingListPalletLines = GridLinePalletList;
 
             await _LinePalletGrid.Refresh();
 
