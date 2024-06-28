@@ -1,10 +1,8 @@
 ﻿using Microsoft.Extensions.Localization;
-using Syncfusion.Blazor.Buttons;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementParameter.Dtos;
-using static TsiErp.ErpUI.Pages.QualityControl.Report8D.Report8DsListPage;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.StockManagementParameter
 {

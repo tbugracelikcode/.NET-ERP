@@ -7,7 +7,6 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.ControlType
 {

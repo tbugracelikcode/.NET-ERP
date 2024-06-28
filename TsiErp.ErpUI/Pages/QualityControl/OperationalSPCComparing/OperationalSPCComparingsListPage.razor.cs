@@ -1,10 +1,5 @@
-﻿using TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services;
-using TsiErp.Business.Entities.UnsuitabilityItemSPC.Services;
-using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
+﻿using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPC.Dtos;
-using static TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPCComparing.UnsuitabilityItemSPCComparingsListPage;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPC.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPCComparing
 {

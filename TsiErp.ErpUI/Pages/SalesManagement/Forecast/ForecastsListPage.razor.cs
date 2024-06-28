@@ -7,10 +7,6 @@ using Syncfusion.Blazor.Inputs;
 using Syncfusion.XlsIO;
 using System.Data;
 using System.Dynamic;
-using TsiErp.Business.Entities.BillsofMaterial.Services;
-using TsiErp.Business.Entities.GrandTotalStockMovement.Services;
-using TsiErp.Business.Entities.ProductReferanceNumber.Services;
-using TsiErp.Business.Entities.PurchasePrice.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
@@ -22,14 +18,11 @@ using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
-using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.Forecast.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine.Dtos;
-using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.ErpUI.Models;
-using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast

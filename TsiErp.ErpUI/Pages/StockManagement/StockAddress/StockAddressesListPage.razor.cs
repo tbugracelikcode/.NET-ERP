@@ -2,25 +2,16 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
-using TsiErp.Entities.Entities.StockManagement.ProductCost.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddressLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockColumn.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockSection.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockShelf.Dtos;
-using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
-using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
-using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.StockManagement.StockAddress

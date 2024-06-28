@@ -1,23 +1,19 @@
-﻿using Syncfusion.Blazor.Grids;
-using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using TsiErp.ErpUI.Utilities.ModalUtilities;
-using Microsoft.AspNetCore.Components;
-using TsiErp.Business.Entities.BillsofMaterial.Services;
-using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
-using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
+using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
-using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine.Dtos;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
-using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
-using Microsoft.SqlServer.Server;
 using System.Timers;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
-using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 {

@@ -1,10 +1,8 @@
 ﻿using Microsoft.Extensions.Localization;
-using Syncfusion.Blazor.Buttons;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter.Dtos;
-using static TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PurchaseManagementParameter.PurchaseManagementParametersListPage;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.SalesManagementParameter
 {

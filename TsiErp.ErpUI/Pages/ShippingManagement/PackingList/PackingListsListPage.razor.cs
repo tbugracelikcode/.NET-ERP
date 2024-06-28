@@ -1,5 +1,4 @@
 ﻿using DevExpress.Blazor.Reporting;
-using DevExpress.CodeParser;
 using DevExpress.DataAccess.ObjectBinding;
 using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Components;
@@ -7,35 +6,26 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using Syncfusion.Blazor.Lists;
 using Syncfusion.Blazor.Navigations;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Reflection;
-using TsiErp.Business.Entities.PackageFiche.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
-using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
-using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
-using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.CustomsInstruction;
-using TsiErp.ErpUI.Reports.ShippingManagement.PalletReports.PalletLabels;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using static TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord.PalletRecordsListPage;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 {

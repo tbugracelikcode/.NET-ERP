@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
@@ -10,10 +9,6 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dtos;
-using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
-using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
-using TsiErp.Entities.Entities.StockManagement.StockAddressLine.Dtos;
-using TsiErp.Entities.Entities.StockManagement.StockShelf.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
