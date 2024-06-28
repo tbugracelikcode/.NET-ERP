@@ -196,6 +196,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
+
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             CreatePalletDetailContextMenuItems();
@@ -1102,11 +1103,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         {
             LineCrudPopup = false;
         }
+
         public void HidePalletDetailPopup()
         {
             PalletDetailPopupVisible = false;
             PalletDetailGridList.Clear();
         }
+
         public void HideLoadingDetailPopup()
         {
             LoadingDetailPopupVisible = false;
@@ -1117,16 +1120,19 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             CurrentAccountIDFilter = Guid.Empty;
             LoadingDetailGridList.Clear();
         }
+
         public void HidePalletDetailCrudPopup()
         {
             PalletDetailCrudPopupVisible = false;
         }
+
         public void HideTicketList()
         {
             TicketListGridList.Clear();
 
             TicketListPopupVisible = false;
         }
+
         protected async Task OnPalletDetailSubmit()
         {
             int index = PalletDetailGridList.IndexOf(PalletDetailDataSource);
@@ -1152,6 +1158,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             HidePalletDetailCrudPopup();
             await InvokeAsync(StateHasChanged);
         }
+
         protected async Task OnLineSubmit()
         {
 
@@ -1187,6 +1194,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             HideLinesPopup();
             await InvokeAsync(StateHasChanged);
         }
+
         public async void LoadingDetailFilterClicked()
         {
             #region Filtreleme 
@@ -1368,6 +1376,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
             #endregion
         }
+
         public void ClearButtonClicked()
         {
             PalletNameFilter = string.Empty;
@@ -1376,6 +1385,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             CurrentAccountNameFilter = string.Empty;
             CurrentAccountIDFilter = Guid.Empty;
         }
+
         public async void LoadingDetailToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
         {
             if (args.Item.Id == "ExcelExport")
@@ -1396,6 +1406,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
             }
         }
+
         public async void TicketListToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
         {
             if (args.Item.Id == "ExcelExport")
