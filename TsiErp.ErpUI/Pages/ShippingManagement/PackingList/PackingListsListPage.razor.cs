@@ -99,6 +99,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
+
             CreateMainContextMenuItems();
             CreatePalletContextMenuItems();
             CreatePalletPackageContextMenuItems();
@@ -454,6 +455,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             }
         }
 
+        #region Palet Seçim Modalı
+
         public async void PalletSelectionLineContextMenuClick(ContextMenuClickEventArgs<PalletSelectionModal> args)
         {
             switch (args.Item.Id)
@@ -686,6 +689,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             await InvokeAsync(StateHasChanged);
         }
+
+        #endregion
 
         public async void PalletPackageLineContextMenuClick(ContextMenuClickEventArgs<SelectPackingListPalletPackageLinesDto> args)
         {

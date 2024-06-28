@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.Navigations;
 using TsiErp.Business.Entities.BillsofMaterial.Services;
 using TsiErp.Business.Entities.Branch.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -80,6 +81,52 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextOccuredAmountEntry"], Id = "occuredamountentry" }); break;
                             case "ProductionOrderContextConsumptionReceipt":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextConsumptionReceipt"], Id = "consumptionreceipt" }); break;
+                            case "ProductionOrderContextCancel":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextCancel"], Id = "cancel" }); break;
+                            case "ProductionOrderContextMaterialSupplyStatus":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextMaterialSupplyStatus"], Id = "materialsupplystatus" }); break;
+                            case "ProductionOrderContextWrite":
+
+                                List<MenuItem> subMenus = new List<MenuItem>();
+
+                                var subList = MenusList.Where(t => t.ParentMenuId == context.Id).OrderBy(t => t.ContextOrderNo).ToList();
+
+                                foreach (var subMenu in subList)
+                                {
+                                    var subPermission = UserPermissionsList.Where(t => t.MenuId == subMenu.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+
+                                    if (subPermission)
+                                    {
+                                        switch (subMenu.MenuName)
+                                        {
+                                            case "ProductionOrderContextRequestForm":
+                                                subMenus.Add(new MenuItem { Text = L["ProductionOrderContextRequestForm"], Id = "requestform" }); break;
+                                            case "ProductionOrderContextPrintProdOrder":
+                                                subMenus.Add(new MenuItem { Text = L["ProductionOrderContextPrintProdOrder"], Id = "printprodorder" }); break;
+                                            case "ProductionOrderContextViewProdOrder":
+                                                subMenus.Add(new MenuItem { Text = L["ProductionOrderContextViewProdOrder"], Id = "viewprodorder" }); break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+
+
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextWrite"], Id = "write", Items = subMenus }); break;
+
+
+                            case "ProductionOrderContextMaterialFiches":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextMaterialFiches"], Id = "materialfiches" }); break;
+                            case "ProductionOrderContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextRefresh"], Id = "refresh" }); break;
+                            case "ProductionOrderContextUnsuitabilityRecords":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextUnsuitabilityRecords"], Id = "unsrecords" }); break;
+                            case "ProductionOrderContextTrackingChart":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextTrackingChart"], Id = "trackingchart" }); break;
+                            case "ProductionOrderContextChangeTechnicalDrawing":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextChangeTechnicalDrawing"], Id = "changetechdrawing" }); break;
+
+
                             default: break;
                         }
                     }
@@ -121,6 +168,55 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     break;
 
+
+                case "cancel":
+
+                    break;
+
+
+                case "materialsupplystatus":
+
+                    break;
+
+
+                case "requestform":
+
+                    break;
+
+
+                case "printprodorder":
+
+                    break;
+
+
+                case "viewprodorder":
+
+                    break;
+
+
+                case "materialfiches":
+
+                    break;
+
+
+                case "refresh":
+
+                    break;
+
+
+                case "unsrecords":
+
+                    break;
+
+
+                case "trackingchart":
+
+                    break;
+
+
+                case "changetechdrawing":
+
+                    break;
 
 
                 default:

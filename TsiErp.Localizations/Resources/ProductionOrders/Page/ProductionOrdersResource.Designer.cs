@@ -385,11 +385,29 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İptal.
+        /// </summary>
+        public static string ProductionOrderContextCancel {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ProductionOrderContextChange {
             get {
                 return ResourceManager.GetString("ProductionOrderContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teknik Resim Değiştir.
+        /// </summary>
+        public static string ProductionOrderContextChangeTechnicalDrawing {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextChangeTechnicalDrawing", resourceCulture);
             }
         }
         
@@ -412,11 +430,38 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Malzeme Fişleri.
+        /// </summary>
+        public static string ProductionOrderContextMaterialFiches {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextMaterialFiches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Malzeme Temin Durumu.
+        /// </summary>
+        public static string ProductionOrderContextMaterialSupplyStatus {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextMaterialSupplyStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gerçekleşen Miktar Girişi.
         /// </summary>
         public static string ProductionOrderContextOccuredAmountEntry {
             get {
                 return ResourceManager.GetString("ProductionOrderContextOccuredAmountEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Emri Yazdır.
+        /// </summary>
+        public static string ProductionOrderContextPrintProdOrder {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextPrintProdOrder", resourceCulture);
             }
         }
         
@@ -430,11 +475,56 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hammadde ve Yarı Mamül İstek Formu.
+        /// </summary>
+        public static string ProductionOrderContextRequestForm {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextRequestForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to H.M. - Y.M. İzleme Tablosu.
+        /// </summary>
+        public static string ProductionOrderContextTrackingChart {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextTrackingChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Kayıtları.
+        /// </summary>
+        public static string ProductionOrderContextUnsuitabilityRecords {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextUnsuitabilityRecords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Emri Görüntüle.
+        /// </summary>
+        public static string ProductionOrderContextViewProdOrder {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextViewProdOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İş Emirleri.
         /// </summary>
         public static string ProductionOrderContextWorkOrders {
             get {
                 return ResourceManager.GetString("ProductionOrderContextWorkOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yaz.
+        /// </summary>
+        public static string ProductionOrderContextWrite {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextWrite", resourceCulture);
             }
         }
         

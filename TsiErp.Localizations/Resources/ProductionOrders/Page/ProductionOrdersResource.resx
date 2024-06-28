@@ -225,8 +225,14 @@
   <data name="ProductionOrderContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
+  <data name="ProductionOrderContextCancel" xml:space="preserve">
+    <value>İptal</value>
+  </data>
   <data name="ProductionOrderContextChange" xml:space="preserve">
     <value>Değiştir</value>
+  </data>
+  <data name="ProductionOrderContextChangeTechnicalDrawing" xml:space="preserve">
+    <value>Teknik Resim Değiştir</value>
   </data>
   <data name="ProductionOrderContextConsumptionReceipt" xml:space="preserve">
     <value>Sarf Fişi Oluştur</value>
@@ -234,14 +240,38 @@
   <data name="ProductionOrderContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="ProductionOrderContextMaterialFiches" xml:space="preserve">
+    <value>Malzeme Fişleri</value>
+  </data>
+  <data name="ProductionOrderContextMaterialSupplyStatus" xml:space="preserve">
+    <value>Malzeme Temin Durumu</value>
+  </data>
   <data name="ProductionOrderContextOccuredAmountEntry" xml:space="preserve">
     <value>Gerçekleşen Miktar Girişi</value>
+  </data>
+  <data name="ProductionOrderContextPrintProdOrder" xml:space="preserve">
+    <value>Üretim Emri Yazdır</value>
   </data>
   <data name="ProductionOrderContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="ProductionOrderContextRequestForm" xml:space="preserve">
+    <value>Hammadde ve Yarı Mamül İstek Formu</value>
+  </data>
+  <data name="ProductionOrderContextTrackingChart" xml:space="preserve">
+    <value>H.M. - Y.M. İzleme Tablosu</value>
+  </data>
+  <data name="ProductionOrderContextUnsuitabilityRecords" xml:space="preserve">
+    <value>Uygunsuzluk Kayıtları</value>
+  </data>
+  <data name="ProductionOrderContextViewProdOrder" xml:space="preserve">
+    <value>Üretim Emri Görüntüle</value>
+  </data>
   <data name="ProductionOrderContextWorkOrders" xml:space="preserve">
     <value>İş Emirleri</value>
+  </data>
+  <data name="ProductionOrderContextWrite" xml:space="preserve">
+    <value>Yaz</value>
   </data>
   <data name="ProductionOrderState" xml:space="preserve">
     <value>ÜRETİM EMRİ DURUMU</value>

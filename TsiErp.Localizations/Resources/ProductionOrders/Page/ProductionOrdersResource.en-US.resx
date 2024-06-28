@@ -225,8 +225,14 @@
   <data name="ProductionOrderContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="ProductionOrderContextCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="ProductionOrderContextChange" xml:space="preserve">
     <value>Change</value>
+  </data>
+  <data name="ProductionOrderContextChangeTechnicalDrawing" xml:space="preserve">
+    <value>Change Technical Drawing</value>
   </data>
   <data name="ProductionOrderContextConsumptionReceipt" xml:space="preserve">
     <value>Create Consumption Fiche</value>
@@ -234,14 +240,38 @@
   <data name="ProductionOrderContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ProductionOrderContextMaterialFiches" xml:space="preserve">
+    <value>Material Fiches</value>
+  </data>
+  <data name="ProductionOrderContextMaterialSupplyStatus" xml:space="preserve">
+    <value>Material Supply Status</value>
+  </data>
   <data name="ProductionOrderContextOccuredAmountEntry" xml:space="preserve">
     <value>Occured Amount Entry</value>
+  </data>
+  <data name="ProductionOrderContextPrintProdOrder" xml:space="preserve">
+    <value>Print Production Order</value>
   </data>
   <data name="ProductionOrderContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ProductionOrderContextRequestForm" xml:space="preserve">
+    <value>Raw Material and Semi-Finished Product Request Form</value>
+  </data>
+  <data name="ProductionOrderContextTrackingChart" xml:space="preserve">
+    <value>R.M. - S.F.P. Tracking Chart</value>
+  </data>
+  <data name="ProductionOrderContextUnsuitabilityRecords" xml:space="preserve">
+    <value>Unsuitability Records</value>
+  </data>
+  <data name="ProductionOrderContextViewProdOrder" xml:space="preserve">
+    <value>View Production Order</value>
+  </data>
   <data name="ProductionOrderContextWorkOrders" xml:space="preserve">
     <value>Work Orders</value>
+  </data>
+  <data name="ProductionOrderContextWrite" xml:space="preserve">
+    <value>Print</value>
   </data>
   <data name="ProductionOrderState" xml:space="preserve">
     <value>PRODUCTION ORDER STATE</value>
