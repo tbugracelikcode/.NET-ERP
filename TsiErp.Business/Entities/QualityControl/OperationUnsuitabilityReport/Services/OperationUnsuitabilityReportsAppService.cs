@@ -11,7 +11,6 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.Validations;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
-using TsiErp.Business.Entities.ProductionOrder.Services;
 using TsiErp.Business.Entities.WorkOrder.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;

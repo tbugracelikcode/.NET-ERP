@@ -25,7 +25,6 @@ using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;

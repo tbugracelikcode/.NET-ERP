@@ -14,8 +14,6 @@ using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
-using TsiErp.Entities.Entities.SalesManagement.SalesProposition;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Branches.Page;
 
