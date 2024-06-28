@@ -13,6 +13,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Reflection;
 using TsiErp.Business.Entities.PackageFiche.Services;
+using TsiErp.Business.Entities.ProductGroup.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
@@ -1027,10 +1028,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                 string refNo = yil + ay + gun + "/" + yil;
 
-                //XtraReport mainReport = new XtraReport();
-                //mainReport.ShowPrintMarginsWarning = false;
-                //mainReport.CreateDocument();
-
                 var bank = (await BankAccountsAppService.GetAsync(packingList.BankID.GetValueOrDefault())).Data;
 
                 CustomsInstructionReport customsInstructionReport = new CustomsInstructionReport();
@@ -1113,7 +1110,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                             {
                                 MalCinsiTurkce = malCinsi,
                                 MalCinsiIngilizce = MalCinsiIngilizce(malCinsi),
-                                //GtipKodu = entities.TUR_STOK_GRUP.Where(t => t.ACIKLAMA == malCinsi).Select(t => t.GTIP).FirstOrDefault()
+                                GtipKodu = (await ProductGroupsAppService.GetByNameAsync(malCinsi)).Data.Name
                             });
                         }
                     }

@@ -223,5 +223,21 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
 
 
         }
+
+        public async Task<IDataResult<SelectProductGroupsDto>> GetByNameAsync(string name)
+        {
+            var query = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(
+            new
+            {
+                Name = name
+            }, true, true, "");
+            var productGroup = queryFactory.Get<SelectProductGroupsDto>(query);
+
+
+            LogsAppService.InsertLogToDatabase(productGroup, productGroup, LoginedUserService.UserId, Tables.ProductGroups, LogType.Get, productGroup.Id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectProductGroupsDto>(productGroup);
+        }
     }
 }
