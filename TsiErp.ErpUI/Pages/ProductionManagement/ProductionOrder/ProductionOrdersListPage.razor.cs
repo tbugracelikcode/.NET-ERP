@@ -166,6 +166,20 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                 case "cancel":
 
+                    DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    DataSource.Cancel_ = true;
+
+                    var updatedEntity = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(DataSource);
+
+                    await ProductionOrdersAppService.UpdateAsync(updatedEntity);
+
+                    await GetListDataSourceAsync();
+
+                    await _grid.Refresh();
+
+                    await InvokeAsync(StateHasChanged);
+
                     break;
 
 
@@ -195,6 +209,12 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
 
                 case "refresh":
+
+                    await GetListDataSourceAsync();
+
+                    await _grid.Refresh();
+
+                    await InvokeAsync(StateHasChanged);
 
                     break;
 
@@ -297,6 +317,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                 await InvokeAsync(StateHasChanged);
             }
+        }
+
+        protected override async Task GetListDataSourceAsync()
+        {
+            ListDataSource = (await ProductionOrdersAppService.GetNotCanceledListAsync(new ListProductionOrdersParameterDto())).Data.ToList();
+
+            IsLoaded = true;
         }
 
 

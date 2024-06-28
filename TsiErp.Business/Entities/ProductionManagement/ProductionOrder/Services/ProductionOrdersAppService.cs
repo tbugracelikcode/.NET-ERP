@@ -632,6 +632,190 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         }
 
+        public async Task<IDataResult<IList<ListProductionOrdersDto>>> GetNotCanceledListAsync(ListProductionOrdersParameterDto input)
+        {
+            var query = queryFactory
+               .Query()
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(null)
+                        .Join<SalesOrders>
+                        (
+                            so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
+                            nameof(ProductionOrders.OrderID),
+                            nameof(SalesOrders.Id),
+                            JoinType.Left
+                        )
+                           .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code },
+                        nameof(ProductionOrders.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                     .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                        nameof(ProductionOrders.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+
+                         .Join<Products>
+                        (
+                            p => new { FinishedProductCode = p.Code, FinishedProductName = p.Name },
+                            nameof(ProductionOrders.FinishedProductID),
+                            nameof(Products.Id),
+                            "FinishedProduct",
+                            JoinType.Left
+                        )
+                         .Join<Products>
+                        (
+                            p => new { LinkedProductCode = p.Code, LinkedProductName = p.Name },
+                            nameof(ProductionOrders.LinkedProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                         .Join<UnitSets>
+                        (
+                            u => new { UnitSetCode = u.Code },
+                            nameof(ProductionOrders.UnitSetID),
+                            nameof(UnitSets.Id),
+                            JoinType.Left
+                        )
+                         .Join<BillsofMaterials>
+                        (
+                            bom => new { BOMCode = bom.Code, BOMName = bom.Name },
+                            nameof(ProductionOrders.BOMID),
+                            nameof(BillsofMaterials.Id),
+                            JoinType.Left
+                        )
+                         .Join<Routes>
+                        (
+                            r => new { RouteCode = r.Code, RouteName = r.Name },
+                            nameof(ProductionOrders.RouteID),
+                            nameof(Routes.Id),
+                            JoinType.Left
+                        )
+                         .Join<SalesPropositions>
+                        (
+                            sp => new { PropositionFicheNo = sp.FicheNo },
+                            nameof(ProductionOrders.PropositionID),
+                            nameof(SalesPropositions.Id),
+                            JoinType.Left
+                        )
+
+                        .Join<CurrentAccountCards>
+                        (
+                            ca => new
+                            {
+                                CurrentAccountCode = ca.Code,
+                                CurrentAccountName = ca.Name,
+                                CustomerCode = ca.CustomerCode
+                            },
+                            nameof(ProductionOrders.CurrentAccountID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        )
+                   .Where(new { Cancel_ = false }, false, false, Tables.ProductionOrders);
+
+            var productionOrders = queryFactory.GetList<ListProductionOrdersDto>(query).ToList();
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListProductionOrdersDto>>(productionOrders);
+
+        }
+
+        public async Task<IDataResult<IList<ListProductionOrdersDto>>> GetCanceledListAsync(ListProductionOrdersParameterDto input)
+        {
+            var query = queryFactory
+               .Query()
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(null)
+                        .Join<SalesOrders>
+                        (
+                            so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
+                            nameof(ProductionOrders.OrderID),
+                            nameof(SalesOrders.Id),
+                            JoinType.Left
+                        )
+                           .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code },
+                        nameof(ProductionOrders.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                     .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                        nameof(ProductionOrders.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+
+                         .Join<Products>
+                        (
+                            p => new { FinishedProductCode = p.Code, FinishedProductName = p.Name },
+                            nameof(ProductionOrders.FinishedProductID),
+                            nameof(Products.Id),
+                            "FinishedProduct",
+                            JoinType.Left
+                        )
+                         .Join<Products>
+                        (
+                            p => new { LinkedProductCode = p.Code, LinkedProductName = p.Name },
+                            nameof(ProductionOrders.LinkedProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                         .Join<UnitSets>
+                        (
+                            u => new { UnitSetCode = u.Code },
+                            nameof(ProductionOrders.UnitSetID),
+                            nameof(UnitSets.Id),
+                            JoinType.Left
+                        )
+                         .Join<BillsofMaterials>
+                        (
+                            bom => new { BOMCode = bom.Code, BOMName = bom.Name },
+                            nameof(ProductionOrders.BOMID),
+                            nameof(BillsofMaterials.Id),
+                            JoinType.Left
+                        )
+                         .Join<Routes>
+                        (
+                            r => new { RouteCode = r.Code, RouteName = r.Name },
+                            nameof(ProductionOrders.RouteID),
+                            nameof(Routes.Id),
+                            JoinType.Left
+                        )
+                         .Join<SalesPropositions>
+                        (
+                            sp => new { PropositionFicheNo = sp.FicheNo },
+                            nameof(ProductionOrders.PropositionID),
+                            nameof(SalesPropositions.Id),
+                            JoinType.Left
+                        )
+
+                        .Join<CurrentAccountCards>
+                        (
+                            ca => new
+                            {
+                                CurrentAccountCode = ca.Code,
+                                CurrentAccountName = ca.Name,
+                                CustomerCode = ca.CustomerCode
+                            },
+                            nameof(ProductionOrders.CurrentAccountID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        )
+                   .Where(new { Cancel_ = true }, false, false, Tables.ProductionOrders);
+
+            var productionOrders = queryFactory.GetList<ListProductionOrdersDto>(query).ToList();
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListProductionOrdersDto>>(productionOrders);
+
+        }
+
         [ValidationAspect(typeof(UpdateProductionOrdersValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrdersDto>> UpdateAsync(UpdateProductionOrdersDto input)
