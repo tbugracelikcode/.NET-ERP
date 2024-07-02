@@ -21,6 +21,7 @@
 @inject IUnitSetsAppService UnitSetsAppService
 @inject IStockManagementParametersAppService StockManagementParametersAppService
 @inject IProductionOrderChangeReportsAppService ProductionOrderChangeReportsAppService
+@inject ITechnicalDrawingsAppService TechnicalDrawingsAppService
 
 @if (!base.IsLoaded)
 {
@@ -834,6 +835,102 @@ else
         </BodyTemplate>
         <FooterContentTemplate>
             <SfButton CssClass="TSICancelButton" OnClick="HideProductionOrderChangeReportViewModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+
+    <DxPopup @bind-Visible="TechDrawingModalVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["TechnicalDrawingUpdateModalTitle"]"
+             Width="31%"
+             Height="60%"
+             MinWidth="600px"
+             MinHeight="610px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="17%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="18%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="7%" />
+                    <DxGridLayoutColumn Width="33%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="50%" />
+                    <DxGridLayoutColumn Width="7%" />
+                </Columns>
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["TechnicalDrawingUpdateProductionOrderNoLabel"] </strong></label>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3" >
+                        <Template>
+                            <SfTextBox Enabled=false @bind-Value="DataSource.FicheNo"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["OldTechDrawingNoLabel"] </strong></label>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3" >
+                        <Template>
+                            <SfTextBox Enabled=false @bind-Value="OldTechDrawingNo"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["NewTechDrawingNoLabel"] </strong></label>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <SfTextBox @bind-Value="NewTechDrawingNo"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["NewTechDrawingDateLabel"] </strong></label>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="3">
+                        <Template>
+                            <SfDatePicker @bind-Value="DataSource.TechnicalDrawingUpdateDate_"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="4" Column="1" ColumnSpan="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["NewTechDrawingDescriptionLabel"] </strong></label>
+                            <SfTextBox Enabled=true @bind-Value="DataSource.TechnicalDrawingUpdateDescription_" CssClass="TSIMemoBox100"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                   
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="UpdateTechnicalDrawing"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideTechnicalDrawingUpdateModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

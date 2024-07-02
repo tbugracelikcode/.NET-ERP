@@ -129,5 +129,21 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder
         /// </summary>
         public Guid WarehouseID { get; set; }
 
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Teknik Resim ID
+        /// </summary>
+        public Guid TechnicalDrawingID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Teknik Resim Değiştirilme Tarihi
+        /// </summary>
+        public DateTime? TechnicalDrawingUpdateDate_ { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// eknik Resim Değiştirilme Açıklama
+        /// </summary>
+        public string TechnicalDrawingUpdateDescription_ { get; set; }
+
     }
 }

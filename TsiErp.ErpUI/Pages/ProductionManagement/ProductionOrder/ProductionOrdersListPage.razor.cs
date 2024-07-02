@@ -23,6 +23,7 @@ using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeReport.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Enums;
@@ -68,6 +69,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         SelectProductionOrderChangeReportsDto SelectProductionOrderChangeReportDataSource;
         public bool ProductionOrderChangeReportModalVisible = false;
         public bool ProductionOrderChangeReportViewModalVisible = false;
+
+        SelectTechnicalDrawingsDto TechDrawingDataSource;
+        public bool TechDrawingModalVisible = false;
+        public string OldTechDrawingNo = string.Empty;
+        public string NewTechDrawingNo = string.Empty;
 
         public bool OccuredAmountPopup = false;
         public string productionDateReferance = string.Empty;
@@ -311,6 +317,28 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
 
                 case "changetechdrawing":
+
+                    DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    NewTechDrawingNo = string.Empty;
+
+                    TechDrawingDataSource = (await TechnicalDrawingsAppService.GetSelectListAsync(DataSource.FinishedProductID.GetValueOrDefault())).Data.Where(t => t.IsApproved && t.CustomerApproval).FirstOrDefault();
+
+                    if(TechDrawingDataSource != null && TechDrawingDataSource.Id != Guid.Empty)
+                    {
+
+                        OldTechDrawingNo = TechDrawingDataSource.RevisionNo;
+                        TechDrawingModalVisible = true;
+                    }
+                    else
+                    {
+                        OldTechDrawingNo = string.Empty;
+                        await ModalManager.MessagePopupAsync(L["UIMessageNullTechDrawTitle"], L["UIMessageNullTechDrawMessage"]);
+                    }
+
+
+
+                    await InvokeAsync(StateHasChanged);
 
                     break;
 
@@ -1131,7 +1159,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     break;
 
-             
+
 
                 default:
                     break;
@@ -1147,7 +1175,38 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
         public void HideProductionOrderChangeReportViewModal()
         {
-            ProductionOrderChangeReportViewModalVisible= false;
+            ProductionOrderChangeReportViewModalVisible = false;
+        }
+
+        #endregion
+
+        #region Teknik Resim Değiştirme Modalı İşlemleri
+
+        public void HideTechnicalDrawingUpdateModal()
+        {
+            TechDrawingModalVisible = false;
+        }
+
+        public async void UpdateTechnicalDrawing()
+        {
+            TechDrawingDataSource.RevisionNo = NewTechDrawingNo;
+
+            var updatedTechnicalDrawing = ObjectMapper.Map<SelectTechnicalDrawingsDto, UpdateTechnicalDrawingsDto>(TechDrawingDataSource);
+
+            await TechnicalDrawingsAppService.UpdateAsync(updatedTechnicalDrawing);
+
+            DataSource.TechnicalDrawingID = TechDrawingDataSource.Id;
+            DataSource.TechnicalDrawingNo = TechDrawingDataSource.RevisionNo;
+
+            var updatedEntity = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(DataSource);
+
+            await ProductionOrdersAppService.UpdateAsync(updatedEntity);    
+
+            HideTechnicalDrawingUpdateModal();
+
+            await InvokeAsync(StateHasChanged);
+
+            
         }
 
         #endregion

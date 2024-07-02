@@ -348,8 +348,20 @@
   <data name="NetAmountLabel" xml:space="preserve">
     <value>Net Amount:</value>
   </data>
+  <data name="NewTechDrawingDateLabel" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="NewTechDrawingDescriptionLabel" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="NewTechDrawingNoLabel" xml:space="preserve">
+    <value>New Technical Drawing No:</value>
+  </data>
   <data name="OccuredAmountTitle" xml:space="preserve">
     <value>Occured Amount Entry</value>
+  </data>
+  <data name="OldTechDrawingNoLabel" xml:space="preserve">
+    <value>Previous Technical Drawing No:</value>
   </data>
   <data name="OrderFicheNo" xml:space="preserve">
     <value>ORDER FICHE NR</value>
@@ -576,6 +588,12 @@
   <data name="StockFichesGeneralConAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="TechnicalDrawingUpdateModalTitle" xml:space="preserve">
+    <value>Technical Drawing Change</value>
+  </data>
+  <data name="TechnicalDrawingUpdateProductionOrderNoLabel" xml:space="preserve">
+    <value>Production Order No:</value>
+  </data>
   <data name="Time_Label" xml:space="preserve">
     <value>Hour:</value>
   </data>
@@ -617,6 +635,12 @@
   </data>
   <data name="UIExportTitle1" xml:space="preserve">
     <value>Stock Fiches</value>
+  </data>
+  <data name="UIMessageNullTechDrawMessage" xml:space="preserve">
+    <value>There is no company or customer approved technical drawing record of the product belonging to this production order.</value>
+  </data>
+  <data name="UIMessageNullTechDrawTitle" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Production Management &gt; Transactions</value>

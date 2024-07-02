@@ -754,11 +754,47 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tarih:.
+        /// </summary>
+        public static string NewTechDrawingDateLabel {
+            get {
+                return ResourceManager.GetString("NewTechDrawingDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Açıklama:.
+        /// </summary>
+        public static string NewTechDrawingDescriptionLabel {
+            get {
+                return ResourceManager.GetString("NewTechDrawingDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yeni Teknik Resim No:.
+        /// </summary>
+        public static string NewTechDrawingNoLabel {
+            get {
+                return ResourceManager.GetString("NewTechDrawingNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gerçekleşen Miktar Girişi.
         /// </summary>
         public static string OccuredAmountTitle {
             get {
                 return ResourceManager.GetString("OccuredAmountTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eski Teknik Resim No:.
+        /// </summary>
+        public static string OldTechDrawingNoLabel {
+            get {
+                return ResourceManager.GetString("OldTechDrawingNoLabel", resourceCulture);
             }
         }
         
@@ -1438,6 +1474,24 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Teknik Resim Değiştir.
+        /// </summary>
+        public static string TechnicalDrawingUpdateModalTitle {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingUpdateModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Emri No:.
+        /// </summary>
+        public static string TechnicalDrawingUpdateProductionOrderNoLabel {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingUpdateProductionOrderNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Saat:.
         /// </summary>
         public static string Time_Label {
@@ -1560,6 +1614,24 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string UIExportTitle1 {
             get {
                 return ResourceManager.GetString("UIExportTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bu üretim emrine ait stoğun firma ve müşteri onaylı teknik resim kaydı bulunmamaktadır..
+        /// </summary>
+        public static string UIMessageNullTechDrawMessage {
+            get {
+                return ResourceManager.GetString("UIMessageNullTechDrawMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string UIMessageNullTechDrawTitle {
+            get {
+                return ResourceManager.GetString("UIMessageNullTechDrawTitle", resourceCulture);
             }
         }
         

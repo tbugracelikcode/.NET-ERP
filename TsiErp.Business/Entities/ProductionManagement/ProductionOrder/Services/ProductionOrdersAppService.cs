@@ -31,6 +31,7 @@ using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesManagement.SalesProposition;
 using TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Enums;
@@ -97,6 +98,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
                 CustomerOrderNo = input.CustomerOrderNo,
                 FinishedProductID = input.FinishedProductID.GetValueOrDefault(),
+                TechnicalDrawingID = input.TechnicalDrawingID.GetValueOrDefault(),
+                TechnicalDrawingUpdateDate_ = input.TechnicalDrawingUpdateDate_,
+                TechnicalDrawingUpdateDescription_ = input.TechnicalDrawingUpdateDescription_,
                 LinkedProductID = input.LinkedProductID.GetValueOrDefault(),
                 LinkedProductionOrderID = input.LinkedProductionOrderID.GetValueOrDefault(),
                 OrderID = input.OrderID.GetValueOrDefault(),
@@ -342,6 +346,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 BOMID = input.BOMID,
                 FicheNo = input.FicheNo,
                 CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
+                TechnicalDrawingID = input.TechnicalDrawingID.GetValueOrDefault(),
+                TechnicalDrawingUpdateDescription_ = input.TechnicalDrawingUpdateDescription_,
+                TechnicalDrawingUpdateDate_ = input.TechnicalDrawingUpdateDate_,
                 CustomerOrderNo = input.CustomerOrderNo,
                 FinishedProductID = input.FinishedProductID.GetValueOrDefault(),
                 LinkedProductID = input.LinkedProductID.GetValueOrDefault(),
@@ -515,6 +522,13 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         nameof(Warehouses.Id),
                         JoinType.Left
                     )
+                    .Join<TechnicalDrawings>
+                    (
+                        w => new { TechnicalDrawingID = w.Id, TechnicalDrawingNo = w.RevisionNo },
+                        nameof(ProductionOrders.TechnicalDrawingID),
+                        nameof(TechnicalDrawings.Id),
+                        JoinType.Left
+                    )
                         .Join<CurrentAccountCards>
                         (
                             ca => new
@@ -610,7 +624,13 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             nameof(SalesPropositions.Id),
                             JoinType.Left
                         )
-
+                        .Join<TechnicalDrawings>
+                    (
+                        w => new { TechnicalDrawingID = w.Id, TechnicalDrawingNo = w.RevisionNo },
+                        nameof(ProductionOrders.TechnicalDrawingID),
+                        nameof(TechnicalDrawings.Id),
+                        JoinType.Left
+                    )
                         .Join<CurrentAccountCards>
                         (
                             ca => new
@@ -702,7 +722,13 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             nameof(SalesPropositions.Id),
                             JoinType.Left
                         )
-
+                        .Join<TechnicalDrawings>
+                    (
+                        w => new { TechnicalDrawingID = w.Id, TechnicalDrawingNo = w.RevisionNo },
+                        nameof(ProductionOrders.TechnicalDrawingID),
+                        nameof(TechnicalDrawings.Id),
+                        JoinType.Left
+                    )
                         .Join<CurrentAccountCards>
                         (
                             ca => new
@@ -794,7 +820,13 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             nameof(SalesPropositions.Id),
                             JoinType.Left
                         )
-
+                        .Join<TechnicalDrawings>
+                    (
+                        w => new { TechnicalDrawingID = w.Id, TechnicalDrawingNo = w.RevisionNo },
+                        nameof(ProductionOrders.TechnicalDrawingID),
+                        nameof(TechnicalDrawings.Id),
+                        JoinType.Left
+                    )
                         .Join<CurrentAccountCards>
                         (
                             ca => new
@@ -843,6 +875,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 CustomerOrderNo = input.CustomerOrderNo,
                 FinishedProductID = input.FinishedProductID.GetValueOrDefault(),
                 LinkedProductID = input.LinkedProductID.GetValueOrDefault(),
+                TechnicalDrawingID = input.TechnicalDrawingID.GetValueOrDefault(),
+                TechnicalDrawingUpdateDate_ = input.TechnicalDrawingUpdateDate_,
+                TechnicalDrawingUpdateDescription_ = input.TechnicalDrawingUpdateDescription_,
                 LinkedProductionOrderID = input.LinkedProductionOrderID.GetValueOrDefault(),
                 OrderID = input.OrderID.GetValueOrDefault(),
                 OrderLineID = input.OrderLineID.GetValueOrDefault(),
@@ -893,6 +928,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 BOMID = entity.BOMID,
                 FicheNo = entity.FicheNo,
                 CurrentAccountID = entity.CurrentAccountID,
+                TechnicalDrawingUpdateDescription_ = entity.TechnicalDrawingUpdateDescription_,
+                TechnicalDrawingUpdateDate_ = entity.TechnicalDrawingUpdateDate_,
+                TechnicalDrawingID = entity.TechnicalDrawingID,
                 CustomerOrderNo = entity.CustomerOrderNo,
                 FinishedProductID = entity.FinishedProductID,
                 LinkedProductID = entity.LinkedProductID,

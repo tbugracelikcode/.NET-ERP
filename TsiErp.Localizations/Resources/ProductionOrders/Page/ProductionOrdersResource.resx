@@ -348,8 +348,20 @@
   <data name="NetAmountLabel" xml:space="preserve">
     <value>Net Tutar:</value>
   </data>
+  <data name="NewTechDrawingDateLabel" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
+  <data name="NewTechDrawingDescriptionLabel" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="NewTechDrawingNoLabel" xml:space="preserve">
+    <value>Yeni Teknik Resim No:</value>
+  </data>
   <data name="OccuredAmountTitle" xml:space="preserve">
     <value>Gerçekleşen Miktar Girişi</value>
+  </data>
+  <data name="OldTechDrawingNoLabel" xml:space="preserve">
+    <value>Eski Teknik Resim No:</value>
   </data>
   <data name="OrderFicheNo" xml:space="preserve">
     <value>SİPARİŞ FİŞ NO</value>
@@ -576,6 +588,12 @@
   <data name="StockFichesGeneralConAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
+  <data name="TechnicalDrawingUpdateModalTitle" xml:space="preserve">
+    <value>Teknik Resim Değiştir</value>
+  </data>
+  <data name="TechnicalDrawingUpdateProductionOrderNoLabel" xml:space="preserve">
+    <value>Üretim Emri No:</value>
+  </data>
   <data name="Time_Label" xml:space="preserve">
     <value>Saat:</value>
   </data>
@@ -617,6 +635,12 @@
   </data>
   <data name="UIExportTitle1" xml:space="preserve">
     <value>Stok Fişleri</value>
+  </data>
+  <data name="UIMessageNullTechDrawMessage" xml:space="preserve">
+    <value>Bu üretim emrine ait stoğun firma ve müşteri onaylı teknik resim kaydı bulunmamaktadır.</value>
+  </data>
+  <data name="UIMessageNullTechDrawTitle" xml:space="preserve">
+    <value>Bilgi</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Üretim Yönetimi &gt; Hareketler</value>
