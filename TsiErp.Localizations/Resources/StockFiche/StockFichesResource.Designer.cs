@@ -889,6 +889,15 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Miktar 0 ise satır kaydetme işlemi yapılamaz..
+        /// </summary>
+        public static string UIWarningPopupMessageBase3 {
+            get {
+                return ResourceManager.GetString("UIWarningPopupMessageBase3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uyarı.
         /// </summary>
         public static string UIWarningPopupTitleBase {

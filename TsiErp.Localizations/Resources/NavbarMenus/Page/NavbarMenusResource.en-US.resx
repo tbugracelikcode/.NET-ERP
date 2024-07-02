@@ -399,6 +399,9 @@
   <data name="ProdOperationsChildMenu" xml:space="preserve">
     <value>Products Operations</value>
   </data>
+  <data name="ProdOrderChangeRecordsChildMenu" xml:space="preserve">
+    <value>Production Order Change Reports</value>
+  </data>
   <data name="ProdOrderRecordsChildMenu" xml:space="preserve">
     <value>Production Order Unsuitability Records</value>
   </data>

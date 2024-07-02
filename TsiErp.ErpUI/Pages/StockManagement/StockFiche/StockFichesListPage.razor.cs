@@ -353,7 +353,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
         public async void TransactionExchangeCurrenciesButtonClickEvent()
         {
-            SelectCurrencyPopupVisible = true;
+            SelectTransactionExchangeCurrencyPopupVisible = true;
             TransactionExchangeCurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
             await InvokeAsync(StateHasChanged);
         }

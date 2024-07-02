@@ -120,6 +120,9 @@
   <data name="BOMCode" xml:space="preserve">
     <value>REÇETE KODU</value>
   </data>
+  <data name="BranchCode" xml:space="preserve">
+    <value>ŞUBE KODU</value>
+  </data>
   <data name="BranchCodeButtonEditLabel" xml:space="preserve">
     <value>Şube:</value>
   </data>
@@ -129,17 +132,50 @@
   <data name="BranchesPopupGridName" xml:space="preserve">
     <value>ŞUBE ADI</value>
   </data>
+  <data name="BranchModalGridCode" xml:space="preserve">
+    <value>ŞUBE KODU</value>
+  </data>
+  <data name="BranchModalGridDescription" xml:space="preserve">
+    <value>AÇIKLAMA</value>
+  </data>
+  <data name="BranchModalGridName" xml:space="preserve">
+    <value>ŞUBE ADI</value>
+  </data>
   <data name="BranchModalTitle" xml:space="preserve">
     <value>Şubeler</value>
   </data>
+  <data name="BranchModalTitle1" xml:space="preserve">
+    <value>Şubeler</value>
+  </data>
+  <data name="BranchNameLabel" xml:space="preserve">
+    <value>Şube Kodu:</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="CloseButton1" xml:space="preserve">
     <value>Kapat</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="CodeControlManager1" xml:space="preserve">
+    <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
+  </data>
   <data name="CreateFicheButton" xml:space="preserve">
     <value>Fişi Oluştur</value>
+  </data>
+  <data name="CurrencyCodeLabel" xml:space="preserve">
+    <value>Yerel Para Birimi:</value>
+  </data>
+  <data name="CurrencyModalGridCode" xml:space="preserve">
+    <value>PARA BİRİMİ KODU</value>
+  </data>
+  <data name="CurrencyModalGridName" xml:space="preserve">
+    <value>PARA BİRİMİ AÇIKLAMASI</value>
+  </data>
+  <data name="CurrencyModalTitle" xml:space="preserve">
+    <value>Para Birimleri</value>
   </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>MÜŞTERİ KODU</value>
@@ -147,23 +183,50 @@
   <data name="CustomerCodeLabel" xml:space="preserve">
     <value>Varyant Kodu:</value>
   </data>
+  <data name="Date_" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
   <data name="Date_Label" xml:space="preserve">
     <value>Fiş Tarihi:</value>
   </data>
+  <data name="Date_Label1" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
+    <value>Silmek istediğinize emin misiniz ?</value>
+  </data>
+  <data name="DeleteConfirmationDescriptionBase1" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
     <value>Onay</value>
   </data>
+  <data name="DeleteConfirmationTitleBase1" xml:space="preserve">
+    <value>Onay</value>
+  </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Stok Fişi Satırları</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Stok Fişleri</value>
+  </data>
+  <data name="EditStockLineModalTitle" xml:space="preserve">
+    <value>Stok Fiş Satırları</value>
   </data>
   <data name="EndDate" xml:space="preserve">
     <value>BİTİŞ TARİHİ</value>
   </data>
   <data name="EnumBaslamadi" xml:space="preserve">
     <value>Başlamadı</value>
+  </data>
+  <data name="EnumConsume" xml:space="preserve">
+    <value>Sarf Fişi</value>
   </data>
   <data name="EnumDevamEdiyor" xml:space="preserve">
     <value>Devam Ediyor</value>
@@ -174,14 +237,50 @@
   <data name="EnumIptal" xml:space="preserve">
     <value>İptal</value>
   </data>
+  <data name="EnumProductionIncome" xml:space="preserve">
+    <value>Üretimden Giriş Fişi</value>
+  </data>
+  <data name="EnumReserved" xml:space="preserve">
+    <value>Stok Rezerve Fişi</value>
+  </data>
+  <data name="EnumStockIncome" xml:space="preserve">
+    <value>Stok Giriş Fişi</value>
+  </data>
+  <data name="EnumStockOutput" xml:space="preserve">
+    <value>Stok Çıkış Fişi</value>
+  </data>
   <data name="EnumTamamlandi" xml:space="preserve">
     <value>Tamamlandı</value>
+  </data>
+  <data name="EnumWarehouse" xml:space="preserve">
+    <value>Depo Sevk Fişi</value>
+  </data>
+  <data name="EnumWastage" xml:space="preserve">
+    <value>Fire Fişi</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
+  <data name="Error1" xml:space="preserve">
+    <value>Hata</value>
+  </data>
+  <data name="ExchangeRateLabel" xml:space="preserve">
+    <value>Döviz Kuru:</value>
+  </data>
   <data name="FicheNo" xml:space="preserve">
     <value>FİŞ NO</value>
+  </data>
+  <data name="FicheNo1" xml:space="preserve">
+    <value>STOK FİŞİ NUMARASI</value>
+  </data>
+  <data name="FicheNoLabel" xml:space="preserve">
+    <value>Stok Fişi Numarası:</value>
+  </data>
+  <data name="FicheType" xml:space="preserve">
+    <value>FİŞ TÜRÜ</value>
+  </data>
+  <data name="FicheTypeLabel" xml:space="preserve">
+    <value>Fiş Türü:</value>
   </data>
   <data name="FinishedProductCode" xml:space="preserve">
     <value>MAMÜL KODU</value>
@@ -192,20 +291,62 @@
   <data name="FinishedProductNameLabel" xml:space="preserve">
     <value>Malzeme Açıklaması:</value>
   </data>
+  <data name="LineAmountLineLabel" xml:space="preserve">
+    <value>Satır Tutarı:</value>
+  </data>
+  <data name="LineDescriptionLineLabel" xml:space="preserve">
+    <value>Satır Açıklaması:</value>
+  </data>
+  <data name="LineGridLineAmount" xml:space="preserve">
+    <value>SATIR TUTARI</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="LineGridProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="LineGridQuantity" xml:space="preserve">
+    <value>MİKTAR</value>
+  </data>
+  <data name="LineGridUnitPrice" xml:space="preserve">
+    <value>BİRİM FİYAT</value>
+  </data>
+  <data name="LineGridUnitSetCode" xml:space="preserve">
+    <value>BİRİM SETİ</value>
+  </data>
   <data name="LinkedProductCode" xml:space="preserve">
     <value>BAĞLI ÜRÜN KODU</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
+  <data name="LoadingCaption1" xml:space="preserve">
+    <value>Lütfen Bekleyin..</value>
+  </data>
   <data name="LoadingText" xml:space="preserve">
+    <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="LoadingText1" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
+  <data name="MessagePopupInformationDescriptionBase1" xml:space="preserve">
+    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
+  </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="MessagePopupInformationTitleBase1" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
+  <data name="NetAmount" xml:space="preserve">
+    <value>NET TUTAR</value>
+  </data>
+  <data name="NetAmountLabel" xml:space="preserve">
+    <value>Net Tutar:</value>
   </data>
   <data name="OccuredAmountTitle" xml:space="preserve">
     <value>Gerçekleşen Miktar Girişi</value>
@@ -219,8 +360,71 @@
   <data name="ProducedQuantity" xml:space="preserve">
     <value>ÜRETİLEN MİKTAR</value>
   </data>
+  <data name="ProductCodeLineLabel" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
   <data name="ProductionDateReferanceLabel" xml:space="preserve">
     <value>Üretim Tarihi Referansı:</value>
+  </data>
+  <data name="ProductionDateReferanceLabel1" xml:space="preserve">
+    <value>Üretim Tarihi Referansı:</value>
+  </data>
+  <data name="ProductionOrderChangeReportActionLabel" xml:space="preserve">
+    <value>Aksiyon:</value>
+  </data>
+  <data name="ProductionOrderChangeReportContextView" xml:space="preserve">
+    <value>İncele</value>
+  </data>
+  <data name="ProductionOrderChangeReportDate_Label" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
+  <data name="ProductionOrderChangeReportDescription_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="ProductionOrderChangeReportFicheNoLabel" xml:space="preserve">
+    <value>Fiş Numarası:</value>
+  </data>
+  <data name="ProductionOrderChangeReportModalTitle" xml:space="preserve">
+    <value>Üretim Emri Değişiklik Kayıtları</value>
+  </data>
+  <data name="ProductionOrderChangeReportProductCodeLabel" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
+  <data name="ProductionOrderChangeReportProductionOrderFicheNoLabel" xml:space="preserve">
+    <value>Üretim Emri Fiş Numarası:</value>
+  </data>
+  <data name="ProductionOrderChangeReportProductNameLabel" xml:space="preserve">
+    <value>Stok Açıklaması:</value>
+  </data>
+  <data name="ProductionOrderChangeReportSalesOrderFicheNoLabel" xml:space="preserve">
+    <value>Sipariş Numarası:</value>
+  </data>
+  <data name="ProductionOrderChangeReportsDate_" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="ProductionOrderChangeReportsFicheNo" xml:space="preserve">
+    <value>FİŞ NO</value>
+  </data>
+  <data name="ProductionOrderChangeReportsProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductionOrderChangeReportsProductionOrderFicheNo" xml:space="preserve">
+    <value>ÜRETİM EMRİ FİŞ NO</value>
+  </data>
+  <data name="ProductionOrderChangeReportsProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductionOrderChangeReportsSalesOrderFicheNo" xml:space="preserve">
+    <value>SİPARİŞ NO</value>
+  </data>
+  <data name="ProductionOrderChangeReportUnsuitabilityItemsNameLabel" xml:space="preserve">
+    <value>Hata Başlığı:</value>
+  </data>
+  <data name="ProductionOrderChangeReportViewModalTitle" xml:space="preserve">
+    <value>Üretim Emri Değişiklik Kayıtları</value>
+  </data>
+  <data name="ProductionOrderCodeLabel" xml:space="preserve">
+    <value>Üretim Emri Fiş No:</value>
   </data>
   <data name="ProductionOrderContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -273,26 +477,152 @@
   <data name="ProductionOrderContextWrite" xml:space="preserve">
     <value>Yaz</value>
   </data>
+  <data name="ProductionOrderModalGridFicheNo" xml:space="preserve">
+    <value>ÜRETİM EMRİ FİŞ NO</value>
+  </data>
+  <data name="ProductionOrderModalGridFinishedProductCode" xml:space="preserve">
+    <value>MAMÜL KODU</value>
+  </data>
+  <data name="ProductionOrderModalGridPlannedQuantity" xml:space="preserve">
+    <value>PLANLANAN MİKTAR</value>
+  </data>
+  <data name="ProductionOrderModalGridProducedQuantity" xml:space="preserve">
+    <value>ÜRETİLEN MİKTAR</value>
+  </data>
+  <data name="ProductionOrdersModalTitle" xml:space="preserve">
+    <value>Üretim Emirleri</value>
+  </data>
   <data name="ProductionOrderState" xml:space="preserve">
     <value>ÜRETİM EMRİ DURUMU</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="ProductNameLineLabel" xml:space="preserve">
+    <value>Stok Açıklaması:</value>
   </data>
   <data name="QuantityLabel" xml:space="preserve">
     <value>Miktar:</value>
   </data>
+  <data name="QuantityLineLabel" xml:space="preserve">
+    <value>Miktar:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="SpecialCodeLabel" xml:space="preserve">
+    <value>Özel Kod:</value>
+  </data>
   <data name="StartDate" xml:space="preserve">
     <value>BAŞLANGIÇ TARİHİ</value>
+  </data>
+  <data name="StockFicheContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="StockFicheContextAddConsume" xml:space="preserve">
+    <value>Sarf Fişi</value>
+  </data>
+  <data name="StockFicheContextAddProductionIncome" xml:space="preserve">
+    <value>Üretimden Giriş Fişi</value>
+  </data>
+  <data name="StockFicheContextAddReserved" xml:space="preserve">
+    <value>Rezerve Fişi</value>
+  </data>
+  <data name="StockFicheContextAddStockIncome" xml:space="preserve">
+    <value>Stok Giriş Fişi</value>
+  </data>
+  <data name="StockFicheContextAddStockOutput" xml:space="preserve">
+    <value>Stok Çıkış Fişi</value>
+  </data>
+  <data name="StockFicheContextAddWarehouse" xml:space="preserve">
+    <value>Depo Sevk Fişi</value>
+  </data>
+  <data name="StockFicheContextAddWastege" xml:space="preserve">
+    <value>Fire Fişi</value>
+  </data>
+  <data name="StockFicheContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="StockFicheContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="StockFicheContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="StockFicheEditModalTitle" xml:space="preserve">
+    <value>Stok Fişleri</value>
+  </data>
+  <data name="StockFicheLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="StockFicheLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="StockFicheLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="StockFicheLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="StockFicheModalTitle" xml:space="preserve">
+    <value>Stok Fişleri</value>
+  </data>
+  <data name="StockFichesGeneralConAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="Time_Label" xml:space="preserve">
+    <value>Saat:</value>
+  </data>
+  <data name="TransactionExchangeLabel" xml:space="preserve">
+    <value>İşlem Dövizi:</value>
+  </data>
+  <data name="TransactionExchangeLineAmountLabel" xml:space="preserve">
+    <value>İşlem Dövizi Satır Tutarı:</value>
+  </data>
+  <data name="TransactionExchangeUnitPriceLabel" xml:space="preserve">
+    <value>İşlem Dövizi Birim Fiyat:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz stok fişi kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupStockFicheMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz stok fişi kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Dikkat</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Üretim Emirleri</value>
   </data>
+  <data name="UICurrentMenu1" xml:space="preserve">
+    <value>Stok Fişleri</value>
+  </data>
   <data name="UIExportFileName" xml:space="preserve">
     <value>UretimEmirleri</value>
+  </data>
+  <data name="UIExportFileName1" xml:space="preserve">
+    <value>StokFisleri</value>
   </data>
   <data name="UIExportTitle" xml:space="preserve">
     <value>Üretim Emirleri</value>
   </data>
+  <data name="UIExportTitle1" xml:space="preserve">
+    <value>Stok Fişleri</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Üretim Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="UIPreviousMenu1" xml:space="preserve">
+    <value>Stok Yönetimi &gt; Hareketler</value>
   </data>
   <data name="UIWarningCreateOccuredAmountFicheMessageQuantity" xml:space="preserve">
     <value>Miktar alanının doldurulması gerekmektedir.</value>
@@ -303,8 +633,41 @@
   <data name="UIWarningCreateOccuredAmountFicheTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>
+  <data name="UIWarningFicheTypeMessageBase" xml:space="preserve">
+    <value>Fiş türü seçmeden satır ekleme işlemi yapılamaz.</value>
+  </data>
+  <data name="UIWarningFicheTypeTitleBase" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningPopupMessageBase1" xml:space="preserve">
+    <value>Birim seti seçilmeden satır kaydetme işlemi yapılamaz.</value>
+  </data>
+  <data name="UIWarningPopupMessageBase2" xml:space="preserve">
+    <value>Stok kartı seçilmeden satır kaydetme işlemi yapılamaz.</value>
+  </data>
+  <data name="UIWarningPopupMessageBase3" xml:space="preserve">
+    <value>Miktar 0 ise satır kaydetme işlemi yapılamaz.</value>
+  </data>
+  <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UnitPriceLineLabel" xml:space="preserve">
+    <value>Birim Fiyat:</value>
+  </data>
   <data name="UnitSetCode" xml:space="preserve">
     <value>BİRİM SETİ</value>
+  </data>
+  <data name="UnitSetCodeLineLabel" xml:space="preserve">
+    <value>Birim Seti Kodu:</value>
+  </data>
+  <data name="UnitSetModalGridCode" xml:space="preserve">
+    <value>BİRİM SETİ KODU</value>
+  </data>
+  <data name="UnitSetModalGridName" xml:space="preserve">
+    <value>BİRİM SETİ AÇIKLAMASI</value>
+  </data>
+  <data name="UnitSetModalTitle" xml:space="preserve">
+    <value>Birim Setleri</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
@@ -321,6 +684,12 @@
   <data name="ValidatorCurrentAccountID" xml:space="preserve">
     <value>Lütfen cari hesap seçin.</value>
   </data>
+  <data name="ValidatorExchangeRateEmpty" xml:space="preserve">
+    <value>Lütfen kur tutarını yazınız.</value>
+  </data>
+  <data name="ValidatorExchangeRateMin" xml:space="preserve">
+    <value>Kur tutarı, en az 1 olmalıdır.</value>
+  </data>
   <data name="ValidatorFinishedProductID" xml:space="preserve">
     <value>Lütfen mamül seçin.</value>
   </data>
@@ -336,11 +705,26 @@
   <data name="ValidatorUnitSetID" xml:space="preserve">
     <value>Lütfen birim seti seçin.</value>
   </data>
+  <data name="WarehouseCode" xml:space="preserve">
+    <value>DEPO KODU</value>
+  </data>
   <data name="WarehouseCodeButtonEditLabel" xml:space="preserve">
     <value>Depo:</value>
   </data>
+  <data name="WarehouseCodeLabel" xml:space="preserve">
+    <value>Depo Kodu:</value>
+  </data>
+  <data name="WarehouseModalGridCode" xml:space="preserve">
+    <value>DEPO KODU</value>
+  </data>
+  <data name="WarehouseModalGridName" xml:space="preserve">
+    <value>DEPO ADI</value>
+  </data>
   <data name="WarehouseModalTitle" xml:space="preserve">
     <value>Depo Kartları</value>
+  </data>
+  <data name="WarehouseModalTitle1" xml:space="preserve">
+    <value>Depolar</value>
   </data>
   <data name="WarehousesPopupGridCode" xml:space="preserve">
     <value>DEPO KODU</value>

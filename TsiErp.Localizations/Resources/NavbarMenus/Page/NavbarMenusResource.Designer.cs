@@ -907,6 +907,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Emri Değişiklik Kayıtları.
+        /// </summary>
+        public static string ProdOrderChangeRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("ProdOrderChangeRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Emri Uygunsuzluk Kayıtları.
         /// </summary>
         public static string ProdOrderRecordsChildMenu {

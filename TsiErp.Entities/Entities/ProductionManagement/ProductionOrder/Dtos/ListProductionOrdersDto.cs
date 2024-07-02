@@ -131,6 +131,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// Müşteri Kodu
         /// </summary>
         public string CustomerCode { get; set; }
+        /// <summary>
+        /// Bağlı Üretim Emri ID
+        /// </summary>
+        public Guid? LinkedProductionOrderID { get; set; }
 
         /// <summary>
         /// Bağlı Üretim Emri Fiş No

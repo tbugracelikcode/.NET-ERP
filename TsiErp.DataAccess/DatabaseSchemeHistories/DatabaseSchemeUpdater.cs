@@ -164,6 +164,7 @@ using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty;
 using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine;
+using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeReport;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -5740,6 +5741,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 BankAccountsTable.Create();
+            }
+            #endregion
+
+            #region ProductionOrderChangeReports Table Created
+            Table ProductionOrderChangeReportsTable = model.CreateTable(Tables.ProductionOrderChangeReports);
+
+            if (ProductionOrderChangeReportsTable != null)
+            {
+                var properties = (typeof(ProductionOrderChangeReports)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ProductionOrderChangeReportsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ProductionOrderChangeReportsTable, "PK_" + ProductionOrderChangeReportsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ProductionOrderChangeReportsTable.Indexes.Add(pkIndex);
+                    }
+
+                    ProductionOrderChangeReportsTable.Columns.Add(column);
+                }
+
+                ProductionOrderChangeReportsTable.Create();
             }
             #endregion
 

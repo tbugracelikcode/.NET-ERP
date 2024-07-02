@@ -15,6 +15,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
         bool _isOperation;
         bool _isPurchase;
         bool _isContract;
+        bool _isProductionOrderChange;
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -111,6 +112,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                 DataSource.UnsuitabilityTypesDescription = "Operation";
                 _isPurchase = false;
                 _isContract = false;
+                _isProductionOrderChange = false;
                 await (InvokeAsync(StateHasChanged));
             }
         }
@@ -122,6 +124,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                 DataSource.UnsuitabilityTypesDescription = "Purchase";
                 _isOperation = false;
                 _isContract = false;
+                _isProductionOrderChange = false;
                 await (InvokeAsync(StateHasChanged));
             }
         }
@@ -134,6 +137,19 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                 DataSource.UnsuitabilityTypesDescription = "Contract";
                 _isOperation = false;
                 _isPurchase = false;
+                _isProductionOrderChange = false;
+                await (InvokeAsync(StateHasChanged));
+            }
+        }
+
+        private async void ProductionOrderChangeChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (args.Checked)
+            {
+                DataSource.UnsuitabilityTypesDescription = "ProductionOrderChange";
+                _isPurchase = false;
+                _isContract = false;
+                _isOperation = false;
                 await (InvokeAsync(StateHasChanged));
             }
         }

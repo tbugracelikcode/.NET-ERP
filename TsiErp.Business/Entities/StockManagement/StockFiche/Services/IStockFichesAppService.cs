@@ -12,5 +12,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
         //Task<IDataResult<SelectStockFichesDto>> GetbyProductionOrderAsync(Guid ProductionOrderID);
         Task<List<SelectStockFicheLinesDto>> GetbyProductionOrderAsync(Guid ProductionOrderID);
         Task<List<SelectStockFicheLinesDto>> GetbyProductionOrderDateReferenceAsync(string DateReference, Guid ProductionOrderID);
+
+        Task<IDataResult<IList<ListStockFichesDto>>> GetListbyProductionOrderAsync(Guid productionOrderID);
     }
 }

@@ -349,7 +349,7 @@ namespace TsiErp.Localizations.Resources.ControlTypes.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kalite Kontrol &gt; .
+        ///   Looks up a localized string similar to Kalite Kontrol &gt; Ana Kayıtlar.
         /// </summary>
         public static string UIPreviousMenu {
             get {

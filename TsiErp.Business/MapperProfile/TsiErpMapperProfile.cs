@@ -207,6 +207,8 @@ using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PFMEA;
 using TsiErp.Entities.Entities.QualityControl.PFMEA.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeReport;
+using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine;
@@ -403,6 +405,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectCustomerComplaintReportsDto, CreateCustomerComplaintReportsDto>();
             CreateMap<UpdateCustomerComplaintReportsDto, CustomerComplaintReports>();
             CreateMap<SelectCustomerComplaintReportsDto, UpdateCustomerComplaintReportsDto>();
+
+            CreateMap<ProductionOrderChangeReports, SelectProductionOrderChangeReportsDto>();
+            CreateMap<ProductionOrderChangeReports, ListProductionOrderChangeReportsDto>();
+            CreateMap<CreateProductionOrderChangeReportsDto, ProductionOrderChangeReports>();
+            CreateMap<SelectProductionOrderChangeReportsDto, CreateProductionOrderChangeReportsDto>();
+            CreateMap<UpdateProductionOrderChangeReportsDto, ProductionOrderChangeReports>();
+            CreateMap<SelectProductionOrderChangeReportsDto, UpdateProductionOrderChangeReportsDto>();
 
             CreateMap<Report8Ds, SelectReport8DsDto>();
             CreateMap<Report8Ds, ListReport8DsDto>();

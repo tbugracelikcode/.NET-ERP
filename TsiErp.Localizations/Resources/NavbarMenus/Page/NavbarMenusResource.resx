@@ -399,6 +399,9 @@
   <data name="ProdOperationsChildMenu" xml:space="preserve">
     <value>Ürün Operasyon Kayıtları</value>
   </data>
+  <data name="ProdOrderChangeRecordsChildMenu" xml:space="preserve">
+    <value>Üretim Emri Değişiklik Kayıtları</value>
+  </data>
   <data name="ProdOrderRecordsChildMenu" xml:space="preserve">
     <value>Üretim Emri Uygunsuzluk Kayıtları</value>
   </data>

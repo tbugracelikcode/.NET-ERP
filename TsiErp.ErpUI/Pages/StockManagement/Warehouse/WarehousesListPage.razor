@@ -108,9 +108,10 @@ else
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1">
-                        <Template>
+                        <Template><center>
                             <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
-                            <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
+                                <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
+                            </center>
                         </Template>
                     </DxGridLayoutItem>
 

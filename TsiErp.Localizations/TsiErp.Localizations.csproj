@@ -331,6 +331,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ProductionManagementParametersResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ProductionOrderChangeReports\Page\ProductionOrderChangeReportsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProductionOrderChangeReportsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\ProductionOrders\Page\ProductionOrdersResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -901,6 +906,10 @@
     <EmbeddedResource Update="Resources\ProductionManagementParameter\Page\ProductionManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductionManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductionOrderChangeReports\Page\ProductionOrderChangeReportsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductionOrderChangeReportsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\ProductionOrders\Page\ProductionOrdersResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
