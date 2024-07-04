@@ -301,6 +301,10 @@ using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using TsiErp.Entities.Entities.TestManagement.Continent;
+using TsiErp.Entities.Entities.TestManagement.Continent.Dtos;
+using TsiErp.Entities.Entities.TestManagement.ContinentLine;
+using TsiErp.Entities.Entities.TestManagement.ContinentLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -1537,6 +1541,25 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectPurchaseOrdersAwaitingApprovalLinesDto, UpdatePurchaseOrdersAwaitingApprovalLinesDto>();
             CreateMap<SelectPurchaseOrdersAwaitingApprovalLinesDto, PurchaseOrdersAwaitingApprovalLines>();
 
+            //TEST -------------------------------------------------------
+
+            CreateMap<Continents, SelectContinentsDto>();
+            CreateMap<Continents, ListContinentsDto>();
+            CreateMap<UpdateContinentsDto, Continents>();
+            CreateMap<CreateContinentsDto, Continents>();
+            CreateMap<SelectContinentsDto, CreateContinentsDto>();
+            CreateMap<SelectContinentsDto, UpdateContinentsDto>();
+
+
+            CreateMap<ContinentLines, SelectContinentLinesDto>();
+            CreateMap<ContinentLines, ListContinentLinesDto>();
+            CreateMap<CreateContinentLinesDto, ContinentLines>();
+            CreateMap<SelectContinentLinesDto, CreateContinentLinesDto>();
+            CreateMap<UpdateContinentLinesDto, ContinentLines>();
+            CreateMap<SelectContinentLinesDto, UpdateContinentLinesDto>();
+            CreateMap<SelectContinentLinesDto, ContinentLines>();
+
+            //TEST -------------------------------------------------------
         }
     }
 }

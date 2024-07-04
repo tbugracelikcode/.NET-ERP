@@ -156,6 +156,9 @@
   <data name="CalVerificationsChildMenu" xml:space="preserve">
     <value>Kalibrasyon Doğrulama Kayıtları</value>
   </data>
+  <data name="ContinentsChildMenu" xml:space="preserve">
+    <value>Kıtalar</value>
+  </data>
   <data name="ContractProdTrackingsChildMenu" xml:space="preserve">
     <value>Fason İmalat Takip Kayıtları</value>
   </data>
@@ -665,6 +668,9 @@
   </data>
   <data name="TempOperationsChildMenu" xml:space="preserve">
     <value>Şablon Operasyon Kayıtları</value>
+  </data>
+  <data name="TestManagementParentMenu" xml:space="preserve">
+    <value>Test Yönetimi</value>
   </data>
   <data name="TransactionsMenu" xml:space="preserve">
     <value>Hareketler</value>

@@ -222,8 +222,14 @@
   <data name="EndDate" xml:space="preserve">
     <value>END DATE</value>
   </data>
+  <data name="EnumAparatus" xml:space="preserve">
+    <value>(APRT) Aparatus</value>
+  </data>
   <data name="EnumBaslamadi" xml:space="preserve">
     <value>Not Start</value>
+  </data>
+  <data name="EnumCommercialProduct" xml:space="preserve">
+    <value>(CP) Commercial Product</value>
   </data>
   <data name="EnumConsume" xml:space="preserve">
     <value>Consumption Fiche</value>
@@ -237,11 +243,35 @@
   <data name="EnumIptal" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="EnumKit" xml:space="preserve">
+    <value>(KT) Kit</value>
+  </data>
+  <data name="EnumMaterial" xml:space="preserve">
+    <value>(MT) Material</value>
+  </data>
+  <data name="EnumMold" xml:space="preserve">
+    <value>(MLD) Mold</value>
+  </data>
+  <data name="EnumProduct" xml:space="preserve">
+    <value>(FP) Finished Product</value>
+  </data>
+  <data name="EnumProduction" xml:space="preserve">
+    <value>Production</value>
+  </data>
   <data name="EnumProductionIncome" xml:space="preserve">
     <value>Production Input Fiche</value>
   </data>
+  <data name="EnumPurchase" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
   <data name="EnumReserved" xml:space="preserve">
     <value>Add Reserved Fiche</value>
+  </data>
+  <data name="EnumSemiProduct" xml:space="preserve">
+    <value>(SP) Semi-Product</value>
+  </data>
+  <data name="EnumSparePart" xml:space="preserve">
+    <value>(SPR) Spare Part</value>
   </data>
   <data name="EnumStockIncome" xml:space="preserve">
     <value>Stock Input Fiche</value>
@@ -597,6 +627,36 @@
   <data name="Time_Label" xml:space="preserve">
     <value>Hour:</value>
   </data>
+  <data name="TrackingGridLineType" xml:space="preserve">
+    <value>LINE TYPE</value>
+  </data>
+  <data name="TrackingGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="TrackingGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="TrackingGridQuantity" xml:space="preserve">
+    <value>QUANTITY</value>
+  </data>
+  <data name="TrackingGridSize" xml:space="preserve">
+    <value>SIZE</value>
+  </data>
+  <data name="TrackingGridTotalCounsume" xml:space="preserve">
+    <value>TOTAL CONSUME QUANTITY</value>
+  </data>
+  <data name="TrackingGridTotalOutput" xml:space="preserve">
+    <value>TOTAL OUTPUT QUANTITY</value>
+  </data>
+  <data name="TrackingGridTotalWastage" xml:space="preserve">
+    <value>TOTAL WASTAGE QUANTITY</value>
+  </data>
+  <data name="TrackingGridUnitSet" xml:space="preserve">
+    <value>UNIT SET</value>
+  </data>
+  <data name="TrackingModalTitle" xml:space="preserve">
+    <value>Raw Material - Semi-Product Tracking Chart</value>
+  </data>
   <data name="TransactionExchangeLabel" xml:space="preserve">
     <value>Transaction Exchange Currency:</value>
   </data>
@@ -635,6 +695,12 @@
   </data>
   <data name="UIExportTitle1" xml:space="preserve">
     <value>Stock Fiches</value>
+  </data>
+  <data name="UIMessageNullBomMessage" xml:space="preserve">
+    <value>The production order does not have a product bills of material.</value>
+  </data>
+  <data name="UIMessageNullBomTitle" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="UIMessageNullTechDrawMessage" xml:space="preserve">
     <value>There is no company or customer approved technical drawing record of the product belonging to this production order.</value>

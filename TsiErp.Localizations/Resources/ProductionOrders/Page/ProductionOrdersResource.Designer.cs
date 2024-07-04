@@ -376,11 +376,29 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (APRT) Aparat.
+        /// </summary>
+        public static string EnumAparatus {
+            get {
+                return ResourceManager.GetString("EnumAparatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Başlamadı.
         /// </summary>
         public static string EnumBaslamadi {
             get {
                 return ResourceManager.GetString("EnumBaslamadi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (TM) Ticari Mal.
+        /// </summary>
+        public static string EnumCommercialProduct {
+            get {
+                return ResourceManager.GetString("EnumCommercialProduct", resourceCulture);
             }
         }
         
@@ -421,6 +439,51 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (TK) Takım.
+        /// </summary>
+        public static string EnumKit {
+            get {
+                return ResourceManager.GetString("EnumKit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (HM) Hammadde.
+        /// </summary>
+        public static string EnumMaterial {
+            get {
+                return ResourceManager.GetString("EnumMaterial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (KLP) Kalıp.
+        /// </summary>
+        public static string EnumMold {
+            get {
+                return ResourceManager.GetString("EnumMold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (MM) Mamül.
+        /// </summary>
+        public static string EnumProduct {
+            get {
+                return ResourceManager.GetString("EnumProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim.
+        /// </summary>
+        public static string EnumProduction {
+            get {
+                return ResourceManager.GetString("EnumProduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretimden Giriş Fişi.
         /// </summary>
         public static string EnumProductionIncome {
@@ -430,11 +493,38 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Alma.
+        /// </summary>
+        public static string EnumPurchase {
+            get {
+                return ResourceManager.GetString("EnumPurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok Rezerve Fişi.
         /// </summary>
         public static string EnumReserved {
             get {
                 return ResourceManager.GetString("EnumReserved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (YM) Yarı Mamül.
+        /// </summary>
+        public static string EnumSemiProduct {
+            get {
+                return ResourceManager.GetString("EnumSemiProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (BP) Yedek Parça.
+        /// </summary>
+        public static string EnumSparePart {
+            get {
+                return ResourceManager.GetString("EnumSparePart", resourceCulture);
             }
         }
         
@@ -1501,6 +1591,96 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SATIR TİPİ.
+        /// </summary>
+        public static string TrackingGridLineType {
+            get {
+                return ResourceManager.GetString("TrackingGridLineType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string TrackingGridProductCode {
+            get {
+                return ResourceManager.GetString("TrackingGridProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK AÇIKLAMASI.
+        /// </summary>
+        public static string TrackingGridProductName {
+            get {
+                return ResourceManager.GetString("TrackingGridProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to REÇETE MİKTARI.
+        /// </summary>
+        public static string TrackingGridQuantity {
+            get {
+                return ResourceManager.GetString("TrackingGridQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BOY.
+        /// </summary>
+        public static string TrackingGridSize {
+            get {
+                return ResourceManager.GetString("TrackingGridSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM SARF MİKTARI.
+        /// </summary>
+        public static string TrackingGridTotalCounsume {
+            get {
+                return ResourceManager.GetString("TrackingGridTotalCounsume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM ÇIKIŞ MİKTARI.
+        /// </summary>
+        public static string TrackingGridTotalOutput {
+            get {
+                return ResourceManager.GetString("TrackingGridTotalOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM FİRE MİKTARI.
+        /// </summary>
+        public static string TrackingGridTotalWastage {
+            get {
+                return ResourceManager.GetString("TrackingGridTotalWastage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BİRİM SETİ.
+        /// </summary>
+        public static string TrackingGridUnitSet {
+            get {
+                return ResourceManager.GetString("TrackingGridUnitSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hammadde - Yarı Mamül İzleme Tablosu.
+        /// </summary>
+        public static string TrackingModalTitle {
+            get {
+                return ResourceManager.GetString("TrackingModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İşlem Dövizi:.
         /// </summary>
         public static string TransactionExchangeLabel {
@@ -1614,6 +1794,24 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string UIExportTitle1 {
             get {
                 return ResourceManager.GetString("UIExportTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim emrinin stok reçetesi bulunmamaktadır..
+        /// </summary>
+        public static string UIMessageNullBomMessage {
+            get {
+                return ResourceManager.GetString("UIMessageNullBomMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string UIMessageNullBomTitle {
+            get {
+                return ResourceManager.GetString("UIMessageNullBomTitle", resourceCulture);
             }
         }
         

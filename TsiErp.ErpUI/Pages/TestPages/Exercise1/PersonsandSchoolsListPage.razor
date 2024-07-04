@@ -1,0 +1,214 @@
+﻿@page "/persons-schools"
+
+@layout MainLayout
+
+<DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+    <GridLayoutItems>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIListPageTitleCard">
+                    <CardContent>
+                        <TsiBreadCrumb PreviousMenus="Öğrenciler" CurrentMenu="Kişiler" />
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIGridCards">
+
+                    <CardContent>
+                        <SfGrid ID="PersonGrid" @ref="_PersonGrid" AllowPdfExport=true ShowColumnMenu="true" DataSource="@PersonsList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@PersonGridContextMenu" >
+                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+
+                            <GridEvents ContextMenuItemClicked="@PersonContextMenuClick" TValue="Person"></GridEvents>
+                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                            <GridColumns>
+                                <GridColumn Field=@nameof(Person.NameSurname) HeaderText="AD SOYAD" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(Person.BirthDay) HeaderText="DOĞUM TARİHİ" Type= "ColumnType.DateTime" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(Person.Age) HeaderText="YAŞ" Type= "ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(Person.Description_) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                            </GridColumns>
+                        </SfGrid>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </GridLayoutItems>
+</DevGridLayout>
+
+<DxPopup @bind-Visible="personEditModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Kişiler"
+         Width="62%"
+         Height="60%"
+         MinWidth="1060px"
+         MinHeight="650px"
+         HeaderCssClass="HeaderTitleCss">
+
+    <BodyTemplate>
+        <DxGridLayout CssClass="TSIGridLayout">
+
+            <Rows>
+                <DxGridLayoutRow Height="17%" />
+                <DxGridLayoutRow Height="15%" />
+                <DxGridLayoutRow Height="60%" />
+            </Rows>
+
+            <Columns>
+                <DxGridLayoutColumn Width="4%" />
+                <DxGridLayoutColumn Width="28%" />
+                <DxGridLayoutColumn Width="4%" />
+                <DxGridLayoutColumn Width="28%" />
+                <DxGridLayoutColumn Width="4%" />
+                <DxGridLayoutColumn Width="28%" />
+                <DxGridLayoutColumn Width="4%" />
+            </Columns>
+
+            <Items>
+
+                <br />
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>Ad Soyad: </strong></label>
+
+                        <SfTextBox   @bind-Value="PersonDataSource.NameSurname" ></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="0" Column="3">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>Doğum Tarihi: </strong></label>
+
+                        <SfDatePicker @bind-Value="PersonDataSource.BirthDay"></SfDatePicker>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="0" Column="5">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>Yaş: </strong></label>
+
+                        <SfNumericTextBox Min="0" @bind-Value="PersonDataSource.Age"></SfNumericTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="1" Column="1" ColumnSpan="5">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>Açıklama: </strong></label>
+
+                        <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="PersonDataSource.Description_"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+              
+
+                <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
+                    <Template>
+                        <SfGrid @ref=_SchoolGrid ID="SchoolGrid" ShowColumnMenu="true" DataSource="@SchoolGridList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@SchoolGridContextMenu">
+                            <GridEvents ContextMenuItemClicked="@SchoolContextMenuClick" TValue="School"></GridEvents>
+                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                            <GridColumns>
+                                <GridColumn Field=@nameof(School.SchoolName) HeaderText="OKUL ADI" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                <GridColumn Field=@nameof(School.Date) HeaderText="TARİH" TextAlign="TextAlign.Center" Type="ColumnType.DateTime" Width="155"></GridColumn>
+                                <GridColumn Field=@nameof(School.TotalStudents) HeaderText="ÖĞRENCİ SAYISI" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="155"></GridColumn>
+                                <GridColumn Field=@nameof(School.Type) HeaderText="TÜRÜ" TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                            </GridColumns>
+
+                        </SfGrid>
+                    </Template>
+                </DxGridLayoutItem>
+
+
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HidePersonEditModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+    </FooterContentTemplate>
+</DxPopup>
+
+<DxPopup @bind-Visible="schoolEditModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Okullar"
+         Width="62%"
+         Height="32%"
+         MinWidth="1060px"
+         MinHeight="350px"
+         HeaderCssClass="HeaderTitleCss">
+
+    <BodyTemplate>
+        <DxGridLayout CssClass="TSIGridLayout">
+
+            <Rows>
+                <DxGridLayoutRow Height="50%" />
+                <DxGridLayoutRow Height="50%" />
+            </Rows>
+
+            <Columns>
+                <DxGridLayoutColumn Width="4%" />
+                <DxGridLayoutColumn Width="28%" />
+                <DxGridLayoutColumn Width="4%" />
+                <DxGridLayoutColumn Width="28%" />
+                <DxGridLayoutColumn Width="4%" />
+                <DxGridLayoutColumn Width="28%" />
+                <DxGridLayoutColumn Width="4%" />
+
+            </Columns>
+
+            <Items>
+                <br />
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>Okul Adı: </strong></label>
+                        <SfTextBox  @bind-Value="SchoolDataSource.SchoolName" ></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="0" Column="3">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>Okul Tarihi: </strong></label>
+                        <SfDatePicker @bind-Value="SchoolDataSource.Date"></SfDatePicker>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="0" Column="5">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>Öğrenci Sayısı: </strong></label>
+                        <SfNumericTextBox Min="0" @bind-Value="SchoolDataSource.TotalStudents"></SfNumericTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="1" Column="1">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>Tür: </strong></label>
+                        <SfTextBox  @bind-Value="SchoolDataSource.Type"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideSchoolEditModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+    </FooterContentTemplate>
+</DxPopup>

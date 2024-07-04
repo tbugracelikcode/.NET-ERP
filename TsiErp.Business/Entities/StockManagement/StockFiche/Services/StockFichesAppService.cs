@@ -431,6 +431,99 @@ namespace TsiErp.Business.Entities.StockFiche.Services
         }
 
 
+        public async Task<IDataResult<IList<ListStockFicheLinesDto>>> GetLineConsumeListbyProductIDAsync(Guid productID)
+        {
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.StockFicheLines)
+                   .Select<StockFicheLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductCode = p.Code, ProductName = p.Name },
+                        nameof(StockFicheLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        "PurchaseOrderLine",
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrderLines>
+                    (
+                        b => new { PurchaseOrderLineID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderLineID),
+                        nameof(PurchaseOrderLines.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new {UnitSetCode = u.Code },
+                        nameof(StockFicheLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { ProductID = productID }, false, false, Tables.StockFicheLines)
+                    .Where(new { FicheType = 12 }, false, false, Tables.StockFicheLines);
+
+            var stockFicheLine = queryFactory.GetList<ListStockFicheLinesDto>(queryLines).ToList();
+
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListStockFicheLinesDto>>(stockFicheLine);
+
+        }
+
+        public async Task<IDataResult<IList<ListStockFicheLinesDto>>> GetLineWastageListbyProductIDAsync(Guid productID)
+        {
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.StockFicheLines)
+                   .Select<StockFicheLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductCode = p.Code, ProductName = p.Name },
+                        nameof(StockFicheLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        "PurchaseOrderLine",
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrderLines>
+                    (
+                        b => new { PurchaseOrderLineID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderLineID),
+                        nameof(PurchaseOrderLines.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetCode = u.Code },
+                        nameof(StockFicheLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { ProductID = productID }, false, false, Tables.StockFicheLines)
+                    .Where(new { FicheType = 11 }, false, false, Tables.StockFicheLines);
+
+            var stockFicheLine = queryFactory.GetList<ListStockFicheLinesDto>(queryLines).ToList();
+
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListStockFicheLinesDto>>(stockFicheLine);
+
+        }
+
+
         public async Task<IDataResult<IList<ListStockFichesDto>>> GetListbyProductionOrderAsync(Guid productionOrderID)
         {
             var query = queryFactory

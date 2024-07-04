@@ -156,6 +156,9 @@
   <data name="CalVerificationsChildMenu" xml:space="preserve">
     <value>Calibration Verification Records</value>
   </data>
+  <data name="ContinentsChildMenu" xml:space="preserve">
+    <value>Continents</value>
+  </data>
   <data name="ContractProdTrackingsChildMenu" xml:space="preserve">
     <value>Contract Production Tracking Records</value>
   </data>
@@ -665,6 +668,9 @@
   </data>
   <data name="TempOperationsChildMenu" xml:space="preserve">
     <value>Template Operations</value>
+  </data>
+  <data name="TestManagementParentMenu" xml:space="preserve">
+    <value>Test Management</value>
   </data>
   <data name="TransactionsMenu" xml:space="preserve">
     <value>Transactions</value>

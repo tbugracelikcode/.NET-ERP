@@ -41,6 +41,25 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
         #endregion
 
+        public class SPFPTracking
+        {
+            public ProductTypeEnum LineType { get; set; }
+            public string ProductCode { get; set; }
+            public string ProductName { get; set; }
+            public string UnitSet { get; set; }
+            public decimal Quantity { get; set; }
+            public decimal TotalCounsume { get; set; }
+            public decimal TotalWastage { get; set; }
+            public decimal TotalOutput { get; set; }
+            public decimal Size { get; set; }
+        }
+
+        public List<SPFPTracking> TrackingList = new List<SPFPTracking>();
+
+        private SfGrid<SPFPTracking> _TrackingGrid;
+
+        public bool TrackingModalVisible = false;
+
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> StockFicheGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> StockFicheLineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -54,6 +73,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
+        #region Malzeme Fişleri Değişkenleri
+
         public List<ListStockFichesDto> StockFichesList = new List<ListStockFichesDto>();
         public List<SelectStockFicheLinesDto> StockFicheLinesList = new List<SelectStockFicheLinesDto>();
         SelectStockFichesDto StockFicheDataSource;
@@ -64,11 +85,19 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         public bool StockFicheEditPageVisible = false;
         public bool StockFicheLineCrudPopupVisible = false;
 
+        #endregion
+
+        #region Üretim Emri Değişiklik Raporları Değişkenleri
+
+
         public List<ListProductionOrderChangeReportsDto> ProductionOrderChangeReportsList = new List<ListProductionOrderChangeReportsDto>();
         private SfGrid<ListProductionOrderChangeReportsDto> _ProductionOrderChangeReportGrid;
         SelectProductionOrderChangeReportsDto SelectProductionOrderChangeReportDataSource;
         public bool ProductionOrderChangeReportModalVisible = false;
         public bool ProductionOrderChangeReportViewModalVisible = false;
+
+
+        #endregion
 
         SelectTechnicalDrawingsDto TechDrawingDataSource;
         public bool TechDrawingModalVisible = false;
@@ -313,6 +342,47 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                 case "trackingchart":
 
+                    DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    var bomDataSource = (await BillsofMaterialsAppService.GetListbyProductIDAsync(DataSource.FinishedProductID.GetValueOrDefault())).Data;
+
+                    if (bomDataSource != null && bomDataSource.Id != Guid.Empty)
+                    {
+                        if (bomDataSource.SelectBillsofMaterialLines != null && bomDataSource.SelectBillsofMaterialLines.Count > 0)
+                        {
+                            TrackingList.Clear();
+
+                            foreach (var bomline in bomDataSource.SelectBillsofMaterialLines)
+                            {
+                                var consumeQuantity = (await StockFichesAppService.GetLineConsumeListbyProductIDAsync(bomline.ProductID.GetValueOrDefault())).Data.Sum(t => t.Quantity);
+                                var wastageQuantity = (await StockFichesAppService.GetLineWastageListbyProductIDAsync(bomline.ProductID.GetValueOrDefault())).Data.Sum(t => t.Quantity);
+
+                                SPFPTracking sPFPTrackingModel = new SPFPTracking
+                                {
+                                    LineType = bomline.MaterialType,
+                                    ProductCode = bomline.ProductCode,
+                                    ProductName = bomline.ProductName,
+                                    UnitSet = bomline.UnitSetCode,
+                                    Quantity = DataSource.PlannedQuantity * bomline.Quantity,
+                                    TotalCounsume = consumeQuantity,
+                                    TotalWastage = wastageQuantity,
+                                    TotalOutput = wastageQuantity + consumeQuantity,
+                                    Size = 0
+                                };
+
+                                TrackingList.Add(sPFPTrackingModel);
+                            }
+
+                            TrackingModalVisible = true;
+
+                            await InvokeAsync(StateHasChanged);
+                        }
+                       
+                    }
+                    else
+                    {
+                        await ModalManager.MessagePopupAsync(L["UIMessageNullBomTitle"], L["UIMessageNullBomMessage"]);
+                    }
                     break;
 
 
@@ -324,7 +394,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     TechDrawingDataSource = (await TechnicalDrawingsAppService.GetSelectListAsync(DataSource.FinishedProductID.GetValueOrDefault())).Data.Where(t => t.IsApproved && t.CustomerApproval).FirstOrDefault();
 
-                    if(TechDrawingDataSource != null && TechDrawingDataSource.Id != Guid.Empty)
+                    if (TechDrawingDataSource != null && TechDrawingDataSource.Id != Guid.Empty)
                     {
 
                         OldTechDrawingNo = TechDrawingDataSource.RevisionNo;
@@ -1200,13 +1270,23 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
             var updatedEntity = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(DataSource);
 
-            await ProductionOrdersAppService.UpdateAsync(updatedEntity);    
+            await ProductionOrdersAppService.UpdateAsync(updatedEntity);
 
             HideTechnicalDrawingUpdateModal();
 
             await InvokeAsync(StateHasChanged);
 
-            
+
+        }
+
+        #endregion
+
+        #region HM YM İzleme Metotları
+
+        public void HideTrackingModal()
+        {
+            TrackingModalVisible = false;
+            TrackingList.Clear();
         }
 
         #endregion

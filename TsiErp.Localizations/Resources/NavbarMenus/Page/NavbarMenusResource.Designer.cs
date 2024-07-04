@@ -178,6 +178,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kıtalar.
+        /// </summary>
+        public static string ContinentsChildMenu {
+            get {
+                return ResourceManager.GetString("ContinentsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fason İmalat Takip Kayıtları.
         /// </summary>
         public static string ContractProdTrackingsChildMenu {
@@ -1704,6 +1713,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string TempOperationsChildMenu {
             get {
                 return ResourceManager.GetString("TempOperationsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Yönetimi.
+        /// </summary>
+        public static string TestManagementParentMenu {
+            get {
+                return ResourceManager.GetString("TestManagementParentMenu", resourceCulture);
             }
         }
         

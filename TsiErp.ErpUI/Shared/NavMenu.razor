@@ -883,6 +883,19 @@
         </BlazoredSubMenu>
     </BlazoredMenuItem>  @*Genel Sistem Tanýmlamalarý*@
 
+    <BlazoredMenuItem IsVisible="true">
+        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+            <HeaderTemplate>
+                <i class="fa fa-newspaper" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["TestManagementParentMenu"]</text>
+            </HeaderTemplate>
+            <MenuTemplate>
+                <BlazoredMenuItem IsVisible="true">
+                    <NavLink href="continents">@L["ContinentsChildMenu"]</NavLink>
+                </BlazoredMenuItem>
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Test Yönetimi*@
+
 </BlazoredMenu>
 
 <style>

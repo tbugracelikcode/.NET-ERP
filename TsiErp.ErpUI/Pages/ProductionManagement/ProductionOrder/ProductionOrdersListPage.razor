@@ -22,6 +22,7 @@
 @inject IStockManagementParametersAppService StockManagementParametersAppService
 @inject IProductionOrderChangeReportsAppService ProductionOrderChangeReportsAppService
 @inject ITechnicalDrawingsAppService TechnicalDrawingsAppService
+@inject IBillsofMaterialsAppService BillsofMaterialsAppService
 
 @if (!base.IsLoaded)
 {
@@ -838,7 +839,6 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
-
     <DxPopup @bind-Visible="TechDrawingModalVisible"
              ShowFooter="true"
              CloseOnEscape="false"
@@ -931,6 +931,90 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="UpdateTechnicalDrawing"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideTechnicalDrawingUpdateModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="TrackingModalVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["TrackingModalTitle"]"
+             Width="70%"
+             Height="80%"
+             MinWidth="1200px"
+             MinHeight="700px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
+
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <SfGrid ID="TrackingGrid" @ref="_TrackingGrid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@TrackingList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" Toolbar=@GridToolbarItems>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEvents  OnToolbarClick="@ToolbarClickHandler" TValue="SPFPTracking"></GridEvents>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings> 
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SPFPTracking.LineType) HeaderText="@L["TrackingGridLineType"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">
+                                        <Template>
+                                            @{
+                                                var lineType = (trackingContext as SPFPTracking).LineType;
+                                                string lineTypeStr = string.Empty;
+
+                                                switch (lineType)
+                                                {
+                                                    case ProductTypeEnum.TM: lineTypeStr = L["EnumCommercialProduct"] ; break;
+                                                    case ProductTypeEnum.HM: lineTypeStr = L["EnumMaterial"]; break;
+                                                    case ProductTypeEnum.YM: lineTypeStr = L["EnumSemiProduct"] ; break;
+                                                    case ProductTypeEnum.MM: lineTypeStr = L["EnumProduct"]; break;
+                                                    case ProductTypeEnum.BP: lineTypeStr = L["EnumSparePart"] ; break;
+                                                    case ProductTypeEnum.TK: lineTypeStr = L["EnumKit"] ; break;
+                                                    case ProductTypeEnum.KLP: lineTypeStr = L["EnumMold"] ; break;
+                                                    case ProductTypeEnum.APRT: lineTypeStr = L["EnumAparatus"] ; break;
+                                                    default: break;
+                                                }
+                                            }
+                                            @lineTypeStr
+
+                                        </Template>
+
+                                        </GridColumn>
+                                        <GridColumn Field=@nameof(SPFPTracking.ProductCode) HeaderText="@L["TrackingGridProductCode"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
+                                        <GridColumn Field=@nameof(SPFPTracking.ProductName) HeaderText="@L["TrackingGridProductName"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
+                                        <GridColumn Field=@nameof(SPFPTracking.UnitSet) HeaderText="@L["TrackingGridUnitSet"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
+                                        <GridColumn Field=@nameof(SPFPTracking.Quantity) Type="ColumnType.Number" HeaderText="@L["TrackingGridQuantity"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
+                                    <GridColumn Field=@nameof(SPFPTracking.TotalCounsume) Type="ColumnType.Number" HeaderText="@L["TrackingGridTotalCounsume"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
+                                    <GridColumn Field=@nameof(SPFPTracking.TotalWastage) Type="ColumnType.Number" HeaderText="@L["TrackingGridTotalWastage"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
+                                    <GridColumn Field=@nameof(SPFPTracking.TotalOutput) Type="ColumnType.Number" HeaderText="@L["TrackingGridTotalOutput"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
+                                    <GridColumn Field=@nameof(SPFPTracking.Size) Type="ColumnType.Number" HeaderText="@L["TrackingGridSize"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
+
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideTrackingModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
