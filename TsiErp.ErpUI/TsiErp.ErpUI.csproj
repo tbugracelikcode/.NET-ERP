@@ -107,6 +107,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Reports\ShippingManagement\PackingListReports\CommercialInvoice\" />
 		<Folder Include="wwwroot\ExportedGridFiles\" />
 	</ItemGroup>
 

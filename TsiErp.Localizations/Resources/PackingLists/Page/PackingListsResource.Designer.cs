@@ -376,7 +376,7 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ex-Works İstanbul (€).
+        ///   Looks up a localized string similar to EX-WORKS ISTANBUL (€).
         /// </summary>
         public static string EnumExWorks {
             get {
@@ -385,7 +385,7 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FOB İstanbul (€).
+        ///   Looks up a localized string similar to FOB ISTANBUL (€).
         /// </summary>
         public static string EnumFOB {
             get {

@@ -12,6 +12,7 @@ using Syncfusion.Blazor.Navigations;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Reflection;
+using TsiErp.Business.Entities.CurrentAccountCard.Services;
 using TsiErp.Business.Entities.PackageFiche.Services;
 using TsiErp.Business.Entities.ProductGroup.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
@@ -26,6 +27,7 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackingList;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletLine.Dtos;
@@ -383,6 +385,31 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     await InvokeAsync(StateHasChanged);
                     break;
                 case "commercialinvoice":
+                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    #region Enum Combobox Localization
+
+                    foreach (var item in salesTypes)
+                    {
+                        DataSource.SalesTypeName = L[item.SalesTypeName];
+                    }
+
+                    foreach (var item in tIRTypes)
+                    {
+                        DataSource.TIRTypeName = L[item.TIRTypeName];
+                    }
+
+                    foreach (var item in packingListStates)
+                    {
+                        DataSource.PackingListStateName = L[item.PackingListStateName];
+                    }
+
+                    #endregion
+
+
+                    CommercialInvoiceDynamicReport = new XtraReport();
+                    CommercialInvoiceReportVisible = true;
+                    await CreateCommercialInvoiceReport(DataSource);
                     await InvokeAsync(StateHasChanged);
                     break;
                 case "custominstruction":
@@ -1475,6 +1502,24 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
         #endregion
 
+        #region Commercial Invoice
+        bool CommercialInvoiceReportVisible { get; set; }
+
+        DxReportViewer CommercialInvoiceReportViewer { get; set; }
+
+        XtraReport CommercialInvoiceDynamicReport { get; set; }
+
+
+        async Task CreateCommercialInvoiceReport(SelectPackingListsDto packingList)
+        {
+            var list = (await PackingListsAppService.GetCommercialInvoiceReportDataSource(packingList));
+
+            await Task.CompletedTask;
+        }
+
+
+        #endregion
+
         private string MalCinsiIngilizce(string malCinsi)
         {
             string result = "";
@@ -1550,6 +1595,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             GC.SuppressFinalize(this);
         }
     }
+
 
     public class UploadConfirmationReportDto
     {
