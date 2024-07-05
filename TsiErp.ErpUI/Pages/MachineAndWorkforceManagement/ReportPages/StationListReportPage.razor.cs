@@ -1,11 +1,6 @@
 ﻿using DevExpress.Blazor.Reporting;
 using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Components;
-using TsiErp.Business.Entities.Department.Services;
-using TsiErp.Business.Entities.MachineAndWorkforceManagement.Employee.Reports;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.ReportDtos.EmployeeListReportDtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.ReportDtos.StationsListReportDtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.ErpUI.Reports.MachineAndWorkforceManagement;

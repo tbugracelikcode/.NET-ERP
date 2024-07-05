@@ -1,24 +1,18 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
-using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
-using TsiErp.ErpUI.Utilities.ModalUtilities;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
-using Microsoft.Extensions.Localization;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
-using TsiErp.DataAccess.Services.Login;
-using TsiErp.Business.Entities.WorkOrder.Services;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
 {

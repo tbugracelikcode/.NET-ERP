@@ -14,18 +14,13 @@ using TsiErp.Business.Entities.PlanningManagement.ShipmentPlanning.Services;
 using TsiErp.Business.Entities.PlanningManagement.ShipmentPlanning.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
-using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
-using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
-using TsiErp.Entities.Entities.StockManagement.UnitSet;
-using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ShipmentPlannings.Page;
 

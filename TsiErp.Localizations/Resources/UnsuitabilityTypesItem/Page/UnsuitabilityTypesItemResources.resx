@@ -168,6 +168,9 @@
   <data name="IsOperationLabel" xml:space="preserve">
     <value>Operasyon</value>
   </data>
+  <data name="IsProductionOrderLabel" xml:space="preserve">
+    <value>Üretim Emri Değişiklik</value>
+  </data>
   <data name="IsPurchaseLabel" xml:space="preserve">
     <value>Satınalma</value>
   </data>
@@ -196,7 +199,7 @@
     <value>İş Merkezi:</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Kalite Kontrol &gt; </value>
+    <value>Kalite Kontrol &gt; Ana Kayıtlar</value>
   </data>
   <data name="UnsuitabilityTypesItemContextAdd" xml:space="preserve">
     <value>Ekle</value>

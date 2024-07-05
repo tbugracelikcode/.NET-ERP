@@ -3,16 +3,11 @@ using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using System.Linq.Dynamic.Core;
-using TsiErp.Business.Entities.Product.Services;
-using TsiErp.Business.Entities.StockManagement.Product.Reports;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.ReportDtos.PurchaseRequestListReportDtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
-using TsiErp.Entities.Entities.StockManagement.Product.ReportDtos.ProductWarehouseStatusReportDtos;
 using TsiErp.Entities.Enums;
-using TsiErp.ErpUI.Pages.StockManagement.ReportPages;
 using TsiErp.ErpUI.Reports.PurchaseManagement;
-using TsiErp.ErpUI.Reports.StockManagement;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PurchaseManagement.ReportPages

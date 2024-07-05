@@ -214,7 +214,7 @@
     <value>Work Center:</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Quality Control &gt; </value>
+    <value>Quality Control &gt; Main Records</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

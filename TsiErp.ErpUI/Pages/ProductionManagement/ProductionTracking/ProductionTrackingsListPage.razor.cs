@@ -4,8 +4,6 @@ using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Business.Entities.CurrentAccountCard.Services;
-using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
@@ -13,13 +11,11 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
-using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking

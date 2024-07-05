@@ -156,6 +156,9 @@
   <data name="CalVerificationsChildMenu" xml:space="preserve">
     <value>Calibration Verification Records</value>
   </data>
+  <data name="ContinentsChildMenu" xml:space="preserve">
+    <value>Continents</value>
+  </data>
   <data name="ContractProdTrackingsChildMenu" xml:space="preserve">
     <value>Contract Production Tracking Records</value>
   </data>
@@ -399,6 +402,9 @@
   <data name="ProdOperationsChildMenu" xml:space="preserve">
     <value>Products Operations</value>
   </data>
+  <data name="ProdOrderChangeRecordsChildMenu" xml:space="preserve">
+    <value>Production Order Change Reports</value>
+  </data>
   <data name="ProdOrderRecordsChildMenu" xml:space="preserve">
     <value>Production Order Unsuitability Records</value>
   </data>
@@ -567,6 +573,9 @@
   <data name="SalesPropositionsChildMenu" xml:space="preserve">
     <value>SAles Propositions</value>
   </data>
+  <data name="SectorsChildMenu" xml:space="preserve">
+    <value>Sectors</value>
+  </data>
   <data name="ShiftsChildMenu" xml:space="preserve">
     <value>Shifts</value>
   </data>
@@ -662,6 +671,9 @@
   </data>
   <data name="TempOperationsChildMenu" xml:space="preserve">
     <value>Template Operations</value>
+  </data>
+  <data name="TestManagementParentMenu" xml:space="preserve">
+    <value>Test Management</value>
   </data>
   <data name="TransactionsMenu" xml:space="preserve">
     <value>Transactions</value>

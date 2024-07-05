@@ -3,7 +3,6 @@ using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using System.Linq.Dynamic.Core;
-using TsiErp.Business.Entities.PurchaseManagement.PurchaseOrder.Reports;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.ReportDtos.PurchaseOrderListReportDtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;

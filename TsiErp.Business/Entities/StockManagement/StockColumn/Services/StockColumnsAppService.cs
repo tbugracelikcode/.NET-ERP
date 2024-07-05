@@ -12,7 +12,6 @@ using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.StockManagement.StockColumn.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockColumn;
 using TsiErp.Entities.Entities.StockManagement.StockColumn.Dtos;
 using TsiErp.Entities.TableConstant;

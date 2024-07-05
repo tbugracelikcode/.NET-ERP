@@ -139,7 +139,7 @@
     <value>The record deleted successfully.</value>
   </data>
   <data name="EnumBaslamadi" xml:space="preserve">
-    <value>Not Start</value>
+    <value>Not Started</value>
   </data>
   <data name="EnumDevamEdiyor" xml:space="preserve">
     <value>Continues</value>
@@ -252,11 +252,26 @@
   <data name="WorkOrderContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="WorkOrderContextChangeOperationCriteria" xml:space="preserve">
+    <value>Change Operation Criteria</value>
+  </data>
+  <data name="WorkOrderContextChangeStation" xml:space="preserve">
+    <value>Change Station</value>
+  </data>
+  <data name="WorkOrderContextContractTracking" xml:space="preserve">
+    <value>Contract Tracking</value>
+  </data>
   <data name="WorkOrderContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="WorkOrderContextProductionTracking" xml:space="preserve">
+    <value>Production Tracking</value>
+  </data>
   <data name="WorkOrderContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="WorkOrderContextSplitWorkOrder" xml:space="preserve">
+    <value>Split the Work Order Into Pieces</value>
   </data>
   <data name="WorkOrderNo" xml:space="preserve">
     <value>WORK ORDER NR</value>

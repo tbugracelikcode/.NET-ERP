@@ -15,7 +15,6 @@ using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Helpers;
-using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan

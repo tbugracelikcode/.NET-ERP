@@ -207,6 +207,8 @@ using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PFMEA;
 using TsiErp.Entities.Entities.QualityControl.PFMEA.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeReport;
+using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine;
@@ -299,6 +301,14 @@ using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using TsiErp.Entities.Entities.TestManagement.Continent;
+using TsiErp.Entities.Entities.TestManagement.Continent.Dtos;
+using TsiErp.Entities.Entities.TestManagement.ContinentLine;
+using TsiErp.Entities.Entities.TestManagement.ContinentLine.Dtos;
+using TsiErp.Entities.Entities.TestManagement.Sector;
+using TsiErp.Entities.Entities.TestManagement.Sector.Dtos;
+using TsiErp.Entities.Entities.TestManagement.SectorLine;
+using TsiErp.Entities.Entities.TestManagement.SectorLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -403,6 +413,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectCustomerComplaintReportsDto, CreateCustomerComplaintReportsDto>();
             CreateMap<UpdateCustomerComplaintReportsDto, CustomerComplaintReports>();
             CreateMap<SelectCustomerComplaintReportsDto, UpdateCustomerComplaintReportsDto>();
+
+            CreateMap<ProductionOrderChangeReports, SelectProductionOrderChangeReportsDto>();
+            CreateMap<ProductionOrderChangeReports, ListProductionOrderChangeReportsDto>();
+            CreateMap<CreateProductionOrderChangeReportsDto, ProductionOrderChangeReports>();
+            CreateMap<SelectProductionOrderChangeReportsDto, CreateProductionOrderChangeReportsDto>();
+            CreateMap<UpdateProductionOrderChangeReportsDto, ProductionOrderChangeReports>();
+            CreateMap<SelectProductionOrderChangeReportsDto, UpdateProductionOrderChangeReportsDto>();
 
             CreateMap<Report8Ds, SelectReport8DsDto>();
             CreateMap<Report8Ds, ListReport8DsDto>();
@@ -1528,6 +1545,44 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectPurchaseOrdersAwaitingApprovalLinesDto, UpdatePurchaseOrdersAwaitingApprovalLinesDto>();
             CreateMap<SelectPurchaseOrdersAwaitingApprovalLinesDto, PurchaseOrdersAwaitingApprovalLines>();
 
+            //TEST -------------------------------------------------------
+
+            CreateMap<Continents, SelectContinentsDto>();
+            CreateMap<Continents, ListContinentsDto>();
+            CreateMap<UpdateContinentsDto, Continents>();
+            CreateMap<CreateContinentsDto, Continents>();
+            CreateMap<SelectContinentsDto, CreateContinentsDto>();
+            CreateMap<SelectContinentsDto, UpdateContinentsDto>();
+
+
+            CreateMap<ContinentLines, SelectContinentLinesDto>();
+            CreateMap<ContinentLines, ListContinentLinesDto>();
+            CreateMap<CreateContinentLinesDto, ContinentLines>();
+            CreateMap<SelectContinentLinesDto, CreateContinentLinesDto>();
+            CreateMap<UpdateContinentLinesDto, ContinentLines>();
+            CreateMap<SelectContinentLinesDto, UpdateContinentLinesDto>();
+            CreateMap<SelectContinentLinesDto, ContinentLines>();
+
+
+            CreateMap<Sectors, SelectSectorsDto>();
+            CreateMap<Sectors, ListSectorsDto>();
+            CreateMap<UpdateSectorsDto, Sectors>();
+            CreateMap<CreateSectorsDto, Sectors>();
+            CreateMap<SelectSectorsDto, CreateSectorsDto>();
+            CreateMap<SelectSectorsDto, UpdateSectorsDto>();
+
+
+            CreateMap<SectorLines, SelectSectorLinesDto>();
+            CreateMap<SectorLines, ListSectorLinesDto>();
+            CreateMap<CreateSectorLinesDto, SectorLines>();
+            CreateMap<SelectSectorLinesDto, CreateSectorLinesDto>();
+            CreateMap<UpdateSectorLinesDto, SectorLines>();
+            CreateMap<SelectSectorLinesDto, UpdateSectorLinesDto>();
+            CreateMap<SelectSectorLinesDto, SectorLines>();
+
+
+
+            //TEST -------------------------------------------------------
         }
     }
 }

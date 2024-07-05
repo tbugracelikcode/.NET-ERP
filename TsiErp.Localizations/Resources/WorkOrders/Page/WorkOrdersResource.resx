@@ -252,11 +252,26 @@
   <data name="WorkOrderContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>
+  <data name="WorkOrderContextChangeOperationCriteria" xml:space="preserve">
+    <value>Operasyon Kriterlerini Değiştir</value>
+  </data>
+  <data name="WorkOrderContextChangeStation" xml:space="preserve">
+    <value>İş İstasyonunu Değiştir</value>
+  </data>
+  <data name="WorkOrderContextContractTracking" xml:space="preserve">
+    <value>Fason Takip</value>
+  </data>
   <data name="WorkOrderContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="WorkOrderContextProductionTracking" xml:space="preserve">
+    <value>Üretim Takip</value>
+  </data>
   <data name="WorkOrderContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="WorkOrderContextSplitWorkOrder" xml:space="preserve">
+    <value>İş Emri Parçala</value>
   </data>
   <data name="WorkOrderNo" xml:space="preserve">
     <value>İŞ EMRİ NO</value>

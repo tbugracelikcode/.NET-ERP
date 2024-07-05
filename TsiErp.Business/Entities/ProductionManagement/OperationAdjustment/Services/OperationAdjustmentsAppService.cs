@@ -1,27 +1,19 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
-using TsiErp.Entities.Entities.ProductionManagement.OperationAdjustment.Dtos;
-using TsiErp.Entities.TableConstant;
-using TSI.QueryBuilder.Constants.Join;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
-using TsiErp.Entities.Entities.ProductionManagement.OperationAdjustment;
-using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
-using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Entities.Entities.ProductionManagement.OperationAdjustment;
+using TsiErp.Entities.Entities.ProductionManagement.OperationAdjustment.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
+using TsiErp.Entities.TableConstant;
 
 namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Services
 {

@@ -1,5 +1,4 @@
-﻿using AutoMapper.Internal.Mappers;
-using Microsoft.Extensions.Localization;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -14,12 +13,11 @@ using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.ProductsOperation.Validations;
 using TsiErp.Business.Entities.Route.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement;
@@ -27,11 +25,11 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ProductsOperations.Page;
-using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 
 namespace TsiErp.Business.Entities.ProductsOperation.Services
 {

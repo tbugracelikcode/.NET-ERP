@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
-using Syncfusion.Blazor.Buttons;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
@@ -17,6 +15,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
         bool _isOperation;
         bool _isPurchase;
         bool _isContract;
+        bool _isProductionOrderChange;
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -113,6 +112,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                 DataSource.UnsuitabilityTypesDescription = "Operation";
                 _isPurchase = false;
                 _isContract = false;
+                _isProductionOrderChange = false;
                 await (InvokeAsync(StateHasChanged));
             }
         }
@@ -124,6 +124,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                 DataSource.UnsuitabilityTypesDescription = "Purchase";
                 _isOperation = false;
                 _isContract = false;
+                _isProductionOrderChange = false;
                 await (InvokeAsync(StateHasChanged));
             }
         }
@@ -136,6 +137,19 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                 DataSource.UnsuitabilityTypesDescription = "Contract";
                 _isOperation = false;
                 _isPurchase = false;
+                _isProductionOrderChange = false;
+                await (InvokeAsync(StateHasChanged));
+            }
+        }
+
+        private async void ProductionOrderChangeChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (args.Checked)
+            {
+                DataSource.UnsuitabilityTypesDescription = "ProductionOrderChange";
+                _isPurchase = false;
+                _isContract = false;
+                _isOperation = false;
                 await (InvokeAsync(StateHasChanged));
             }
         }

@@ -4,22 +4,16 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.Schedule;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Business.Entities.MaintenanceInstruction.Services;
-using TsiErp.Business.Entities.MaintenancePeriod.Services;
-using TsiErp.Business.Entities.Product.Services;
-using TsiErp.Business.Entities.UnitSet.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.CalendarColorConstant;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalary;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
@@ -31,10 +25,7 @@ using TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Enums;
-using TsiErp.ErpUI.Helpers;
-using TsiErp.ErpUI.Shared;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using static TsiErp.ErpUI.Pages.QualityControl.Report8D.Report8DsListPage;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 {

@@ -7,5 +7,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
     public interface IProductionOrdersAppService : ICrudAppService<SelectProductionOrdersDto, ListProductionOrdersDto, CreateProductionOrdersDto, UpdateProductionOrdersDto, ListProductionOrdersParameterDto>
     {
         Task<IDataResult<SelectProductionOrdersDto>> ConverttoProductionOrder(CreateProductionOrdersDto input);
+
+        Task<IDataResult<IList<ListProductionOrdersDto>>> GetNotCanceledListAsync(ListProductionOrdersParameterDto input);
+
+        Task<IDataResult<IList<ListProductionOrdersDto>>> GetCanceledListAsync(ListProductionOrdersParameterDto input);
     }
 }

@@ -7,20 +7,18 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.Report8D.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Report8D.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.QualityControl.Report8D;
 using TsiErp.Entities.Entities.QualityControl.Report8D.Dtos;
-using TsiErp.Entities.Entities.QualityControl.EquipmentRecord;
-using TsiErp.Entities.TableConstant;
-using TsiErp.Localizations.Resources.Report8Ds.Page;
-using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
-using Castle.Core.Resource;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
-using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Localizations.Resources.Report8Ds.Page;
 
 namespace TsiErp.Business.Entities.Report8D.Services
 {

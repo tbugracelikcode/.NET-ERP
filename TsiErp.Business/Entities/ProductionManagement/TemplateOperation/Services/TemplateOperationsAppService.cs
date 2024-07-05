@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Localization;
-using System.Collections.Generic;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -14,7 +13,6 @@ using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.TemplateOperation.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation;
@@ -25,7 +23,6 @@ using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabili
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.TemplateOperations.Page;
 

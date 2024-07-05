@@ -1,26 +1,23 @@
 ﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.QualityControl.PFMEA.Validations;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.QualityControl.PFMEA.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.QualityControl.PFMEA;
-using TsiErp.Entities.Entities.QualityControl.PFMEA.Dtos;
-using TsiErp.Entities.Entities.QualityControl.EquipmentRecord;
-using TsiErp.Entities.TableConstant;
-using TsiErp.Localizations.Resources.PFMEAs.Page;
-using TsiErp.Entities.Entities.QualityControl.OperationalSPC;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
+using TsiErp.Entities.Entities.QualityControl.OperationalSPC;
+using TsiErp.Entities.Entities.QualityControl.PFMEA;
+using TsiErp.Entities.Entities.QualityControl.PFMEA.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
-using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Localizations.Resources.PFMEAs.Page;
 
 namespace TsiErp.Business.Entities.PFMEA.Services
 {

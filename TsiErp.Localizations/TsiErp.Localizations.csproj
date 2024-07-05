@@ -51,6 +51,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CalibrationVerificationsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Continents\Page\ContinentsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ContinentsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\ContractProductionTrackings\Page\ContractProductionTrackingsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -331,6 +336,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ProductionManagementParametersResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ProductionOrderChangeReports\Page\ProductionOrderChangeReportsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProductionOrderChangeReportsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\ProductionOrders\Page\ProductionOrdersResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -440,6 +450,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>SalesPropositionsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Sectors\Page\SectorsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SectorsResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\Shifts\Page\ShiftsResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -626,6 +641,10 @@
     <EmbeddedResource Update="Resources\CalibrationVerifications\Page\CalibrationVerificationsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CalibrationVerificationsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Continents\Page\ContinentsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContinentsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\ContractProductionTrackings\Page\ContractProductionTrackingsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -902,6 +921,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductionManagementParametersResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductionOrderChangeReports\Page\ProductionOrderChangeReportsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductionOrderChangeReportsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\ProductionOrders\Page\ProductionOrdersResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
@@ -1025,6 +1048,10 @@
     <EmbeddedResource Update="Resources\SalesPropositions\Page\SalesPropositionsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SalesPropositionsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Sectors\Page\SectorsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SectorsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Shifts\Page\ShiftsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

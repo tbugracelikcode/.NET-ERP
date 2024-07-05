@@ -168,6 +168,9 @@
   <data name="IsOperationLabel" xml:space="preserve">
     <value>Operation</value>
   </data>
+  <data name="IsProductionOrderLabel" xml:space="preserve">
+    <value>Production Order Change</value>
+  </data>
   <data name="IsPurchaseLabel" xml:space="preserve">
     <value>Purchase</value>
   </data>
@@ -196,7 +199,7 @@
     <value>Work Center:</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Quality Control &gt; </value>
+    <value>Quality Control &gt; Main Records</value>
   </data>
   <data name="UnsuitabilityTypesItemContextAdd" xml:space="preserve">
     <value>Add</value>
