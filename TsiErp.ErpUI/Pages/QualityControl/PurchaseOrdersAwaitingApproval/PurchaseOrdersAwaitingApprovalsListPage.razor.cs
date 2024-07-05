@@ -1,33 +1,24 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
-using TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services;
+using Syncfusion.Blazor.Inputs;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using System.Timers;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine.Dtos;
-using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
-using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine.Dtos;
-using TsiErp.ErpUI.Utilities.ModalUtilities;
-using TsiErp.ErpUI.Helpers;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.Entities.Enums;
-using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dtos;
-using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
-using System.Timers;
-using static DevExpress.XtraPrinting.Native.ExportOptionsPropertiesNames;
-using Syncfusion.Blazor.Inputs;
-using TsiErp.ErpUI.Services;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
-using Microsoft.AspNetCore.Components.Web;
-using Syncfusion.Blazor.Charts.Chart.Models;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
-using TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services;
-using Syncfusion.Blazor.DropDowns;
+using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dtos;
+using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Helpers;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 {

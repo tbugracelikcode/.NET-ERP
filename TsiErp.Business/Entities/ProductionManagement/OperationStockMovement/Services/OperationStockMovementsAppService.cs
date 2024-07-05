@@ -1,23 +1,13 @@
-﻿using Azure;
-using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.CurrentAccountCard.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.TableConstant;
-using TsiErp.Localizations.Resources.CurrentAccountCards.Page;
 using TsiErp.Localizations.Resources.OperationStockMovement.Page;
 
 namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.Services

@@ -466,6 +466,33 @@ namespace TsiErp.Localizations.Resources.WorkOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operasyon Kriterlerini Değiştir.
+        /// </summary>
+        public static string WorkOrderContextChangeOperationCriteria {
+            get {
+                return ResourceManager.GetString("WorkOrderContextChangeOperationCriteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş İstasyonunu Değiştir.
+        /// </summary>
+        public static string WorkOrderContextChangeStation {
+            get {
+                return ResourceManager.GetString("WorkOrderContextChangeStation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fason Takip.
+        /// </summary>
+        public static string WorkOrderContextContractTracking {
+            get {
+                return ResourceManager.GetString("WorkOrderContextContractTracking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string WorkOrderContextDelete {
@@ -475,11 +502,29 @@ namespace TsiErp.Localizations.Resources.WorkOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Takip.
+        /// </summary>
+        public static string WorkOrderContextProductionTracking {
+            get {
+                return ResourceManager.GetString("WorkOrderContextProductionTracking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string WorkOrderContextRefresh {
             get {
                 return ResourceManager.GetString("WorkOrderContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş Emri Parçala.
+        /// </summary>
+        public static string WorkOrderContextSplitWorkOrder {
+            get {
+                return ResourceManager.GetString("WorkOrderContextSplitWorkOrder", resourceCulture);
             }
         }
         

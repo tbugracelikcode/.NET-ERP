@@ -13,14 +13,11 @@ using TsiErp.Business.Entities.MachineAndWorkforceManagement.StartingSalary.Serv
 using TsiErp.Business.Entities.MachineAndWorkforceManagement.StartingSalary.Validations;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalary;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalary.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalaryLine;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalaryLine.Dtos;
-using TsiErp.Entities.Entities.StockManagement.Product;
-using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.StartingSalaries.Page;
 

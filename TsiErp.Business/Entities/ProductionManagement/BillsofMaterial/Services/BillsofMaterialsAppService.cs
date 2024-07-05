@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.EnumUtilities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -21,7 +20,6 @@ using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
-using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.BillsofMaterials.Page;
 
@@ -381,6 +379,70 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             var billsOfMaterials = queryFactory.GetList<ListBillsofMaterialsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListBillsofMaterialsDto>>(billsOfMaterials);
+
+        }
+
+        public async Task<IDataResult<SelectBillsofMaterialsDto>> GetListbyProductIDAsync(Guid finishedProductId)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.BillsofMaterials)
+                   .Select<BillsofMaterials>(null)
+                   .Join<Products>
+                    (
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },
+                        nameof(BillsofMaterials.FinishedProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        pr => new { CustomerCode = pr.CustomerCode },
+                        nameof(BillsofMaterials.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { FinishedProductID  = finishedProductId}, true, true, Tables.BillsofMaterials);
+
+            var billsOfMaterials = queryFactory.GetList<SelectBillsofMaterialsDto>(query).ToList();
+
+            var billsOfMaterial = billsOfMaterials.FirstOrDefault();
+
+            var queryLines = queryFactory
+                  .Query()
+                  .From(Tables.BillsofMaterialLines)
+                  .Select<BillsofMaterialLines>(null)
+                  .Join<Products>
+                   (
+                       p => new { FinishedProductCode = p.Code },
+                       nameof(BillsofMaterialLines.FinishedProductID),
+                       nameof(Products.Id),
+                       JoinType.Left
+                   )
+                  .Join<Products>
+                   (
+                       p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, SupplyForm = p.SupplyForm },
+                       nameof(BillsofMaterialLines.ProductID),
+                       nameof(Products.Id),
+                       "ProductLine",
+                       JoinType.Left
+                   )
+                  .Join<UnitSets>
+                   (
+                       u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                       nameof(BillsofMaterialLines.UnitSetID),
+                       nameof(UnitSets.Id),
+                       JoinType.Left
+                   )
+                   .Where(new { BoMID = billsOfMaterial.Id }, false, false, Tables.BillsofMaterialLines);
+
+            var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
+
+            billsOfMaterial.SelectBillsofMaterialLines = billsOfMaterialLine;
+
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterial);
 
         }
 

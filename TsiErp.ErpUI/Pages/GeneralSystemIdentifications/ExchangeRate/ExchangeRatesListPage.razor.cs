@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Utilities.FinanceUtilities.TCMBExchange;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using TsiErp.Business.Utilities.FinanceUtilities.TCMBExchange;
-using TsiErp.Business.Entities.Currency.Services;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
 {

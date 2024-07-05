@@ -10,22 +10,18 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.MaintenanceMRP.Validations;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine.Dtos;
-using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
-using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
-using TsiErp.Entities.Entities.PlanningManagement.MRPLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.MaintenanceMRPs.Page;
-using TsiErp.Business.Extensions.DeleteControlExtension;
-using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 
 namespace TsiErp.Business.Entities.MaintenanceMRP.Services
 {

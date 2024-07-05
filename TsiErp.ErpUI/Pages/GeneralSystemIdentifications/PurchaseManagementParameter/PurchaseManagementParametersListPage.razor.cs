@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
-using Syncfusion.Blazor.Buttons;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
@@ -9,7 +8,6 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
-using static TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PlanningManagementParameter.PlanningManagementParametersListPage;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PurchaseManagementParameter
 {

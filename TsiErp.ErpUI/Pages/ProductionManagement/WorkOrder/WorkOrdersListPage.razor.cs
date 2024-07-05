@@ -1,16 +1,22 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
 {
     public partial class WorkOrdersListPage : IDisposable
     {
+        [Inject]
+        ModalManager ModalManager { get; set; }
+
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+        public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         protected override async void OnInitialized()
         {
             BaseCrudService = WorkOrdersAppService;
@@ -26,9 +32,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
 
+            CreateContextMenuItems();
         }
 
-        protected override void CreateContextMenuItems(IStringLocalizer L)
+        protected void CreateContextMenuItems()
         {
 
             foreach (var context in contextsList)
@@ -39,16 +46,87 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
                     switch (context.MenuName)
                     {
                         case "WorkOrderContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextAdd"], Id = "new" }); break;
+                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextAdd"], Id = "new" }); break;
                         case "WorkOrderContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextChange"], Id = "changed" }); break;
+                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextChange"], Id = "changed" }); break;
                         case "WorkOrderContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextDelete"], Id = "delete" }); break;
+                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextDelete"], Id = "delete" }); break;
                         case "WorkOrderContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextRefresh"], Id = "refresh" }); break;
+                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextRefresh"], Id = "refresh" }); break;
+                        case "WorkOrderContextProductionTracking":
+                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextProductionTracking"], Id = "prodtracking" }); break;
+                        case "WorkOrderContextContractTracking":
+                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextContractTracking"], Id = "contracttracking" }); break;
+                        case "WorkOrderContextChangeOperationCriteria":
+                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextChangeOperationCriteria"], Id = "changeoprcriteria" }); break;
+                        case "WorkOrderContextChangeStation":
+                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextChangeStation"], Id = "changestation" }); break;
+                        case "WorkOrderContextSplitWorkOrder":
+                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextSplitWorkOrder"], Id = "splitworkorder" }); break;
                         default: break;
                     }
                 }
+            }
+        }
+
+        public override async void OnContextMenuClick(ContextMenuClickEventArgs<ListWorkOrdersDto> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "new":
+                    await BeforeInsertAsync();
+                    break;
+
+                case "changed":
+                    IsChanged = true;
+                    SelectFirstDataRow = false;
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    ShowEditPage();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "delete":
+
+                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+
+
+                    if (res == true)
+                    {
+                        SelectFirstDataRow = false;
+                        await DeleteAsync(args.RowInfo.RowData.Id);
+                        await GetListDataSourceAsync();
+                        await InvokeAsync(StateHasChanged);
+                    }
+
+                    break;
+
+                case "refresh":
+                    await GetListDataSourceAsync();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "prodtracking":
+
+                    break;
+
+                case "contracttracking":
+
+                    break;
+
+                case "changeoprcriteria":
+
+                    break;
+
+                case "changestation":
+
+                    break;
+
+                case "splitworkorder":
+
+                    break;
+
+                default:
+                    break;
             }
         }
 

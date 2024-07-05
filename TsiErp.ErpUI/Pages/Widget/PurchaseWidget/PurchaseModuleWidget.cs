@@ -2,7 +2,6 @@
 using TsiErp.Business.Entities.PurchaseOrder.Services;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Enums;
-using TsiErp.Localizations.Resources.PurchaseOrders.Page;
 
 namespace TsiErp.ErpUI.Pages.Widget.PurchaseWidget
 {

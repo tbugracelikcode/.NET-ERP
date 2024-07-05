@@ -1,9 +1,7 @@
 ﻿using BlazorInputFile;
 using DevExpress.Blazor;
-using DevExpress.XtraCharts.Native;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Syncfusion.Blazor.Buttons;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
@@ -25,7 +23,6 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPriceLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
-using TsiErp.Entities.Entities.StockManagement.ProductProperty.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductPropertyLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty.Dtos;

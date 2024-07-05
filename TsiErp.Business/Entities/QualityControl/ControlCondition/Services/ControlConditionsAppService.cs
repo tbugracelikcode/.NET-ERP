@@ -13,8 +13,6 @@ using TsiErp.Business.Entities.QualityControl.ControlCondition.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.QualityControl.ControlCondition;
 using TsiErp.Entities.Entities.QualityControl.ControlCondition.Dtos;
-using TsiErp.Entities.Entities.QualityControl.ControlType;
-using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ControlConditions.Page;
 

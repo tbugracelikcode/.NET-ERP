@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Localization;
-using System.Runtime.Serialization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -14,11 +13,10 @@ using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.PackageFiche.Services;
 using TsiErp.Business.Entities.ShippingManagement.PalletRecord.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
-using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
@@ -27,7 +25,6 @@ using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PalletRecords.Page;
-using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
 
 namespace TsiErp.Business.Entities.PalletRecord.Services
 {

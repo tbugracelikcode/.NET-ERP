@@ -1,17 +1,12 @@
-﻿using DevExpress.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using Tsi.Core.Utilities.Guids;
-using TsiErp.Business.Entities.GrandTotalStockMovement.Services;
-using TsiErp.Business.Entities.MaintenanceInstruction.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
-using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceInstruction.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceInstructionLine.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine.Dtos;
@@ -20,7 +15,6 @@ using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using static TsiErp.ErpUI.Pages.QualityControl.Report8D.Report8DsListPage;
 
 namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 {

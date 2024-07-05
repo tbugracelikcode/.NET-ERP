@@ -1,41 +1,30 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DevExpress.Blazor.Reporting;
+using DevExpress.XtraReports.UI;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Business.Entities.PalletRecord.Services;
-using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
-using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
-using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
-using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
-using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
-using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
-using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
-using TsiErp.ErpUI.Utilities.ModalUtilities;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
-using TsiErp.DataAccess.Services.Login;
 using Syncfusion.Blazor.Navigations;
 using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.Business.Entities.ProductReferanceNumber.Services;
-using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.BigPalletLabelDtos;
-using DevExpress.XtraReports.UI;
-using TsiErp.ErpUI.Reports.ShippingManagement.PalletReports.PalletLabels;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
-using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
-using TsiErp.Entities.Entities.ShippingManagement.PackingList;
-using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
-using TsiErp.Entities.Entities.ShippingManagement.PackageFiche;
-using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
-using DevExpress.Blazor.Reporting;
-using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
-using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
-using TsiErp.Entities.Entities.StockManagement.ProductGroup;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.BigPalletLabelDtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.PalletLabelDtos;
-using DevExpress.XtraReports;
-using DevExpress.XtraCharts.Native;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
+using TsiErp.ErpUI.Reports.ShippingManagement.PalletReports.PalletLabels;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 {
@@ -207,6 +196,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
+
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             CreatePalletDetailContextMenuItems();
@@ -1113,11 +1103,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         {
             LineCrudPopup = false;
         }
+
         public void HidePalletDetailPopup()
         {
             PalletDetailPopupVisible = false;
             PalletDetailGridList.Clear();
         }
+
         public void HideLoadingDetailPopup()
         {
             LoadingDetailPopupVisible = false;
@@ -1128,16 +1120,19 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             CurrentAccountIDFilter = Guid.Empty;
             LoadingDetailGridList.Clear();
         }
+
         public void HidePalletDetailCrudPopup()
         {
             PalletDetailCrudPopupVisible = false;
         }
+
         public void HideTicketList()
         {
             TicketListGridList.Clear();
 
             TicketListPopupVisible = false;
         }
+
         protected async Task OnPalletDetailSubmit()
         {
             int index = PalletDetailGridList.IndexOf(PalletDetailDataSource);
@@ -1163,6 +1158,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             HidePalletDetailCrudPopup();
             await InvokeAsync(StateHasChanged);
         }
+
         protected async Task OnLineSubmit()
         {
 
@@ -1198,6 +1194,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             HideLinesPopup();
             await InvokeAsync(StateHasChanged);
         }
+
         public async void LoadingDetailFilterClicked()
         {
             #region Filtreleme 
@@ -1379,6 +1376,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
             #endregion
         }
+
         public void ClearButtonClicked()
         {
             PalletNameFilter = string.Empty;
@@ -1387,6 +1385,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             CurrentAccountNameFilter = string.Empty;
             CurrentAccountIDFilter = Guid.Empty;
         }
+
         public async void LoadingDetailToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
         {
             if (args.Item.Id == "ExcelExport")
@@ -1407,6 +1406,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
             }
         }
+
         public async void TicketListToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
         {
             if (args.Item.Id == "ExcelExport")

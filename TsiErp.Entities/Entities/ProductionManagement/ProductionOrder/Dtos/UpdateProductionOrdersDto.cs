@@ -11,6 +11,18 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
     public class UpdateProductionOrdersDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Teknik Resim ID
+        /// </summary>
+        public Guid? TechnicalDrawingID { get; set; }
+        /// <summary>
+        /// Teknik Resim Değiştirilme Tarihi
+        /// </summary>
+        public DateTime? TechnicalDrawingUpdateDate_ { get; set; }
+        /// <summary>
+        /// eknik Resim Değiştirilme Açıklama
+        /// </summary>
+        public string TechnicalDrawingUpdateDescription_ { get; set; }
+        /// <summary>
         /// Üretim Emri Fiş No
         /// </summary>
         public string FicheNo { get; set; }

@@ -1,26 +1,20 @@
-﻿using Syncfusion.Blazor.Grids;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
-using TsiErp.ErpUI.Utilities.ModalUtilities;
-using TsiErp.Business.Entities.BillsofMaterial.Services;
-using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
-using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
-using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
-using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using Syncfusion.Blazor.DropDowns;
-using static TsiErp.ErpUI.Pages.QualityControl.Report8D.Report8DsListPage;
-using DevExpress.Blazor.Grid.Internal;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
-using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
-using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Helpers;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 {

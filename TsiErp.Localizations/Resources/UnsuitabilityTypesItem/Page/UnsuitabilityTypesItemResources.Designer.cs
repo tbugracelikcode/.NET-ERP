@@ -215,6 +215,15 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Emri Değişiklik.
+        /// </summary>
+        public static string IsProductionOrderLabel {
+            get {
+                return ResourceManager.GetString("IsProductionOrderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satınalma.
         /// </summary>
         public static string IsPurchaseLabel {
@@ -296,7 +305,7 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kalite Kontrol &gt; .
+        ///   Looks up a localized string similar to Kalite Kontrol &gt; Ana Kayıtlar.
         /// </summary>
         public static string UIPreviousMenu {
             get {
