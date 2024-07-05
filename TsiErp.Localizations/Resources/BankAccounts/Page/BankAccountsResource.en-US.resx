@@ -189,11 +189,23 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="EuroAccountIBANLabel" xml:space="preserve">
+    <value>Euro IBAN No:</value>
+  </data>
+  <data name="EuroAccountNoLabel" xml:space="preserve">
+    <value>Euro Account No:</value>
+  </data>
   <data name="ExportFileName" xml:space="preserve">
     <value>BankAccounts</value>
   </data>
   <data name="ExportTitle" xml:space="preserve">
     <value>Bank Accounts</value>
+  </data>
+  <data name="GBPAccountIBANLabel" xml:space="preserve">
+    <value>GBP IBAN No:</value>
+  </data>
+  <data name="GBPAccountNoLabel" xml:space="preserve">
+    <value>GBP Account No:</value>
   </data>
   <data name="IBANNoLabel" xml:space="preserve">
     <value>IBAN Number:</value>
@@ -219,8 +231,17 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SWIFTCode" xml:space="preserve">
+    <value>SWIFT CODE</value>
+  </data>
   <data name="SWIFTCodeLabel" xml:space="preserve">
     <value>SWIFT Code:</value>
+  </data>
+  <data name="TLAccountIBANLabel" xml:space="preserve">
+    <value>TL IBAN No:</value>
+  </data>
+  <data name="TLAccountNoLabel" xml:space="preserve">
+    <value>TL Account No:</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Bank Accounts</value>
@@ -230,6 +251,12 @@
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="USDAccountIBANLabel" xml:space="preserve">
+    <value>USD IBAN No:</value>
+  </data>
+  <data name="USDAccountNoLabel" xml:space="preserve">
+    <value>USD Account No:</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Please enter the bank code.</value>

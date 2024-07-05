@@ -135,6 +135,9 @@
   <data name="BankAccountGridName" xml:space="preserve">
     <value>BANK NAME</value>
   </data>
+  <data name="BankAccountGridSWIFTCode" xml:space="preserve">
+    <value>SWIFT CODE</value>
+  </data>
   <data name="BankAccountModalTitle" xml:space="preserve">
     <value>Bank Accounts</value>
   </data>

@@ -135,6 +135,9 @@
   <data name="BankAccountGridName" xml:space="preserve">
     <value>BANKA ADI</value>
   </data>
+  <data name="BankAccountGridSWIFTCode" xml:space="preserve">
+    <value>SWIFT KODU</value>
+  </data>
   <data name="BankAccountModalTitle" xml:space="preserve">
     <value>Banka Hesapları</value>
   </data>

@@ -277,6 +277,24 @@ namespace TsiErp.Localizations.Resources.BankAccounts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Euro IBAN No:.
+        /// </summary>
+        public static string EuroAccountIBANLabel {
+            get {
+                return ResourceManager.GetString("EuroAccountIBANLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euro Hesap No:.
+        /// </summary>
+        public static string EuroAccountNoLabel {
+            get {
+                return ResourceManager.GetString("EuroAccountNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BankaHesaplari.
         /// </summary>
         public static string ExportFileName {
@@ -291,6 +309,24 @@ namespace TsiErp.Localizations.Resources.BankAccounts.Page {
         public static string ExportTitle {
             get {
                 return ResourceManager.GetString("ExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GBP IBAN No:.
+        /// </summary>
+        public static string GBPAccountIBANLabel {
+            get {
+                return ResourceManager.GetString("GBPAccountIBANLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GBP Hesap No:.
+        /// </summary>
+        public static string GBPAccountNoLabel {
+            get {
+                return ResourceManager.GetString("GBPAccountNoLabel", resourceCulture);
             }
         }
         
@@ -367,11 +403,38 @@ namespace TsiErp.Localizations.Resources.BankAccounts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SWIFT KODU.
+        /// </summary>
+        public static string SWIFTCode {
+            get {
+                return ResourceManager.GetString("SWIFTCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SWIFT Kodu:.
         /// </summary>
         public static string SWIFTCodeLabel {
             get {
                 return ResourceManager.GetString("SWIFTCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TL IBAN No:.
+        /// </summary>
+        public static string TLAccountIBANLabel {
+            get {
+                return ResourceManager.GetString("TLAccountIBANLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TL Hesap No:.
+        /// </summary>
+        public static string TLAccountNoLabel {
+            get {
+                return ResourceManager.GetString("TLAccountNoLabel", resourceCulture);
             }
         }
         
@@ -399,6 +462,24 @@ namespace TsiErp.Localizations.Resources.BankAccounts.Page {
         public static string UpdateControlManager {
             get {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to USD IBAN No:.
+        /// </summary>
+        public static string USDAccountIBANLabel {
+            get {
+                return ResourceManager.GetString("USDAccountIBANLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to USD Hesap No:.
+        /// </summary>
+        public static string USDAccountNoLabel {
+            get {
+                return ResourceManager.GetString("USDAccountNoLabel", resourceCulture);
             }
         }
         

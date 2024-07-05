@@ -13,36 +13,52 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Banka Hesap Adı
-        /// </summary>
-        public string BankAccountName { get; set; }
-        /// <summary>
         /// Banka Talimat Açıklaması
         /// </summary>
         public string BankInstructionDescription { get; set; }
-        /// <summary>
-        /// Hesap No
-        /// </summary>
-        public string AccountNo { get; set; }
-        /// <summary>
-        /// IBAN No
-        /// </summary>
-        public string IBANNo { get; set; }
         /// <summary>
         /// SWIFT Kodu
         /// </summary>
         public string SWIFTCode { get; set; }
         /// <summary>
+        /// Adres
+        /// </summary>
+        public string Address { get; set; }
+        /// <summary>
         /// Şube Adı
         /// </summary>
         public string BankBranchName { get; set; }
         /// <summary>
-        /// Şube Numarası
+        /// TL Hesap No
         /// </summary>
-        public string BankBranchNo { get; set; }
+        public string TLAccountNo { get; set; }
         /// <summary>
-        /// Adres
+        /// TL Hesap IBAN No
         /// </summary>
-        public string Address { get; set; }
+        public string TLAccountIBAN { get; set; }
+        /// <summary>
+        /// USD Hesap No
+        /// </summary>
+        public string USDAccountNo { get; set; }
+        /// <summary>
+        /// USD Hesap IBAN No
+        /// </summary>
+        public string USDAccountIBAN { get; set; }
+        /// <summary>
+        /// Euro Hesap No
+        /// </summary>
+        public string EuroAccountNo { get; set; }
+        /// <summary>
+        /// Euro Hesap IBAN No
+        /// </summary>
+        public string EuroAccountIBAN { get; set; }
+        /// <summary>
+        /// GBP Hesap No
+        /// </summary>
+        public string GBPAccountNo { get; set; }
+        /// <summary>
+        /// GBP Hesap IBAN No
+        /// </summary>
+        public string GBPAccountIBAN { get; set; }
     }
 }
