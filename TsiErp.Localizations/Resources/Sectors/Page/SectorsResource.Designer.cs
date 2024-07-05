@@ -70,11 +70,47 @@ namespace TsiErp.Localizations.Resources.Sectors.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SEKTÖR KODU.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
         /// </summary>
         public static string CodeControlManager {
             get {
                 return ResourceManager.GetString("CodeControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sektör Kodu:.
+        /// </summary>
+        public static string CodeLabel {
+            get {
+                return ResourceManager.GetString("CodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şirket Adı:.
+        /// </summary>
+        public static string CompanyNameLineLabel {
+            get {
+                return ResourceManager.GetString("CompanyNameLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şirket No:.
+        /// </summary>
+        public static string CompanyNoLineLabel {
+            get {
+                return ResourceManager.GetString("CompanyNoLineLabel", resourceCulture);
             }
         }
         
@@ -115,6 +151,42 @@ namespace TsiErp.Localizations.Resources.Sectors.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AÇIKLAMA.
+        /// </summary>
+        public static string Description_ {
+            get {
+                return ResourceManager.GetString("Description_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Açıklama:.
+        /// </summary>
+        public static string Description_Label {
+            get {
+                return ResourceManager.GetString("Description_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Açıklama.
+        /// </summary>
+        public static string Description_LineLabel {
+            get {
+                return ResourceManager.GetString("Description_LineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sektör Satırları.
+        /// </summary>
+        public static string EditLineModalTitle {
+            get {
+                return ResourceManager.GetString("EditLineModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sektörler.
         /// </summary>
         public static string EditModalTitle {
@@ -147,6 +219,78 @@ namespace TsiErp.Localizations.Resources.Sectors.Page {
         public static string ExportTitle {
             get {
                 return ResourceManager.GetString("ExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÖZEL SEKTÖR.
+        /// </summary>
+        public static string IsPrivateSector {
+            get {
+                return ResourceManager.GetString("IsPrivateSector", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Özel Sektör:.
+        /// </summary>
+        public static string IsPrivateSectorLabel {
+            get {
+                return ResourceManager.GetString("IsPrivateSectorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şahıs Şirketi:.
+        /// </summary>
+        public static string IsSoleProprietorshipLineLabel {
+            get {
+                return ResourceManager.GetString("IsSoleProprietorshipLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FİRMA ADI.
+        /// </summary>
+        public static string LineGridCompanyName {
+            get {
+                return ResourceManager.GetString("LineGridCompanyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FİRMA NO.
+        /// </summary>
+        public static string LineGridCompanyNo {
+            get {
+                return ResourceManager.GetString("LineGridCompanyNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AÇIKLAMA.
+        /// </summary>
+        public static string LineGridDescription_ {
+            get {
+                return ResourceManager.GetString("LineGridDescription_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞAHIS ŞİRKETİ.
+        /// </summary>
+        public static string LineGridIsSoleProprietorship {
+            get {
+                return ResourceManager.GetString("LineGridIsSoleProprietorship", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SATIR NO.
+        /// </summary>
+        public static string LineGridLineNr {
+            get {
+                return ResourceManager.GetString("LineGridLineNr", resourceCulture);
             }
         }
         
@@ -187,11 +331,65 @@ namespace TsiErp.Localizations.Resources.Sectors.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SEKTÖR ADI.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sektör Adı:.
+        /// </summary>
+        public static string NameLabel {
+            get {
+                return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string SectorLinesContextAdd {
+            get {
+                return ResourceManager.GetString("SectorLinesContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string SectorLinesContextChange {
+            get {
+                return ResourceManager.GetString("SectorLinesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string SectorLinesContextDelete {
+            get {
+                return ResourceManager.GetString("SectorLinesContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string SectorLinesContextRefresh {
+            get {
+                return ResourceManager.GetString("SectorLinesContextRefresh", resourceCulture);
             }
         }
         
@@ -228,6 +426,60 @@ namespace TsiErp.Localizations.Resources.Sectors.Page {
         public static string SectorsContextRefresh {
             get {
                 return ResourceManager.GetString("SectorsContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TÜR.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tür:.
+        /// </summary>
+        public static string TypeLabel {
+            get {
+                return ResourceManager.GetString("TypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz sektör kalıcı olarak silinecektir..
+        /// </summary>
+        public static string UIConfirmationPopupMessageBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupMessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz satırı silmek istiyor musunuz?.
+        /// </summary>
+        public static string UIConfirmationPopupMessageLineBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupMessageLineBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string UIConfirmationPopupTitleBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sektörler.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
             }
         }
         

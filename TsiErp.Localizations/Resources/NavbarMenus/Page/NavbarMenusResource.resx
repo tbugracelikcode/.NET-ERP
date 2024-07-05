@@ -573,6 +573,9 @@
   <data name="SalesPropositionsChildMenu" xml:space="preserve">
     <value>Verilen Teklifler</value>
   </data>
+  <data name="SectorsChildMenu" xml:space="preserve">
+    <value>Sektörler</value>
+  </data>
   <data name="ShiftsChildMenu" xml:space="preserve">
     <value>Vardiya Tanımlamaları</value>
   </data>

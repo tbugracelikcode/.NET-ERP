@@ -120,8 +120,20 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>SEKTÖR KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Sektör Kodu:</value>
+  </data>
+  <data name="CompanyNameLineLabel" xml:space="preserve">
+    <value>Şirket Adı:</value>
+  </data>
+  <data name="CompanyNoLineLabel" xml:space="preserve">
+    <value>Şirket No:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -135,6 +147,18 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Description_" xml:space="preserve">
+    <value>AÇIKLAMA</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="Description_LineLabel" xml:space="preserve">
+    <value>Açıklama</value>
+  </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Sektör Satırları</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Sektörler</value>
   </data>
@@ -146,6 +170,30 @@
   </data>
   <data name="ExportTitle" xml:space="preserve">
     <value>Sektörler</value>
+  </data>
+  <data name="IsPrivateSector" xml:space="preserve">
+    <value>ÖZEL SEKTÖR</value>
+  </data>
+  <data name="IsPrivateSectorLabel" xml:space="preserve">
+    <value>Özel Sektör:</value>
+  </data>
+  <data name="IsSoleProprietorshipLineLabel" xml:space="preserve">
+    <value>Şahıs Şirketi:</value>
+  </data>
+  <data name="LineGridCompanyName" xml:space="preserve">
+    <value>FİRMA ADI</value>
+  </data>
+  <data name="LineGridCompanyNo" xml:space="preserve">
+    <value>FİRMA NO</value>
+  </data>
+  <data name="LineGridDescription_" xml:space="preserve">
+    <value>AÇIKLAMA</value>
+  </data>
+  <data name="LineGridIsSoleProprietorship" xml:space="preserve">
+    <value>ŞAHIS ŞİRKETİ</value>
+  </data>
+  <data name="LineGridLineNr" xml:space="preserve">
+    <value>SATIR NO</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -159,8 +207,26 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>SEKTÖR ADI</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Sektör Adı:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="SectorLinesContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="SectorLinesContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="SectorLinesContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="SectorLinesContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="SectorsContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -173,6 +239,24 @@
   </data>
   <data name="SectorsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>TÜR</value>
+  </data>
+  <data name="TypeLabel" xml:space="preserve">
+    <value>Tür:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz sektör kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satırı silmek istiyor musunuz?</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Onay</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Sektörler</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Test Yönetimi</value>

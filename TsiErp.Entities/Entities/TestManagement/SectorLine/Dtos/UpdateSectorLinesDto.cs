@@ -9,26 +9,30 @@ namespace TsiErp.Entities.Entities.TestManagement.SectorLine.Dtos
 {
     public class UpdateSectorLinesDto : FullAuditedEntityDto
     {
+
         /// <summary>
-        /// Kıta ID
+        /// Sektör ID
         /// </summary>
-        public Guid ContinentID { get; set; }
+        public Guid SectorID { get; set; }
+
         /// <summary>
-        /// Ülke Adı
+        /// Firma Adı
         /// </summary>
-        public string CountryName { get; set; }
+        public string CompanyName { get; set; }
+
         /// <summary>
-        /// Ülke Nüfus
+        /// Firma no
         /// </summary>
-        public int CountryPopulation { get; set; }
+        public int CompanyNo { get; set; }
+
         /// <summary>
         /// Satır No
         /// </summary>
         public int LineNr { get; set; }
         /// <summary>
-        /// NATO Üyesi
+        /// Şahıs Şirketi
         /// </summary>
-        public bool IsNATOMember { get; set; }
+        public bool IsSoleProprietorship { get; set; }
         /// <summary>
         /// Açıklama
         /// </summary>

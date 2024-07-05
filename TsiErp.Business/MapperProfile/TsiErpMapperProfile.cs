@@ -305,6 +305,10 @@ using TsiErp.Entities.Entities.TestManagement.Continent;
 using TsiErp.Entities.Entities.TestManagement.Continent.Dtos;
 using TsiErp.Entities.Entities.TestManagement.ContinentLine;
 using TsiErp.Entities.Entities.TestManagement.ContinentLine.Dtos;
+using TsiErp.Entities.Entities.TestManagement.Sector;
+using TsiErp.Entities.Entities.TestManagement.Sector.Dtos;
+using TsiErp.Entities.Entities.TestManagement.SectorLine;
+using TsiErp.Entities.Entities.TestManagement.SectorLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -1558,6 +1562,25 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateContinentLinesDto, ContinentLines>();
             CreateMap<SelectContinentLinesDto, UpdateContinentLinesDto>();
             CreateMap<SelectContinentLinesDto, ContinentLines>();
+
+
+            CreateMap<Sectors, SelectSectorsDto>();
+            CreateMap<Sectors, ListSectorsDto>();
+            CreateMap<UpdateSectorsDto, Sectors>();
+            CreateMap<CreateSectorsDto, Sectors>();
+            CreateMap<SelectSectorsDto, CreateSectorsDto>();
+            CreateMap<SelectSectorsDto, UpdateSectorsDto>();
+
+
+            CreateMap<SectorLines, SelectSectorLinesDto>();
+            CreateMap<SectorLines, ListSectorLinesDto>();
+            CreateMap<CreateSectorLinesDto, SectorLines>();
+            CreateMap<SelectSectorLinesDto, CreateSectorLinesDto>();
+            CreateMap<UpdateSectorLinesDto, SectorLines>();
+            CreateMap<SelectSectorLinesDto, UpdateSectorLinesDto>();
+            CreateMap<SelectSectorLinesDto, SectorLines>();
+
+
 
             //TEST -------------------------------------------------------
         }

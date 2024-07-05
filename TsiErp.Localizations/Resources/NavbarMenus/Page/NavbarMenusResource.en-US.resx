@@ -573,6 +573,9 @@
   <data name="SalesPropositionsChildMenu" xml:space="preserve">
     <value>SAles Propositions</value>
   </data>
+  <data name="SectorsChildMenu" xml:space="preserve">
+    <value>Sectors</value>
+  </data>
   <data name="ShiftsChildMenu" xml:space="preserve">
     <value>Shifts</value>
   </data>

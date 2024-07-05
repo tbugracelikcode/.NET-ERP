@@ -1429,6 +1429,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sektörler.
+        /// </summary>
+        public static string SectorsChildMenu {
+            get {
+                return ResourceManager.GetString("SectorsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vardiya Tanımlamaları.
         /// </summary>
         public static string ShiftsChildMenu {
