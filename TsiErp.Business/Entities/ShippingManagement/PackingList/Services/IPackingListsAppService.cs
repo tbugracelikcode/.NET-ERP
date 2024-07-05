@@ -24,7 +24,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
         string SayiOku(int tutar);
         string SayiyiOku(string sayi);
         string NumberToWords(double doubleNumber);
-        string NumberToWords(int number);
+        string NumberToWordsInt(int number);
         string SmallNumberToWord(double number, string words);
         string NumberToWordsTR(decimal tutar);
 

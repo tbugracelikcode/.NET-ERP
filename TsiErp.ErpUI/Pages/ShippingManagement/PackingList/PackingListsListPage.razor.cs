@@ -35,6 +35,7 @@ using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine.D
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.CommercialInvoice;
 using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.CustomsInstruction;
 using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.ShippingInstruction;
 using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.UploadConfirmation;
@@ -1513,6 +1514,29 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
         async Task CreateCommercialInvoiceReport(SelectPackingListsDto packingList)
         {
             var list = (await PackingListsAppService.GetCommercialInvoiceReportDataSource(packingList));
+
+            if(list.Count > 0)
+            {
+                CommercialInvoiceDynamicReport.ShowPrintMarginsWarning = false;
+                CommercialInvoiceDynamicReport.ShowPreviewMarginLines = false;
+                CommercialInvoiceDynamicReport.CreateDocument();
+
+                bool exWorks = false;
+
+                if (list[0].SatisSekli == "EX-WORKS ISTANBUL (€)")
+                {
+                    exWorks = true;
+                }
+
+                CommercialInvoiceReport report = new CommercialInvoiceReport();
+                report.DataSource = list;
+                report.ShowPrintMarginsWarning = false;
+                decimal toplam = list.Sum(t => t.ToplamTutar);
+                report.lblNetToplamYazi.Text = PackingListsAppService.NumberToWords((double)toplam);
+                report.CreateDocument();
+                CommercialInvoiceDynamicReport.Pages.AddRange(report.Pages);
+                CommercialInvoiceDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
+            }
 
             await Task.CompletedTask;
         }

@@ -51,5 +51,29 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingList.ReportDtos
         public string SevkiyatAdresi { get; set; }
 
         public Guid SiparisId { get; set; }
+
+        public string BankName { get; set; }
+
+        public string BankBranch { get; set; }
+
+        public string SwiftKodu { get; set; }
+
+        public string EuroAccIbanNo { get; set; }
+
+        public string EuroAccNr { get; set; }
+
+        public string UsdAccIbanNo { get; set; }
+
+        public string UsdAccNr { get; set; }
+
+        public string TlAccIbanNo { get; set; }
+
+        public string TlAccNr { get; set; }
+
+        public string GbpAccIbanNo { get; set; }
+
+        public string GbpAccNr { get; set; }
+
+
     }
 }

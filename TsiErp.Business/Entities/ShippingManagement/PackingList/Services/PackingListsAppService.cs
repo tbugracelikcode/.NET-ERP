@@ -1028,7 +1028,6 @@ namespace TsiErp.Business.Entities.PackingList.Services
 
                     satir.Adet += c.Adet;
                     satir.ToplamTutar = satir.Adet * c.BirimFiyat;
-
                 }
             }
 
@@ -1176,44 +1175,44 @@ namespace TsiErp.Business.Entities.PackingList.Services
         public string NumberToWords(double doubleNumber)
         {
             var beforeFloatingPoint = (int)Math.Floor(doubleNumber);
-            var beforeFloatingPointWord = NumberToWords(beforeFloatingPoint) + " EURO";
+            var beforeFloatingPointWord = NumberToWordsInt(beforeFloatingPoint) + " EURO";
 
             var afterFloatingPointWord = SmallNumberToWord((double)((doubleNumber - beforeFloatingPoint) * 100), "") + " CENT";
 
             return beforeFloatingPointWord + " AND " + afterFloatingPointWord;
         }
 
-        public string NumberToWords(int number)
+        public string NumberToWordsInt(int number)
         {
             if (number == 0)
                 return "zero";
 
             if (number < 0)
-                return "minus " + NumberToWords(Math.Abs(number));
+                return "minus " + NumberToWordsInt(Math.Abs(number));
 
             var words = "";
 
             if (number / 1000000000 > 0)
             {
-                words += NumberToWords(number / 1000000000) + " Billion ";
+                words += NumberToWordsInt(number / 1000000000) + " Billion ";
                 number %= 1000000000;
             }
 
             if (number / 1000000 > 0)
             {
-                words += NumberToWords(number / 1000000) + " Million ";
+                words += NumberToWordsInt(number / 1000000) + " Million ";
                 number %= 1000000;
             }
 
             if (number / 1000 > 0)
             {
-                words += NumberToWords(number / 1000) + " Thousand ";
+                words += NumberToWordsInt(number / 1000) + " Thousand ";
                 number %= 1000;
             }
 
             if (number / 100 > 0)
             {
-                words += NumberToWords(number / 100) + " Hundred ";
+                words += NumberToWordsInt(number / 100) + " Hundred ";
                 number %= 100;
             }
 
