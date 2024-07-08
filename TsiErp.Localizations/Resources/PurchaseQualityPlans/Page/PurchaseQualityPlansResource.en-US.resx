@@ -363,14 +363,8 @@
   <data name="Error1" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>PurchaseEntryQualityPlans</value>
-  </data>
   <data name="ExportFileName1" xml:space="preserve">
     <value>ContractEntryQualityPlans</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Purchase Entry Quality Plans</value>
   </data>
   <data name="ExportTitle1" xml:space="preserve">
     <value>Contract Entry Quality Plans</value>
@@ -734,6 +728,12 @@
   </data>
   <data name="UICurrentMenu1" xml:space="preserve">
     <value>Contract Entry Quality Plans</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>PurchaseEntryQualityPlans</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Purchase Entry Quality Plans</value>
   </data>
   <data name="UIInformationPopupMessageBase" xml:space="preserve">
     <value>The uploaded technical drawing file has been deleted successfully.</value>

@@ -485,29 +485,11 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SatinAlmaGirisKalitePlanlari.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to FasonGirisKalitePlanlari.
         /// </summary>
         public static string ExportFileName1 {
             get {
                 return ResourceManager.GetString("ExportFileName1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Satın Alma Giriş Kalite Planları.
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
             }
         }
         
@@ -1606,6 +1588,24 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         public static string UICurrentMenu1 {
             get {
                 return ResourceManager.GetString("UICurrentMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SatinAlmaGirisKalitePlanlari.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Giriş Kalite Planları.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
             }
         }
         

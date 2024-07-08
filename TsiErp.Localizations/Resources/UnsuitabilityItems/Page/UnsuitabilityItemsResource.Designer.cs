@@ -179,24 +179,6 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItems.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UygunsuzlukBasliklari.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Uygunsuzluk Başlıkları.
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Ekstra Maliyet:.
         /// </summary>
         public static string ExtraCostLabel {
@@ -409,6 +391,24 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItems.Page {
         public static string ToBeUsedAsLabel {
             get {
                 return ResourceManager.GetString("ToBeUsedAsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UygunsuzlukBasliklari.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıkları.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
             }
         }
         

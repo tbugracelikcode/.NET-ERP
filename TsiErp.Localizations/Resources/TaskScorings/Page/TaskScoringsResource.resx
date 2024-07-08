@@ -153,12 +153,6 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>GorevPuanlamalari</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Görev Puanlamaları</value>
-  </data>
   <data name="IsAdjustment" xml:space="preserve">
     <value />
   </data>
@@ -229,6 +223,12 @@
     <value>Güncelle</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Görev Puanlamaları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>GorevPuanlamalari</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Görev Puanlamaları</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

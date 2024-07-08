@@ -180,12 +180,6 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>BakimMalzemesiIhtiyacPlanlamasi</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Bakım Malzemesi İhtiyaç Planlaması</value>
-  </data>
   <data name="FilterEndDate" xml:space="preserve">
     <value>HESAPLAMA BİTİŞ TARİHİ</value>
   </data>
@@ -277,6 +271,12 @@
     <value>Onay</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Bakım Malzemesi İhtiyaç Planlaması</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>BakimMalzemesiIhtiyacPlanlamasi</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Bakım Malzemesi İhtiyaç Planlaması</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

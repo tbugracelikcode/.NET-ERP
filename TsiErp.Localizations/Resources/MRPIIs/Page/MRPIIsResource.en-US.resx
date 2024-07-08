@@ -168,12 +168,6 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>MRPII</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Production Resource Planning (MRPII)</value>
-  </data>
   <data name="LineGridEstimatedProductionEndDate" xml:space="preserve">
     <value>ESTIMATED PRODUCTION END DATE</value>
   </data>
@@ -253,6 +247,12 @@
     <value>Select All</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Production Resource Planning (MRPII)</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>MRPII</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Production Resource Planning (MRPII)</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

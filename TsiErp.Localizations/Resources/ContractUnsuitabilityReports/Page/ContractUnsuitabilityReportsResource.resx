@@ -204,12 +204,6 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>FasonUygunsuzlukRaporlari</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Fason Uygunsuzluk Raporları</value>
-  </data>
   <data name="FicheNo" xml:space="preserve">
     <value>FİŞ NUMARASI</value>
   </data>
@@ -241,6 +235,12 @@
     <value>Kaydet</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Fason Uygunsuzluk Raporları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>FasonUygunsuzlukRaporlari</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Fason Uygunsuzluk Raporları</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

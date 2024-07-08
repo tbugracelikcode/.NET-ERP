@@ -244,7 +244,8 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>@L["SupplyFormLabel"] </strong></label><br />
-                                                            <SfDropDownList TItem="SelectProductsDto" TValue="ProductSupplyFormEnum" PopupHeight="230px" Placeholder="Temin Şeklini Seçiniz" @bind-Value="@DataSource.SupplyForm" DataSource="@supplyforms">
+                                                            <SfDropDownList TItem="SelectProductsDto" TValue="ProductSupplyFormEnum" PopupHeight="230px" 
+                                                                @bind-Value="@DataSource.SupplyForm" DataSource="@supplyforms">
                                                                 <DropDownListFieldSettings Text="SupplyFormName" Value="SupplyForm"></DropDownListFieldSettings>
                                                             </SfDropDownList>
                                                         </Template>

@@ -160,15 +160,6 @@ namespace TsiErp.Localizations.Resources.StockSections.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to StokBolumleri.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Stok Bölümleri.
         /// </summary>
         public static string ExportTitle {
@@ -282,6 +273,15 @@ namespace TsiErp.Localizations.Resources.StockSections.Page {
         public static string UICurrentMenu {
             get {
                 return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to StokBolumleri.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
             }
         }
         

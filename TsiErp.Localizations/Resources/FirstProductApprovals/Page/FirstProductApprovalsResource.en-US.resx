@@ -195,12 +195,6 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>FirstProductApproval</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>First Product Approval</value>
-  </data>
   <data name="FirstProductApprovalContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -292,6 +286,12 @@
     <value>Show Operation Picture</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>First Product Approval</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>FirstProductApproval</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>First Product Approval</value>
   </data>
   <data name="UILineDeleteConfirmation" xml:space="preserve">

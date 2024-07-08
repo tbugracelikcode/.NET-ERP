@@ -690,11 +690,17 @@
   <data name="UIExportFileName1" xml:space="preserve">
     <value>StokFisleri</value>
   </data>
+  <data name="UIExportTechDrawing" xml:space="preserve">
+    <value>Teknik Resim Değiştirme</value>
+  </data>
   <data name="UIExportTitle" xml:space="preserve">
     <value>Üretim Emirleri</value>
   </data>
   <data name="UIExportTitle1" xml:space="preserve">
     <value>Stok Fişleri</value>
+  </data>
+  <data name="UIExportTracking" xml:space="preserve">
+    <value>H.M.-Y.M.İzlemeTablosu</value>
   </data>
   <data name="UIMessageNullBomMessage" xml:space="preserve">
     <value>Üretim emrinin stok reçetesi bulunmamaktadır.</value>

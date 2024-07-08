@@ -150,12 +150,6 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>StockSections</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Stock Sections</value>
-  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
@@ -190,6 +184,12 @@
     <value>Refresh</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Stock Sections</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>StockSections</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Stock Sections</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

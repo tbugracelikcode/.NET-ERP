@@ -177,12 +177,6 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>PFMEA</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>P-FMEA</value>
-  </data>
   <data name="FirstOperationalSPCCode" xml:space="preserve">
     <value>1. SPC CODE</value>
   </data>
@@ -289,6 +283,12 @@
     <value>Target End Date:</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>P-FMEA</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>PFMEA</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>P-FMEA</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

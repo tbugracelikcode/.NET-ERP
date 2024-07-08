@@ -232,24 +232,6 @@ namespace TsiErp.Localizations.Resources.StartingSalaries.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BaslangicMaaslari.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Başlangıç Maaşları.
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to GÜNCEL MAAŞ ALT LİMİT.
         /// </summary>
         public static string LineGridCurrentSalaryLowerLimit {
@@ -498,6 +480,24 @@ namespace TsiErp.Localizations.Resources.StartingSalaries.Page {
         public static string UICurrentMenu {
             get {
                 return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BaslangicMaaslari.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başlangıç Maaşları.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
             }
         }
         

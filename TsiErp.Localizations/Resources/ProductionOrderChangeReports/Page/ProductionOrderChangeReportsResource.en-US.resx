@@ -162,12 +162,6 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>ProductionOrderChangeReports</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Production Order Change Reports</value>
-  </data>
   <data name="FicheNo" xml:space="preserve">
     <value>FICHE NO</value>
   </data>
@@ -241,6 +235,12 @@
     <value>Save</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Production Order Change Reports</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>ProductionOrderChangeReports</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Production Order Change Reports</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

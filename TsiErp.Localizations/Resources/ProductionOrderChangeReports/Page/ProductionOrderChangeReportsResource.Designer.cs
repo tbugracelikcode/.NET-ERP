@@ -197,24 +197,6 @@ namespace TsiErp.Localizations.Resources.ProductionOrderChangeReports.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UretimEmriDegisiklikKayitlari.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Üretim Emri Değişiklik Kayıtları.
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to FİŞ NO.
         /// </summary>
         public static string FicheNo {
@@ -436,6 +418,24 @@ namespace TsiErp.Localizations.Resources.ProductionOrderChangeReports.Page {
         public static string UICurrentMenu {
             get {
                 return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UretimEmriDegisiklikKayitlari.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Emri Değişiklik Kayıtları.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
             }
         }
         

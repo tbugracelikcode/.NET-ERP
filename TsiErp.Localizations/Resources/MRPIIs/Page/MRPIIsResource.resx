@@ -168,12 +168,6 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>MRPII</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Üretim Kaynak Planlaması (MRPII)</value>
-  </data>
   <data name="LineGridEstimatedProductionEndDate" xml:space="preserve">
     <value>TAHMİNİ ÜRETİM BİTİŞ TARİHİ</value>
   </data>
@@ -253,6 +247,12 @@
     <value>Hepsini Seç</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Üretim Kaynak Planlaması (MRPII)</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>MRPII</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Üretim Kaynak Planlaması (MRPII)</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

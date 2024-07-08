@@ -171,12 +171,6 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>ControlConditionItems</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Control Condition Items</value>
-  </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
   </data>
@@ -212,6 +206,12 @@
   </data>
   <data name="StationGroupLabel" xml:space="preserve">
     <value>Work Center:</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>ControlConditionItems</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Control Condition Items</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control &gt; Main Records</value>

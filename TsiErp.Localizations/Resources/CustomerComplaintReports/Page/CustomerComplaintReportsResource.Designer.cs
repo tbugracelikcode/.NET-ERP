@@ -242,24 +242,6 @@ namespace TsiErp.Localizations.Resources.CustomerComplaintReports.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MusteriSikayetKayitlari.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Müşteri Şikayet (Reklamasyon) Kayıtları.
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 8D Raporu Oluşturulacak:.
         /// </summary>
         public static string is8DReportLabel {
@@ -481,6 +463,24 @@ namespace TsiErp.Localizations.Resources.CustomerComplaintReports.Page {
         public static string UICurrentMenu {
             get {
                 return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MusteriSikayetKayitlari.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteri Şikayet (Reklamasyon) Kayıtları.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
             }
         }
         

@@ -162,12 +162,6 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>PackageFiches</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Package Fiches</value>
-  </data>
   <data name="FinishedProductCode" xml:space="preserve">
     <value>FINISHED PRODUCT CODE</value>
   </data>
@@ -301,6 +295,12 @@
     <value>Small Package</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Package Fiches</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>PackageFiches</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Package Fiches</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

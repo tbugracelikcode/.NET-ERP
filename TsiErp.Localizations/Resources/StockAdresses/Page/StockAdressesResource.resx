@@ -153,12 +153,6 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>StokAdresleri</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Stok Adresleri</value>
-  </data>
   <data name="LineGridStockColumnName" xml:space="preserve">
     <value>STOK SÜTUN</value>
   </data>
@@ -283,6 +277,12 @@
     <value>Onay</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Stok Adresleri</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>StokAdresleri</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Stok Adresleri</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
