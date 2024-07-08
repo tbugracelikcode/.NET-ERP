@@ -106,5 +106,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLi
         /// Dövizli Birim Fiyat
         /// </summary>
         public decimal TransactionExchangeUnitPrice { get; set; }
+
+        /// <summary>
+        /// Müşteri Sipariş No
+        /// </summary>
+        public string CustomerOrderNr { get; set; }
     }
 }

@@ -390,20 +390,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                     #region Enum Combobox Localization
 
-                    foreach (var item in salesTypes)
-                    {
-                        DataSource.SalesTypeName = L[item.SalesTypeName];
-                    }
+                    DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
 
-                    foreach (var item in tIRTypes)
-                    {
-                        DataSource.TIRTypeName = L[item.TIRTypeName];
-                    }
+                    DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
 
-                    foreach (var item in packingListStates)
-                    {
-                        DataSource.PackingListStateName = L[item.PackingListStateName];
-                    }
+                    DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
 
                     #endregion
 
@@ -1025,20 +1016,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             #region Enum Combobox Localization
 
-            foreach (var item in salesTypes)
-            {
-                packingList.SalesTypeName = L[item.SalesTypeName];
-            }
+            DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
 
-            foreach (var item in tIRTypes)
-            {
-                packingList.TIRTypeName = L[item.TIRTypeName];
-            }
+            DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
 
-            foreach (var item in packingListStates)
-            {
-                packingList.PackingListStateName = L[item.PackingListStateName];
-            }
+            DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
 
             #endregion
 
@@ -1194,20 +1176,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             #region Enum Combobox Localization
 
-            foreach (var item in salesTypes)
-            {
-                packingList.SalesTypeName = L[item.SalesTypeName];
-            }
+            DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
 
-            foreach (var item in tIRTypes)
-            {
-                packingList.TIRTypeName = L[item.TIRTypeName];
-            }
+            DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
 
-            foreach (var item in packingListStates)
-            {
-                packingList.PackingListStateName = L[item.PackingListStateName];
-            }
+            DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
 
             #endregion
 
@@ -1376,20 +1349,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             #region Enum Combobox Localization
 
-            foreach (var item in salesTypes)
-            {
-                packingList.SalesTypeName = L[item.SalesTypeName];
-            }
+            DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
 
-            foreach (var item in tIRTypes)
-            {
-                packingList.TIRTypeName = L[item.TIRTypeName];
-            }
+            DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
 
-            foreach (var item in packingListStates)
-            {
-                packingList.PackingListStateName = L[item.PackingListStateName];
-            }
+            DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
 
             #endregion
 
@@ -1515,7 +1479,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
         {
             var list = (await PackingListsAppService.GetCommercialInvoiceReportDataSource(packingList));
 
-            if(list.Count > 0)
+            var bank = (await BankAccountsAppService.GetAsync(packingList.BankID.GetValueOrDefault())).Data;
+
+            if (list.Count > 0)
             {
                 CommercialInvoiceDynamicReport.ShowPrintMarginsWarning = false;
                 CommercialInvoiceDynamicReport.ShowPreviewMarginLines = false;
@@ -1528,11 +1494,27 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     exWorks = true;
                 }
 
+                list[0].BankName = bank.Name;
+                list[0].BankBranch = bank.BankBranchName;
+                list[0].EuroAccNr = bank.EuroAccountNo;
+                list[0].EuroAccIbanNo = bank.EuroAccountIBAN;
+                list[0].UsdAccNr = bank.USDAccountNo;
+                list[0].UsdAccIbanNo = bank.USDAccountIBAN;
+                list[0].TlAccNr = bank.TLAccountNo;
+                list[0].TlAccIbanNo = bank.TLAccountIBAN;
+                list[0].GbpAccNr = bank.GBPAccountNo;
+                list[0].GbpAccIbanNo = bank.GBPAccountIBAN;
+                list[0].SwiftKodu = bank.SWIFTCode;
+
                 CommercialInvoiceReport report = new CommercialInvoiceReport();
                 report.DataSource = list;
                 report.ShowPrintMarginsWarning = false;
                 decimal toplam = list.Sum(t => t.ToplamTutar);
                 report.lblNetToplamYazi.Text = PackingListsAppService.NumberToWords((double)toplam);
+                report.TLRow.Visible = !string.IsNullOrEmpty(bank.TLAccountNo) ? true : false;
+                report.GBPRow.Visible = !string.IsNullOrEmpty(bank.GBPAccountNo) ? true : false;
+                report.DeliveryAddressLabel.Visible = exWorks ? true : false;
+                report.DeliveryAddress.Visible = exWorks ? true : false;
                 report.CreateDocument();
                 CommercialInvoiceDynamicReport.Pages.AddRange(report.Pages);
                 CommercialInvoiceDynamicReport.PrintingSystem.ContinuousPageNumbering = true;

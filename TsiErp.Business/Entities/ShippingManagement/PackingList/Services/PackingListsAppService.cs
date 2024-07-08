@@ -12,6 +12,7 @@ using TsiErp.Business.Entities.CurrentAccountCard.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.ProductReferanceNumber.Services;
 using TsiErp.Business.Entities.ShippingManagement.PackingList.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
@@ -43,12 +44,14 @@ namespace TsiErp.Business.Entities.PackingList.Services
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly ICurrentAccountCardsAppService _CurrentAccountCardsAppService;
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly IProductReferanceNumbersAppService _ProductReferanceNumbersAppService;
 
-        public PackingListsAppService(IStringLocalizer<PackingListsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, ICurrentAccountCardsAppService currentAccountCardsAppService) : base(l)
+        public PackingListsAppService(IStringLocalizer<PackingListsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, ICurrentAccountCardsAppService currentAccountCardsAppService, IProductReferanceNumbersAppService productReferanceNumbersAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
             _CurrentAccountCardsAppService = currentAccountCardsAppService;
+            _ProductReferanceNumbersAppService = productReferanceNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreatePackingListsValidator), Priority = 1)]
@@ -383,7 +386,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                     )
                     .Join<SalesOrders>
                     (
-                        pr => new { SalesOrderFicheNo = pr.FicheNo },
+                        pr => new { SalesOrderFicheNo = pr.FicheNo, CustomerOrderNr=pr.CustomerOrderNr },
                         nameof(PackingListPalletPackageLines.SalesOrderID),
                         nameof(SalesOrders.Id),
                         JoinType.Left
@@ -962,7 +965,6 @@ namespace TsiErp.Business.Entities.PackingList.Services
         {
             List<CommercialInvoiceDto> reportSource = new List<CommercialInvoiceDto>();
 
-
             Guid sentCompanyId = packingList.TransmitterID.GetValueOrDefault();
             var sentCurrentAccountCard = (await _CurrentAccountCardsAppService.GetAsync(sentCompanyId)).Data;
             int odemeVadeGun = sentCurrentAccountCard.PaymentTermDay;
@@ -989,21 +991,25 @@ namespace TsiErp.Business.Entities.PackingList.Services
                 string varyantKodu = "049";
                 string cekiStokAciklama = line.ProductEnglishDefinition;
 
+                string supplierReferanceNumber = _ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(line.ProductID.GetValueOrDefault(), sentCompanyId);
+
+                cekiStokAciklama = cekiStokAciklama + supplierReferanceNumber + "/049/" + line.CustomerOrderNr;
+
                 CommercialInvoiceDto c = new CommercialInvoiceDto();
 
                 c.SiparisId = siparisId;
                 c.CekiListesiNo = packingList.Code;
-                c.CariUnvan = sentCurrentAccountCard.Name ;
+                c.CariUnvan = sentCurrentAccountCard.Name;
                 c.Adres1 = sentCurrentAccountCard.Address1;
                 c.Adres2 = sentCurrentAccountCard.Address2;
                 c.Tel1 = sentCurrentAccountCard.Tel1;
                 c.Faks = sentCurrentAccountCard.Fax;
                 c.EoriNr = sentCurrentAccountCard.EORINr;
-                c.FaturaNo = packingList.BillNo ;
+                c.FaturaNo = packingList.BillNo;
                 c.FaturaTarhi = packingList.BillDate.Value;
                 c.Adet = line.TotalAmount;
-                //c.StokAciklamasi = cekiStokAciklama;
-                c.BirimFiyat = line.TransactionExchangeUnitPrice ;
+                c.StokAciklamasi = cekiStokAciklama;
+                c.BirimFiyat = line.TransactionExchangeUnitPrice;
                 c.ToplamTutar = c.Adet * c.BirimFiyat;
                 c.BagliSiparisNo = line.SalesOrderFicheNo;
                 c.StokKodu = stokkodu;
