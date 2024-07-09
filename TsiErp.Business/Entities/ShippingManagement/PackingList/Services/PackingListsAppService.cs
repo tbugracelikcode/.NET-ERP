@@ -291,7 +291,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                    .Select<PackingLists>(null)
                     .Join<CurrentAccountCards>
                     (
-                        pr => new { TransmitterCode = pr.Code, TransmitterID = pr.Id, TransmitterName = pr.Name, TransmitterSupplierNo = pr.SupplierNo, TransmitterEORINo = pr.EORINr, TransmitterPaymentTermDay = pr.PaymentTermDay },
+                        pr => new { TransmitterCode = pr.Code, TransmitterID = pr.Id, TransmitterName = pr.Name, TransmitterSupplierNo = pr.SupplierNo, TransmitterEORINo = pr.EORINr, TransmitterPaymentTermDay = pr.PaymentTermDay, TransmitterAddress1=pr.Address1, TransmitterAddress2=pr.Address2, TransmitterTel=pr.Tel1, TransmitterFax =pr.Fax},
                         nameof(PackingLists.TransmitterID),
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left

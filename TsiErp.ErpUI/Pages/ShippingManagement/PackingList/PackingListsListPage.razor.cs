@@ -1,6 +1,7 @@
 ﻿using DevExpress.Blazor.Reporting;
 using DevExpress.CodeParser;
 using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -29,6 +30,7 @@ using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackingList.ReportDtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine.Dtos;
@@ -37,6 +39,7 @@ using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.CommercialInvoice;
 using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.CustomsInstruction;
+using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.PackingList;
 using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.ShippingInstruction;
 using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.UploadConfirmation;
 using TsiErp.ErpUI.Reports.ShippingManagement.PalletReports.PalletLabels;
@@ -383,6 +386,22 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     break;
 
                 case "packinglist":
+                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    #region Enum Combobox Localization
+
+                    DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
+
+                    DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
+
+                    DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
+
+                    #endregion
+
+
+                    PackingListDynamicReport = new XtraReport();
+                    PackingListReportVisible = true;
+                    await CreateTRPackingListReport(DataSource);
                     await InvokeAsync(StateHasChanged);
                     break;
                 case "commercialinvoice":
@@ -1519,6 +1538,63 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 CommercialInvoiceDynamicReport.Pages.AddRange(report.Pages);
                 CommercialInvoiceDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
             }
+
+            await Task.CompletedTask;
+        }
+
+
+        #endregion
+
+        #region Çeki Listesi
+        bool PackingListReportVisible { get; set; }
+
+        DxReportViewer PackingListReportViewer { get; set; }
+
+        XtraReport PackingListDynamicReport { get; set; }
+
+        async Task CreateTRPackingListReport(SelectPackingListsDto packingList)
+        {
+            PackingListDynamicReport.ShowPrintMarginsWarning = false;
+            PackingListDynamicReport.ShowPreviewMarginLines = false;
+            PackingListDynamicReport.CreateDocument();
+
+            List<PackingListReportDto> reportSource = new List<PackingListReportDto>();
+
+            foreach (var item in packingList.SelectPackingListPalletPackageLines)
+            {
+                PackingListReportDto report = new PackingListReportDto();
+                report.EoriNr = packingList.TransmitterEORINo;
+                report.FaturaNo = packingList.BillNo;
+                report.CekiListesiNo = packingList.Code;
+                report.FaturaTarihi = packingList.BillDate.Value.ToShortDateString();
+                report.SiparisNo = packingList.OrderNo;
+                report.AliciUnvan = packingList.TransmitterName;
+                report.AliciAdres1 = packingList.TransmitterAddress1;
+                report.AliciAdres2 = packingList.TransmitterAddress2;
+                report.AliciTel = packingList.TransmitterTel;
+                report.AliciFax = packingList.TransmitterFax;
+                report.PaketNo = item.PackageNo;
+                report.MalzemeTanimi = "";
+                report.PaketCinsi = item.PackageType;
+                report.PaketIcerigi = item.PackageContent;
+                report.PaketSayisi = item.NumberofPackage;
+                report.ToplamAdet = item.TotalAmount;
+                report.KoliNetKg = item.OnePackageNetKG;
+                report.KoliBrutKg = item.OnePackageGrossKG;
+                report.KoliToplamNetKg = item.TotalNetKG;
+                report.KoliToplamBrutKg = item.TotalGrossKG;
+                report.ToplamPaletAdedi = packingList.SelectPackingListPalletCubageLines.Sum(t => t.NumberofPallet);
+                report.ToplamHacim = packingList.SelectPackingListPalletCubageLines.Sum(t => t.Cubage);
+
+                reportSource.Add(report);
+            }
+
+            PackingListTrReport packingListTrReport = new PackingListTrReport();
+            packingListTrReport.DataSource = reportSource;
+            packingListTrReport.ShowPrintMarginsWarning = false;
+            packingListTrReport.CreateDocument();
+            PackingListDynamicReport.Pages.AddRange(packingListTrReport.Pages);
+            PackingListDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
 
             await Task.CompletedTask;
         }
