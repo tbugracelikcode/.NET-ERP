@@ -242,6 +242,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                                         {
                                             case "PackingListsContextPackingList":
                                                 subMenus.Add(new MenuItem { Text = L["PackingListsContextPackingList"], Id = "packinglist" }); break;
+                                            case "PackingListsContextPackingListEng":
+                                                subMenus.Add(new MenuItem { Text = L["PackingListsContextPackingListEng"], Id = "packinglisteng" }); break;
                                             case "PalletRecordsContextCommercialInvoice":
                                                 subMenus.Add(new MenuItem { Text = L["PalletRecordsContextCommercialInvoice"], Id = "commercialinvoice" }); break;
                                             case "PalletRecordsContextCustomClearanceInstruction":
@@ -400,6 +402,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     PackingListReportVisible = true;
                     await CreateTRPackingListReport(DataSource);
                     await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "packinglisteng":
                     break;
                 case "commercialinvoice":
                     DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
