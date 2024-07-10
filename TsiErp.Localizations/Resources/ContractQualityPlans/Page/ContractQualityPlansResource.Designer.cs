@@ -503,24 +503,6 @@ namespace TsiErp.Localizations.Resources.ContractQualityPlans.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FasonGirisKalitePlanlari.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fason Giriş Kalite Planları.
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Yüklenecek Dosyalar:.
         /// </summary>
         public static string FilestoUpload {
@@ -1057,6 +1039,24 @@ namespace TsiErp.Localizations.Resources.ContractQualityPlans.Page {
         public static string UICurrentMenu {
             get {
                 return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FasonGirisKalitePlanlari.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fason Giriş Kalite Planları.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
             }
         }
         

@@ -258,12 +258,6 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>PersonelPuanlamaKayitlari</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Personel Puanlama Kayıtları</value>
-  </data>
   <data name="GeneralSkillRecordPrioritiesGeneralSkillName" xml:space="preserve">
     <value>BECERİ ADI</value>
   </data>
@@ -415,6 +409,12 @@
     <value>Onay</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Personel Puanlama Kayıtları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>PersonelPuanlamaKayitlari</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Personel Puanlama Kayıtları</value>
   </data>
   <data name="UILineDeleteConfirmation" xml:space="preserve">

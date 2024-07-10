@@ -267,12 +267,6 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>ContractEntryQualityPlans</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Contract Entry Quality Plans</value>
-  </data>
   <data name="FilestoUpload" xml:space="preserve">
     <value>Files to Upload:</value>
   </data>
@@ -451,6 +445,12 @@
     <value>Confirmation</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Contract Entry Quality Plans</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>ContractEntryQualityPlans</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Contract Entry Quality Plans</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

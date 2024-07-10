@@ -120,11 +120,35 @@
   <data name="AdjustmentAndControlTime" xml:space="preserve">
     <value>ADJUSTMENT AND CONTROL TIME</value>
   </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="Code" xml:space="preserve">
     <value>WORK ORDER CODE</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="ContractTrackingFicheGridIsSent" xml:space="preserve">
+    <value>SENT</value>
+  </data>
+  <data name="ContractTrackingFicheGridOperationCode" xml:space="preserve">
+    <value>OPERATION CODE</value>
+  </data>
+  <data name="ContractTrackingFicheGridOperationName" xml:space="preserve">
+    <value>OPERATION NAME</value>
+  </data>
+  <data name="ContractTrackingFicheGridStationCode" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
+  <data name="ContractTrackingFicheGridStationName" xml:space="preserve">
+    <value>STATION NAME</value>
+  </data>
+  <data name="ContractTrackingFicheGridWorkOrderNr" xml:space="preserve">
+    <value>WORK ORDER NO</value>
+  </data>
+  <data name="ContractTrackingFicheModalTitle" xml:space="preserve">
+    <value>Contract Tracking</value>
   </data>
   <data name="CurrentAccountCardName" xml:space="preserve">
     <value>CURRENT ACCOUNT NAME</value>
@@ -171,26 +195,80 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="NewPlannedQuantityLabel" xml:space="preserve">
+    <value>Planned Quantity:</value>
+  </data>
+  <data name="NewWorkOrderNoLabel" xml:space="preserve">
+    <value>New Work Order No:</value>
+  </data>
   <data name="OccuredFinishDate" xml:space="preserve">
     <value>OCCURED END DATE</value>
   </data>
   <data name="OccuredStartDate" xml:space="preserve">
     <value>OCCURED START DATE</value>
   </data>
+  <data name="OldStationLabel" xml:space="preserve">
+    <value>Eski İstasyon:</value>
+  </data>
+  <data name="OldStationNameLabel" xml:space="preserve">
+    <value>Station:</value>
+  </data>
   <data name="OperationTime" xml:space="preserve">
+    <value>OPERATION TIME</value>
+  </data>
+  <data name="OProductionTrackingperationTime" xml:space="preserve">
     <value>OPERATION TIME</value>
   </data>
   <data name="PlannedQuantity" xml:space="preserve">
     <value>PLANNED QUANTITY</value>
   </data>
+  <data name="PlannedQuantityLabel" xml:space="preserve">
+    <value>Planned Quantity:</value>
+  </data>
   <data name="ProducedQuantity" xml:space="preserve">
     <value>PRODUCED QUANTITY</value>
+  </data>
+  <data name="ProducedQuantityLabel" xml:space="preserve">
+    <value>Produced Quantity:</value>
   </data>
   <data name="ProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
   </data>
   <data name="ProductionOrderFicheNo" xml:space="preserve">
     <value>PRODUCTION ORDER RECEIPT NR</value>
+  </data>
+  <data name="ProductionTrackingAdjustmentTime" xml:space="preserve">
+    <value>ADJUSTMENT AND CONTROL TIME</value>
+  </data>
+  <data name="ProductionTrackingEmployeeName" xml:space="preserve">
+    <value>EMPLOYEE</value>
+  </data>
+  <data name="ProductionTrackingHaltTime" xml:space="preserve">
+    <value>HALT TIME</value>
+  </data>
+  <data name="ProductionTrackingIsFinished" xml:space="preserve">
+    <value>COMPLETED</value>
+  </data>
+  <data name="ProductionTrackingModalTitle" xml:space="preserve">
+    <value>Production Tracking</value>
+  </data>
+  <data name="ProductionTrackingOperationEndDate" xml:space="preserve">
+    <value>OPERATION END DATE</value>
+  </data>
+  <data name="ProductionTrackingOperationStartDate" xml:space="preserve">
+    <value>OPERATION START DATE</value>
+  </data>
+  <data name="ProductionTrackingPlannedQuantity" xml:space="preserve">
+    <value>PLANNED QUANTITY</value>
+  </data>
+  <data name="ProductionTrackingProducedQuantity" xml:space="preserve">
+    <value>PRODUCED QUANTITY</value>
+  </data>
+  <data name="ProductionTrackingStationCode" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
+  <data name="ProductionTrackingWorkOrderCode" xml:space="preserve">
+    <value>WORK ORDER NO</value>
   </data>
   <data name="ProductsOperationCode" xml:space="preserve">
     <value>OPERATION</value>
@@ -201,11 +279,29 @@
   <data name="RouteCode" xml:space="preserve">
     <value>ROUTE</value>
   </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="StationChangeModalTitle" xml:space="preserve">
+    <value>Change Station</value>
+  </data>
   <data name="StationCode" xml:space="preserve">
     <value>STATION</value>
   </data>
   <data name="StationGroupCode" xml:space="preserve">
     <value>STATION GROUP</value>
+  </data>
+  <data name="StationModalGridCode" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
+  <data name="StationModalGridName" xml:space="preserve">
+    <value>STATION NAME</value>
+  </data>
+  <data name="StationModalTitle" xml:space="preserve">
+    <value>Stations</value>
+  </data>
+  <data name="StationNameLabel" xml:space="preserve">
+    <value>Yeni İstasyon:</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Work Orders</value>
@@ -275,6 +371,12 @@
   </data>
   <data name="WorkOrderNo" xml:space="preserve">
     <value>WORK ORDER NR</value>
+  </data>
+  <data name="WorkOrderNoLabel" xml:space="preserve">
+    <value>Work Order No:</value>
+  </data>
+  <data name="WorkOrderSplitModalTitle" xml:space="preserve">
+    <value>Split the Work Order Into Pieces</value>
   </data>
   <data name="WorkOrderState" xml:space="preserve">
     <value>STATE</value>

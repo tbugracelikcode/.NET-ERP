@@ -690,11 +690,17 @@
   <data name="UIExportFileName1" xml:space="preserve">
     <value>StockFiches</value>
   </data>
+  <data name="UIExportTechDrawing" xml:space="preserve">
+    <value>Change Technical Drawing</value>
+  </data>
   <data name="UIExportTitle" xml:space="preserve">
     <value>Production Orders</value>
   </data>
   <data name="UIExportTitle1" xml:space="preserve">
     <value>Stock Fiches</value>
+  </data>
+  <data name="UIExportTracking" xml:space="preserve">
+    <value>R.M.- S.P.TrackingChart</value>
   </data>
   <data name="UIMessageNullBomMessage" xml:space="preserve">
     <value>The production order does not have a product bills of material.</value>

@@ -41,6 +41,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
         #endregion
 
+        #region HM-YM İzleme Değişkenleri
+
         public class SPFPTracking
         {
             public ProductTypeEnum LineType { get; set; }
@@ -59,6 +61,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         private SfGrid<SPFPTracking> _TrackingGrid;
 
         public bool TrackingModalVisible = false;
+        public List<ItemModel> TrackingToolbarItems { get; set; } = new List<ItemModel>();
+
+        #endregion
 
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> StockFicheGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -99,10 +104,14 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
         #endregion
 
+        #region Teknik Resim Değiştirme Değişkenleri
+
         SelectTechnicalDrawingsDto TechDrawingDataSource;
         public bool TechDrawingModalVisible = false;
         public string OldTechDrawingNo = string.Empty;
         public string NewTechDrawingNo = string.Empty;
+
+        #endregion
 
         public bool OccuredAmountPopup = false;
         public string productionDateReferance = string.Empty;
@@ -344,6 +353,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
+                    TrackingToolbarItems.Clear();
+
                     var bomDataSource = (await BillsofMaterialsAppService.GetListbyProductIDAsync(DataSource.FinishedProductID.GetValueOrDefault())).Data;
 
                     if (bomDataSource != null && bomDataSource.Id != Guid.Empty)
@@ -375,6 +386,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                             TrackingModalVisible = true;
 
+                            TrackingToolbarItems.Add(new ItemModel() { Id = "ExcelExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIExcelIcon", TooltipText = L["UIExportTracking"] });
+
                             await InvokeAsync(StateHasChanged);
                         }
                        
@@ -389,6 +402,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                 case "changetechdrawing":
 
                     DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
 
                     NewTechDrawingNo = string.Empty;
 
@@ -1279,6 +1293,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
         }
 
+
         #endregion
 
         #region HM YM İzleme Metotları
@@ -1287,6 +1302,15 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         {
             TrackingModalVisible = false;
             TrackingList.Clear();
+        }
+
+        public async void TrackingToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+        {
+            ExcelExportProperties ExcelExportProperties = new ExcelExportProperties();
+            ExcelExportProperties.FileName = args.Item.TooltipText + ".xlsx";
+            await this._TrackingGrid.ExportToExcelAsync(ExcelExportProperties);
+
+
         }
 
         #endregion

@@ -268,29 +268,56 @@ namespace TsiErp.Localizations.Resources.Continents.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ÇALIŞAN KODU.
+        /// </summary>
+        public static string EmployeeModalGridCode {
+            get {
+                return ResourceManager.GetString("EmployeeModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÇALIŞAN ADI.
+        /// </summary>
+        public static string EmployeeModalGridName {
+            get {
+                return ResourceManager.GetString("EmployeeModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÇALIŞAN SOYADI.
+        /// </summary>
+        public static string EmployeeModalGridSurname {
+            get {
+                return ResourceManager.GetString("EmployeeModalGridSurname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çalışan:.
+        /// </summary>
+        public static string EmployeeNameLabel {
+            get {
+                return ResourceManager.GetString("EmployeeNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çalışanlar.
+        /// </summary>
+        public static string EmployeesModalTitle {
+            get {
+                return ResourceManager.GetString("EmployeesModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Kitalar.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Kıtalar.
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
             }
         }
         
@@ -462,6 +489,24 @@ namespace TsiErp.Localizations.Resources.Continents.Page {
         public static string UICurrentMenu {
             get {
                 return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kitalar.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kıtalar.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
             }
         }
         

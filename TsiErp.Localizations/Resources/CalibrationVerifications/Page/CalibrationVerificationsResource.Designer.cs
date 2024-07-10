@@ -242,24 +242,6 @@ namespace TsiErp.Localizations.Resources.CalibrationVerifications.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to KalibrasyonDogrulama.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Kalibrasyon Doğrulama Kayıtları.
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to MASTAR SERTİFİKA NO.
         /// </summary>
         public static string InfinitiveCertificateNo {
@@ -404,7 +386,25 @@ namespace TsiErp.Localizations.Resources.CalibrationVerifications.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kalite Kontrol &gt; Hareketler &gt; Ekipman Kalibrasyon İşlemleri &gt; .
+        ///   Looks up a localized string similar to KalibrasyonDogrulama.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalibrasyon Doğrulama Kayıtları.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalite Kontrol &gt; Hareketler &gt; Kalibrasyon Doğrulama Kayıtları.
         /// </summary>
         public static string UIPreviousMenu {
             get {

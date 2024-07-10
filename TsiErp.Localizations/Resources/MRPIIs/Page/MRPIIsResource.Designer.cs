@@ -214,24 +214,6 @@ namespace TsiErp.Localizations.Resources.MRPIIs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MRPII.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Üretim Kaynak Planlaması (MRPII).
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to TAHMİNİ ÜRETİM BİTİŞ TARİHİ.
         /// </summary>
         public static string LineGridEstimatedProductionEndDate {
@@ -471,6 +453,24 @@ namespace TsiErp.Localizations.Resources.MRPIIs.Page {
         public static string UICurrentMenu {
             get {
                 return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MRPII.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Kaynak Planlaması (MRPII).
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
             }
         }
         

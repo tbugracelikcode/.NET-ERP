@@ -159,12 +159,6 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>SPCTablesbyUnsuitabilityItems</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>SPC Tables by Unsuitability Items</value>
-  </data>
   <data name="LineGridDetectability" xml:space="preserve">
     <value>DETECTABILITY</value>
   </data>
@@ -232,6 +226,12 @@
     <value>Confirmation</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>SPC Tables by Unsuitability Items</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>SPCTablesbyUnsuitabilityItems</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>SPC Tables by Unsuitability Items</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

@@ -126,5 +126,13 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
         /// Rezerve Miktarı
         /// </summary>
         public decimal TotalReserved { get; set; }
+        /// <summary>
+        ///  Satın Alma Sipariş Toplamı
+        /// </summary>
+        public decimal TotalPurchaseOrder { get; set; }
+        /// <summary>
+        ///  Kullanılabilir Stok
+        /// </summary>
+        public decimal TotalAvailableStock { get; set; }
     }
 }

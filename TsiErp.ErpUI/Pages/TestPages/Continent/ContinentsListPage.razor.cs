@@ -12,6 +12,7 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.TestManagement.Continent.Dtos;
@@ -316,6 +317,51 @@ namespace TsiErp.ErpUI.Pages.TestPages.Continent
         {
             DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("ContinentsChildMenu");
             await InvokeAsync(StateHasChanged);
+        }
+        #endregion
+
+
+        #region Çalışanlar ButtonEdit
+
+        SfTextBox EmployeesButtonEdit;
+        bool SelectEmployeesPopupVisible = false;
+        List<ListEmployeesDto> EmployeesList = new List<ListEmployeesDto>();
+
+        public async Task EmployeesOnCreateIcon()
+        {
+            var EmployeesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, EmployeesButtonClickEvent);
+            await EmployeesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", EmployeesButtonClick } });
+        }
+
+        public async void EmployeesButtonClickEvent()
+        {
+            SelectEmployeesPopupVisible = true;
+            EmployeesList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.ToList();
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void EmployeesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.EmployeeID = Guid.Empty;
+                DataSource.EmployeeName = string.Empty;
+            }
+        }
+
+        public async void EmployeesDoubleClickHandler(RecordDoubleClickEventArgs<ListEmployeesDto> args)
+        {
+            var selectedEmployee = args.RowData;
+
+            if (selectedEmployee != null)
+            {
+                DataSource.EmployeeID = selectedEmployee.Id;
+                DataSource.EmployeeName = selectedEmployee.Name;
+                SelectEmployeesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
         }
         #endregion
 

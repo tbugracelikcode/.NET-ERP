@@ -170,24 +170,6 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UygunsuzlukTuruBasliklari.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Uygunsuzluk Türü Başlıkları.
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Aktiflik:.
         /// </summary>
         public static string IsActiveLabel {
@@ -301,6 +283,24 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         public static string StationGroupLabel {
             get {
                 return ResourceManager.GetString("StationGroupLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UygunsuzlukTuruBasliklari.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Türü Başlıkları.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
             }
         }
         

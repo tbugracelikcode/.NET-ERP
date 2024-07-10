@@ -30,5 +30,10 @@ namespace TsiErp.Entities.Entities.TestManagement.Continent
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Çalışan ID
+        /// </summary>
+        public Guid EmployeeID { get; set; }
     }
 }

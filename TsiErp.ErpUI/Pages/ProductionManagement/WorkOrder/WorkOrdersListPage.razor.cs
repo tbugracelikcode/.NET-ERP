@@ -1,8 +1,16 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using AutoMapper.Internal.Mappers;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -17,6 +25,24 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+
+        public bool StationChangeModalVisible = false;
+        public string OldStation = string.Empty;
+        public string NewStation = string.Empty;
+        public Guid NewStationID = Guid.Empty;
+
+        public bool WorkOrderSplitModalVisible = false;
+        public string NewWorkOrderNo = string.Empty;
+        public decimal NewPlannedQuantity = 0;
+
+        public List<SelectContractTrackingFicheLinesDto> ContractTrackingFicheLinesList = new List<SelectContractTrackingFicheLinesDto>();
+
+        public List<ListProductionTrackingsDto> ProductionTrackingsList = new List<ListProductionTrackingsDto>();
+
+        public bool ProductionTrackingModalVisible = false;
+        public bool ContractTrackingFicheLineModalVisible = false;
+
+
         protected override async void OnInitialized()
         {
             BaseCrudService = WorkOrdersAppService;
@@ -107,9 +133,25 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
 
                 case "prodtracking":
 
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    ProductionTrackingsList = (await ProductionTrackingsAppService.GetListbyWorkOrderIDAsync(DataSource.Id)).Data.ToList();
+
+                    ProductionTrackingModalVisible = true;
+
+                    await InvokeAsync(StateHasChanged);
+
                     break;
 
                 case "contracttracking":
+
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    ContractTrackingFicheLinesList = (await ContractTrackingFichesAppService.GetLineListbyWorkOrderIDAsync(DataSource.Id)).Data.ToList();
+
+                    ContractTrackingFicheLineModalVisible = true;
+
+                    await InvokeAsync(StateHasChanged);
 
                     break;
 
@@ -119,9 +161,35 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
 
                 case "changestation":
 
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    OldStation = DataSource.StationName;
+
+                    NewStation = string.Empty;
+
+                    NewStationID = Guid.Empty;
+
+                    StationChangeModalVisible = true;
+
+                    await InvokeAsync(StateHasChanged);
+
                     break;
 
                 case "splitworkorder":
+
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    NewStation = string.Empty;
+
+                    NewStationID = Guid.Empty;
+
+                    NewWorkOrderNo = DataSource.WorkOrderNo + "." + (DataSource.SplitQuantity +1).ToString();
+
+                    NewPlannedQuantity = 0;
+
+                    WorkOrderSplitModalVisible = true;
+
+                    await InvokeAsync(StateHasChanged);
 
                     break;
 
@@ -129,6 +197,168 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
                     break;
             }
         }
+
+        #region İş İstasyonu Değiştirme Metotları
+
+        public void HideStationChangeModal()
+        {
+            StationChangeModalVisible = false;
+        }
+
+        public async void OnStationChangeSubmit()
+        {
+
+            DataSource.StationID = NewStationID;
+            DataSource.StationName = NewStation;
+
+            var updatedEntity = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(DataSource);
+
+            await WorkOrdersAppService.UpdateAsync(updatedEntity);
+
+            HideStationChangeModal();
+
+            await GetListDataSourceAsync();
+
+            await InvokeAsync(StateHasChanged);
+
+        }
+
+        #endregion
+
+        #region İş Emri Parçalama Metotları
+
+        public void HideWorkOrderSplitModal()
+        {
+            WorkOrderSplitModalVisible = false;
+        }
+
+        public async void OnWorkOrderSplitSubmit()
+        {
+            DataSource.SplitQuantity = DataSource.SplitQuantity + 1;
+
+            var updatedEntity = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(DataSource);
+
+            await WorkOrdersAppService.UpdateAsync(updatedEntity);
+
+            var station = (await StationsAppService.GetAsync(NewStationID)).Data;
+
+
+            CreateWorkOrdersDto createWorkOrderModel = new CreateWorkOrdersDto
+            {
+                SplitQuantity = 0,
+                AdjustmentAndControlTime = DataSource.AdjustmentAndControlTime,
+                CurrentAccountCardID = DataSource.CurrentAccountCardID,
+                IsCancel = DataSource.IsCancel,
+                LineNr = 1,
+                WorkOrderState = 1,
+                WorkOrderNo = NewWorkOrderNo,
+                StationID = NewStationID,
+                StationGroupID = station.GroupID,
+                RouteID = DataSource.RouteID,
+                PropositionID = DataSource.PropositionID,
+                ProductsOperationID = DataSource.ProductsOperationID,
+                ProductionOrderID = DataSource.ProductionOrderID,
+                ProductID = DataSource.ProductID,
+                ProducedQuantity = DataSource.ProducedQuantity,
+                PlannedQuantity = NewPlannedQuantity,
+                OrderID = DataSource.OrderID,
+                OperationTime = DataSource.OperationTime,
+                OccuredStartDate = DataSource.OccuredStartDate,
+                OccuredFinishDate = DataSource.OccuredFinishDate,
+                LinkedWorkOrderID = DataSource.LinkedWorkOrderID,
+            };
+
+            await WorkOrdersAppService.CreateAsync(createWorkOrderModel);
+
+            HideWorkOrderSplitModal();
+
+            await GetListDataSourceAsync();
+
+            await InvokeAsync(StateHasChanged);
+
+        }
+
+        #endregion
+
+        #region Üretim Takip Metotları
+
+        public void HideProductionTrackingModal()
+        {
+            ProductionTrackingModalVisible = false;
+        }
+
+        #endregion
+
+        #region Fason Takip Metotları
+
+        public void HideContractTrackingFicheModal()
+        {
+            ContractTrackingFicheLineModalVisible = false;
+        }
+
+        #endregion
+
+        #region İş İstasyonu ButtonEdit
+
+        SfTextBox StationsCodeButtonEdit;
+        SfTextBox StationsNameButtonEdit;
+        bool SelectStationsPopupVisible = false;
+        List<ListStationsDto> StationsList = new List<ListStationsDto>();
+
+        public async Task StationsCodeOnCreateIcon()
+        {
+            var StationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationsCodeButtonClickEvent);
+            await StationsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationsButtonClick } });
+        }
+
+        public async void StationsCodeButtonClickEvent()
+        {
+            SelectStationsPopupVisible = true;
+            await GetStationsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async Task StationsNameOnCreateIcon()
+        {
+            var StationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationsNameButtonClickEvent);
+            await StationsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationsButtonClick } });
+        }
+
+        public async void StationsNameButtonClickEvent()
+        {
+            SelectStationsPopupVisible = true;
+            await GetStationsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void StationsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                NewStationID = Guid.Empty;
+                NewStation = string.Empty;
+            }
+        }
+
+        public async void StationsDoubleClickHandler(RecordDoubleClickEventArgs<ListStationsDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                NewStationID = selectedUnitSet.Id;
+                NewStation = selectedUnitSet.Name;
+                SelectStationsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        private async Task GetStationsList()
+        {
+            StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
+        }
+
+        #endregion
 
         public void Dispose()
         {

@@ -186,14 +186,23 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Kıtalar</value>
   </data>
+  <data name="EmployeeModalGridCode" xml:space="preserve">
+    <value>ÇALIŞAN KODU</value>
+  </data>
+  <data name="EmployeeModalGridName" xml:space="preserve">
+    <value>ÇALIŞAN ADI</value>
+  </data>
+  <data name="EmployeeModalGridSurname" xml:space="preserve">
+    <value>ÇALIŞAN SOYADI</value>
+  </data>
+  <data name="EmployeeNameLabel" xml:space="preserve">
+    <value>Çalışan:</value>
+  </data>
+  <data name="EmployeesModalTitle" xml:space="preserve">
+    <value>Çalışanlar</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
-  </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>Kitalar</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Kıtalar</value>
   </data>
   <data name="IsNATOMemberLineLabel" xml:space="preserve">
     <value>NATO Üyesi:</value>
@@ -250,6 +259,12 @@
     <value>Onay</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Kıtalar</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>Kitalar</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Kıtalar</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

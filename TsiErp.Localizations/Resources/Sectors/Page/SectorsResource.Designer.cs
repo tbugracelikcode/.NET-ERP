@@ -205,6 +205,7 @@ namespace TsiErp.Localizations.Resources.Sectors.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ÖZEL SEKTÖR.
         ///   Sektorler benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string ExportFileName {
@@ -484,7 +485,25 @@ namespace TsiErp.Localizations.Resources.Sectors.Page {
         }
         
         /// <summary>
-        ///   Test Yönetimi benzeri yerelleştirilmiş bir dize arar.
+        ///   Looks up a localized string similar to Sektorler.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sektörler.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Yönetimi.
         /// </summary>
         public static string UIPreviousMenu {
             get {

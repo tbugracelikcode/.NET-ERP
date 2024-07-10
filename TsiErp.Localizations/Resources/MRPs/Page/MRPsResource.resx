@@ -180,12 +180,6 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>MRP</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Malzeme İhtiyaç Planlaması (MRP)</value>
-  </data>
   <data name="IsMaintenanceMRPLabel" xml:space="preserve">
     <value>Bakım Malzeme İhtiyaç Planlaması:</value>
   </data>
@@ -352,6 +346,12 @@
     <value>Onay</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Malzeme İhtiyaç Planlaması (MRP)</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>MRP</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Malzeme İhtiyaç Planlaması (MRP)</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

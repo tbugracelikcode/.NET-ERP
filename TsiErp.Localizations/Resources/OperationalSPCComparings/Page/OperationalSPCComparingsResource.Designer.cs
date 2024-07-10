@@ -125,24 +125,6 @@ namespace TsiErp.Localizations.Resources.OperationalSPCComparings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OperasyonelSPCKarsilastirma.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Operasyonel SPC Karşılaştırma.
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
@@ -202,6 +184,24 @@ namespace TsiErp.Localizations.Resources.OperationalSPCComparings.Page {
         public static string UICurrentMenu {
             get {
                 return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OperasyonelSPCKarsilastirma.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyonel SPC Karşılaştırma.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
             }
         }
         

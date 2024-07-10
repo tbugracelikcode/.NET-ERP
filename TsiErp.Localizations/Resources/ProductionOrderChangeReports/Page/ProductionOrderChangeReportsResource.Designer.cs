@@ -197,6 +197,7 @@ namespace TsiErp.Localizations.Resources.ProductionOrderChangeReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FİŞ NO.
         ///   UretimEmriDegisiklikKayitlari benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string ExportFileName {
@@ -440,7 +441,7 @@ namespace TsiErp.Localizations.Resources.ProductionOrderChangeReports.Page {
         }
         
         /// <summary>
-        ///   Kalite Kontrol &gt; Hareketler &gt; Uygunsuzluk Kayıtları benzeri yerelleştirilmiş bir dize arar.
+        ///   Looks up a localized string similar to Kalite Kontrol &gt; Hareketler &gt; Uygunsuzluk Kayıtları.
         /// </summary>
         public static string UIPreviousMenu {
             get {

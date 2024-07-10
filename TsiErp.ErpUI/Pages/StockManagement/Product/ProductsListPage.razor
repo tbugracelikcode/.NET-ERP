@@ -64,13 +64,27 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="222"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="222"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListProductsDto.Amount) HeaderText="@L["AmountOfStock"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.TotalReserved) HeaderText="@L["AmountOfReserved"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.UnitSetCode) HeaderText="@L["UnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.SupplyForm) HeaderText="@L["SupplyForm"]" TextAlign="TextAlign.Center" Width="120">
+                                    <GridColumn Field=@nameof(ListProductsDto.Amount) HeaderText="@L["AmountOfStock"]" TextAlign="TextAlign.Center" Width="222" Format="N2"></GridColumn> <GridColumn Field=@nameof(ListProductsDto.TotalPurchaseOrder) HeaderText="@L["AmountOfPurchaseOrder"]" TextAlign="TextAlign.Center" Width="222" Format="N2"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.TotalReserved) HeaderText="@L["AmountOfReserved"]" TextAlign="TextAlign.Center" Width="222" Format="N2"></GridColumn>
+                                   
+                                    <GridColumn Field=@nameof(ListProductsDto.TotalAvailableStock) HeaderText="@L["AmountOfAvailableStock"]" TextAlign="TextAlign.Center" Width="222" Format="N2">
+                                       <Template>
+                                           @{
+                                               decimal availableStock = (context as ListProductsDto).Amount - (context as ListProductsDto).TotalReserved;
+
+                                               if(0 > availableStock)
+                                               {
+                                                   availableStock =0;
+                                               }
+                                           }
+                                            @availableStock
+                                       </Template>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.UnitSetCode) HeaderText="@L["UnitSetCode"]" TextAlign="TextAlign.Center" Width="222"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.SupplyForm) HeaderText="@L["SupplyForm"]" TextAlign="TextAlign.Center" Width="222">
                                         <Template>
                                             @{
                                                 ProductSupplyFormEnum productsupplyform = (context as ListProductsDto).SupplyForm;
@@ -87,8 +101,8 @@ else
                                         @supplyForm
                                     </Template>
                                 </GridColumn>
-                                <GridColumn Field=@nameof(ListProductsDto.ProductGrp) HeaderText="@L["ProductGrp"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListProductsDto.ProductType) HeaderText="@L["ProductType"]" TextAlign="TextAlign.Center" Width="120">
+                                <GridColumn Field=@nameof(ListProductsDto.ProductGrp) HeaderText="@L["ProductGrp"]" TextAlign="TextAlign.Center" Width="222"></GridColumn>
+                                <GridColumn Field=@nameof(ListProductsDto.ProductType) HeaderText="@L["ProductType"]" TextAlign="TextAlign.Center" Width="222">
                                     <Template>
                                         @{
                                                 ProductTypeEnum producttype = (context as ListProductsDto).ProductType;
@@ -244,7 +258,8 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>@L["SupplyFormLabel"] </strong></label><br />
-                                                            <SfDropDownList TItem="SelectProductsDto" TValue="ProductSupplyFormEnum" PopupHeight="230px" Placeholder="Temin Şeklini Seçiniz" @bind-Value="@DataSource.SupplyForm" DataSource="@supplyforms">
+                                                            <SfDropDownList TItem="SelectProductsDto" TValue="ProductSupplyFormEnum" PopupHeight="230px" 
+                                                                @bind-Value="@DataSource.SupplyForm" DataSource="@supplyforms">
                                                                 <DropDownListFieldSettings Text="SupplyFormName" Value="SupplyForm"></DropDownListFieldSettings>
                                                             </SfDropDownList>
                                                         </Template>

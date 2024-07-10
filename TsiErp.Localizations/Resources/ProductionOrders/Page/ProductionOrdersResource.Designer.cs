@@ -1780,6 +1780,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Teknik Resim Değiştirme.
+        /// </summary>
+        public static string UIExportTechDrawing {
+            get {
+                return ResourceManager.GetString("UIExportTechDrawing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Emirleri.
         /// </summary>
         public static string UIExportTitle {
@@ -1794,6 +1803,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string UIExportTitle1 {
             get {
                 return ResourceManager.GetString("UIExportTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to H.M.-Y.M.İzlemeTablosu.
+        /// </summary>
+        public static string UIExportTracking {
+            get {
+                return ResourceManager.GetString("UIExportTracking", resourceCulture);
             }
         }
         

@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AmountOfAvailableStock" xml:space="preserve">
+    <value>AVAILABLE STOCK</value>
+  </data>
+  <data name="AmountOfPurchaseOrder" xml:space="preserve">
+    <value>PURCHASE ORDER AMOUNT</value>
+  </data>
   <data name="AmountOfReserved" xml:space="preserve">
     <value>RESERVED AMOUNT</value>
   </data>

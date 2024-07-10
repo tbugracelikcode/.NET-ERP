@@ -267,12 +267,6 @@
   <data name="EstimatedDate_Label" xml:space="preserve">
     <value>Tahmini Teslim Tarihi:</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>FasonTakipFisleri</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Fason Takip Fişleri</value>
-  </data>
   <data name="FicheDate_" xml:space="preserve">
     <value>FİŞ TARİHİ</value>
   </data>
@@ -355,6 +349,12 @@
     <value>Onay</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Fason Takip Fişleri</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>FasonTakipFisleri</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Fason Takip Fişleri</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

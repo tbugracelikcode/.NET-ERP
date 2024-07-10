@@ -250,24 +250,6 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MRP.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Malzeme İhtiyaç Planlaması (MRP).
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Bakım Malzeme İhtiyaç Planlaması:.
         /// </summary>
         public static string IsMaintenanceMRPLabel {
@@ -768,6 +750,24 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         public static string UICurrentMenu {
             get {
                 return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MRP.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Malzeme İhtiyaç Planlaması (MRP).
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
             }
         }
         

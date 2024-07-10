@@ -186,14 +186,20 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Continents</value>
   </data>
+  <data name="EmployeeModalGridCode" xml:space="preserve">
+    <value>EMPLOYEE CODE</value>
+  </data>
+  <data name="EmployeeModalGridName" xml:space="preserve">
+    <value>EMPLOYEE NAME</value>
+  </data>
+  <data name="EmployeeModalGridSurname" xml:space="preserve">
+    <value>EMPLOYEE SURNAME</value>
+  </data>
+  <data name="EmployeeNameLabel" xml:space="preserve">
+    <value>Employee:</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
-  </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>Continents</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Continents</value>
   </data>
   <data name="IsNATOMemberLineLabel" xml:space="preserve">
     <value>NATO Member:</value>
@@ -250,6 +256,12 @@
     <value>Confirmation</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Continents</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>Continents</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Continents</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

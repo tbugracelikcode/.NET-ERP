@@ -125,24 +125,6 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItemSPCComparings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UygunsuzlukBasliklarinaGoreSPCKarsilastirma.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Uygunsuzluk Başlıklarına Göre SPC Karşılaştırma.
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
@@ -193,6 +175,24 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItemSPCComparings.Page {
         public static string UICurrentMenu {
             get {
                 return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UygunsuzlukBasliklarinaGoreSPCKarsilastirma.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıklarına Göre SPC Karşılaştırma.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
             }
         }
         
