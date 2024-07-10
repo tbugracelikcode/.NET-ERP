@@ -66,15 +66,15 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["Date_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.CustomerOrderNo) HeaderText="@L["CustomerOrderNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.CustomerRequestedDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["CustomerRequestedDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.ConfirmedLoadingDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["ConfirmedLoadingDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.ProductionOrderLoadingDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["ProductionOrderLoadingDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.OrderAcceptanceRecordState) HeaderText="@L["OrderAcceptanceRecordState"]" TextAlign="TextAlign.Center" Width="120">
+                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["Date_"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.CustomerOrderNo) HeaderText="@L["CustomerOrderNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.CustomerRequestedDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["CustomerRequestedDate"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.ConfirmedLoadingDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["ConfirmedLoadingDate"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.ProductionOrderLoadingDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["ProductionOrderLoadingDate"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOrderAcceptanceRecordsDto.OrderAcceptanceRecordState) HeaderText="@L["OrderAcceptanceRecordState"]" TextAlign="TextAlign.Center" Width="220">
                                         <Template>
                                             @{
                                                 OrderAcceptanceRecordStateEnum? status = (context as ListOrderAcceptanceRecordsDto).OrderAcceptanceRecordState;
@@ -367,7 +367,7 @@ else
 
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.LineAmount) Type="ColumnType.Number" HeaderText="@L["LineGridLineAmount"]" TextAlign="TextAlign.Center" Width="120" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu></GridColumn>
+                                    <GridColumn Field=@nameof(VirtualLineModel.LineAmount) Type="ColumnType.Number" HeaderText="@L["LineGridLineAmount"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu></GridColumn>
 
                                     <GridColumn Field=@nameof(VirtualLineModel.Description_) HeaderText="@L["LineGridDescription_"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                 </GridColumns>

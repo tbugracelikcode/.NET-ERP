@@ -169,6 +169,8 @@ using TsiErp.Entities.Entities.TestManagement.Continent;
 using TsiErp.Entities.Entities.TestManagement.ContinentLine;
 using TsiErp.Entities.Entities.TestManagement.Sector;
 using TsiErp.Entities.Entities.TestManagement.SectorLine;
+using TsiErp.Entities.Entities.TestManagement.District;
+using TsiErp.Entities.Entities.TestManagement.City;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -5922,6 +5924,76 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 SectorLinesTable.Create();
+            }
+            #endregion
+
+            #region Cities Table Created
+            Table CitiesTable = model.CreateTable(Tables.Cities);
+
+            if (CitiesTable != null)
+            {
+                var properties = (typeof(Cities)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(CitiesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(CitiesTable, "PK_" + CitiesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        CitiesTable.Indexes.Add(pkIndex);
+                    }
+
+                    CitiesTable.Columns.Add(column);
+                }
+
+                CitiesTable.Create();
+            }
+            #endregion
+
+            #region CityLines Table Created
+            Table CityLinesTable = model.CreateTable(Tables.CityLines);
+
+            if (CityLinesTable != null)
+            {
+                var properties = (typeof(CityLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(CityLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(CityLinesTable, "PK_" + CityLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        CityLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    CityLinesTable.Columns.Add(column);
+                }
+
+                CityLinesTable.Create();
             }
             #endregion
 

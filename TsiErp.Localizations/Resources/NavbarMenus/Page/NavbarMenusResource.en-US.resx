@@ -156,6 +156,9 @@
   <data name="CalVerificationsChildMenu" xml:space="preserve">
     <value>Calibration Verification Records</value>
   </data>
+  <data name="CitiesChildMenu" xml:space="preserve">
+    <value>Cities</value>
+  </data>
   <data name="ContinentsChildMenu" xml:space="preserve">
     <value>Continents</value>
   </data>

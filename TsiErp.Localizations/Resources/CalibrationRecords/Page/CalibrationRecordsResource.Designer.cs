@@ -404,7 +404,7 @@ namespace TsiErp.Localizations.Resources.CalibrationRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kalite Kontrol &gt; Hareketler &gt; Kalibrasyon Takip Kayıtları.
+        ///   Looks up a localized string similar to Kalite Kontrol &gt;  Hareketler &gt; Ekipman Kalibrasyon İşlemleri &gt; .
         /// </summary>
         public static string UIPreviousMenu {
             get {

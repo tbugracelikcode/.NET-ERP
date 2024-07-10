@@ -744,7 +744,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
         #region Combobox İşlemleri
 
-        #region D2
+      #region D2
         public class D2ComplaintComboBox
         {
             public string ID { get; set; }
@@ -779,7 +779,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
         }
 
         #endregion
-
+  
         #region D4
 
         public class D4FailureOccuranceComboBox

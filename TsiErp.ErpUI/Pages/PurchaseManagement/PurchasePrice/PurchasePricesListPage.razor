@@ -53,8 +53,8 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListPurchasePricesDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPurchasePricesDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchasePricesDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchasePricesDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchasePricesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["StartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchasePricesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["EndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchasePricesDto.CurrencyCode) HeaderText="@L["CurrencyCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -232,7 +232,7 @@ else
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.Price) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridPrice"]" TextAlign="TextAlign.Center" Width="120" Visible=@LoginedUserService.PurchaseManagementShowAmountsChildMenu></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridStartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridEndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.SupplyDateDay) Type="ColumnType.Number" HeaderText="@L["LineGridSupplyDateDay"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.SupplyDateDay) Type="ColumnType.Number" HeaderText="@L["LineGridSupplyDateDay"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>

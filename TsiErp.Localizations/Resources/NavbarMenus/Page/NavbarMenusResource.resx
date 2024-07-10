@@ -156,6 +156,9 @@
   <data name="CalVerificationsChildMenu" xml:space="preserve">
     <value>Kalibrasyon Doğrulama Kayıtları</value>
   </data>
+  <data name="CitiesChildMenu" xml:space="preserve">
+    <value>Şehirler</value>
+  </data>
   <data name="ContinentsChildMenu" xml:space="preserve">
     <value>Kıtalar</value>
   </data>

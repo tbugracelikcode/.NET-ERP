@@ -232,7 +232,7 @@
     <value>Calibration Verifications</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Quality Control &gt; Transactions &gt; Calibration Verifications</value>
+    <value>Quality Control &gt; Transactions &gt; Equipment Calibration Operations &gt; </value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

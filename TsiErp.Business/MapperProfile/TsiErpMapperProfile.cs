@@ -309,6 +309,11 @@ using TsiErp.Entities.Entities.TestManagement.Sector;
 using TsiErp.Entities.Entities.TestManagement.Sector.Dtos;
 using TsiErp.Entities.Entities.TestManagement.SectorLine;
 using TsiErp.Entities.Entities.TestManagement.SectorLine.Dtos;
+using TsiErp.Entities.Entities.TestManagement.City;
+using TsiErp.Entities.Entities.TestManagement.City.Dtos;
+using TsiErp.Entities.Entities.TestManagement.District;
+using TsiErp.Entities.Entities.TestManagement.District.Dtos;
+
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -1579,6 +1584,23 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateSectorLinesDto, SectorLines>();
             CreateMap<SelectSectorLinesDto, UpdateSectorLinesDto>();
             CreateMap<SelectSectorLinesDto, SectorLines>();
+
+
+            CreateMap<Cities, SelectCitiesDto>();
+            CreateMap<Cities, ListCitiesDto>();
+            CreateMap<UpdateCitiesDto, Cities>();
+            CreateMap<CreateCitiesDto, Cities>();
+            CreateMap<SelectCitiesDto, CreateCitiesDto>();
+            CreateMap<SelectCitiesDto, UpdateCitiesDto>();
+
+
+            CreateMap<CityLines, SelectCityLinesDto>();
+            CreateMap<CityLines, ListCityLinesDto>();
+            CreateMap<CreateCityLinesDto, CityLines>();
+            CreateMap<SelectCityLinesDto, CreateCityLinesDto>();
+            CreateMap<UpdateCityLinesDto, CityLines>();
+            CreateMap<SelectCityLinesDto, UpdateCityLinesDto>();
+            CreateMap<SelectCityLinesDto, CityLines>();
 
 
 

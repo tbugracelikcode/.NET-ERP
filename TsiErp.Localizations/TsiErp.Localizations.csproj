@@ -51,6 +51,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CalibrationVerificationsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Cities\Page\CitiesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CitiesResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Continents\Page\ContinentsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -641,6 +646,10 @@
     <EmbeddedResource Update="Resources\CalibrationVerifications\Page\CalibrationVerificationsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CalibrationVerificationsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Cities\Page\CitiesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CitiesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Continents\Page\ContinentsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
