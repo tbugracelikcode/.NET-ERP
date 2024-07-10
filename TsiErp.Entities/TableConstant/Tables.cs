@@ -180,6 +180,8 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string ContinentLines = "ContinentLines";
         public static readonly string Sectors = "Sectors";
         public static readonly string SectorLines = "SectorLines";
+        public static readonly string Cities = "Cities";
+        public static readonly string CityLines = "CityLines";
 
     }
 }

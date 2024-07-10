@@ -51,10 +51,10 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListSalesPricesDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListSalesPricesDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPricesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["StartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPricesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["EndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPricesDto.CurrencyCode) HeaderText= "@L["CurrencyCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPricesDto.IsApproved) DisplayAsCheckBox=true HeaderText="@L["IsApproved"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPricesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["StartDate"]" TextAlign="TextAlign.Center" Width="1700"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPricesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["EndDate"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPricesDto.CurrencyCode) HeaderText= "@L["CurrencyCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPricesDto.IsApproved) DisplayAsCheckBox=true HeaderText="@L["IsApproved"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
 
 
                                 </GridColumns>
@@ -203,12 +203,12 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectSalesPriceLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPriceLinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPriceLinesDto.CurrencyCode) HeaderText="@L["LineGridCurrency"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPriceLinesDto.Price) Type="ColumnType.Number" HeaderText="@L["LineGridPrice"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPriceLinesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridStartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPriceLinesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridEndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPriceLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPriceLinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPriceLinesDto.CurrencyCode) HeaderText="@L["LineGridCurrency"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPriceLinesDto.Price) Type="ColumnType.Number" HeaderText="@L["LineGridPrice"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPriceLinesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridStartDate"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPriceLinesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridEndDate"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -326,8 +326,8 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListCurrenciesDto.Code) HeaderText="@L["CurrencyModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrenciesDto.Name) HeaderText="@L["CurrencyModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.Code) HeaderText="@L["CurrencyModalGridCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.Name) HeaderText="@L["CurrencyModalGridName"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>

@@ -52,11 +52,11 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.RegistrationNo) HeaderText="@L["RegistrationNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StationCode) HeaderText="@L["StationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.PeriodName) HeaderText="@L["PeriodName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.Caregiver) HeaderText="@L["Caregiver"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["StartDate"]" TextAlign="TextAlign.Center" Width="120" Context="maintenancecontext">
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.RegistrationNo) HeaderText="@L["RegistrationNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StationCode) HeaderText="@L["StationCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.PeriodName) HeaderText="@L["PeriodName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.Caregiver) HeaderText="@L["Caregiver"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["StartDate"]" TextAlign="TextAlign.Center" Width="220" Context="maintenancecontext">
                                          <Template>
                                             @{
                                                 var date = (maintenancecontext as ListPlannedMaintenancesDto).StartDate;
@@ -70,7 +70,7 @@ else
                                             @dateStr
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.PlannedDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["PlannedDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.PlannedDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["PlannedDate"]" TextAlign="TextAlign.Center" Width="320"></GridColumn>
 
 
                                 </GridColumns>
@@ -237,10 +237,10 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.Amount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.Amount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridAmount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.InstructionDescription) HeaderText="@L["LineGridInstructionDescription"]" TextAlign="TextAlign.Center" Width="400"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.MaintenanceNote) HeaderText="@L["LineGridMaintenanceNote"]" TextAlign="TextAlign.Center" Width="400"></GridColumn>
                                 </GridColumns>
