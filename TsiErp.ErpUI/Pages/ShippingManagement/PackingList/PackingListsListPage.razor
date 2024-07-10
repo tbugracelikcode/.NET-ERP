@@ -19,6 +19,8 @@
 @inject IPackageFichesAppService PackageFichesAppService
 @inject IStockManagementParametersAppService StockManagementParametersAppService
 @inject IBankAccountsAppService BankAccountsAppService
+@inject IProductGroupsAppService ProductGroupsAppService
+@inject IProductReferanceNumbersAppService ProductReferanceNumbersAppService
 
 @if (!base.IsLoaded)
 {
@@ -514,6 +516,226 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
+    <DxPopup @bind-Visible="ShippingInstructionReportVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["PalletLabelModalTitle"]"
+             Width="81%"
+             Height="83%"
+             MinWidth="1400px"
+             MinHeight="900px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="2%" />
+                    <DxGridLayoutRow Height="98%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="94%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <DxReportViewer @ref="ShippingInstructionReportViewer" Report="@ShippingInstructionReport">
+                            </DxReportViewer>
+                        </Template>
+                    </DxGridLayoutItem>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            @* <SfButton CssClass="TSICancelButton" OnClick="HideLoadingDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton> *@
+        </FooterContentTemplate>
+    </DxPopup>
+    
+    <DxPopup @bind-Visible="UploadConfirmationReportVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["PalletLabelModalTitle"]"
+             Width="81%"
+             Height="83%"
+             MinWidth="1400px"
+             MinHeight="900px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="2%" />
+                    <DxGridLayoutRow Height="98%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="94%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <DxReportViewer @ref="UploadConfirmationReportViewer" Report="@UploadConfirmationDynamicReport">
+                            </DxReportViewer>
+                        </Template>
+                    </DxGridLayoutItem>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            @* <SfButton CssClass="TSICancelButton" OnClick="HideLoadingDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton> *@
+        </FooterContentTemplate>
+    </DxPopup>
+    
+    <DxPopup @bind-Visible="CommercialInvoiceReportVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["PalletLabelModalTitle"]"
+             Width="81%"
+             Height="83%"
+             MinWidth="1400px"
+             MinHeight="900px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="2%" />
+                    <DxGridLayoutRow Height="98%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="94%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <DxReportViewer @ref="CommercialInvoiceReportViewer" Report="@CommercialInvoiceDynamicReport">
+                            </DxReportViewer>
+                        </Template>
+                    </DxGridLayoutItem>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            @* <SfButton CssClass="TSICancelButton" OnClick="HideLoadingDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton> *@
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="PackingListReportVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["BigPalletLabelModalTitle"]"
+             Width="81%"
+             Height="83%"
+             MinWidth="1400px"
+             MinHeight="900px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DevGridLayoutFilterRow ColumnCount="1" RowCount="2" RowHeights="@RowHeights("*")">
+                <GridLayoutItems>
+
+                    <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                        <Template>
+
+                            <SfCard class="TSIReportFilterCard" style="height:100px !important;">
+
+                                <CardContent>
+
+                                    <DxGridLayout CssClass="TSIGridLayout">
+                                        <Rows>
+                                            <DxGridLayoutRow Height="48%" />
+                                            <DxGridLayoutRow Height="48%" />
+                                        </Rows>
+                                        <Columns>
+                                            <DxGridLayoutColumn Width="2%" />
+                                            <DxGridLayoutColumn Width="30%" />
+                                            <DxGridLayoutColumn Width="4%" />
+                                            <DxGridLayoutColumn Width="30%" />
+                                            <DxGridLayoutColumn Width="4%" />
+                                            <DxGridLayoutColumn Width="28%" />
+                                            <DxGridLayoutColumn Width="2%" />
+                                        </Columns>
+                                        <Items>
+
+                                            <DxGridLayoutItem Row="0" Column="1">
+                                                <Template>
+
+                                                    <br />
+                                                    @*<label class="TSIModalLabel"><strong>@ReportLocalizer["BigPalletLabelPalletFilterLabel"] </strong></label><br />
+
+                                                     <SfMultiSelect @bind-Value="@BindingPalletRecords"
+                                                                   DataSource="@PalletRecords"
+                                                                   AllowFiltering=true
+                                                                   Mode="VisualMode.CheckBox"
+                                                                   ShowSelectAll=true
+                                                                   SelectAllText=@ReportLocalizer["SelectAllText"]
+                                                                   UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
+                                                                   ShowDropDownIcon="true">
+
+                                                        <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                                    </SfMultiSelect> *@
+
+                                                </Template>
+                                            </DxGridLayoutItem>
+
+                                            <DxGridLayoutItem Row="0" Column="3">
+                                                <Template>
+                                                    <br />
+                                                    <br />
+                                                   @*  <SfButton CssClass="TSISaveButton" OnClick="CreateBigPalletLabelReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["CreateReport"]</SfButton> *@
+                                                </Template>
+                                            </DxGridLayoutItem>
+
+                                        </Items>
+                                    </DxGridLayout>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="1" Column="0" ColumnSpan="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+                                <CardContent>
+                                    <DxReportViewer @ref="PackingListReportViewer" Report="@PackingListDynamicReport">
+                                    </DxReportViewer>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayoutFilterRow>
+        </BodyTemplate>
+        <FooterContentTemplate>
+           
+        </FooterContentTemplate>
+    </DxPopup>
+
 }
 
 @if (ShowPalletsModal)
@@ -709,12 +931,9 @@ else
                                         <GridColumns>
                                             <GridColumn Field=@nameof(ListBankAccountsDto.Code) HeaderText="@L["BankAccountGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListBankAccountsDto.Name) HeaderText="@L["BankAccountGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListBankAccountsDto.BankAccountName) HeaderText="@L["BankAccountGridBankAccountName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListBankAccountsDto.BankBranchName) HeaderText="@L["BankAccountGridBankBranchName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListBankAccountsDto.BankBranchNo) HeaderText="@L["BankAccountGridBankBranchNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListBankAccountsDto.AccountNo) HeaderText="@L["BankAccountGridAccountNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
-
+                                        <GridColumn Field=@nameof(ListBankAccountsDto.SWIFTCode) HeaderText="@L["BankAccountGridSWIFTCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     </SfGrid>
                                 </CardContent>
                                 <CardFooter>

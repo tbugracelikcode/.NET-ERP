@@ -115,6 +115,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SWIFT KODU.
+        /// </summary>
+        public static string BankAccountGridSWIFTCode {
+            get {
+                return ResourceManager.GetString("BankAccountGridSWIFTCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Banka Hesapları.
         /// </summary>
         public static string BankAccountModalTitle {
@@ -376,7 +385,7 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ex-Works İstanbul (€).
+        ///   Looks up a localized string similar to EX-WORKS ISTANBUL (€).
         /// </summary>
         public static string EnumExWorks {
             get {
@@ -385,7 +394,7 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FOB İstanbul (€).
+        ///   Looks up a localized string similar to FOB ISTANBUL (€).
         /// </summary>
         public static string EnumFOB {
             get {

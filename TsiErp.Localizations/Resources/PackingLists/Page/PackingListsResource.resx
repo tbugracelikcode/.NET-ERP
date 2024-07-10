@@ -135,6 +135,9 @@
   <data name="BankAccountGridName" xml:space="preserve">
     <value>BANKA ADI</value>
   </data>
+  <data name="BankAccountGridSWIFTCode" xml:space="preserve">
+    <value>SWIFT KODU</value>
+  </data>
   <data name="BankAccountModalTitle" xml:space="preserve">
     <value>Banka Hesapları</value>
   </data>
@@ -223,10 +226,10 @@
     <value>Komple TIR</value>
   </data>
   <data name="EnumExWorks" xml:space="preserve">
-    <value>Ex-Works İstanbul (€)</value>
+    <value>EX-WORKS ISTANBUL (€)</value>
   </data>
   <data name="EnumFOB" xml:space="preserve">
-    <value>FOB İstanbul (€)</value>
+    <value>FOB ISTANBUL (€)</value>
   </data>
   <data name="EnumPartialTIR" xml:space="preserve">
     <value>Parsiyel TIR</value>

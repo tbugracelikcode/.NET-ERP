@@ -49,6 +49,22 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos
         /// </summary>
         public string TransmitterEORINo { get; set; }
         /// <summary>
+        /// Gönderici Adres 1
+        /// </summary>
+        public string TransmitterAddress1 { get; set; }
+        /// <summary>
+        /// Gönderici Adres 2
+        /// </summary>
+        public string TransmitterAddress2 { get; set; }
+        /// <summary>
+        /// Gönderici Tel
+        /// </summary>
+        public string TransmitterTel { get; set; }
+        /// <summary>
+        /// Gönderici Fax
+        /// </summary>
+        public string TransmitterFax { get; set; }
+        /// <summary>
         /// Gönderilen ID
         /// </summary>
         public Guid? RecieverID { get; set; }

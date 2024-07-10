@@ -24,6 +24,11 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLi
         /// Satış Sipariş ID
         /// </summary>
         public Guid? SalesOrderID { get; set; }
+
+        /// <summary>
+        /// Satış Sipariş No
+        /// </summary>
+        public string SalesOrderFicheNo { get; set; }
         /// <summary>
         /// Satış Sipariş Satır ID
         /// </summary>
@@ -44,6 +49,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLi
         ///  Stok Açıklaması
         /// </summary>
         public string ProductName { get; set; }
+        /// <summary>
+        ///  Stok Açıklaması İngilizce
+        /// </summary>
+        public string ProductEnglishDefinition { get; set; }
         /// <summary>
         /// Müşteri ID
         /// </summary>
@@ -97,5 +106,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLi
         /// Dövizli Birim Fiyat
         /// </summary>
         public decimal TransactionExchangeUnitPrice { get; set; }
+
+        /// <summary>
+        /// Müşteri Sipariş No
+        /// </summary>
+        public string CustomerOrderNr { get; set; }
     }
 }

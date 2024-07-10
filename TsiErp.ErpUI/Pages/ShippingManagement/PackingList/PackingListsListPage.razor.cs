@@ -1,8 +1,11 @@
 ﻿using DevExpress.Blazor.Reporting;
 using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.XtraCharts.Native;
+using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.SqlServer.Management.XEvent;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
@@ -10,6 +13,9 @@ using Syncfusion.Blazor.Navigations;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Reflection;
+using TsiErp.Business.Entities.CurrentAccountCard.Services;
+using TsiErp.Business.Entities.PackageFiche.Services;
+using TsiErp.Business.Entities.ProductGroup.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
@@ -18,13 +24,22 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackingList;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackingList.ReportDtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.CommercialInvoice;
 using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.CustomsInstruction;
+using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.PackingList;
+using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.ShippingInstruction;
+using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.UploadConfirmation;
+using TsiErp.ErpUI.Reports.ShippingManagement.PalletReports.PalletLabels;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
@@ -368,9 +383,41 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     break;
 
                 case "packinglist":
+                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    #region Enum Combobox Localization
+
+                    DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
+
+                    DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
+
+                    DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
+
+                    #endregion
+
+
+                    PackingListDynamicReport = new XtraReport();
+                    PackingListReportVisible = true;
+                    await CreateTRPackingListReport(DataSource);
                     await InvokeAsync(StateHasChanged);
                     break;
                 case "commercialinvoice":
+                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    #region Enum Combobox Localization
+
+                    DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
+
+                    DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
+
+                    DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
+
+                    #endregion
+
+
+                    CommercialInvoiceDynamicReport = new XtraReport();
+                    CommercialInvoiceReportVisible = true;
+                    await CreateCommercialInvoiceReport(DataSource);
                     await InvokeAsync(StateHasChanged);
                     break;
                 case "custominstruction":
@@ -383,9 +430,20 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                     break;
                 case "shippinginstruction":
+                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    ShippingInstructionReport = new XtraReport();
+                    ShippingInstructionReportVisible = true;
+                    await CreateShippingInstructionReport(DataSource);
+
                     await InvokeAsync(StateHasChanged);
+
                     break;
                 case "uploadconfirmation":
+                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    UploadConfirmationDynamicReport = new XtraReport();
+                    UploadConfirmationReportVisible = true;
+                    await CreateUploadConfirmationReport(DataSource);
+
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -978,20 +1036,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             #region Enum Combobox Localization
 
-            foreach (var item in salesTypes)
-            {
-                packingList.SalesTypeName = L[item.SalesTypeName];
-            }
+            DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
 
-            foreach (var item in tIRTypes)
-            {
-                packingList.TIRTypeName = L[item.TIRTypeName];
-            }
+            DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
 
-            foreach (var item in packingListStates)
-            {
-                packingList.PackingListStateName = L[item.PackingListStateName];
-            }
+            DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
 
             #endregion
 
@@ -1021,10 +1070,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 string yil = faturaTarihi.Year.ToString().Substring(2, faturaTarihi.Year.ToString().Length - 2);
 
                 string refNo = yil + ay + gun + "/" + yil;
-
-                //XtraReport mainReport = new XtraReport();
-                //mainReport.ShowPrintMarginsWarning = false;
-                //mainReport.CreateDocument();
 
                 var bank = (await BankAccountsAppService.GetAsync(packingList.BankID.GetValueOrDefault())).Data;
 
@@ -1077,9 +1122,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     FaxMessageGTIPTable = new List<FaxMessageGTIPTable>()
                 });
 
-
-
-
                 for (int i = 0; i < siraListe.Count; i++)
                 {
                     string baslik = siraListe[i];
@@ -1108,7 +1150,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                             {
                                 MalCinsiTurkce = malCinsi,
                                 MalCinsiIngilizce = MalCinsiIngilizce(malCinsi),
-                                //GtipKodu = entities.TUR_STOK_GRUP.Where(t => t.ACIKLAMA == malCinsi).Select(t => t.GTIP).FirstOrDefault()
+                                GtipKodu = (await ProductGroupsAppService.GetByNameAsync(malCinsi)).Data.Name
                             });
                         }
                     }
@@ -1137,6 +1179,489 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             await Task.CompletedTask;
         }
+
+        #endregion
+
+        #region Nakliye Talimatı
+        bool ShippingInstructionReportVisible { get; set; }
+
+        DxReportViewer ShippingInstructionReportViewer { get; set; }
+
+        XtraReport ShippingInstructionReport { get; set; }
+
+        async Task CreateShippingInstructionReport(SelectPackingListsDto packingList)
+        {
+            ShippingInstructionReport.ShowPrintMarginsWarning = false;
+            ShippingInstructionReport.CreateDocument();
+
+            #region Enum Combobox Localization
+
+            DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
+
+            DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
+
+            DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
+
+            #endregion
+
+            if (packingList.Id != Guid.Empty)
+            {
+                int toplamPaletAdedi = packingList.SelectPackingListPalletCubageLines.Sum(t => t.NumberofPallet);
+                string yetkili = packingList.CustomsOfficial;
+                string teslimSekli = packingList.SalesTypeName;
+                teslimSekli = teslimSekli.Substring(0, teslimSekli.Length - 3);
+                DateTime teslimTarihi = packingList.DeliveryDate.GetValueOrDefault();
+                DateTime faturaTarihi = packingList.BillDate.GetValueOrDefault();
+
+                string ay = faturaTarihi.Month.ToString();
+
+                if (ay.Length == 1)
+                {
+                    ay = "0" + ay;
+                }
+
+                string gun = faturaTarihi.Day.ToString();
+
+                if (gun.Length == 1)
+                {
+                    gun = "0" + gun;
+                }
+
+                string yil = faturaTarihi.Year.ToString().Substring(2, faturaTarihi.Year.ToString().Length - 2);
+
+                string refNo = yil + ay + gun + "/" + yil;
+
+                var bank = (await BankAccountsAppService.GetAsync(packingList.BankID.GetValueOrDefault())).Data;
+
+                ShippingInstructionReport shippingInstructionReport = new ShippingInstructionReport();
+                shippingInstructionReport.RefNo.Text = refNo;
+                shippingInstructionReport.ToplamPaletAdedi.Text = toplamPaletAdedi.ToString();
+                shippingInstructionReport.Yetkili.Text = yetkili;
+                shippingInstructionReport.TeslimSekli.Text = teslimSekli;
+                shippingInstructionReport.Tarih.Text = faturaTarihi.ToShortDateString();
+                shippingInstructionReport.GumruklemeTarihi.Text = teslimTarihi.ToShortDateString() + " " + CultureInfo.CurrentCulture.DateTimeFormat.DayNames[(int)teslimTarihi.DayOfWeek];
+                shippingInstructionReport.AraciBanka.Text = bank.BankInstructionDescription;
+                shippingInstructionReport.ShowPreviewMarginLines = false;
+                shippingInstructionReport.CreateDocument();
+
+                ShippingInstructionReport.Pages.AddRange(shippingInstructionReport.Pages);
+
+
+
+
+                string PackListNo = packingList.Code2;
+
+                List<string> siraListe = new List<string>()
+                        {
+                            "VİRAJ ROTU",
+                            "ROT MİLİ",
+                            "BURÇ",
+                            "OYNAR BURÇ",
+                            "ROTİL",
+                            "ROT BAŞI",
+                            "YAN ROT",
+                            "BURÇ TAKIMI",
+                            "DENGE KOLU",
+                            "MONTAJ TAKIMI",
+                            "CİVATA TAKIMI",
+                            "BASKILI TORBA, PE",
+                            "DEBRİYAJ CIRCIRI",
+                            "ŞAFT ASKISI",
+                            "AMORTİSÖR YAYI",
+                            "SOMUN",
+                            "BOŞ KOLİ",
+                            "TAMİR TAKIMI"
+                        };
+
+                var satirlar = packingList.SelectPackingListPalletPackageLines;
+
+                var malCinsileri = satirlar.Select(t => t.ProductGroupName).Distinct().ToList();
+
+                List<FaxMessageLines> faksMesajiSatirlar = new List<FaxMessageLines>();
+
+                for (int i = 0; i < siraListe.Count; i++)
+                {
+                    string baslik = siraListe[i];
+
+                    for (int j = 0; j < malCinsileri.Count; j++)
+                    {
+                        string malCinsi = malCinsileri[j];
+
+                        if (baslik == malCinsi)
+                        {
+                            FaxMessageLines satir = new FaxMessageLines
+                            {
+                                MalCinsiTurkce = malCinsi,
+                                MalCinsiIngilizce = MalCinsiIngilizce(malCinsi),
+                                TutarDagilimiEuro = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.TotalAmount * t.TransactionExchangeUnitPrice),
+                                AdetDagilimi = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.TotalAmount),
+                                NetKgDagilimi = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.TotalNetKG),
+                                BrutKgDagilimi = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.TotalGrossKG),
+                                KoliSayisi = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.NumberofPackage),
+                                CesitDagilimi = satirlar.Where(t => t.ProductGroupName == malCinsi).Select(t => t.ProductID).Distinct().Count()
+                            };
+
+                            faksMesajiSatirlar.Add(satir);
+
+
+                        }
+                    }
+                }
+
+
+
+                List<NakliyePaletTablosu> paletListesi = new List<NakliyePaletTablosu>();
+
+                for (int i = 0; i < packingList.SelectPackingListPalletCubageLines.Count; i++)
+                {
+                    NakliyePaletTablosu palet = new NakliyePaletTablosu
+                    {
+                        PaletAdedi = packingList.SelectPackingListPalletCubageLines[i].NumberofPallet,
+                        Boy = packingList.SelectPackingListPalletCubageLines[i].Height_,
+                        En = packingList.SelectPackingListPalletCubageLines[i].Width_,
+                        ToplamM3 = packingList.SelectPackingListPalletCubageLines[i].Cubage,
+                        Yuk = packingList.SelectPackingListPalletCubageLines[i].Load_
+                    };
+
+                    paletListesi.Add(palet);
+                }
+
+                ShippingInstructionSecondPageReport report2 = new ShippingInstructionSecondPageReport();
+                report2.ShowPreviewMarginLines = false;
+                report2.CreateDocument();
+
+                XRSubreport subReport1 = report2.FindControl("xrSubreport1", true) as XRSubreport;
+                XtraReport reportSource1 = subReport1.ReportSource as XtraReport;
+                (reportSource1.DataSource as ObjectDataSource).DataSource = paletListesi;
+                reportSource1.CreateDocument();
+
+                XRSubreport subReport2 = report2.FindControl("xrSubreport2", true) as XRSubreport;
+                XtraReport reportSource2 = subReport2.ReportSource as XtraReport;
+                (reportSource2.DataSource as ObjectDataSource).DataSource = faksMesajiSatirlar;
+                reportSource2.CreateDocument();
+
+                report2.CreateDocument();
+
+                ShippingInstructionReport.Pages.AddRange(report2.Pages);
+
+                ShippingInstructionReport.PrintingSystem.ContinuousPageNumbering = true;
+
+            }
+
+            await Task.CompletedTask;
+        }
+
+
+        #endregion
+
+        #region Yükleme Teyidi
+        bool UploadConfirmationReportVisible { get; set; }
+
+        DxReportViewer UploadConfirmationReportViewer { get; set; }
+
+        XtraReport UploadConfirmationDynamicReport { get; set; }
+
+        async Task CreateUploadConfirmationReport(SelectPackingListsDto packingList)
+        {
+            UploadConfirmationDynamicReport.ShowPrintMarginsWarning = false;
+            UploadConfirmationDynamicReport.ShowPreviewMarginLines = false;
+            UploadConfirmationDynamicReport.CreateDocument();
+
+            #region Enum Combobox Localization
+
+            DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
+
+            DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
+
+            DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
+
+            #endregion
+
+            if (packingList.Id != Guid.Empty)
+            {
+                int toplamPaletAdedi = packingList.SelectPackingListPalletCubageLines.Sum(t => t.NumberofPallet);
+
+                string teslimSekli = packingList.SalesTypeName;
+                teslimSekli = teslimSekli.Substring(0, teslimSekli.Length - 3);
+                DateTime teslimTarihi = packingList.DeliveryDate.GetValueOrDefault();
+                DateTime faturaTarihi = packingList.BillDate.GetValueOrDefault();
+
+                string tirSekli = packingList.TIRTypeName;
+
+                string ay = faturaTarihi.Month.ToString();
+
+                if (ay.Length == 1)
+                {
+                    ay = "0" + ay;
+                }
+
+                string gun = faturaTarihi.Day.ToString();
+
+                if (gun.Length == 1)
+                {
+                    gun = "0" + gun;
+                }
+
+                string yil = faturaTarihi.Year.ToString().Substring(2, faturaTarihi.Year.ToString().Length - 2);
+
+                string refNo = "A" + ay + gun + "/" + yil;
+
+                List<UploadConfirmationReportDto> reportSource = new List<UploadConfirmationReportDto>();
+                reportSource.Add(new UploadConfirmationReportDto
+                {
+                    RefNo = refNo,
+                    ToplamPaletAdedi = toplamPaletAdedi.ToString(),
+                    Tarih = faturaTarihi.ToShortDateString(),
+                    TeslimTarihi = teslimTarihi.ToShortDateString(),
+                    TirSekli = tirSekli
+                });
+
+
+                string PackListNo = packingList.Code2;
+
+                List<string> siraListe = new List<string>()
+                        {
+                            "VİRAJ ROTU",
+                            "ROT MİLİ",
+                            "BURÇ",
+                            "OYNAR BURÇ",
+                            "ROTİL",
+                            "ROT BAŞI",
+                            "YAN ROT",
+                            "BURÇ TAKIMI",
+                            "DENGE KOLU",
+                            "MONTAJ TAKIMI",
+                            "CİVATA TAKIMI",
+                            "BASKILI TORBA, PE",
+                            "DEBRİYAJ CIRCIRI",
+                            "ŞAFT ASKISI",
+                            "AMORTİSÖR YAYI",
+                            "SOMUN",
+                            "BOŞ KOLİ",
+                            "TAMİR TAKIMI"
+                        };
+
+                var satirlar = packingList.SelectPackingListPalletPackageLines;
+
+                var malCinsileri = satirlar.Select(t => t.ProductGroupName).Distinct().ToList();
+
+
+                for (int i = 0; i < siraListe.Count; i++)
+                {
+                    string baslik = siraListe[i];
+
+                    for (int j = 0; j < malCinsileri.Count; j++)
+                    {
+                        string malCinsi = malCinsileri[j];
+
+                        if (baslik == malCinsi)
+                        {
+                            FaxMessageLines satir = new FaxMessageLines
+                            {
+                                MalCinsiTurkce = malCinsi,
+                                MalCinsiIngilizce = MalCinsiIngilizce(malCinsi),
+                                TutarDagilimiEuro = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.TotalAmount * t.TransactionExchangeUnitPrice),
+                                AdetDagilimi = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.TotalAmount),
+                                NetKgDagilimi = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.TotalNetKG),
+                                BrutKgDagilimi = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.TotalGrossKG),
+                                KoliSayisi = satirlar.Where(t => t.ProductGroupName == malCinsi).Sum(t => t.NumberofPackage),
+                                CesitDagilimi = satirlar.Where(t => t.ProductGroupName == malCinsi).Select(t => t.ProductID).Distinct().Count()
+                            };
+
+                            reportSource[0].FaxMessageLines.Add(satir);
+                        }
+                    }
+                }
+                UploadConfirmationReport report = new UploadConfirmationReport();
+                report.DataSource = reportSource;
+                report.CreateDocument();
+
+                UploadConfirmationDynamicReport.Pages.AddRange(report.Pages);
+                UploadConfirmationDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
+
+            }
+
+            await Task.CompletedTask;
+        }
+
+
+        #endregion
+
+        #region Commercial Invoice
+        bool CommercialInvoiceReportVisible { get; set; }
+
+        DxReportViewer CommercialInvoiceReportViewer { get; set; }
+
+        XtraReport CommercialInvoiceDynamicReport { get; set; }
+
+
+        async Task CreateCommercialInvoiceReport(SelectPackingListsDto packingList)
+        {
+            var list = (await PackingListsAppService.GetCommercialInvoiceReportDataSource(packingList));
+
+            var bank = (await BankAccountsAppService.GetAsync(packingList.BankID.GetValueOrDefault())).Data;
+
+            if (list.Count > 0)
+            {
+                CommercialInvoiceDynamicReport.ShowPrintMarginsWarning = false;
+                CommercialInvoiceDynamicReport.ShowPreviewMarginLines = false;
+                CommercialInvoiceDynamicReport.CreateDocument();
+
+                bool exWorks = false;
+
+                if (list[0].SatisSekli == "EX-WORKS ISTANBUL (€)")
+                {
+                    exWorks = true;
+                }
+
+                list[0].BankName = bank.Name;
+                list[0].BankBranch = bank.BankBranchName;
+                list[0].EuroAccNr = bank.EuroAccountNo;
+                list[0].EuroAccIbanNo = bank.EuroAccountIBAN;
+                list[0].UsdAccNr = bank.USDAccountNo;
+                list[0].UsdAccIbanNo = bank.USDAccountIBAN;
+                list[0].TlAccNr = bank.TLAccountNo;
+                list[0].TlAccIbanNo = bank.TLAccountIBAN;
+                list[0].GbpAccNr = bank.GBPAccountNo;
+                list[0].GbpAccIbanNo = bank.GBPAccountIBAN;
+                list[0].SwiftKodu = bank.SWIFTCode;
+
+                CommercialInvoiceReport report = new CommercialInvoiceReport();
+                report.DataSource = list;
+                report.ShowPrintMarginsWarning = false;
+                decimal toplam = list.Sum(t => t.ToplamTutar);
+                report.lblNetToplamYazi.Text = PackingListsAppService.NumberToWords((double)toplam);
+                report.TLRow.Visible = !string.IsNullOrEmpty(bank.TLAccountNo) ? true : false;
+                report.GBPRow.Visible = !string.IsNullOrEmpty(bank.GBPAccountNo) ? true : false;
+                report.DeliveryAddressLabel.Visible = exWorks ? true : false;
+                report.DeliveryAddress.Visible = exWorks ? true : false;
+                report.CreateDocument();
+                CommercialInvoiceDynamicReport.Pages.AddRange(report.Pages);
+                CommercialInvoiceDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
+            }
+
+            await Task.CompletedTask;
+        }
+
+
+        #endregion
+
+        #region Çeki Listesi
+        bool PackingListReportVisible { get; set; }
+
+        DxReportViewer PackingListReportViewer { get; set; }
+
+        XtraReport PackingListDynamicReport { get; set; }
+
+        async Task CreateTRPackingListReport(SelectPackingListsDto packingList)
+        {
+            PackingListDynamicReport.ShowPrintMarginsWarning = false;
+            PackingListDynamicReport.ShowPreviewMarginLines = false;
+            PackingListDynamicReport.CreateDocument();
+
+            List<PackingListReportDto> reportSource = new List<PackingListReportDto>();
+
+            foreach (var item in packingList.SelectPackingListPalletPackageLines)
+            {
+                string malzemeTanimi = item.ProductName;
+                string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(item.ProductID.GetValueOrDefault(), packingList.TransmitterID.GetValueOrDefault());
+
+                malzemeTanimi = malzemeTanimi + supplierReferanceNumber + "/049/" + item.CustomerOrderNr;
+
+                PackingListReportDto report = new PackingListReportDto();
+                report.EoriNr = packingList.TransmitterEORINo;
+                report.FaturaNo = packingList.BillNo;
+                report.CekiListesiNo = packingList.Code;
+                report.FaturaTarihi = packingList.BillDate.Value.ToShortDateString();
+                report.SiparisNo = packingList.OrderNo;
+                report.AliciUnvan = packingList.TransmitterName;
+                report.AliciAdres1 = packingList.TransmitterAddress1;
+                report.AliciAdres2 = packingList.TransmitterAddress2;
+                report.AliciTel = packingList.TransmitterTel;
+                report.AliciFax = packingList.TransmitterFax;
+                report.PaketNo = item.PackageNo;
+                report.MalzemeTanimi = malzemeTanimi;
+                report.PaketCinsi = item.PackageType;
+                report.PaketIcerigi = item.PackageContent;
+                report.PaketSayisi = item.NumberofPackage;
+                report.ToplamAdet = item.TotalAmount;
+                report.KoliNetKg = item.OnePackageNetKG;
+                report.KoliBrutKg = item.OnePackageGrossKG;
+                report.KoliToplamNetKg = item.TotalNetKG;
+                report.KoliToplamBrutKg = item.TotalGrossKG;
+                report.ToplamPaletAdedi = packingList.SelectPackingListPalletCubageLines.Sum(t => t.NumberofPallet);
+                report.ToplamHacim = packingList.SelectPackingListPalletCubageLines.Sum(t => t.Cubage);
+
+                reportSource.Add(report);
+            }
+
+           
+
+            List<PackingListPalletQuantityReportDto> kubajList = new List<PackingListPalletQuantityReportDto>();
+
+            foreach (var item in packingList.SelectPackingListPalletCubageLines)
+            {
+                PackingListPalletQuantityReportDto kubaj = new PackingListPalletQuantityReportDto();
+                kubaj.Kubaj = item.Cubage;
+                kubaj.Yukseklik = item.Load_;
+                kubaj.PaletAdet = item.NumberofPallet;
+                kubaj.Boy = item.Height_;
+                kubaj.En = item.Width_;
+                kubajList.Add(kubaj);
+            }
+
+            List<PackingListPalletDetailReportDto> paletList = new List<PackingListPalletDetailReportDto>();
+
+            int packageNo = 1;
+
+            int palletIndex = 0;
+
+            foreach (var item in packingList.SelectPackingListPalletLines)
+            {
+                if (packageNo == 1)
+                {
+                    PackingListPalletDetailReportDto palet = new PackingListPalletDetailReportDto();
+                    palet.IlkKoliNo = packageNo.ToString();
+                    palet.SonKoliNo = (packageNo + item.NumberofPackage - 1).ToString();
+                    palet.KoliSayisi = item.NumberofPackage;
+                    palet.PaletAdi = item.PalletName.Split("-")[0];
+
+                    packageNo += item.NumberofPackage;
+
+                    paletList.Add(palet);
+                    palletIndex = palletIndex + 1;
+                }
+                else
+                {
+                    string firstPackageNo = Convert.ToString(Convert.ToInt32(paletList[palletIndex - 1].SonKoliNo) + 1);
+
+                    PackingListPalletDetailReportDto palet = new PackingListPalletDetailReportDto();
+                    palet.IlkKoliNo = firstPackageNo;
+                    palet.SonKoliNo = (Convert.ToInt32(firstPackageNo) + item.NumberofPackage - 1).ToString();
+                    palet.KoliSayisi = item.NumberofPackage;
+                    palet.PaletAdi = item.PalletName.Split("-")[0];
+
+                    packageNo += item.NumberofPackage;
+
+                    paletList.Add(palet);
+                    palletIndex = palletIndex + 1;
+                }
+            }
+
+            PackingListTrReport packingListTrReport = new PackingListTrReport();
+            packingListTrReport.DataSource = reportSource;
+            packingListTrReport.ShowPrintMarginsWarning = false;
+            packingListTrReport.PackingListPalletQuantityReportDto = kubajList;
+            packingListTrReport.PackingListPalletDetailReportDto = paletList;
+            packingListTrReport.CreateDocument();
+            PackingListDynamicReport.Pages.AddRange(packingListTrReport.Pages);
+            PackingListDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
+
+            PackingListDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
+
+            await Task.CompletedTask;
+        }
+
 
         #endregion
 
@@ -1216,6 +1741,23 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
         }
     }
 
+
+    public class UploadConfirmationReportDto
+    {
+        public string RefNo { get; set; }
+        public string ToplamPaletAdedi { get; set; }
+        public string Tarih { get; set; }
+        public string TeslimTarihi { get; set; }
+        public string TirSekli { get; set; }
+
+        public List<FaxMessageLines> FaxMessageLines { get; set; }
+
+        public UploadConfirmationReportDto()
+        {
+            FaxMessageLines = new List<FaxMessageLines>();
+        }
+    }
+
     public class FaxMessage
     {
         public string PackingListNo { get; set; }
@@ -1257,5 +1799,18 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
         public string MalCinsiIngilizce { get; set; }
 
         public string GtipKodu { get; set; }
+    }
+
+    public class NakliyePaletTablosu
+    {
+        public int PaletAdedi { get; set; }
+
+        public decimal En { get; set; }
+
+        public decimal Boy { get; set; }
+
+        public decimal Yuk { get; set; }
+
+        public decimal ToplamM3 { get; set; }
     }
 }

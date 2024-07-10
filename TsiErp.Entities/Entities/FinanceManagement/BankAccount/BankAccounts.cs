@@ -17,34 +17,9 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankAccount
         public string Name { get; set; }
         [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
-        /// Banka Hesap Adı
-        /// </summary>
-        public string BankAccountName { get; set; }
-        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// Hesap No
-        /// </summary>
-        public string AccountNo { get; set; }
-        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// IBAN No
-        /// </summary>
-        public string IBANNo { get; set; }
-        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
         /// SWIFT Kodu
         /// </summary>
         public string SWIFTCode { get; set; }
-        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// Şube Adı
-        /// </summary>
-        public string BankBranchName { get; set; }
-        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// Şube Numarası
-        /// </summary>
-        public string BankBranchNo { get; set; }
         [SqlColumnType( Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
         /// <summary>
         /// Adres
@@ -55,5 +30,50 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankAccount
         /// Banka Talimat Açıklaması
         /// </summary>
         public string BankInstructionDescription { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Şube Adı
+        /// </summary>
+        public string BankBranchName { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// TL Hesap No
+        /// </summary>
+        public string TLAccountNo { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// TL Hesap IBAN No
+        /// </summary>
+        public string TLAccountIBAN { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// USD Hesap No
+        /// </summary>
+        public string USDAccountNo { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// USD Hesap IBAN No
+        /// </summary>
+        public string USDAccountIBAN { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Euro Hesap No
+        /// </summary>
+        public string EuroAccountNo { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Euro Hesap IBAN No
+        /// </summary>
+        public string EuroAccountIBAN { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// GBP Hesap No
+        /// </summary>
+        public string GBPAccountNo { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// GBP Hesap IBAN No
+        /// </summary>
+        public string GBPAccountIBAN { get; set; }
     }
 }
