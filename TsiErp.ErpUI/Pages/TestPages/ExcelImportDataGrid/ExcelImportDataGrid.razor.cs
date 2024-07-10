@@ -9,7 +9,7 @@ namespace TsiErp.ErpUI.Pages.TestPages.ExcelImportDataGrid
     public partial class ExcelImportDataGrid
     {
         SfGrid<ExpandoObject> Grid;
-        public DataTable table = new DataTable();
+        public DataTable table = new DataTable(); 
         private void OnChange(UploadChangeEventArgs args)
         {
             foreach (var file in args.Files)

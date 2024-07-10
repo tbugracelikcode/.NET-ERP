@@ -108,16 +108,18 @@ else
                     <DxGridLayoutRow Height="16%" />
                     <DxGridLayoutRow Height="16%" />
                     <DxGridLayoutRow Height="16%" />
+                    <DxGridLayoutRow Height="16%" />
+
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="3%" />
                     <DxGridLayoutColumn Width="28%" />
-                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="3%" />
                     <DxGridLayoutColumn Width="28%" />
-                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="3%" />
                     <DxGridLayoutColumn Width="28%" />
-                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="3%" />
                 </Columns>
 
                 <Items>
@@ -201,10 +203,10 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="4" Column="1" ColumnSpan="5">
+                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="5">
                         <Template>
                                 <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label><br />
-                                <SfTextBox Multiline="true" @bind-Value="DataSource.Description_"></SfTextBox>
+                                <SfTextBox Multiline="true" @bind-Value="DataSource.Description_" ></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
