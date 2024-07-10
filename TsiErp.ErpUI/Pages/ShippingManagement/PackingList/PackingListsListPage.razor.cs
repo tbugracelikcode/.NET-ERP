@@ -1,10 +1,12 @@
 ﻿using DevExpress.Blazor.Reporting;
 using DevExpress.CodeParser;
 using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.XtraCharts.Native;
 using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.SqlServer.Management.XEvent;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
@@ -1562,6 +1564,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             foreach (var item in packingList.SelectPackingListPalletPackageLines)
             {
+                string malzemeTanimi = item.ProductName;
+                string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(item.ProductID.GetValueOrDefault(), packingList.TransmitterID.GetValueOrDefault());
+
+                malzemeTanimi = malzemeTanimi + supplierReferanceNumber + "/049/" + item.CustomerOrderNr;
+
                 PackingListReportDto report = new PackingListReportDto();
                 report.EoriNr = packingList.TransmitterEORINo;
                 report.FaturaNo = packingList.BillNo;
@@ -1574,7 +1581,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 report.AliciTel = packingList.TransmitterTel;
                 report.AliciFax = packingList.TransmitterFax;
                 report.PaketNo = item.PackageNo;
-                report.MalzemeTanimi = "";
+                report.MalzemeTanimi = malzemeTanimi;
                 report.PaketCinsi = item.PackageType;
                 report.PaketIcerigi = item.PackageContent;
                 report.PaketSayisi = item.NumberofPackage;
@@ -1604,10 +1611,49 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 kubajList.Add(kubaj);
             }
 
+            List<PackingListPalletDetailReportDto> paletList = new List<PackingListPalletDetailReportDto>();
+
+            int packageNo = 1;
+
+            int palletIndex = 0;
+
+            foreach (var item in packingList.SelectPackingListPalletLines)
+            {
+                if (packageNo == 1)
+                {
+                    PackingListPalletDetailReportDto palet = new PackingListPalletDetailReportDto();
+                    palet.IlkKoliNo = packageNo.ToString();
+                    palet.SonKoliNo = (packageNo + item.NumberofPackage - 1).ToString();
+                    palet.KoliSayisi = item.NumberofPackage;
+                    palet.PaletAdi = item.PalletName.Split("-")[0];
+
+                    packageNo += item.NumberofPackage;
+
+                    paletList.Add(palet);
+                    palletIndex = palletIndex + 1;
+                }
+                else
+                {
+                    string firstPackageNo = Convert.ToString(Convert.ToInt32(paletList[palletIndex - 1].SonKoliNo) + 1);
+
+                    PackingListPalletDetailReportDto palet = new PackingListPalletDetailReportDto();
+                    palet.IlkKoliNo = firstPackageNo;
+                    palet.SonKoliNo = (Convert.ToInt32(firstPackageNo) + item.NumberofPackage - 1).ToString();
+                    palet.KoliSayisi = item.NumberofPackage;
+                    palet.PaletAdi = item.PalletName.Split("-")[0];
+
+                    packageNo += item.NumberofPackage;
+
+                    paletList.Add(palet);
+                    palletIndex = palletIndex + 1;
+                }
+            }
+
             PackingListTrReport packingListTrReport = new PackingListTrReport();
             packingListTrReport.DataSource = reportSource;
             packingListTrReport.ShowPrintMarginsWarning = false;
             packingListTrReport.PackingListPalletQuantityReportDto = kubajList;
+            packingListTrReport.PackingListPalletDetailReportDto = paletList;
             packingListTrReport.CreateDocument();
             PackingListDynamicReport.Pages.AddRange(packingListTrReport.Pages);
             PackingListDynamicReport.PrintingSystem.ContinuousPageNumbering = true;

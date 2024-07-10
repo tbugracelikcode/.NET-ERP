@@ -1473,6 +1473,7 @@
             this.xrSubreport1.Name = "xrSubreport1";
             this.xrSubreport1.ReportSource = new TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.PackingList.PackingListPalletDetailReport();
             this.xrSubreport1.SizeF = new System.Drawing.SizeF(520.8333F, 18.12503F);
+            this.xrSubreport1.BeforePrint += new DevExpress.XtraReports.UI.BeforePrintEventHandler(this.xrSubreport1_BeforePrint);
             // 
             // PageFooter
             // 
