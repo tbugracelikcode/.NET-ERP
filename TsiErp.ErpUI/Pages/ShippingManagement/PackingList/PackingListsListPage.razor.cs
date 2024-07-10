@@ -1589,11 +1589,29 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 reportSource.Add(report);
             }
 
+           
+
+            List<PackingListPalletQuantityReportDto> kubajList = new List<PackingListPalletQuantityReportDto>();
+
+            foreach (var item in packingList.SelectPackingListPalletCubageLines)
+            {
+                PackingListPalletQuantityReportDto kubaj = new PackingListPalletQuantityReportDto();
+                kubaj.Kubaj = item.Cubage;
+                kubaj.Yukseklik = item.Load_;
+                kubaj.PaletAdet = item.NumberofPallet;
+                kubaj.Boy = item.Height_;
+                kubaj.En = item.Width_;
+                kubajList.Add(kubaj);
+            }
+
             PackingListTrReport packingListTrReport = new PackingListTrReport();
             packingListTrReport.DataSource = reportSource;
             packingListTrReport.ShowPrintMarginsWarning = false;
+            packingListTrReport.PackingListPalletQuantityReportDto = kubajList;
             packingListTrReport.CreateDocument();
             PackingListDynamicReport.Pages.AddRange(packingListTrReport.Pages);
+            PackingListDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
+
             PackingListDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
 
             await Task.CompletedTask;

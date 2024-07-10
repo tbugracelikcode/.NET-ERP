@@ -1465,6 +1465,7 @@
             this.xrSubreport2.Name = "xrSubreport2";
             this.xrSubreport2.ReportSource = new TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.PackingList.PackingListPalletQuantityReport();
             this.xrSubreport2.SizeF = new System.Drawing.SizeF(349.8836F, 97.70825F);
+            this.xrSubreport2.BeforePrint += new DevExpress.XtraReports.UI.BeforePrintEventHandler(this.xrSubreport2_BeforePrint);
             // 
             // xrSubreport1
             // 
@@ -1775,7 +1776,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell38;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell39;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell40;
-        private DevExpress.XtraReports.UI.XRSubreport xrSubreport2;
         private DevExpress.XtraReports.UI.XRSubreport xrSubreport1;
         private DevExpress.XtraReports.UI.PageFooterBand PageFooter;
         private DevExpress.XtraReports.UI.XRTable xrTable2;
@@ -1796,5 +1796,6 @@
         private DevExpress.XtraReports.UI.XRLabel xrLabel20;
         private DevExpress.XtraReports.UI.XRLabel xrLabel1;
         private DevExpress.DataAccess.ObjectBinding.ObjectDataSource objectDataSource1;
+        public DevExpress.XtraReports.UI.XRSubreport xrSubreport2;
     }
 }
