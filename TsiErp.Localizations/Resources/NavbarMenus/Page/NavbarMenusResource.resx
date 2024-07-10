@@ -156,6 +156,12 @@
   <data name="CalVerificationsChildMenu" xml:space="preserve">
     <value>Kalibrasyon Doğrulama Kayıtları</value>
   </data>
+  <data name="CitiesChildMenu" xml:space="preserve">
+    <value>Şehirler</value>
+  </data>
+  <data name="ContinentsChildMenu" xml:space="preserve">
+    <value>Kıtalar</value>
+  </data>
   <data name="ContractProdTrackingsChildMenu" xml:space="preserve">
     <value>Fason İmalat Takip Kayıtları</value>
   </data>
@@ -399,6 +405,9 @@
   <data name="ProdOperationsChildMenu" xml:space="preserve">
     <value>Ürün Operasyon Kayıtları</value>
   </data>
+  <data name="ProdOrderChangeRecordsChildMenu" xml:space="preserve">
+    <value>Üretim Emri Değişiklik Kayıtları</value>
+  </data>
   <data name="ProdOrderRecordsChildMenu" xml:space="preserve">
     <value>Üretim Emri Uygunsuzluk Kayıtları</value>
   </data>
@@ -567,6 +576,9 @@
   <data name="SalesPropositionsChildMenu" xml:space="preserve">
     <value>Verilen Teklifler</value>
   </data>
+  <data name="SectorsChildMenu" xml:space="preserve">
+    <value>Sektörler</value>
+  </data>
   <data name="ShiftsChildMenu" xml:space="preserve">
     <value>Vardiya Tanımlamaları</value>
   </data>
@@ -662,6 +674,9 @@
   </data>
   <data name="TempOperationsChildMenu" xml:space="preserve">
     <value>Şablon Operasyon Kayıtları</value>
+  </data>
+  <data name="TestManagementParentMenu" xml:space="preserve">
+    <value>Test Yönetimi</value>
   </data>
   <data name="TransactionsMenu" xml:space="preserve">
     <value>Hareketler</value>

@@ -323,24 +323,6 @@ namespace TsiErp.Localizations.Resources.ContractUnsuitabilityReports.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FasonUygunsuzlukRaporlari.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fason Uygunsuzluk Raporları.
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to FİŞ NUMARASI.
         /// </summary>
         public static string FicheNo {
@@ -436,6 +418,24 @@ namespace TsiErp.Localizations.Resources.ContractUnsuitabilityReports.Page {
         public static string UICurrentMenu {
             get {
                 return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FasonUygunsuzlukRaporlari.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fason Uygunsuzluk Raporları.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
             }
         }
         

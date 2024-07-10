@@ -171,12 +171,6 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>KontrolSartiBasliklari</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Kontrol Şartı Başlıkları</value>
-  </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Aktiflik:</value>
   </data>
@@ -213,8 +207,14 @@
   <data name="StationGroupLabel" xml:space="preserve">
     <value>İş Merkezi:</value>
   </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>KontrolSartiBasliklari</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Kontrol Şartı Başlıkları</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Kalite Kontrol &gt; </value>
+    <value>Kalite Kontrol &gt; Ana Kayıtlar</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

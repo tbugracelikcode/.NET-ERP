@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TSI.QueryBuilder.BaseClasses;
-using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceInstruction.Dtos;
+﻿using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Entities.Entities.Other.GetSQLDate.Dtos;
 
 namespace TsiErp.Business.Entities.Other.GetSQLDate.Services

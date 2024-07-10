@@ -175,5 +175,13 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string PurchaseOrdersAwaitingApprovals = "PurchaseOrdersAwaitingApprovals";
         public static readonly string PurchaseOrdersAwaitingApprovalLines = "PurchaseOrdersAwaitingApprovalLines";
         public static readonly string BankAccounts = "BankAccounts";
+        public static readonly string ProductionOrderChangeReports = "ProductionOrderChangeReports";
+        public static readonly string Continents = "Continents";
+        public static readonly string ContinentLines = "ContinentLines";
+        public static readonly string Sectors = "Sectors";
+        public static readonly string SectorLines = "SectorLines";
+        public static readonly string Cities = "Cities";
+        public static readonly string CityLines = "CityLines";
+
     }
 }

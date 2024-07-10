@@ -1,15 +1,12 @@
-﻿using Autofac.Features.OwnedInstances;
-using DevExpress.Blazor;
+﻿using DevExpress.Blazor;
 using FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
-using Syncfusion.Blazor.Buttons;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Navigations;
-using Syncfusion.XlsIO.Implementation.XmlSerialization;
 using System.Text;
 using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -20,7 +17,6 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Shared;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using ChangeEventArgs = Microsoft.AspNetCore.Components.ChangeEventArgs;
 using IResult = Tsi.Core.Utilities.Results.IResult;
 
 namespace TsiErp.ErpUI.Pages.Base

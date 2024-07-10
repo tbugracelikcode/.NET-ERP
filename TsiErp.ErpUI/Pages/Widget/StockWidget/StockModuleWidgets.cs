@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.JsonPatch.Internal;
-using TsiErp.Business.Entities.Product.Services;
+﻿using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 
 namespace TsiErp.ErpUI.Pages.Widget.StockWidget

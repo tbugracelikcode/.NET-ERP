@@ -13,15 +13,32 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// <summary>
         /// Üretim Emri Fiş No
         /// </summary>
-        public string FicheNo { get; set; } /// <summary>
-                                                        /// Şube ID
-                                                        /// </summary>
+        public string FicheNo { get; set; }
+        /// <summary>
+        /// Şube ID
+        /// </summary>
         public Guid? BranchID { get; set; }
         /// <summary>
         /// Şube Kodu
         /// </summary>
         public string BranchCode { get; set; }
 
+        /// <summary>
+        /// Teknik Resim ID
+        /// </summary>
+        public Guid? TechnicalDrawingID { get; set; }
+        /// <summary>
+        /// Teknik Resim ID
+        /// </summary>
+        public string TechnicalDrawingNo { get; set; }
+        /// <summary>
+        /// Teknik Resim Değiştirilme Tarihi
+        /// </summary>
+        public DateTime? TechnicalDrawingUpdateDate_ { get; set; }
+        /// <summary>
+        /// eknik Resim Değiştirilme Açıklama
+        /// </summary>
+        public string TechnicalDrawingUpdateDescription_ { get; set; }
 
         /// <summary>
         /// Depo ID

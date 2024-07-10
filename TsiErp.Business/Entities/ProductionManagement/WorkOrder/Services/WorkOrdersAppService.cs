@@ -69,6 +69,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 LineNr = input.LineNr,
                 LinkedWorkOrderID = input.LinkedWorkOrderID.GetValueOrDefault(),
                 OccuredFinishDate = input.OccuredFinishDate,
+                SplitQuantity = 0,
                 OccuredStartDate = input.OccuredStartDate,
                 OperationTime = input.OperationTime,
                 PlannedQuantity = input.PlannedQuantity,
@@ -377,6 +378,81 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
         }
 
+        public async Task<IDataResult<IList<SelectWorkOrdersDto>>> GetSelectListbyProductionOrderAsync(Guid productionOrderID)
+        {
+            var query = queryFactory
+                    .Query().From(Tables.WorkOrders).Select<WorkOrders>(null)
+                        .Join<ProductionOrders>
+                        (
+                            po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo = po.FicheNo },
+                            nameof(WorkOrders.ProductionOrderID),
+                            nameof(ProductionOrders.Id),
+                            JoinType.Left
+                        )
+                         .Join<SalesPropositions>
+                        (
+                            sp => new { PropositionID = sp.Id, PropositionFicheNo = sp.FicheNo },
+                            nameof(WorkOrders.PropositionID),
+                            nameof(SalesPropositions.Id),
+                            JoinType.Left
+                        )
+                        .Join<Routes>
+                        (
+                            r => new { RouteID = r.Id, RouteCode = r.Code },
+                            nameof(WorkOrders.RouteID),
+                            nameof(Routes.Id),
+                            JoinType.Left
+                        )
+                         .Join<ProductsOperations>
+                        (
+                            pro => new { ProductsOperationID = pro.Id, ProductsOperationCode = pro.Code, ProductsOperationName = pro.Name },
+                            nameof(WorkOrders.ProductsOperationID),
+                            nameof(ProductsOperations.Id),
+                            JoinType.Left
+                        )
+                        .Join<Stations>
+                        (
+                            s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
+                            nameof(WorkOrders.StationID),
+                            nameof(Stations.Id),
+                            JoinType.Left
+                        )
+                         .Join<StationGroups>
+                        (
+                            sg => new { StationGroupID = sg.Id, StationGroupCode = sg.Code },
+                            nameof(WorkOrders.StationGroupID),
+                            nameof(StationGroups.Id),
+                            JoinType.Left
+                        )
+                         .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(WorkOrders.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                         .Join<CurrentAccountCards>
+                        (
+                            ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                            nameof(WorkOrders.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        ).Join<SalesOrders>
+                        (
+                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id },
+                            nameof(WorkOrders.OrderID),
+                            nameof(SalesOrders.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { ProductionOrderID = productionOrderID }, false, false, Tables.WorkOrders);
+
+            var workOrders = queryFactory.GetList<SelectWorkOrdersDto>(query).ToList();
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<SelectWorkOrdersDto>>(workOrders);
+
+        }
+
 
         [ValidationAspect(typeof(UpdateWorkOrdersValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
@@ -405,6 +481,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 LineNr = input.LineNr,
                 LinkedWorkOrderID = input.LinkedWorkOrderID.GetValueOrDefault(),
                 OccuredFinishDate = input.OccuredFinishDate,
+                SplitQuantity = input.SplitQuantity,
                 OccuredStartDate = input.OccuredStartDate,
                 OperationTime = input.OperationTime,
                 PlannedQuantity = input.PlannedQuantity,
@@ -452,6 +529,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 IsCancel = entity.IsCancel,
                 LineNr = entity.LineNr,
                 LinkedWorkOrderID = entity.LinkedWorkOrderID,
+                SplitQuantity = entity.SplitQuantity,
                 OccuredFinishDate = entity.OccuredFinishDate,
                 OccuredStartDate = entity.OccuredStartDate,
                 OperationTime = entity.OperationTime,

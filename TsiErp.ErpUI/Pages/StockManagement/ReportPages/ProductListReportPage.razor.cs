@@ -1,13 +1,8 @@
 ﻿using DevExpress.Blazor.Reporting;
-using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using System.Linq.Dynamic.Core;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.Services;
-using TsiErp.Business.Entities.Menu.Services;
-using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.ReportDtos.ProductListReportDtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 using TsiErp.Entities.Enums;

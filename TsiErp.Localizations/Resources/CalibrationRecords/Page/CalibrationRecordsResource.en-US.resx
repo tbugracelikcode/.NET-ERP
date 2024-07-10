@@ -177,12 +177,6 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>CalibrationRecords</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Calibration Records</value>
-  </data>
   <data name="InfinitiveCertificateNo" xml:space="preserve">
     <value>INFINITIVE CERTIFICATE NR</value>
   </data>
@@ -231,8 +225,14 @@
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Calibration Records</value>
   </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>CalibrationRecords</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Calibration Records</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Quality Control &gt; Transactions &gt; Calibration Records</value>
+    <value>Quality Control &gt; Transactions &gt; Equipment Calibration Operations &gt; </value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

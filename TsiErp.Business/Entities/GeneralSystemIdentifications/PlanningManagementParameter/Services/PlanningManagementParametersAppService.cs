@@ -7,10 +7,8 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.FinanceManagementParameter.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PlanningManagementParameter.Page;
 

@@ -258,12 +258,6 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>PalletRecords</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Pallet Records</value>
-  </data>
   <data name="FilterButton" xml:space="preserve">
     <value>Filter</value>
   </data>
@@ -667,6 +661,12 @@
     <value>Transfer Package Fiches</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Pallet Records</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>PalletRecords</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Pallet Records</value>
   </data>
   <data name="UILineApprovalConfirmation" xml:space="preserve">

@@ -61,7 +61,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
 
         }
 
-        #region Station ButtonEdit
+        #region İstasyon Grup ButtonEdit
 
         public async Task StationGroupOnCreateIcon()
         {

@@ -120,11 +120,35 @@
   <data name="AdjustmentAndControlTime" xml:space="preserve">
     <value>AYAR VE KONTROL SÜRESİ</value>
   </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
   <data name="Code" xml:space="preserve">
     <value>İŞ EMRİ KODU</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ContractTrackingFicheGridIsSent" xml:space="preserve">
+    <value>GÖNDERİLECEK</value>
+  </data>
+  <data name="ContractTrackingFicheGridOperationCode" xml:space="preserve">
+    <value>OPERASYON KODU</value>
+  </data>
+  <data name="ContractTrackingFicheGridOperationName" xml:space="preserve">
+    <value>OPERASYON AÇIKLAMASI</value>
+  </data>
+  <data name="ContractTrackingFicheGridStationCode" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
+  <data name="ContractTrackingFicheGridStationName" xml:space="preserve">
+    <value>İSTASYON ADI</value>
+  </data>
+  <data name="ContractTrackingFicheGridWorkOrderNr" xml:space="preserve">
+    <value>İŞ EMRİ NO</value>
+  </data>
+  <data name="ContractTrackingFicheModalTitle" xml:space="preserve">
+    <value>Fason Takip</value>
   </data>
   <data name="CurrentAccountCardName" xml:space="preserve">
     <value>CARİ HESAP ÜNVANI</value>
@@ -171,26 +195,80 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="NewPlannedQuantityLabel" xml:space="preserve">
+    <value>Planlanan Adet:</value>
+  </data>
+  <data name="NewWorkOrderNoLabel" xml:space="preserve">
+    <value>Oluşacak İş Emri No:</value>
+  </data>
   <data name="OccuredFinishDate" xml:space="preserve">
     <value>GERÇEKLEŞEN BİTİŞ TARİHİ</value>
   </data>
   <data name="OccuredStartDate" xml:space="preserve">
     <value>GERÇEKLEŞEN BAŞLANGIÇ TARİHİ</value>
   </data>
+  <data name="OldStationLabel" xml:space="preserve">
+    <value>Eski İstasyon:</value>
+  </data>
+  <data name="OldStationNameLabel" xml:space="preserve">
+    <value>İş İstasyonu:</value>
+  </data>
   <data name="OperationTime" xml:space="preserve">
+    <value>OPERASYON SÜRESİ</value>
+  </data>
+  <data name="OProductionTrackingperationTime" xml:space="preserve">
     <value>OPERASYON SÜRESİ</value>
   </data>
   <data name="PlannedQuantity" xml:space="preserve">
     <value>PLANLANAN MİKTAR</value>
   </data>
+  <data name="PlannedQuantityLabel" xml:space="preserve">
+    <value>Planlanan Miktar:</value>
+  </data>
   <data name="ProducedQuantity" xml:space="preserve">
     <value>GERÇEKLEŞEN MİKTAR</value>
+  </data>
+  <data name="ProducedQuantityLabel" xml:space="preserve">
+    <value>Gerçekleşen Miktar:</value>
   </data>
   <data name="ProductCode" xml:space="preserve">
     <value>STOK KODU</value>
   </data>
   <data name="ProductionOrderFicheNo" xml:space="preserve">
     <value>ÜRETİM EMRİ FİŞ NO</value>
+  </data>
+  <data name="ProductionTrackingAdjustmentTime" xml:space="preserve">
+    <value>KONTROL VE AYAR SÜRESİ</value>
+  </data>
+  <data name="ProductionTrackingEmployeeName" xml:space="preserve">
+    <value>ÇALIŞAN</value>
+  </data>
+  <data name="ProductionTrackingHaltTime" xml:space="preserve">
+    <value>DURUŞ SÜRESİ</value>
+  </data>
+  <data name="ProductionTrackingIsFinished" xml:space="preserve">
+    <value>TAMAMLANDI</value>
+  </data>
+  <data name="ProductionTrackingModalTitle" xml:space="preserve">
+    <value>Üretim Takip</value>
+  </data>
+  <data name="ProductionTrackingOperationEndDate" xml:space="preserve">
+    <value>OPERASYON BİTİŞ TARİHİ</value>
+  </data>
+  <data name="ProductionTrackingOperationStartDate" xml:space="preserve">
+    <value>OPERASYON BAŞLANGIÇ TARİHİ</value>
+  </data>
+  <data name="ProductionTrackingPlannedQuantity" xml:space="preserve">
+    <value>PLANLANAN MİKTAR</value>
+  </data>
+  <data name="ProductionTrackingProducedQuantity" xml:space="preserve">
+    <value>GERÇEKLEŞEN MİKTAR</value>
+  </data>
+  <data name="ProductionTrackingStationCode" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
+  <data name="ProductionTrackingWorkOrderCode" xml:space="preserve">
+    <value>İŞ EMRİ NO</value>
   </data>
   <data name="ProductsOperationCode" xml:space="preserve">
     <value>OPERASYON</value>
@@ -201,11 +279,29 @@
   <data name="RouteCode" xml:space="preserve">
     <value>ROTA </value>
   </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="StationChangeModalTitle" xml:space="preserve">
+    <value>İş İstasyonunu Değiştir</value>
+  </data>
   <data name="StationCode" xml:space="preserve">
     <value>İSTASYON</value>
   </data>
   <data name="StationGroupCode" xml:space="preserve">
     <value>İSTASYON GRUBU</value>
+  </data>
+  <data name="StationModalGridCode" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
+  <data name="StationModalGridName" xml:space="preserve">
+    <value>İSTASYON AÇIKLAMASI</value>
+  </data>
+  <data name="StationModalTitle" xml:space="preserve">
+    <value>İş İstasyonları</value>
+  </data>
+  <data name="StationNameLabel" xml:space="preserve">
+    <value>Yeni İstasyon:</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>İş Emirleri</value>
@@ -252,14 +348,35 @@
   <data name="WorkOrderContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>
+  <data name="WorkOrderContextChangeOperationCriteria" xml:space="preserve">
+    <value>Operasyon Kriterlerini Değiştir</value>
+  </data>
+  <data name="WorkOrderContextChangeStation" xml:space="preserve">
+    <value>İş İstasyonunu Değiştir</value>
+  </data>
+  <data name="WorkOrderContextContractTracking" xml:space="preserve">
+    <value>Fason Takip</value>
+  </data>
   <data name="WorkOrderContextDelete" xml:space="preserve">
     <value>Sil</value>
+  </data>
+  <data name="WorkOrderContextProductionTracking" xml:space="preserve">
+    <value>Üretim Takip</value>
   </data>
   <data name="WorkOrderContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="WorkOrderContextSplitWorkOrder" xml:space="preserve">
+    <value>İş Emri Parçala</value>
+  </data>
   <data name="WorkOrderNo" xml:space="preserve">
     <value>İŞ EMRİ NO</value>
+  </data>
+  <data name="WorkOrderNoLabel" xml:space="preserve">
+    <value>İş Emri No:</value>
+  </data>
+  <data name="WorkOrderSplitModalTitle" xml:space="preserve">
+    <value>İş Emri Parçala</value>
   </data>
   <data name="WorkOrderState" xml:space="preserve">
     <value>DURUM</value>

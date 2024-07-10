@@ -223,24 +223,6 @@ namespace TsiErp.Localizations.Resources.ControlTypes.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to KontrolTuruBasliklari.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Kontrol Türü Başlıkları.
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Aktiflik:.
         /// </summary>
         public static string IsActiveLabel {
@@ -349,7 +331,25 @@ namespace TsiErp.Localizations.Resources.ControlTypes.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kalite Kontrol &gt; .
+        ///   Looks up a localized string similar to KontrolTuruBasliklari.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontrol Türü Başlıkları.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalite Kontrol &gt; Ana Kayıtlar.
         /// </summary>
         public static string UIPreviousMenu {
             get {

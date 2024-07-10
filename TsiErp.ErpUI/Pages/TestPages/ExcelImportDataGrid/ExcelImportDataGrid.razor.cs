@@ -1,17 +1,15 @@
-﻿using Microsoft.Extensions.Hosting;
-using Syncfusion.Blazor.Grids;
+﻿using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using Syncfusion.XlsIO;
 using System.Data;
 using System.Dynamic;
-using TsiErp.ErpUI.Services;
 
 namespace TsiErp.ErpUI.Pages.TestPages.ExcelImportDataGrid
 {
     public partial class ExcelImportDataGrid
     {
         SfGrid<ExpandoObject> Grid;
-        public DataTable table = new DataTable();
+        public DataTable table = new DataTable(); 
         private void OnChange(UploadChangeEventArgs args)
         {
             foreach (var file in args.Files)

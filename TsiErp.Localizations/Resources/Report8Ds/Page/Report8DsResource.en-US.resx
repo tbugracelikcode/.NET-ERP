@@ -447,12 +447,6 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>8DReports</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>8D Reports</value>
-  </data>
   <data name="FirstD4" xml:space="preserve">
     <value>First Occurrence Failure</value>
   </data>
@@ -622,6 +616,12 @@
     <value>Concern Title:</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>8D Reports</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>8DReports</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>8D Reports</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

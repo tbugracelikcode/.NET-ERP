@@ -6,7 +6,6 @@ using Syncfusion.Blazor.Inputs;
 using Syncfusion.XlsIO;
 using System.Data;
 using System.Dynamic;
-using TsiErp.Business.Entities.SalesPrice.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
@@ -15,13 +14,9 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchasePrice.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos;
-using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
-using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
-using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using static TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord.OrderAcceptanceRecordsListPage;
 
 namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
 {

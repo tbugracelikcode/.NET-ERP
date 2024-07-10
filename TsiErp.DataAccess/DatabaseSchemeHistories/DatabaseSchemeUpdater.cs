@@ -164,6 +164,13 @@ using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty;
 using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine;
+using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeReport;
+using TsiErp.Entities.Entities.TestManagement.Continent;
+using TsiErp.Entities.Entities.TestManagement.ContinentLine;
+using TsiErp.Entities.Entities.TestManagement.Sector;
+using TsiErp.Entities.Entities.TestManagement.SectorLine;
+using TsiErp.Entities.Entities.TestManagement.District;
+using TsiErp.Entities.Entities.TestManagement.City;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -5742,6 +5749,256 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 BankAccountsTable.Create();
             }
             #endregion
+
+            #region ProductionOrderChangeReports Table Created
+            Table ProductionOrderChangeReportsTable = model.CreateTable(Tables.ProductionOrderChangeReports);
+
+            if (ProductionOrderChangeReportsTable != null)
+            {
+                var properties = (typeof(ProductionOrderChangeReports)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ProductionOrderChangeReportsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ProductionOrderChangeReportsTable, "PK_" + ProductionOrderChangeReportsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ProductionOrderChangeReportsTable.Indexes.Add(pkIndex);
+                    }
+
+                    ProductionOrderChangeReportsTable.Columns.Add(column);
+                }
+
+                ProductionOrderChangeReportsTable.Create();
+            }
+            #endregion
+
+            //TEST BÖLGESİ
+
+            #region Continents Table Created
+            Table ContinentsTable = model.CreateTable(Tables.Continents);
+
+            if (ContinentsTable != null)
+            {
+                var properties = (typeof(Continents)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ContinentsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ContinentsTable, "PK_" + ContinentsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ContinentsTable.Indexes.Add(pkIndex);
+                    }
+
+                    ContinentsTable.Columns.Add(column);
+                }
+
+                ContinentsTable.Create();
+            }
+            #endregion
+
+            #region ContinentLines Table Created
+            Table ContinentLinesTable = model.CreateTable(Tables.ContinentLines);
+
+            if (ContinentLinesTable != null)
+            {
+                var properties = (typeof(ContinentLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ContinentLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ContinentLinesTable, "PK_" + ContinentLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ContinentLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    ContinentLinesTable.Columns.Add(column);
+                }
+
+                ContinentLinesTable.Create();
+            }
+            #endregion
+
+            #region Sectors Table Created
+            Table SectorsTable = model.CreateTable(Tables.Sectors);
+
+            if (SectorsTable != null)
+            {
+                var properties = (typeof(Sectors)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(SectorsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(SectorsTable, "PK_" + SectorsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        SectorsTable.Indexes.Add(pkIndex);
+                    }
+
+                    SectorsTable.Columns.Add(column);
+                }
+
+                SectorsTable.Create();
+            }
+            #endregion
+
+            #region SectorLines Table Created
+            Table SectorLinesTable = model.CreateTable(Tables.SectorLines);
+
+            if (SectorLinesTable != null)
+            {
+                var properties = (typeof(SectorLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(SectorLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(SectorLinesTable, "PK_" + SectorLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        SectorLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    SectorLinesTable.Columns.Add(column);
+                }
+
+                SectorLinesTable.Create();
+            }
+            #endregion
+
+            #region Cities Table Created
+            Table CitiesTable = model.CreateTable(Tables.Cities);
+
+            if (CitiesTable != null)
+            {
+                var properties = (typeof(Cities)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(CitiesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(CitiesTable, "PK_" + CitiesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        CitiesTable.Indexes.Add(pkIndex);
+                    }
+
+                    CitiesTable.Columns.Add(column);
+                }
+
+                CitiesTable.Create();
+            }
+            #endregion
+
+            #region CityLines Table Created
+            Table CityLinesTable = model.CreateTable(Tables.CityLines);
+
+            if (CityLinesTable != null)
+            {
+                var properties = (typeof(CityLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(CityLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(CityLinesTable, "PK_" + CityLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        CityLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    CityLinesTable.Columns.Add(column);
+                }
+
+                CityLinesTable.Create();
+            }
+            #endregion
+
+
+            //---------------------
 
             return true;
         }

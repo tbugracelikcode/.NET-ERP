@@ -1,24 +1,19 @@
-﻿using Syncfusion.Blazor.Grids;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using TsiErp.ErpUI.Utilities.ModalUtilities;
-using TsiErp.Entities.Entities.QualityControl.OperationalSPCLine.Dtos;
-using TsiErp.Business.Entities.SalesPrice.Services;
-using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
-using TsiErp.Entities.Entities.SalesManagement.SalesPriceLine.Dtos;
-using TsiErp.Entities.Entities.QualityControl.OperationalSPC.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
-using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
-using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
-using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
-using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
+using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
-using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationalSPC.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationalSPCLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 {

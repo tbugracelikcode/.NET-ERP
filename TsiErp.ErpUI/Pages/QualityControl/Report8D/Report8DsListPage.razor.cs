@@ -9,8 +9,6 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
-using TsiErp.Entities.Entities.QualityControl.CalibrationRecord.Dtos;
-using TsiErp.Entities.Entities.QualityControl.EquipmentRecord.Dtos;
 using TsiErp.Entities.Entities.QualityControl.Report8D.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
@@ -746,7 +744,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
         #region Combobox İşlemleri
 
-        #region D2
+      #region D2
         public class D2ComplaintComboBox
         {
             public string ID { get; set; }
@@ -781,7 +779,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
         }
 
         #endregion
-
+  
         #region D4
 
         public class D4FailureOccuranceComboBox

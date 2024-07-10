@@ -1,7 +1,6 @@
 ﻿using BlazorInputFile;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.JsonPatch.Operations;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Extensions.ObjectMapping;
@@ -17,7 +16,6 @@ using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlCondition.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
-using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;

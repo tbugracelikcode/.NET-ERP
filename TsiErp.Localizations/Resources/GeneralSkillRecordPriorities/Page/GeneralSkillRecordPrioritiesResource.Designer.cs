@@ -188,24 +188,6 @@ namespace TsiErp.Localizations.Resources.GeneralSkillRecordPriorities.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GenelBeceriKayitlariOncelikleri.
-        /// </summary>
-        public static string ExportFileName {
-            get {
-                return ResourceManager.GetString("ExportFileName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Genel Beceri Kayıtları Öncelikleri.
-        /// </summary>
-        public static string ExportTitle {
-            get {
-                return ResourceManager.GetString("ExportTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to BECERİ.
         /// </summary>
         public static string GeneralSkillName {
@@ -328,6 +310,24 @@ namespace TsiErp.Localizations.Resources.GeneralSkillRecordPriorities.Page {
         public static string UICurrentMenu {
             get {
                 return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GenelBeceriKayitlariOncelikleri.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Beceri Kayıtları Öncelikleri.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
             }
         }
         

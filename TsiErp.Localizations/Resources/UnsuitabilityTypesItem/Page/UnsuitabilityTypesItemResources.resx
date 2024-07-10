@@ -153,12 +153,6 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>UygunsuzlukTuruBasliklari</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Uygunsuzluk Türü Başlıkları</value>
-  </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Aktiflik:</value>
   </data>
@@ -167,6 +161,9 @@
   </data>
   <data name="IsOperationLabel" xml:space="preserve">
     <value>Operasyon</value>
+  </data>
+  <data name="IsProductionOrderLabel" xml:space="preserve">
+    <value>Üretim Emri Değişiklik</value>
   </data>
   <data name="IsPurchaseLabel" xml:space="preserve">
     <value>Satınalma</value>
@@ -195,8 +192,14 @@
   <data name="StationGroupLabel" xml:space="preserve">
     <value>İş Merkezi:</value>
   </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>UygunsuzlukTuruBasliklari</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Uygunsuzluk Türü Başlıkları</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Kalite Kontrol &gt; </value>
+    <value>Kalite Kontrol &gt; Ana Kayıtlar</value>
   </data>
   <data name="UnsuitabilityTypesItemContextAdd" xml:space="preserve">
     <value>Ekle</value>

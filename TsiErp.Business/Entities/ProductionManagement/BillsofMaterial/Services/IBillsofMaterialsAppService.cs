@@ -9,5 +9,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
     {
         Task<IDataResult<SelectBillsofMaterialsDto>> GetbyCurrentAccountIDAsync(Guid currentAccountID, Guid finishedProductId);
         Task<IDataResult<SelectBillsofMaterialsDto>> GetbyProductIDAsync( Guid finishedProductId);
+        Task<IDataResult<SelectBillsofMaterialsDto>> GetListbyProductIDAsync(Guid finishedProductId);
     }
 }

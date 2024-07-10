@@ -120,6 +120,9 @@
   <data name="BOMCode" xml:space="preserve">
     <value>BOM CODE</value>
   </data>
+  <data name="BranchCode" xml:space="preserve">
+    <value>BRANCH CODE</value>
+  </data>
   <data name="BranchCodeButtonEditLabel" xml:space="preserve">
     <value>Branch:</value>
   </data>
@@ -129,17 +132,50 @@
   <data name="BranchesPopupGridName" xml:space="preserve">
     <value>BRANCH NAME</value>
   </data>
+  <data name="BranchModalGridCode" xml:space="preserve">
+    <value>BRANCH CODE</value>
+  </data>
+  <data name="BranchModalGridDescription" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
+  <data name="BranchModalGridName" xml:space="preserve">
+    <value>BRANCH NAME</value>
+  </data>
   <data name="BranchModalTitle" xml:space="preserve">
     <value>Branches</value>
   </data>
+  <data name="BranchModalTitle1" xml:space="preserve">
+    <value>Branches</value>
+  </data>
+  <data name="BranchNameLabel" xml:space="preserve">
+    <value>Branch Code:</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="CloseButton1" xml:space="preserve">
     <value>Close</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
   </data>
+  <data name="CodeControlManager1" xml:space="preserve">
+    <value>There is a record with the same number.</value>
+  </data>
   <data name="CreateFicheButton" xml:space="preserve">
     <value>Create Fiche</value>
+  </data>
+  <data name="CurrencyCodeLabel" xml:space="preserve">
+    <value>Local Currency Code:</value>
+  </data>
+  <data name="CurrencyModalGridCode" xml:space="preserve">
+    <value>CURRENCY CODE</value>
+  </data>
+  <data name="CurrencyModalGridName" xml:space="preserve">
+    <value>CURRENCY NAME</value>
+  </data>
+  <data name="CurrencyModalTitle" xml:space="preserve">
+    <value>Currencies</value>
   </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>CUSTOMER CODE</value>
@@ -147,23 +183,56 @@
   <data name="CustomerCodeLabel" xml:space="preserve">
     <value>Variant Code:</value>
   </data>
+  <data name="Date_" xml:space="preserve">
+    <value>DATE</value>
+  </data>
   <data name="Date_Label" xml:space="preserve">
     <value>Fiche Date:</value>
   </data>
+  <data name="Date_Label1" xml:space="preserve">
+    <value>Date:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
+    <value>Are you sure you want to delete?</value>
+  </data>
+  <data name="DeleteConfirmationDescriptionBase1" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
     <value>Confirmation</value>
   </data>
+  <data name="DeleteConfirmationTitleBase1" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Stock Fiche Lines</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Stock Fiches</value>
+  </data>
+  <data name="EditStockLineModalTitle" xml:space="preserve">
+    <value>Stock Fiche Lines</value>
   </data>
   <data name="EndDate" xml:space="preserve">
     <value>END DATE</value>
   </data>
+  <data name="EnumAparatus" xml:space="preserve">
+    <value>(APRT) Aparatus</value>
+  </data>
   <data name="EnumBaslamadi" xml:space="preserve">
     <value>Not Start</value>
+  </data>
+  <data name="EnumCommercialProduct" xml:space="preserve">
+    <value>(CP) Commercial Product</value>
+  </data>
+  <data name="EnumConsume" xml:space="preserve">
+    <value>Consumption Fiche</value>
   </data>
   <data name="EnumDevamEdiyor" xml:space="preserve">
     <value>Continues</value>
@@ -174,14 +243,74 @@
   <data name="EnumIptal" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="EnumKit" xml:space="preserve">
+    <value>(KT) Kit</value>
+  </data>
+  <data name="EnumMaterial" xml:space="preserve">
+    <value>(MT) Material</value>
+  </data>
+  <data name="EnumMold" xml:space="preserve">
+    <value>(MLD) Mold</value>
+  </data>
+  <data name="EnumProduct" xml:space="preserve">
+    <value>(FP) Finished Product</value>
+  </data>
+  <data name="EnumProduction" xml:space="preserve">
+    <value>Production</value>
+  </data>
+  <data name="EnumProductionIncome" xml:space="preserve">
+    <value>Production Input Fiche</value>
+  </data>
+  <data name="EnumPurchase" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
+  <data name="EnumReserved" xml:space="preserve">
+    <value>Add Reserved Fiche</value>
+  </data>
+  <data name="EnumSemiProduct" xml:space="preserve">
+    <value>(SP) Semi-Product</value>
+  </data>
+  <data name="EnumSparePart" xml:space="preserve">
+    <value>(SPR) Spare Part</value>
+  </data>
+  <data name="EnumStockIncome" xml:space="preserve">
+    <value>Stock Input Fiche</value>
+  </data>
+  <data name="EnumStockOutput" xml:space="preserve">
+    <value>Stock Output Fiche</value>
+  </data>
   <data name="EnumTamamlandi" xml:space="preserve">
     <value>Completed</value>
+  </data>
+  <data name="EnumWarehouse" xml:space="preserve">
+    <value>Shipped to Warehouse Fiche</value>
+  </data>
+  <data name="EnumWastage" xml:space="preserve">
+    <value>Wastege Fiche</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="Error1" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ExchangeRateLabel" xml:space="preserve">
+    <value>Exchange Rate:</value>
+  </data>
   <data name="FicheNo" xml:space="preserve">
     <value>FICHE NR</value>
+  </data>
+  <data name="FicheNo1" xml:space="preserve">
+    <value>STOCK FICHE NUMBER</value>
+  </data>
+  <data name="FicheNoLabel" xml:space="preserve">
+    <value>Stock Fiche Number:</value>
+  </data>
+  <data name="FicheType" xml:space="preserve">
+    <value>FICHE TYPE</value>
+  </data>
+  <data name="FicheTypeLabel" xml:space="preserve">
+    <value>Fiche Type:</value>
   </data>
   <data name="FinishedProductCode" xml:space="preserve">
     <value>FINISHED PRODUCT CODE</value>
@@ -192,23 +321,77 @@
   <data name="FinishedProductNameLabel" xml:space="preserve">
     <value>Product Name:</value>
   </data>
+  <data name="LineAmountLineLabel" xml:space="preserve">
+    <value>Line Amount:</value>
+  </data>
+  <data name="LineDescriptionLineLabel" xml:space="preserve">
+    <value>Line Description:</value>
+  </data>
+  <data name="LineGridLineAmount" xml:space="preserve">
+    <value>LINE PRICE</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="LineGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="LineGridQuantity" xml:space="preserve">
+    <value>QUANTITY</value>
+  </data>
+  <data name="LineGridUnitPrice" xml:space="preserve">
+    <value>UNIT PRICE</value>
+  </data>
+  <data name="LineGridUnitSetCode" xml:space="preserve">
+    <value>UNIT SET</value>
+  </data>
   <data name="LinkedProductCode" xml:space="preserve">
     <value>LINKED PRODUCT CODE</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
+  <data name="LoadingCaption1" xml:space="preserve">
+    <value>Please wait..</value>
+  </data>
   <data name="LoadingText" xml:space="preserve">
+    <value>The records are loading..</value>
+  </data>
+  <data name="LoadingText1" xml:space="preserve">
     <value>The records are loading..</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
   </data>
+  <data name="MessagePopupInformationDescriptionBase1" xml:space="preserve">
+    <value>The record you selected is using by {0}.</value>
+  </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="MessagePopupInformationTitleBase1" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="NetAmount" xml:space="preserve">
+    <value>NET AMOUNT</value>
+  </data>
+  <data name="NetAmountLabel" xml:space="preserve">
+    <value>Net Amount:</value>
+  </data>
+  <data name="NewTechDrawingDateLabel" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="NewTechDrawingDescriptionLabel" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="NewTechDrawingNoLabel" xml:space="preserve">
+    <value>New Technical Drawing No:</value>
+  </data>
   <data name="OccuredAmountTitle" xml:space="preserve">
     <value>Occured Amount Entry</value>
+  </data>
+  <data name="OldTechDrawingNoLabel" xml:space="preserve">
+    <value>Previous Technical Drawing No:</value>
   </data>
   <data name="OrderFicheNo" xml:space="preserve">
     <value>ORDER FICHE NR</value>
@@ -219,14 +402,83 @@
   <data name="ProducedQuantity" xml:space="preserve">
     <value>PRODUCED QUANTITY</value>
   </data>
+  <data name="ProductCodeLineLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
   <data name="ProductionDateReferanceLabel" xml:space="preserve">
     <value>Production Date Referance:</value>
+  </data>
+  <data name="ProductionDateReferanceLabel1" xml:space="preserve">
+    <value>Production Date Referance:</value>
+  </data>
+  <data name="ProductionOrderChangeReportActionLabel" xml:space="preserve">
+    <value>Action:</value>
+  </data>
+  <data name="ProductionOrderChangeReportContextView" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="ProductionOrderChangeReportDate_Label" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="ProductionOrderChangeReportDescription_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="ProductionOrderChangeReportFicheNoLabel" xml:space="preserve">
+    <value>Fiche Number:</value>
+  </data>
+  <data name="ProductionOrderChangeReportModalTitle" xml:space="preserve">
+    <value>Production Order Change Reports</value>
+  </data>
+  <data name="ProductionOrderChangeReportProductCodeLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="ProductionOrderChangeReportProductionOrderFicheNoLabel" xml:space="preserve">
+    <value>Production Order Fiche Number:</value>
+  </data>
+  <data name="ProductionOrderChangeReportProductNameLabel" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
+  <data name="ProductionOrderChangeReportSalesOrderFicheNoLabel" xml:space="preserve">
+    <value>Order Number:</value>
+  </data>
+  <data name="ProductionOrderChangeReportsDate_" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="ProductionOrderChangeReportsFicheNo" xml:space="preserve">
+    <value>FICHE NO</value>
+  </data>
+  <data name="ProductionOrderChangeReportsProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductionOrderChangeReportsProductionOrderFicheNo" xml:space="preserve">
+    <value>PRODUCTION ORDER FICHE NO</value>
+  </data>
+  <data name="ProductionOrderChangeReportsProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductionOrderChangeReportsSalesOrderFicheNo" xml:space="preserve">
+    <value>ORDER NO</value>
+  </data>
+  <data name="ProductionOrderChangeReportUnsuitabilityItemsNameLabel" xml:space="preserve">
+    <value>Unsuitability Item:</value>
+  </data>
+  <data name="ProductionOrderChangeReportViewModalTitle" xml:space="preserve">
+    <value>Production Order Change Reports</value>
+  </data>
+  <data name="ProductionOrderCodeLabel" xml:space="preserve">
+    <value>Production Order Receipt Nr:</value>
   </data>
   <data name="ProductionOrderContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="ProductionOrderContextCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="ProductionOrderContextChange" xml:space="preserve">
     <value>Change</value>
+  </data>
+  <data name="ProductionOrderContextChangeTechnicalDrawing" xml:space="preserve">
+    <value>Change Technical Drawing</value>
   </data>
   <data name="ProductionOrderContextConsumptionReceipt" xml:space="preserve">
     <value>Create Consumption Fiche</value>
@@ -234,35 +486,239 @@
   <data name="ProductionOrderContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ProductionOrderContextMaterialFiches" xml:space="preserve">
+    <value>Material Fiches</value>
+  </data>
+  <data name="ProductionOrderContextMaterialSupplyStatus" xml:space="preserve">
+    <value>Material Supply Status</value>
+  </data>
   <data name="ProductionOrderContextOccuredAmountEntry" xml:space="preserve">
     <value>Occured Amount Entry</value>
+  </data>
+  <data name="ProductionOrderContextPrintProdOrder" xml:space="preserve">
+    <value>Print Production Order</value>
   </data>
   <data name="ProductionOrderContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ProductionOrderContextRequestForm" xml:space="preserve">
+    <value>Raw Material and Semi-Finished Product Request Form</value>
+  </data>
+  <data name="ProductionOrderContextTrackingChart" xml:space="preserve">
+    <value>R.M. - S.F.P. Tracking Chart</value>
+  </data>
+  <data name="ProductionOrderContextUnsuitabilityRecords" xml:space="preserve">
+    <value>Unsuitability Records</value>
+  </data>
+  <data name="ProductionOrderContextViewProdOrder" xml:space="preserve">
+    <value>View Production Order</value>
+  </data>
   <data name="ProductionOrderContextWorkOrders" xml:space="preserve">
     <value>Work Orders</value>
+  </data>
+  <data name="ProductionOrderContextWrite" xml:space="preserve">
+    <value>Print</value>
+  </data>
+  <data name="ProductionOrderModalGridFicheNo" xml:space="preserve">
+    <value>PRODUCTION ORDER RECEIPT NR</value>
+  </data>
+  <data name="ProductionOrderModalGridFinishedProductCode" xml:space="preserve">
+    <value>FINISHED PRODUCT CODE</value>
+  </data>
+  <data name="ProductionOrderModalGridPlannedQuantity" xml:space="preserve">
+    <value>PLANNED QUANTITY</value>
+  </data>
+  <data name="ProductionOrderModalGridProducedQuantity" xml:space="preserve">
+    <value>PRODUCED QUANTITY</value>
+  </data>
+  <data name="ProductionOrdersModalTitle" xml:space="preserve">
+    <value>Production Orders</value>
   </data>
   <data name="ProductionOrderState" xml:space="preserve">
     <value>PRODUCTION ORDER STATE</value>
   </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="ProductNameLineLabel" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
   <data name="QuantityLabel" xml:space="preserve">
     <value>Quantity:</value>
+  </data>
+  <data name="QuantityLineLabel" xml:space="preserve">
+    <value>Quantity:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SpecialCodeLabel" xml:space="preserve">
+    <value>Special Code:</value>
   </data>
   <data name="StartDate" xml:space="preserve">
     <value>START DATE</value>
   </data>
+  <data name="StockFicheContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockFicheContextAddConsume" xml:space="preserve">
+    <value>Consumption Fiche</value>
+  </data>
+  <data name="StockFicheContextAddProductionIncome" xml:space="preserve">
+    <value>Production Input Fiche</value>
+  </data>
+  <data name="StockFicheContextAddReserved" xml:space="preserve">
+    <value>Reserve Fiche</value>
+  </data>
+  <data name="StockFicheContextAddStockIncome" xml:space="preserve">
+    <value>Stock Input Fiche</value>
+  </data>
+  <data name="StockFicheContextAddStockOutput" xml:space="preserve">
+    <value>Stock Output Fiche</value>
+  </data>
+  <data name="StockFicheContextAddWarehouse" xml:space="preserve">
+    <value>Shipping to Warehouse Fiche</value>
+  </data>
+  <data name="StockFicheContextAddWastege" xml:space="preserve">
+    <value>Wastage Fiche</value>
+  </data>
+  <data name="StockFicheContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockFicheContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockFicheContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="StockFicheEditModalTitle" xml:space="preserve">
+    <value>Stock Fiches</value>
+  </data>
+  <data name="StockFicheLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockFicheLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockFicheLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockFicheLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="StockFicheModalTitle" xml:space="preserve">
+    <value>Stock Fiches</value>
+  </data>
+  <data name="StockFichesGeneralConAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="TechnicalDrawingUpdateModalTitle" xml:space="preserve">
+    <value>Technical Drawing Change</value>
+  </data>
+  <data name="TechnicalDrawingUpdateProductionOrderNoLabel" xml:space="preserve">
+    <value>Production Order No:</value>
+  </data>
+  <data name="Time_Label" xml:space="preserve">
+    <value>Hour:</value>
+  </data>
+  <data name="TrackingGridLineType" xml:space="preserve">
+    <value>LINE TYPE</value>
+  </data>
+  <data name="TrackingGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="TrackingGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="TrackingGridQuantity" xml:space="preserve">
+    <value>QUANTITY</value>
+  </data>
+  <data name="TrackingGridSize" xml:space="preserve">
+    <value>SIZE</value>
+  </data>
+  <data name="TrackingGridTotalCounsume" xml:space="preserve">
+    <value>TOTAL CONSUME QUANTITY</value>
+  </data>
+  <data name="TrackingGridTotalOutput" xml:space="preserve">
+    <value>TOTAL OUTPUT QUANTITY</value>
+  </data>
+  <data name="TrackingGridTotalWastage" xml:space="preserve">
+    <value>TOTAL WASTAGE QUANTITY</value>
+  </data>
+  <data name="TrackingGridUnitSet" xml:space="preserve">
+    <value>UNIT SET</value>
+  </data>
+  <data name="TrackingModalTitle" xml:space="preserve">
+    <value>Raw Material - Semi-Product Tracking Chart</value>
+  </data>
+  <data name="TransactionExchangeLabel" xml:space="preserve">
+    <value>Transaction Exchange Currency:</value>
+  </data>
+  <data name="TransactionExchangeLineAmountLabel" xml:space="preserve">
+    <value>Transaction Exchange Rate Line Amount:</value>
+  </data>
+  <data name="TransactionExchangeUnitPriceLabel" xml:space="preserve">
+    <value>Transaction Exchange Rate Unit Price:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>The stock fiche you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupStockFicheMessageBase" xml:space="preserve">
+    <value>The stock fiche you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Attention</value>
+  </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Production Orders</value>
+  </data>
+  <data name="UICurrentMenu1" xml:space="preserve">
+    <value>Stock Fiches</value>
   </data>
   <data name="UIExportFileName" xml:space="preserve">
     <value>ProductionOrders</value>
   </data>
+  <data name="UIExportFileName1" xml:space="preserve">
+    <value>StockFiches</value>
+  </data>
+  <data name="UIExportTechDrawing" xml:space="preserve">
+    <value>Change Technical Drawing</value>
+  </data>
   <data name="UIExportTitle" xml:space="preserve">
     <value>Production Orders</value>
   </data>
+  <data name="UIExportTitle1" xml:space="preserve">
+    <value>Stock Fiches</value>
+  </data>
+  <data name="UIExportTracking" xml:space="preserve">
+    <value>R.M.- S.P.TrackingChart</value>
+  </data>
+  <data name="UIMessageNullBomMessage" xml:space="preserve">
+    <value>The production order does not have a product bills of material.</value>
+  </data>
+  <data name="UIMessageNullBomTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="UIMessageNullTechDrawMessage" xml:space="preserve">
+    <value>There is no company or customer approved technical drawing record of the product belonging to this production order.</value>
+  </data>
+  <data name="UIMessageNullTechDrawTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Production Management &gt; Transactions</value>
+  </data>
+  <data name="UIPreviousMenu1" xml:space="preserve">
+    <value>Inventory Management &gt;Transactions</value>
   </data>
   <data name="UIWarningCreateOccuredAmountFicheMessageQuantity" xml:space="preserve">
     <value>Quantity field must be filled.</value>
@@ -273,8 +729,41 @@
   <data name="UIWarningCreateOccuredAmountFicheTitle" xml:space="preserve">
     <value>Warning</value>
   </data>
+  <data name="UIWarningFicheTypeMessageBase" xml:space="preserve">
+    <value>It is not possible to add a line without selecting a fiche type.</value>
+  </data>
+  <data name="UIWarningFicheTypeTitleBase" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningPopupMessageBase1" xml:space="preserve">
+    <value>It is not possible to save lines without selecting the unit set.</value>
+  </data>
+  <data name="UIWarningPopupMessageBase2" xml:space="preserve">
+    <value>It is not possible to save lines without selecting the product.</value>
+  </data>
+  <data name="UIWarningPopupMessageBase3" xml:space="preserve">
+    <value>It is not possible to save lines when quantity is equal to 0.</value>
+  </data>
+  <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UnitPriceLineLabel" xml:space="preserve">
+    <value>Unit Price:</value>
+  </data>
   <data name="UnitSetCode" xml:space="preserve">
     <value>UNIT SET</value>
+  </data>
+  <data name="UnitSetCodeLineLabel" xml:space="preserve">
+    <value>Unit Set Code:</value>
+  </data>
+  <data name="UnitSetModalGridCode" xml:space="preserve">
+    <value>UNIT SET CODE</value>
+  </data>
+  <data name="UnitSetModalGridName" xml:space="preserve">
+    <value>UNIT SET NAME</value>
+  </data>
+  <data name="UnitSetModalTitle" xml:space="preserve">
+    <value>Unit Sets</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
@@ -291,6 +780,12 @@
   <data name="ValidatorCurrentAccountID" xml:space="preserve">
     <value>Please select a current account.</value>
   </data>
+  <data name="ValidatorExchangeRateEmpty" xml:space="preserve">
+    <value>Please enter the exchange rate.</value>
+  </data>
+  <data name="ValidatorExchangeRateMin" xml:space="preserve">
+    <value>The exchange rate must be at least 1.</value>
+  </data>
   <data name="ValidatorFinishedProductID" xml:space="preserve">
     <value>Please select a finished product.</value>
   </data>
@@ -306,10 +801,25 @@
   <data name="ValidatorUnitSetID" xml:space="preserve">
     <value>Please select an unit set.</value>
   </data>
+  <data name="WarehouseCode" xml:space="preserve">
+    <value>WAREHOUSE CODE</value>
+  </data>
   <data name="WarehouseCodeButtonEditLabel" xml:space="preserve">
     <value>Warehouse:</value>
   </data>
+  <data name="WarehouseCodeLabel" xml:space="preserve">
+    <value>Warehouse Code:</value>
+  </data>
+  <data name="WarehouseModalGridCode" xml:space="preserve">
+    <value>WAREHOUSE CODE</value>
+  </data>
+  <data name="WarehouseModalGridName" xml:space="preserve">
+    <value>WAREHOUSE NAME</value>
+  </data>
   <data name="WarehouseModalTitle" xml:space="preserve">
+    <value>Warehouses</value>
+  </data>
+  <data name="WarehouseModalTitle1" xml:space="preserve">
     <value>Warehouses</value>
   </data>
   <data name="WarehousesPopupGridCode" xml:space="preserve">

@@ -240,12 +240,6 @@
   <data name="ExchangeRateAmountLabel" xml:space="preserve">
     <value>Kur Tutarı:</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>SiparisKabulKayitlari</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Sipariş Kabul Kayıtları</value>
-  </data>
   <data name="LineAmountLineLabel" xml:space="preserve">
     <value>Satır Toplamı:</value>
   </data>
@@ -532,6 +526,12 @@
     <value>Uyarı</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Sipariş Kabul Kayıtları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>SiparisKabulKayitlari</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Sipariş Kabul Kayıtları</value>
   </data>
   <data name="UILineIncludeEmptyProductMessage" xml:space="preserve">

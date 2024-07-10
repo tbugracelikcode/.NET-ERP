@@ -178,6 +178,24 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Şehirler.
+        /// </summary>
+        public static string CitiesChildMenu {
+            get {
+                return ResourceManager.GetString("CitiesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kıtalar.
+        /// </summary>
+        public static string ContinentsChildMenu {
+            get {
+                return ResourceManager.GetString("ContinentsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fason İmalat Takip Kayıtları.
         /// </summary>
         public static string ContractProdTrackingsChildMenu {
@@ -907,6 +925,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Emri Değişiklik Kayıtları.
+        /// </summary>
+        public static string ProdOrderChangeRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("ProdOrderChangeRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Emri Uygunsuzluk Kayıtları.
         /// </summary>
         public static string ProdOrderRecordsChildMenu {
@@ -1411,6 +1438,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sektörler.
+        /// </summary>
+        public static string SectorsChildMenu {
+            get {
+                return ResourceManager.GetString("SectorsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vardiya Tanımlamaları.
         /// </summary>
         public static string ShiftsChildMenu {
@@ -1695,6 +1731,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string TempOperationsChildMenu {
             get {
                 return ResourceManager.GetString("TempOperationsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Yönetimi.
+        /// </summary>
+        public static string TestManagementParentMenu {
+            get {
+                return ResourceManager.GetString("TestManagementParentMenu", resourceCulture);
             }
         }
         

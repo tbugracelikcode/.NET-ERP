@@ -67,7 +67,7 @@ else
                                     <GridColumn Field=@nameof(ListMRPsDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["Date_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListMRPsDto.State_) HeaderText="@L["State_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListMRPsDto.Description_) HeaderText="@L["Description_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListMRPsDto.MaintenanceMRPCode) HeaderText="@L["MaintenanceMRPCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListMRPsDto.MaintenanceMRPCode) HeaderText="@L["MaintenanceMRPCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
 
                                 </GridColumns>
@@ -86,9 +86,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["EditModalTitle"]"
-             Width="87%"
+             Width="83%"
              Height="83%"
-             MinWidth="1500px"
+             MinWidth="1000px"
              MinHeight="900px"
              HeaderCssClass="HeaderTitleCss"
              Showing="CrudModalShowing"
@@ -108,12 +108,12 @@ else
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="4%" />
                     <DxGridLayoutColumn Width="20%" />
-                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="4%" />
                     <DxGridLayoutColumn Width="40%" />
                     <DxGridLayoutColumn Width="24%" />
-                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="4%" />
                 </Columns>
 
                 <Items>

@@ -243,12 +243,6 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>CekiListeleri</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Çeki Listeleri</value>
-  </data>
   <data name="LineCubageGridCubage" xml:space="preserve">
     <value>KÜBAJ</value>
   </data>
@@ -463,6 +457,12 @@
     <value>Tedarikçi Numarası:</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Çeki Listeleri</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>CekiListeleri</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Çeki Listeleri</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

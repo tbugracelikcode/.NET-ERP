@@ -421,7 +421,7 @@ namespace TsiErp.Localizations.Resources.EquipmentRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kalite Kontrol &gt; Ekipman Yönetimi.
+        ///   Looks up a localized string similar to Kalite Kontrol &gt; Ana Kayıtlar.
         /// </summary>
         public static string UIPreviousMenu {
             get {

@@ -258,12 +258,6 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>PaletKayitlari</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Palet Kayıtları</value>
-  </data>
   <data name="FilterButton" xml:space="preserve">
     <value>Filtrele</value>
   </data>
@@ -667,6 +661,12 @@
     <value>Paket Fişlerini Aktar</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>Palet Kayıtları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>PaletKayitlari</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
     <value>Palet Kayıtları</value>
   </data>
   <data name="UILineApprovalConfirmation" xml:space="preserve">

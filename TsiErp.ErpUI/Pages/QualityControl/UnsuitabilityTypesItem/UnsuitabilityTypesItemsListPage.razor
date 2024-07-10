@@ -78,8 +78,8 @@ else
                 <Rows>
                     <DxGridLayoutRow Height="21%" />
                     <DxGridLayoutRow Height="0.4%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="0.4%" />
+                    <DxGridLayoutRow Height="20%" />
+                    <DxGridLayoutRow Height="15%" />
                     <DxGridLayoutRow Height="25%" />
                 </Rows>
 
@@ -113,20 +113,20 @@ else
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <table>
-                                    <tr>
-                                        <td>
-                                            <center>
-                                                <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
-                                                <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center>
-                                                <label class="TSIModalLabel"><strong>@L["IsOperationLabel"] </strong></label><br />
-                                                <SfSwitch TChecked="bool" @bind-Checked="@_isOperation" ValueChange="OperationChange"></SfSwitch>
-                                            </center>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>
+                                        <center>
+                                            <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
+                                            <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                            <label class="TSIModalLabel"><strong>@L["IsOperationLabel"] </strong></label><br />
+                                            <SfSwitch TChecked="bool" @bind-Checked="@_isOperation" ValueChange="OperationChange"></SfSwitch>
+                                        </center>
+                                    </td>
+                                </tr>
                             </table>
                         </Template>
                     </DxGridLayoutItem>
@@ -134,21 +134,31 @@ else
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <table>
-                                    <tr>
-                                        <td>
-                                            <center>
-                                                <label class="TSIModalLabel"><strong>@L["IsPurchaseLabel"] </strong></label><br />
-                                                <SfSwitch TChecked="bool"  @bind-Checked="@_isPurchase" ValueChange="PurchaseChange"></SfSwitch>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center>
+                                <tr>
+                                    <td>
+                                        <center>
+                                            <label class="TSIModalLabel"><strong>@L["IsPurchaseLabel"] </strong></label><br />
+                                            <SfSwitch TChecked="bool" @bind-Checked="@_isPurchase" ValueChange="PurchaseChange"></SfSwitch>
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
                                             <label class="TSIModalLabel"><strong>@L["IsContractLabel"] </strong></label><br />
                                             <SfSwitch TChecked="bool" @bind-Checked="@_isContract" ValueChange="ContractChange"></SfSwitch>
-                                            </center>
-                                        </td>
-                                    </tr>
+                                        </center>
+                                    </td>
+                                </tr>
                             </table>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="3">
+                        <Template>
+
+                            <center>
+                                <label class="TSIModalLabel"><strong>@L["IsProductionOrderLabel"] </strong></label><br />
+                                <SfSwitch TChecked="bool" @bind-Checked="@_isProductionOrderChange" ValueChange="ProductionOrderChangeChange"></SfSwitch>
+                            </center>
                         </Template>
                     </DxGridLayoutItem>
 

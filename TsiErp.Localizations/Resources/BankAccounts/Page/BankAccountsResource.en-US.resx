@@ -246,6 +246,12 @@
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Bank Accounts</value>
   </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>BankAccounts</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Bank Accounts</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Finance Management &gt; Main Records</value>
   </data>

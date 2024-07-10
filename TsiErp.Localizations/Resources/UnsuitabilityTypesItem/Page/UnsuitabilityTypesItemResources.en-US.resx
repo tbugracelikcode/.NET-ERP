@@ -153,12 +153,6 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="ExportFileName" xml:space="preserve">
-    <value>UnsuitabilityTypeItems</value>
-  </data>
-  <data name="ExportTitle" xml:space="preserve">
-    <value>Unsuitability Type Items</value>
-  </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
   </data>
@@ -167,6 +161,9 @@
   </data>
   <data name="IsOperationLabel" xml:space="preserve">
     <value>Operation</value>
+  </data>
+  <data name="IsProductionOrderLabel" xml:space="preserve">
+    <value>Production Order Change</value>
   </data>
   <data name="IsPurchaseLabel" xml:space="preserve">
     <value>Purchase</value>
@@ -195,8 +192,14 @@
   <data name="StationGroupLabel" xml:space="preserve">
     <value>Work Center:</value>
   </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>UnsuitabilityTypeItems</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Unsuitability Type Items</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Quality Control &gt; </value>
+    <value>Quality Control &gt; Main Records</value>
   </data>
   <data name="UnsuitabilityTypesItemContextAdd" xml:space="preserve">
     <value>Add</value>

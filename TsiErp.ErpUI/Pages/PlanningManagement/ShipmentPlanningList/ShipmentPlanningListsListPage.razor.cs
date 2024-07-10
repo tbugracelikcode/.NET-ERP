@@ -1,17 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using TsiErp.Business.Entities.Product.Services;
-using Microsoft.AspNetCore.Components.Web;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.Services;
-using TsiErp.Business.Entities.Menu.Services;
-using TsiErp.DataAccess.Services.Login;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 {
