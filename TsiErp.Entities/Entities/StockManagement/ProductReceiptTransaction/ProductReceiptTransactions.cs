@@ -51,7 +51,7 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction
         /// Depo Giriş Miktarı
         /// </summary>
         public decimal WarehouseReceiptQuantity { get; set; }
-        [SqlColumnType( Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        [SqlColumnType( MaxLength = 800, Nullable = false, SqlDbType = SqlDataType.NVarCharMax)]
         /// <summary>
         /// Açıklama
         /// </summary>
