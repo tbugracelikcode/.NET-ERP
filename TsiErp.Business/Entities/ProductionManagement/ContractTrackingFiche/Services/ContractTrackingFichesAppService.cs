@@ -29,6 +29,7 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan;
+using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
@@ -521,6 +522,42 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
             var contractTrackingFiches = queryFactory.GetList<ListContractTrackingFichesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListContractTrackingFichesDto>>(contractTrackingFiches);
+
+        }
+
+        public async Task<IDataResult<IList<SelectContractTrackingFicheLinesDto>>> GetLineListbyWorkOrderIDAsync(Guid workOrderID)
+        {
+            var queryLines = queryFactory
+                            .Query()
+                            .From(Tables.ContractTrackingFicheLines)
+                            .Select<ContractTrackingFicheLines>(null)
+                            .Join<ProductsOperations>
+                             (
+                                 s => new { OperationID = s.Id, OperationCode = s.Code, OperationName = s.Name },
+                                 nameof(ContractTrackingFicheLines.OperationID),
+                                 nameof(ProductsOperations.Id),
+                                 JoinType.Left
+                             )
+                             .Join<Stations>
+                             (
+                                 s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
+                                 nameof(ContractTrackingFicheLines.StationID),
+                                 nameof(Stations.Id),
+                                 JoinType.Left
+                             )
+                              .Join<WorkOrders>
+                             (
+                                 s => new { WorkOrderID = s.Id, WorkOrderNr = s.WorkOrderNo },
+                                 nameof(ContractTrackingFicheLines.WorkOrderID),
+                                 nameof(WorkOrders.Id),
+                                 JoinType.Left
+                             )
+                             .Where(new { WorkOrderID = workOrderID }, false, false, Tables.ContractTrackingFicheLines);
+
+            var ContractTrackingFicheLine = queryFactory.GetList<SelectContractTrackingFicheLinesDto>(queryLines).ToList();
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<SelectContractTrackingFicheLinesDto>>(ContractTrackingFicheLine);
 
         }
 

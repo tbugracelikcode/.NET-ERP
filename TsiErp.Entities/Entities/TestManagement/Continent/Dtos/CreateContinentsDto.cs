@@ -29,6 +29,10 @@ namespace TsiErp.Entities.Entities.TestManagement.Continent.Dtos
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
+        /// <summary>
+        /// Çalışan ID
+        /// </summary>
+        public Guid? EmployeeID { get; set; }
 
         [NoDatabaseAction]
         public List<SelectContinentLinesDto> SelectContinentLines { get; set; }

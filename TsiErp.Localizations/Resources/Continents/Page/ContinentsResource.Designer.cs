@@ -268,6 +268,51 @@ namespace TsiErp.Localizations.Resources.Continents.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ÇALIŞAN KODU.
+        /// </summary>
+        public static string EmployeeModalGridCode {
+            get {
+                return ResourceManager.GetString("EmployeeModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÇALIŞAN ADI.
+        /// </summary>
+        public static string EmployeeModalGridName {
+            get {
+                return ResourceManager.GetString("EmployeeModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÇALIŞAN SOYADI.
+        /// </summary>
+        public static string EmployeeModalGridSurname {
+            get {
+                return ResourceManager.GetString("EmployeeModalGridSurname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çalışan:.
+        /// </summary>
+        public static string EmployeeNameLabel {
+            get {
+                return ResourceManager.GetString("EmployeeNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çalışanlar.
+        /// </summary>
+        public static string EmployeesModalTitle {
+            get {
+                return ResourceManager.GetString("EmployeesModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {

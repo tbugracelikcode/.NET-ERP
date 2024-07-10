@@ -186,6 +186,21 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Kıtalar</value>
   </data>
+  <data name="EmployeeModalGridCode" xml:space="preserve">
+    <value>ÇALIŞAN KODU</value>
+  </data>
+  <data name="EmployeeModalGridName" xml:space="preserve">
+    <value>ÇALIŞAN ADI</value>
+  </data>
+  <data name="EmployeeModalGridSurname" xml:space="preserve">
+    <value>ÇALIŞAN SOYADI</value>
+  </data>
+  <data name="EmployeeNameLabel" xml:space="preserve">
+    <value>Çalışan:</value>
+  </data>
+  <data name="EmployeesModalTitle" xml:space="preserve">
+    <value>Çalışanlar</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>

@@ -300,7 +300,7 @@ namespace TsiErp.Business.Entities.Product.Services
               .Select<Products, GrandTotalStockMovements>
               (
                   null
-                , t => new { t.Amount, t.TotalReserved }
+                , t => new { t.Amount, t.TotalReserved, t.TotalPurchaseOrder }
                 , Tables.GrandTotalStockMovements
                 , true
                 , nameof(GrandTotalStockMovements.ProductID) + "=" + Tables.Products + "." + nameof(Products.Id))

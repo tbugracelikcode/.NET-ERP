@@ -61,6 +61,24 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KULLANILABİLİR STOK.
+        /// </summary>
+        public static string AmountOfAvailableStock {
+            get {
+                return ResourceManager.GetString("AmountOfAvailableStock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BEKLEYEN SATIN ALMA.
+        /// </summary>
+        public static string AmountOfPurchaseOrder {
+            get {
+                return ResourceManager.GetString("AmountOfPurchaseOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to REZERVE MİKTARI.
         /// </summary>
         public static string AmountOfReserved {

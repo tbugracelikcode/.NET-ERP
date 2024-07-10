@@ -14,6 +14,9 @@ using TsiErp.Business.Entities.TestManagement.Continent.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
+using TsiErp.Entities.Entities.QualityControl.CalibrationRecord;
+using TsiErp.Entities.Entities.QualityControl.EquipmentRecord;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.TestManagement.Continent;
@@ -60,6 +63,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                 Code = input.Code,
 
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                EmployeeID = input.EmployeeID.GetValueOrDefault(),
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -146,9 +150,17 @@ namespace TsiErp.Business.Entities.Continent.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Continents)
-                   .Select("*").Where(new { Id = id }, false, false, "");
+                   .Select<Continents>(null)
+                     .Join<Employees>
+                        (
+                            e => new { EmployeeName = e.Name, EmployeeID = e.Id },
+                            nameof(Continents.EmployeeID),
+                            nameof(Employees.Id),
+                            JoinType.Left
+                        )
+                   .Where(new { Id = id }, false, false, Tables.Continents);
 
-            var Continents = queryFactory.Get<SelectContinentsDto>(query);
+            var continents = queryFactory.Get<SelectContinentsDto>(query);
 
             var queryLines = queryFactory
                    .Query()
@@ -158,12 +170,12 @@ namespace TsiErp.Business.Entities.Continent.Services
 
             var ContinentLine = queryFactory.GetList<SelectContinentLinesDto>(queryLines).ToList();
 
-            Continents.SelectContinentLines = ContinentLine;
+            continents.SelectContinentLines = ContinentLine;
 
-            LogsAppService.InsertLogToDatabase(Continents, Continents, LoginedUserService.UserId, Tables.Continents, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(continents, continents, LoginedUserService.UserId, Tables.Continents, LogType.Get, id);
 
             await Task.CompletedTask;
-            return new SuccessDataResult<SelectContinentsDto>(Continents);
+            return new SuccessDataResult<SelectContinentsDto>(continents);
 
         }
 
@@ -173,12 +185,19 @@ namespace TsiErp.Business.Entities.Continent.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Continents)
-                   .Select("*")
-                    .Where(null, false, false, "");
+                    .Select<Continents>(null)
+                     .Join<Employees>
+                        (
+                            e => new { EmployeeName = e.Name, EmployeeID = e.Id },
+                            nameof(Continents.EmployeeID),
+                            nameof(Employees.Id),
+                            JoinType.Left
+                        )
+                    .Where(null, false, false, Tables.Continents);
 
-            var Continents = queryFactory.GetList<ListContinentsDto>(query).ToList();
+            var continents = queryFactory.GetList<ListContinentsDto>(query).ToList();
             await Task.CompletedTask;
-            return new SuccessDataResult<IList<ListContinentsDto>>(Continents);
+            return new SuccessDataResult<IList<ListContinentsDto>>(continents);
 
         }
 
@@ -190,8 +209,14 @@ namespace TsiErp.Business.Entities.Continent.Services
             var entityQuery = queryFactory
                    .Query()
                    .From(Tables.Continents)
-                   .Select("*")
-                    .Where(new { Id = input.Id }, false, false, "");
+                   .Join<Employees>
+                        (
+                            e => new { EmployeeName = e.Name, EmployeeID = e.Id },
+                            nameof(Continents.EmployeeID),
+                            nameof(Employees.Id),
+                            JoinType.Left
+                        )
+                    .Where(new { Id = input.Id }, false, false, Tables.Continents);
 
             var entity = queryFactory.Get<SelectContinentsDto>(entityQuery);
 
@@ -209,8 +234,14 @@ namespace TsiErp.Business.Entities.Continent.Services
             var listQuery = queryFactory
                            .Query()
                            .From(Tables.Continents)
-                           .Select("*")
-                            .Where(new { Code = input.Code }, false, false, "");
+                           .Join<Employees>
+                        (
+                            e => new { EmployeeName = e.Name, EmployeeID = e.Id },
+                            nameof(Continents.EmployeeID),
+                            nameof(Employees.Id),
+                            JoinType.Left
+                        )
+                            .Where(new { Code = input.Code }, false, false, Tables.Continents);
 
             var list = queryFactory.GetList<ListContinentsDto>(listQuery).ToList();
 
@@ -228,6 +259,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
+                EmployeeID = input.EmployeeID.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
@@ -317,6 +349,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                 Code = entity.Code,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
+                EmployeeID = entity.EmployeeID,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),

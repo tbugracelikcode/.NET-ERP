@@ -112,6 +112,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder
         /// Sipariş ID
         /// </summary>
         public Guid OrderID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Parçalama Miktarı
+        /// </summary>
+        public int SplitQuantity { get; set; }
 
     }
 }

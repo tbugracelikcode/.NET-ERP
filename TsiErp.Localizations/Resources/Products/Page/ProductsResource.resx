@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AmountOfAvailableStock" xml:space="preserve">
+    <value>KULLANILABİLİR STOK</value>
+  </data>
+  <data name="AmountOfPurchaseOrder" xml:space="preserve">
+    <value>BEKLEYEN SATIN ALMA</value>
+  </data>
   <data name="AmountOfReserved" xml:space="preserve">
     <value>REZERVE MİKTARI</value>
   </data>

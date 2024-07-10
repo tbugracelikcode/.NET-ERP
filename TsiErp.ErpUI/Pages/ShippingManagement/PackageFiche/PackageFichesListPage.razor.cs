@@ -29,6 +29,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
 
         }
+
         private SfGrid<SelectPackageFicheLinesDto> _LineGrid;
 
 
@@ -65,6 +66,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
+
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
