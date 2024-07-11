@@ -337,10 +337,10 @@
     <value>Dikkat</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
-    <value>Üretim Takip Yönetimi (Manuel)</value>
+    <value>Üretim Takip Kayıtları (Manuel)</value>
   </data>
   <data name="UICurrentMenuIoT" xml:space="preserve">
-    <value>Üretim Takip Yönetimi (IoT)</value>
+    <value>Üretim Takip Kayıtları (IoT)</value>
   </data>
   <data name="UIExportFileName" xml:space="preserve">
     <value>UretimTakip</value>

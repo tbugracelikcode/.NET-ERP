@@ -337,10 +337,10 @@
     <value>Attention</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
-    <value>Production Tracking Management (Manual)</value>
+    <value>Production Tracking Records (Manual)</value>
   </data>
   <data name="UICurrentMenuIoT" xml:space="preserve">
-    <value>Production Tracking Management (IoT)</value>
+    <value>Production Tracking Records (IoT)</value>
   </data>
   <data name="UIExportFileName" xml:space="preserve">
     <value>ProductionTracking</value>
