@@ -75,6 +75,11 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche
         /// Satın Alma Sipariş ID
         /// </summary>
         public Guid PurchaseOrderID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satın Alma Talep ID
+        /// </summary>
+        public Guid PurchaseRequestID { get; set; }
 
 
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]

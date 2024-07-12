@@ -20,6 +20,14 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// Üretim Tarihi Referansı
         /// </summary>
         public string ProductionDateReferance { get; set; }
+        /// <summary>
+        /// Satın Alma Talep ID
+        /// </summary>
+        public Guid? PurchaseRequestID { get; set; }
+        /// <summary>
+        /// Satın Alma Talep Fiş No
+        /// </summary>
+        public string PurchaseRequestFicheNo { get; set; }
 
         /// <summary>
         /// Satın Alma Sipariş ID

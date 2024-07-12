@@ -1340,6 +1340,24 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to REVİZYON NO.
+        /// </summary>
+        public static string RevisionNo {
+            get {
+                return ResourceManager.GetString("RevisionNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Revizyon Numarası:.
+        /// </summary>
+        public static string RevisionNoLabel {
+            get {
+                return ResourceManager.GetString("RevisionNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {

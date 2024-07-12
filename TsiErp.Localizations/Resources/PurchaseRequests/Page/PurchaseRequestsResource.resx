@@ -435,6 +435,9 @@
   <data name="PurchaseRequestLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="PurchaseReservedQuantityLineLabel" xml:space="preserve">
+    <value>Satın Alma Rezerve Miktarı:</value>
+  </data>
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Miktar:</value>
   </data>
@@ -587,6 +590,9 @@
   </data>
   <data name="VATrateLineLabel" xml:space="preserve">
     <value>KDV Oranı:</value>
+  </data>
+  <data name="WaitingQuantityLineLabel" xml:space="preserve">
+    <value>Bekleyen Miktar:</value>
   </data>
   <data name="WarehouseCode" xml:space="preserve">
     <value>DEPO KODU</value>

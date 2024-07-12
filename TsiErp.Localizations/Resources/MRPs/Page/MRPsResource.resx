@@ -195,11 +195,14 @@
   <data name="LineGridProductCode" xml:space="preserve">
     <value>STOK KODU</value>
   </data>
+  <data name="LineGridPurchaseReservedAmount" xml:space="preserve">
+    <value>SATIN ALMA REZERVE MİKTARI</value>
+  </data>
   <data name="LineGridRequirementAmount" xml:space="preserve">
     <value>SATIN ALMA İHTİYAÇ MİKTARI</value>
   </data>
   <data name="LineGridReservedAmount" xml:space="preserve">
-    <value>REZERVE MİKTARI</value>
+    <value>STOKTAN REZERVE MİKTARI</value>
   </data>
   <data name="LineGridSalesOrderFicheNo" xml:space="preserve">
     <value>SİPARİŞ FİŞ NO</value>
@@ -270,6 +273,9 @@
   <data name="MRPLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="MRPLineContextReservePurchase" xml:space="preserve">
+    <value>Satın Almayı Rezerve Et</value>
+  </data>
   <data name="MRPLineContextStockUsage" xml:space="preserve">
     <value>Stoktan Kullan</value>
   </data>
@@ -291,8 +297,17 @@
   <data name="PlaceholderSalesOrders" xml:space="preserve">
     <value>Sipariş seçiniz.</value>
   </data>
+  <data name="PurchaseReservedAmountLabel" xml:space="preserve">
+    <value>Satın Alma Rezerve Miktarı:</value>
+  </data>
+  <data name="PurchaseReservedQuantityModalTitle" xml:space="preserve">
+    <value>Satın Almayı Rezerve Et</value>
+  </data>
   <data name="ReferanceDateLabel" xml:space="preserve">
     <value>Referans Tarihi:</value>
+  </data>
+  <data name="RequirementAmountLabel" xml:space="preserve">
+    <value>Satın Alma İhtiyaç Miktarı:</value>
   </data>
   <data name="SalesOrderModalTitle" xml:space="preserve">
     <value>Satış Siparişleri</value>

@@ -54,6 +54,7 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListOperationalQualityPlansDto.DocumentNumber) HeaderText="@L["DocumentNumber"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOperationalQualityPlansDto.RevisionNo) HeaderText="@L["RevisionNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListOperationalQualityPlansDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListOperationalQualityPlansDto.ProductName) HeaderText="@L["ProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -112,6 +113,13 @@ else
                             @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
 
                             <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.DocumentNumber" ShowClearButton=true></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["RevisionNoLabel"]</strong></label><br />
+                            <SfTextBox @bind-Value="DataSource.RevisionNo"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

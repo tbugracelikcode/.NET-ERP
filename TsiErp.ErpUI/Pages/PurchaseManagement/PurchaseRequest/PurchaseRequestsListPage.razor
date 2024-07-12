@@ -443,6 +443,27 @@ else
                             <SfTextBox @ref="@LineProductionOrdersButtonEdit" Created="@LineProductionOrdersOnCreateIcon" @bind-Value="LineDataSource.ProductionOrderFicheNo" ShowClearButton=true ValueChange="LineProductionOrdersOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
+
+                      <DxGridLayoutItem Row="1" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PurchaseReservedQuantityLineLabel"]</strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" Max="LineDataSource.Quantity" @bind-Value="LineDataSource.PurchaseReservedQuantity" OnChange="LineQuantityWaiting">
+
+
+                            </SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="2" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["WaitingQuantityLineLabel"]</strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" Max="LineDataSource.Quantity" @bind-Value="LineDataSource.WaitingQuantity" OnChange="LineQuantityReserved">
+
+
+                            </SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
                     @{
                         if (LoginedUserService.PurchaseManagementShowAmountsChildMenu)
                         {

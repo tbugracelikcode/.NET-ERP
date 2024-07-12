@@ -132,6 +132,8 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     ExchangeRate = item.ExchangeRate,
                     LineAmount = item.LineAmount,
                     LineDescription = item.LineDescription,
+                    PurchaseReservedQuantity = item.PurchaseReservedQuantity,
+                    WaitingQuantity = item.WaitingQuantity,
                     LineTotalAmount = item.LineTotalAmount,
                     OrderConversionDate = item.OrderConversionDate,
                     PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
@@ -256,7 +258,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     )
                     .Join<Currencies>
                     (
-                        c => new { CurrencyID = c.Id, CurrencyCode = c.Code},
+                        c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
                         nameof(PurchaseRequests.CurrencyID),
                         nameof(Currencies.Id),
                         JoinType.Left
@@ -633,6 +635,8 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
                         LineAmount = item.LineAmount,
                         LineDescription = item.LineDescription,
+                        WaitingQuantity = item.WaitingQuantity,
+                        PurchaseReservedQuantity = item.PurchaseReservedQuantity,
                         LineTotalAmount = item.LineTotalAmount,
                         OrderConversionDate = item.OrderConversionDate,
                         PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
@@ -686,6 +690,8 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             LineAmount = item.LineAmount,
                             LineDescription = item.LineDescription,
                             LineTotalAmount = item.LineTotalAmount,
+                            PurchaseReservedQuantity = item.PurchaseReservedQuantity,
+                            WaitingQuantity = item.WaitingQuantity,
                             OrderConversionDate = item.OrderConversionDate,
                             PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
                             ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
@@ -850,6 +856,8 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             PaymentPlanID = line.PaymentPlanID,
                             ProductionOrderID = line.ProductionOrderID,
                             PurchaseRequestLineState = (int)lineState,
+                            WaitingQuantity = line.WaitingQuantity,
+                            PurchaseReservedQuantity = line.PurchaseReservedQuantity,
                             UnitPrice = line.UnitPrice,
                             VATamount = line.VATamount,
                             VATrate = line.VATrate,

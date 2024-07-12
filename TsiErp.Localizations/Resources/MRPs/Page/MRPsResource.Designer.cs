@@ -295,6 +295,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SATIN ALMA REZERVE MİKTARI.
+        /// </summary>
+        public static string LineGridPurchaseReservedAmount {
+            get {
+                return ResourceManager.GetString("LineGridPurchaseReservedAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SATIN ALMA İHTİYAÇ MİKTARI.
         /// </summary>
         public static string LineGridRequirementAmount {
@@ -304,7 +313,7 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to REZERVE MİKTARI.
+        ///   Looks up a localized string similar to STOKTAN REZERVE MİKTARI.
         /// </summary>
         public static string LineGridReservedAmount {
             get {
@@ -520,6 +529,15 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Almayı Rezerve Et.
+        /// </summary>
+        public static string MRPLineContextReservePurchase {
+            get {
+                return ResourceManager.GetString("MRPLineContextReservePurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stoktan Kullan.
         /// </summary>
         public static string MRPLineContextStockUsage {
@@ -583,11 +601,38 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Rezerve Miktarı:.
+        /// </summary>
+        public static string PurchaseReservedAmountLabel {
+            get {
+                return ResourceManager.GetString("PurchaseReservedAmountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Almayı Rezerve Et.
+        /// </summary>
+        public static string PurchaseReservedQuantityModalTitle {
+            get {
+                return ResourceManager.GetString("PurchaseReservedQuantityModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Referans Tarihi:.
         /// </summary>
         public static string ReferanceDateLabel {
             get {
                 return ResourceManager.GetString("ReferanceDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma İhtiyaç Miktarı:.
+        /// </summary>
+        public static string RequirementAmountLabel {
+            get {
+                return ResourceManager.GetString("RequirementAmountLabel", resourceCulture);
             }
         }
         

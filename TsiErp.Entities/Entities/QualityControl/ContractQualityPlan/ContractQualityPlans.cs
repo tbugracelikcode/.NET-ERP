@@ -39,8 +39,13 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractQualityPlan
 
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
         ///<summary>
-        ///Açıklama
+        /// Açıklama
         /// </summary
         public string Description_ { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        ///<summary>
+        /// Revizyon No
+        /// </summary
+        public string RevisionNo { get; set; }
     }
 }

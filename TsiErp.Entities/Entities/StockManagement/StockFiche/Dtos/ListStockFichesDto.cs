@@ -38,6 +38,14 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// </summary>
         public string PurchaseOrderFicheNo { get; set; }
         /// <summary>
+        /// Satın Alma Talep ID
+        /// </summary>
+        public Guid? PurchaseRequestID { get; set; }
+        /// <summary>
+        /// Satın Alma Talep Fiş No
+        /// </summary>
+        public string PurchaseRequestFicheNo { get; set; }
+        /// <summary>
         /// Fiş Türü
         /// </summary>
         public StockFicheTypeEnum FicheType { get; set; }

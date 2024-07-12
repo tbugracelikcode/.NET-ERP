@@ -115,5 +115,10 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine
         /// Rezerve Miktarı
         /// </summary>
         public decimal ReservedAmount { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Satın Alma Rezerve Miktarı
+        /// </summary>
+        public decimal PurchaseReservedAmount { get; set; }
     }
 }

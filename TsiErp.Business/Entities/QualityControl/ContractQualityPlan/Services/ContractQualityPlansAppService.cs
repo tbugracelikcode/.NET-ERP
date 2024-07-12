@@ -72,6 +72,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 DeletionTime = null,
                 Id = addedEntityId,
                 Description_ = input.Description_,
+                RevisionNo = input.RevisionNo,
                 DocumentNumber = input.DocumentNumber,
                 ProductID = input.ProductID.GetValueOrDefault(),
                 CurrrentAccountCardID = input.CurrrentAccountCardID.GetValueOrDefault(),
@@ -162,7 +163,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
-                     OperationID = item.OperationID.GetValueOrDefault()
+                    OperationID = item.OperationID.GetValueOrDefault()
 
                 });
 
@@ -413,6 +414,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 Description_ = input.Description_,
+                RevisionNo = input.RevisionNo,
                 DocumentNumber = input.DocumentNumber,
                 ProductID = input.ProductID.GetValueOrDefault(),
                 CurrrentAccountCardID = input.CurrrentAccountCardID.GetValueOrDefault(),
@@ -643,6 +645,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 DataOpenStatusUserId = userId,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                RevisionNo = entity.RevisionNo,
                 Id = entity.Id,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
