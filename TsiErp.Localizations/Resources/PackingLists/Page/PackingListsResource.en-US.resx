@@ -351,6 +351,9 @@
   <data name="PackingListsContextPackingList" xml:space="preserve">
     <value>Packing List</value>
   </data>
+  <data name="PackingListsContextPackingListEng" xml:space="preserve">
+    <value>Packing List</value>
+  </data>
   <data name="PackingListsContextPrint" xml:space="preserve">
     <value>Print</value>
   </data>

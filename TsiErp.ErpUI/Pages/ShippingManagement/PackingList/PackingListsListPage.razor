@@ -556,7 +556,7 @@ else
             @* <SfButton CssClass="TSICancelButton" OnClick="HideLoadingDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton> *@
         </FooterContentTemplate>
     </DxPopup>
-    
+
     <DxPopup @bind-Visible="UploadConfirmationReportVisible"
              ShowFooter="true"
              CloseOnEscape="false"
@@ -597,7 +597,7 @@ else
             @* <SfButton CssClass="TSICancelButton" OnClick="HideLoadingDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton> *@
         </FooterContentTemplate>
     </DxPopup>
-    
+
     <DxPopup @bind-Visible="CommercialInvoiceReportVisible"
              ShowFooter="true"
              CloseOnEscape="false"
@@ -683,17 +683,17 @@ else
                                                     <br />
                                                     @*<label class="TSIModalLabel"><strong>@ReportLocalizer["BigPalletLabelPalletFilterLabel"] </strong></label><br />
 
-                                                     <SfMultiSelect @bind-Value="@BindingPalletRecords"
-                                                                   DataSource="@PalletRecords"
-                                                                   AllowFiltering=true
-                                                                   Mode="VisualMode.CheckBox"
-                                                                   ShowSelectAll=true
-                                                                   SelectAllText=@ReportLocalizer["SelectAllText"]
-                                                                   UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
-                                                                   ShowDropDownIcon="true">
+                                                <SfMultiSelect @bind-Value="@BindingPalletRecords"
+                                                DataSource="@PalletRecords"
+                                                AllowFiltering=true
+                                                Mode="VisualMode.CheckBox"
+                                                ShowSelectAll=true
+                                                SelectAllText=@ReportLocalizer["SelectAllText"]
+                                                UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
+                                                ShowDropDownIcon="true">
 
-                                                        <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
-                                                    </SfMultiSelect> *@
+                                                <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                                </SfMultiSelect> *@
 
                                                 </Template>
                                             </DxGridLayoutItem>
@@ -702,7 +702,7 @@ else
                                                 <Template>
                                                     <br />
                                                     <br />
-                                                   @*  <SfButton CssClass="TSISaveButton" OnClick="CreateBigPalletLabelReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["CreateReport"]</SfButton> *@
+                                                    @*  <SfButton CssClass="TSISaveButton" OnClick="CreateBigPalletLabelReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["CreateReport"]</SfButton> *@
                                                 </Template>
                                             </DxGridLayoutItem>
 
@@ -732,7 +732,104 @@ else
             </DevGridLayoutFilterRow>
         </BodyTemplate>
         <FooterContentTemplate>
-           
+
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="PackingListEngReportVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["BigPalletLabelModalTitle"]"
+             Width="81%"
+             Height="83%"
+             MinWidth="1400px"
+             MinHeight="900px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DevGridLayoutFilterRow ColumnCount="1" RowCount="2" RowHeights="@RowHeights("*")">
+                <GridLayoutItems>
+
+                    <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                        <Template>
+
+                            <SfCard class="TSIReportFilterCard" style="height:100px !important;">
+
+                                <CardContent>
+
+                                    <DxGridLayout CssClass="TSIGridLayout">
+                                        <Rows>
+                                            <DxGridLayoutRow Height="48%" />
+                                            <DxGridLayoutRow Height="48%" />
+                                        </Rows>
+                                        <Columns>
+                                            <DxGridLayoutColumn Width="2%" />
+                                            <DxGridLayoutColumn Width="30%" />
+                                            <DxGridLayoutColumn Width="4%" />
+                                            <DxGridLayoutColumn Width="30%" />
+                                            <DxGridLayoutColumn Width="4%" />
+                                            <DxGridLayoutColumn Width="28%" />
+                                            <DxGridLayoutColumn Width="2%" />
+                                        </Columns>
+                                        <Items>
+
+                                            <DxGridLayoutItem Row="0" Column="1">
+                                                <Template>
+
+                                                    <br />
+                                                    @*<label class="TSIModalLabel"><strong>@ReportLocalizer["BigPalletLabelPalletFilterLabel"] </strong></label><br />
+
+                                                <SfMultiSelect @bind-Value="@BindingPalletRecords"
+                                                DataSource="@PalletRecords"
+                                                AllowFiltering=true
+                                                Mode="VisualMode.CheckBox"
+                                                ShowSelectAll=true
+                                                SelectAllText=@ReportLocalizer["SelectAllText"]
+                                                UnSelectAllText=@ReportLocalizer["UnSelectAllText"]
+                                                ShowDropDownIcon="true">
+
+                                                <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                                </SfMultiSelect> *@
+
+                                                </Template>
+                                            </DxGridLayoutItem>
+
+                                            <DxGridLayoutItem Row="0" Column="3">
+                                                <Template>
+                                                    <br />
+                                                    <br />
+                                                    @*  <SfButton CssClass="TSISaveButton" OnClick="CreateBigPalletLabelReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["CreateReport"]</SfButton> *@
+                                                </Template>
+                                            </DxGridLayoutItem>
+
+                                        </Items>
+                                    </DxGridLayout>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="1" Column="0" ColumnSpan="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+                                <CardContent>
+                                    <DxReportViewer @ref="PackingListEngReportViewer" Report="@PackingListEngDynamicReport">
+                                    </DxReportViewer>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayoutFilterRow>
+        </BodyTemplate>
+        <FooterContentTemplate>
+
         </FooterContentTemplate>
     </DxPopup>
 
@@ -775,7 +872,7 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(PalletSelectionModal.SelectedPallet)  HeaderText="" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="155"></GridColumn>
+                                    <GridColumn Field=@nameof(PalletSelectionModal.SelectedPallet) HeaderText="" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="155"></GridColumn>
                                     <GridColumn Field=@nameof(PalletSelectionModal.PalletCode) HeaderText="@L["PalletSelectionPalletCode"]" TextAlign="TextAlign.Center" Width="155"></GridColumn>
                                     <GridColumn Field=@nameof(PalletSelectionModal.PalletName) HeaderText="@L["PalletSelectionPalletName"]" TextAlign="TextAlign.Center" Width="190"></GridColumn>
                                     <GridColumn Field=@nameof(PalletSelectionModal.NumberofPackage) Type="ColumnType.Number" HeaderText="@L["PalletSelectionNumberofPackage"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
