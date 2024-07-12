@@ -654,7 +654,7 @@ else
             <DevGridLayoutFilterRow ColumnCount="1" RowCount="2" RowHeights="@RowHeights("*")">
                 <GridLayoutItems>
 
-                    <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                    @*  <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
                         <Template>
 
                             <SfCard class="TSIReportFilterCard" style="height:100px !important;">
@@ -681,7 +681,7 @@ else
                                                 <Template>
 
                                                     <br />
-                                                    @*<label class="TSIModalLabel"><strong>@ReportLocalizer["BigPalletLabelPalletFilterLabel"] </strong></label><br />
+                                                    <label class="TSIModalLabel"><strong>@ReportLocalizer["BigPalletLabelPalletFilterLabel"] </strong></label><br />
 
                                                 <SfMultiSelect @bind-Value="@BindingPalletRecords"
                                                 DataSource="@PalletRecords"
@@ -693,7 +693,7 @@ else
                                                 ShowDropDownIcon="true">
 
                                                 <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
-                                                </SfMultiSelect> *@
+                                                </SfMultiSelect> 
 
                                                 </Template>
                                             </DxGridLayoutItem>
@@ -702,7 +702,7 @@ else
                                                 <Template>
                                                     <br />
                                                     <br />
-                                                    @*  <SfButton CssClass="TSISaveButton" OnClick="CreateBigPalletLabelReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["CreateReport"]</SfButton> *@
+                                                      <SfButton CssClass="TSISaveButton" OnClick="CreateBigPalletLabelReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["CreateReport"]</SfButton> 
                                                 </Template>
                                             </DxGridLayoutItem>
 
@@ -714,9 +714,9 @@ else
                             </SfCard>
                         </Template>
                     </DxGridLayoutItem>
+                    *@
 
-
-                    <DxGridLayoutItem Row="1" Column="0" ColumnSpan="1">
+                    <DxGridLayoutItem Row="0" Column="0" RowSpan="2">
                         <Template>
                             <SfCard class="TSIGridCards">
                                 <CardContent>
@@ -751,7 +751,7 @@ else
             <DevGridLayoutFilterRow ColumnCount="1" RowCount="2" RowHeights="@RowHeights("*")">
                 <GridLayoutItems>
 
-                    <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                   @*  <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
                         <Template>
 
                             <SfCard class="TSIReportFilterCard" style="height:100px !important;">
@@ -778,7 +778,7 @@ else
                                                 <Template>
 
                                                     <br />
-                                                    @*<label class="TSIModalLabel"><strong>@ReportLocalizer["BigPalletLabelPalletFilterLabel"] </strong></label><br />
+                                                   <label class="TSIModalLabel"><strong>@ReportLocalizer["BigPalletLabelPalletFilterLabel"] </strong></label><br />
 
                                                 <SfMultiSelect @bind-Value="@BindingPalletRecords"
                                                 DataSource="@PalletRecords"
@@ -790,7 +790,7 @@ else
                                                 ShowDropDownIcon="true">
 
                                                 <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
-                                                </SfMultiSelect> *@
+                                                </SfMultiSelect> 
 
                                                 </Template>
                                             </DxGridLayoutItem>
@@ -799,7 +799,7 @@ else
                                                 <Template>
                                                     <br />
                                                     <br />
-                                                    @*  <SfButton CssClass="TSISaveButton" OnClick="CreateBigPalletLabelReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["CreateReport"]</SfButton> *@
+                                                      <SfButton CssClass="TSISaveButton" OnClick="CreateBigPalletLabelReport"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@ReportLocalizer["CreateReport"]</SfButton> 
                                                 </Template>
                                             </DxGridLayoutItem>
 
@@ -811,9 +811,9 @@ else
                             </SfCard>
                         </Template>
                     </DxGridLayoutItem>
+                *@
 
-
-                    <DxGridLayoutItem Row="1" Column="0" ColumnSpan="1">
+                    <DxGridLayoutItem Row="0" Column="0" RowSpan="2">
                         <Template>
                             <SfCard class="TSIGridCards">
                                 <CardContent>

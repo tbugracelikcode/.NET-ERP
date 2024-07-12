@@ -116,6 +116,15 @@ namespace TsiErp.Localizations.Resources.ProductionManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hammadde özkütle değeri giriniz..
+        /// </summary>
+        public static string Density_Label {
+            get {
+                return ResourceManager.GetString("Density_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
@@ -202,6 +211,24 @@ namespace TsiErp.Localizations.Resources.ProductionManagementParameter.Page {
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Yönetimi Parametreleri.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Sistem Tanımlamaları &gt; Genel Sistem Parametreleri.
+        /// </summary>
+        public static string UIPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
             }
         }
         

@@ -1,9 +1,10 @@
-﻿using Tsi.Core.Entities.Auditing;
+﻿using Tsi.Core.Entities;
+using Tsi.Core.Entities.Auditing;
 
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter.Dtos
 {
-    public class UpdateProductionManagementParametersDto 
+    public class UpdateProductionManagementParametersDto : IEntityDto
     {
         /// <summary>
         /// İleri Zamanlı Tarih Parametresi
@@ -13,5 +14,9 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManage
         /// Id
         /// </summary>
         public Guid Id { get; set; }
+        /// <summary>
+        /// Özkütle
+        /// </summary>
+        public decimal Density_ { get; set; }
     }
 }
