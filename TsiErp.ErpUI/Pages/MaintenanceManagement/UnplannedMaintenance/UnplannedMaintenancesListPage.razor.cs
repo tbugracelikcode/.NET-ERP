@@ -483,6 +483,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
                 LineDataSource.ProductID = Guid.Empty;
                 LineDataSource.ProductCode = string.Empty;
                 LineDataSource.ProductName = string.Empty;
+                LineDataSource.UnitSetID = Guid.Empty;
+                LineDataSource.UnitSetCode = string.Empty;
             }
         }
 
@@ -495,6 +497,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
                 LineDataSource.ProductID = selectedProduct.Id;
                 LineDataSource.ProductCode = selectedProduct.Code;
                 LineDataSource.ProductName = selectedProduct.Name;
+                LineDataSource.UnitSetID = selectedProduct.UnitSetID;
+                LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
                 SelectproductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

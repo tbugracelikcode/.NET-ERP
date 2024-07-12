@@ -153,5 +153,15 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine
         /// </summary>
         public decimal TransactionExchangeDiscountAmount { get; set; }
 
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Satın Alma Rezerve Miktarı
+        /// </summary>
+        public decimal PurchaseReservedQuantity { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Bekleyen Miktar
+        /// </summary>
+        public decimal WaitingQuantity { get; set; }
     }
 }

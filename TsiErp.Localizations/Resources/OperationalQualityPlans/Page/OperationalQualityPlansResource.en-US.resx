@@ -378,6 +378,12 @@
   <data name="ProductsOprModalTitle" xml:space="preserve">
     <value>Operations</value>
   </data>
+  <data name="RevisionNo" xml:space="preserve">
+    <value>REVISION NO</value>
+  </data>
+  <data name="RevisionNoLabel" xml:space="preserve">
+    <value>Revision Number:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>

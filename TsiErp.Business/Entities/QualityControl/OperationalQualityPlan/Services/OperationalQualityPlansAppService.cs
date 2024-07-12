@@ -72,6 +72,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                 DeletionTime = null,
                 Id = addedEntityId,
                 Description_ = input.Description_,
+                RevisionNo = input.RevisionNo,
                 DocumentNumber = input.DocumentNumber,
                 ProductID = input.ProductID.GetValueOrDefault(),
                 ProductsOperationID = input.ProductsOperationID.GetValueOrDefault(),
@@ -330,7 +331,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                    .Select<OperationalQualityPlans>(null)
                    .Join<Products>
                     (
-                        pr => new { ProductCode = pr.Code, ProductName = pr.Name , ProductID = pr.Id },
+                        pr => new { ProductCode = pr.Code, ProductName = pr.Name, ProductID = pr.Id },
                         nameof(OperationalQualityPlans.ProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -374,6 +375,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                 CreatorId = entity.CreatorId.GetValueOrDefault(),
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
+                RevisionNo = input.RevisionNo,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
@@ -560,6 +562,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = entity.Id,
+                RevisionNo = entity.RevisionNo,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),

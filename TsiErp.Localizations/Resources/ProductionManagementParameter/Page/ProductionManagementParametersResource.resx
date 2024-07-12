@@ -135,6 +135,9 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Density_Label" xml:space="preserve">
+    <value>Hammadde özkütle değeri giriniz.</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
@@ -164,6 +167,12 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Üretim Yönetimi Parametreleri</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Genel Sistem Tanımlamaları &gt; Genel Sistem Parametreleri</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

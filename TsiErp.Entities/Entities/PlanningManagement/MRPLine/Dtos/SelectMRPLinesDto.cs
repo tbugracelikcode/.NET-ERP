@@ -129,5 +129,9 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
         /// Rezerve Miktarı
         /// </summary>
         public decimal ReservedAmount { get; set; }
+        /// <summary>
+        /// Satın Alma Rezerve Miktarı
+        /// </summary>
+        public decimal PurchaseReservedAmount { get; set; }
     }
 }

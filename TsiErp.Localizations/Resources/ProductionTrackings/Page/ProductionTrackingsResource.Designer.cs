@@ -719,7 +719,7 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Üretim Takip Yönetimi (Manuel).
+        ///   Looks up a localized string similar to Üretim Takip Kayıtları (Manuel).
         /// </summary>
         public static string UICurrentMenu {
             get {
@@ -728,7 +728,7 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Üretim Takip Yönetimi (IoT).
+        ///   Looks up a localized string similar to Üretim Takip Kayıtları (IoT).
         /// </summary>
         public static string UICurrentMenuIoT {
             get {

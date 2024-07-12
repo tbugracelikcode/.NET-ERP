@@ -20,6 +20,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.StockFiche;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
@@ -105,6 +106,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 LastModifierId = Guid.Empty,
                 CurrencyID = input.CurrencyID.GetValueOrDefault(),
                 TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
+                PurchaseRequestID = input.PurchaseRequestID.GetValueOrDefault(),
                 BranchID = input.BranchID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
@@ -300,6 +302,13 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         nameof(PurchaseOrders.Id),
                         JoinType.Left
                     )
+                      .Join<PurchaseRequests>
+                    (
+                        b => new { PurchaseRequestFicheNo = b.FicheNo, PurchaseRequestID = b.Id },
+                        nameof(StockFiches.PurchaseRequestID),
+                        nameof(PurchaseRequests.Id),
+                        JoinType.Left
+                    )
                    .Join<Warehouses>
                     (
                         w => new { WarehouseCode = w.Code, WarehouseID = w.Id },
@@ -400,6 +409,13 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         nameof(Branches.Id),
                         JoinType.Left
                     )
+                       .Join<PurchaseRequests>
+                    (
+                        b => new { PurchaseRequestFicheNo = b.FicheNo, PurchaseRequestID = b.Id },
+                        nameof(StockFiches.PurchaseRequestID),
+                        nameof(PurchaseRequests.Id),
+                        JoinType.Left
+                    )
                    .Join<Warehouses>
                     (
                         w => new { WarehouseCode = w.Code },
@@ -461,7 +477,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     )
                    .Join<UnitSets>
                     (
-                        u => new {UnitSetCode = u.Code },
+                        u => new { UnitSetCode = u.Code },
                         nameof(StockFicheLines.UnitSetID),
                         nameof(UnitSets.Id),
                         JoinType.Left
@@ -537,6 +553,13 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         nameof(PurchaseOrders.Id),
                         JoinType.Left
                     )
+                       .Join<PurchaseRequests>
+                    (
+                        b => new { PurchaseRequestFicheNo = b.FicheNo, PurchaseRequestID = b.Id },
+                        nameof(StockFiches.PurchaseRequestID),
+                        nameof(PurchaseRequests.Id),
+                        JoinType.Left
+                    )
                    .Join<Branches>
                     (
                         b => new { BranchCode = b.Code },
@@ -566,7 +589,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         "TransactionExchangeCurrency",
                         JoinType.Left
                     )
-                    .Where(new { ProductionOrderID = productionOrderID}, false, false, Tables.StockFiches);
+                    .Where(new { ProductionOrderID = productionOrderID }, false, false, Tables.StockFiches);
 
             var stockFichesDto = queryFactory.GetList<ListStockFichesDto>(query).ToList();
             await Task.CompletedTask;
@@ -587,6 +610,13 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
                         nameof(StockFiches.PurchaseOrderID),
                         nameof(PurchaseOrders.Id),
+                        JoinType.Left
+                    )
+                       .Join<PurchaseRequests>
+                    (
+                        b => new { PurchaseRequestFicheNo = b.FicheNo, PurchaseRequestID = b.Id },
+                        nameof(StockFiches.PurchaseRequestID),
+                        nameof(PurchaseRequests.Id),
                         JoinType.Left
                     )
                    .Join<Branches>
@@ -696,6 +726,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
+                PurchaseRequestID = input.PurchaseRequestID.GetValueOrDefault(),
                 ProductionDateReferance = input.ProductionDateReferance,
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
@@ -885,6 +916,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 FicheNo = entity.FicheNo,
                 CreationTime = entity.CreationTime.Value,
                 TransactionExchangeCurrencyID = entity.TransactionExchangeCurrencyID,
+                PurchaseRequestID = entity.PurchaseRequestID,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,

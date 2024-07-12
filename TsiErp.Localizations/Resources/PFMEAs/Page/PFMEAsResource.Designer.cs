@@ -403,6 +403,114 @@ namespace TsiErp.Localizations.Resources.PFMEAs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SPC KODU.
+        /// </summary>
+        public static string OperationalSPCGridCode {
+            get {
+                return ResourceManager.GetString("OperationalSPCGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TARİH.
+        /// </summary>
+        public static string OperationalSPCGridDate_ {
+            get {
+                return ResourceManager.GetString("OperationalSPCGridDate_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HESAPLAMA BİTİŞ TARİH.
+        /// </summary>
+        public static string OperationalSPCGridMeasurementEndDate {
+            get {
+                return ResourceManager.GetString("OperationalSPCGridMeasurementEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HESAPLAMA BAŞLANGIÇ TARİH.
+        /// </summary>
+        public static string OperationalSPCGridMeasurementStartDate {
+            get {
+                return ResourceManager.GetString("OperationalSPCGridMeasurementStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SIKLIK.
+        /// </summary>
+        public static string OperationalSPCLineGridFrequency {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineGridFrequency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OPERASYON ADI.
+        /// </summary>
+        public static string OperationalSPCLineGridOperationName {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineGridOperationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RPN.
+        /// </summary>
+        public static string OperationalSPCLineGridRPN {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineGridRPN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FARKEDİLEBİLİRLİK.
+        /// </summary>
+        public static string OperationalSPCLineGridSDetectability {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineGridSDetectability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞİDDET.
+        /// </summary>
+        public static string OperationalSPCLineGridSeverity {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineGridSeverity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞ MERKEZİ.
+        /// </summary>
+        public static string OperationalSPCLineGridWorkCenterName {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineGridWorkCenterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyonel SPC Satırları.
+        /// </summary>
+        public static string OperationalSPCLineModalTitle {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyonel SPC Tabloları.
+        /// </summary>
+        public static string OperationalSPCModalTitle {
+            get {
+                return ResourceManager.GetString("OperationalSPCModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OPERASYON ADI.
         /// </summary>
         public static string OperationName {
@@ -633,6 +741,60 @@ namespace TsiErp.Localizations.Resources.PFMEAs.Page {
         public static string UIWarningWorkCenterTitle {
             get {
                 return ResourceManager.GetString("UIWarningWorkCenterTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAŞLIK KODU.
+        /// </summary>
+        public static string UnsuitabilityItemGridCode {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AÇIKLAMA.
+        /// </summary>
+        public static string UnsuitabilityItemGridDescription_ {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemGridDescription_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞİDDET KATSAYISI.
+        /// </summary>
+        public static string UnsuitabilityItemGridIntensityCoefficient {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemGridIntensityCoefficient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞİDDET ARALIĞI.
+        /// </summary>
+        public static string UnsuitabilityItemGridIntensityRange {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemGridIntensityRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAŞLIK ADI.
+        /// </summary>
+        public static string UnsuitabilityItemGridName {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıkları.
+        /// </summary>
+        public static string UnsuitabilityItemModalTitle {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemModalTitle", resourceCulture);
             }
         }
         

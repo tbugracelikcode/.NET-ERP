@@ -15,6 +15,10 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos
         ///Cari Hesap ID
         /// </summary
         public Guid? CurrrentAccountCardID { get; set; }
+        ///<summary>
+        /// Revizyon No
+        /// </summary
+        public string RevisionNo { get; set; }
 
         /// <summary>
         /// Döküman Numarası

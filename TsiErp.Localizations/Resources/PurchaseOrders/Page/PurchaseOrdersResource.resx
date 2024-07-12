@@ -675,4 +675,10 @@
   <data name="EnumTransactionCurrency" xml:space="preserve">
     <value>İşlem Dövizi</value>
   </data>
+  <data name="PurchaseReservedQuantityLineLabel" xml:space="preserve">
+    <value>Satın Alma Rezerve Miktarı:</value>
+  </data>
+  <data name="WaitingQuantityLineLabel" xml:space="preserve">
+    <value>Bekleyen Miktar:</value>
+  </data>
 </root>

@@ -1397,6 +1397,17 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
         }
 
+        public void LineQuantityReserved()
+        {
+            LineDataSource.PurchaseReservedQuantity = LineDataSource.Quantity - LineDataSource.WaitingQuantity;
+        }
+
+        public void LineQuantityWaiting()
+        {
+            LineDataSource.WaitingQuantity = LineDataSource.Quantity - LineDataSource.PurchaseReservedQuantity;
+        }
+
+
         public override async void LineCalculate()
         {
             if (DataSource.PricingCurrency == PricingCurrencyEnum.LocalCurrency)

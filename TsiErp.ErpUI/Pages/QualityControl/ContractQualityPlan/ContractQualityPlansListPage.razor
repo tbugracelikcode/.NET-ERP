@@ -54,6 +54,7 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListContractQualityPlansDto.DocumentNumber) HeaderText="@L["DocumentNumber"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListContractQualityPlansDto.RevisionNo) HeaderText="@L["RevisionNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListContractQualityPlansDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListContractQualityPlansDto.ProductName) HeaderText="@L["ProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -160,13 +161,19 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="3" ColumnSpan="3">
+                    <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["Description_Label"]</strong></label><br />
                             <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.Description_"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
+                     <DxGridLayoutItem Row="2" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["RevisionNoLabel"]</strong></label><br />
+                            <SfTextBox @bind-Value="DataSource.RevisionNo"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="1" ColumnSpan="5">
                         <Template>

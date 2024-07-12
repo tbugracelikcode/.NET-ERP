@@ -402,6 +402,12 @@
   <data name="ProductsOprModalTitle" xml:space="preserve">
     <value>Ürüne Özel Operasyonlar</value>
   </data>
+  <data name="RevisionNo" xml:space="preserve">
+    <value>REVİZYON NO</value>
+  </data>
+  <data name="RevisionNoLabel" xml:space="preserve">
+    <value>Revizyon Numarası:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>

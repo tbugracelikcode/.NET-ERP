@@ -8,6 +8,10 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos
         /// Ürün Kodu
         /// </summary>
         public string ProductCode { get; set; }
+        ///<summary>
+        /// Revizyon No
+        /// </summary
+        public string RevisionNo { get; set; }
         /// <summary>
         /// Ürün Açıklaması
         /// </summary>

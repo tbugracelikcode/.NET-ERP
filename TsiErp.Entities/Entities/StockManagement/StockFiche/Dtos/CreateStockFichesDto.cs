@@ -42,6 +42,10 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// </summary>
         public Guid? PurchaseOrderID { get; set; }
         /// <summary>
+        /// Satın Alma Talep ID
+        /// </summary>
+        public Guid? PurchaseRequestID { get; set; }
+        /// <summary>
         /// Fiş Türü
         /// </summary>
         public int FicheType { get; set; }

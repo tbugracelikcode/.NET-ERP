@@ -1,4 +1,5 @@
 ﻿using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
 {
@@ -8,6 +9,14 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
         /// Satın Alma Sipariş ID
         /// </summary>
         public Guid PurchaseOrderID { get; set; }
+        /// <summary>
+        /// Satın Alma Rezerve Miktarı
+        /// </summary>
+        public decimal PurchaseReservedQuantity { get; set; }
+        /// <summary>
+        /// Bekleyen Miktar
+        /// </summary>
+        public decimal WaitingQuantity { get; set; }
         /// <summary>
         /// Satır Nr
         /// </summary>

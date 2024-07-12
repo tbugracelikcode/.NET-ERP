@@ -30,6 +30,10 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos
         /// Kabul Edilebilir Hatalı Ürün Sayısı
         /// </summary>
         public int AcceptableNumberofDefectiveProduct { get; set; }
+        ///<summary>
+        /// Revizyon No
+        /// </summary
+        public string RevisionNo { get; set; }
 
         ///<summary>
         ///Açıklama

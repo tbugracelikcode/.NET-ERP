@@ -10,6 +10,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos;
@@ -62,6 +63,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
             public int SupplyDate { get; set; }
         }
+
+        public bool PurchaseReservedQuantityModalVisible = false;
 
         #region Planning Parameters
 
@@ -170,6 +173,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextDeleteOrderLines"], Id = "deleteorderlines" }); break;
                             case "MRPLineContextStockUsage":
                                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextStockUsage"], Id = "stockusage" }); break;
+                            case "MRPLineContextReservePurchase":
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextReservePurchase"], Id = "reservepurchase" }); break;
                             case "MRPLineContextChange":
                                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextChange"], Id = "changed" }); break;
                             case "MRPLineContextRefresh":
@@ -261,6 +266,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                         }
                         else
                         {
+
+
+                            List<SelectStockFicheLinesDto> stockFicheLineList = new List<SelectStockFicheLinesDto>();
+
                             if (MRPPurchaseTransaction == 1) //PurchaseOrder
                             {
                                 var groupedList2 = DataSource.SelectMRPLines.GroupBy(t => new { t.BranchID, t.WarehouseID, t.CurrencyID, t.CurrentAccountCardID }, (key, group) => new
@@ -273,8 +282,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                 });
 
                                 List<SelectPurchaseOrderLinesDto> purchaseOrderLineList = new List<SelectPurchaseOrderLinesDto>();
-
-                                List<SelectStockFicheLinesDto> stockFicheLineList = new List<SelectStockFicheLinesDto>();
 
                                 Guid? BranchIDData = Guid.Empty;
                                 Guid? WarehouseIDData = Guid.Empty;
@@ -324,33 +331,39 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                             SupplyDate = supplyDate
                                         };
 
-                                        SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
-                                        {
-                                            Date_ = GetSQLDateAppService.GetDateFromSQL(),
-                                            FicheType = Entities.Enums.StockFicheTypeEnum.StokRezerveFisi,
-                                            LineNr = stockFicheLineList.Count + 1,
-                                            UnitSetID = data.UnitSetID,
-                                            UnitSetCode = data.UnitSetCode,
-                                            UnitPrice = data.UnitPrice,
-                                            UnitOutputCost = 0,
-                                            Quantity = data.RequirementAmount,
-                                            MRPLineID = data.Id,
-                                            MRPID = DataSource.Id,
-                                            ProductID = data.ProductID,
-                                            ProductCode = data.ProductCode,
-                                            LineAmount = data.UnitPrice * data.RequirementAmount,
-                                            PurchaseOrderLineID = Guid.Empty,
-                                            PurchaseOrderID = Guid.Empty,
-                                            PurchaseOrderFicheNo = string.Empty,
-                                            LineDescription = string.Empty,
-                                            ProductionDateReferance = string.Empty,
-                                            ProductName = data.ProductName,
-                                        };
-
                                         BranchIDData = data.BranchID;
                                         WarehouseIDData = data.WarehouseID;
                                         purchaseOrderLineList.Add(purchaseOrderLineModel);
-                                        stockFicheLineList.Add(stockFicheLineModel);
+
+                                        if (data.ReservedAmount + data.PurchaseReservedAmount > 0)
+                                        {
+                                            SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                                            {
+                                                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                                                FicheType = Entities.Enums.StockFicheTypeEnum.StokRezerveFisi,
+                                                LineNr = stockFicheLineList.Count + 1,
+                                                UnitSetID = data.UnitSetID,
+                                                UnitSetCode = data.UnitSetCode,
+                                                UnitPrice = data.UnitPrice,
+                                                UnitOutputCost = 0,
+                                                Quantity = data.ReservedAmount + data.PurchaseReservedAmount,
+                                                MRPLineID = data.Id,
+                                                MRPID = DataSource.Id,
+                                                ProductID = data.ProductID,
+                                                ProductCode = data.ProductCode,
+                                                LineAmount = data.UnitPrice * data.RequirementAmount,
+                                                PurchaseOrderLineID = Guid.Empty,
+                                                PurchaseOrderID = Guid.Empty,
+                                                PurchaseOrderFicheNo = string.Empty,
+                                                LineDescription = string.Empty,
+                                                ProductionDateReferance = string.Empty,
+                                                ProductName = data.ProductName,
+                                            };
+                                            stockFicheLineList.Add(stockFicheLineModel);
+                                        }
+
+
+
 
                                     }
 
@@ -398,6 +411,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                         FicheType = 55,
                                         SpecialCode = string.Empty,
                                         PurchaseOrderID = purchaseOrder.Data.Id,
+                                        PurchaseRequestID = Guid.Empty,
                                         ProductionOrderID = Guid.Empty,
                                         ProductionDateReferance = string.Empty,
                                         InputOutputCode = 1,
@@ -464,6 +478,33 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                         BranchIDData = data.BranchID;
                                         WarehouseIDData = data.WarehouseID;
                                         purchaseRequestLineList.Add(purchaseRequestLineModel);
+
+                                        if (data.ReservedAmount + data.PurchaseReservedAmount > 0)
+                                        {
+                                            SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                                            {
+                                                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                                                FicheType = Entities.Enums.StockFicheTypeEnum.StokRezerveFisi,
+                                                LineNr = stockFicheLineList.Count + 1,
+                                                UnitSetID = data.UnitSetID,
+                                                UnitSetCode = data.UnitSetCode,
+                                                UnitPrice = data.UnitPrice,
+                                                UnitOutputCost = 0,
+                                                Quantity = data.ReservedAmount + data.PurchaseReservedAmount,
+                                                MRPLineID = data.Id,
+                                                MRPID = DataSource.Id,
+                                                ProductID = data.ProductID,
+                                                ProductCode = data.ProductCode,
+                                                LineAmount = data.UnitPrice * data.RequirementAmount,
+                                                PurchaseOrderLineID = Guid.Empty,
+                                                PurchaseOrderID = Guid.Empty,
+                                                PurchaseOrderFicheNo = string.Empty,
+                                                LineDescription = string.Empty,
+                                                ProductionDateReferance = string.Empty,
+                                                ProductName = data.ProductName,
+                                            };
+                                            stockFicheLineList.Add(stockFicheLineModel);
+                                        }
                                     }
 
                                     CreatePurchaseRequestsDto purchaseRequestModel = new CreatePurchaseRequestsDto
@@ -496,7 +537,31 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                                     purchaseRequestModel.SelectPurchaseRequestLines = purchaseRequestLineList;
 
-                                    await PurchaseRequestsAppService.CreateAsync(purchaseRequestModel);
+                                    var purchaseRequest = await PurchaseRequestsAppService.CreateAsync(purchaseRequestModel);
+
+                                    CreateStockFichesDto stockFicheModel = new CreateStockFichesDto
+                                    {
+                                        BranchID = BranchIDData,
+                                        WarehouseID = WarehouseIDData,
+                                        Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                                        Description_ = string.Empty,
+                                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                                        ExchangeRate = 0,
+                                        Time_ = null,
+                                        FicheType = 55,
+                                        SpecialCode = string.Empty,
+                                        PurchaseRequestID = purchaseRequest.Data.Id,
+                                        PurchaseOrderID = Guid.Empty,
+                                        ProductionOrderID = Guid.Empty,
+                                        ProductionDateReferance = string.Empty,
+                                        InputOutputCode = 1,
+                                        NetAmount = stockFicheLineList.Select(t => t.LineAmount).Sum(),
+                                        CurrencyID = Guid.Empty,
+                                    };
+
+                                    stockFicheModel.SelectStockFicheLines = stockFicheLineList;
+
+                                    await StockFichesAppService.CreateAsync(stockFicheModel);
                                 }
                             }
                         }
@@ -596,7 +661,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                 case "stockusage":
                     var selectedline = args.RowInfo.RowData;
-                    var Index = GridLineList.FindIndex(t => t.SalesOrderID == selectedline.SalesOrderID && t.ProductID == selectedline.ProductID);
+                    var Index = GridLineList.IndexOf(selectedline);
                     if (Index >= 0)
                     {
                         GridLineList[Index].isStockUsage = !selectedline.isStockUsage;
@@ -636,6 +701,15 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                     }
 
                     await _LineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+
+                case "reservepurchase":
+                    LineDataSource = args.RowInfo.RowData;
+
+                    PurchaseReservedQuantityModalVisible = true;
+
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -738,9 +812,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
         public void ReferanceDateValueChangeHandler(ChangedEventArgs<DateTime> args)
         {
-            if(GridLineList != null && GridLineList.Count > 0)
+            if (GridLineList != null && GridLineList.Count > 0)
             {
-                foreach(var line in GridLineList)
+                foreach (var line in GridLineList)
                 {
                     int index = GridLineList.IndexOf(line);
                     GridLineList[index].SupplyDate = args.Value;
@@ -861,6 +935,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             await InvokeAsync(StateHasChanged);
 
 
+        }
+
+        public void HidePurchaseReservedQuantity()
+        {
+            PurchaseReservedQuantityModalVisible = false;
         }
 
         #endregion

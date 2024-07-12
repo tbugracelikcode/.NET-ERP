@@ -12,6 +12,10 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractQualityPlan.Dtos
         /// Ürün ID
         /// </summary>
         public Guid? ProductID { get; set; }
+        ///<summary>
+        /// Revizyon No
+        /// </summary
+        public string RevisionNo { get; set; }
         /// <summary>
         /// Ürün Kodu
         /// </summary>

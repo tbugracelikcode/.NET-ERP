@@ -1015,6 +1015,15 @@ namespace TsiErp.Localizations.Resources.PurchaseRequests.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Rezerve Miktarı:.
+        /// </summary>
+        public static string PurchaseReservedQuantityLineLabel {
+            get {
+                return ResourceManager.GetString("PurchaseReservedQuantityLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Miktar:.
         /// </summary>
         public static string QuantityLineLabel {
@@ -1470,6 +1479,15 @@ namespace TsiErp.Localizations.Resources.PurchaseRequests.Page {
         public static string VATrateLineLabel {
             get {
                 return ResourceManager.GetString("VATrateLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bekleyen Miktar:.
+        /// </summary>
+        public static string WaitingQuantityLineLabel {
+            get {
+                return ResourceManager.GetString("WaitingQuantityLineLabel", resourceCulture);
             }
         }
         

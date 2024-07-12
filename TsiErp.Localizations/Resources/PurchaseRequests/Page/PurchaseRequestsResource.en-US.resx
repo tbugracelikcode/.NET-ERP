@@ -435,6 +435,9 @@
   <data name="PurchaseRequestLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PurchaseReservedQuantityLineLabel" xml:space="preserve">
+    <value>Purchase Reserved Quantity:</value>
+  </data>
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Quantity:</value>
   </data>
@@ -587,6 +590,9 @@
   </data>
   <data name="VATrateLineLabel" xml:space="preserve">
     <value>VAT Rate:</value>
+  </data>
+  <data name="WaitingQuantityLineLabel" xml:space="preserve">
+    <value>Waiting Quantity:</value>
   </data>
   <data name="WarehouseCode" xml:space="preserve">
     <value>WAREHOUSE CODE</value>

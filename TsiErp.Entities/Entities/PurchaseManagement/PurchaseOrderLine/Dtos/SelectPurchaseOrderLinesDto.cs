@@ -16,6 +16,14 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
         /// </summary>
         public decimal TransactionExchangeUnitPrice { get; set; }
         /// <summary>
+        /// Satın Alma Rezerve Miktarı
+        /// </summary>
+        public decimal PurchaseReservedQuantity { get; set; }
+        /// <summary>
+        /// Bekleyen Miktar
+        /// </summary>
+        public decimal WaitingQuantity { get; set; }
+        /// <summary>
         /// İşlem Dövizi KDV Tutarı
         /// </summary>
         public decimal TransactionExchangeVATamount { get; set; }

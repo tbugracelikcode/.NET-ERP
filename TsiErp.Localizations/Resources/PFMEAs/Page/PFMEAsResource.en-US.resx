@@ -231,6 +231,42 @@
   <data name="NewSeverityLabel" xml:space="preserve">
     <value>New Severity:</value>
   </data>
+  <data name="OperationalSPCGridCode" xml:space="preserve">
+    <value>SPC CODE</value>
+  </data>
+  <data name="OperationalSPCGridDate_" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="OperationalSPCGridMeasurementEndDate" xml:space="preserve">
+    <value>MEASUREMENT END DATE</value>
+  </data>
+  <data name="OperationalSPCGridMeasurementStartDate" xml:space="preserve">
+    <value>MEASUREMENT START DATE</value>
+  </data>
+  <data name="OperationalSPCLineGridFrequency" xml:space="preserve">
+    <value>FREQUENCY</value>
+  </data>
+  <data name="OperationalSPCLineGridOperationName" xml:space="preserve">
+    <value>OPERATION NAME</value>
+  </data>
+  <data name="OperationalSPCLineGridRPN" xml:space="preserve">
+    <value>RPN</value>
+  </data>
+  <data name="OperationalSPCLineGridSDetectability" xml:space="preserve">
+    <value>DETECTABILITY</value>
+  </data>
+  <data name="OperationalSPCLineGridSeverity" xml:space="preserve">
+    <value>SEVERITY</value>
+  </data>
+  <data name="OperationalSPCLineGridWorkCenterName" xml:space="preserve">
+    <value>WORK CENTER</value>
+  </data>
+  <data name="OperationalSPCLineModalTitle" xml:space="preserve">
+    <value>Operational SPC Lines</value>
+  </data>
+  <data name="OperationalSPCModalTitle" xml:space="preserve">
+    <value>Operational SPC Tables</value>
+  </data>
   <data name="OperationName" xml:space="preserve">
     <value>OPERATION NAME</value>
   </data>
@@ -308,6 +344,24 @@
   </data>
   <data name="UIWarningWorkCenterTitle" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="UnsuitabilityItemGridCode" xml:space="preserve">
+    <value>ITEM CODE</value>
+  </data>
+  <data name="UnsuitabilityItemGridDescription_" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
+  <data name="UnsuitabilityItemGridIntensityCoefficient" xml:space="preserve">
+    <value>INTENSITY COEFFICIENT</value>
+  </data>
+  <data name="UnsuitabilityItemGridIntensityRange" xml:space="preserve">
+    <value>INTENSITY RANGE</value>
+  </data>
+  <data name="UnsuitabilityItemGridName" xml:space="preserve">
+    <value>ITEM NAME</value>
+  </data>
+  <data name="UnsuitabilityItemModalTitle" xml:space="preserve">
+    <value>Unsuitability Items</value>
   </data>
   <data name="UnsuitabilityItemName" xml:space="preserve">
     <value>UNSUITABILITY ITEM</value>

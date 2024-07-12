@@ -918,8 +918,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             }
         }
 
-
-
         public async void MainContextMenuClick(ContextMenuClickEventArgs<ListPurchaseRequestsDto> args)
         {
             switch (args.Item.Id)
@@ -1098,6 +1096,16 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 await InvokeAsync(StateHasChanged);
             }
 
+        }
+
+        public void LineQuantityReserved()
+        {
+            LineDataSource.PurchaseReservedQuantity = LineDataSource.Quantity - LineDataSource.WaitingQuantity;
+        }
+
+        public void LineQuantityWaiting()
+        {
+            LineDataSource.WaitingQuantity = LineDataSource.Quantity - LineDataSource.PurchaseReservedQuantity;
         }
 
         public override async void LineCalculate()

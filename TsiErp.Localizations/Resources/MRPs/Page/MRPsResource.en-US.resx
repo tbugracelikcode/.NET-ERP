@@ -195,11 +195,14 @@
   <data name="LineGridProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
   </data>
+  <data name="LineGridPurchaseReservedAmount" xml:space="preserve">
+    <value>PURCHASE RESERVED QUANTITY</value>
+  </data>
   <data name="LineGridRequirementAmount" xml:space="preserve">
     <value>PURCHASE REQUIREMENT AMOUNT</value>
   </data>
   <data name="LineGridReservedAmount" xml:space="preserve">
-    <value>RESERVED AMOUNT</value>
+    <value>STOCK RESERVED AMOUNT</value>
   </data>
   <data name="LineGridSalesOrderFicheNo" xml:space="preserve">
     <value>ORDER FICHE NO</value>
@@ -270,6 +273,9 @@
   <data name="MRPLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="MRPLineContextReservePurchase" xml:space="preserve">
+    <value>Reserve the Purchase</value>
+  </data>
   <data name="MRPLineContextStockUsage" xml:space="preserve">
     <value>Use From Stock</value>
   </data>
@@ -291,8 +297,17 @@
   <data name="PlaceholderSalesOrders" xml:space="preserve">
     <value>Select orders.</value>
   </data>
+  <data name="PurchaseReservedAmountLabel" xml:space="preserve">
+    <value>Purchase Reserved Quantity:</value>
+  </data>
+  <data name="PurchaseReservedQuantityModalTitle" xml:space="preserve">
+    <value>Reserve the Purchase</value>
+  </data>
   <data name="ReferanceDateLabel" xml:space="preserve">
     <value>Referance Date:</value>
+  </data>
+  <data name="RequirementAmountLabel" xml:space="preserve">
+    <value>Purchase Requirement Quantity:</value>
   </data>
   <data name="SalesOrderModalTitle" xml:space="preserve">
     <value>Sales Orders</value>
