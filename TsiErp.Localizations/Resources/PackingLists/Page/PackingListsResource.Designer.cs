@@ -763,6 +763,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Packing List.
+        /// </summary>
+        public static string PackingListsContextPackingListEng {
+            get {
+                return ResourceManager.GetString("PackingListsContextPackingListEng", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yazdır.
         /// </summary>
         public static string PackingListsContextPrint {
