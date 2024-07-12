@@ -529,6 +529,15 @@ namespace TsiErp.Localizations.Resources.PFMEAs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DURUM.
+        /// </summary>
+        public static string State {
+            get {
+                return ResourceManager.GetString("State", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Durum:.
         /// </summary>
         public static string StateLabel {

@@ -52,9 +52,9 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
 
-                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.CreationTime) HeaderText="@L["CreationDate"]" TextAlign="TextAlign.Center" Width="120">
+                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.CreationTime) HeaderText="@L["CreationDate"]" TextAlign="TextAlign.Center" Width="220">
                                         <Template>
                                             @{
                                                 var creationTime = ((context as ListFirstProductApprovalsDto).CreationTime);
@@ -65,7 +65,7 @@ else
                                         </Template>
                                     </GridColumn>
 
-                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.IsApproval) HeaderText="@L["Approve"]" TextAlign="TextAlign.Center" Width="120">
+                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.IsApproval) HeaderText="@L["Approve"]" TextAlign="TextAlign.Center" Width="220">
 
                                         <Template>
 
@@ -84,17 +84,17 @@ else
 
                                     </GridColumn>
 
-                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.WorkOrderNo) HeaderText="@L["WorkOrderNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.WorkOrderNo) HeaderText="@L["WorkOrderNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.ProductionOrderFicheNo) HeaderText="@L["ProductionOrderFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.ProductionOrderFicheNo) HeaderText="@L["ProductionOrderFicheNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.AdjustmentUser) HeaderText="@L["AdjustmentUser"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.AdjustmentUser) HeaderText="@L["AdjustmentUser"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.EmployeeName) HeaderText="@L["EmployeeName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.EmployeeName) HeaderText="@L["EmployeeName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                     <GridColumn Field=@nameof(ListFirstProductApprovalsDto.IsFinalControl) HeaderText="@L["IsFinalControl"]" TextAlign="TextAlign.Center" Width="120">
+                                     <GridColumn Field=@nameof(ListFirstProductApprovalsDto.IsFinalControl) HeaderText="@L["IsFinalControl"]" TextAlign="TextAlign.Center" Width="220">
 
                                         <Template>
 
@@ -283,13 +283,13 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.IsCriticalMeasurement) DisplayAsCheckBox=true HeaderText="@L["LineGridIsCriticalMeasurement"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.Description_) HeaderText="@L["LineGridDescription_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.IdealMeasure) Type="ColumnType.Number" HeaderText="@L["LineGridIdealMeasure"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.MeasurementValue) HeaderText="@L["LineGridMeasurementValue"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.BottomTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridBottomTolerance"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.UpperTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridUpperTolerance"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.IsCriticalMeasurement) DisplayAsCheckBox=true HeaderText="@L["LineGridIsCriticalMeasurement"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.Description_) HeaderText="@L["LineGridDescription_"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.IdealMeasure) Type="ColumnType.Number" HeaderText="@L["LineGridIdealMeasure"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.MeasurementValue) HeaderText="@L["LineGridMeasurementValue"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.BottomTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridBottomTolerance"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.UpperTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridUpperTolerance"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>

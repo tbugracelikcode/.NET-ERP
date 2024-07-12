@@ -306,6 +306,9 @@
   <data name="EnumAparatus" xml:space="preserve">
     <value>(APRT) Aparatus</value>
   </data>
+  <data name="EnumBoru" xml:space="preserve">
+    <value>Pipe Raw Material</value>
+  </data>
   <data name="EnumCommercialProduct" xml:space="preserve">
     <value>(CP) Commercial Product</value>
   </data>
@@ -314,6 +317,9 @@
   </data>
   <data name="EnumMaterial" xml:space="preserve">
     <value>(MT) Material</value>
+  </data>
+  <data name="EnumMil" xml:space="preserve">
+    <value>Joint Raw Material</value>
   </data>
   <data name="EnumMold" xml:space="preserve">
     <value>(MLD) Mold</value>
@@ -327,6 +333,9 @@
   <data name="EnumPurchase" xml:space="preserve">
     <value>Purchase</value>
   </data>
+  <data name="EnumSac" xml:space="preserve">
+    <value>Sheet Raw Material</value>
+  </data>
   <data name="EnumSemiProduct" xml:space="preserve">
     <value>(SP) Semi-Product</value>
   </data>
@@ -339,6 +348,9 @@
   <data name="ExportCatNoLabel" xml:space="preserve">
     <value>Export Category Nr:</value>
   </data>
+  <data name="ExternalRadiusLabel" xml:space="preserve">
+    <value>External Radius:</value>
+  </data>
   <data name="FilestoUpload" xml:space="preserve">
     <value>Files to Upload:</value>
   </data>
@@ -350,6 +362,9 @@
   </data>
   <data name="GTIPLabel" xml:space="preserve">
     <value>GTIP:</value>
+  </data>
+  <data name="InternalRadiusLabel" xml:space="preserve">
+    <value>Internal Radius:</value>
   </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
@@ -579,6 +594,12 @@
   <data name="PurchaseVATLabel" xml:space="preserve">
     <value>Purchase VAT:</value>
   </data>
+  <data name="RadiusValueLabel" xml:space="preserve">
+    <value>Radius Value:</value>
+  </data>
+  <data name="RawMaterialTypeLabel" xml:space="preserve">
+    <value>Raw Material Type:</value>
+  </data>
   <data name="ReferanceNoLabelProdRef" xml:space="preserve">
     <value>Supplier Reference Number:</value>
   </data>
@@ -741,6 +762,9 @@
   <data name="Tab4Name" xml:space="preserve">
     <value>Product Properties</value>
   </data>
+  <data name="Tab5Name" xml:space="preserve">
+    <value>Raw Material Informations</value>
+  </data>
   <data name="TechnicalApprovalLabelRoute" xml:space="preserve">
     <value>Technical Approval:</value>
   </data>
@@ -758,6 +782,9 @@
   </data>
   <data name="TechnicalDrawingContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="Tickness_Label" xml:space="preserve">
+    <value>Tickness:</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The technical drawing you selected will be permanently deleted.</value>
@@ -836,5 +863,8 @@
   </data>
   <data name="ValidatorUnitSetID" xml:space="preserve">
     <value>Please select a unit set.</value>
+  </data>
+  <data name="Width_Label" xml:space="preserve">
+    <value>Width:</value>
   </data>
 </root>

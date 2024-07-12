@@ -135,6 +135,38 @@ namespace TsiErp.Entities.Entities.StockManagement.Product
         /// Birim Ağırlığı
         /// </summary>
         public decimal UnitWeight { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Hammadde Türü
+        /// </summary>
+        public  RowMaterialTypeEnum RawMaterialType { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Dış Çap
+        /// </summary>
+        public decimal ExternalRadius { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// İç Çap
+        /// </summary>
+        public decimal InternalRadius { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Genişlik
+        /// </summary>
+        public decimal Width_ { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Kalınlık
+        /// </summary>
+        public decimal Tickness_ { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Çap Değeri
+        /// </summary>
+        public decimal RadiusValue { get; set; }
+
+
 
     }
 }

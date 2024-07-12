@@ -628,6 +628,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Boru Hammadde.
+        /// </summary>
+        public static string EnumBoru {
+            get {
+                return ResourceManager.GetString("EnumBoru", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (TM) Ticari Mal.
         /// </summary>
         public static string EnumCommercialProduct {
@@ -651,6 +660,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string EnumMaterial {
             get {
                 return ResourceManager.GetString("EnumMaterial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mil Hammadde.
+        /// </summary>
+        public static string EnumMil {
+            get {
+                return ResourceManager.GetString("EnumMil", resourceCulture);
             }
         }
         
@@ -691,6 +709,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sac Hammadde.
+        /// </summary>
+        public static string EnumSac {
+            get {
+                return ResourceManager.GetString("EnumSac", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (YM) Yarı Mamül.
         /// </summary>
         public static string EnumSemiProduct {
@@ -727,6 +754,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dış Çap:.
+        /// </summary>
+        public static string ExternalRadiusLabel {
+            get {
+                return ResourceManager.GetString("ExternalRadiusLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yüklenecek Dosyalar:.
         /// </summary>
         public static string FilestoUpload {
@@ -759,6 +795,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string GTIPLabel {
             get {
                 return ResourceManager.GetString("GTIPLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İç Çap:.
+        /// </summary>
+        public static string InternalRadiusLabel {
+            get {
+                return ResourceManager.GetString("InternalRadiusLabel", resourceCulture);
             }
         }
         
@@ -1447,6 +1492,24 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çap Değeri:.
+        /// </summary>
+        public static string RadiusValueLabel {
+            get {
+                return ResourceManager.GetString("RadiusValueLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hammadde Türü:.
+        /// </summary>
+        public static string RawMaterialTypeLabel {
+            get {
+                return ResourceManager.GetString("RawMaterialTypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tedarikçi Referans Numarası:.
         /// </summary>
         public static string ReferanceNoLabelProdRef {
@@ -1933,6 +1996,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hammadde Bilgileri.
+        /// </summary>
+        public static string Tab5Name {
+            get {
+                return ResourceManager.GetString("Tab5Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Teknik Onay:.
         /// </summary>
         public static string TechnicalApprovalLabelRoute {
@@ -1983,6 +2055,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string TechnicalDrawingContextRefresh {
             get {
                 return ResourceManager.GetString("TechnicalDrawingContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalınlık:.
+        /// </summary>
+        public static string Tickness_Label {
+            get {
+                return ResourceManager.GetString("Tickness_Label", resourceCulture);
             }
         }
         
@@ -2217,6 +2298,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string ValidatorUnitSetID {
             get {
                 return ResourceManager.GetString("ValidatorUnitSetID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genişlik:.
+        /// </summary>
+        public static string Width_Label {
+            get {
+                return ResourceManager.GetString("Width_Label", resourceCulture);
             }
         }
     }

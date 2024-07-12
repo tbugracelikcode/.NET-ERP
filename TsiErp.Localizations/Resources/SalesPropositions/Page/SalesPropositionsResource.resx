@@ -415,7 +415,7 @@
     <value>Kaydet</value>
   </data>
   <data name="ShippingAdressCodeLabel" xml:space="preserve">
-    <value>Seviyat Adresi:</value>
+    <value>Sevkiyat Adresi:</value>
   </data>
   <data name="ShippingAdressModalGridAdress" xml:space="preserve">
     <value>ADRES</value>
@@ -463,7 +463,7 @@
     <value>İşlem Dövizi İndirim Toplamı:</value>
   </data>
   <data name="TransactionExchangeTotalVatAmountLabel" xml:space="preserve">
-    <value>İşlem Dövizi KDC Toplamı:</value>
+    <value>İşlem Dövizi KDV Toplamı:</value>
   </data>
   <data name="TransactionExchangeTotalVatExcludedAmountLabel" xml:space="preserve">
     <value>İşlem Dövizi Toplam Tutar:</value>
