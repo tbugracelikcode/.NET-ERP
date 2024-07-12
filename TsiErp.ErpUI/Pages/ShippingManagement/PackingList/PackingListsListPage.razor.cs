@@ -272,11 +272,24 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
         {
             if (PalletGridContextMenu.Count() == 0)
             {
-                var contextID = contextsList.Where(t => t.MenuName == "PackingListsPalletLineContextSelectPallet").Select(t => t.Id).FirstOrDefault();
-                var permission = UserPermissionsList.Where(t => t.MenuId == contextID).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+
+
+                foreach (var context in contextsList)
                 {
-                    PalletGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsPalletLineContextSelectPallet"], Id = "selectpallet" });
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "PackingListsPalletLineContextSelectPallet":
+                                PalletGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsPalletLineContextSelectPallet"], Id = "selectpallet" }); break;
+                            case "PackingListsPalletLineContextRemovePallet":
+                                PalletGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsPalletLineContextRemovePallet"], Id = "removepallet" }); break;
+
+                            default: break;
+                        }
+                    }
                 }
 
             }
@@ -520,6 +533,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     }
 
 
+                    break;
+
+                case "removepallet":
+
+                   
                     break;
                 default:
                     break;
@@ -1618,7 +1636,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 reportSource.Add(report);
             }
 
-           
+
 
             List<PackingListPalletQuantityReportDto> kubajList = new List<PackingListPalletQuantityReportDto>();
 
