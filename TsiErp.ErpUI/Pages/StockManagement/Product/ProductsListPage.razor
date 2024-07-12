@@ -227,7 +227,7 @@ else
                                         <ContentTemplate>
                                             <DxGridLayout CssClass="TSIGridLayout">
                                                 <Rows>
-                                                    <DxGridLayoutRow Height="35%" />
+                                                    <DxGridLayoutRow Height="55%" />
                                                     <DxGridLayoutRow Height="30%" />
                                                     <DxGridLayoutRow Height="30%" />
                                                     <DxGridLayoutRow Height="30%" />
@@ -301,28 +301,6 @@ else
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["OemRefNo3Label"]</strong></label><br />
                                                             <SfTextBox @bind-Value="DataSource.OemRefNo3"></SfTextBox>
-                                                        </Template>
-                                                    </DxGridLayoutItem>
-
-                                                    <DxGridLayoutItem Row="2" Column="0">
-                                                        <Template>
-                                                            <label class="TSIModalLabel"><strong>@L["PlannedWastageLabel"] </strong></label>
-                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.PlannedWastage" ></SfNumericTextBox>
-                                                        </Template>
-                                                    </DxGridLayoutItem>
-
-                                                    <DxGridLayoutItem Row="2" Column="2">
-                                                        <Template>
-                                                            <label class="TSIModalLabel"><strong>@L["SawWastageLabel"]</strong></label><br />
-                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.SawWastage"></SfNumericTextBox>
-                                                        </Template>
-                                                    </DxGridLayoutItem>
-                                                    
-
-                                                    <DxGridLayoutItem Row="2" Column="4">
-                                                        <Template>
-                                                            <label class="TSIModalLabel"><strong>@L["ProductSizeLabel"] </strong></label><br />
-                                                            <SfNumericTextBox Min="0" TValue="decimal" Enabled="@productSizeVisible" @bind-Value="DataSource.ProductSize"></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -501,6 +479,108 @@ else
                                             </DxGridLayout>
                                         </ContentTemplate>
                                     </TabItem>
+
+                                    <TabItem>
+                                        <ChildContent>
+                                            <TabHeader Text="@L["Tab5Name"]"></TabHeader>
+                                        </ChildContent>
+                                        <ContentTemplate>
+                                            <DxGridLayout CssClass="TSIGridLayout">
+                                                <Rows>
+                                                    <DxGridLayoutRow Height="60%" />
+                                                    <DxGridLayoutRow Height="30%" />
+                                                    <DxGridLayoutRow Height="30%" />
+                                                    <DxGridLayoutRow Height="30%" />
+                                                    <DxGridLayoutRow Height="25%" />
+                                                </Rows>
+                                                <Columns>
+                                                    <DxGridLayoutColumn Width="22%" />
+                                                    <DxGridLayoutColumn Width="4%" />
+                                                    <DxGridLayoutColumn Width="22%" />
+                                                    <DxGridLayoutColumn Width="4%" />
+                                                    <DxGridLayoutColumn Width="22%" />
+                                                    <DxGridLayoutColumn Width="4%" />
+                                                    <DxGridLayoutColumn Width="22%" />
+                                                </Columns>
+                                                <Items>
+                                                    <br/>
+                                                    <DxGridLayoutItem Row="0" Column="0">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["PlannedWastageLabel"] </strong></label>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.PlannedWastage" ></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="0" Column="2">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["SawWastageLabel"]</strong></label><br />
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.SawWastage"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                    
+
+                                                    <DxGridLayoutItem Row="0" Column="4">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["ProductSizeLabel"] </strong></label><br />
+                                                            <SfNumericTextBox Min="0" TValue="decimal" Enabled="@productSizeVisible" @bind-Value="DataSource.ProductSize"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                    <DxGridLayoutItem Row="0" Column="6">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["RawMaterialTypeLabel"] </strong></label><br />
+                                                            <SfDropDownList TItem="SelectProductsDto" TValue="RowMaterialTypeEnum" PopupHeight="230px" @bind-Value="@DataSource.RawMaterialType" DataSource="@rawmaterialtypes">
+                                                                <DropDownListFieldSettings Text="RawMaterialTypeName" Value="RawMaterialType"></DropDownListFieldSettings>
+                                                                <DropDownListEvents TItem="SelectProductsDto" TValue="RowMaterialTypeEnum" ValueChange="@RawMaterialTypeValueChangeHandler"></DropDownListEvents>
+                            </SfDropDownList>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    @if(isHSRaw){
+
+                                                    <DxGridLayoutItem Row="1" Column="0">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["Width_Label"] </strong></label>
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.Width_" ></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="1" Column="2">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["Tickness_Label"]</strong></label><br />
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.Tickness_"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                    }
+                                                      @if(isHBRaw){
+                                                    <DxGridLayoutItem Row="1" Column="4">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["ExternalRadiusLabel"] </strong></label><br />
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.ExternalRadius" ></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                    <DxGridLayoutItem Row="1" Column="6">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["InternalRadiusLabel"] </strong></label><br />
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.InternalRadius" ></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                    }
+                                                     
+                                                     @if(isHMRaw){
+
+                                                    <DxGridLayoutItem Row="2" Column="0">
+                                                        <Template>
+                                                                <label class="TSIModalLabel"><strong>@L["RadiusValueLabel"] </strong></label>
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.RadiusValue" ></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    }
+                                                </Items>
+                                            </DxGridLayout>
+                                        </ContentTemplate>
+                                    </TabItem>
+
 
                                 </TabItems>
                             </SfTab>

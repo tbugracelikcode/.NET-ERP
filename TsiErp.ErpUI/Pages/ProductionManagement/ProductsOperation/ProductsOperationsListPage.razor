@@ -59,7 +59,7 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListProductsOperationsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListProductsOperationsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsOperationsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListProductsOperationsDto.TotalAmount) HeaderText="@L["TotalAmount"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
 
@@ -181,18 +181,18 @@ else
                                                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                                                 <GridColumns>
 
-                                                                    <GridColumn Field=@nameof(SelectProductsOperationLinesDto.Priority) Type="ColumnType.Number" HeaderText="@L["LineGridPriority"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectProductsOperationLinesDto.Priority) Type="ColumnType.Number" HeaderText="@L["LineGridPriority"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                                                    <GridColumn Field=@nameof(SelectProductsOperationLinesDto.StationCode) HeaderText="@L["LineGridStationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                                    <GridColumn Field=@nameof(SelectProductsOperationLinesDto.StationName) HeaderText="@L["LineGridStationName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectProductsOperationLinesDto.StationCode) HeaderText="@L["LineGridStationCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectProductsOperationLinesDto.StationName) HeaderText="@L["LineGridStationName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                                                    <GridColumn Field=@nameof(SelectProductsOperationLinesDto.OperationTime) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridOperationTime"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectProductsOperationLinesDto.OperationTime) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridOperationTime"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
 
-                                                                    <GridColumn Field=@nameof(SelectProductsOperationLinesDto.ProcessQuantity) Type="ColumnType.Number" HeaderText="@L["LineGridProcessQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                                    <GridColumn Field=@nameof(SelectProductsOperationLinesDto.AdjustmentAndControlTime) Type="ColumnType.Number" HeaderText="@L["LineGridAdjustment"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectProductsOperationLinesDto.ProcessQuantity) Type="ColumnType.Number" HeaderText="@L["LineGridProcessQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectProductsOperationLinesDto.AdjustmentAndControlTime) Type="ColumnType.Number" HeaderText="@L["LineGridAdjustment"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                                                    <GridColumn Field=@nameof(SelectProductsOperationLinesDto.Alternative) DisplayAsCheckBox=true HeaderText="@L["LineGridAlternative"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectProductsOperationLinesDto.Alternative) DisplayAsCheckBox=true HeaderText="@L["LineGridAlternative"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                                                 </GridColumns>
                                                             </SfGrid>
                                                         </Template>

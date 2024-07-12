@@ -49,13 +49,13 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListRoutesDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRoutesDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRoutesDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRoutesDto.ProductName) HeaderText="@L["ProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRoutesDto.ProductionStart) HeaderText="@L["ProductionStart"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRoutesDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRoutesDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRoutesDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRoutesDto.ProductName) HeaderText="@L["ProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRoutesDto.ProductionStart) HeaderText="@L["ProductionStart"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(ListRoutesDto.Approval) DisplayAsCheckBox=true HeaderText="@L["Approval"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRoutesDto.TechnicalApproval) HeaderText="@L["TechnicalApproval"]" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRoutesDto.TechnicalApproval) HeaderText="@L["TechnicalApproval"]" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="170"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -176,8 +176,8 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListProductsOperationsDto.Code) HeaderText="@L["OperationGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsOperationsDto.Name) HeaderText="@L["OperationGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsOperationsDto.Code) HeaderText="@L["OperationGridCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsOperationsDto.Name) HeaderText="@L["OperationGridName"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -230,12 +230,12 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectRouteLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectRouteLinesDto.OperationCode) HeaderText="@L["LineGridOprCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectRouteLinesDto.OperationName) HeaderText="@L["LineGridOprName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectRouteLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectRouteLinesDto.OperationCode) HeaderText="@L["LineGridOprCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectRouteLinesDto.OperationName) HeaderText="@L["LineGridOprName"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
                                    
-                                    <GridColumn Field=@nameof(SelectRouteLinesDto.AdjustmentAndControlTime) Type="ColumnType.Number" HeaderText="@L["LineGridAdjustment"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectRouteLinesDto.OperationTime) Type="ColumnType.Number" HeaderText="@L["LineGridOprTime"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectRouteLinesDto.AdjustmentAndControlTime) Type="ColumnType.Number" HeaderText="@L["LineGridAdjustment"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectRouteLinesDto.OperationTime) Type="ColumnType.Number" HeaderText="@L["LineGridOprTime"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>

@@ -112,6 +112,31 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
         /// Kaplama Ağırlığı
         /// </summary>
         public decimal CoatingWeight { get; set; }
+        /// <summary>
+        /// Hammadde Türü
+        /// </summary>
+        public int RawMaterialType { get; set; }
+
+        /// <summary>
+        /// Dış Çap
+        /// </summary>
+        public decimal ExternalRadius { get; set; }
+        /// <summary>
+        /// İç Çap
+        /// </summary>
+        public decimal InternalRadius { get; set; }
+        /// <summary>
+        /// Genişlik
+        /// </summary>
+        public decimal Width_ { get; set; }
+        /// <summary>
+        /// Kalınlık
+        /// </summary>
+        public decimal Tickness_ { get; set; }
+        /// <summary>
+        /// Çap Değeri
+        /// </summary>
+        public decimal RadiusValue { get; set; }
 
         [NoDatabaseAction]
         public List<SelectProductRelatedProductPropertiesDto> SelectProductRelatedProductProperties { get; set; }

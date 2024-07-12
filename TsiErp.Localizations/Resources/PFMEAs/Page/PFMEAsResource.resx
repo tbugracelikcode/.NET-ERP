@@ -309,6 +309,9 @@
   <data name="SecondSPCLineButton" xml:space="preserve">
     <value>2. SPC Satırları</value>
   </data>
+  <data name="State" xml:space="preserve">
+    <value>DURUM</value>
+  </data>
   <data name="StateLabel" xml:space="preserve">
     <value>Durum:</value>
   </data>

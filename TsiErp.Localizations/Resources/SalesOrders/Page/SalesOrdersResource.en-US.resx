@@ -135,6 +135,9 @@
   <data name="BranchCode" xml:space="preserve">
     <value>BRANCH CODE</value>
   </data>
+  <data name="BranchCodeLabel" xml:space="preserve">
+    <value>Branch:</value>
+  </data>
   <data name="BranchModalGridCode" xml:space="preserve">
     <value>BRANCH CODE</value>
   </data>
@@ -146,9 +149,6 @@
   </data>
   <data name="BranchModalTitle" xml:space="preserve">
     <value>Branches</value>
-  </data>
-  <data name="BranchNameLabel" xml:space="preserve">
-    <value>Branch:</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
@@ -465,7 +465,7 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="ShipmentAdressLabel" xml:space="preserve">
+  <data name="ShippingAdressCodeLabel" xml:space="preserve">
     <value>Shipping Adress:</value>
   </data>
   <data name="ShippingAdressModalGridAdress" xml:space="preserve">

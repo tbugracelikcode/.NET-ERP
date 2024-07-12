@@ -96,7 +96,14 @@ namespace TsiErp.Business.Entities.Product.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
-                Name = input.Name
+                Name = input.Name,
+                RawMaterialType = input.RawMaterialType,
+                 ExternalRadius = input.ExternalRadius,
+                  InternalRadius = input.InternalRadius,
+                   RadiusValue = input.RadiusValue,
+                   Width_ = input.Width_,
+                   Tickness_ = input.Tickness_
+                    
             });
 
             foreach (var item in input.SelectProductRelatedProductProperties)
@@ -372,6 +379,12 @@ namespace TsiErp.Business.Entities.Product.Services
                 SaleVAT = input.SaleVAT,
                 SawWastage = input.SawWastage,
                 SupplyForm = input.SupplyForm,
+                ExternalRadius = input.ExternalRadius,
+                RawMaterialType = input.RawMaterialType,
+                InternalRadius = input.InternalRadius,
+                 Tickness_ = input.Tickness_,
+                 RadiusValue = input.RadiusValue,  
+                  Width_    = input.Width_,
                 TechnicalConfirmation = input.TechnicalConfirmation,
                 UnitSetID = input.UnitSetID.GetValueOrDefault(),
                 CreationTime = entity.CreationTime.Value,
@@ -500,6 +513,13 @@ namespace TsiErp.Business.Entities.Product.Services
                 Id = id,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
+                RawMaterialType = (int)entity.RawMaterialType,
+                InternalRadius = entity.InternalRadius,
+                RadiusValue = entity.RadiusValue,
+                Width_ = entity.Width_,
+                 ExternalRadius = entity.ExternalRadius,
+                  Tickness_ = entity.Tickness_
+
 
             }).Where(new { Id = id }, true, true, "");
 

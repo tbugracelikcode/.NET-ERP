@@ -135,6 +135,9 @@
   <data name="BranchCode" xml:space="preserve">
     <value>ŞUBE KODU</value>
   </data>
+  <data name="BranchCodeLabel" xml:space="preserve">
+    <value>Şube:</value>
+  </data>
   <data name="BranchModalGridCode" xml:space="preserve">
     <value>ŞUBE KODU</value>
   </data>
@@ -146,9 +149,6 @@
   </data>
   <data name="BranchModalTitle" xml:space="preserve">
     <value>Şubeler</value>
-  </data>
-  <data name="BranchNameLabel" xml:space="preserve">
-    <value>Şube:</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
@@ -465,7 +465,7 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
-  <data name="ShipmentAdressLabel" xml:space="preserve">
+  <data name="ShippingAdressCodeLabel" xml:space="preserve">
     <value>Sevkiyat Adresi:</value>
   </data>
   <data name="ShippingAdressModalGridAdress" xml:space="preserve">

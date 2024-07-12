@@ -115,6 +115,15 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Şube:.
+        /// </summary>
+        public static string BranchCodeLabel {
+            get {
+                return ResourceManager.GetString("BranchCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ŞUBE KODU.
         /// </summary>
         public static string BranchModalGridCode {
@@ -147,15 +156,6 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         public static string BranchModalTitle {
             get {
                 return ResourceManager.GetString("BranchModalTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Şube:.
-        /// </summary>
-        public static string BranchNameLabel {
-            get {
-                return ResourceManager.GetString("BranchNameLabel", resourceCulture);
             }
         }
         
@@ -1107,9 +1107,9 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         /// <summary>
         ///   Looks up a localized string similar to Sevkiyat Adresi:.
         /// </summary>
-        public static string ShipmentAdressLabel {
+        public static string ShippingAdressCodeLabel {
             get {
-                return ResourceManager.GetString("ShipmentAdressLabel", resourceCulture);
+                return ResourceManager.GetString("ShippingAdressCodeLabel", resourceCulture);
             }
         }
         

@@ -67,7 +67,7 @@ else
              HeaderText="@L["EditModalTitle"]"
              Width="72%"
              Height="62%"
-             MinWidth="1400px"
+             MinWidth="1200px"
              MinHeight="680px"
              HeaderCssClass="HeaderTitleCss"
              Showing="CrudModalShowing"
@@ -151,18 +151,18 @@ else
                                                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                                                 <GridColumns>
-                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.Priority) Type="ColumnType.Number" HeaderText="@L["LineGridPriority"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.Priority) Type="ColumnType.Number" HeaderText="@L["LineGridPriority"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.StationCode) HeaderText="@L["LineGridStationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.StationName) HeaderText="@L["LineGridStationName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.StationCode) HeaderText="@L["LineGridStationCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.StationName) HeaderText="@L["LineGridStationName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.OperationTime) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridOprTime"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.OperationTime) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridOprTime"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
 
-                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.ProcessQuantity) Type="ColumnType.Number" HeaderText="@L["LineGridProcessQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.AdjustmentAndControlTime) Type="ColumnType.Number" HeaderText="@L["LineGridAdjustment"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.ProcessQuantity) Type="ColumnType.Number" HeaderText="@L["LineGridProcessQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.AdjustmentAndControlTime) Type="ColumnType.Number" HeaderText="@L["LineGridAdjustment"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.Alternative) DisplayAsCheckBox=true HeaderText="@L["LineGridAlternative"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.Alternative) DisplayAsCheckBox=true HeaderText="@L["LineGridAlternative"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                                                 </GridColumns>
                                                             </SfGrid>
                                                         </Template>
@@ -252,11 +252,11 @@ else
 
                                             <DxGridLayout CssClass="TSITemplateOprGridLayout">
                                                 <Rows>
-                                                    <DxGridLayoutRow Height="24%" />
-                                                    <DxGridLayoutRow Height="24%" />
-                                                    <DxGridLayoutRow Height="24%" />
-                                                    <DxGridLayoutRow Height="24%" />
-                                                    <DxGridLayoutRow Height="24%" />
+                                                    <DxGridLayoutRow Height="20%" />
+                                                    <DxGridLayoutRow Height="20%" />
+                                                    <DxGridLayoutRow Height="20%" />
+                                                    <DxGridLayoutRow Height="20%" />
+                                                    <DxGridLayoutRow Height="20%" />
                                                 </Rows>
                                                 <Columns>
                                                     <DxGridLayoutColumn Width="2%" />

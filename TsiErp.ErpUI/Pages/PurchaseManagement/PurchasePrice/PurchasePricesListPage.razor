@@ -54,11 +54,11 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListPurchasePricesDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPurchasePricesDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPurchasePricesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["StartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPurchasePricesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["EndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPurchasePricesDto.CurrencyCode) HeaderText="@L["CurrencyCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                     <GridColumn Field=@nameof(ListPurchasePricesDto.IsApproved) DisplayAsCheckBox=true HeaderText="@L["IsApproved"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchasePricesDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchasePricesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["StartDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchasePricesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["EndDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchasePricesDto.CurrencyCode) HeaderText="@L["CurrencyCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                     <GridColumn Field=@nameof(ListPurchasePricesDto.IsApproved) DisplayAsCheckBox=true HeaderText="@L["IsApproved"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
 
                                 </GridColumns>
                             </SfGrid>
@@ -94,7 +94,7 @@ else
                     <DxGridLayoutRow Height="9%" />
                     <DxGridLayoutRow Height="9%" />
                     <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="51%" />
+                    <DxGridLayoutRow Height="50%" />
                 </Rows>
 
                 <Columns>
@@ -214,8 +214,8 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
                                   @*   <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.SupplierReferanceNo) HeaderText="@L["SupplierReferanceNo"]" TextAlign="TextAlign.Center" Width="120" Context="lineContext">
                                         <Template>
@@ -228,11 +228,11 @@ else
                                                 @supplierReferanceNumber
                                         </Template>
                                     </GridColumn> *@
-                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.CurrencyCode) HeaderText="@L["LineGridCurrencyCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.Price) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridPrice"]" TextAlign="TextAlign.Center" Width="120" Visible=@LoginedUserService.PurchaseManagementShowAmountsChildMenu></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridStartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridEndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.SupplyDateDay) Type="ColumnType.Number" HeaderText="@L["LineGridSupplyDateDay"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.CurrencyCode) HeaderText="@L["LineGridCurrencyCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.Price) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridPrice"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.PurchaseManagementShowAmountsChildMenu></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridStartDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridEndDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.SupplyDateDay) Type="ColumnType.Number" HeaderText="@L["LineGridSupplyDateDay"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -357,8 +357,8 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListCurrenciesDto.Code) HeaderText="@L["CurrencyModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrenciesDto.Name) HeaderText="@L["CurrencyModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.Code) HeaderText="@L["CurrencyModalGridCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.Name) HeaderText="@L["CurrencyModalGridName"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
@@ -406,8 +406,8 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListWarehousesDto.Code) HeaderText="@L["WarehouseModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListWarehousesDto.Name) HeaderText="@L["WarehouseModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWarehousesDto.Code) HeaderText="@L["WarehouseModalGridCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWarehousesDto.Name) HeaderText="@L["WarehouseModalGridName"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
@@ -455,8 +455,8 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListBranchesDto.Code) HeaderText="@L["BranchModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListBranchesDto.Name) HeaderText="@L["BranchModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListBranchesDto.Code) HeaderText="@L["BranchModalGridCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                            <GridColumn Field=@nameof(ListBranchesDto.Name) HeaderText="@L["BranchModalGridName"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
@@ -505,12 +505,12 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Code) HeaderText="@L["CurrentAccountModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Name) HeaderText="@L["CurrentAccountModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Tel1) HeaderText="@L["CurrentAccountModalGridTel"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Responsible) HeaderText="@L["CurrentAccountModalGridResponsible"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Email) HeaderText="@L["CurrentAccountModalGridEmail"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.TaxNumber) HeaderText="@L["CurrentAccountModalGridTaxNumber"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Code) HeaderText="@L["CurrentAccountModalGridCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Name) HeaderText="@L["CurrentAccountModalGridName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Tel1) HeaderText="@L["CurrentAccountModalGridTel"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Responsible) HeaderText="@L["CurrentAccountModalGridResponsible"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Email) HeaderText="@L["CurrentAccountModalGridEmail"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.TaxNumber) HeaderText="@L["CurrentAccountModalGridTaxNumber"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                         </GridColumns>
 
                                     </SfGrid>
@@ -560,8 +560,8 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["ProductModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["ProductModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["ProductModalGridCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["ProductModalGridName"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
                                         </GridColumns>
 
                                     </SfGrid>

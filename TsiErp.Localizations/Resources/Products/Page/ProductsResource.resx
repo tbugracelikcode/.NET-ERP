@@ -306,6 +306,9 @@
   <data name="EnumAparatus" xml:space="preserve">
     <value>(APRT) Aparat</value>
   </data>
+  <data name="EnumBoru" xml:space="preserve">
+    <value>Boru Hammadde</value>
+  </data>
   <data name="EnumCommercialProduct" xml:space="preserve">
     <value>(TM) Ticari Mal</value>
   </data>
@@ -314,6 +317,9 @@
   </data>
   <data name="EnumMaterial" xml:space="preserve">
     <value>(HM) Hammadde</value>
+  </data>
+  <data name="EnumMil" xml:space="preserve">
+    <value>Mil Hammadde</value>
   </data>
   <data name="EnumMold" xml:space="preserve">
     <value>(KLP) Kalıp</value>
@@ -327,6 +333,9 @@
   <data name="EnumPurchase" xml:space="preserve">
     <value>Satın Alma</value>
   </data>
+  <data name="EnumSac" xml:space="preserve">
+    <value>Sac Hammadde</value>
+  </data>
   <data name="EnumSemiProduct" xml:space="preserve">
     <value>(YM) Yarı Mamül</value>
   </data>
@@ -339,6 +348,9 @@
   <data name="ExportCatNoLabel" xml:space="preserve">
     <value>İhracat Kategori No:</value>
   </data>
+  <data name="ExternalRadiusLabel" xml:space="preserve">
+    <value>Dış Çap:</value>
+  </data>
   <data name="FilestoUpload" xml:space="preserve">
     <value>Yüklenecek Dosyalar:</value>
   </data>
@@ -350,6 +362,9 @@
   </data>
   <data name="GTIPLabel" xml:space="preserve">
     <value>GTIP:</value>
+  </data>
+  <data name="InternalRadiusLabel" xml:space="preserve">
+    <value>İç Çap:</value>
   </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Aktiflik:</value>
@@ -579,6 +594,12 @@
   <data name="PurchaseVATLabel" xml:space="preserve">
     <value>Satın Alma KDV:</value>
   </data>
+  <data name="RadiusValueLabel" xml:space="preserve">
+    <value>Çap Değeri:</value>
+  </data>
+  <data name="RawMaterialTypeLabel" xml:space="preserve">
+    <value>Hammadde Türü:</value>
+  </data>
   <data name="ReferanceNoLabelProdRef" xml:space="preserve">
     <value>Tedarikçi Referans Numarası:</value>
   </data>
@@ -741,6 +762,9 @@
   <data name="Tab4Name" xml:space="preserve">
     <value>Ürün Özellikleri</value>
   </data>
+  <data name="Tab5Name" xml:space="preserve">
+    <value>Hammadde Bilgileri</value>
+  </data>
   <data name="TechnicalApprovalLabelRoute" xml:space="preserve">
     <value>Teknik Onay:</value>
   </data>
@@ -758,6 +782,9 @@
   </data>
   <data name="TechnicalDrawingContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="Tickness_Label" xml:space="preserve">
+    <value>Kalınlık:</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>Seçtiğiniz teknik resim, kalıcı olarak silinecektir.</value>
@@ -836,5 +863,8 @@
   </data>
   <data name="ValidatorUnitSetID" xml:space="preserve">
     <value>Lütfen birim seti seçin.</value>
+  </data>
+  <data name="Width_Label" xml:space="preserve">
+    <value>Genişlik:</value>
   </data>
 </root>

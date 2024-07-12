@@ -134,5 +134,30 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
         ///  Kullanılabilir Stok
         /// </summary>
         public decimal TotalAvailableStock { get; set; }
+        /// <summary>
+        /// Hammadde Türü
+        /// </summary>
+        public RowMaterialTypeEnum RawMaterialType { get; set; }
+
+        /// <summary>
+        /// Dış Çap
+        /// </summary>
+        public decimal ExternalRadius { get; set; }
+        /// <summary>
+        /// İç Çap
+        /// </summary>
+        public decimal InternalRadius { get; set; }
+        /// <summary>
+        /// Genişlik
+        /// </summary>
+        public decimal Width_ { get; set; }
+        /// <summary>
+        /// Kalınlık
+        /// </summary>
+        public decimal Tickness_ { get; set; }
+        /// <summary>
+        /// Çap Değeri
+        /// </summary>
+        public decimal RadiusValue { get; set; }
     }
 }

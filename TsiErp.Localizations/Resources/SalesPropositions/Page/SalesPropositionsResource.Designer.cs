@@ -952,7 +952,7 @@ namespace TsiErp.Localizations.Resources.SalesPropositions.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seviyat Adresi:.
+        ///   Looks up a localized string similar to Sevkiyat Adresi:.
         /// </summary>
         public static string ShippingAdressCodeLabel {
             get {
@@ -1096,7 +1096,7 @@ namespace TsiErp.Localizations.Resources.SalesPropositions.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to İşlem Dövizi KDC Toplamı:.
+        ///   Looks up a localized string similar to İşlem Dövizi KDV Toplamı:.
         /// </summary>
         public static string TransactionExchangeTotalVatAmountLabel {
             get {
