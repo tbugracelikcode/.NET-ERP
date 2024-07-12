@@ -405,6 +405,23 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     break;
 
                 case "packinglisteng":
+                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    #region Enum Combobox Localization
+
+                    DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
+
+                    DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
+
+                    DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
+
+                    #endregion
+
+
+                    PackingListEngDynamicReport = new XtraReport();
+                    PackingListEngReportVisible = true;
+                    await CreateEngPackingListReport(DataSource);
+                    await InvokeAsync(StateHasChanged);
                     break;
 
                 case "commercialinvoice":
@@ -1664,6 +1681,125 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             PackingListDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
 
             PackingListDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
+
+            await Task.CompletedTask;
+        }
+
+
+        #endregion
+
+        #region Packing List
+        bool PackingListEngReportVisible { get; set; }
+
+        DxReportViewer PackingListEngReportViewer { get; set; }
+
+        XtraReport PackingListEngDynamicReport { get; set; }
+
+        async Task CreateEngPackingListReport(SelectPackingListsDto packingList)
+        {
+            PackingListEngDynamicReport.ShowPrintMarginsWarning = false;
+            PackingListEngDynamicReport.ShowPreviewMarginLines = false;
+            PackingListEngDynamicReport.CreateDocument();
+
+            List<PackingListReportDto> reportSource = new List<PackingListReportDto>();
+
+            foreach (var item in packingList.SelectPackingListPalletPackageLines)
+            {
+                string malzemeTanimi = item.ProductName;
+                string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(item.ProductID.GetValueOrDefault(), packingList.TransmitterID.GetValueOrDefault());
+
+                malzemeTanimi = malzemeTanimi + supplierReferanceNumber + "/049/" + item.CustomerOrderNr;
+
+                PackingListReportDto report = new PackingListReportDto();
+                report.EoriNr = packingList.TransmitterEORINo;
+                report.FaturaNo = packingList.BillNo;
+                report.CekiListesiNo = packingList.Code;
+                report.FaturaTarihi = packingList.BillDate.Value.ToShortDateString();
+                report.SiparisNo = packingList.OrderNo;
+                report.AliciUnvan = packingList.TransmitterName;
+                report.AliciAdres1 = packingList.TransmitterAddress1;
+                report.AliciAdres2 = packingList.TransmitterAddress2;
+                report.AliciTel = packingList.TransmitterTel;
+                report.AliciFax = packingList.TransmitterFax;
+                report.PaketNo = item.PackageNo;
+                report.MalzemeTanimi = malzemeTanimi;
+                report.PaketCinsi = item.PackageType;
+                report.PaketIcerigi = item.PackageContent;
+                report.PaketSayisi = item.NumberofPackage;
+                report.ToplamAdet = item.TotalAmount;
+                report.KoliNetKg = item.OnePackageNetKG;
+                report.KoliBrutKg = item.OnePackageGrossKG;
+                report.KoliToplamNetKg = item.TotalNetKG;
+                report.KoliToplamBrutKg = item.TotalGrossKG;
+                report.ToplamPaletAdedi = packingList.SelectPackingListPalletCubageLines.Sum(t => t.NumberofPallet);
+                report.ToplamHacim = packingList.SelectPackingListPalletCubageLines.Sum(t => t.Cubage);
+
+                reportSource.Add(report);
+            }
+
+
+
+            List<PackingListPalletQuantityReportDto> kubajList = new List<PackingListPalletQuantityReportDto>();
+
+            foreach (var item in packingList.SelectPackingListPalletCubageLines)
+            {
+                PackingListPalletQuantityReportDto kubaj = new PackingListPalletQuantityReportDto();
+                kubaj.Kubaj = item.Cubage;
+                kubaj.Yukseklik = item.Load_;
+                kubaj.PaletAdet = item.NumberofPallet;
+                kubaj.Boy = item.Height_;
+                kubaj.En = item.Width_;
+                kubajList.Add(kubaj);
+            }
+
+            List<PackingListPalletDetailReportDto> paletList = new List<PackingListPalletDetailReportDto>();
+
+            int packageNo = 1;
+
+            int palletIndex = 0;
+
+            foreach (var item in packingList.SelectPackingListPalletLines)
+            {
+                if (packageNo == 1)
+                {
+                    PackingListPalletDetailReportDto palet = new PackingListPalletDetailReportDto();
+                    palet.IlkKoliNo = packageNo.ToString();
+                    palet.SonKoliNo = (packageNo + item.NumberofPackage - 1).ToString();
+                    palet.KoliSayisi = item.NumberofPackage;
+                    palet.PaletAdi = item.PalletName.Split("-")[0];
+
+                    packageNo += item.NumberofPackage;
+
+                    paletList.Add(palet);
+                    palletIndex = palletIndex + 1;
+                }
+                else
+                {
+                    string firstPackageNo = Convert.ToString(Convert.ToInt32(paletList[palletIndex - 1].SonKoliNo) + 1);
+
+                    PackingListPalletDetailReportDto palet = new PackingListPalletDetailReportDto();
+                    palet.IlkKoliNo = firstPackageNo;
+                    palet.SonKoliNo = (Convert.ToInt32(firstPackageNo) + item.NumberofPackage - 1).ToString();
+                    palet.KoliSayisi = item.NumberofPackage;
+                    palet.PaletAdi = item.PalletName.Split("-")[0];
+
+                    packageNo += item.NumberofPackage;
+
+                    paletList.Add(palet);
+                    palletIndex = palletIndex + 1;
+                }
+            }
+
+            PackingListEngReport packingListEngReport = new PackingListEngReport();
+            packingListEngReport.DataSource = reportSource;
+            packingListEngReport.ShowPrintMarginsWarning = false;
+            packingListEngReport.PackingListPalletQuantityReportDto = kubajList;
+            packingListEngReport.PackingListPalletDetailReportDto = paletList;
+            packingListEngReport.CreateDocument();
+            PackingListEngDynamicReport.Pages.AddRange(packingListEngReport.Pages);
+            PackingListEngDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
+
+            PackingListEngDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
 
             await Task.CompletedTask;
         }
