@@ -43,6 +43,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         SfTextBox ProductGroupsButtonEdit;
         bool SelectProductGroupsPopupVisible = false;
         List<ListProductGroupsDto> ProductGroupsList = new List<ListProductGroupsDto>();
+
         #endregion
 
         #region Combobox İşlemleri
@@ -50,6 +51,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         public IEnumerable<SelectProductsDto> types = GetEnumDisplayTypeNames<ProductTypeEnum>();
 
         public IEnumerable<SelectProductsDto> supplyforms = GetEnumDisplaySupplyFormNames<ProductSupplyFormEnum>();
+        public IEnumerable<SelectProductsDto> rawmaterialtypes = GetEnumDisplayRowMaterialTypeNames<RowMaterialTypeEnum>();
+        
+
 
         public static List<SelectProductsDto> GetEnumDisplayTypeNames<T>()
         {
@@ -81,6 +85,21 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                        }).ToList();
         }
 
+        public static List<SelectProductsDto> GetEnumDisplayRowMaterialTypeNames<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<RowMaterialTypeEnum>()
+                       .Select(x => new SelectProductsDto
+                       {
+                           RawMaterialType = x,
+                           RawMaterialTypeName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
+        }
+
         private void ProductTypeValueChangeHandler(ChangeEventArgs<ProductTypeEnum, SelectProductsDto> args)
         {
             if (args.ItemData.ProductType == ProductTypeEnum.HM)
@@ -90,6 +109,37 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             else
             {
                 productSizeVisible = false;
+            }
+        }
+        private void RawMaterialTypeValueChangeHandler(ChangeEventArgs<RowMaterialTypeEnum, SelectProductsDto> args)
+        {
+            if (args.ItemData.RawMaterialType == RowMaterialTypeEnum.BoruHammadde)
+            {
+                isHBRaw = true;
+                isHMRaw = false;
+                isHSRaw = false;
+                DataSource.Width_ = 0;
+                DataSource.Tickness_ = 0;
+                DataSource.RadiusValue = 0;
+            }
+            else if(args.ItemData.RawMaterialType == RowMaterialTypeEnum.MilHammadde)
+            {
+                isHBRaw = false;
+                isHMRaw = true;
+                isHSRaw = false;
+                DataSource.Width_ = 0;
+                DataSource.Tickness_ = 0;
+                DataSource.ExternalRadius = 0;
+                DataSource.InternalRadius = 0;
+            }
+            else if (args.ItemData.RawMaterialType == RowMaterialTypeEnum.SacHammadde)
+            {
+                isHBRaw = false;
+                isHMRaw = false;
+                isHSRaw = true;
+                DataSource.ExternalRadius = 0;
+                DataSource.InternalRadius = 0;
+                DataSource.RadiusValue = 0;
             }
         }
 
@@ -195,6 +245,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         public bool isYM = false;
         public bool isMM = false;
         public bool isTM = false;
+
+        public bool isHSRaw = false;
+        public bool isHBRaw = false;
+        public bool isHMRaw = false;
 
         public bool StockAddressPopupVisible = false;
 
@@ -1566,12 +1620,54 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             {
                 item.ProductTypeName = L[item.ProductTypeName];
             }
+            foreach (var item in rawmaterialtypes)
+            {
+                item.RawMaterialTypeName = L[item.RawMaterialTypeName];
+            }
 
             EditPageVisible = true;
 
             return Task.CompletedTask;
         }
 
+        public override async void ShowEditPage()
+        {
+            if (DataSource != null)
+            {
+                bool? dataOpenStatus = DataSource.DataOpenStatus;
+
+                if (dataOpenStatus == true && dataOpenStatus != null)
+                {
+                    EditPageVisible = false;
+
+                    string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
+
+                    MessagePopupInformationDescriptionBase = MessagePopupInformationDescriptionBase.Replace("{0}", LoginedUserService.UserName);
+
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], MessagePopupInformationDescriptionBase);
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    foreach (var item in supplyforms)
+                    {
+                        item.SupplyFormName = L[item.SupplyFormName];
+                    }
+
+                    foreach (var item in types)
+                    {
+                        item.ProductTypeName = L[item.ProductTypeName];
+                    }
+                    foreach (var item in rawmaterialtypes)
+                    {
+                        item.RawMaterialTypeName = L[item.RawMaterialTypeName];
+                    }
+
+                    EditPageVisible = true;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+        }
 
         #region Teknik Resim Cari Hesap Button Edit
 

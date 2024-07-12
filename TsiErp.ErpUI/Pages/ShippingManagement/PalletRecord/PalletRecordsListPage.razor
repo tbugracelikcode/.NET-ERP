@@ -60,12 +60,12 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListPalletRecordsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPalletRecordsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPalletRecordsDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPalletRecordsDto.PalletPackageNumber) Type="ColumnType.Number" HeaderText="@L["PalletPackageNumber"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPalletRecordsDto.PackageType) HeaderText="@L["PackageType"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPalletRecordsDto.PalletRecordsStateEnum) HeaderText="@L["PalletRecordsStateEnum"]" TextAlign="TextAlign.Center" Width="120">
+                                    <GridColumn Field=@nameof(ListPalletRecordsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPalletRecordsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPalletRecordsDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPalletRecordsDto.PalletPackageNumber) Type="ColumnType.Number" HeaderText="@L["PalletPackageNumber"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPalletRecordsDto.PackageType) HeaderText="@L["PackageType"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPalletRecordsDto.PalletRecordsStateEnum) HeaderText="@L["PalletRecordsStateEnum"]" TextAlign="TextAlign.Center" Width="170">
                                         <Template>
                                             @{
                                                 var palletRecordsStateEnum = (context as ListPalletRecordsDto).PalletRecordsStateEnum;
@@ -83,7 +83,7 @@ else
                                             @palletRecordsStateEnumStr
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Field=@nameof(ListPalletRecordsDto.PalletRecordsTicketStateEnum) HeaderText="@L["PalletRecordsTicketStateEnum"]" TextAlign="TextAlign.Center" Width="120">
+                                    <GridColumn Field=@nameof(ListPalletRecordsDto.PalletRecordsTicketStateEnum) HeaderText="@L["PalletRecordsTicketStateEnum"]" TextAlign="TextAlign.Center" Width="220">
                                         <Template>
                                             @{
                                                 var palletRecordsTicketStateEnum = (context as ListPalletRecordsDto).PalletRecordsTicketStateEnum;

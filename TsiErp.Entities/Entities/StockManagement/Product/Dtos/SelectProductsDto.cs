@@ -134,6 +134,35 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
         /// Ürün Grup ID
         /// </summary>
         public Guid ProductGrpID { get; set; }
+        /// <summary>
+        /// Hammadde Türü
+        /// </summary>
+        public RowMaterialTypeEnum RawMaterialType { get; set; }
+
+        /// <summary>
+        /// Dış Çap
+        /// </summary>
+        public decimal ExternalRadius { get; set; }
+        /// <summary>
+        /// İç Çap
+        /// </summary>
+        public decimal InternalRadius { get; set; }
+        /// <summary>
+        /// Genişlik
+        /// </summary>
+        public decimal Width_ { get; set; }
+        /// <summary>
+        /// Kalınlık
+        /// </summary>
+        public decimal Tickness_ { get; set; }
+        /// <summary>
+        /// Çap Değeri
+        /// </summary>
+        public decimal RadiusValue { get; set; }
+        /// <summary>
+        /// Hammadde Türü
+        /// </summary>
+        public string RawMaterialTypeName { get; set; }
 
         [NoDatabaseAction]
         public List<SelectProductRelatedProductPropertiesDto> SelectProductRelatedProductProperties { get; set; }
