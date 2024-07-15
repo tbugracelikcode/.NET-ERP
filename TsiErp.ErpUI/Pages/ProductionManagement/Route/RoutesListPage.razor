@@ -229,6 +229,9 @@ else
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+
+                                <GridEvents RowDataBound="OnRowDataBound" TValue="SelectRouteLinesDto"></GridEvents>
+
                                 <GridColumns>
                                     <GridColumn Field=@nameof(SelectRouteLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
                                     <GridColumn Field=@nameof(SelectRouteLinesDto.OperationCode) HeaderText="@L["LineGridOprCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>

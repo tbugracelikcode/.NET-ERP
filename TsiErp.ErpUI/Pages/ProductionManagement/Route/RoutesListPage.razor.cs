@@ -286,6 +286,14 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
 
         }
 
+
+        public void OnRowDataBound(RowDataBoundEventArgs<SelectRouteLinesDto> args)
+        {
+            this._LineGrid.SelectRowAsync(SelectedRowIndex, true);
+        }
+
+        public int SelectedRowIndex { get; set; }
+
         public async void ArrowUpBtnClicked()
         {
             var index = Convert.ToInt32(_LineGrid.SelectedRowIndexes.FirstOrDefault());
@@ -300,6 +308,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
                 GridLineList = GridLineList.OrderBy(t => t.LineNr).ToList();
 
                 DataSource.SelectRouteLines = GridLineList;
+
+                SelectedRowIndex = index - 1;
 
                 await _LineGrid.Refresh();
                 await InvokeAsync(StateHasChanged);
@@ -322,6 +332,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
 
                 DataSource.SelectRouteLines = GridLineList;
 
+                SelectedRowIndex = index + 1;
                 await _LineGrid.Refresh();
                 await InvokeAsync(StateHasChanged);
             }
