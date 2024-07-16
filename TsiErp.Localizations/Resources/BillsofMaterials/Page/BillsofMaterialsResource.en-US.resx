@@ -141,6 +141,9 @@
   <data name="BoMLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="CalculateQuantityButton" xml:space="preserve">
+    <value>Calculate Quantity</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>

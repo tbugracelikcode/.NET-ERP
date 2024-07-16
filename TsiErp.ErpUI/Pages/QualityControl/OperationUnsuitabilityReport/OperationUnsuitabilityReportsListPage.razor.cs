@@ -4,8 +4,10 @@ using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
@@ -126,7 +128,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
 
                     var createdWorkOrder = (await WorkOrdersAppService.GetbyLinkedWorkOrderAsync(DataSource.WorkOrderID.GetValueOrDefault())).Data;
 
-                    if(createdWorkOrder != null && createdWorkOrder.Id != Guid.Empty)
+                    if (createdWorkOrder != null && createdWorkOrder.Id != Guid.Empty)
                     {
                         isCreatedNewWorkOrder = true;
                         CreatedWorkOrderNo = createdWorkOrder.WorkOrderNo;
@@ -230,7 +232,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
         SfTextBox StationsCodeButtonEdit;
         SfTextBox StationsNameButtonEdit;
         bool SelectStationsPopupVisible = false;
-        List<ListStationsDto> StationsList = new List<ListStationsDto>();
+        List<SelectStationsDto> StationsList = new List<SelectStationsDto>();
 
         public async Task StationsCodeOnCreateIcon()
         {
@@ -284,7 +286,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
             }
         }
 
-        public async void StationsDoubleClickHandler(RecordDoubleClickEventArgs<ListStationsDto> args)
+        public async void StationsDoubleClickHandler(RecordDoubleClickEventArgs<SelectStationsDto> args)
         {
             var selectedUnitSet = args.RowData;
 
@@ -402,18 +404,33 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
 
         #region GetList Metotları
 
-
-
         private async Task GetEmployeesList()
         {
             EmployeesList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.ToList();
         }
 
-
-
         private async Task GetStationsList()
         {
-            StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
+            StationsList.Clear();
+            var productOperationId = (await WorkOrdersAppService.GetAsync(DataSource.WorkOrderID.GetValueOrDefault())).Data.ProductsOperationID;
+
+            if (productOperationId != Guid.Empty)
+            {
+                var productOperation = (await ProductsOperationsAppService.GetAsync(productOperationId.GetValueOrDefault())).Data;
+
+                foreach (var item in productOperation.SelectProductsOperationLines)
+                {
+                    var selectStationDto = (await StationsAppService.GetAsync(item.StationID.GetValueOrDefault())).Data;
+                    StationsList.Add(selectStationDto);
+                }
+            }
+            else
+            {
+                await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["EmptyProductOperationError"]);
+                await InvokeAsync(StateHasChanged);
+            }
+
+            //StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
         }
 
         private async Task GetWorkOrdersList()

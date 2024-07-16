@@ -12,6 +12,7 @@
 @inject IFicheNumbersAppService FicheNumbersAppService
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
+@inject IProductionManagementParametersAppService ProductionManagementParametersService
 
 
 @if (!base.IsLoaded)
@@ -193,11 +194,11 @@ else
                                                 {
                                                     supplyForm = L["EnumProduction"];
                                                 }
-                                        }
-                                        @supplyForm
-                                    </Template>
-                                </GridColumn>
-                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            }
+                                            @supplyForm
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.Quantity) Format="N6" Type="ColumnType.Number" HeaderText="@L["LineGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.Size) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridSize"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
@@ -294,8 +295,15 @@ else
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            @*   <label class="TSIModalLabel"><strong>Boy: </strong></label>
-                        <SfNumericTextBox Format="N6" Min="0" @bind-Value="LineDataSource.Size" TValue="decimal" Placeholder="KDV Oranı Yazınız."></SfNumericTextBox>*@
+                            <label class="TSIModalLabel"><strong>Boy: </strong></label>
+                            <SfNumericTextBox Format="N6" Min="0" @bind-Value="LineDataSource.Size" TValue="decimal"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <br/>
+                            <SfButton CssClass="TSISaveButton" OnClick="(()=>CalculateQuantity(LineDataSource.ProductID.GetValueOrDefault()))"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["CalculateQuantityButton"]</SfButton>
                         </Template>
                     </DxGridLayoutItem>
 
