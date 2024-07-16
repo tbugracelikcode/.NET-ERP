@@ -490,17 +490,17 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
             await InvokeAsync(StateHasChanged);
         }
 
-        public async Task ProductsNameOnCreateIcon()
-        {
-            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsNameButtonClickEvent);
-            await ProductsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
-        }
-
         public async void ProductsNameButtonClickEvent()
         {
             SelectProductsPopupVisible = true;
             await GetProductsList();
             await InvokeAsync(StateHasChanged);
+        }
+
+        public async Task ProductsNameOnCreateIcon()
+        {
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsNameButtonClickEvent);
+            await ProductsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
         }
 
         public void ProductsOnValueChange(ChangedEventArgs args)

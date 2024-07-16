@@ -790,6 +790,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Palet Çıkar.
+        /// </summary>
+        public static string PackingListsPalletLineContextRemovePallet {
+            get {
+                return ResourceManager.GetString("PackingListsPalletLineContextRemovePallet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Palet Seç.
         /// </summary>
         public static string PackingListsPalletLineContextSelectPallet {

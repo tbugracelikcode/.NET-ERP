@@ -360,6 +360,9 @@
   <data name="PackingListsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PackingListsPalletLineContextRemovePallet" xml:space="preserve">
+    <value>Remove the Pallet</value>
+  </data>
   <data name="PackingListsPalletLineContextSelectPallet" xml:space="preserve">
     <value>Select Pallet</value>
   </data>

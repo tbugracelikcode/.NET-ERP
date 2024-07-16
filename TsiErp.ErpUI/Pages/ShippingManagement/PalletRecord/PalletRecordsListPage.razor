@@ -705,16 +705,26 @@ else
              CloseOnOutsideClick="false"
              HeaderText="@L["BigPalletLabelModalTitle"]"
              Width="81%"
-             Height="83%"
+             Height="90%"
              MinWidth="1400px"
              MinHeight="900px"
              HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
-            <DevGridLayoutFilterRow ColumnCount="1" RowCount="2" RowHeights="@RowHeights("*")">
-                <GridLayoutItems>
 
-                    <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="80%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
+                </Columns>
+                <Items>
+
+                    <DxGridLayoutItem Row="0" Column="1">
                         <Template>
 
                             <SfCard class="TSIReportFilterCard" style="height:100px !important;">
@@ -772,27 +782,22 @@ else
                                 <CardFooter>
                                 </CardFooter>
                             </SfCard>
+
                         </Template>
                     </DxGridLayoutItem>
 
-
-                    <DxGridLayoutItem Row="1" Column="0" ColumnSpan="1">
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
-                                <CardContent>
-                                    <DxReportViewer @ref="BigLabelReportViewer" Report="@BigLabelReport">
-                                    </DxReportViewer>
-                                </CardContent>
-                                <CardFooter>
-                                </CardFooter>
-                            </SfCard>
+
+                            <DxReportViewer @ref="BigLabelReportViewer" Report="@BigLabelReport">
+                            </DxReportViewer>
                         </Template>
                     </DxGridLayoutItem>
-                </GridLayoutItems>
-            </DevGridLayoutFilterRow>
+
+                </Items>
+            </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSICancelButton" OnClick="HideLoadingDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -802,9 +807,9 @@ else
              CloseOnOutsideClick="false"
              HeaderText="@L["PalletLabelModalTitle"]"
              Width="81%"
-             Height="83%"
+             Height="74%"
              MinWidth="1400px"
-             MinHeight="900px"
+             MinHeight="800px"
              HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
@@ -831,7 +836,6 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSICancelButton" OnClick="HideLoadingDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -873,43 +877,43 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(TicketListGrid.IsApproved) DisplayAsCheckBox=true HeaderText="@L["TicketListGridIsApproved"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                       
+
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.PalletNo) HeaderText="@L["TicketListGridPalletNo"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                       
+
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.ProductCode) HeaderText="@L["TicketListGridProductCode"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        
+
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.PackageOrderNo) HeaderText="@L["TicketListGridPackageOrderNo"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        
+
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.QuantityInPackage) HeaderText="@L["TicketListGridQuantityInPackage"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                      
+
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.PackageQuantity) HeaderText="@L["TicketListGridPackageQuantity"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                       
+
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.TotalPackageQuantity) HeaderText="@L["TicketListGridTotalPackageQuantity"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                       
+
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.PackageType) HeaderText="@L["TicketListGridPackageType"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        
+
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.OrderRefNo) HeaderText="@L["TicketListGridOrderRefNo"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                       
+
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.CustomerRefNo) HeaderText="@L["TicketListGridCustomerRefNo"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                       
+
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.CustomerCode) HeaderText="@L["TicketListGridCustomerCode"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                       
+
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.ProductionOrderNo) HeaderText="@L["TicketListGridProductionOrderNo"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                       
+
                                     </GridColumn>
                                     <GridColumn Field=@nameof(TicketListGrid.Status) HeaderText="@L["TicketListGridStatus"]" TextAlign="TextAlign.Center" Width="155" Context="ticketContext">
-                                        
+
                                     </GridColumn>
 
                                 </GridColumns>
@@ -1210,3 +1214,12 @@ else
         </FooterContentTemplate>
     </DxPopup>
 }
+
+<style>
+    .dxbrv-wrapper {
+        position: relative;
+        z-index: 0;
+        overflow: hidden;
+        height: 46rem !important;
+    }
+</style>

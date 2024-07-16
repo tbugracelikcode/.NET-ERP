@@ -47,6 +47,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
             _isContract = false;
             _isOperation = false;
             _isPurchase = false;
+            _isProductionOrderChange = false;
 
             EditPageVisible = true;
 
@@ -85,18 +86,28 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                     _isOperation = true;
                     _isPurchase = false;
                     _isContract = false;
+                    _isProductionOrderChange = false;
                     break;
 
                 case "Purchase":
                     _isOperation = false;
                     _isPurchase = true;
                     _isContract = false;
+                    _isProductionOrderChange = false;
                     break;
 
                 case "Contract":
                     _isOperation = false;
                     _isPurchase = false;
                     _isContract = true;
+                    _isProductionOrderChange = false;
+                    break;
+
+                case "ProductionOrderChange":
+                    _isOperation = false;
+                    _isPurchase = false;
+                    _isContract = false;
+                    _isProductionOrderChange = true;
                     break;
                 default:
                     break;
