@@ -156,6 +156,9 @@
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
   </data>
+  <data name="IsAdvertisementLabel" xml:space="preserve">
+    <value>Advertisement</value>
+  </data>
   <data name="IsContractLabel" xml:space="preserve">
     <value>Contract</value>
   </data>

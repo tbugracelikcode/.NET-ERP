@@ -16,6 +16,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
         bool _isPurchase;
         bool _isContract;
         bool _isProductionOrderChange;
+        bool _isAdvertisement;
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -25,6 +26,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
         {
             BaseCrudService = UnsuitabilityTypesItemsService;
             _L = L;
+
             #region Context Menü Yetkilendirmesi
 
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
@@ -48,6 +50,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
             _isOperation = false;
             _isPurchase = false;
             _isProductionOrderChange = false;
+            _isAdvertisement = false;
 
             EditPageVisible = true;
 
@@ -87,6 +90,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                     _isPurchase = false;
                     _isContract = false;
                     _isProductionOrderChange = false;
+                    _isAdvertisement = false;
                     break;
 
                 case "Purchase":
@@ -94,6 +98,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                     _isPurchase = true;
                     _isContract = false;
                     _isProductionOrderChange = false;
+                    _isAdvertisement = false;
                     break;
 
                 case "Contract":
@@ -101,6 +106,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                     _isPurchase = false;
                     _isContract = true;
                     _isProductionOrderChange = false;
+                    _isAdvertisement = false;
                     break;
 
                 case "ProductionOrderChange":
@@ -108,6 +114,16 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                     _isPurchase = false;
                     _isContract = false;
                     _isProductionOrderChange = true;
+                    _isAdvertisement = false;
+                    break;
+                
+
+                case "Advertisement":
+                    _isOperation = false;
+                    _isPurchase = false;
+                    _isContract = false;
+                    _isProductionOrderChange = false;
+                    _isAdvertisement = true;
                     break;
                 default:
                     break;
@@ -124,6 +140,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                 _isPurchase = false;
                 _isContract = false;
                 _isProductionOrderChange = false;
+                _isAdvertisement = false;
                 await (InvokeAsync(StateHasChanged));
             }
         }
@@ -136,6 +153,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                 _isOperation = false;
                 _isContract = false;
                 _isProductionOrderChange = false;
+                _isAdvertisement = false;
                 await (InvokeAsync(StateHasChanged));
             }
         }
@@ -149,6 +167,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                 _isOperation = false;
                 _isPurchase = false;
                 _isProductionOrderChange = false;
+                _isAdvertisement = false;
                 await (InvokeAsync(StateHasChanged));
             }
         }
@@ -161,9 +180,25 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                 _isPurchase = false;
                 _isContract = false;
                 _isOperation = false;
+                _isAdvertisement = false;
                 await (InvokeAsync(StateHasChanged));
             }
         }
+
+        private async void AdvertisementChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+
+            if (args.Checked)
+            {
+                DataSource.UnsuitabilityTypesDescription = "AdvertisementChange";
+                _isOperation = false;
+                _isContract = false;
+                _isPurchase = false;
+                _isProductionOrderChange = false;
+                await (InvokeAsync(StateHasChanged));
+            }
+        }
+
 
         #region Kod ButtonEdit
 

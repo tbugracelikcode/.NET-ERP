@@ -156,6 +156,9 @@
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Aktiflik:</value>
   </data>
+  <data name="IsAdvertisementLabel" xml:space="preserve">
+    <value>Reklamasyon</value>
+  </data>
   <data name="IsContractLabel" xml:space="preserve">
     <value>Fason</value>
   </data>

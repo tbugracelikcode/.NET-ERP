@@ -899,6 +899,15 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OPERASYON ADI.
+        /// </summary>
+        public static string WorkOrderModalGridOperationName {
+            get {
+                return ResourceManager.GetString("WorkOrderModalGridOperationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İŞ EMRİ NO.
         /// </summary>
         public static string WorkOrderModalGridWorkOrderNo {
