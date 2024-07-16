@@ -42,5 +42,9 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos
         /// Üst Tolerans
         /// </summary>
         public decimal UpperTolerance { get; set; }
+        /// <summary>
+        /// Resimdeki Ölçü Numarası
+        /// </summary>
+        public decimal MeasureNumberInPicture { get; set; }
     }
 }

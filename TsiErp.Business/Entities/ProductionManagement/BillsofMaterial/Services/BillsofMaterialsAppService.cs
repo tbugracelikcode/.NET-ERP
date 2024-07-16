@@ -99,7 +99,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     ProductID = item.ProductID.GetValueOrDefault(),
                     Quantity = item.Quantity,
                     Size = item.Size,
-                     SupplyForm = (int)item.SupplyForm,
+                    SupplyForm = (int)item.SupplyForm,
                     UnitSetID = item.UnitSetID.GetValueOrDefault(),
                     _Description = item._Description
                 });
@@ -402,7 +402,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { FinishedProductID  = finishedProductId}, true, true, Tables.BillsofMaterials);
+                    .Where(new { FinishedProductID = finishedProductId }, true, true, Tables.BillsofMaterials);
 
             var billsOfMaterials = queryFactory.GetList<SelectBillsofMaterialsDto>(query).ToList();
 
@@ -574,7 +574,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
                         MaterialType = (int)item.MaterialType,
-                         SupplyForm = (int)item.SupplyForm,
+                        SupplyForm = (int)item.SupplyForm,
                         ProductID = item.ProductID.GetValueOrDefault(),
                         Quantity = item.Quantity,
                         Size = item.Size,

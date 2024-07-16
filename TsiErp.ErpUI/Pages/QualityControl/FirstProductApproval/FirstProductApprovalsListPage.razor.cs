@@ -77,7 +77,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
         {
             DataSource = new SelectFirstProductApprovalsDto()
             {
-                Code = FicheNumbersAppService.GetFicheNumberAsync("FirstProductApprovalChildMenu")
+                Code = FicheNumbersAppService.GetFicheNumberAsync("FirstProductApprovalChildMenu"),
+                ControlDate = DateTime.Today
             };
 
             DataSource.SelectFirstProductApprovalLines = new List<SelectFirstProductApprovalLinesDto>();
@@ -450,6 +451,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                         LineNr = GridLineList.Count + 1,
                         UpperTolerance = qualityplanline.UpperTolerance,
                         MeasurementValue = string.Empty,
+                        MeasureNumberInPicture = qualityplanline.MeasureNumberInPicture
                     };
 
                     GridLineList.Add(firstProductApprovalLineModel);

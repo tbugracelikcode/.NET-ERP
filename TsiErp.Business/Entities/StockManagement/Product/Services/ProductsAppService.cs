@@ -34,7 +34,7 @@ namespace TsiErp.Business.Entities.Product.Services
 
         private readonly IStockAddressesAppService _stockAddressesAppService;
 
-        public ProductsAppService(IStringLocalizer<ProductsResource> l, IStockAddressesAppService stockAddressesAppService,  IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public ProductsAppService(IStringLocalizer<ProductsResource> l, IStockAddressesAppService stockAddressesAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             _stockAddressesAppService = stockAddressesAppService;
             _GetSQLDateAppService = getSQLDateAppService;
@@ -98,12 +98,12 @@ namespace TsiErp.Business.Entities.Product.Services
                 LastModifierId = Guid.Empty,
                 Name = input.Name,
                 RawMaterialType = input.RawMaterialType,
-                 ExternalRadius = input.ExternalRadius,
-                  InternalRadius = input.InternalRadius,
-                   RadiusValue = input.RadiusValue,
-                   Width_ = input.Width_,
-                   Tickness_ = input.Tickness_
-                    
+                ExternalRadius = input.ExternalRadius,
+                InternalRadius = input.InternalRadius,
+                RadiusValue = input.RadiusValue,
+                Width_ = input.Width_,
+                Tickness_ = input.Tickness_
+
             });
 
             foreach (var item in input.SelectProductRelatedProductProperties)
@@ -382,9 +382,9 @@ namespace TsiErp.Business.Entities.Product.Services
                 ExternalRadius = input.ExternalRadius,
                 RawMaterialType = input.RawMaterialType,
                 InternalRadius = input.InternalRadius,
-                 Tickness_ = input.Tickness_,
-                 RadiusValue = input.RadiusValue,  
-                  Width_    = input.Width_,
+                Tickness_ = input.Tickness_,
+                RadiusValue = input.RadiusValue,
+                Width_ = input.Width_,
                 TechnicalConfirmation = input.TechnicalConfirmation,
                 UnitSetID = input.UnitSetID.GetValueOrDefault(),
                 CreationTime = entity.CreationTime.Value,
@@ -517,8 +517,8 @@ namespace TsiErp.Business.Entities.Product.Services
                 InternalRadius = entity.InternalRadius,
                 RadiusValue = entity.RadiusValue,
                 Width_ = entity.Width_,
-                 ExternalRadius = entity.ExternalRadius,
-                  Tickness_ = entity.Tickness_
+                ExternalRadius = entity.ExternalRadius,
+                Tickness_ = entity.Tickness_
 
 
             }).Where(new { Id = id }, true, true, "");

@@ -243,6 +243,9 @@
   <data name="LineGridMeasurementValue" xml:space="preserve">
     <value>MEASUREMENT VALUE</value>
   </data>
+  <data name="LineGridMeasureNumberInPicture" xml:space="preserve">
+    <value>MEASURE NUMBER IN PICTURE</value>
+  </data>
   <data name="LineGridUpperTolerance" xml:space="preserve">
     <value>(+) TOLERANCE</value>
   </data>

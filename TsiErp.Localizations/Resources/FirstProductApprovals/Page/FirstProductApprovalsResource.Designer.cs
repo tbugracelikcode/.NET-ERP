@@ -440,6 +440,15 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RESİMDEKİ ÖLÇÜ NUMARASI.
+        /// </summary>
+        public static string LineGridMeasureNumberInPicture {
+            get {
+                return ResourceManager.GetString("LineGridMeasureNumberInPicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (+) TOLERANS.
         /// </summary>
         public static string LineGridUpperTolerance {
