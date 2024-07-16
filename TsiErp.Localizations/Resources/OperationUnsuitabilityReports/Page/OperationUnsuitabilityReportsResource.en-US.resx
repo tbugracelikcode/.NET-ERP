@@ -177,6 +177,9 @@
   <data name="EmployeeNameLabel" xml:space="preserve">
     <value>Employee Name:</value>
   </data>
+  <data name="EmptyProductOperationError" xml:space="preserve">
+    <value>No product specific action was found in the Work Order you selected.</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>

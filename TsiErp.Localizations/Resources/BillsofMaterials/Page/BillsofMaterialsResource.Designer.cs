@@ -142,6 +142,15 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Miktar Hesapla.
+        /// </summary>
+        public static string CalculateQuantityButton {
+            get {
+                return ResourceManager.GetString("CalculateQuantityButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {

@@ -177,6 +177,9 @@
   <data name="EmployeeNameLabel" xml:space="preserve">
     <value>Çalışan Adı:</value>
   </data>
+  <data name="EmptyProductOperationError" xml:space="preserve">
+    <value>Seçtiğiniz İş Emrinde ürüne özel operasyon bulunamadı.</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>

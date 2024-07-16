@@ -242,6 +242,15 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz İş Emrinde ürüne özel operasyon bulunamadı..
+        /// </summary>
+        public static string EmptyProductOperationError {
+            get {
+                return ResourceManager.GetString("EmptyProductOperationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {

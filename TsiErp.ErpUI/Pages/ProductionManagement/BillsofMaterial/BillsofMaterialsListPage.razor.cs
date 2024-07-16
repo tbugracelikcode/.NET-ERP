@@ -243,7 +243,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
             {
                 case "new":
 
-                    if(DataSource.FinishedProductCode != null )
+                    if (DataSource.FinishedProductCode != null)
                     {
                         LineDataSource = new SelectBillsofMaterialLinesDto();
                         LineCrudPopup = true;
@@ -322,7 +322,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
             {
                 await ModalManager.WarningPopupAsync(L["DeleteConfirmationTitleBase"], L["UILineSubmitWithoutUnitset"]);
             }
-            else if(LineDataSource.Quantity == 0)
+            else if (LineDataSource.Quantity == 0)
             {
                 await ModalManager.WarningPopupAsync(L["DeleteConfirmationTitleBase"], L["UILineSubmitQuantityZero"]);
             }
@@ -362,14 +362,14 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                 HideLinesPopup();
                 await InvokeAsync(StateHasChanged);
             }
-           
+
         }
 
         protected override async Task OnSubmit()
         {
             if (isCustomerCodeAvailable)
             {
-                if(DataSource.CurrentAccountCardID == Guid.Empty && DataSource.CurrentAccountCardID == null)
+                if (DataSource.CurrentAccountCardID == Guid.Empty && DataSource.CurrentAccountCardID == null)
                 {
                     await ModalManager.WarningPopupAsync(L["UIWarningCustomerTitle"], L["UIWarningCustomerMessage"]);
                 }
@@ -531,9 +531,61 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                 LineDataSource.MaterialType = selectedProduct.ProductType;
                 LineDataSource.SupplyForm = selectedProduct.SupplyForm;
 
-
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        public async Task CalculateQuantity(Guid productId)
+        {
+            double pi = 3.14;
+
+            decimal density = (await ProductionManagementParametersService.GetProductionManagementParametersAsync()).Data.Density_;
+
+            decimal size = LineDataSource.Size;
+
+            if (density == 0)
+            {
+
+            }
+            else if (size == 0)
+            {
+
+            }
+            else
+            {
+                var product = (await ProductsAppService.GetAsync(productId)).Data;
+                if (product.Id != Guid.Empty)
+                {
+                    if (product.ProductType == ProductTypeEnum.HM)
+                    {
+                        if (product.RawMaterialType == RowMaterialTypeEnum.MilHammadde)
+                        {
+                            size = size + product.SawWastage;
+                            decimal capDeger = product.RadiusValue;
+                            decimal r = capDeger / 2;
+                            decimal kg = ((decimal)pi * (r * r) * size * density) / 1000000;
+                            LineDataSource.Quantity = kg;
+                        }
+
+                        if (product.RawMaterialType == RowMaterialTypeEnum.SacHammadde)
+                        {
+                            decimal width = product.Width_;
+                            decimal tickness = product.Tickness_;
+                            decimal kg = ((width * tickness * size) * size) / 1000000;
+                            LineDataSource.Quantity = kg;
+                        }
+
+                        if (product.RawMaterialType == RowMaterialTypeEnum.BoruHammadde)
+                        {
+                            size = size + product.SawWastage;
+                            decimal kg = size / 1000;
+                            LineDataSource.Quantity = kg;
+                        }
+                    }
+
+                    await Task.CompletedTask;
+                }
             }
         }
 
@@ -610,11 +662,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
 
             if (selectedUnitSet != null)
             {
-                DataSource.CurrentAccountCardID = selectedUnitSet.Id;;
+                DataSource.CurrentAccountCardID = selectedUnitSet.Id; ;
                 DataSource.CustomerCode = selectedUnitSet.CustomerCode;
                 SelectCurrentAccountCardsPopupVisible = false;
 
-                if(DataSource.FinishedProductID != Guid.Empty && DataSource.FinishedProductID != null && !string.IsNullOrEmpty(DataSource.CustomerCode))
+                if (DataSource.FinishedProductID != Guid.Empty && DataSource.FinishedProductID != null && !string.IsNullOrEmpty(DataSource.CustomerCode))
                 {
                     DataSource.Name = DataSource.Name + " / " + DataSource.CustomerCode;
                 }
@@ -680,13 +732,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                 DataSource.FinishedProducName = selectedFinishedProduct.Name;
                 DataSource.ProductType = selectedFinishedProduct.ProductType;
 
-                if(DataSource.ProductType == ProductTypeEnum.MM)
+                if (DataSource.ProductType == ProductTypeEnum.MM)
                 {
                     isCustomerCodeAvailable = true;
                 }
-                else if(DataSource.ProductType == ProductTypeEnum.YM)
+                else if (DataSource.ProductType == ProductTypeEnum.YM)
                 {
-                    isCustomerCodeAvailable = false;    
+                    isCustomerCodeAvailable = false;
                 }
 
                 DataSource.Name = DataSource.FinishedProductCode + " / " + DataSource.FinishedProducName;
