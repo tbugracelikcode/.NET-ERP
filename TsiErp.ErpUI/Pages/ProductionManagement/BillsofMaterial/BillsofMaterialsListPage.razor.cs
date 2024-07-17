@@ -546,11 +546,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
 
             if (density == 0)
             {
-
+                await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["UIEmptyDensityError"]);
+                await InvokeAsync(StateHasChanged);
             }
             else if (size == 0)
             {
-
+                await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["UIEmptySizeError"]);
+                await InvokeAsync(StateHasChanged);
             }
             else
             {
@@ -668,7 +670,17 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
 
                 if (DataSource.FinishedProductID != Guid.Empty && DataSource.FinishedProductID != null && !string.IsNullOrEmpty(DataSource.CustomerCode))
                 {
-                    DataSource.Name = DataSource.Name + " / " + DataSource.CustomerCode;
+
+                    if(DataSource.Name.EndsWith("/"))
+                    {
+                        DataSource.Name = DataSource.Name + "  " + DataSource.CustomerCode;
+                    }
+                    else
+                    {
+                        DataSource.Name = DataSource.Name + " / " + DataSource.CustomerCode;
+                    }
+
+                    
                 }
 
                 await InvokeAsync(StateHasChanged);

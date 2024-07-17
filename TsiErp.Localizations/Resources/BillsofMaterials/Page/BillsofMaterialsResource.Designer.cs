@@ -664,6 +664,24 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen üretim parametrelerinden Özkütle değeri girin..
+        /// </summary>
+        public static string UIEmptyDensityError {
+            get {
+                return ResourceManager.GetString("UIEmptyDensityError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen Boy değerini girin..
+        /// </summary>
+        public static string UIEmptySizeError {
+            get {
+                return ResourceManager.GetString("UIEmptySizeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Receteler.
         /// </summary>
         public static string UIExportFileName {
