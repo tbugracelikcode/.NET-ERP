@@ -152,7 +152,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="3">
+                    <DxGridLayoutItem Row="3" Column="1">
                         <Template>
 
                             <center>
@@ -161,6 +161,17 @@ else
                             </center>
                         </Template>
                     </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="3">
+                        <Template>
+
+                            <center>
+                                <label class="TSIModalLabel"><strong>@L["IsAdvertisementLabel"] </strong></label><br />
+                                <SfSwitch TChecked="bool" @bind-Checked="@_isAdvertisement" ValueChange="AdvertisementChange"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
 
 
                     <DxGridLayoutItem Row="4" Column="1" ColumnSpan="4">

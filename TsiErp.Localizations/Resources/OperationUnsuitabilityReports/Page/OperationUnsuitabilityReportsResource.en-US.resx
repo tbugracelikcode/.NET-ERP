@@ -390,6 +390,9 @@
   <data name="WorkOrderModalGridOperationCode" xml:space="preserve">
     <value>OPERATION CODE</value>
   </data>
+  <data name="WorkOrderModalGridOperationName" xml:space="preserve">
+    <value>OPERATION NAME</value>
+  </data>
   <data name="WorkOrderModalGridWorkOrderNo" xml:space="preserve">
     <value>WORK ORDER NR</value>
   </data>

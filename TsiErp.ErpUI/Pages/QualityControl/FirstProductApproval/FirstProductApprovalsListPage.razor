@@ -286,10 +286,10 @@ else
                                     <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.MeasureNumberInPicture) Type="ColumnType.Number" HeaderText="@L["LineGridMeasureNumberInPicture"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.IsCriticalMeasurement) DisplayAsCheckBox=true HeaderText="@L["LineGridIsCriticalMeasurement"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.Description_) HeaderText="@L["LineGridDescription_"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.IdealMeasure) Type="ColumnType.Number" HeaderText="@L["LineGridIdealMeasure"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.IdealMeasure) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridIdealMeasure"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.MeasurementValue) HeaderText="@L["LineGridMeasurementValue"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.BottomTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridBottomTolerance"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.UpperTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridUpperTolerance"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.BottomTolerance) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridBottomTolerance"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectFirstProductApprovalLinesDto.UpperTolerance) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridUpperTolerance"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>

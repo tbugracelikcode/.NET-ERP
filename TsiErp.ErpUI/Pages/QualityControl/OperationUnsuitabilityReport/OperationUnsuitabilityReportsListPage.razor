@@ -237,9 +237,9 @@
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="@L["StationModalTitle"]"
-         Width="64%"
+         Width="62%"
          Height="44%"
-         MinWidth="1220px"
+         MinWidth="1060px"
          MinHeight="470px"
          HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -251,7 +251,8 @@
                             <SfCard class="TSIGridCards">
 
                                 <CardContent>
-                                    <SfGrid ID="StationsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StationsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                    <SfGrid ID="StationsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StationsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" 
+                                    Height="100%" Width="100%" class="GridZebra" >
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@StationsDoubleClickHandler" TValue="SelectStationsDto"></GridEvents>
@@ -360,6 +361,7 @@
                                         <GridColumns>
                                             <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="@L["WorkOrderModalGridWorkOrderNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListWorkOrdersDto.ProductsOperationCode) HeaderText="@L["WorkOrderModalGridOperationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.ProductsOperationName) HeaderText="@L["WorkOrderModalGridOperationName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
@@ -398,7 +400,8 @@
                             <SfCard class="TSIGridCards">
 
                                 <CardContent>
-                                    <SfGrid ID="UnsuitabilityItemsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnsuitabilityItemsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                    <SfGrid ID="UnsuitabilityItemsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnsuitabilityItemsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" 
+                                       AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@UnsuitabilityItemsDoubleClickHandler" TValue="ListUnsuitabilityItemsDto"></GridEvents>

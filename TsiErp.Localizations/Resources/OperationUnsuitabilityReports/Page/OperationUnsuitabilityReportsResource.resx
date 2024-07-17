@@ -399,6 +399,9 @@
   <data name="WorkOrderModalGridOperationCode" xml:space="preserve">
     <value>OPERASYON KODU</value>
   </data>
+  <data name="WorkOrderModalGridOperationName" xml:space="preserve">
+    <value>OPERASYON ADI</value>
+  </data>
   <data name="WorkOrderModalGridWorkOrderNo" xml:space="preserve">
     <value>İŞ EMRİ NO</value>
   </data>

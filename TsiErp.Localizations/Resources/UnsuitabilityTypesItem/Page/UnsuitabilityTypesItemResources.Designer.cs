@@ -179,6 +179,15 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reklamasyon.
+        /// </summary>
+        public static string IsAdvertisementLabel {
+            get {
+                return ResourceManager.GetString("IsAdvertisementLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fason.
         /// </summary>
         public static string IsContractLabel {
