@@ -1602,6 +1602,17 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
             List<PackingListReportDto> reportSource = new List<PackingListReportDto>();
 
+            bool exWorks = false;
+
+            if (packingList.SalesTypeName == "EX-WORKS ISTANBUL (€)")
+            {
+                exWorks = true;
+            }
+
+            Guid recieverCompanyId = packingList.RecieverID.GetValueOrDefault();
+            var recieverCurrentAccountCard = (await CurrentAccountCardsAppService.GetAsync(recieverCompanyId)).Data;
+            string shippingAddress = recieverCurrentAccountCard.ShippingAddress;
+
             foreach (var item in packingList.SelectPackingListPalletPackageLines)
             {
                 string malzemeTanimi = item.ProductName;
@@ -1632,10 +1643,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 report.KoliToplamBrutKg = item.TotalGrossKG;
                 report.ToplamPaletAdedi = packingList.SelectPackingListPalletCubageLines.Sum(t => t.NumberofPallet);
                 report.ToplamHacim = packingList.SelectPackingListPalletCubageLines.Sum(t => t.Cubage);
+                report.SevkiyatAdresi = shippingAddress;
 
                 reportSource.Add(report);
             }
-
 
 
             List<PackingListPalletQuantityReportDto> kubajList = new List<PackingListPalletQuantityReportDto>();
@@ -1689,11 +1700,15 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 }
             }
 
+           
+
             PackingListTrReport packingListTrReport = new PackingListTrReport();
             packingListTrReport.DataSource = reportSource;
             packingListTrReport.ShowPrintMarginsWarning = false;
             packingListTrReport.PackingListPalletQuantityReportDto = kubajList;
             packingListTrReport.PackingListPalletDetailReportDto = paletList;
+            packingListTrReport.DeliveryAddressLabel.Visible = exWorks ? true : false;
+            packingListTrReport.DeliveryAddress.Visible = exWorks ? true : false;
             packingListTrReport.CreateDocument();
             PackingListDynamicReport.Pages.AddRange(packingListTrReport.Pages);
             PackingListDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
@@ -1720,6 +1735,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             PackingListEngDynamicReport.CreateDocument();
 
             List<PackingListReportDto> reportSource = new List<PackingListReportDto>();
+
+            Guid recieverCompanyId = packingList.RecieverID.GetValueOrDefault();
+            var recieverCurrentAccountCard = (await CurrentAccountCardsAppService.GetAsync(recieverCompanyId)).Data;
+            string shippingAddress = recieverCurrentAccountCard.ShippingAddress;
 
             foreach (var item in packingList.SelectPackingListPalletPackageLines)
             {
@@ -1751,6 +1770,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 report.KoliToplamBrutKg = item.TotalGrossKG;
                 report.ToplamPaletAdedi = packingList.SelectPackingListPalletCubageLines.Sum(t => t.NumberofPallet);
                 report.ToplamHacim = packingList.SelectPackingListPalletCubageLines.Sum(t => t.Cubage);
+                report.SevkiyatAdresi = shippingAddress;
 
                 reportSource.Add(report);
             }

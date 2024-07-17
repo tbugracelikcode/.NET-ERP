@@ -261,9 +261,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
                 DataSource.ContractTrackingFicheNr = selectedOrder.FicheNr;
                 DataSource.ProductionOrderID = selectedOrder.ProductionOrderID;
                 DataSource.ProductionOrderFicheNr = selectedOrder.ProductionOrderNr;
-                DataSource.CurrentAccountCardID = selectedOrder.CurrentAccountCardID;
-                DataSource.CurrentAccountCardName = selectedOrder.CurrentAccountCardName;
-                DataSource.CurrentAccountCardCode = selectedOrder.CurrentAccountCardCode;
+                DataSource.CurrentAccountCardID = selectedOrder.QualityPlanCurrentAccountCardID;
+                DataSource.CurrentAccountCardName = selectedOrder.QualityPlanCurrentAccountCardName;
+                DataSource.CurrentAccountCardCode = selectedOrder.QualityPlanCurrentAccountCardCode;
                 SelectContractTrackingFichesPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

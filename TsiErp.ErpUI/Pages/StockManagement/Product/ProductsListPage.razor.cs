@@ -52,7 +52,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         public IEnumerable<SelectProductsDto> supplyforms = GetEnumDisplaySupplyFormNames<ProductSupplyFormEnum>();
         public IEnumerable<SelectProductsDto> rawmaterialtypes = GetEnumDisplayRowMaterialTypeNames<RowMaterialTypeEnum>();
-        
+
 
 
         public static List<SelectProductsDto> GetEnumDisplayTypeNames<T>()
@@ -111,36 +111,38 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 productSizeVisible = false;
             }
         }
-        private void RawMaterialTypeValueChangeHandler(ChangeEventArgs<RowMaterialTypeEnum, SelectProductsDto> args)
+        private async void RawMaterialTypeValueChangeHandler(ChangeEventArgs<RowMaterialTypeEnum, SelectProductsDto> args)
         {
             if (args.ItemData.RawMaterialType == RowMaterialTypeEnum.BoruHammadde)
             {
                 isHBRaw = true;
                 isHMRaw = false;
                 isHSRaw = false;
-                DataSource.Width_ = 0;
-                DataSource.Tickness_ = 0;
-                DataSource.RadiusValue = 0;
+                //DataSource.Width_ = 0;
+                //DataSource.Tickness_ = 0;
+                //DataSource.RadiusValue = 0;
             }
-            else if(args.ItemData.RawMaterialType == RowMaterialTypeEnum.MilHammadde)
+            else if (args.ItemData.RawMaterialType == RowMaterialTypeEnum.MilHammadde)
             {
                 isHBRaw = false;
                 isHMRaw = true;
                 isHSRaw = false;
-                DataSource.Width_ = 0;
-                DataSource.Tickness_ = 0;
-                DataSource.ExternalRadius = 0;
-                DataSource.InternalRadius = 0;
+                //DataSource.Width_ = 0;
+                //DataSource.Tickness_ = 0;
+                //DataSource.ExternalRadius = 0;
+                //DataSource.InternalRadius = 0;
             }
             else if (args.ItemData.RawMaterialType == RowMaterialTypeEnum.SacHammadde)
             {
                 isHBRaw = false;
                 isHMRaw = false;
                 isHSRaw = true;
-                DataSource.ExternalRadius = 0;
-                DataSource.InternalRadius = 0;
-                DataSource.RadiusValue = 0;
+                //DataSource.ExternalRadius = 0;
+                //DataSource.InternalRadius = 0;
+                //DataSource.RadiusValue = 0;
             }
+
+            await InvokeAsync(StateHasChanged);
         }
 
         #endregion
@@ -333,6 +335,14 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         }
 
+        public override void HideEditPage()
+        {
+            isHMRaw = false;
+            isHSRaw = false;
+            isHBRaw = false;
+            base.HideEditPage();
+        }
+
         protected void CreateMainContextMenuItems()
         {
             if (MainGridContextMenu.Count() == 0)
@@ -393,7 +403,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             switch (args.Item.Id)
             {
-               
+
 
                 case "changed":
                     LineDataSource = args.RowInfo.RowData;
@@ -1661,6 +1671,24 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                     foreach (var item in rawmaterialtypes)
                     {
                         item.RawMaterialTypeName = L[item.RawMaterialTypeName];
+                    }
+
+                    switch (DataSource.RawMaterialType)
+                    {
+                        case RowMaterialTypeEnum.MilHammadde:
+                            isHMRaw = true;
+                            break;
+                        case RowMaterialTypeEnum.SacHammadde:
+                            isHSRaw = true;
+                            break;
+                        case RowMaterialTypeEnum.BoruHammadde:
+                            isHBRaw = true;
+                            break;
+                        default:
+                            isHMRaw= false;
+                            isHSRaw=false;
+                            isHBRaw=false;
+                            break;
                     }
 
                     EditPageVisible = true;

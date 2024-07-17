@@ -156,8 +156,8 @@
             this.xrTableRow10 = new DevExpress.XtraReports.UI.XRTableRow();
             this.xrTableCell51 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell52 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.xrLabel19 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel20 = new DevExpress.XtraReports.UI.XRLabel();
+            this.DeliveryAddress = new DevExpress.XtraReports.UI.XRLabel();
+            this.DeliveryAddressLabel = new DevExpress.XtraReports.UI.XRLabel();
             this.xrSubreport1 = new DevExpress.XtraReports.UI.XRSubreport();
             this.xrSubreport2 = new DevExpress.XtraReports.UI.XRSubreport();
             this.PageFooter = new DevExpress.XtraReports.UI.PageFooterBand();
@@ -1074,8 +1074,8 @@
             this.ReportFooter.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrTable4,
             this.xrTable5,
-            this.xrLabel19,
-            this.xrLabel20,
+            this.DeliveryAddress,
+            this.DeliveryAddressLabel,
             this.xrSubreport1,
             this.xrSubreport2});
             this.ReportFooter.HeightF = 265.2086F;
@@ -1430,34 +1430,34 @@
             this.xrTableCell52.TextFormatString = "{0:n2}";
             this.xrTableCell52.Weight = 0.89281512626575754D;
             // 
-            // xrLabel19
+            // DeliveryAddress
             // 
-            this.xrLabel19.Borders = DevExpress.XtraPrinting.BorderSide.None;
-            this.xrLabel19.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            this.DeliveryAddress.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.DeliveryAddress.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[SevkiyatAdresi]")});
-            this.xrLabel19.Font = new DevExpress.Drawing.DXFont("Arial", 11F, DevExpress.Drawing.DXFontStyle.Bold);
-            this.xrLabel19.LocationFloat = new DevExpress.Utils.PointFloat(172.4629F, 206.7917F);
-            this.xrLabel19.Name = "xrLabel19";
-            this.xrLabel19.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel19.SizeF = new System.Drawing.SizeF(593.6F, 55.00006F);
-            this.xrLabel19.StylePriority.UseBorders = false;
-            this.xrLabel19.StylePriority.UseFont = false;
-            this.xrLabel19.StylePriority.UseTextAlignment = false;
-            this.xrLabel19.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
+            this.DeliveryAddress.Font = new DevExpress.Drawing.DXFont("Arial", 11F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.DeliveryAddress.LocationFloat = new DevExpress.Utils.PointFloat(172.4629F, 206.7917F);
+            this.DeliveryAddress.Name = "DeliveryAddress";
+            this.DeliveryAddress.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.DeliveryAddress.SizeF = new System.Drawing.SizeF(593.6F, 55.00006F);
+            this.DeliveryAddress.StylePriority.UseBorders = false;
+            this.DeliveryAddress.StylePriority.UseFont = false;
+            this.DeliveryAddress.StylePriority.UseTextAlignment = false;
+            this.DeliveryAddress.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
             // 
-            // xrLabel20
+            // DeliveryAddressLabel
             // 
-            this.xrLabel20.Borders = DevExpress.XtraPrinting.BorderSide.None;
-            this.xrLabel20.Font = new DevExpress.Drawing.DXFont("Arial", 11F, DevExpress.Drawing.DXFontStyle.Bold);
-            this.xrLabel20.LocationFloat = new DevExpress.Utils.PointFloat(2.962844F, 206.7917F);
-            this.xrLabel20.Name = "xrLabel20";
-            this.xrLabel20.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel20.SizeF = new System.Drawing.SizeF(169.5F, 28.33336F);
-            this.xrLabel20.StylePriority.UseBorders = false;
-            this.xrLabel20.StylePriority.UseFont = false;
-            this.xrLabel20.StylePriority.UseTextAlignment = false;
-            this.xrLabel20.Text = "DELIVERY ADDRESS:";
-            this.xrLabel20.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
+            this.DeliveryAddressLabel.Borders = DevExpress.XtraPrinting.BorderSide.None;
+            this.DeliveryAddressLabel.Font = new DevExpress.Drawing.DXFont("Arial", 11F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.DeliveryAddressLabel.LocationFloat = new DevExpress.Utils.PointFloat(2.962844F, 206.7917F);
+            this.DeliveryAddressLabel.Name = "DeliveryAddressLabel";
+            this.DeliveryAddressLabel.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.DeliveryAddressLabel.SizeF = new System.Drawing.SizeF(169.5F, 28.33336F);
+            this.DeliveryAddressLabel.StylePriority.UseBorders = false;
+            this.DeliveryAddressLabel.StylePriority.UseFont = false;
+            this.DeliveryAddressLabel.StylePriority.UseTextAlignment = false;
+            this.DeliveryAddressLabel.Text = "DELIVERY ADDRESS:";
+            this.DeliveryAddressLabel.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrSubreport1
             // 
@@ -1752,8 +1752,6 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell49;
         private DevExpress.XtraReports.UI.XRTableRow xrTableRow10;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell51;
-        private DevExpress.XtraReports.UI.XRLabel xrLabel19;
-        private DevExpress.XtraReports.UI.XRLabel xrLabel20;
         private DevExpress.XtraReports.UI.XRSubreport xrSubreport1;
         private DevExpress.XtraReports.UI.XRSubreport xrSubreport2;
         private DevExpress.XtraReports.UI.PageFooterBand PageFooter;
@@ -1803,5 +1801,7 @@
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell23;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell24;
         private DevExpress.XtraReports.UI.XRTableCell xrTableCell25;
+        public DevExpress.XtraReports.UI.XRLabel DeliveryAddressLabel;
+        public DevExpress.XtraReports.UI.XRLabel DeliveryAddress;
     }
 }
