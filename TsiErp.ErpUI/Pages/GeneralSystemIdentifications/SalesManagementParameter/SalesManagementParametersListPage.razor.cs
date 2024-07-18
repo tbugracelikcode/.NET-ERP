@@ -37,10 +37,13 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.SalesManagementParamet
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesManagementParameterContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesManagementParameterContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesManagementParameterContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesManagementParameterContextRefresh"], Id = "refresh" });
+            if (GridContextMenu.Count == 0)
+            {
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesManagementParameterContextAdd"], Id = "new" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesManagementParameterContextChange"], Id = "changed" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesManagementParameterContextDelete"], Id = "delete" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesManagementParameterContextRefresh"], Id = "refresh" });
+            }
         }
 
         private async void OnClick()

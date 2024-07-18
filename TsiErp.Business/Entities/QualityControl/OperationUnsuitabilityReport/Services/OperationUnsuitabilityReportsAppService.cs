@@ -161,11 +161,17 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 )
                 .Join<Stations>
                 (
-                   d => new { StationCode = d.Code, StationName = d.Name }, nameof(OperationUnsuitabilityReports.StationID), nameof(Stations.Id), JoinType.Left
+                   d => new { StationCode = d.Code, StationName = d.Name}, 
+                   nameof(OperationUnsuitabilityReports.StationID), 
+                   nameof(Stations.Id), 
+                   JoinType.Left
                 )
                 .Join<StationGroups>
                 (
-                   d => new { StationGroupCode = d.Code, StationGroupName = d.Name }, nameof(OperationUnsuitabilityReports.StationGroupID), nameof(StationGroups.Id), JoinType.Left
+                   d => new { StationGroupCode = d.Code, StationGroupName = d.Name},
+                   nameof(OperationUnsuitabilityReports.StationGroupID), 
+                   nameof(StationGroups.Id), 
+                   JoinType.Left
                 )
                 .Join<Employees>
                 (
@@ -185,7 +191,10 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 )
                 .Join<UnsuitabilityItems>
                 (
-                   d => new { UnsuitabilityItemsName = d.Name, UnsuitabilityItemsID = d.Id }, nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
+                   d => new { UnsuitabilityItemsName = d.Name, UnsuitabilityItemsID = d.Id }, 
+                   nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID), 
+                   nameof(UnsuitabilityItems.Id), 
+                   JoinType.Left
                 )
                 .Where(null, false, false, Tables.OperationUnsuitabilityReports);
 

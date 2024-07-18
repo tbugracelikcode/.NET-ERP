@@ -43,23 +43,26 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeGeneralSkillR
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "EmployeeGeneralSkillRecordsContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeGeneralSkillRecordsContextAdd"], Id = "new" }); break;
-                        case "EmployeeGeneralSkillRecordsContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeGeneralSkillRecordsContextChange"], Id = "changed" }); break;
-                        case "EmployeeGeneralSkillRecordsContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeGeneralSkillRecordsContextDelete"], Id = "delete" }); break;
-                        case "EmployeeGeneralSkillRecordsContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeGeneralSkillRecordsContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "EmployeeGeneralSkillRecordsContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeGeneralSkillRecordsContextAdd"], Id = "new" }); break;
+                            case "EmployeeGeneralSkillRecordsContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeGeneralSkillRecordsContextChange"], Id = "changed" }); break;
+                            case "EmployeeGeneralSkillRecordsContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeGeneralSkillRecordsContextDelete"], Id = "delete" }); break;
+                            case "EmployeeGeneralSkillRecordsContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeGeneralSkillRecordsContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

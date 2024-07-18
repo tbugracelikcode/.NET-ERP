@@ -95,25 +95,28 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "CusCompReportContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CusCompReportContextAdd"], Id = "new" }); break;
-                        case "CusCompReportContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CusCompReportContextChange"], Id = "changed" }); break;
-                        case "CusCompReportContextCreate8D":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CusCompReportContextCreate8D"], Id = "create8d" }); break;
-                        case "CusCompReportContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CusCompReportContextDelete"], Id = "delete" }); break;
-                        case "CusCompReportContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CusCompReportContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "CusCompReportContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["CusCompReportContextAdd"], Id = "new" }); break;
+                            case "CusCompReportContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["CusCompReportContextChange"], Id = "changed" }); break;
+                            case "CusCompReportContextCreate8D":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["CusCompReportContextCreate8D"], Id = "create8d" }); break;
+                            case "CusCompReportContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["CusCompReportContextDelete"], Id = "delete" }); break;
+                            case "CusCompReportContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["CusCompReportContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

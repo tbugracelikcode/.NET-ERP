@@ -1058,7 +1058,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
         protected void CreateMainContextMenuItems()
         {
-            if (MainGridContextMenu.Count() == 0)
+            if (GridContextMenu.Count == 0)
             {
 
                 foreach (var context in contextsList)

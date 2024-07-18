@@ -139,7 +139,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
 
         protected void CreateMainContextMenuItems()
         {
-            if (MainGridContextMenu.Count() == 0)
+            if (GridContextMenu.Count == 0)
             {
 
                 foreach (var context in contextsList)

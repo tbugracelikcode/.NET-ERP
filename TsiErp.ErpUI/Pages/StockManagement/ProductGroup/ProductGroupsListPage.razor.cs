@@ -96,22 +96,25 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
 
         protected void CreateProductPropertyContextMenuItems()
         {
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "ProductPropertyContextAdd":
-                            PropertyMainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyContextAdd"], Id = "new" }); break;
-                        case "ProductPropertyContextChange":
-                            PropertyMainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyContextChange"], Id = "changed" }); break;
-                        case "ProductPropertyContextDelete":
-                            PropertyMainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyContextDelete"], Id = "delete" }); break;
-                        case "ProductPropertyContextRefresh":
-                            PropertyMainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "ProductPropertyContextAdd":
+                                PropertyMainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyContextAdd"], Id = "new" }); break;
+                            case "ProductPropertyContextChange":
+                                PropertyMainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyContextChange"], Id = "changed" }); break;
+                            case "ProductPropertyContextDelete":
+                                PropertyMainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyContextDelete"], Id = "delete" }); break;
+                            case "ProductPropertyContextRefresh":
+                                PropertyMainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }
@@ -119,22 +122,25 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
 
         protected void CreateProductPropertyLineContextMenuItems()
         {
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "ProductPropertyLineContextAdd":
-                            PropertyLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyLineContextAdd"], Id = "new" }); break;
-                        case "ProductPropertyLineContextChange":
-                            PropertyLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyLineContextChange"], Id = "changed" }); break;
-                        case "ProductPropertyLineContextDelete":
-                            PropertyLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyLineContextDelete"], Id = "delete" }); break;
-                        case "ProductPropertyLineContextRefresh":
-                            PropertyLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyLineContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "ProductPropertyLineContextAdd":
+                                PropertyLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyLineContextAdd"], Id = "new" }); break;
+                            case "ProductPropertyLineContextChange":
+                                PropertyLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyLineContextChange"], Id = "changed" }); break;
+                            case "ProductPropertyLineContextDelete":
+                                PropertyLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyLineContextDelete"], Id = "delete" }); break;
+                            case "ProductPropertyLineContextRefresh":
+                                PropertyLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductPropertyLineContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

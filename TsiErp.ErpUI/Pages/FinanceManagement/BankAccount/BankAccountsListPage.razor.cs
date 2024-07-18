@@ -47,26 +47,30 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankAccount
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "BankAccountsContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["BankAccountsContextAdd"], Id = "new" }); break;
-                        case "BankAccountsContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["BankAccountsContextChange"], Id = "changed" }); break;
-                        case "BankAccountsContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["BankAccountsContextDelete"], Id = "delete" }); break;
-                        case "BankAccountsContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["BankAccountsContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "BankAccountsContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["BankAccountsContextAdd"], Id = "new" }); break;
+                            case "BankAccountsContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["BankAccountsContextChange"], Id = "changed" }); break;
+                            case "BankAccountsContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["BankAccountsContextDelete"], Id = "delete" }); break;
+                            case "BankAccountsContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["BankAccountsContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }
         }
+
 
         #region Kod ButtonEdit
 

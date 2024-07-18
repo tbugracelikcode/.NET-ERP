@@ -203,7 +203,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
 
         protected void CreateLineContextMenuItems()
         {
-            if (LineGridContextMenu.Count() == 0)
+            if (GridContextMenu.Count == 0)
             {
 
                 foreach (var context in contextsList)
@@ -230,7 +230,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
 
         protected void CreateMainContextMenuItems()
         {
-            if (MainGridContextMenu.Count() == 0)
+            if (GridContextMenu.Count == 0)
             {
 
                 foreach (var context in contextsList)

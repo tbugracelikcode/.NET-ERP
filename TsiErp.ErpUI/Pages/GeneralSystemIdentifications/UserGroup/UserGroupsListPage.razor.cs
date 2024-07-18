@@ -46,23 +46,26 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.UserGroup
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "UserGroupContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserGroupContextAdd"], Id = "new" }); break;
-                        case "UserGroupContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserGroupContextChange"], Id = "changed" }); break;
-                        case "UserGroupContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserGroupContextDelete"], Id = "delete" }); break;
-                        case "UserGroupContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserGroupContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "UserGroupContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserGroupContextAdd"], Id = "new" }); break;
+                            case "UserGroupContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserGroupContextChange"], Id = "changed" }); break;
+                            case "UserGroupContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserGroupContextDelete"], Id = "delete" }); break;
+                            case "UserGroupContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserGroupContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

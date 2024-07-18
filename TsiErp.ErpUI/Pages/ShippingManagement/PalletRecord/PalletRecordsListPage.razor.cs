@@ -408,12 +408,19 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         protected void CreatePalletDetailContextMenuItems()
         {
-            PalletDetailGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletDetailApproveUnitPrice"], Id = "approve" });
+            if (GridContextMenu.Count == 0)
+            {
+
+                PalletDetailGridContextMenu.Add(new ContextMenuItemModel { Text = L["PalletDetailApproveUnitPrice"], Id = "approve" });
+            }
         }
 
         protected void CreateTicketListContextMenuItems()
         {
-            TicketListGridContextMenu.Add(new ContextMenuItemModel { Text = L["TicketListPrint"], Id = "print" });
+            if (GridContextMenu.Count == 0)
+            {
+                TicketListGridContextMenu.Add(new ContextMenuItemModel { Text = L["TicketListPrint"], Id = "print" });
+            }
         }
 
         public async void MainContextMenuClick(ContextMenuClickEventArgs<ListPalletRecordsDto> args)

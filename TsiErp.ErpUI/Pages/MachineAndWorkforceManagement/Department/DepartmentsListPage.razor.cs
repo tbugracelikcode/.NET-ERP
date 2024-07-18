@@ -46,23 +46,26 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Department
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "DepartmentContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["DepartmentContextAdd"], Id = "new" }); break;
-                        case "DepartmentContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["DepartmentContextChange"], Id = "changed" }); break;
-                        case "DepartmentContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["DepartmentContextDelete"], Id = "delete" }); break;
-                        case "DepartmentContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["DepartmentContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "DepartmentContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["DepartmentContextAdd"], Id = "new" }); break;
+                            case "DepartmentContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["DepartmentContextChange"], Id = "changed" }); break;
+                            case "DepartmentContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["DepartmentContextDelete"], Id = "delete" }); break;
+                            case "DepartmentContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["DepartmentContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

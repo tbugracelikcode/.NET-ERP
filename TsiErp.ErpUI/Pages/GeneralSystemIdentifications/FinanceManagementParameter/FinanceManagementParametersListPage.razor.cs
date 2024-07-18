@@ -18,12 +18,14 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.FinanceManagementParam
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["FinanceManagementParameterContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["FinanceManagementParameterContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["FinanceManagementParameterContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["FinanceManagementParameterContextRefresh"], Id = "refresh" });
+            if (GridContextMenu.Count == 0)
+            {
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["FinanceManagementParameterContextAdd"], Id = "new" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["FinanceManagementParameterContextChange"], Id = "changed" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["FinanceManagementParameterContextDelete"], Id = "delete" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["FinanceManagementParameterContextRefresh"], Id = "refresh" });
+            }
         }
-
         private async void OnClick()
         {
             if (DataSource.Id == Guid.Empty)

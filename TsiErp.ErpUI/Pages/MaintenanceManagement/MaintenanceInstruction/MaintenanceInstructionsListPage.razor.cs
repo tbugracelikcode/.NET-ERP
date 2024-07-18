@@ -287,7 +287,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
 
         protected void CreateMainContextMenuItems()
         {
-            if (LineGridContextMenu.Count() == 0)
+            if (GridContextMenu.Count == 0)
             {
 
                 foreach (var context in contextsList)

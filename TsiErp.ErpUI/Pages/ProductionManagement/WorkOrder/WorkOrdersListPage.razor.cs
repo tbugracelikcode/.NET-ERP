@@ -63,33 +63,36 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
 
         protected void CreateContextMenuItems()
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "WorkOrderContextAdd":
-                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextAdd"], Id = "new" }); break;
-                        case "WorkOrderContextChange":
-                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextChange"], Id = "changed" }); break;
-                        case "WorkOrderContextDelete":
-                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextDelete"], Id = "delete" }); break;
-                        case "WorkOrderContextRefresh":
-                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextRefresh"], Id = "refresh" }); break;
-                        case "WorkOrderContextProductionTracking":
-                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextProductionTracking"], Id = "prodtracking" }); break;
-                        case "WorkOrderContextContractTracking":
-                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextContractTracking"], Id = "contracttracking" }); break;
-                        case "WorkOrderContextChangeOperationCriteria":
-                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextChangeOperationCriteria"], Id = "changeoprcriteria" }); break;
-                        case "WorkOrderContextChangeStation":
-                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextChangeStation"], Id = "changestation" }); break;
-                        case "WorkOrderContextSplitWorkOrder":
-                            MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextSplitWorkOrder"], Id = "splitworkorder" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "WorkOrderContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextAdd"], Id = "new" }); break;
+                            case "WorkOrderContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextChange"], Id = "changed" }); break;
+                            case "WorkOrderContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextDelete"], Id = "delete" }); break;
+                            case "WorkOrderContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextRefresh"], Id = "refresh" }); break;
+                            case "WorkOrderContextProductionTracking":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextProductionTracking"], Id = "prodtracking" }); break;
+                            case "WorkOrderContextContractTracking":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextContractTracking"], Id = "contracttracking" }); break;
+                            case "WorkOrderContextChangeOperationCriteria":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextChangeOperationCriteria"], Id = "changeoprcriteria" }); break;
+                            case "WorkOrderContextChangeStation":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextChangeStation"], Id = "changestation" }); break;
+                            case "WorkOrderContextSplitWorkOrder":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextSplitWorkOrder"], Id = "splitworkorder" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

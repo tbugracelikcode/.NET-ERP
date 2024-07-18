@@ -61,23 +61,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "OperationUnsuitabilityReportContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationUnsuitabilityReportContextAdd"], Id = "new" }); break;
-                        case "OperationUnsuitabilityReportContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationUnsuitabilityReportContextChange"], Id = "changed" }); break;
-                        case "OperationUnsuitabilityReportContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationUnsuitabilityReportContextDelete"], Id = "delete" }); break;
-                        case "OperationUnsuitabilityReportContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationUnsuitabilityReportContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "OperationUnsuitabilityReportContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationUnsuitabilityReportContextAdd"], Id = "new" }); break;
+                            case "OperationUnsuitabilityReportContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationUnsuitabilityReportContextChange"], Id = "changed" }); break;
+                            case "OperationUnsuitabilityReportContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationUnsuitabilityReportContextDelete"], Id = "delete" }); break;
+                            case "OperationUnsuitabilityReportContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationUnsuitabilityReportContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }
@@ -440,7 +443,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
 
         private async Task GetUnsuitabilityItemsList()
         {
-            UnsuitabilityItemsList = (await UnsuitabilityItemsAppService.GetListAsync(new ListUnsuitabilityItemsParameterDto())).Data.ToList();
+            var IsMerkeziId = (await StationsAppService.GetAsync(DataSource.StationID.GetValueOrDefault())).Data.GroupID;
+            if (IsMerkeziId!=Guid.Empty)
+            {
+
+                UnsuitabilityItemsList = (await UnsuitabilityItemsAppService.GetListAsync(new ListUnsuitabilityItemsParameterDto())).Data.
+                    Where(t => t.StationGroupId == IsMerkeziId)
+                    .ToList();
+            }
         }
 
 

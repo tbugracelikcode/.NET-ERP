@@ -93,23 +93,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationVerification
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "CalibrationVerificationContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationVerificationContextAdd"], Id = "new" }); break;
-                        case "CalibrationVerificationContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationVerificationContextChange"], Id = "changed" }); break;
-                        case "CalibrationVerificationContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationVerificationContextDelete"], Id = "delete" }); break;
-                        case "CalibrationVerificationContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationVerificationContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "CalibrationVerificationContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationVerificationContextAdd"], Id = "new" }); break;
+                            case "CalibrationVerificationContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationVerificationContextChange"], Id = "changed" }); break;
+                            case "CalibrationVerificationContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationVerificationContextDelete"], Id = "delete" }); break;
+                            case "CalibrationVerificationContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationVerificationContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

@@ -55,22 +55,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "PurchaseUnsuitabilityReportContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextAdd"], Id = "new" }); break;
-                        case "PurchaseUnsuitabilityReportContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextChange"], Id = "changed" }); break;
-                        case "PurchaseUnsuitabilityReportContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextDelete"], Id = "delete" }); break;
-                        case "PurchaseUnsuitabilityReportContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "PurchaseUnsuitabilityReportContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextAdd"], Id = "new" }); break;
+                            case "PurchaseUnsuitabilityReportContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextChange"], Id = "changed" }); break;
+                            case "PurchaseUnsuitabilityReportContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextDelete"], Id = "delete" }); break;
+                            case "PurchaseUnsuitabilityReportContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

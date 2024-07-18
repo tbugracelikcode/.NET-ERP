@@ -44,23 +44,26 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EducationLevelScore
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "EducationLevelScoresContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EducationLevelScoresContextAdd"], Id = "new" }); break;
-                        case "EducationLevelScoresContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EducationLevelScoresContextChange"], Id = "changed" }); break;
-                        case "EducationLevelScoresContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EducationLevelScoresContextDelete"], Id = "delete" }); break;
-                        case "EducationLevelScoresContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EducationLevelScoresContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "EducationLevelScoresContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EducationLevelScoresContextAdd"], Id = "new" }); break;
+                            case "EducationLevelScoresContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EducationLevelScoresContextChange"], Id = "changed" }); break;
+                            case "EducationLevelScoresContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EducationLevelScoresContextDelete"], Id = "delete" }); break;
+                            case "EducationLevelScoresContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EducationLevelScoresContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

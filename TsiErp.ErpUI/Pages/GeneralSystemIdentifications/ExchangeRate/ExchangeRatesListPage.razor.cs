@@ -54,14 +54,15 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                 var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
+                        switch (context.MenuName)
+                        {
                         case "ExchangeRateContextAdd":
                             GridContextMenu.Add(new ContextMenuItemModel { Text = L["ExchangeRateContextAdd"], Id = "new" }); break;
                         case "ExchangeRateContextChange":
@@ -73,9 +74,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
                         case "ExchangeRateContextCentralBankExchange":
                             GridContextMenu.Add(new ContextMenuItemModel { Text = L["ExchangeRateContextCentralBankExchange"], Id = "bankexchange" }); break;
                         default: break;
+                        }
                     }
                 }
             }
+
+                
         }
 
         public override async void OnContextMenuClick(ContextMenuClickEventArgs<ListExchangeRatesDto> args)

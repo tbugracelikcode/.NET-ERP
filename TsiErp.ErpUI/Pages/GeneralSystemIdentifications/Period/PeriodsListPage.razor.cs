@@ -93,6 +93,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Period
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
+            if (GridContextMenu.Count ==0)
+            {
 
             foreach (var context in contextsList)
             {
@@ -112,6 +114,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Period
                         default: break;
                     }
                 }
+            }
             }
         }
 

@@ -28,10 +28,13 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PlanningManagementPara
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PlanningManagementParameterContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PlanningManagementParameterContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PlanningManagementParameterContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PlanningManagementParameterContextRefresh"], Id = "refresh" });
+            if (GridContextMenu.Count == 0)
+            {
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["PlanningManagementParameterContextAdd"], Id = "new" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["PlanningManagementParameterContextChange"], Id = "changed" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["PlanningManagementParameterContextDelete"], Id = "delete" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["PlanningManagementParameterContextRefresh"], Id = "refresh" });
+            }
         }
 
         #region ComboBox İşlemleri

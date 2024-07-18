@@ -50,23 +50,26 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeAnnualSeniori
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "EmployeeAnnualSeniorityDifferencesContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeAnnualSeniorityDifferencesContextAdd"], Id = "new" }); break;
-                        case "EmployeeAnnualSeniorityDifferencesContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeAnnualSeniorityDifferencesContextChange"], Id = "changed" }); break;
-                        case "EmployeeAnnualSeniorityDifferencesContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeAnnualSeniorityDifferencesContextDelete"], Id = "delete" }); break;
-                        case "EmployeeAnnualSeniorityDifferencesContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeAnnualSeniorityDifferencesContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "EmployeeAnnualSeniorityDifferencesContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeAnnualSeniorityDifferencesContextAdd"], Id = "new" }); break;
+                            case "EmployeeAnnualSeniorityDifferencesContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeAnnualSeniorityDifferencesContextChange"], Id = "changed" }); break;
+                            case "EmployeeAnnualSeniorityDifferencesContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeAnnualSeniorityDifferencesContextDelete"], Id = "delete" }); break;
+                            case "EmployeeAnnualSeniorityDifferencesContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeAnnualSeniorityDifferencesContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

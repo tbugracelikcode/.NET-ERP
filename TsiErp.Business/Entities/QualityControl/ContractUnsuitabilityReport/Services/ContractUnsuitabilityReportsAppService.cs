@@ -169,7 +169,10 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
                 )
                  .Join<CurrentAccountCards>
                 (
-                   d => new { CurrentAccountCardCode = d.Code, CurrentAccountCardName = d.Name, CurrentAccountCardID = d.Id }, nameof(ContractUnsuitabilityReports.CurrentAccountCardID), nameof(CurrentAccountCards.Id), JoinType.Left
+                   d => new { CurrentAccountCardCode = d.Code, CurrentAccountCardName = d.Name, CurrentAccountCardID = d.Id }, 
+                   nameof(ContractUnsuitabilityReports.CurrentAccountCardID), 
+                   nameof(CurrentAccountCards.Id), 
+                   JoinType.Left
                 )
                 .Where(new { Id = id }, false, false, Tables.ContractUnsuitabilityReports);
 

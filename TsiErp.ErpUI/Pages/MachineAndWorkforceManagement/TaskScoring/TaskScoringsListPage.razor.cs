@@ -45,23 +45,26 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.TaskScoring
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "TaskScoringsContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["TaskScoringsContextAdd"], Id = "new" }); break;
-                        case "TaskScoringsContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["TaskScoringsContextChange"], Id = "changed" }); break;
-                        case "TaskScoringsContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["TaskScoringsContextDelete"], Id = "delete" }); break;
-                        case "TaskScoringsContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["TaskScoringsContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "TaskScoringsContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["TaskScoringsContextAdd"], Id = "new" }); break;
+                            case "TaskScoringsContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["TaskScoringsContextChange"], Id = "changed" }); break;
+                            case "TaskScoringsContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["TaskScoringsContextDelete"], Id = "delete" }); break;
+                            case "TaskScoringsContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["TaskScoringsContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

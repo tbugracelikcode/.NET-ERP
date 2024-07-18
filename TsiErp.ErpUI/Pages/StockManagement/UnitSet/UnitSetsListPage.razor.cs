@@ -42,22 +42,25 @@ namespace TsiErp.ErpUI.Pages.StockManagement.UnitSet
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "UnitSetContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnitSetContextAdd"], Id = "new" }); break;
-                        case "UnitSetContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnitSetContextChange"], Id = "changed" }); break;
-                        case "UnitSetContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnitSetContextDelete"], Id = "delete" }); break;
-                        case "UnitSetContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnitSetContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "UnitSetContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnitSetContextAdd"], Id = "new" }); break;
+                            case "UnitSetContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnitSetContextChange"], Id = "changed" }); break;
+                            case "UnitSetContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnitSetContextDelete"], Id = "delete" }); break;
+                            case "UnitSetContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnitSetContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }
