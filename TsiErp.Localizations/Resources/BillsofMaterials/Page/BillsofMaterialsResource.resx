@@ -315,6 +315,12 @@
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Ürün Reçeteleri</value>
   </data>
+  <data name="UIEmptyDensityError" xml:space="preserve">
+    <value>Lütfen üretim parametrelerinden Özkütle değeri girin.</value>
+  </data>
+  <data name="UIEmptySizeError" xml:space="preserve">
+    <value>Lütfen Boy değerini girin.</value>
+  </data>
   <data name="UIExportFileName" xml:space="preserve">
     <value>Receteler</value>
   </data>

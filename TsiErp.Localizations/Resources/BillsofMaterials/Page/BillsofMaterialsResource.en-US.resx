@@ -318,6 +318,12 @@
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Bills of Materials</value>
   </data>
+  <data name="UIEmptyDensityError" xml:space="preserve">
+    <value>Please enter the Density value from the production parameters.</value>
+  </data>
+  <data name="UIEmptySizeError" xml:space="preserve">
+    <value>Please enter the Size value.</value>
+  </data>
   <data name="UIExportFileName" xml:space="preserve">
     <value>BillsofMaterials</value>
   </data>
