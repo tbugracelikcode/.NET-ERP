@@ -537,7 +537,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                 case "removepallet":
 
-                   
+                    var a = DataSource.SelectPackingListPalletPackageLines;
+
                     break;
                 default:
                     break;
@@ -717,7 +718,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                         ProductionOrderID = productionOrder.Id,
                         SalesOrderID = productionOrder.OrderID,
                         SalesOrderLineID = productionOrder.OrderLineID,
-                        ProductGroupID = product.ProductGrpID
+                        ProductGroupID = product.ProductGrpID,
+                        PalletID = pallet.PalletID
                     };
 
 
@@ -1700,7 +1702,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 }
             }
 
-           
+
 
             PackingListTrReport packingListTrReport = new PackingListTrReport();
             packingListTrReport.DataSource = reportSource;
