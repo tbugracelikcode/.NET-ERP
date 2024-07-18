@@ -190,7 +190,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
 
             if (args.Checked)
             {
-                DataSource.UnsuitabilityTypesDescription = "AdvertisementChange";
+                DataSource.UnsuitabilityTypesDescription = "Advertisement";
                 _isOperation = false;
                 _isContract = false;
                 _isPurchase = false;

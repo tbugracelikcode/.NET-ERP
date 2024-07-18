@@ -103,6 +103,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 RadiusValue = input.RadiusValue,
                 Width_ = input.Width_,
                 Tickness_ = input.Tickness_
+                
 
             });
 
@@ -396,6 +397,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
+
             }).Where(new { Id = input.Id }, true, true, "");
 
             foreach (var item in input.SelectProductRelatedProductProperties)
