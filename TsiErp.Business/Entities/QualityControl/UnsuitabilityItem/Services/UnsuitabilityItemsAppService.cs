@@ -159,7 +159,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                     .Query().From(Tables.UnsuitabilityItems).Select<UnsuitabilityItems>(null)
                         .Join<UnsuitabilityTypesItems>
                         (
-                            b => new { UnsuitabilityTypesItemsName = b.Name },
+                            b => new { UnsuitabilityTypesItemsName = b.Name, UnsuitabilityTypesItemsId=b.Id },
                             nameof(UnsuitabilityItems.UnsuitabilityTypesItemsId),
                             nameof(UnsuitabilityTypesItems.Id),
                             JoinType.Left

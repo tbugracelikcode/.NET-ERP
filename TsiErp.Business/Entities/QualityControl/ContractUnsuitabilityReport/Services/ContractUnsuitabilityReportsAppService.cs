@@ -189,15 +189,24 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
             var query = queryFactory.Query().From(Tables.ContractUnsuitabilityReports).Select<ContractUnsuitabilityReports>(null)
                .Join<WorkOrders>
                 (
-                   d => new { WorkOrderFicheNr = d.WorkOrderNo }, nameof(ContractUnsuitabilityReports.WorkOrderID), nameof(WorkOrders.Id), JoinType.Left
+                   d => new { WorkOrderFicheNr = d.WorkOrderNo }, 
+                   nameof(ContractUnsuitabilityReports.WorkOrderID), 
+                   nameof(WorkOrders.Id), 
+                   JoinType.Left
                 )
                 .Join<ProductionOrders>
                 (
-                   d => new { ProductionOrderFicheNr = d.FicheNo }, nameof(ContractUnsuitabilityReports.ProductionOrderID), nameof(ProductionOrders.Id), JoinType.Left
+                   d => new { ProductionOrderFicheNr = d.FicheNo }, 
+                   nameof(ContractUnsuitabilityReports.ProductionOrderID), 
+                   nameof(ProductionOrders.Id), 
+                   JoinType.Left
                 )
                 .Join<UnsuitabilityItems>
                 (
-                   d => new { UnsuitabilityItemsName = d.Name }, nameof(ContractUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
+                   d => new { UnsuitabilityItemsName = d.Name, UnsuitabilityItemsId = d.Id }, 
+                   nameof(ContractUnsuitabilityReports.UnsuitabilityItemsID), 
+                   nameof(UnsuitabilityItems.Id), 
+                   JoinType.Left
                 )
                 .Join<ContractTrackingFiches>
                 (

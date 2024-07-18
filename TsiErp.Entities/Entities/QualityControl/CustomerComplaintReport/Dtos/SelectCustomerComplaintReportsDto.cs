@@ -86,5 +86,11 @@ namespace TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport.Dtos
         /// Rapor Sonucu
         /// </summary>
         public string ReportResult { get; set; }
+
+
+        /// <summary>
+        /// Uygunsuzluk Türü Açıklaması
+        /// </summary>
+        public string UnsuitabilityTypesDescription { get; set; }
     }
 }

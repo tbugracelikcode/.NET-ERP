@@ -4,6 +4,7 @@ using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
@@ -413,12 +414,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
 
         public async void UnsuitabilityItemsButtonClickEvent()
         {
-
             SelectUnsuitabilityItemsPopupVisible = true;
-            UnsuitabilityItemsList = (await UnsuitabilityItemsAppService.GetListAsync(new ListUnsuitabilityItemsParameterDto())).Data.ToList();
-
+            await GetUnsuitabilityItemsList();
             await InvokeAsync(StateHasChanged);
         }
+    
 
 
         public void UnsuitabilityItemsOnValueChange(ChangedEventArgs args)
@@ -443,6 +443,16 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
             }
         }
         #endregion
+        private async Task GetUnsuitabilityItemsList()
+        {
+
+            var unsuitabilityTypesItem = (await UnsuitabilityTypesItemsAppService.GetWithUnsuitabilityItemDescriptionAsync("Advertisement")).Data;
+
+            if (unsuitabilityTypesItem != null)
+            {
+                UnsuitabilityItemsList = (await UnsuitabilityItemsAppService.GetListAsync(new ListUnsuitabilityItemsParameterDto())).Data.Where(t => t.UnsuitabilityTypesItemsId == unsuitabilityTypesItem.Id).ToList();
+            }
+        }
 
         #region Satış Siparişi ButtonEdit
 
