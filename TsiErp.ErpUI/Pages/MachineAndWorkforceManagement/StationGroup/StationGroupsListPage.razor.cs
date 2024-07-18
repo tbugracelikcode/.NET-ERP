@@ -47,23 +47,26 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StationGroup
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "StationGroupContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StationGroupContextAdd"], Id = "new" }); break;
-                        case "StationGroupContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StationGroupContextChange"], Id = "changed" }); break;
-                        case "StationGroupContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StationGroupContextDelete"], Id = "delete" }); break;
-                        case "StationGroupContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StationGroupContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "StationGroupContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["StationGroupContextAdd"], Id = "new" }); break;
+                            case "StationGroupContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["StationGroupContextChange"], Id = "changed" }); break;
+                            case "StationGroupContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["StationGroupContextDelete"], Id = "delete" }); break;
+                            case "StationGroupContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["StationGroupContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

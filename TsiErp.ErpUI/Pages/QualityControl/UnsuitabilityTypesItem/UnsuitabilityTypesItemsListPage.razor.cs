@@ -59,23 +59,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "UnsuitabilityTypesItemContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityTypesItemContextAdd"], Id = "new" }); break;
-                        case "UnsuitabilityTypesItemContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityTypesItemContextChange"], Id = "changed" }); break;
-                        case "UnsuitabilityTypesItemContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityTypesItemContextDelete"], Id = "delete" }); break;
-                        case "UnsuitabilityTypesItemContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityTypesItemContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "UnsuitabilityTypesItemContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityTypesItemContextAdd"], Id = "new" }); break;
+                            case "UnsuitabilityTypesItemContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityTypesItemContextChange"], Id = "changed" }); break;
+                            case "UnsuitabilityTypesItemContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityTypesItemContextDelete"], Id = "delete" }); break;
+                            case "UnsuitabilityTypesItemContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityTypesItemContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

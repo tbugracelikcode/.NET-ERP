@@ -176,7 +176,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
         protected void CreateMainContextMenuItems()
         {
-            if (MainGridContextMenu.Count() == 0)
+            if (GridContextMenu.Count == 0)
             {
 
                 foreach (var context in contextsList)
@@ -485,11 +485,13 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
         protected void CreateDayTypeContextMenuItems()
         {
-            DayTypeGridContextMenu.Add(new ContextMenuItemModel { Text = L["DayTypeContextAdd"], Id = "new" });
-            DayTypeGridContextMenu.Add(new ContextMenuItemModel { Text = L["DayTypeContextChange"], Id = "change" });
-            DayTypeGridContextMenu.Add(new ContextMenuItemModel { Text = L["DayTypeContextDelete"], Id = "delete" });
-            DayTypeGridContextMenu.Add(new ContextMenuItemModel { Text = L["DayTypeContextRefresh"], Id = "refresh" });
-
+            if (GridContextMenu.Count == 0)
+            {
+                DayTypeGridContextMenu.Add(new ContextMenuItemModel { Text = L["DayTypeContextAdd"], Id = "new" });
+                DayTypeGridContextMenu.Add(new ContextMenuItemModel { Text = L["DayTypeContextChange"], Id = "change" });
+                DayTypeGridContextMenu.Add(new ContextMenuItemModel { Text = L["DayTypeContextDelete"], Id = "delete" });
+                DayTypeGridContextMenu.Add(new ContextMenuItemModel { Text = L["DayTypeContextRefresh"], Id = "refresh" });
+            }
         }
 
         public async void OnDayTypeContextMenuClick(ContextMenuClickEventArgs<DayTypeModel> args)

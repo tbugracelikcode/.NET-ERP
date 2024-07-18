@@ -62,23 +62,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ProductionOrderChangeReport
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "ProductionOrderChangeReportsContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderChangeReportsContextAdd"], Id = "new" }); break;
-                        case "ProductionOrderChangeReportsContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderChangeReportsContextChange"], Id = "changed" }); break;
-                        case "ProductionOrderChangeReportsContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderChangeReportsContextDelete"], Id = "delete" }); break;
-                        case "ProductionOrderChangeReportsContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderChangeReportsContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "ProductionOrderChangeReportsContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderChangeReportsContextAdd"], Id = "new" }); break;
+                            case "ProductionOrderChangeReportsContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderChangeReportsContextChange"], Id = "changed" }); break;
+                            case "ProductionOrderChangeReportsContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderChangeReportsContextDelete"], Id = "delete" }); break;
+                            case "ProductionOrderChangeReportsContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderChangeReportsContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

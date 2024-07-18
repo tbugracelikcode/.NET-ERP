@@ -95,23 +95,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationRecord
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "CalibrationRecordContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextAdd"], Id = "new" }); break;
-                        case "CalibrationRecordContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextChange"], Id = "changed" }); break;
-                        case "CalibrationRecordContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextDelete"], Id = "delete" }); break;
-                        case "CalibrationRecordContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "CalibrationRecordContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextAdd"], Id = "new" }); break;
+                            case "CalibrationRecordContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextChange"], Id = "changed" }); break;
+                            case "CalibrationRecordContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextDelete"], Id = "delete" }); break;
+                            case "CalibrationRecordContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationRecordContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

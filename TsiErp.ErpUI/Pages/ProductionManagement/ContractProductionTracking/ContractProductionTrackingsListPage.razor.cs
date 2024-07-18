@@ -70,9 +70,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractProductionTracking
 
         protected void CreateMainContextMenuItems()
         {
-            if (MainGridContextMenu.Count() == 0)
+            if (GridContextMenu.Count == 0)
             {
-
                 foreach (var context in contextsList)
                 {
                     var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();

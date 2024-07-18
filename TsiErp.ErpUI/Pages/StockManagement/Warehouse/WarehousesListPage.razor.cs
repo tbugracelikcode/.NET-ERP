@@ -46,22 +46,25 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Warehouse
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "WarehouseContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["WarehouseContextAdd"], Id = "new" }); break;
-                        case "WarehouseContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["WarehouseContextChange"], Id = "changed" }); break;
-                        case "WarehouseContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["WarehouseContextDelete"], Id = "delete" }); break;
-                        case "WarehouseContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["WarehouseContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "WarehouseContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["WarehouseContextAdd"], Id = "new" }); break;
+                            case "WarehouseContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["WarehouseContextChange"], Id = "changed" }); break;
+                            case "WarehouseContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["WarehouseContextDelete"], Id = "delete" }); break;
+                            case "WarehouseContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["WarehouseContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

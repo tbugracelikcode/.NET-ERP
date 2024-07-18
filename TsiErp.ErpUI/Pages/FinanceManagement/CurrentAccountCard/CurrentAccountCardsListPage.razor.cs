@@ -114,7 +114,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CurrentAccountCard
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
+            {
+
+                foreach (var context in contextsList)
             {
                 var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
                 if (permission)
@@ -132,6 +135,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CurrentAccountCard
                         default: break;
                     }
                 }
+            }
             }
         }
 

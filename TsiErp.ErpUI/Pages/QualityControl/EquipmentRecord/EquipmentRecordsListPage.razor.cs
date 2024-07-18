@@ -69,22 +69,25 @@ namespace TsiErp.ErpUI.Pages.QualityControl.EquipmentRecord
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "EquipmentRecordContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EquipmentRecordContextAdd"], Id = "new" }); break;
-                        case "EquipmentRecordContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EquipmentRecordContextChange"], Id = "changed" }); break;
-                        case "EquipmentRecordContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EquipmentRecordContextDelete"], Id = "delete" }); break;
-                        case "EquipmentRecordContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EquipmentRecordContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "EquipmentRecordContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EquipmentRecordContextAdd"], Id = "new" }); break;
+                            case "EquipmentRecordContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EquipmentRecordContextChange"], Id = "changed" }); break;
+                            case "EquipmentRecordContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EquipmentRecordContextDelete"], Id = "delete" }); break;
+                            case "EquipmentRecordContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EquipmentRecordContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

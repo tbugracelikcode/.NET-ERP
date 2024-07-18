@@ -55,22 +55,25 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReferanceNumber
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "ProductReferanceNumberContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextAdd"], Id = "new" }); break;
-                        case "ProductReferanceNumberContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextChange"], Id = "changed" }); break;
-                        case "ProductReferanceNumberContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextDelete"], Id = "delete" }); break;
-                        case "ProductReferanceNumberContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "ProductReferanceNumberContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextAdd"], Id = "new" }); break;
+                            case "ProductReferanceNumberContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextChange"], Id = "changed" }); break;
+                            case "ProductReferanceNumberContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextDelete"], Id = "delete" }); break;
+                            case "ProductReferanceNumberContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

@@ -45,22 +45,25 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockNumber
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "StockNumbersContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockNumbersContextAdd"], Id = "new" }); break;
-                        case "StockNumbersContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockNumbersContextChange"], Id = "changed" }); break;
-                        case "StockNumbersContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockNumbersContextDelete"], Id = "delete" }); break;
-                        case "StockNumbersContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockNumbersContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "StockNumbersContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockNumbersContextAdd"], Id = "new" }); break;
+                            case "StockNumbersContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockNumbersContextChange"], Id = "changed" }); break;
+                            case "StockNumbersContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockNumbersContextDelete"], Id = "delete" }); break;
+                            case "StockNumbersContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockNumbersContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

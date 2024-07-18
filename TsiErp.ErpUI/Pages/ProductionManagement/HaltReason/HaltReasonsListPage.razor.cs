@@ -50,23 +50,26 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.HaltReason
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "HaltReasonContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextAdd"], Id = "new" }); break;
-                        case "HaltReasonContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextChange"], Id = "changed" }); break;
-                        case "HaltReasonContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextDelete"], Id = "delete" }); break;
-                        case "HaltReasonContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "HaltReasonContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextAdd"], Id = "new" }); break;
+                            case "HaltReasonContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextChange"], Id = "changed" }); break;
+                            case "HaltReasonContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextDelete"], Id = "delete" }); break;
+                            case "HaltReasonContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

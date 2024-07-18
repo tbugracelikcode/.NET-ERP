@@ -383,27 +383,30 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "8DContextAddforSupplier":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforSupplier"], Id = "newsupplier" }); break;
-                        case "8DContextAddforCustomer":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforCustomer"], Id = "newcustomer" }); break;
-                        case "8DContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextChange"], Id = "changed" }); break;
-                        case "8DContextState":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextState"], Id = "state" }); break;
-                        case "8DContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextDelete"], Id = "delete" }); break;
-                        case "8DContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "8DContextAddforSupplier":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforSupplier"], Id = "newsupplier" }); break;
+                            case "8DContextAddforCustomer":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextAddforCustomer"], Id = "newcustomer" }); break;
+                            case "8DContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextChange"], Id = "changed" }); break;
+                            case "8DContextState":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextState"], Id = "state" }); break;
+                            case "8DContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextDelete"], Id = "delete" }); break;
+                            case "8DContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["8DContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

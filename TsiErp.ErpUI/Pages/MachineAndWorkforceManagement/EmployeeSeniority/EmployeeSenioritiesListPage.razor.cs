@@ -58,23 +58,26 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeSeniority
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "EmployeeSenioritiesContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextAdd"], Id = "new" }); break;
-                        case "EmployeeSenioritiesContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextChange"], Id = "changed" }); break;
-                        case "EmployeeSenioritiesContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextDelete"], Id = "delete" }); break;
-                        case "EmployeeSenioritiesContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "EmployeeSenioritiesContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextAdd"], Id = "new" }); break;
+                            case "EmployeeSenioritiesContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextChange"], Id = "changed" }); break;
+                            case "EmployeeSenioritiesContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextDelete"], Id = "delete" }); break;
+                            case "EmployeeSenioritiesContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeSenioritiesContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

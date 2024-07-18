@@ -55,23 +55,26 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ControlCondition
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "ControlConditionContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextAdd"], Id = "new" }); break;
-                        case "ControlConditionContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextChange"], Id = "changed" }); break;
-                        case "ControlConditionContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextDelete"], Id = "delete" }); break;
-                        case "ControlConditionContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "ControlConditionContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextAdd"], Id = "new" }); break;
+                            case "ControlConditionContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextChange"], Id = "changed" }); break;
+                            case "ControlConditionContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextDelete"], Id = "delete" }); break;
+                            case "ControlConditionContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["ControlConditionContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

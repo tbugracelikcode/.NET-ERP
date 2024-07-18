@@ -148,7 +148,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
         protected void CreateMainContextMenuItems()
         {
-            if (MainGridContextMenu.Count() == 0)
+            if (GridContextMenu.Count == 0)
             {
 
                 foreach (var context in contextsList)

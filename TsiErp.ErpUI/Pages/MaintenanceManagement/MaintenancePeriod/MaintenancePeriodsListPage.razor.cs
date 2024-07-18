@@ -49,23 +49,26 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenancePeriod
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "MaintenancePeriodContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenancePeriodContextAdd"], Id = "new" }); break;
-                        case "MaintenancePeriodContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenancePeriodContextChange"], Id = "changed" }); break;
-                        case "MaintenancePeriodContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenancePeriodContextDelete"], Id = "delete" }); break;
-                        case "MaintenancePeriodContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenancePeriodContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "MaintenancePeriodContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenancePeriodContextAdd"], Id = "new" }); break;
+                            case "MaintenancePeriodContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenancePeriodContextChange"], Id = "changed" }); break;
+                            case "MaintenancePeriodContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenancePeriodContextDelete"], Id = "delete" }); break;
+                            case "MaintenancePeriodContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenancePeriodContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

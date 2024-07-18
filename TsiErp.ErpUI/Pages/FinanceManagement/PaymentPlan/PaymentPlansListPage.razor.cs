@@ -47,8 +47,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.PaymentPlan
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
+            if (GridContextMenu.Count == 0)
+            {
 
-            foreach (var context in contextsList)
+                foreach (var context in contextsList)
             {
                 var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
                 if (permission)
@@ -67,6 +69,8 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.PaymentPlan
                     }
                 }
             }
+            }
+
         }
 
 

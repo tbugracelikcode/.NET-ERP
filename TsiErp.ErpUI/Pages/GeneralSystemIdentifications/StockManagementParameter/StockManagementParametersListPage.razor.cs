@@ -34,10 +34,13 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.StockManagementParamet
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockManagementParameterContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockManagementParameterContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockManagementParameterContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockManagementParameterContextRefresh"], Id = "refresh" });
+            if (GridContextMenu.Count == 0)
+            {
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockManagementParameterContextAdd"], Id = "new" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockManagementParameterContextChange"], Id = "changed" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockManagementParameterContextDelete"], Id = "delete" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockManagementParameterContextRefresh"], Id = "refresh" });
+            }
         }
 
         private async void OnClick()

@@ -79,25 +79,28 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-
-            foreach (var context in contextsList)
+            if (GridContextMenu.Count == 0)
             {
-                var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                if (permission)
+
+                foreach (var context in contextsList)
                 {
-                    switch (context.MenuName)
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
                     {
-                        case "UserContextAdd":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserContextAdd"], Id = "new" }); break;
-                        case "UserContextChange":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserContextChange"], Id = "changed" }); break;
-                        case "UserContextPermission":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserContextPermission"], Id = "permission" }); break;
-                        case "UserContextDelete":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserContextDelete"], Id = "delete" }); break;
-                        case "UserContextRefresh":
-                            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserContextRefresh"], Id = "refresh" }); break;
-                        default: break;
+                        switch (context.MenuName)
+                        {
+                            case "UserContextAdd":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserContextAdd"], Id = "new" }); break;
+                            case "UserContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserContextChange"], Id = "changed" }); break;
+                            case "UserContextPermission":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserContextPermission"], Id = "permission" }); break;
+                            case "UserContextDelete":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserContextDelete"], Id = "delete" }); break;
+                            case "UserContextRefresh":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["UserContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
                     }
                 }
             }

@@ -43,10 +43,13 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PurchaseManagementPara
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseManagementParameterContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseManagementParameterContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseManagementParameterContextDelete"], Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseManagementParameterContextRefresh"], Id = "refresh" });
+            if (GridContextMenu.Count == 0)
+            {
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseManagementParameterContextAdd"], Id = "new" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseManagementParameterContextChange"], Id = "changed" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseManagementParameterContextDelete"], Id = "delete" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseManagementParameterContextRefresh"], Id = "refresh" });
+            }
         }
 
         private async void OnClick()
