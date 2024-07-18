@@ -9,5 +9,7 @@ namespace TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport.Dtos
 {
     public class ListCustomerComplaintReportsParameterDto : FullAuditedEntityDto
     {
+        public bool IsActive { get; set; } = true;
     }
+    
 }

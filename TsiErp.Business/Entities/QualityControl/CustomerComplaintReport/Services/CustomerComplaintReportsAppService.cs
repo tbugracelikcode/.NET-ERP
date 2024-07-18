@@ -15,6 +15,7 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport;
 using TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.TableConstant;
@@ -258,6 +259,23 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectCustomerComplaintReportsDto>(CustomerComplaintReport);
+
+        }
+
+        public async Task<IDataResult<SelectCustomerComplaintReportsDto>> GetWithUnsuitabilityItemDescriptionAsync(string description)
+        {
+            var query = queryFactory.Query().From(Tables.UnsuitabilityTypesItems).Select("*").Where(
+            new
+            {
+                UnsuitabilityTypesDescription = description
+            }, true, true, "");
+            var unsuitabilityTypesItems = queryFactory.Get<SelectCustomerComplaintReportsDto>(query);
+
+
+            LogsAppService.InsertLogToDatabase(unsuitabilityTypesItems, unsuitabilityTypesItems, LoginedUserService.UserId, Tables.UnsuitabilityTypesItems, LogType.Get, unsuitabilityTypesItems.Id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectCustomerComplaintReportsDto>(unsuitabilityTypesItems);
 
         }
     }

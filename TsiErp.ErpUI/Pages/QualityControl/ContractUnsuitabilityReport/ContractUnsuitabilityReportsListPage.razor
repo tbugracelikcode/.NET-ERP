@@ -10,6 +10,7 @@
 @inject IWorkOrdersAppService WorkOrdersAppService
 @inject IProductionOrdersAppService ProductionOrdersAppService
 @inject IUnsuitabilityItemsAppService UnsuitabilityItemsAppService
+@inject IUnsuitabilityTypesItemsAppService UnsuitabilityTypesItemsAppService
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
 @inject IContractTrackingFichesAppService ContractTrackingFichesAppService
 @inject IFicheNumbersAppService FicheNumbersAppService
@@ -158,29 +159,29 @@
                                 <SfTextBox CssClass="TSITxtBox" Enabled=false @bind-Value="DataSource.ProductionOrderFicheNr"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
-
+                        @*
                         <DxGridLayoutItem Row="4" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["WorkOrderFicheNrLabel"] </strong></label><br />
                                 <SfTextBox @ref="@WorkOrdersButtonEdit" Created="@WorkOrdersOnCreateIcon" @bind-Value="DataSource.WorkOrderFicheNr" ShowClearButton=true ValueChange="WorkOrdersOnValueChange"></SfTextBox>
                             </Template>
-                        </DxGridLayoutItem>
+                        </DxGridLayoutItem>*@
 
-                        <DxGridLayoutItem Row="4" Column="3">
+                        <DxGridLayoutItem Row="4" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["UnsuitabilityItemsNameLabel"] </strong></label><br />
                                 <SfTextBox @ref="@UnsuitabilityItemsButtonEdit" Created="@UnsuitabilityItemsOnCreateIcon" @bind-Value="DataSource.UnsuitabilityItemsName" ShowClearButton=true ValueChange="UnsuitabilityItemsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
-                        <DxGridLayoutItem Row="4" Column="5">
+                        <DxGridLayoutItem Row="4" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["UnsuitableAmountLabel"] </strong></label>
                                 <SfNumericTextBox TValue="decimal" @bind-Value="DataSource.UnsuitableAmount" Min=0></SfNumericTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
-                        <DxGridLayoutItem Row="5" Column="1">
+                        <DxGridLayoutItem Row="4" Column="5">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["ActionLabel"] </strong></label><br />
                                 <SfComboBox TValue="string" TItem="UnsComboBox"  DataSource="@_unsComboBox">
@@ -190,7 +191,7 @@
                             </Template>
                         </DxGridLayoutItem>
 
-                        <DxGridLayoutItem Row="5" Column="3">
+                        <DxGridLayoutItem Row="5" Column="1">
                             <Template>
                                 <center>
                                 <label class="TSIModalLabel"><strong>@L["IsUnsuitabilityWorkOrderLabel"] </strong></label><br />
