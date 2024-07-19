@@ -1132,6 +1132,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz Palet ve eklenen sonraki Palet kayıtları kalıcı olarak silinecektir..
+        /// </summary>
+        public static string UIWarningPalletRemoveMessage {
+            get {
+                return ResourceManager.GetString("UIWarningPalletRemoveMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Çeki listesi kaydı yapılmadan palet seçimi yapılamaz..
         /// </summary>
         public static string UIWarningPalletSelectionMessage {

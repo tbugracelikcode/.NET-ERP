@@ -537,7 +537,46 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                 case "removepallet":
 
-                    var a = DataSource.SelectPackingListPalletPackageLines;
+                    var selectedPallet = args.RowInfo.RowData;
+
+                    if (selectedPallet.Id != Guid.Empty)
+                    {
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIWarningPalletRemoveMessage"]);
+
+                        if (res == true)
+                        {
+                            int selectedPalletIndex = DataSource.SelectPackingListPalletLines.IndexOf(selectedPallet);
+
+                            if (selectedPalletIndex > -1)
+                            {
+                                List<SelectPackingListPalletLinesDto> removedPallets = new List<SelectPackingListPalletLinesDto>();
+
+                                if (selectedPalletIndex == 0)
+                                {
+                                    removedPallets = DataSource.SelectPackingListPalletLines.ToList();
+                                }
+                                else if (selectedPalletIndex == DataSource.SelectPackingListPalletLines.Count - 1)
+                                {
+                                    removedPallets.Add(DataSource.SelectPackingListPalletLines[selectedPalletIndex]);
+                                }
+                                else
+                                {
+                                    if (selectedPalletIndex == DataSource.SelectPackingListPalletLines.Count - 2)
+                                    {
+                                        removedPallets.Add(selectedPallet);
+                                        removedPallets.Add(DataSource.SelectPackingListPalletLines[selectedPalletIndex + 1]);
+                                    }
+                                    else
+                                    {
+                                        removedPallets = DataSource.SelectPackingListPalletLines.ToList().GetRange(selectedPalletIndex, DataSource.SelectPackingListPalletLines.Count - 1);
+                                    }
+                                }
+
+
+
+                            }
+                        }
+                    }
 
                     break;
                 default:

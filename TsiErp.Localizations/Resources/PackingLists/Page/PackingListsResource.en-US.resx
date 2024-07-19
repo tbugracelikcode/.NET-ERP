@@ -474,6 +474,9 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Shipment Management &gt; Transactions</value>
   </data>
+  <data name="UIWarningPalletRemoveMessage" xml:space="preserve">
+    <value>The Palette you selected and any Palette records you add later will be permanently deleted.</value>
+  </data>
   <data name="UIWarningPalletSelectionMessage" xml:space="preserve">
     <value>Pallet selection cannot be made without recording the packing list.</value>
   </data>
