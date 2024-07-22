@@ -14,16 +14,16 @@ using TsiErp.Business.Entities.TestManagement.Continent.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.QualityControl.CalibrationRecord;
 using TsiErp.Entities.Entities.QualityControl.EquipmentRecord;
 using TsiErp.Entities.Entities.StockManagement.Product;
-using TsiErp.Entities.Entities.StockManagement.UnitSet;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.TestManagement.Continent;
 using TsiErp.Entities.Entities.TestManagement.Continent.Dtos;
 using TsiErp.Entities.Entities.TestManagement.ContinentLine.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Continents.Page;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 
 namespace TsiErp.Business.Entities.Continent.Services
 {
@@ -160,6 +160,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                         )
                    .Where(new { Id = id }, false, false, Tables.Continents);
 
+
             var continents = queryFactory.Get<SelectContinentsDto>(query);
 
             var queryLines = queryFactory
@@ -234,7 +235,7 @@ namespace TsiErp.Business.Entities.Continent.Services
             var listQuery = queryFactory
                            .Query()
                            .From(Tables.Continents)
-                           .Join<Employees>
+                        .Join<Employees>
                         (
                             e => new { EmployeeName = e.Name, EmployeeID = e.Id },
                             nameof(Continents.EmployeeID),
@@ -267,7 +268,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
                 Description_ = input.Description_,
-                Population_ = input.Population_,
+                Population_ = input.Population_
             }).Where(new { Id = input.Id }, false, false, "");
 
             foreach (var item in input.SelectContinentLines)
@@ -361,6 +362,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 Name = entity.Name,
+                 
             }).Where(new { Id = id }, false, false, "");
 
             var ContinentsDto = queryFactory.Update<SelectContinentsDto>(query, "Id", true);

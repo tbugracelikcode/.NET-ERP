@@ -935,8 +935,17 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         public async void StationGroupButtonClickEvent()
         {
+
+            var isMerkeziIds = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID).Select(t=>t.WorkCenterID).ToList();
+
+            if(isMerkeziIds.Count>0)
+            {
+                StationGroupList = (await StationGroupsAppService.GetListAsync(new ListStationGroupsParameterDto())).Data.Where(t=>isMerkeziIds.Contains(t.Id)).ToList();
+            }
+
+
+
             SelectStationGroupPopupVisible = true;
-            StationGroupList = (await StationGroupsAppService.GetListAsync(new ListStationGroupsParameterDto())).Data.ToList();
             await InvokeAsync(StateHasChanged);
         }
 

@@ -46,6 +46,7 @@ namespace TsiErp.Entities.Entities.TestManagement.City.Dtos
         /// </summary>
         public string Description_ { get; set; }
 
+
         [NoDatabaseAction]
         public List<SelectCityLinesDto> SelectCityLines { get; set; }
     }

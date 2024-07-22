@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -76,6 +77,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
                 IsBigCity = input.IsBigCity,
                 Description_ = input.Description_,
                 CityTypeForm = input.CityTypeForm,
+               
 
             });
 
@@ -348,6 +350,10 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
                 IsBigCity = entity.IsBigCity,
                 Population_ = entity.Population_,
                 CityTypeForm = (int)entity.CityTypeForm,
+
+
+
+
             }).Where(new { Id = id }, false, false, "");
 
             var CitiesDto = queryFactory.Update<SelectCitiesDto>(query, "Id", true);

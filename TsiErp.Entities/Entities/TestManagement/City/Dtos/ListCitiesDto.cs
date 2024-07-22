@@ -42,6 +42,5 @@ namespace TsiErp.Entities.Entities.TestManagement.City.Dtos
             /// Açıklama
             /// </summary>
             public string Description_ { get; set; }
-        
     }
 }

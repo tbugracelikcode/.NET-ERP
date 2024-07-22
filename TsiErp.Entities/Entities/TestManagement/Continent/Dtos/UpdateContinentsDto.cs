@@ -33,7 +33,6 @@ namespace TsiErp.Entities.Entities.TestManagement.Continent.Dtos
         /// Çalışan ID
         /// </summary>
         public Guid? EmployeeID { get; set; }
-
         [NoDatabaseAction]
         public List<SelectContinentLinesDto> SelectContinentLines { get; set; }
     }

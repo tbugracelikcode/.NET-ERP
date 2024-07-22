@@ -35,5 +35,6 @@ namespace TsiErp.Entities.Entities.TestManagement.Continent
         /// Çalışan ID
         /// </summary>
         public Guid EmployeeID { get; set; }
+
     }
 }

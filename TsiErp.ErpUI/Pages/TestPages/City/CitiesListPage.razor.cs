@@ -16,6 +16,15 @@ using TsiErp.Entities.Entities.TestManagement.District.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Business.Entities.Branch.Services;
+using TsiErp.Business.Entities.Currency.Services;
+using TsiErp.Business.Entities.CurrentAccountCard.Services;
+using TsiErp.Business.Entities.Product.Services;
+using TsiErp.Business.Entities.Warehouse.Services;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
+using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 
 
 namespace TsiErp.ErpUI.Pages.TestPages.City
@@ -96,6 +105,7 @@ namespace TsiErp.ErpUI.Pages.TestPages.City
 
 
         private bool LineCrudPopup = false;
+
 
 
         protected override async Task OnSubmit()
