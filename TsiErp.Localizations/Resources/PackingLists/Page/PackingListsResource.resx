@@ -474,6 +474,9 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sevkiyat Yönetimi &gt; Hareketler</value>
   </data>
+  <data name="UIWarningPalletRemoveMessage" xml:space="preserve">
+    <value>Seçtiğiniz Palet ve eklenen sonraki Palet kayıtları kalıcı olarak silinecektir.</value>
+  </data>
   <data name="UIWarningPalletSelectionMessage" xml:space="preserve">
     <value>Çeki listesi kaydı yapılmadan palet seçimi yapılamaz.</value>
   </data>

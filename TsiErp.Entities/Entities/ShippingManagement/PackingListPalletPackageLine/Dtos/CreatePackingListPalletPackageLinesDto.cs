@@ -77,5 +77,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLi
         ///  Stok Grup ID
         /// </summary>
         public Guid ProductGroupID { get; set; }
+
+        /// <summary>
+        ///  Palet ID
+        /// </summary>
+        public Guid PalletID { get; set; }
     }
 }

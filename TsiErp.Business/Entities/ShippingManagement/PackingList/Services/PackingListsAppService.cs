@@ -157,7 +157,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
-                    LineNr = item.LineNr,
+                    LineNr = item.LineNr
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -194,7 +194,8 @@ namespace TsiErp.Business.Entities.PackingList.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
-                    ProductGroupID = item.ProductGroupID
+                    ProductGroupID = item.ProductGroupID,
+                    PalletID = item.PalletID
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -291,7 +292,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                    .Select<PackingLists>(null)
                     .Join<CurrentAccountCards>
                     (
-                        pr => new { TransmitterCode = pr.Code, TransmitterID = pr.Id, TransmitterName = pr.Name, TransmitterSupplierNo = pr.SupplierNo, TransmitterEORINo = pr.EORINr, TransmitterPaymentTermDay = pr.PaymentTermDay, TransmitterAddress1=pr.Address1, TransmitterAddress2=pr.Address2, TransmitterTel=pr.Tel1, TransmitterFax =pr.Fax},
+                        pr => new { TransmitterCode = pr.Code, TransmitterID = pr.Id, TransmitterName = pr.Name, TransmitterSupplierNo = pr.SupplierNo, TransmitterEORINo = pr.EORINr, TransmitterPaymentTermDay = pr.PaymentTermDay, TransmitterAddress1 = pr.Address1, TransmitterAddress2 = pr.Address2, TransmitterTel = pr.Tel1, TransmitterFax = pr.Fax },
                         nameof(PackingLists.TransmitterID),
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
@@ -386,7 +387,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                     )
                     .Join<SalesOrders>
                     (
-                        pr => new { SalesOrderFicheNo = pr.FicheNo, CustomerOrderNr=pr.CustomerOrderNr },
+                        pr => new { SalesOrderFicheNo = pr.FicheNo, CustomerOrderNr = pr.CustomerOrderNr },
                         nameof(PackingListPalletPackageLines.SalesOrderID),
                         nameof(SalesOrders.Id),
                         JoinType.Left
@@ -397,6 +398,13 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         nameof(PackingListPalletPackageLines.CustomerID),
                         nameof(CurrentAccountCards.Id),
                          "PalletPackageCustomer",
+                        JoinType.Left
+                    )
+                     .Join<PalletRecords>
+                    (
+                        pr => new { PalletID = pr.Id, PalletName = pr.Name },
+                        nameof(PackingListPalletPackageLines.PalletID),
+                        nameof(PalletRecords.Id),
                         JoinType.Left
                     )
                     .Where(new { PackingListID = id }, false, false, Tables.PackingListPalletPackageLines);
@@ -477,6 +485,13 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         nameof(PackingListPalletPackageLines.CustomerID),
                         nameof(CurrentAccountCards.Id),
                          "PalletPackageCustomer",
+                        JoinType.Left
+                    )
+                     .Join<PalletRecords>
+                    (
+                        pr => new { PalletID = pr.Id, PalletName = pr.Name },
+                        nameof(PackingListPalletPackageLines.PalletID),
+                        nameof(PalletRecords.Id),
                         JoinType.Left
                     )
                     .Where(null, false, false, Tables.PackingListPalletPackageLines);
@@ -574,6 +589,13 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         nameof(PackingListPalletPackageLines.CustomerID),
                         nameof(CurrentAccountCards.Id),
                          "PalletPackageCustomer",
+                        JoinType.Left
+                    )
+                     .Join<PalletRecords>
+                    (
+                        pr => new { PalletID = pr.Id, PalletName = pr.Name },
+                        nameof(PackingListPalletPackageLines.PalletID),
+                        nameof(PalletRecords.Id),
                         JoinType.Left
                     )
                     .Where(new { PackingListID = input.Id }, false, false, Tables.PackingListPalletPackageLines);
@@ -821,7 +843,8 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
-                        ProductGroupID = item.ProductGroupID
+                        ProductGroupID = item.ProductGroupID,
+                        PalletID = item.PalletID
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -863,7 +886,8 @@ namespace TsiErp.Business.Entities.PackingList.Services
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                            ProductGroupID = item.ProductGroupID
+                            ProductGroupID = item.ProductGroupID,
+                            PalletID = item.PalletID
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;

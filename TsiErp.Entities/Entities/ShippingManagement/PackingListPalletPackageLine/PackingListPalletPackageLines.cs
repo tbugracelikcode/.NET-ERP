@@ -101,5 +101,11 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLi
         ///  Stok Grup ID
         /// </summary>
         public Guid ProductGroupID { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        ///  Palet ID
+        /// </summary>
+        public Guid PalletID { get; set; }
     }
 }

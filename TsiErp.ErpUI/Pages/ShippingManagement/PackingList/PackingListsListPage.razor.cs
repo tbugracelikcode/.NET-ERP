@@ -537,7 +537,114 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                 case "removepallet":
 
-                   
+                    var selectedPallet = args.RowInfo.RowData;
+
+                    if (selectedPallet.Id != Guid.Empty)
+                    {
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIWarningPalletRemoveMessage"]);
+
+                        if (res == true)
+                        {
+                            int selectedPalletIndex = DataSource.SelectPackingListPalletLines.IndexOf(selectedPallet);
+
+                            if (selectedPalletIndex > -1)
+                            {
+                                List<SelectPackingListPalletLinesDto> removedPallets = new List<SelectPackingListPalletLinesDto>();
+
+                                if (selectedPalletIndex == 0)
+                                {
+                                    removedPallets = DataSource.SelectPackingListPalletLines.ToList();
+                                }
+                                else if (selectedPalletIndex == DataSource.SelectPackingListPalletLines.Count - 1)
+                                {
+                                    removedPallets.Add(DataSource.SelectPackingListPalletLines[selectedPalletIndex]);
+                                }
+                                else
+                                {
+                                    if (selectedPalletIndex == DataSource.SelectPackingListPalletLines.Count - 2)
+                                    {
+                                        removedPallets.Add(selectedPallet);
+                                        removedPallets.Add(DataSource.SelectPackingListPalletLines[selectedPalletIndex + 1]);
+                                    }
+                                    else
+                                    {
+                                        removedPallets = DataSource.SelectPackingListPalletLines.ToList().GetRange(selectedPalletIndex, DataSource.SelectPackingListPalletLines.Count - 1);
+                                    }
+                                }
+
+                                foreach (var pallet in removedPallets)
+                                {
+
+                                    var removedPackageFiches = DataSource.SelectPackingListPalletPackageLines.Where(t => t.PalletID == pallet.Id).ToList();
+
+                                    foreach (var packageFiche in removedPackageFiches)
+                                    {
+                                        await PackingListsAppService.DeleteLinePalletPackageAsync(packageFiche.Id);
+                                    }
+
+                                    await PackingListsAppService.DeleteLinePalletAsync(pallet.Id);
+
+                                    DataSource.SelectPackingListPalletLines.Remove(pallet);
+                                }
+
+                                foreach (var cubage in DataSource.SelectPackingListPalletCubageLines)
+                                {
+                                    await PackingListsAppService.DeleteLineCubageAsync(cubage.Id);
+                                }
+
+                                GridLineCubageList.Clear();
+
+                                foreach (var item in DataSource.SelectPackingListPalletLines)
+                                {
+                                    var pallet = (await PalletRecordsAppService.GetAsync(item.PalletID.GetValueOrDefault())).Data;
+
+                                    PalletSelectionModal palletSelectionModel = new PalletSelectionModal
+                                    {
+                                        PalletCode = pallet.Code,
+                                        PalletID = pallet.Id,
+                                        PalletName = pallet.Name,
+                                        NumberofPackage = pallet.PalletPackageNumber,
+                                        Height_ = pallet.Height_,
+                                        Length_ = pallet.Lenght_,
+                                        PackageType = pallet.PackageType,
+                                        CurrentAccountCardID = pallet.CurrentAccountCardID,
+                                        Width_ = pallet.Width_,
+                                        SelectedPallet = false
+                                    };
+
+                                    PalletSelectionList.Add(palletSelectionModel);
+                                }
+
+                                #region Palet Kübaj İşlemleri
+
+                                var palletList = PalletSelectionList.GroupBy(t => t.PackageType).Select(t => new { PackageType = t.Key, Pallet = t.ToList() }).ToList();
+
+                                foreach (var pallet in palletList)
+                                {
+                                    int height = pallet.Pallet.Select(t => t.Height_).FirstOrDefault();
+                                    int width = pallet.Pallet.Select(t => t.Width_).FirstOrDefault();
+                                    int lenght = pallet.Pallet.Select(t => t.Length_).FirstOrDefault();
+
+                                    SelectPackingListPalletCubageLinesDto palletCubageLineModel = new SelectPackingListPalletCubageLinesDto
+                                    {
+                                        NumberofPallet = pallet.Pallet.Count,
+                                        Height_ = height,
+                                        Width_ = width,
+                                        Load_ = lenght,
+                                        Cubage = (height * width * lenght * pallet.Pallet.Count) / 1000000
+                                    };
+
+                                    GridLineCubageList.Add(palletCubageLineModel);
+                                }
+
+                                await _LineCubageGrid.Refresh();
+
+                                #endregion
+
+                            }
+                        }
+                    }
+
                     break;
                 default:
                     break;
@@ -717,7 +824,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                         ProductionOrderID = productionOrder.Id,
                         SalesOrderID = productionOrder.OrderID,
                         SalesOrderLineID = productionOrder.OrderLineID,
-                        ProductGroupID = product.ProductGrpID
+                        ProductGroupID = product.ProductGrpID,
+                        PalletID = pallet.PalletID
                     };
 
 
@@ -1700,7 +1808,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                 }
             }
 
-           
+
 
             PackingListTrReport packingListTrReport = new PackingListTrReport();
             packingListTrReport.DataSource = reportSource;

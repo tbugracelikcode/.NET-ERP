@@ -111,5 +111,15 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLi
         /// Müşteri Sipariş No
         /// </summary>
         public string CustomerOrderNr { get; set; }
+
+        /// <summary>
+        ///  Palet ID
+        /// </summary>
+        public Guid PalletID { get; set; }
+
+        /// <summary>
+        /// Palet Adı
+        /// </summary>
+        public string PalletName { get; set; }
     }
 }
