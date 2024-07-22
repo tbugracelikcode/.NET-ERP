@@ -1,9 +1,13 @@
 ﻿using DevExpress.Utils.Internal;
 using Syncfusion.Blazor.Inputs;
+using System.Numerics;
 using TsiErp.Business.Entities.BillsofMaterial.Services;
 using TsiErp.Business.Entities.Employee.Services;
 using TsiErp.Business.Entities.HaltReason.Services;
+using TsiErp.Business.Entities.MaintenancePeriod.Services;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.Services;
+using TsiErp.Business.Entities.Period.Services;
+using TsiErp.Business.Entities.PlannedMaintenance.Services;
 using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Entities.ProductGroup.Services;
 using TsiErp.Business.Entities.ProductionOrder.Services;
@@ -15,8 +19,12 @@ using TsiErp.Business.Entities.Route.Services;
 using TsiErp.Business.Entities.StationGroup.Services;
 using TsiErp.Business.Entities.TemplateOperation.Services;
 using TsiErp.Business.Entities.WorkOrder.Services;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.PlannedMaintenance.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.PlannedMaintenanceLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
@@ -84,7 +92,7 @@ namespace TsiErp.ErpUI.Pages.TestPages.Exercise_Query_1
             var productsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.Where(t => t.ProductGrpID == productionGroupId).Select(t => t.Code).ToList();
 
         }
-        //Seçilen iş emrine ait üretim takip kayıtları listesi(?)
+        //Seçilen iş emrine ait üretim takip kayıtları listesi
         public async void Query7()
         {
             Guid workOrderId = Guid.Parse("CTA23");
@@ -92,7 +100,7 @@ namespace TsiErp.ErpUI.Pages.TestPages.Exercise_Query_1
             var trackingRecordsList = (await ProductionTrackingsAppService.GetListAsync(new ListProductionTrackingsParameterDto())).Data.Where(t => t.WorkOrderID == workOrderId).ToList();
 
         }
-        //Seçilen çalışana ait üretim takip kayıtları listesi(?)
+        //Seçilen çalışana ait üretim takip kayıtları listesi
         public async void Query8()
         {
             Guid employeeId = Guid.Parse("AFGHJ2");
@@ -151,5 +159,24 @@ namespace TsiErp.ErpUI.Pages.TestPages.Exercise_Query_1
             var haltReasonsList = (await HaltReasonsAppService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsMachine == isMachine).Select(t => t.Code).ToList();
 
         }
+        //Seçilen iş istasyonunun Önleyici/Planlı Bakım Kayıtları Listesi
+        public async void Query16()
+        {
+            Guid stationId = Guid.Parse("93CA4DEF-2EEB-439B-0916-3A07F9BC8871"); ;
+
+            var plannedMaintenanceRecordsList = (await PlannedMaintenancesAppService.GetListAsync(new ListPlannedMaintenancesParameterDto())).Data.Where(t => t.StationID == stationId).Select(t => t.RegistrationNo).ToList();
+
+        }
+        //Seçilen iş istasyonunun 6 Aylık Bakım Önleyici/Planlı Bakım Kayıtları Listesi
+
+        public async void Query17()
+        {
+            string stationId = "93CA4DEF-2EEB-439B-0916-3A07F9BC8871"; 
+
+            var maintenancePeriodsList = (await MaintenancePeriodsAppService.GetListAsync(new ListMaintenancePeriodsParameterDto())).Data.Where(t => t.Code == stationId).Select(t => t.Name == "6 Aylık Bakım").ToList();
+
+        }
+
+
     }
 }
