@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Utilities.Results;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.ReportDtos;
 
 namespace TsiErp.Business.Entities.ProductionOrder.Services
 {
@@ -11,5 +12,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         Task<IDataResult<IList<ListProductionOrdersDto>>> GetNotCanceledListAsync(ListProductionOrdersParameterDto input);
 
         Task<IDataResult<IList<ListProductionOrdersDto>>> GetCanceledListAsync(ListProductionOrdersParameterDto input);
+
+        Task<IDataResult<IList<RawMaterialRequestFormReportDto>>> CreateRawMaterialRequestFormReportAsync(Guid productionOrderId);
+
     }
 }

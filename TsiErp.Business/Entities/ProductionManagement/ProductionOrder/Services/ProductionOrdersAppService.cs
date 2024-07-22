@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.BillsofMaterial.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManagementParameter.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Product.Services;
@@ -16,6 +17,7 @@ using TsiErp.Business.Entities.ProductionOrder.Validations;
 using TsiErp.Business.Entities.ProductsOperation.Services;
 using TsiErp.Business.Entities.Route.Services;
 using TsiErp.Business.Entities.Station.Services;
+using TsiErp.Business.Entities.StockAddress.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
@@ -23,6 +25,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.ReportDtos;
 using TsiErp.Entities.Entities.ProductionManagement.Route;
 using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
@@ -31,6 +34,7 @@ using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesManagement.SalesProposition;
 using TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
@@ -59,7 +63,10 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         private IProductsAppService ProductsAppService { get; set; }
 
-        public ProductionOrdersAppService(IStringLocalizer<ProductionOrdersResource> l, IFicheNumbersAppService ficheNumbersAppService, IRoutesAppService routesAppService, IProductsOperationsAppService productsOperationsAppService, IStationsAppService stationsAppService, IBillsofMaterialsAppService billsofMaterialsAppService, IProductsAppService productsAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        private IStockAddressesAppService StockAddressesAppService { get; set; }
+        private IProductionManagementParametersAppService ProductionManagementParametersService { get; set; }
+
+        public ProductionOrdersAppService(IStringLocalizer<ProductionOrdersResource> l, IFicheNumbersAppService ficheNumbersAppService, IRoutesAppService routesAppService, IProductsOperationsAppService productsOperationsAppService, IStationsAppService stationsAppService, IBillsofMaterialsAppService billsofMaterialsAppService, IProductsAppService productsAppService, IGetSQLDateAppService getSQLDateAppService, IStockAddressesAppService stockAddressesAppService, IProductionManagementParametersAppService productionManagementParametersService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             RoutesAppService = routesAppService;
@@ -68,6 +75,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
             BillsofMaterialsAppService = billsofMaterialsAppService;
             _GetSQLDateAppService = getSQLDateAppService;
             ProductsAppService = productsAppService;
+            StockAddressesAppService = stockAddressesAppService;
+            ProductionManagementParametersService = productionManagementParametersService;
         }
 
         [ValidationAspect(typeof(CreateProductionOrdersValidator), Priority = 1)]
@@ -580,69 +589,68 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         nameof(Warehouses.Id),
                         JoinType.Left
                     )
-
-                         .Join<Products>
-                        (
-                            p => new { FinishedProductCode = p.Code, FinishedProductName = p.Name },
-                            nameof(ProductionOrders.FinishedProductID),
-                            nameof(Products.Id),
-                            "FinishedProduct",
-                            JoinType.Left
-                        )
-                         .Join<Products>
-                        (
-                            p => new { LinkedProductCode = p.Code, LinkedProductName = p.Name },
-                            nameof(ProductionOrders.LinkedProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                         .Join<UnitSets>
-                        (
-                            u => new { UnitSetCode = u.Code },
-                            nameof(ProductionOrders.UnitSetID),
-                            nameof(UnitSets.Id),
-                            JoinType.Left
-                        )
-                         .Join<BillsofMaterials>
-                        (
-                            bom => new { BOMCode = bom.Code, BOMName = bom.Name },
-                            nameof(ProductionOrders.BOMID),
-                            nameof(BillsofMaterials.Id),
-                            JoinType.Left
-                        )
-                         .Join<Routes>
-                        (
-                            r => new { RouteCode = r.Code, RouteName = r.Name },
-                            nameof(ProductionOrders.RouteID),
-                            nameof(Routes.Id),
-                            JoinType.Left
-                        )
-                         .Join<SalesPropositions>
-                        (
-                            sp => new { PropositionFicheNo = sp.FicheNo },
-                            nameof(ProductionOrders.PropositionID),
-                            nameof(SalesPropositions.Id),
-                            JoinType.Left
-                        )
-                        .Join<TechnicalDrawings>
+                     .Join<Products>
+                    (
+                        p => new { FinishedProductCode = p.Code, FinishedProductName = p.Name },
+                        nameof(ProductionOrders.FinishedProductID),
+                        nameof(Products.Id),
+                        "FinishedProduct",
+                        JoinType.Left
+                    )
+                     .Join<Products>
+                    (
+                        p => new { LinkedProductCode = p.Code, LinkedProductName = p.Name },
+                        nameof(ProductionOrders.LinkedProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                     .Join<UnitSets>
+                    (
+                        u => new { UnitSetCode = u.Code },
+                        nameof(ProductionOrders.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<BillsofMaterials>
+                    (
+                        bom => new { BOMCode = bom.Code, BOMName = bom.Name },
+                        nameof(ProductionOrders.BOMID),
+                        nameof(BillsofMaterials.Id),
+                        JoinType.Left
+                    )
+                     .Join<Routes>
+                    (
+                        r => new { RouteCode = r.Code, RouteName = r.Name },
+                        nameof(ProductionOrders.RouteID),
+                        nameof(Routes.Id),
+                        JoinType.Left
+                    )
+                     .Join<SalesPropositions>
+                    (
+                        sp => new { PropositionFicheNo = sp.FicheNo },
+                        nameof(ProductionOrders.PropositionID),
+                        nameof(SalesPropositions.Id),
+                        JoinType.Left
+                    )
+                     .Join<TechnicalDrawings>
                     (
                         w => new { TechnicalDrawingID = w.Id, TechnicalDrawingNo = w.RevisionNo },
                         nameof(ProductionOrders.TechnicalDrawingID),
                         nameof(TechnicalDrawings.Id),
                         JoinType.Left
                     )
-                        .Join<CurrentAccountCards>
-                        (
-                            ca => new
-                            {
-                                CurrentAccountCode = ca.Code,
-                                CurrentAccountName = ca.Name,
-                                CustomerCode = ca.CustomerCode
-                            },
-                            nameof(ProductionOrders.CurrentAccountID),
-                            nameof(CurrentAccountCards.Id),
-                            JoinType.Left
-                        )
+                     .Join<CurrentAccountCards>
+                    (
+                        ca => new
+                        {
+                            CurrentAccountCode = ca.Code,
+                            CurrentAccountName = ca.Name,
+                            CustomerCode = ca.CustomerCode
+                        },
+                        nameof(ProductionOrders.CurrentAccountID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
                    .Where(null, false, false, Tables.ProductionOrders);
 
             var productionOrders = queryFactory.GetList<ListProductionOrdersDto>(query).ToList();
@@ -969,6 +977,138 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
             await Task.CompletedTask;
             return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
 
+        }
+
+        public async Task<IDataResult<IList<RawMaterialRequestFormReportDto>>> CreateRawMaterialRequestFormReportAsync(Guid productionOrderId)
+        {
+            List<RawMaterialRequestFormReportDto> reportSource = new List<RawMaterialRequestFormReportDto>();
+
+            #region GetProduction Order
+
+            var productionOrder = (await GetAsync(productionOrderId)).Data;
+
+            if (productionOrder.Id != Guid.Empty)
+            {
+                var bom = (await BillsofMaterialsAppService.GetAsync(productionOrder.BOMID.GetValueOrDefault())).Data;
+
+                foreach (var bomLine in bom.SelectBillsofMaterialLines)
+                {
+                    RawMaterialRequestFormReportDto r = new RawMaterialRequestFormReportDto();
+
+                    switch (bomLine.MaterialType)
+                    {
+                        case ProductTypeEnum.TM:
+                            r.StokTuru = "Ticari Mal";
+                            break;
+                        case ProductTypeEnum.HM:
+                            r.StokTuru = "Hammadde";
+                            break;
+                        case ProductTypeEnum.YM:
+                            r.StokTuru = "Yarı Mamül";
+                            break;
+                        case ProductTypeEnum.MM:
+                            r.StokTuru = "Mamül";
+                            break;
+                        case ProductTypeEnum.BP:
+                            break;
+                        case ProductTypeEnum.TK:
+                            break;
+                        case ProductTypeEnum.KLP:
+                            r.StokTuru = "Kalıp";
+                            break;
+                        case ProductTypeEnum.APRT:
+                            r.StokTuru = "Aparat";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    r.StokKodu = bomLine.ProductCode;
+                    r.StokAciklamasi = bomLine.ProductName;
+                    r.VaryantKodu = productionOrder.CustomerCode;
+                    r.Birim = bomLine.UnitSetCode;
+
+                    var adresList = (await StockAddressesAppService.GetStockAddressByStockIdAsync(bomLine.ProductID.GetValueOrDefault())).Data.ToList();
+
+                    string adres = "";
+
+                    for (int a = 1; a <= adresList.Count; a++)
+                    {
+                        string ad = "";
+                        ad = adresList[a - 1].StockSectionName + "-" + adresList[a - 1].StockShelfName + "-" + adresList[a - 1].StockColumnName + "-" + adresList[a - 1].StockNumberName;
+
+                        if (a == 1)
+                        {
+                            adres = ad;
+                        }
+                        else
+                        {
+                            adres = adres + " / " + ad;
+                        }
+                    }
+
+                    r.StokAdres = adres;
+
+                    if (bomLine.Size==null || bomLine.Size==0)
+                    {
+                        r.Boy = 0;
+                        r.Adet = productionOrder.PlannedQuantity * bomLine.Quantity;
+                        r.Aciklama = bomLine._Description;
+                    }
+                    else
+                    {
+                        var lineProduct = (await ProductsAppService.GetAsync(bomLine.ProductID.GetValueOrDefault())).Data;
+
+                        r.Boy = bomLine.Size;
+
+                        if(lineProduct.Id != Guid.Empty)
+                        {
+                            decimal testereBoyFire = lineProduct.SawWastage;
+                            r.Boy += testereBoyFire;
+                            decimal stokBoyu = lineProduct.ProductSize;
+                            decimal tamSayi = Math.Floor(stokBoyu / r.Boy);
+
+                            r.Boy = productionOrder.PlannedQuantity / tamSayi;
+
+                            if (r.StokKodu.StartsWith("HB"))
+                            {
+                                r.Adet = (r.Boy * stokBoyu) / 1000;
+                                r.Aciklama = "1 Boy = " + string.Format("{0:0}", stokBoyu) + " mm";
+                            }
+                            else if (r.StokKodu.StartsWith("HS"))
+                            {
+                                r.Adet = productionOrder.PlannedQuantity * bomLine.Quantity;
+                            }
+                            else
+                            {
+
+                                decimal ozkutle = (await ProductionManagementParametersService.GetProductionManagementParametersAsync()).Data.Density_;
+
+
+                                decimal cap = lineProduct.RadiusValue;
+                                double pi = 3.14;
+                                decimal rr = Convert.ToDecimal(cap) / 2;
+                                decimal kg = ((decimal)pi * (rr * rr) * stokBoyu * ozkutle) / 1000000;
+
+
+                                r.Adet = r.Boy * kg;
+                                r.Aciklama = "1 Boy = " + string.Format("{0:0}", stokBoyu) + " mm";
+                            }
+
+                            r.UretimEmriNo = productionOrder.FicheNo;
+                            r.AnaUrunAdi = productionOrder.FinishedProductName;
+                            r.TeminSekli = bomLine.SupplyForm == ProductSupplyFormEnum.Üretim ? "Üretim" : "Satınalma";
+                            reportSource.Add(r);
+                        }
+                    }
+                }
+            }
+
+            #endregion
+
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<RawMaterialRequestFormReportDto>>(reportSource);
         }
     }
 }
