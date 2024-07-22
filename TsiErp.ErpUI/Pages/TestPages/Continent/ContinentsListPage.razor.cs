@@ -5,6 +5,7 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Entities.Currency.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementParameter.Services;
+using TsiErp.Business.Entities.Employee.Services;
 using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Entities.SalesOrder.Services;
 using TsiErp.Business.Entities.UnitSet.Services;
@@ -12,12 +13,22 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.TestManagement.Continent.Dtos;
 using TsiErp.Entities.Entities.TestManagement.ContinentLine.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using TsiErp.Business.Entities.Employee;
+using TsiErp.Business.Entities.Product;
+using TsiErp.Business.Entities.StationGroup.Services;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
+using TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services;
+using TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Services;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
+using TsiErp.Business.Entities.ProductGroup.Services;
+using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 
 namespace TsiErp.ErpUI.Pages.TestPages.Continent
 {
@@ -326,6 +337,8 @@ namespace TsiErp.ErpUI.Pages.TestPages.Continent
         SfTextBox EmployeesButtonEdit;
         bool SelectEmployeesPopupVisible = false;
         List<ListEmployeesDto> EmployeesList = new List<ListEmployeesDto>();
+        
+
 
         public async Task EmployeesOnCreateIcon()
         {
@@ -335,8 +348,10 @@ namespace TsiErp.ErpUI.Pages.TestPages.Continent
 
         public async void EmployeesButtonClickEvent()
         {
+
+
             SelectEmployeesPopupVisible = true;
-            EmployeesList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.ToList();
+            await GetEmployeesList();
 
             await InvokeAsync(StateHasChanged);
         }
@@ -365,6 +380,16 @@ namespace TsiErp.ErpUI.Pages.TestPages.Continent
         }
         #endregion
 
+
+
+
+
+        #region GetList Metotları
+        private async Task GetEmployeesList()
+        {
+            EmployeesList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.ToList();
+        }
+        #endregion
         public void Dispose()
         {
             GC.Collect();

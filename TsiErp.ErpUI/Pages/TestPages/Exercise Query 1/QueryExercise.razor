@@ -1,0 +1,25 @@
+﻿@page "/query"
+@layout MainLayout
+
+
+@inject IFicheNumbersAppService FicheNumbersAppService
+@inject IUserPermissionsAppService UserPermissionsAppService
+@inject IMenusAppService MenusAppService
+@inject IProductsOperationsAppService ProductsOperationsAppService
+@inject IUnsuitabilityItemsAppService UnsuitabilityItemsAppService
+@inject IOperationUnsuitabilityReportsAppService OperationUnsuitabilityReportsAppService
+@inject IStationGroupsAppService StationGroupsAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
+@inject IProductGroupsAppService ProductGroupsAppService
+@inject IProductionOrdersAppService ProductionOrdersAppService
+@inject IWorkOrdersAppService WorkOrdersAppService
+@inject IEmployeesAppService EmployeesAppService
+@inject IProductsAppService ProductsAppService
+@inject IProductionTrackingsAppService ProductionTrackingsAppService
+@inject IRoutesAppService RoutesAppService
+@inject IBillsofMaterialsAppService BillsofMaterialsAppService
+@inject IHaltReasonsAppService HaltReasonsAppService
+@inject ITemplateOperationsAppService TemplateOperationsAppService
+
+<SfButton CssClass="TSISaveButton" OnClick="Query1"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Query 1</SfButton>
+
