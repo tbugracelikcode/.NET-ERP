@@ -35,6 +35,7 @@ using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Pages.ShippingManagement.PackingList;
+using TsiErp.ErpUI.Reports.ProductionManagement;
 using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.ShippingInstruction;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -302,7 +303,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
 
                 case "requestform":
+                    RawMaterialRequestFormDynamicReport = new XtraReport();
+                    RawMaterialRequestFormReportVisible = true;
+                    await CreateRawMaterialRequestFormReport(args.RowInfo.RowData.Id);
 
+                    await InvokeAsync(StateHasChanged);
                     break;
 
 
@@ -1423,20 +1428,25 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
         DxReportViewer RawMaterialRequestFormReportViewer { get; set; }
 
-        XtraReport RawMaterialRequestFormReport { get; set; }
+        XtraReport RawMaterialRequestFormDynamicReport { get; set; }
 
-        async Task CreateShippingInstructionReport(Guid productionOrderId)
+        async Task CreateRawMaterialRequestFormReport(Guid productionOrderId)
         {
-            RawMaterialRequestFormReport.ShowPrintMarginsWarning = false;
-            RawMaterialRequestFormReport.CreateDocument();
+            RawMaterialRequestFormDynamicReport.ShowPrintMarginsWarning = false;
+            RawMaterialRequestFormDynamicReport.CreateDocument();
 
             if (productionOrderId != Guid.Empty)
             {
+                var list = (await ProductionOrdersAppService.CreateRawMaterialRequestFormReportAsync(productionOrderId)).Data;
 
+                RawMaterialRequestFormReport report = new RawMaterialRequestFormReport();
+                report.DataSource = list;
+                report.ShowPrintMarginsWarning = false;
+                report.CreateDocument();
 
-                //RawMaterialRequestFormReport.Pages.AddRange(report2.Pages);
+                RawMaterialRequestFormDynamicReport.Pages.AddRange(report.Pages);
 
-                RawMaterialRequestFormReport.PrintingSystem.ContinuousPageNumbering = true;
+                RawMaterialRequestFormDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
             }
 
             await Task.CompletedTask;
