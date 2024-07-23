@@ -15,6 +15,14 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// </summary>
         public string WorkOrderNo { get; set; }
         /// <summary>
+        /// Uygunsuzluk İş Emri
+        /// </summary>
+        public bool IsUnsuitabilityWorkOrder { get; set; }
+        /// <summary>
+        /// Bağlı İş Emri ID
+        /// </summary>
+        public Guid? LinkedWorkOrderID { get; set; }
+        /// <summary>
         /// Parçalama Miktarı
         /// </summary>
         public int SplitQuantity { get; set; }
@@ -138,5 +146,13 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// Sipariş ID
         /// </summary>
         public Guid OrderID { get; set; }
+        /// <summary>
+        /// Sipariş ID
+        /// </summary>
+        public Guid? PropositionID { get; set; }
+        /// <summary>
+        /// Rota ID
+        /// </summary>
+        public Guid? RouteID { get; set; }
     }
 }

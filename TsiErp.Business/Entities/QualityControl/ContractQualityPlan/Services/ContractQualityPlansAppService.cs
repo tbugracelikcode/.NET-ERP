@@ -22,6 +22,7 @@ using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanLine;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlCondition;
 using TsiErp.Entities.Entities.QualityControl.ControlType;
@@ -334,13 +335,21 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
 
             #endregion
 
-            #region Operasyon Resmi Get
+            #region Operasyon Satır Get
 
-            var queryContractOperation = queryFactory.Query().From(Tables.ContractQualityPlanOperations).Select("*").Where(
+            var queryContractOperation = queryFactory.Query().From(Tables.ContractQualityPlanOperations).Select<ContractQualityPlanOperations>(null)
+                  .Join<ProductsOperations>
+                    (
+                        sg => new { Name = sg.Name, Code = sg.Code, OperationID = sg.Id },
+                        nameof(ContractQualityPlanOperations.OperationID),
+                        nameof(ProductsOperations.Id),
+                        JoinType.Left
+                    )
+                .Where(
            new
            {
                ContractQualityPlanID = id
-           }, false, false, "");
+           }, false, false, Tables.ContractQualityPlanOperations);
 
             var contractOperations = queryFactory.GetList<SelectContractQualityPlanOperationsDto>(queryContractOperation).ToList();
 

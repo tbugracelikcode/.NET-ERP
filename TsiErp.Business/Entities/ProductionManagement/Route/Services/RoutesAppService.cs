@@ -221,6 +221,62 @@ namespace TsiErp.Business.Entities.Route.Services
 
         }
 
+
+        public async Task<IDataResult<SelectRoutesDto>> GetbyProductIDAsync(Guid productId)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.Routes)
+                   .Select<Routes>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(Routes.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                     .Join<StationGroups>
+                    (
+                        p => new { StationGroupID = p.Id, ProductionStart = p.Name },
+                        nameof(Routes.StationGroupID),
+                        nameof(StationGroups.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { ProductID = productId }, true, true, Tables.Routes);
+
+            var routes = queryFactory.Get<SelectRoutesDto>(query);
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.RouteLines)
+                   .Select<RouteLines>(null)
+                   .Join<Products>
+                    (
+                        pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
+                        nameof(RouteLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<ProductsOperations>
+                    (
+                        po => new { ProductsOperationID = po.Id, OperationName = po.Name, OperationCode = po.Code },
+                        nameof(RouteLines.ProductsOperationID),
+                        nameof(ProductsOperations.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { RouteID = routes.Id }, false, false, Tables.RouteLines);
+
+            var routeLine = queryFactory.GetList<SelectRouteLinesDto>(queryLines).ToList();
+
+            routes.SelectRouteLines = routeLine;
+
+            LogsAppService.InsertLogToDatabase(routes, routes, LoginedUserService.UserId, Tables.Routes, LogType.Get, routes.Id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectRoutesDto>(routes);
+
+        }
+
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListRoutesDto>>> GetListAsync(ListRoutesParameterDto input)
         {

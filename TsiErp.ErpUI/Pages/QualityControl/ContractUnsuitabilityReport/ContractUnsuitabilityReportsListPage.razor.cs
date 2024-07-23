@@ -5,6 +5,7 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Services;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
@@ -12,11 +13,12 @@ using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
 {
-    public partial class ContractUnsuitabilityReportsListPage:IDisposable
+    public partial class ContractUnsuitabilityReportsListPage : IDisposable
     {
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -170,6 +172,112 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
             }
         }
 
+        protected override async Task OnSubmit()
+        {
+            #region Uygunsuzluk Kayıt 
+
+            SelectContractUnsuitabilityReportsDto result;
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                var createInput = ObjectMapper.Map<SelectContractUnsuitabilityReportsDto, CreateContractUnsuitabilityReportsDto>(DataSource);
+
+                result = (await CreateAsync(createInput)).Data;
+
+                if (result != null)
+                    DataSource.Id = result.Id;
+            }
+            else
+            {
+                var updateInput = ObjectMapper.Map<SelectContractUnsuitabilityReportsDto, UpdateContractUnsuitabilityReportsDto>(DataSource);
+
+                result = (await UpdateAsync(updateInput)).Data;
+            }
+
+            if (result == null)
+            {
+
+                return;
+            }
+
+            await GetListDataSourceAsync();
+
+            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+            HideEditPage();
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                DataSource.Id = result.Id;
+            }
+
+            if (savedEntityIndex > -1)
+                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+            else
+                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+            #endregion
+
+            #region İş Emri Kayıt
+
+            if (DataSource.ContractTrackingFicheID != Guid.Empty && DataSource.ContractTrackingFicheID != null && DataSource.IsUnsuitabilityWorkOrder && DataSource.Action_ != L["ComboboxToBeUsedAs"].Value)
+            {
+                var contractTrackingFiche = (await ContractTrackingFichesAppService.GetAsync(DataSource.ContractTrackingFicheID.Value)).Data;
+
+                if (contractTrackingFiche != null && contractTrackingFiche.Id != Guid.Empty)
+                {
+                    var contractQualityPlan = (await ContractQualityPlansAppService.GetAsync(contractTrackingFiche.ContractQualityPlanID.Value)).Data;
+
+                    if (contractQualityPlan != null && contractQualityPlan.Id != Guid.Empty && contractQualityPlan.SelectContractQualityPlanOperations != null && contractQualityPlan.SelectContractQualityPlanOperations.Count > 0)
+                    {
+                        foreach (var line in contractQualityPlan.SelectContractQualityPlanOperations)
+                        {
+                            var productsRoute = (await RoutesAppService.GetbyProductIDAsync(contractQualityPlan.ProductID.Value)).Data;
+
+                            if (productsRoute.Id == null)
+                            {
+                                productsRoute.Id = Guid.Empty;
+                            }
+
+                            var productsOperation = (await ProductsOperationsAppService.GetAsync(line.OperationID.Value)).Data;
+
+                            CreateWorkOrdersDto createdWorkOrderModel = new CreateWorkOrdersDto
+                            {
+                                AdjustmentAndControlTime = 0,
+                                CurrentAccountCardID = contractQualityPlan.CurrrentAccountCardID,
+                                IsCancel = false,
+                                IsUnsuitabilityWorkOrder = true,
+                                LineNr = 1,
+                                LinkedWorkOrderID = Guid.Empty,
+                                OccuredStartDate = null,
+                                OccuredFinishDate = null,
+                                OperationTime = 0,
+                                OrderID = Guid.Empty,
+                                PlannedQuantity = DataSource.UnsuitableAmount,
+                                ProducedQuantity = 0,
+                                ProductID = contractQualityPlan.ProductID,
+                                ProductionOrderID = DataSource.ProductionOrderID,
+                                ProductsOperationID = line.OperationID,
+                                RouteID = productsRoute.Id,
+                                PropositionID = Guid.Empty,
+                                SplitQuantity = 0,
+                                StationGroupID = productsOperation.WorkCenterID,
+                                StationID = Guid.Empty,
+                                WorkOrderState = 1,
+                                WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
+
+                            };
+
+                            await WorkOrdersAppService.CreateAsync(createdWorkOrderModel);
+                        }
+                    }
+                }
+
+            }
+
+            #endregion
+        }
+
         #region İş Emri ButtonEdit
 
         SfTextBox WorkOrdersButtonEdit;
@@ -184,7 +292,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
 
         public async void WorkOrdersButtonClickEvent()
         {
-            if(DataSource.ContractTrackingFicheID == null || DataSource.ContractTrackingFicheID == Guid.Empty)
+            if (DataSource.ContractTrackingFicheID == null || DataSource.ContractTrackingFicheID == Guid.Empty)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitleBase"], L["UIWarningWorkOrderMessageBase"]);
             }

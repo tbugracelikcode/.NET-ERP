@@ -1,18 +1,28 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.Timers;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.ProductsOperation.Services;
+using TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services;
+using TsiErp.Business.Entities.Station.Services;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
@@ -32,6 +42,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
         SelectFirstProductApprovalLinesDto LineDataSource;
 
+        SelectOperationUnsuitabilityReportsDto OperationUnsuitabilityDataSource;
+
         SelectOperationalQualityPlansDto OperationalQualityPlanDataSource;
 
         SelectOperationPicturesDto OperationPictureDataSource;
@@ -49,6 +61,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
         public string fileURL = string.Empty;
         bool image = false;
         //bool pdf = new();
+        public bool isUnsuitabilityReportVisible = false;
+        public bool isUnsuitabilityReportTabVisible = false;
+        public bool CreateUnsuitabilityReport = false;
 
         protected override async void OnInitialized()
         {
@@ -81,6 +96,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                 ControlDate = DateTime.Today
             };
 
+            isUnsuitabilityReportVisible = true;
+            CreateUnsuitabilityReport = false;
+            isUnsuitabilityReportTabVisible = false;
+
             DataSource.SelectFirstProductApprovalLines = new List<SelectFirstProductApprovalLinesDto>();
             GridLineList = DataSource.SelectFirstProductApprovalLines;
 
@@ -108,6 +127,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                 }
                 else
                 {
+                    isUnsuitabilityReportVisible = false;
+                    CreateUnsuitabilityReport = false;
+                    isUnsuitabilityReportTabVisible = false;
                     EditPageVisible = true;
                     await InvokeAsync(StateHasChanged);
                 }
@@ -216,65 +238,74 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectFirstProductApprovalLinesDto> args)
         {
-            switch (args.Item.Id)
+            if (DataSource.OperationQualityPlanID != null && DataSource.OperationQualityPlanID != Guid.Empty)
             {
-                case "new":
 
-                    LineDataSource = new SelectFirstProductApprovalLinesDto();
-                    LineCrudPopup = true;
-                    LineDataSource.LineNr = GridLineList.Count + 1;
+                switch (args.Item.Id)
+                {
+                    case "new":
+
+                        LineDataSource = new SelectFirstProductApprovalLinesDto();
+                        LineCrudPopup = true;
+                        LineDataSource.LineNr = GridLineList.Count + 1;
 
 
-                    await InvokeAsync(StateHasChanged);
-                    break;
+                        await InvokeAsync(StateHasChanged);
+                        break;
 
-                case "changed":
-                    LineDataSource = args.RowInfo.RowData;
-                    LineCrudPopup = true;
-                    await InvokeAsync(StateHasChanged);
-                    break;
+                    case "changed":
+                        LineDataSource = args.RowInfo.RowData;
+                        LineCrudPopup = true;
+                        await InvokeAsync(StateHasChanged);
+                        break;
 
-                case "delete":
+                    case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineDeleteConfirmation"]);
+                        var res = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineDeleteConfirmation"]);
 
-                    if (res == true)
-                    {
-                        var line = args.RowInfo.RowData;
-
-                        if (line.Id == Guid.Empty)
+                        if (res == true)
                         {
-                            DataSource.SelectFirstProductApprovalLines.Remove(args.RowInfo.RowData);
-                        }
-                        else
-                        {
-                            if (line != null)
+                            var line = args.RowInfo.RowData;
+
+                            if (line.Id == Guid.Empty)
                             {
-                                await DeleteAsync(args.RowInfo.RowData.Id);
-                                DataSource.SelectFirstProductApprovalLines.Remove(line);
-                                await GetListDataSourceAsync();
+                                DataSource.SelectFirstProductApprovalLines.Remove(args.RowInfo.RowData);
                             }
                             else
                             {
-                                DataSource.SelectFirstProductApprovalLines.Remove(line);
+                                if (line != null)
+                                {
+                                    await DeleteAsync(args.RowInfo.RowData.Id);
+                                    DataSource.SelectFirstProductApprovalLines.Remove(line);
+                                    await GetListDataSourceAsync();
+                                }
+                                else
+                                {
+                                    DataSource.SelectFirstProductApprovalLines.Remove(line);
+                                }
                             }
+
+                            await _LineGrid.Refresh();
+                            GetTotal();
+                            await InvokeAsync(StateHasChanged);
                         }
 
+                        break;
+
+                    case "refresh":
+                        await GetListDataSourceAsync();
                         await _LineGrid.Refresh();
-                        GetTotal();
                         await InvokeAsync(StateHasChanged);
-                    }
+                        break;
 
-                    break;
+                    default:
+                        break;
+                }
+            }
 
-                case "refresh":
-                    await GetListDataSourceAsync();
-                    await _LineGrid.Refresh();
-                    await InvokeAsync(StateHasChanged);
-                    break;
-
-                default:
-                    break;
+            else
+            {
+                await ModalManager.WarningPopupAsync(L["UIQualityPlanMessageTitle"], L["UIQualityPlanMessageMessage"]);
             }
         }
 
@@ -381,6 +412,378 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
             fileURL = string.Empty;
         }
 
+        protected override async Task OnSubmit()
+        {
+
+            #region Operasyon Uygunsuzluk Kaydı
+
+            if (CreateUnsuitabilityReport && DataSource.ScrapQuantity > 0)
+            {
+
+                #region İlk Ürün Onay Kaydı
+
+                if (DataSource.OperationQualityPlanID != null && DataSource.OperationQualityPlanID != Guid.Empty)
+                {
+                    SelectFirstProductApprovalsDto result;
+
+                    if (DataSource.Id == Guid.Empty)
+                    {
+                        var createInput = ObjectMapper.Map<SelectFirstProductApprovalsDto, CreateFirstProductApprovalsDto>(DataSource);
+
+                        result = (await CreateAsync(createInput)).Data;
+
+                        if (result != null)
+                            DataSource.Id = result.Id;
+                    }
+                    else
+                    {
+                        var updateInput = ObjectMapper.Map<SelectFirstProductApprovalsDto, UpdateFirstProductApprovalsDto>(DataSource);
+
+                        result = (await UpdateAsync(updateInput)).Data;
+                    }
+
+                    if (result == null)
+                    {
+
+                        return;
+                    }
+
+                    await GetListDataSourceAsync();
+
+                    var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+                    HideEditPage();
+
+                    if (DataSource.Id == Guid.Empty)
+                    {
+                        DataSource.Id = result.Id;
+                    }
+
+                    if (savedEntityIndex > -1)
+                        SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+                    else
+                        SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+                }
+
+                else
+                {
+                    await ModalManager.WarningPopupAsync(L["UIQualityPlanMessageTitle"], L["UIQualityPlanMessageMessage"]);
+                }
+
+                #endregion
+
+                #region Uygunsuzluk Kayıt
+
+                if (OperationUnsuitabilityDataSource.Id == Guid.Empty)
+                {
+                    var createInput = ObjectMapper.Map<SelectOperationUnsuitabilityReportsDto, CreateOperationUnsuitabilityReportsDto>(OperationUnsuitabilityDataSource);
+
+                    await OperationUnsuitabilityReportsAppService.CreateAsync(createInput);
+
+
+
+                }
+
+                else
+                {
+                    var updateInput = ObjectMapper.Map<SelectOperationUnsuitabilityReportsDto, UpdateOperationUnsuitabilityReportsDto>(OperationUnsuitabilityDataSource);
+
+                    await OperationUnsuitabilityReportsAppService.UpdateAsync(updateInput);
+                }
+
+                #endregion
+
+                #region İş Emri Kayıt
+
+                if (OperationUnsuitabilityDataSource.WorkOrderID != Guid.Empty && OperationUnsuitabilityDataSource.WorkOrderID != null && OperationUnsuitabilityDataSource.Action_ == L["ComboboxScrap"].Value && OperationUnsuitabilityDataSource.IsUnsuitabilityWorkOrder)
+                {
+                    var WorkOrdersList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.ToList();
+
+                    if (WorkOrdersList != null && WorkOrdersList.Count > 0)
+                    {
+                        var selectedWorkOrder = WorkOrdersList.Where(t => t.Id == OperationUnsuitabilityDataSource.WorkOrderID).FirstOrDefault();
+
+                        int selectedWorkOrderIndex = WorkOrdersList.IndexOf(selectedWorkOrder);
+
+                        for (int i = 0; i <= selectedWorkOrderIndex; i++)
+                        {
+                            var coppiedWorkOrder = WorkOrdersList[i];
+
+                            CreateWorkOrdersDto createdWorkOrderModel = new CreateWorkOrdersDto
+                            {
+                                AdjustmentAndControlTime = coppiedWorkOrder.AdjustmentAndControlTime,
+                                CurrentAccountCardID = coppiedWorkOrder.CurrentAccountCardID,
+                                IsCancel = coppiedWorkOrder.IsCancel,
+                                IsUnsuitabilityWorkOrder = true,
+                                LineNr = coppiedWorkOrder.LineNr,
+                                LinkedWorkOrderID = coppiedWorkOrder.LinkedWorkOrderID,
+                                OccuredStartDate = null,
+                                OccuredFinishDate = null,
+                                OperationTime = coppiedWorkOrder.OperationTime,
+                                OrderID = coppiedWorkOrder.OrderID,
+                                PlannedQuantity = OperationUnsuitabilityDataSource.UnsuitableAmount,
+                                ProducedQuantity = 0,
+                                ProductID = coppiedWorkOrder.ProductID,
+                                ProductionOrderID = DataSource.ProductionOrderID,
+                                ProductsOperationID = coppiedWorkOrder.ProductID,
+                                PropositionID = coppiedWorkOrder.PropositionID,
+                                WorkOrderState = 1,
+                                WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
+                                StationID = coppiedWorkOrder.StationID,
+                                StationGroupID = coppiedWorkOrder.StationGroupID,
+                                SplitQuantity = 0,
+                                RouteID = coppiedWorkOrder.RouteID,
+                            };
+
+                            await WorkOrdersAppService.CreateAsync(createdWorkOrderModel);
+                        }
+                    }
+
+
+                }
+
+                else if (OperationUnsuitabilityDataSource.WorkOrderID != Guid.Empty && OperationUnsuitabilityDataSource.WorkOrderID != null && OperationUnsuitabilityDataSource.Action_ == L["ComboboxCorrection"].Value && OperationUnsuitabilityDataSource.IsUnsuitabilityWorkOrder)
+                {
+
+                    var selectedWorkOrder = (await WorkOrdersAppService.GetAsync(DataSource.WorkOrderID.Value)).Data;
+
+                    if (selectedWorkOrder != null && selectedWorkOrder.Id != Guid.Empty)
+                    {
+                        CreateWorkOrdersDto createdWorkOrderModel = new CreateWorkOrdersDto
+                        {
+                            AdjustmentAndControlTime = selectedWorkOrder.AdjustmentAndControlTime,
+                            CurrentAccountCardID = selectedWorkOrder.CurrentAccountCardID,
+                            IsCancel = selectedWorkOrder.IsCancel,
+                            IsUnsuitabilityWorkOrder = true,
+                            LineNr = selectedWorkOrder.LineNr,
+                            LinkedWorkOrderID = selectedWorkOrder.LinkedWorkOrderID,
+                            OccuredStartDate = null,
+                            OccuredFinishDate = null,
+                            OperationTime = selectedWorkOrder.OperationTime,
+                            OrderID = selectedWorkOrder.OrderID,
+                            PlannedQuantity = OperationUnsuitabilityDataSource.UnsuitableAmount,
+                            ProducedQuantity = 0,
+                            ProductID = selectedWorkOrder.ProductID,
+                            ProductionOrderID = DataSource.ProductionOrderID,
+                            ProductsOperationID = selectedWorkOrder.ProductID,
+                            PropositionID = selectedWorkOrder.PropositionID,
+                            WorkOrderState = 1,
+                            WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
+                            StationID = selectedWorkOrder.StationID,
+                            StationGroupID = selectedWorkOrder.StationGroupID,
+                            SplitQuantity = 0,
+                            RouteID = selectedWorkOrder.RouteID,
+                        };
+
+                        await WorkOrdersAppService.CreateAsync(createdWorkOrderModel);
+                    }
+                }
+
+                #endregion
+            }
+
+            else if (CreateUnsuitabilityReport && DataSource.ScrapQuantity == 0)
+            {
+                var res = await ModalManager.ConfirmationAsync(L["UIScrapQuantityTitle"], L["UIScrapQuantityMessage"]);
+
+                if (res == true)
+                {
+                    #region İlk Ürün Onay Kaydı
+
+                    if (DataSource.OperationQualityPlanID != null && DataSource.OperationQualityPlanID != Guid.Empty)
+                    {
+                        SelectFirstProductApprovalsDto result;
+
+                        if (DataSource.Id == Guid.Empty)
+                        {
+                            var createInput = ObjectMapper.Map<SelectFirstProductApprovalsDto, CreateFirstProductApprovalsDto>(DataSource);
+
+                            result = (await CreateAsync(createInput)).Data;
+
+                            if (result != null)
+                                DataSource.Id = result.Id;
+                        }
+                        else
+                        {
+                            var updateInput = ObjectMapper.Map<SelectFirstProductApprovalsDto, UpdateFirstProductApprovalsDto>(DataSource);
+
+                            result = (await UpdateAsync(updateInput)).Data;
+                        }
+
+                        if (result == null)
+                        {
+
+                            return;
+                        }
+
+                        await GetListDataSourceAsync();
+
+                        var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+                        HideEditPage();
+
+                        if (DataSource.Id == Guid.Empty)
+                        {
+                            DataSource.Id = result.Id;
+                        }
+
+                        if (savedEntityIndex > -1)
+                            SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+                        else
+                            SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+                    }
+
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIQualityPlanMessageTitle"], L["UIQualityPlanMessageMessage"]);
+                    }
+
+                    #endregion
+                }
+            }
+
+            else if (!CreateUnsuitabilityReport)
+            {
+                #region İlk Ürün Onay Kaydı
+
+                if (DataSource.OperationQualityPlanID != null && DataSource.OperationQualityPlanID != Guid.Empty)
+                {
+                    SelectFirstProductApprovalsDto result;
+
+                    if (DataSource.Id == Guid.Empty)
+                    {
+                        var createInput = ObjectMapper.Map<SelectFirstProductApprovalsDto, CreateFirstProductApprovalsDto>(DataSource);
+
+                        result = (await CreateAsync(createInput)).Data;
+
+                        if (result != null)
+                            DataSource.Id = result.Id;
+                    }
+                    else
+                    {
+                        var updateInput = ObjectMapper.Map<SelectFirstProductApprovalsDto, UpdateFirstProductApprovalsDto>(DataSource);
+
+                        result = (await UpdateAsync(updateInput)).Data;
+                    }
+
+                    if (result == null)
+                    {
+
+                        return;
+                    }
+
+                    await GetListDataSourceAsync();
+
+                    var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+                    HideEditPage();
+
+                    if (DataSource.Id == Guid.Empty)
+                    {
+                        DataSource.Id = result.Id;
+                    }
+
+                    if (savedEntityIndex > -1)
+                        SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+                    else
+                        SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+                }
+
+                else
+                {
+                    await ModalManager.WarningPopupAsync(L["UIQualityPlanMessageTitle"], L["UIQualityPlanMessageMessage"]);
+                }
+
+                #endregion
+            }
+
+            #endregion
+
+        }
+
+        private async void CreateUnsuitabilityReportChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (CreateUnsuitabilityReport)
+            {
+                SelectWorkOrdersDto workOrderDataSource = new SelectWorkOrdersDto();
+
+                if (DataSource.WorkOrderID != null && DataSource.WorkOrderID != Guid.Empty)
+                {
+                    workOrderDataSource = (await WorkOrdersAppService.GetAsync(DataSource.WorkOrderID.Value)).Data;
+                }
+
+                OperationUnsuitabilityDataSource = new SelectOperationUnsuitabilityReportsDto
+                {
+                    Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("OprUnsRecordsChildMenu"),
+                    UnsuitableAmount = DataSource.ScrapQuantity,
+                    WorkOrderID = workOrderDataSource.Id,
+                    WorkOrderNo = workOrderDataSource.WorkOrderNo,
+                    ProductID = workOrderDataSource.ProductID,
+                    ProductCode = workOrderDataSource.ProductCode,
+                    ProductName = workOrderDataSource.ProductName,
+                    StationGroupID = workOrderDataSource.StationGroupID,
+                    StationGroupCode = workOrderDataSource.StationGroupCode,
+                    OperationID = workOrderDataSource.ProductsOperationID,
+                    OperationCode = workOrderDataSource.ProductsOperationCode,
+                    ProductionOrderID = workOrderDataSource.ProductionOrderID,
+                    ProductionOrderFicheNo = workOrderDataSource.ProductionOrderFicheNo
+                };
+
+                foreach (var item in _unsComboBox)
+                {
+                    item.Text = L[item.Text];
+                }
+
+                isUnsuitabilityReportTabVisible = true;
+            }
+            else
+            {
+                isUnsuitabilityReportTabVisible = false;
+            }
+        }
+
+        private void UnsComboBoxValueChangeHandler(ChangeEventArgs<string, UnsComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Scrap":
+                    OperationUnsuitabilityDataSource.Action_ = L["ComboboxScrap"].Value;
+                    break;
+
+                case "Correction":
+                    OperationUnsuitabilityDataSource.Action_ = L["ComboboxCorrection"].Value;
+                    break;
+
+                case "ToBeUsedAs":
+                    OperationUnsuitabilityDataSource.Action_ = L["ComboboxToBeUsedAs"].Value;
+                    break;
+
+                default: break;
+            }
+        }
+
+        public class UnsComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<UnsComboBox> _unsComboBox = new List<UnsComboBox>
+        {
+            new UnsComboBox(){ID = "Scrap", Text="ComboboxScrap"},
+            new UnsComboBox(){ID = "Correction", Text="ComboboxCorrection"},
+            new UnsComboBox(){ID = "ToBeUsedAs", Text="ComboboxToBeUsedAs"}
+        };
+
+        private void ScrapValueChangeHandler(Syncfusion.Blazor.Inputs.ChangeEventArgs<decimal> args)
+        {
+            OperationUnsuitabilityDataSource.UnsuitableAmount = DataSource.ScrapQuantity;
+        }
+
         #endregion
 
         #region İş Emri ButtonEdit
@@ -415,6 +818,17 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                 DataSource.ProductionOrderID = Guid.Empty;
                 DataSource.OperationQualityPlanID = Guid.Empty;
                 DataSource.OperationQualityPlanDocumentNumber = string.Empty;
+                OperationUnsuitabilityDataSource.WorkOrderID = Guid.Empty;
+                OperationUnsuitabilityDataSource.WorkOrderNo = string.Empty;
+                OperationUnsuitabilityDataSource.ProductID = Guid.Empty;
+                OperationUnsuitabilityDataSource.ProductCode = string.Empty;
+                OperationUnsuitabilityDataSource.ProductName = string.Empty;
+                OperationUnsuitabilityDataSource.StationGroupID = Guid.Empty;
+                OperationUnsuitabilityDataSource.StationGroupCode = string.Empty;
+                OperationUnsuitabilityDataSource.OperationID = Guid.Empty;
+                OperationUnsuitabilityDataSource.OperationCode = string.Empty;
+                OperationUnsuitabilityDataSource.ProductionOrderID = Guid.Empty;
+                OperationUnsuitabilityDataSource.ProductionOrderFicheNo = string.Empty;
                 OperationalQualityPlanLineList.Clear();
                 GridLineList.Clear();
                 _LineGrid.Refresh();
@@ -423,6 +837,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
         public async void WorkOrdersDoubleClickHandler(RecordDoubleClickEventArgs<ListWorkOrdersDto> args)
         {
+            GridLineList.Clear();
+
             var selectedWorkOrder = args.RowData;
 
             if (selectedWorkOrder != null)
@@ -433,6 +849,18 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                 DataSource.ProductName = selectedWorkOrder.ProductName;
                 DataSource.ProductCode = selectedWorkOrder.ProductCode;
                 DataSource.ProductionOrderID = selectedWorkOrder.ProductionOrderID;
+                OperationUnsuitabilityDataSource.WorkOrderID = selectedWorkOrder.Id;
+                OperationUnsuitabilityDataSource.WorkOrderNo = selectedWorkOrder.WorkOrderNo;
+
+                OperationUnsuitabilityDataSource.ProductID = selectedWorkOrder.ProductID;
+                OperationUnsuitabilityDataSource.ProductCode = selectedWorkOrder.ProductCode;
+                OperationUnsuitabilityDataSource.ProductName = selectedWorkOrder.ProductName;
+                OperationUnsuitabilityDataSource.StationGroupID = selectedWorkOrder.StationGroupID;
+                OperationUnsuitabilityDataSource.StationGroupCode = selectedWorkOrder.StationGroupCode;
+                OperationUnsuitabilityDataSource.OperationID = selectedWorkOrder.ProductsOperationID;
+                OperationUnsuitabilityDataSource.OperationCode = selectedWorkOrder.ProductsOperationCode;
+                OperationUnsuitabilityDataSource.ProductionOrderID = selectedWorkOrder.ProductionOrderID;
+                OperationUnsuitabilityDataSource.ProductionOrderFicheNo = selectedWorkOrder.ProductionOrderFicheNo;
 
                 DataSource.OperationQualityPlanID = (await OperationalQualityPlansAppService.GetListAsync(new ListOperationalQualityPlansParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID && t.ProductsOperationID == selectedWorkOrder.ProductsOperationID).Select(t => t.Id).FirstOrDefault();
 
@@ -525,7 +953,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
         }
         #endregion
 
+        #region Operasyon Uygunsuzluk Kaydı Kod ButtonEdit
 
+        SfTextBox OperationUnsuitabilityCodeButtonEdit;
+
+        public async Task OperationUnsuitabilityCodeOnCreateIcon()
+        {
+            var OperationUnsuitabilityCodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, OperationUnsuitabilityCodeButtonClickEvent);
+            await OperationUnsuitabilityCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", OperationUnsuitabilityCodesButtonClick } });
+        }
+
+        public async void OperationUnsuitabilityCodeButtonClickEvent()
+        {
+            OperationUnsuitabilityDataSource.FicheNo = FicheNumbersAppService.GetFicheNumberAsync("OprUnsRecordsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
 
         #region Timer
 
@@ -546,7 +989,218 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
         }
         #endregion
 
+        #region Hata Başlığı ButtonEdit
 
+        SfTextBox UnsuitabilityItemsButtonEdit;
+        bool SelectUnsuitabilityItemsPopupVisible = false;
+        List<ListUnsuitabilityItemsDto> UnsuitabilityItemsList = new List<ListUnsuitabilityItemsDto>();
+
+        public async Task UnsuitabilityItemsOnCreateIcon()
+        {
+            var UnsuitabilityItemsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, UnsuitabilityItemsButtonClickEvent);
+            await UnsuitabilityItemsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", UnsuitabilityItemsButtonClick } });
+        }
+
+        public async void UnsuitabilityItemsButtonClickEvent()
+        {
+
+            SelectUnsuitabilityItemsPopupVisible = true;
+            await GetUnsuitabilityItemsList();
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        private async Task GetUnsuitabilityItemsList()
+        {
+            var IsMerkeziId = (await StationsAppService.GetAsync(OperationUnsuitabilityDataSource.StationID.GetValueOrDefault())).Data.GroupID;
+            if (IsMerkeziId != Guid.Empty)
+            {
+
+                UnsuitabilityItemsList = (await UnsuitabilityItemsAppService.GetListAsync(new ListUnsuitabilityItemsParameterDto())).Data.
+                    Where(t => t.StationGroupId == IsMerkeziId)
+                    .ToList();
+            }
+        }
+
+        public void UnsuitabilityItemsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                OperationUnsuitabilityDataSource.UnsuitabilityItemsID = Guid.Empty;
+                OperationUnsuitabilityDataSource.UnsuitabilityItemsName = string.Empty;
+            }
+        }
+
+        public async void UnsuitabilityItemsDoubleClickHandler(RecordDoubleClickEventArgs<ListUnsuitabilityItemsDto> args)
+        {
+            var selectedUnsuitabilityItem = args.RowData;
+
+            if (selectedUnsuitabilityItem != null)
+            {
+                OperationUnsuitabilityDataSource.UnsuitabilityItemsID = selectedUnsuitabilityItem.Id;
+                OperationUnsuitabilityDataSource.UnsuitabilityItemsName = selectedUnsuitabilityItem.Name;
+                SelectUnsuitabilityItemsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+
+        #region Personel ButtonEdit
+
+        SfTextBox OprUnsEmployeesButtonEdit;
+        bool SelectOprUnsEmployeesPopupVisible = false;
+        List<ListEmployeesDto> OprUnsEmployeesList = new List<ListEmployeesDto>();
+
+        public async Task OprUnsEmployeesOnCreateIcon()
+        {
+            var OprUnsEmployeesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, OprUnsEmployeesButtonClickEvent);
+            await OprUnsEmployeesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", OprUnsEmployeesButtonClick } });
+        }
+
+        public async void OprUnsEmployeesButtonClickEvent()
+        {
+            if (OperationUnsuitabilityDataSource.WorkOrderID == Guid.Empty || OperationUnsuitabilityDataSource.WorkOrderID == null)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitlebase"], L["UIWarningWorkOrderMessageEmployeebase"]);
+            }
+            else
+            {
+                SelectOprUnsEmployeesPopupVisible = true;
+                await GetOprUnsEmployeesList();
+
+            }
+            await InvokeAsync(StateHasChanged);
+        }
+
+        private async Task GetOprUnsEmployeesList()
+        {
+            OprUnsEmployeesList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.ToList();
+        }
+
+        public void OprUnsEmployeesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                OperationUnsuitabilityDataSource.EmployeeID = Guid.Empty;
+                OperationUnsuitabilityDataSource.EmployeeName = string.Empty;
+            }
+        }
+
+        public async void OprUnsEmployeesDoubleClickHandler(RecordDoubleClickEventArgs<ListEmployeesDto> args)
+        {
+            var selectedOrder = args.RowData;
+
+            if (selectedOrder != null)
+            {
+                OperationUnsuitabilityDataSource.EmployeeID = selectedOrder.Id;
+                OperationUnsuitabilityDataSource.EmployeeName = selectedOrder.Name;
+                SelectOprUnsEmployeesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region İş İstasyonu ButtonEdit
+
+        SfTextBox StationsCodeButtonEdit;
+        SfTextBox StationsNameButtonEdit;
+        bool SelectStationsPopupVisible = false;
+        List<SelectStationsDto> StationsList = new List<SelectStationsDto>();
+
+        public async Task StationsCodeOnCreateIcon()
+        {
+            var StationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationsCodeButtonClickEvent);
+            await StationsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationsButtonClick } });
+        }
+
+        public async void StationsCodeButtonClickEvent()
+        {
+            if (OperationUnsuitabilityDataSource.WorkOrderID == Guid.Empty || OperationUnsuitabilityDataSource.WorkOrderID == null)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitlebase"], L["UIWarningWorkOrderMessageStationbase"]);
+            }
+            else
+            {
+                SelectStationsPopupVisible = true;
+                await GetStationsList();
+
+            }
+            await InvokeAsync(StateHasChanged);
+        }
+
+        private async Task GetStationsList()
+        {
+            StationsList.Clear();
+            var productOperationId = (await WorkOrdersAppService.GetAsync(OperationUnsuitabilityDataSource.WorkOrderID.GetValueOrDefault())).Data.ProductsOperationID;
+
+            if (productOperationId != Guid.Empty)
+            {
+                var productOperation = (await ProductsOperationsAppService.GetAsync(productOperationId.GetValueOrDefault())).Data;
+
+                foreach (var item in productOperation.SelectProductsOperationLines)
+                {
+                    var selectStationDto = (await StationsAppService.GetAsync(item.StationID.GetValueOrDefault())).Data;
+                    StationsList.Add(selectStationDto);
+                }
+            }
+            else
+            {
+                await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["EmptyProductOperationError"]);
+                await InvokeAsync(StateHasChanged);
+            }
+
+            //StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
+        }
+
+        public async Task StationsNameOnCreateIcon()
+        {
+            var StationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationsNameButtonClickEvent);
+            await StationsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationsButtonClick } });
+        }
+
+        public async void StationsNameButtonClickEvent()
+        {
+            if (DataSource.WorkOrderID == Guid.Empty || DataSource.WorkOrderID == null)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitlebase"], L["UIWarningWorkOrderMessageStationbase"]);
+            }
+            else
+            {
+                SelectStationsPopupVisible = true;
+                await GetStationsList();
+
+            }
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void StationsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                OperationUnsuitabilityDataSource.StationID = Guid.Empty;
+                OperationUnsuitabilityDataSource.StationCode = string.Empty;
+                OperationUnsuitabilityDataSource.StationName = string.Empty;
+            }
+        }
+
+        public async void StationsDoubleClickHandler(RecordDoubleClickEventArgs<SelectStationsDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                OperationUnsuitabilityDataSource.StationID = selectedUnitSet.Id;
+                OperationUnsuitabilityDataSource.StationCode = selectedUnitSet.Code;
+                OperationUnsuitabilityDataSource.StationName = selectedUnitSet.Name;
+                OperationUnsuitabilityDataSource.StationGroupID = selectedUnitSet.GroupID;
+                OperationUnsuitabilityDataSource.StationGroupName = selectedUnitSet.StationGroup;
+                OperationUnsuitabilityDataSource.StationGroupCode = selectedUnitSet.StationGroupCode;
+                SelectStationsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
 
         public void Dispose()
         {
