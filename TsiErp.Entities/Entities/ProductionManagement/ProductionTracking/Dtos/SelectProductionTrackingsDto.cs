@@ -73,6 +73,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// </summary>
         public decimal PlannedQuantity { get; set; }
         /// <summary>
+        /// Hatalı Miktar
+        /// </summary>
+        public decimal FaultyQuantity { get; set; }
+        /// <summary>
         /// Tamamlandı mı ?
         /// </summary>
         public bool IsFinished { get; set; }

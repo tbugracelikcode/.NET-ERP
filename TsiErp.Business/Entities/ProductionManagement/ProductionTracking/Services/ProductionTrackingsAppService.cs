@@ -134,7 +134,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 LastModifierId = Guid.Empty,
                 ProductID = input.ProductID,
                 ProductionOrderID = input.ProductionOrderID,
-                ProductsOperationID = input.ProductsOperationID
+                ProductsOperationID = input.ProductsOperationID,
+                 FaultyQuantity = input.FaultyQuantity,
             });
 
             #region Halt Lines
@@ -1179,7 +1180,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 LastModifierId = LoginedUserService.UserId,
                 ProductID = input.ProductID,
                 ProductionOrderID = input.ProductionOrderID,
-                ProductsOperationID = input.ProductsOperationID
+                ProductsOperationID = input.ProductsOperationID,
+                 FaultyQuantity = input.FaultyQuantity,
             }).Where(new { Id = input.Id }, false, false, "");
 
             if (input.SelectProductionTrackingHaltLinesDto != null)
@@ -1643,7 +1645,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 ProductID = entity.ProductID,
                 ProductionOrderID = entity.ProductionOrderID,
-                ProductsOperationID = entity.ProductsOperationID
+                ProductsOperationID = entity.ProductsOperationID,
+                 FaultyQuantity = entity.FaultyQuantity,
             }).Where(new { Id = id }, false, false, "");
 
             var productionTrackingsDto = queryFactory.Update<SelectProductionTrackingsDto>(query, "Id", true);

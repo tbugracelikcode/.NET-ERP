@@ -78,6 +78,7 @@ else
                                     </GridColumn>
 
                                     <GridColumn Field=@nameof(ListProductionTrackingsDto.PlannedQuantity) Type="ColumnType.Number" HeaderText="@L["PlannedQuantity"]" TextAlign="TextAlign.Center" Format="N0" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.FaultyQuantity) Type="ColumnType.Number" HeaderText="@L["FaultyQuantity"]" TextAlign="TextAlign.Center" Format="N0" Width="220"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListProductionTrackingsDto.ProducedQuantity) HeaderText="@L["ProducedQuantity"]" TextAlign="TextAlign.Center" Format="N0" Width="210"></GridColumn>
 
@@ -96,6 +97,19 @@ else
                                     <GridColumn Field=@nameof(ListProductionTrackingsDto.IsFinished) HeaderText="@L["IsFinished"]" TextAlign="TextAlign.Center" DisplayAsCheckBox="true" Width="160"></GridColumn>
 
                                 </GridColumns>
+
+
+                                <GridAggregates>
+                                    <GridAggregate>
+                                        <GridAggregateColumns>
+                                            <GridAggregateColumn Field="@nameof(ListProductionTrackingsDto.ProducedQuantity)" Type="AggregateType.Sum" Format="N0"></GridAggregateColumn>
+                                            <GridAggregateColumn Field="@nameof(ListProductionTrackingsDto.AdjustmentTime)" Type="AggregateType.Sum" Format="N0"></GridAggregateColumn>
+                                            <GridAggregateColumn Field="@nameof(ListProductionTrackingsDto.OperationTime)" Type="AggregateType.Sum" Format="N0"></GridAggregateColumn>
+                                            <GridAggregateColumn Field="@nameof(ListProductionTrackingsDto.FaultyQuantity)" Type="AggregateType.Sum" Format="N0">
+                                            </GridAggregateColumn> 
+                                        </GridAggregateColumns>
+                                    </GridAggregate>
+                                </GridAggregates>
                             </SfGrid>
                         </CardContent>
                         <CardFooter>

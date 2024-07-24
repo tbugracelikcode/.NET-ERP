@@ -127,5 +127,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking
         /// </summary>
         public Guid ProductsOperationID { get; set; }
 
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Hatalı Miktar
+        /// </summary>
+        public decimal FaultyQuantity { get; set; }
+
     }
 }
