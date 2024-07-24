@@ -63,7 +63,6 @@ namespace TsiErp.ErpUI.Pages.Base
 
         public string GridSearchText { get; set; }
 
-        public bool EnableStickyHeader { get; set; } = true;
 
         protected ICrudAppService<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> BaseCrudService { get; set; }
 
