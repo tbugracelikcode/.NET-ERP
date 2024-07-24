@@ -54,8 +54,7 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                    AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems EnableStickyHeader=@EnableStickyHeader>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
@@ -67,12 +66,13 @@ else
                                     <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="222"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="222"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListProductsDto.Amount) HeaderText="@L["AmountOfStock"]" TextAlign="TextAlign.Center" Width="222" Format="N2"></GridColumn> <GridColumn Field=@nameof(ListProductsDto.TotalPurchaseOrder) HeaderText="@L["AmountOfPurchaseOrder"]" TextAlign="TextAlign.Center" Width="222" Format="N2"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.Amount) HeaderText="@L["AmountOfStock"]" TextAlign="TextAlign.Center" Width="222" Format="N2"></GridColumn> 
+                                    <GridColumn Field=@nameof(ListProductsDto.TotalPurchaseOrder) HeaderText="@L["AmountOfPurchaseOrder"]" TextAlign="TextAlign.Center" Width="222" Format="N2"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.TotalReserved) HeaderText="@L["AmountOfReserved"]" TextAlign="TextAlign.Center" Width="222" Format="N2"></GridColumn>
                                    
                                     <GridColumn Field=@nameof(ListProductsDto.TotalAvailableStock) HeaderText="@L["AmountOfAvailableStock"]" TextAlign="TextAlign.Center" Width="222" Format="N2">
-                                       <Template>
-                                           @{
+                                       @* <Template>
+                                            @{
                                                decimal availableStock = (context as ListProductsDto).Amount - (context as ListProductsDto).TotalReserved;
 
                                                if(0 > availableStock)
@@ -80,8 +80,8 @@ else
                                                    availableStock =0;
                                                }
                                            }
-                                            @availableStock
-                                       </Template>
+                                            @availableStock.ToString("N2") 
+                                       </Template> *@
                                     </GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.UnitSetCode) HeaderText="@L["UnitSetCode"]" TextAlign="TextAlign.Center" Width="222"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.SupplyForm) HeaderText="@L["SupplyForm"]" TextAlign="TextAlign.Center" Width="222">
@@ -123,9 +123,20 @@ else
                                         @type
                                     </Template>
                                 </GridColumn>
-
-
                             </GridColumns>
+                            
+
+                             <GridAggregates>
+                                    <GridAggregate>
+                                        <GridAggregateColumns>
+                                            <GridAggregateColumn Field="@nameof(ListProductsDto.Amount)" Type="AggregateType.Sum" Format="N2"></GridAggregateColumn>
+                                            <GridAggregateColumn Field="@nameof(ListProductsDto.TotalReserved)" Type="AggregateType.Sum" Format="N2"></GridAggregateColumn>
+                                            <GridAggregateColumn Field="@nameof(ListProductsDto.TotalAvailableStock)" Type="AggregateType.Sum" Format="N2"></GridAggregateColumn>
+                                            <GridAggregateColumn Field="@nameof(ListProductsDto.TotalPurchaseOrder)"  Type="AggregateType.Sum" Format="N2">
+                                            </GridAggregateColumn>
+                                        </GridAggregateColumns>
+                                    </GridAggregate>
+                             </GridAggregates>
                         </SfGrid>
                     </CardContent>
                     <CardFooter>

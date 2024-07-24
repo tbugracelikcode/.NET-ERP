@@ -329,6 +329,23 @@ namespace TsiErp.Business.Entities.Product.Services
 
             var products = queryFactory.GetList<ListProductsDto>(query).ToList();
 
+            if (products.Count > 0 && products != null)
+            {
+                foreach (var product in products)
+                {
+                    int index = products.IndexOf(product);
+                    products[index].TotalAvailableStock = product.Amount - product.TotalReserved;
+
+                    if(products[index].TotalAvailableStock < 0)
+                    {
+                        products[index].TotalAvailableStock = 0;
+                    }
+                    
+                }
+            }
+
+
+
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListProductsDto>>(products);
 

@@ -364,6 +364,16 @@ else
 
                                                                     <GridColumn Field=@nameof(SelectPackingListPalletCubageLinesDto.Cubage) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineCubageGridCubage"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                                                 </GridColumns>
+
+
+                                                                <GridAggregates>
+                                                                    <GridAggregate>
+                                                                        <GridAggregateColumns>
+                                                                            <GridAggregateColumn Field="@nameof(SelectPackingListPalletCubageLinesDto.NumberofPallet)" Type="AggregateType.Sum" Format="N0"></GridAggregateColumn>
+                                                                            <GridAggregateColumn Field="@nameof(SelectPackingListPalletCubageLinesDto.Cubage)" Type="AggregateType.Sum" Format="N2"></GridAggregateColumn>
+                                                                        </GridAggregateColumns>
+                                                                    </GridAggregate>
+                                                                </GridAggregates>
                                                             </SfGrid>
                                                         </Template>
                                                     </DxGridLayoutItem>
@@ -397,7 +407,19 @@ else
                                                                     <GridColumn Field=@nameof(SelectPackingListPalletLinesDto.LastPackageNo) HeaderText="@L["LinePalletGridLastPackageNo"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                                                     <GridColumn Field=@nameof(SelectPackingListPalletLinesDto.NumberofPackage) Type="ColumnType.Number" HeaderText="@L["LinePalletGridNumberofPackage"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                                                 </GridColumns>
+
+
+                                                                <GridAggregates>
+                                                                    <GridAggregate>
+                                                                        <GridAggregateColumns>
+                                                                            <GridAggregateColumn Field="@nameof(SelectPackingListPalletLinesDto.NumberofPackage)" Type="AggregateType.Sum" Format="N0">
+                                                                            </GridAggregateColumn>
+                                                                        </GridAggregateColumns>
+                                                                    </GridAggregate>
+                                                                </GridAggregates>
                                                             </SfGrid>
+
+
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -449,6 +471,19 @@ else
                                                                     <GridColumn Field=@nameof(SelectPackingListPalletPackageLinesDto.TotalNetKG) Format="N2" Type="ColumnType.Number" HeaderText="@L["LinePalletPackageGridTotalNetKG"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                                                     <GridColumn Field=@nameof(SelectPackingListPalletPackageLinesDto.TotalGrossKG) Format="N2" Type="ColumnType.Number" HeaderText="@L["LinePalletPackageGridTotalGrossKG"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                                                 </GridColumns>
+
+
+                                                                <GridAggregates>
+                                                                    <GridAggregate>
+                                                                        <GridAggregateColumns>
+                                                                            <GridAggregateColumn Field="@nameof(SelectPackingListPalletPackageLinesDto.NumberofPackage)" Type="AggregateType.Sum" Format="N0"></GridAggregateColumn>
+                                                                            <GridAggregateColumn Field="@nameof(SelectPackingListPalletPackageLinesDto.TotalAmount)" Type="AggregateType.Sum" Format="N0"></GridAggregateColumn>
+                                                                            <GridAggregateColumn Field="@nameof(SelectPackingListPalletPackageLinesDto.TotalNetKG)" Type="AggregateType.Sum" Format="N2"></GridAggregateColumn>
+                                                                            <GridAggregateColumn Field="@nameof(SelectPackingListPalletPackageLinesDto.TotalGrossKG)" Type="AggregateType.Sum" Format="N2">
+                                                                            </GridAggregateColumn>
+                                                                        </GridAggregateColumns>
+                                                                    </GridAggregate>
+                                                                </GridAggregates>
                                                             </SfGrid>
                                                         </Template>
                                                     </DxGridLayoutItem>

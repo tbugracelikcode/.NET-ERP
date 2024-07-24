@@ -7,6 +7,7 @@
     margin-left: 30px !important;
 }
 
+
     .TSIIndexDollarIcon:hover {
         font-size: 28px !important;
         position: relative !important;
@@ -1473,4 +1474,10 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
 .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-checked > .dxbl-checkbox-check-element:not(:hover), .dxbl-treeview .dxbl-checkbox:not(.dxbl-checkbox-switch):not(.dxbl-checkbox-radio):not(.dxbl-disabled):not(:disabled).dxbl-checkbox-indeterminate > .dxbl-checkbox-check-element:not(:hover) {
     background-color: var(--dxbl-treeview-checkbox-checked-bg, #6c0a0a) !important;
     opacity: var(--dxbl-treeview-checkbox-checked-bg,80%);
+}
+.e-grid .e-summaryrow .e-summarycell, .e-grid .e-summaryrow .e-templatecell, .e-grid .e-summarycontent .e-indentcell, .e-grid .e-indentcell.e-detailindentcelltop {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    color: #212529;
+    font-size: 15px !important;
 }

@@ -186,6 +186,9 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="FaultyQuantity" xml:space="preserve">
+    <value>FAULTY QUANTITY</value>
+  </data>
   <data name="HaltModalGridCode" xml:space="preserve">
     <value>HALT REASON CODE</value>
   </data>
