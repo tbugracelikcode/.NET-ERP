@@ -1,11 +1,16 @@
-﻿using DevExpress.CodeParser;
+﻿using DevExpress.Blazor.Reporting;
+using DevExpress.CodeParser;
+using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Navigations;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Reflection;
+using TsiErp.Business.Entities.BankAccount.Services;
 using TsiErp.Business.Entities.Currency.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementParameter.Services;
 using TsiErp.Business.Entities.Product.Services;
@@ -20,6 +25,7 @@ using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeReport.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
@@ -28,6 +34,9 @@ using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Helpers;
+using TsiErp.ErpUI.Pages.ShippingManagement.PackingList;
+using TsiErp.ErpUI.Reports.ProductionManagement;
+using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.ShippingInstruction;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
@@ -123,7 +132,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         {
             BaseCrudService = ProductionOrdersAppService;
             _L = L;
-
 
             var purchaseParameter = (await PurchaseManagementParametersAppService.GetPurchaseManagementParametersAsync()).Data;
             BranchIDParameter = purchaseParameter.BranchID;
@@ -295,7 +303,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
 
                 case "requestform":
+                    RawMaterialRequestFormDynamicReport = new XtraReport();
+                    RawMaterialRequestFormReportVisible = true;
+                    await CreateRawMaterialRequestFormReport(args.RowInfo.RowData.Id);
 
+                    await InvokeAsync(StateHasChanged);
                     break;
 
 
@@ -390,7 +402,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                             await InvokeAsync(StateHasChanged);
                         }
-                       
+
                     }
                     else
                     {
@@ -1407,6 +1419,42 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                 await InvokeAsync(StateHasChanged);
             }
         }
+        #endregion
+
+        #region Yazdır
+
+        #region HM ve YM İstek Formu
+        bool RawMaterialRequestFormReportVisible { get; set; }
+
+        DxReportViewer RawMaterialRequestFormReportViewer { get; set; }
+
+        XtraReport RawMaterialRequestFormDynamicReport { get; set; }
+
+        async Task CreateRawMaterialRequestFormReport(Guid productionOrderId)
+        {
+            RawMaterialRequestFormDynamicReport.ShowPrintMarginsWarning = false;
+            RawMaterialRequestFormDynamicReport.CreateDocument();
+
+            if (productionOrderId != Guid.Empty)
+            {
+                var list = (await ProductionOrdersAppService.CreateRawMaterialRequestFormReportAsync(productionOrderId)).Data;
+
+                RawMaterialRequestFormReport report = new RawMaterialRequestFormReport();
+                report.DataSource = list;
+                report.ShowPrintMarginsWarning = false;
+                report.CreateDocument();
+
+                RawMaterialRequestFormDynamicReport.Pages.AddRange(report.Pages);
+
+                RawMaterialRequestFormDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
+            }
+
+            await Task.CompletedTask;
+        }
+
+
+        #endregion
+
         #endregion
 
         public void Dispose()

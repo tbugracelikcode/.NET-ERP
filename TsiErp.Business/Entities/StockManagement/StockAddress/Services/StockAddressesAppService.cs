@@ -91,6 +91,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                     Id = GuidGenerator.CreateGuid(),
                     IsDeleted = false,
                     LastModificationTime = null,
+                    ProductID = input.ProductID.GetValueOrDefault(),
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
                     StockColumnID = item.StockColumnID.GetValueOrDefault(),
@@ -341,6 +342,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                         Id = GuidGenerator.CreateGuid(),
                         IsDeleted = false,
                         LastModificationTime = null,
+                        ProductID = input.ProductID.GetValueOrDefault(),
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
                         StockShelfID = item.StockShelfID.GetValueOrDefault(),
@@ -374,6 +376,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             StockAdressID = input.Id,
+                            ProductID = input.ProductID.GetValueOrDefault(),
                             StockColumnID = item.StockColumnID.GetValueOrDefault(),
                             StockSectionID = item.StockSectionID.GetValueOrDefault(),
                             StockNumberID = item.StockNumberID.GetValueOrDefault(),
@@ -424,7 +427,45 @@ namespace TsiErp.Business.Entities.StockAddress.Services
 
         }
 
+        public async Task<IDataResult<IList<SelectStockAddressLinesDto>>> GetStockAddressByStockIdAsync(Guid stockId)
+        {
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.StockAddressLines)
+                   .Select<StockAddressLines>(null)
+                   .Join<StockColumns>
+                    (
+                        u => new { StockColumnID = u.Id, StockColumnName = u.Name },
+                        nameof(StockAddressLines.StockColumnID),
+                        nameof(StockColumns.Id),
+                        JoinType.Left
+                    )
+                    .Join<StockSections>
+                    (
+                        u => new { StockSectionID = u.Id, StockSectionName = u.Name },
+                        nameof(StockAddressLines.StockSectionID),
+                        nameof(StockSections.Id),
+                        JoinType.Left
+                    )
+                    .Join<StockNumbers>
+                    (
+                        u => new { StockNumberID = u.Id, StockNumberName = u.Name },
+                        nameof(StockAddressLines.StockNumberID),
+                        nameof(StockNumbers.Id),
+                        JoinType.Left
+                    )
+                    .Join<StockShelfs>
+                    (
+                        u => new { StockShelfID = u.Id, StockShelfName = u.Name },
+                        nameof(StockAddressLines.StockShelfID),
+                        nameof(StockShelfs.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { ProductID = stockId }, false, false, Tables.StockAddressLines);
 
-
+            var StockAddressLine = queryFactory.GetList<SelectStockAddressLinesDto>(queryLines).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<SelectStockAddressLinesDto>>(StockAddressLine);
+        }
     }
 }

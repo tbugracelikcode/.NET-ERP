@@ -197,6 +197,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 Tables.SalesPropositionLines,
                 Tables.StationInventories,
                 Tables.StockFicheLines,
+                Tables.StockAddressLines,
                 Tables.TechnicalDrawings,Tables.UnplannedMaintenanceLines,
                 Tables.WorkOrders
             });
