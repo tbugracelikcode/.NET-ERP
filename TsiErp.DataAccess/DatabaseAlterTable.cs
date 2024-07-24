@@ -4,18 +4,18 @@ using TsiErp.DataAccess.Utilities;
 
 namespace TsiErp.DataAccess
 {
-    public class DatabaseAddColumn
+    public class DatabaseAlterTable
     {
-        #region SQL Data Type'lara göre kullanım örnekleri
+        #region Table AddColumn SQL Data Type'lara göre kullanım örnekleri
 
         #region INT
-        //[DatabaseAddColumn(Nullable = true, SqlDbType = SqlDataType.Int, TableName = "CurrentAccountCards",Default_ ="(0)")]
-        //public int Deneme { get; set; } 
+        //[DatabaseAddColumn(Nullable = true, SqlDbType = SqlDataType.Int, TableName = "CurrentAccountCards", Default_ = "(0)")]
+        //public int Deneme { get; set; }
         #endregion
 
         #region DECIMAL
         //[DatabaseAddColumn(Nullable = true, SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18, TableName = "CurrentAccountCards", Default_ = "(0.0)")]
-        //public decimal Deneme2 { get; set; } 
+        //public decimal Deneme2 { get; set; }
         #endregion
 
         #region STRING
@@ -33,5 +33,11 @@ namespace TsiErp.DataAccess
         //public bool Deneme5 { get; set; }  
         #endregion
         #endregion
+
+        [DatabaseDropColumn(ColumnName = "Deneme", TableName = "CurrentAccountCards")]
+        public int Deneme { get; set; }
+
+        [DatabaseDropColumn(ColumnName = "Deneme2", TableName = "CurrentAccountCards")]
+        public decimal Deneme2 { get; set; }
     }
 }

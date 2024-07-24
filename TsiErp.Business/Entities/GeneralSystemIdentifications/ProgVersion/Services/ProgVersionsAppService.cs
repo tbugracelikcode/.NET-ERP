@@ -167,7 +167,7 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
         {
             DatabaseSchemeUpdater databaseSchemeUpdater = new DatabaseSchemeUpdater();
 
-            databaseSchemeUpdater.TableAddColumn();
+            databaseSchemeUpdater.DbAlterTable();
             await Task.CompletedTask;
             return true;
         }
