@@ -241,10 +241,5 @@ namespace TsiErp.ErpUI.Pages.TestPages.Exercise_Query_1
             var productionOrdersList = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.OrderID == salesOrderId).Select(t => t.LinkedProductionOrderID).ToList();
         }
 
-
-
-
-
-
     }
 }

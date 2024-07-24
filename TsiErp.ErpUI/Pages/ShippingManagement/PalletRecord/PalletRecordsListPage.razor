@@ -102,6 +102,17 @@ else
                                     </GridColumn>
 
 
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(ListPalletRecordsDto.PalletPackageNumber)" Type="AggregateType.Sum" Format="N0"></GridAggregateColumn>@* 
+                                                <GridAggregateColumn Field="@nameof(ListPalletRecordsDto.)" Type="AggregateType.Sum" Format="N2"></GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(ListPalletRecordsDto.)" Type="AggregateType.Sum" Format="N2"></GridAggregateColumn> *@
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+
+
 
                                 </GridColumns>
                             </SfGrid>
