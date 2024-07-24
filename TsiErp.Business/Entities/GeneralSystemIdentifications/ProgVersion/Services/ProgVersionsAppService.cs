@@ -162,5 +162,14 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
             await Task.CompletedTask;
             return true;
         }
+
+        public async Task<bool> TableAddColumn()
+        {
+            DatabaseSchemeUpdater databaseSchemeUpdater = new DatabaseSchemeUpdater();
+
+            databaseSchemeUpdater.TableAddColumn();
+            await Task.CompletedTask;
+            return true;
+        }
     }
 }

@@ -8,5 +8,7 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
         Task<bool> CheckVersion(string progVersion);
 
         Task<bool> UpdateDatabase(string versionToBeUpdated);
+
+        Task<bool> TableAddColumn();
     }
 }
