@@ -70,8 +70,17 @@ else
                                     <GridColumn Field=@nameof(ListCitiesDto.IsBigCity) HeaderText="@L["IsBigCity"]" DisplayAsCheckBox="true" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListCitiesDto.Description_) HeaderText="@L["Description_"]" TextAlign="TextAlign.Center" Width="120">
                                     </GridColumn>
-                                   
                                 </GridColumns>
+
+                                <GridAggregates>
+                                    <GridAggregate>
+                                        <GridAggregateColumns>
+                                            <GridAggregateColumn Field="@nameof(ListCitiesDto.Population_)"  Type="AggregateType.Sum" Format="N2">
+                                            </GridAggregateColumn>
+                                        </GridAggregateColumns>
+                                    </GridAggregate>
+                                </GridAggregates>
+
                             </SfGrid>
                         </CardContent>
                         <CardFooter>

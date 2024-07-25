@@ -197,6 +197,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 Tables.SalesPropositionLines,
                 Tables.StationInventories,
                 Tables.StockFicheLines,
+                Tables.StockAddressLines,
                 Tables.TechnicalDrawings,Tables.UnplannedMaintenanceLines,
                 Tables.WorkOrders
             });
@@ -328,6 +329,23 @@ namespace TsiErp.Business.Entities.Product.Services
                     ).Where(null, true, true, Tables.Products);
 
             var products = queryFactory.GetList<ListProductsDto>(query).ToList();
+
+            if (products.Count > 0 && products != null)
+            {
+                foreach (var product in products)
+                {
+                    int index = products.IndexOf(product);
+                    products[index].TotalAvailableStock = product.Amount - product.TotalReserved;
+
+                    if(products[index].TotalAvailableStock < 0)
+                    {
+                        products[index].TotalAvailableStock = 0;
+                    }
+                    
+                }
+            }
+
+
 
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListProductsDto>>(products);

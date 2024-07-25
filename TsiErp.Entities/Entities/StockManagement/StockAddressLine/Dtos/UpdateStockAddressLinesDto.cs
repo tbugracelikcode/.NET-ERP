@@ -14,6 +14,10 @@ namespace TsiErp.Entities.Entities.StockManagement.StockAddressLine.Dtos
         /// Satır Nr
         /// </summary>
         public int LineNr { get; set; }
+        /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
 
         /// <summary>
         /// Stok Bölüm ID

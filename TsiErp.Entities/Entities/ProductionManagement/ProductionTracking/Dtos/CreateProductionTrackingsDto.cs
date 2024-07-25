@@ -58,6 +58,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// Planlanan Adet
         /// </summary>
         public decimal PlannedQuantity { get; set; }
+        /// <summary>
+        /// Hatalı Miktar
+        /// </summary>
+        public decimal FaultyQuantity { get; set; }
 
         /// <summary>
         /// Tamamlandı mı ?

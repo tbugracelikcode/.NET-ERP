@@ -147,6 +147,19 @@ else
 
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                 </GridColumns>
+                                
+                            
+
+                             <GridAggregates>
+                                    <GridAggregate>
+                                        <GridAggregateColumns>
+                                            <GridAggregateColumn Field="@nameof(ListWorkOrdersDto.PlannedQuantity)" Type="AggregateType.Sum" Format="N0"></GridAggregateColumn>
+                                            <GridAggregateColumn Field="@nameof(ListWorkOrdersDto.ProducedQuantity)" Type="AggregateType.Sum" Format="N0">
+                                            </GridAggregateColumn>
+                                        </GridAggregateColumns>
+                                    </GridAggregate>
+                             </GridAggregates>
+
                             </SfGrid>
                         </CardContent>
                         <CardFooter>

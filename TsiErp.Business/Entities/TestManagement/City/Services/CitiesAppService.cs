@@ -103,6 +103,8 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
                     IsIncludeHospital = item.IsIncludeHospital,
                     Description_ = item.Description_,
                     DistrictInstruction = item.DistrictInstruction,
+                   
+                   
 
 
                 });
@@ -350,6 +352,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
                 IsBigCity = entity.IsBigCity,
                 Population_ = entity.Population_,
                 CityTypeForm = (int)entity.CityTypeForm,
+                
 
 
 

@@ -186,6 +186,9 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
+  <data name="FaultyQuantity" xml:space="preserve">
+    <value>HATALI MİKTAR</value>
+  </data>
   <data name="HaltModalGridCode" xml:space="preserve">
     <value>DURUŞ SEBEBİ KODU</value>
   </data>
