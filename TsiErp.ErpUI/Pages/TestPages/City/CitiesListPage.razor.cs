@@ -39,6 +39,7 @@ namespace TsiErp.ErpUI.Pages.TestPages.City
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
+
         #region ComboBox 
 
         public IEnumerable<SelectCitiesDto> types = GetEnumDisplayTypeNames<CityTypeFormEnum>();
