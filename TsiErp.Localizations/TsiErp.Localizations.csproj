@@ -1,11 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Resources\BreadCrumb\**" />
     <Compile Remove="Resources\Menu\**" />
@@ -14,7 +12,6 @@
     <None Remove="Resources\BreadCrumb\**" />
     <None Remove="Resources\Menu\**" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Resources\BankAccounts\Page\BankAccountsResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -602,7 +599,6 @@
       <DependentUpon>WorkOrdersResource.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="Resources\BankAccounts\Page\BankAccountsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1106,7 +1102,8 @@
       <LastGenOutput>StockColumnsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\StockFiche\StockFichesResource.en-US.resx">
-      <Generator></Generator>
+      <Generator>
+      </Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\StockFiche\StockFichesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1193,5 +1190,4 @@
       <LastGenOutput>WorkOrdersResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-
 </Project>
