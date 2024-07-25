@@ -1033,7 +1033,7 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fiyat Onayı Ver.
+        ///   Looks up a localized string similar to Fatura Onayı Ver.
         /// </summary>
         public static string PurchaseOrderContextPriceApproval {
             get {
@@ -1047,6 +1047,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         public static string PurchaseOrderContextRefresh {
             get {
                 return ResourceManager.GetString("PurchaseOrderContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İrsaliye Onayı Ver.
+        /// </summary>
+        public static string PurchaseOrderContextWayBillApproval {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextWayBillApproval", resourceCulture);
             }
         }
         
@@ -1483,7 +1492,7 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seçtiğiniz siparişin fiyat onayı verilecektir..
+        ///   Looks up a localized string similar to Seçtiğiniz siparişin fatura onayı verilecektir..
         /// </summary>
         public static string UIPriceStatusApprovalMessage {
             get {
@@ -1528,6 +1537,33 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Durumu &quot;Onaylandı&quot; olmayan siparişlerin fatura onayı verilemez..
+        /// </summary>
+        public static string UIWarningStateMessage {
+            get {
+                return ResourceManager.GetString("UIWarningStateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningStateTitle {
+            get {
+                return ResourceManager.GetString("UIWarningStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durumu &quot;Onaylandı&quot; olmayan siparişlerin irsaliye onayı verilemez..
+        /// </summary>
+        public static string UIWarningStateWayBillMessage {
+            get {
+                return ResourceManager.GetString("UIWarningStateWayBillMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok giriş fişi oluşturulabilmesi için, seçilen kaydın onaylanmış olması gerekir..
         /// </summary>
         public static string UIWarningStockFichesMessage {
@@ -1542,6 +1578,24 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         public static string UIWarningStockFichesTitle {
             get {
                 return ResourceManager.GetString("UIWarningStockFichesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İrsaliye durumu beklemede olan kaydın Stok Giriş Fişi oluşturulamaz..
+        /// </summary>
+        public static string UIWarningStockFichesWayBillMessage {
+            get {
+                return ResourceManager.GetString("UIWarningStockFichesWayBillMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz siparişin irsaliye onayı verilecektir..
+        /// </summary>
+        public static string UIWayBillStatusApprovalMessage {
+            get {
+                return ResourceManager.GetString("UIWayBillStatusApprovalMessage", resourceCulture);
             }
         }
         

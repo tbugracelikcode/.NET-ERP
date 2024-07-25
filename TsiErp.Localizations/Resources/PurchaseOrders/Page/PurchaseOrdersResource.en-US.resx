@@ -442,10 +442,13 @@
     <value>Delete</value>
   </data>
   <data name="PurchaseOrderContextPriceApproval" xml:space="preserve">
-    <value>Grant Price Approval</value>
+    <value>Grant Bill Approval</value>
   </data>
   <data name="PurchaseOrderContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrderContextWayBillApproval" xml:space="preserve">
+    <value>Grant Waybill Approval</value>
   </data>
   <data name="PurchaseOrderLineContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -592,7 +595,7 @@
     <value>Purchasing Management &gt; Transactions</value>
   </data>
   <data name="UIPriceStatusApprovalMessage" xml:space="preserve">
-    <value>Price approval of order you selected will be granted.</value>
+    <value>Bill approval of order you selected will be granted.</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>It is not possible to save lines without selecting the unit set.</value>
@@ -606,11 +609,26 @@
   <data name="UIWarningPopupTitleBase" xml:space="preserve">
     <value>Warning</value>
   </data>
+  <data name="UIWarningStateMessage" xml:space="preserve">
+    <value>Bill approval cannot be given for orders whose status is not "Approved".</value>
+  </data>
+  <data name="UIWarningStateTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningStateWayBillMessage" xml:space="preserve">
+    <value>Waybill approval cannot be given for orders whose status is not "Approved".</value>
+  </data>
   <data name="UIWarningStockFichesMessage" xml:space="preserve">
     <value>In order to create a stock receipt fiche, the selected record must be approved.</value>
   </data>
   <data name="UIWarningStockFichesTitle" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="UIWarningStockFichesWayBillMessage" xml:space="preserve">
+    <value>Stock Entry Fiche cannot be created for the record whose waybill status is pending.</value>
+  </data>
+  <data name="UIWayBillStatusApprovalMessage" xml:space="preserve">
+    <value>Waybill approval of order you selected will be granted.</value>
   </data>
   <data name="UnitPriceLineLabel" xml:space="preserve">
     <value>Unit Price:</value>

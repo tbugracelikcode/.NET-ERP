@@ -414,7 +414,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
         protected override async Task OnSubmit()
         {
-
             #region Operasyon Uygunsuzluk Kaydı
 
             if (CreateUnsuitabilityReport && DataSource.ScrapQuantity > 0)
@@ -701,7 +700,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
             }
 
             #endregion
-
         }
 
         private async void CreateUnsuitabilityReportChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)

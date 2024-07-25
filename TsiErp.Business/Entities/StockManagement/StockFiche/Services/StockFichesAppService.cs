@@ -446,6 +446,63 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
         }
 
+        public async Task<IDataResult<IList<ListStockFichesDto>>> GetListbyPurchaseOrderAsync(Guid purchaseOrderID)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.StockFiches)
+                   .Select<StockFiches>(null)
+                    .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFiches.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        JoinType.Left
+                    )
+                   .Join<Branches>
+                    (
+                        b => new { BranchCode = b.Code },
+                        nameof(StockFiches.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                       .Join<PurchaseRequests>
+                    (
+                        b => new { PurchaseRequestFicheNo = b.FicheNo, PurchaseRequestID = b.Id },
+                        nameof(StockFiches.PurchaseRequestID),
+                        nameof(PurchaseRequests.Id),
+                        JoinType.Left
+                    )
+                   .Join<Warehouses>
+                    (
+                        w => new { WarehouseCode = w.Code },
+                        nameof(StockFiches.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        w => new { CurrencyCode = w.Code, CurrencyID = w.Id },
+                        nameof(StockFiches.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(StockFiches.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
+                        JoinType.Left
+                    )
+                    .Where(new { PurchaseOrderID = purchaseOrderID }, false, false, Tables.StockFiches);
+
+            var stockFichesDto = queryFactory.GetList<ListStockFichesDto>(query).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListStockFichesDto>>(stockFichesDto);
+
+        }
+
 
         public async Task<IDataResult<IList<ListStockFicheLinesDto>>> GetLineConsumeListbyProductIDAsync(Guid productID)
         {
