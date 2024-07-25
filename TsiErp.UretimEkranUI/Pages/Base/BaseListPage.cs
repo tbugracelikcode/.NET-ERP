@@ -13,6 +13,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.UretimEkranUI.Helpers;
 using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
+using Microsoft.Maui.ApplicationModel;
 
 namespace TsiErp.UretimEkranUI.Pages.Base
 {

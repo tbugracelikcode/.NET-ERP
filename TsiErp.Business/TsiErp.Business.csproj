@@ -1,17 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Remove="Extensions\CrudControl\**" />
     <EmbeddedResource Remove="Extensions\CrudControl\**" />
     <None Remove="Extensions\CrudControl\**" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.4.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.1" />
@@ -20,12 +17,10 @@
     <PackageReference Include="BlazorInputFile" Version="0.2.0" />
     <PackageReference Include="JsonDiffer" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.3" />
-    <PackageReference Include="Microsoft.JSInterop" Version="6.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.7" />
+    <PackageReference Include="Microsoft.JSInterop" Version="8.0.7" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="System.Xml.ReaderWriter" Version="4.3.1" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
     <ProjectReference Include="..\TSI.QueryBuilder\TSI.QueryBuilder.csproj" />
@@ -33,9 +28,7 @@
     <ProjectReference Include="..\TsiErp.Entities\TsiErp.Entities.csproj" />
     <ProjectReference Include="..\TsiErp.Localizations\TsiErp.Localizations.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="Entities\PlanningManagement\ShipmentPlanning\Services\" />
   </ItemGroup>
-
 </Project>
