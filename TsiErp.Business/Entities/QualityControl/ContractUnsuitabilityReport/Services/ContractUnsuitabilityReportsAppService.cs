@@ -90,41 +90,6 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
             var ContractUnsuitabilityReport = queryFactory.Insert<SelectContractUnsuitabilityReportsDto>(query, "Id", true);
 
 
-            if (input.IsUnsuitabilityWorkOrder)
-            {
-                var workOrder = (await _WorkOrdersAppService.GetAsync(input.WorkOrderID.GetValueOrDefault())).Data;
-
-                    CreateWorkOrdersDto createdWorkOrder = new CreateWorkOrdersDto
-                    {
-                        AdjustmentAndControlTime =workOrder.AdjustmentAndControlTime,
-                        CurrentAccountCardID = workOrder.CurrentAccountCardID.GetValueOrDefault(),
-                        IsCancel = false,
-                        WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
-                        WorkOrderState = 1,
-                        StationID = workOrder.StationID.GetValueOrDefault(),
-                        StationGroupID = workOrder.StationGroupID.GetValueOrDefault(),
-                        RouteID = workOrder.RouteID.GetValueOrDefault(),
-                        PropositionID = workOrder.PropositionID.GetValueOrDefault(),
-                        ProductsOperationID = workOrder.ProductsOperationID.GetValueOrDefault(),
-                        ProductionOrderID = workOrder.ProductionOrderID.GetValueOrDefault(),
-                        ProductID = workOrder.ProductID.GetValueOrDefault(),
-                        ProducedQuantity = 0,
-                        PlannedQuantity = workOrder.PlannedQuantity,
-                        OrderID = workOrder.OrderID,
-                        OperationTime = workOrder.OperationTime,
-                        OccuredStartDate = _GetSQLDateAppService.GetDateFromSQL(),
-                        OccuredFinishDate = _GetSQLDateAppService.GetDateFromSQL(),
-                        LinkedWorkOrderID = input.WorkOrderID.GetValueOrDefault(),
-                        LineNr = 1
-
-                    };
-
-                    await _WorkOrdersAppService.CreateAsync(createdWorkOrder);
-              
-                }
-
-
-
             await FicheNumbersAppService.UpdateFicheNumberAsync("ContUnsRecordsChildMenu", input.FicheNo);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractUnsuitabilityReports, LogType.Insert, addedEntityId);

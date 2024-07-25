@@ -389,13 +389,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
             }
             else
             {
-                if (ListDataSource.Any(t => t.ProductID == DataSource.ProductID && t.Id != DataSource.Id))
-                {
-                    await ModalManager.WarningPopupAsync(L["UIWarningSameProductTitle"], L["UIWarningSameProductMessage"]);
-                }
-                else
-                {
-
+                
                     var updateInput = ObjectMapper.Map<SelectRoutesDto, UpdateRoutesDto>(DataSource);
 
                     result = (await UpdateAsync(updateInput)).Data;
@@ -422,7 +416,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
                     else
                         SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
 
-                }
+                
 
             }
 

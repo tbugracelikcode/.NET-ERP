@@ -117,6 +117,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder
         /// Parçalama Miktarı
         /// </summary>
         public int SplitQuantity { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Uygunsuzluk İş Emri
+        /// </summary>
+        public bool IsUnsuitabilityWorkOrder { get; set; }
 
     }
 }

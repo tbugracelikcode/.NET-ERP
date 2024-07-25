@@ -12,5 +12,7 @@ namespace TsiErp.Business.Entities.Route.Services
          Task<IDataResult<List<ListProductsOperationsDto>>> GetProductsOperationAsync(Guid productId);
 
         Task<IDataResult<SelectRouteLinesDto>> GetLinebyProductsOperationIDAsync(Guid productsOperationID);
+
+        Task<IDataResult<SelectRoutesDto>> GetbyProductIDAsync(Guid productId);
     }
 }

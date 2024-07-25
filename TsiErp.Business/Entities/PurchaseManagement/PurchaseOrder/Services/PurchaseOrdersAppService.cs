@@ -780,21 +780,21 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
             #region Depo Onaya Göre İrsaliye Durumu Belirleme
 
-            if (input.SelectPurchaseOrderLinesDto != null && input.SelectPurchaseOrderLinesDto.Count > 0)
-            {
-                if (!input.SelectPurchaseOrderLinesDto.Any(t => t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.Onaylandi || t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.KismiOnaylandi))
-                {
-                    input.PurchaseOrderWayBillStatusEnum = 1;
-                }
-                else if (!input.SelectPurchaseOrderLinesDto.Any(t => t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.Beklemede && t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.KismiOnaylandi))
-                {
-                    input.PurchaseOrderWayBillStatusEnum = 3;
-                }
-                else
-                {
-                    input.PurchaseOrderWayBillStatusEnum = 2;
-                }
-            }
+            //if (input.SelectPurchaseOrderLinesDto != null && input.SelectPurchaseOrderLinesDto.Count > 0)
+            //{
+            //    if (!input.SelectPurchaseOrderLinesDto.Any(t => t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.Onaylandi || t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.KismiOnaylandi))
+            //    {
+            //        input.PurchaseOrderWayBillStatusEnum = 1;
+            //    }
+            //    else if (!input.SelectPurchaseOrderLinesDto.Any(t => t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.Beklemede && t.PurchaseOrderLineWayBillStatusEnum == PurchaseOrderLineWayBillStatusEnum.KismiOnaylandi))
+            //    {
+            //        input.PurchaseOrderWayBillStatusEnum = 3;
+            //    }
+            //    else
+            //    {
+            //        input.PurchaseOrderWayBillStatusEnum = 2;
+            //    }
+            //}
 
             #endregion
 
