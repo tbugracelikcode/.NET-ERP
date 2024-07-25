@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActionLabel" xml:space="preserve">
+    <value>Uygunsuzluk Aksiyonu:</value>
+  </data>
+  <data name="Action_" xml:space="preserve">
+    <value>AKSİYON</value>
+  </data>
   <data name="AdjustmentUser" xml:space="preserve">
     <value>AYARI YAPAN</value>
   </data>
@@ -138,28 +144,61 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="CloseButton1" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
   <data name="Code" xml:space="preserve">
     <value>İLK ÜRÜN ONAY KODU</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="CodeControlManager1" xml:space="preserve">
+    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
   <data name="CodeLabel" xml:space="preserve">
     <value>İlk Ürün Onay Kodu:</value>
+  </data>
+  <data name="ComboboxCorrection" xml:space="preserve">
+    <value>Düzeltme</value>
+  </data>
+  <data name="ComboboxScrap" xml:space="preserve">
+    <value>Hurda</value>
+  </data>
+  <data name="ComboboxToBeUsedAs" xml:space="preserve">
+    <value>Olduğu Gibi Kullanılacak</value>
   </data>
   <data name="ControlDateLabel" xml:space="preserve">
     <value>Kontrol Tarihi:</value>
   </data>
+  <data name="CreatedWorkOrderLabel" xml:space="preserve">
+    <value>Oluşturulmuş İş Emri No:</value>
+  </data>
   <data name="CreateOperationUnsuiatabilityReportButton" xml:space="preserve">
     <value>Operasyon Uygunsuzluk Kaydı Oluştur</value>
+  </data>
+  <data name="CreateUnsuitabilityReportLabel" xml:space="preserve">
+    <value>Operasyon Uygunsuzluk Kaydı Oluşacak:</value>
   </data>
   <data name="CreationDate" xml:space="preserve">
     <value>OLUŞTURULMA TARİHİ</value>
   </data>
+  <data name="Date_" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
+  <data name="DeleteConfirmationDescriptionBase1" xml:space="preserve">
+    <value>Silmek istediğinize emin misiniz ?</value>
+  </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
+    <value>Onay</value>
+  </data>
+  <data name="DeleteConfirmationTitleBase1" xml:space="preserve">
     <value>Onay</value>
   </data>
   <data name="DeleteControlManager" xml:space="preserve">
@@ -168,20 +207,44 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="DeleteSuccessMessage1" xml:space="preserve">
+    <value>Kayıt başarıyla silindi.</value>
+  </data>
   <data name="DescriptionLabel" xml:space="preserve">
     <value>Açıklama:</value>
   </data>
   <data name="DescriptionLineLabel" xml:space="preserve">
     <value>Açıklama:</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>İlk Ürün Onayları</value>
+  </data>
+  <data name="EditModalTitle1" xml:space="preserve">
+    <value>Operasyon Uygunsuzluk Kayıtları</value>
+  </data>
+  <data name="EmployeeModalGridCode" xml:space="preserve">
+    <value>ÇALIŞAN KODU</value>
+  </data>
+  <data name="EmployeeModalGridName" xml:space="preserve">
+    <value>ÇALIŞAN ADI</value>
+  </data>
+  <data name="EmployeeModalTitle" xml:space="preserve">
+    <value>Çalışanlar</value>
   </data>
   <data name="EmployeeName" xml:space="preserve">
     <value>ONAYLAYAN KULLANICI</value>
   </data>
+  <data name="EmployeeName1" xml:space="preserve">
+    <value>ÇALIŞAN ADI</value>
+  </data>
   <data name="EmployeeNameLabel" xml:space="preserve">
     <value>Onaylayan:</value>
+  </data>
+  <data name="EmployeeNameLabel1" xml:space="preserve">
+    <value>Çalışan Adı:</value>
   </data>
   <data name="EmployeePopupGridCode" xml:space="preserve">
     <value>ONAYLAYAN KULLANICI KODU</value>
@@ -192,8 +255,20 @@
   <data name="EmployeePopupTitle" xml:space="preserve">
     <value>Personeller</value>
   </data>
+  <data name="EmptyProductOperationError" xml:space="preserve">
+    <value>Seçtiğiniz İş Emrinde ürüne özel operasyon bulunamadı.</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="Error1" xml:space="preserve">
+    <value>Hata</value>
+  </data>
+  <data name="FicheNo" xml:space="preserve">
+    <value>UYGUNSUZLUK FİŞ NO</value>
+  </data>
+  <data name="FicheNoLabel" xml:space="preserve">
+    <value>Uygunsuzluk Fiş Numarası:</value>
   </data>
   <data name="FirstProductApprovalContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -225,6 +300,12 @@
   <data name="IsFinalControlLabel" xml:space="preserve">
     <value>Final Kontrol mü? :</value>
   </data>
+  <data name="IsUnsuitabilityWorkOrder" xml:space="preserve">
+    <value>UYGUNSUZLUK İŞ EMRİ OLUŞACAK</value>
+  </data>
+  <data name="IsUnsuitabilityWorkOrderLabel" xml:space="preserve">
+    <value>Uygunsuzluk İş Emri Oluşacak:</value>
+  </data>
   <data name="LineGridBottomTolerance" xml:space="preserve">
     <value>(-) TOLERANS</value>
   </data>
@@ -255,7 +336,13 @@
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
+  <data name="LoadingCaption1" xml:space="preserve">
+    <value>Lütfen Bekleyin..</value>
+  </data>
   <data name="LoadingText" xml:space="preserve">
+    <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="LoadingText1" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
   </data>
   <data name="MeasurementValueLineLabel" xml:space="preserve">
@@ -264,22 +351,136 @@
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
+  <data name="MessagePopupInformationDescriptionBase1" xml:space="preserve">
+    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
+  </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="MessagePopupInformationTitleBase1" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
+  <data name="OperationCode" xml:space="preserve">
+    <value>OPERASYON KODU</value>
+  </data>
+  <data name="OperationCodeLabel" xml:space="preserve">
+    <value>Operasyon Kodu:</value>
+  </data>
+  <data name="OperationModalGridCode" xml:space="preserve">
+    <value>OPERASYON KODU</value>
+  </data>
+  <data name="OperationModalGridName" xml:space="preserve">
+    <value>OPERASYON AÇIKLAMASI</value>
+  </data>
+  <data name="OperationModalTitle" xml:space="preserve">
+    <value>Ürün Operasyon Kayıtları</value>
+  </data>
+  <data name="OperationNameLabel" xml:space="preserve">
+    <value>Operasyon Açıklaması:</value>
   </data>
   <data name="OperationPictureLabel" xml:space="preserve">
     <value>Operasyon Resmi:</value>
   </data>
+  <data name="OperationUnsuitabilityActionLabel" xml:space="preserve">
+    <value>Aksiyon:</value>
+  </data>
+  <data name="OperationUnsuitabilityCodeLabel" xml:space="preserve">
+    <value>Uygunsuzluk Fiş Numarası:</value>
+  </data>
+  <data name="OperationUnsuitabilityDate_Label" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
+  <data name="OperationUnsuitabilityDescription_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="OperationUnsuitabilityEmployeeNameLabel" xml:space="preserve">
+    <value>Çalışan Adı:</value>
+  </data>
+  <data name="OperationUnsuitabilityIsUnsuitabilityWorkOrderLabel" xml:space="preserve">
+    <value>Uygunsuzluk İş Emri Oluşacak:</value>
+  </data>
+  <data name="OperationUnsuitabilityReportContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="OperationUnsuitabilityReportContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="OperationUnsuitabilityReportContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="OperationUnsuitabilityReportContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="OperationUnsuitabilityUnsuitabilityItemsNameLabel" xml:space="preserve">
+    <value>Hata Başlığı:</value>
+  </data>
+  <data name="OperationUnsuitabilityUnsuitabilityStationCodeLabel" xml:space="preserve">
+    <value>İstasyon Kodu:</value>
+  </data>
+  <data name="OperationUnsuitabilityUnsuitabilityStationNameLabel" xml:space="preserve">
+    <value>İstasyon Açıklaması:</value>
+  </data>
+  <data name="OperationUnsuitabilityUnsuitableAmountLabel" xml:space="preserve">
+    <value>Hatalı Miktar:</value>
+  </data>
+  <data name="OperationUnsuitabilityWorkOrderNoLabel" xml:space="preserve">
+    <value>İş Emri:</value>
+  </data>
   <data name="ProductCode" xml:space="preserve">
+    <value>ÜRÜN KODU</value>
+  </data>
+  <data name="ProductCode1" xml:space="preserve">
     <value>ÜRÜN KODU</value>
   </data>
   <data name="ProductCodeLabel" xml:space="preserve">
     <value>Ürün Kodu:</value>
   </data>
+  <data name="ProductCodeLabel1" xml:space="preserve">
+    <value>Ürün Kodu:</value>
+  </data>
   <data name="ProductionOrderFicheNo" xml:space="preserve">
     <value>ÜRETİM EMRİ NO</value>
   </data>
+  <data name="ProductionOrderFicheNo1" xml:space="preserve">
+    <value>ÜRETİM EMRİ FİŞ NO</value>
+  </data>
+  <data name="ProductionOrderFicheNoLabel" xml:space="preserve">
+    <value>Üretim Emri Fiş Numarası:</value>
+  </data>
+  <data name="ProductionOrderModalGridBOMName" xml:space="preserve">
+    <value>REÇETE AÇIKLAMASI</value>
+  </data>
+  <data name="ProductionOrderModalGridFicheNo" xml:space="preserve">
+    <value>FİŞ NO</value>
+  </data>
+  <data name="ProductionOrderModalGridFinishedProductCode" xml:space="preserve">
+    <value>MAMÜL KODU</value>
+  </data>
+  <data name="ProductionOrderModalGridFinishedProductName" xml:space="preserve">
+    <value>MAMÜL AÇIKLAMASI</value>
+  </data>
+  <data name="ProductionOrderModalGridOrderFicheNo" xml:space="preserve">
+    <value>SİPARİŞ FİŞ NO</value>
+  </data>
+  <data name="ProductionOrderModalTitle" xml:space="preserve">
+    <value>Üretim Emirleri</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="ProductNameLabel" xml:space="preserve">
+    <value>Ürün Açıklaması:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="SaveButton1" xml:space="preserve">
     <value>Kaydet</value>
   </data>
   <data name="ScrapQuantityLabel" xml:space="preserve">
@@ -288,14 +489,68 @@
   <data name="ShowButton" xml:space="preserve">
     <value>Operasyon Resmini Göster</value>
   </data>
+  <data name="StationCode" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
+  <data name="StationCodeLabel" xml:space="preserve">
+    <value>İstasyon Kodu:</value>
+  </data>
+  <data name="StationGroupCode" xml:space="preserve">
+    <value>İSTASYON GRUP KODU</value>
+  </data>
+  <data name="StationGroupCodeLabel" xml:space="preserve">
+    <value>İstasyon Grup Kodu:</value>
+  </data>
+  <data name="StationGroupModalCode" xml:space="preserve">
+    <value>İSTASYON GRUP KODU</value>
+  </data>
+  <data name="StationGroupModalName" xml:space="preserve">
+    <value>İSTASYON GRUP AÇIKLAMASI</value>
+  </data>
+  <data name="StationGroupModalTitle" xml:space="preserve">
+    <value>İş İstasyon Grupları</value>
+  </data>
+  <data name="StationGroupNameLabel" xml:space="preserve">
+    <value>İstasyon Grup Açıklaması:</value>
+  </data>
+  <data name="StationModalGridCode" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
+  <data name="StationModalGridName" xml:space="preserve">
+    <value>İSTASYON AÇIKLAMASI</value>
+  </data>
+  <data name="StationModalTitle" xml:space="preserve">
+    <value>İş İstasyonları</value>
+  </data>
+  <data name="StationNameLabel" xml:space="preserve">
+    <value>İstasyon Açıklaması:</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Genel Bilgiler</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Operasyon Uygunsuzluk Kaydı</value>
+  </data>
+  <data name="UICorrection" xml:space="preserve">
+    <value>Düzeltme</value>
+  </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>İlk Ürün Onayları</value>
+  </data>
+  <data name="UICurrentMenu1" xml:space="preserve">
+    <value>Operasyon Uygunsuzluk Kayıtları</value>
   </data>
   <data name="UIExportFileName" xml:space="preserve">
     <value>IlkUrunOnaylari</value>
   </data>
+  <data name="UIExportFileName1" xml:space="preserve">
+    <value>OprUygKayitlari</value>
+  </data>
   <data name="UIExportTitle" xml:space="preserve">
     <value>İlk Ürün Onayları</value>
+  </data>
+  <data name="UIExportTitle1" xml:space="preserve">
+    <value>Operasyon Uygunsuzluk Kayıtları</value>
   </data>
   <data name="UILineDeleteConfirmation" xml:space="preserve">
     <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
@@ -315,26 +570,122 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Hareketler</value>
   </data>
+  <data name="UIPreviousMenu1" xml:space="preserve">
+    <value>Kalite Kontrol &gt; Hareketler &gt; Uygunsuzluk Kayıtları</value>
+  </data>
+  <data name="UIQualityPlanMessageMessage" xml:space="preserve">
+    <value>Bu kaydın iş emri seçilmemiş ya da seçilmiş olan iş emrine bağlı operasyon kalite planı kaydı bulunmamaktadır.</value>
+  </data>
+  <data name="UIQualityPlanMessageTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIScrap" xml:space="preserve">
+    <value>Hurda</value>
+  </data>
+  <data name="UIScrapQuantityMessage" xml:space="preserve">
+    <value>Hurda miktarınız 0 olduğu için Operasyon Uygunsuzluk kaydı yapılmayacaktır. Devam etmek istiyor musunuz?</value>
+  </data>
+  <data name="UIScrapQuantityTitle" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
+  <data name="UIToBeUsedAs" xml:space="preserve">
+    <value>Olduğu Gibi Kullanılacak</value>
+  </data>
+  <data name="UIWarningWorkOrderMessageEmployeebase" xml:space="preserve">
+    <value>İş emri seçmeden çalışan seçilemez.</value>
+  </data>
+  <data name="UIWarningWorkOrderMessageStationbase" xml:space="preserve">
+    <value>İş emri seçmeden iş istasyonu seçilemez.</value>
+  </data>
+  <data name="UIWarningWorkOrderTitlebase" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UnsuitabilityItemModalGridCode" xml:space="preserve">
+    <value>UYGUNSUZLUK BAŞLIĞI KODU</value>
+  </data>
+  <data name="UnsuitabilityItemModalGridName" xml:space="preserve">
+    <value>UYGUNSUZLUK BAŞLIĞI ADI</value>
+  </data>
+  <data name="UnsuitabilityItemModalTitle" xml:space="preserve">
+    <value>Uygunsuzluk Başlıkları</value>
+  </data>
+  <data name="UnsuitabilityItemsNameLabel" xml:space="preserve">
+    <value>Hata Başlığı:</value>
+  </data>
+  <data name="UnsuitableAmountLabel" xml:space="preserve">
+    <value>Hatalı Miktar:</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="UpdateControlManager1" xml:space="preserve">
+    <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Lütfen ilk ürün onay kodunu yazın.</value>
   </data>
+  <data name="ValidatorCodeEmpty1" xml:space="preserve">
+    <value>Lütfen fiş numarasını yazın.</value>
+  </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
     <value>İlk ürün onay kodu 17 karakterden fazla olamaz.</value>
   </data>
+  <data name="ValidatorCodeMaxLenght1" xml:space="preserve">
+    <value>Fiş numarası, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorDate" xml:space="preserve">
+    <value>Lütfen tarihi seçin.</value>
+  </data>
+  <data name="ValidatorEmployeeID" xml:space="preserve">
+    <value>Lütfen çalışan seçin.</value>
+  </data>
+  <data name="ValidatorOperationID" xml:space="preserve">
+    <value>Lütfen operasyon seçin.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Lütfen ürün seçin.</value>
+  </data>
+  <data name="ValidatorProductionOrderID" xml:space="preserve">
+    <value>Lütfen üretim emri seçin.</value>
+  </data>
+  <data name="ValidatorStationGroupID" xml:space="preserve">
+    <value>Lütfen istasyon grubu seçin.</value>
+  </data>
+  <data name="ValidatorStationID" xml:space="preserve">
+    <value>Lütfen iş istasyonu seçin.</value>
+  </data>
   <data name="ValidatorWorkOrderID" xml:space="preserve">
+    <value>Lütfen iş emri seçin.</value>
+  </data>
+  <data name="ValidatorWorkOrderID1" xml:space="preserve">
     <value>Lütfen iş emri seçin.</value>
   </data>
   <data name="WaitingtobeApproved" xml:space="preserve">
     <value>Onay Beliyor</value>
   </data>
+  <data name="WorkOrderModalGridOperationCode" xml:space="preserve">
+    <value>OPERASYON KODU</value>
+  </data>
+  <data name="WorkOrderModalGridOperationName" xml:space="preserve">
+    <value>OPERASYON ADI</value>
+  </data>
+  <data name="WorkOrderModalGridWorkOrderNo" xml:space="preserve">
+    <value>İŞ EMRİ NO</value>
+  </data>
+  <data name="WorkOrderModalTitle" xml:space="preserve">
+    <value>İş Emirleri</value>
+  </data>
   <data name="WorkOrderNo" xml:space="preserve">
     <value>İŞ EMRİ</value>
   </data>
+  <data name="WorkOrderNo1" xml:space="preserve">
+    <value>İŞ EMRİ NO</value>
+  </data>
   <data name="WorkOrderNoLabel" xml:space="preserve">
     <value>İş Emri:</value>
+  </data>
+  <data name="WorkOrderNoLabel1" xml:space="preserve">
+    <value>İş Emri Numarası:</value>
   </data>
   <data name="WorkOrderPopupGridProductCode" xml:space="preserve">
     <value>ÜRÜN KODU</value>

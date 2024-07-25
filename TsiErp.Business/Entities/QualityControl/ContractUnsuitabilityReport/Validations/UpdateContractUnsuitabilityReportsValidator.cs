@@ -22,7 +22,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Validations
 
             RuleFor(x => x.UnsuitabilityItemsID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorUnsuitabilityItemsID");
 
-            RuleFor(x => x.WorkOrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorWorkOrderID");
+            //RuleFor(x => x.WorkOrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorWorkOrderID");
 
             RuleFor(x => x.ProductionOrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductionOrderID");
 

@@ -1,4 +1,6 @@
 ﻿@page "/"
+
+@using TsiErp.Business.Entities.ProgVersion.Services;
 @using TsiErp.ErpUI.Models;
 
 @inject NavigationManager NavigationManager
@@ -6,6 +8,7 @@
 @inject IUsersAppService UsersAppService
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IPurchaseManagementParametersAppService PurchaseManagementParametersAppService
+@inject IProgVersionsAppService ProgVersionsAppService
 
 <!doctype html>
 <html class="no-js" lang="">
@@ -193,13 +196,15 @@
             LoginedUserService.PurchaseRequestExchangeRateType = purchaseManagementParameter.PurchaseRequestExchangeRateType;
         }
 
+        await ProgVersionsAppService.TableAddColumn();
+
         NavigationManager.NavigateTo("/home");
 
     }
+
     private void OnOkButtonClicked()
     {
         vispopup = false;
         NavigationManager.NavigateTo("/");
     }
-
 }

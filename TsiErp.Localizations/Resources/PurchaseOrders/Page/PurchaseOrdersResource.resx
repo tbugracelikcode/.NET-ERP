@@ -433,7 +433,7 @@
     <value>Sil</value>
   </data>
   <data name="PurchaseOrderContextPriceApproval" xml:space="preserve">
-    <value>Fiyat Onayı Ver</value>
+    <value>Fatura Onayı Ver</value>
   </data>
   <data name="PurchaseOrderContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
@@ -547,7 +547,7 @@
     <value>Satın Alma Yönetimi &gt; Hareketler</value>
   </data>
   <data name="UIPriceStatusApprovalMessage" xml:space="preserve">
-    <value>Seçtiğiniz siparişin fiyat onayı verilecektir.</value>
+    <value>Seçtiğiniz siparişin fatura onayı verilecektir.</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>Birim seti seçilmeden satır kaydetme işlemi yapılamaz.</value>
@@ -680,5 +680,23 @@
   </data>
   <data name="WaitingQuantityLineLabel" xml:space="preserve">
     <value>Bekleyen Miktar:</value>
+  </data>
+  <data name="PurchaseOrderContextWayBillApproval" xml:space="preserve">
+    <value>İrsaliye Onayı Ver</value>
+  </data>
+  <data name="UIWarningStateMessage" xml:space="preserve">
+    <value>Durumu "Onaylandı" olmayan siparişlerin fatura onayı verilemez.</value>
+  </data>
+  <data name="UIWarningStateTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningStateWayBillMessage" xml:space="preserve">
+    <value>Durumu "Onaylandı" olmayan siparişlerin irsaliye onayı verilemez.</value>
+  </data>
+  <data name="UIWarningStockFichesWayBillMessage" xml:space="preserve">
+    <value>İrsaliye durumu beklemede olan kaydın Stok Giriş Fişi oluşturulamaz.</value>
+  </data>
+  <data name="UIWayBillStatusApprovalMessage" xml:space="preserve">
+    <value>Seçtiğiniz siparişin irsaliye onayı verilecektir.</value>
   </data>
 </root>

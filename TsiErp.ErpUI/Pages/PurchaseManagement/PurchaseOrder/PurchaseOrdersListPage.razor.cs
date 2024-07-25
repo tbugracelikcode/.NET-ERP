@@ -665,7 +665,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 {
                     if (DataSource.PurchaseOrderState == Entities.Enums.PurchaseOrderStateEnum.Tamamlandi || DataSource.PurchaseOrderState == Entities.Enums.PurchaseOrderStateEnum.KismiTamamlandi)
                     {
-                        var stockFicheIDs = (await StockFichesAppService.GetListAsync(new ListStockFichesParameterDto())).Data.Where(t => t.PurchaseOrderID == DataSource.Id).Select(t => t.Id).ToList();
+                        var stockFicheIDs = (await StockFichesAppService.GetListbyPurchaseOrderAsync(DataSource.Id)).Data.Select(t=>t.Id).ToList();
 
                         foreach (var stockFicheID in stockFicheIDs)
                         {
@@ -677,9 +677,12 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     {
                         int lineIndex = DataSource.SelectPurchaseOrderLinesDto.IndexOf(line);
                         DataSource.SelectPurchaseOrderLinesDto[lineIndex].PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Iptal;
+                        DataSource.SelectPurchaseOrderLinesDto[lineIndex].PurchaseOrderLineWayBillStatusEnum =  PurchaseOrderLineWayBillStatusEnum.Beklemede;
                     }
 
                     DataSource.PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Iptal;
+                    DataSource.PurchaseOrderWayBillStatusEnum =  PurchaseOrderWayBillStatusEnum.Beklemede;
+                    DataSource.PriceApprovalState =  PurchaseOrderPriceApprovalStateEnum.Beklemede;
                     var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
                     await UpdateAsync(updateInput);
                 }
@@ -1084,6 +1087,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextRefresh"], Id = "refresh" }); break;
                             case "PurchaseOrderContextPriceApproval":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextPriceApproval"], Id = "priceApproval" }); break;
+                            case "PurchaseOrderContextWayBillApproval":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseOrderContextWayBillApproval"], Id = "waybillapproval" }); break;
                             default: break;
                         }
                     }
@@ -1162,6 +1167,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     break;
 
                 case "createstockfiches":
+
                     DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectPurchaseOrderLinesDto;
 
@@ -1171,31 +1177,44 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     }
                     else
                     {
-                        bool selectedLine = false;
 
-                        foreach (var line in GridLineList)
+                        if(DataSource.PurchaseOrderWayBillStatusEnum == PurchaseOrderWayBillStatusEnum.Beklemede)
                         {
-                            if (line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
-                            {
-                                selectedLine = true;
-                            }
-                            CreateStockReceiptFishes createStockReceiptFichesModel = new CreateStockReceiptFishes
-                            {
-                                PurchaseStateLine = line.PurchaseOrderLineStateEnum,
-                                ProductCode = line.ProductCode,
-                                ProductID = line.ProductID,
-                                ProductName = line.ProductName,
-                                Quantity = line.Quantity,
-                                UnitSetCode = line.UnitSetCode,
-                                UnitSetID = line.UnitSetID,
-                                SelectedLine = selectedLine,
-                                LineID = line.Id,
-                            };
-
-                            CreateStockFishesList.Add(createStockReceiptFichesModel);
+                            await ModalManager.WarningPopupAsync(L["UIWarningStockFichesTitle"], L["UIWarningStockFichesWayBillMessage"]);
                         }
+                        else
+                        {
+                            bool selectedLine = false;
 
-                        CreateStockFishesCrudPopup = true;
+                            foreach (var line in GridLineList)
+                            {
+                                if(line.PurchaseOrderLineWayBillStatusEnum != PurchaseOrderLineWayBillStatusEnum.Beklemede)
+                                {
+                                    if (line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
+                                    {
+                                        selectedLine = true;
+                                    }
+                                    CreateStockReceiptFishes createStockReceiptFichesModel = new CreateStockReceiptFishes
+                                    {
+                                        PurchaseStateLine = line.PurchaseOrderLineStateEnum,
+                                        ProductCode = line.ProductCode,
+                                        ProductID = line.ProductID,
+                                        ProductName = line.ProductName,
+                                        Quantity = line.Quantity,
+                                        UnitSetCode = line.UnitSetCode,
+                                        UnitSetID = line.UnitSetID,
+                                        SelectedLine = selectedLine,
+                                        LineID = line.Id,
+                                    };
+
+                                    CreateStockFishesList.Add(createStockReceiptFichesModel);
+                                }
+                              
+                            }
+
+                            CreateStockFishesCrudPopup = true;
+                        }
+                        
                     }
 
 
@@ -1257,18 +1276,59 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     break;
 
                 case "priceApproval":
-                    var resConfirm = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIPriceStatusApprovalMessage"]);
 
-                    if (resConfirm == true)
+                    var order = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    if (order.PurchaseOrderState == PurchaseOrderStateEnum.Onaylandı)
                     {
-                        var order = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                        order.PriceApprovalState = PurchaseOrderPriceApprovalStateEnum.Onaylandi;
-                        var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(order);
-                        await UpdateAsync(updateInput);
+                        var resConfirm = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIPriceStatusApprovalMessage"]);
+
+                        if (resConfirm == true)
+                        {
+                            order.PriceApprovalState = PurchaseOrderPriceApprovalStateEnum.Onaylandi;
+                            var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(order);
+                            await UpdateAsync(updateInput);
+                        }
+
+                        await GetListDataSourceAsync();
+                        await _grid.Refresh();
+                    }
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningStateTitle"], L["UIWarningStateMessage"]);
                     }
 
-                    await GetListDataSourceAsync();
-                    await _grid.Refresh();
+                   
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "waybillapproval":
+
+                    DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    if(DataSource.PurchaseOrderState == PurchaseOrderStateEnum.Onaylandı)
+                    {
+                        var resWayBillConfirm = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIWayBillStatusApprovalMessage"]);
+
+                        if (resWayBillConfirm == true)
+                        {
+
+                            DataSource.PurchaseOrderWayBillStatusEnum = PurchaseOrderWayBillStatusEnum.Onaylandi;
+
+                            var updatedEntity = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
+
+                            await UpdateAsync(updatedEntity);
+                        }
+
+                        await GetListDataSourceAsync();
+                        await _grid.Refresh();
+                    }
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningStateTitle"], L["UIWarningStateWayBillMessage"]);
+                    }
+                    
+
                     await InvokeAsync(StateHasChanged);
                     break;
 

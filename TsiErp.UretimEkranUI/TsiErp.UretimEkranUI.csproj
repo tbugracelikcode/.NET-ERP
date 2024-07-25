@@ -152,3 +152,156 @@
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" />
   </ItemGroup>
 </Project>
+  <PropertyGroup>
+    <TargetFrameworks>
+    </TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+    <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+    <!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TsiErp.UretimEkranUI</RootNamespace>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableDefaultCssItems>false</EnableDefaultCssItems>
+    <!-- Display name -->
+    <ApplicationTitle>TsiErp.UretimEkranUI</ApplicationTitle>
+    <!-- App Identifier -->
+    <ApplicationId>com.companyname.tsierp.uretimekranui</ApplicationId>
+    <ApplicationIdGuid>BCC82C63-DA8C-4F9E-8E73-2F9E21D36F77</ApplicationIdGuid>
+    <!-- Versions -->
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+    <WindowsPackageType Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">None</WindowsPackageType>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+    <Platforms>AnyCPU;x64</Platforms>
+    <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppInstallerUri>D:\Projeler\TSICENTER\ERP\UretimEkranPublish</AppInstallerUri>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- App Icon -->
+    <!-- Splash Screen -->
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+    <!-- Images -->
+    <MauiImage Include="Resources\Images\*" />
+    <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+    <!-- Custom Fonts -->
+    <MauiFont Include="Resources\Fonts\*" />
+    <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+    <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\login\css\webfonts\fa-brands-400.woff2" />
+    <Content Remove="wwwroot\login\css\webfonts\fa-regular-400.woff2" />
+    <Content Remove="wwwroot\login\css\webfonts\fa-solid-900.woff2" />
+    <Content Remove="wwwroot\login\font\Flaticon.svg" />
+    <Content Remove="wwwroot\login\font\Flaticon.woff2" />
+    <Content Remove="wwwroot\login\font\_flaticon.scss" />
+    <Content Remove="wwwroot\login\js\bootstrap.min.js" />
+    <Content Remove="wwwroot\login\js\imagesloaded.pkgd.min.js" />
+    <Content Remove="wwwroot\login\js\jquery-3.5.0.min.js" />
+    <Content Remove="wwwroot\login\js\jquery.mb.YTPlayer.min.js" />
+    <Content Remove="wwwroot\login\js\main.js" />
+    <Content Remove="wwwroot\login\js\particles-1.js" />
+    <Content Remove="wwwroot\login\js\particles-2.js" />
+    <Content Remove="wwwroot\login\js\particles-3.js" />
+    <Content Remove="wwwroot\login\js\particles.js" />
+    <Content Remove="wwwroot\login\js\particles.min.js" />
+    <Content Remove="wwwroot\login\js\popper.min.js" />
+    <Content Remove="wwwroot\login\js\star-animation.js" />
+    <Content Remove="wwwroot\login\js\starfield.js" />
+    <Content Remove="wwwroot\login\js\validator.min.js" />
+    <Content Remove="wwwroot\login\js\vegas.min.js" />
+    <Content Remove="wwwroot\login\less\style.less" />
+    <Content Remove="wwwroot\login\sass\base\bases\_animation-classes.scss" />
+    <Content Remove="wwwroot\login\sass\base\bases\_default.scss" />
+    <Content Remove="wwwroot\login\sass\base\bases\_typography.scss" />
+    <Content Remove="wwwroot\login\sass\base\bases\_variables.scss" />
+    <Content Remove="wwwroot\login\sass\base\_bases.scss" />
+    <Content Remove="wwwroot\login\sass\layout\layouts\_template-layout31.scss" />
+    <Content Remove="wwwroot\login\sass\layout\_layouts.scss" />
+    <Content Remove="wwwroot\login\sass\README.md" />
+    <Content Remove="wwwroot\login\sass\style.scss" />
+    <Content Remove="wwwroot\login\webfonts\fa-brands-400.woff2" />
+    <Content Remove="wwwroot\login\webfonts\fa-regular-400.woff2" />
+    <Content Remove="wwwroot\login\webfonts\fa-solid-900.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\login\css\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\login\css\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\login\css\webfonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\login\font\Flaticon.svg" />
+    <None Include="wwwroot\login\font\Flaticon.woff2" />
+    <None Include="wwwroot\login\font\_flaticon.scss" />
+    <None Include="wwwroot\login\js\bootstrap.min.js" />
+    <None Include="wwwroot\login\js\imagesloaded.pkgd.min.js" />
+    <None Include="wwwroot\login\js\jquery-3.5.0.min.js" />
+    <None Include="wwwroot\login\js\jquery.mb.YTPlayer.min.js" />
+    <None Include="wwwroot\login\js\main.js" />
+    <None Include="wwwroot\login\js\particles-1.js" />
+    <None Include="wwwroot\login\js\particles-2.js" />
+    <None Include="wwwroot\login\js\particles-3.js" />
+    <None Include="wwwroot\login\js\particles.js" />
+    <None Include="wwwroot\login\js\particles.min.js" />
+    <None Include="wwwroot\login\js\popper.min.js" />
+    <None Include="wwwroot\login\js\star-animation.js" />
+    <None Include="wwwroot\login\js\starfield.js" />
+    <None Include="wwwroot\login\js\validator.min.js" />
+    <None Include="wwwroot\login\js\vegas.min.js" />
+    <None Include="wwwroot\login\less\style.less" />
+    <None Include="wwwroot\login\sass\base\bases\_animation-classes.scss" />
+    <None Include="wwwroot\login\sass\base\bases\_default.scss" />
+    <None Include="wwwroot\login\sass\base\bases\_typography.scss" />
+    <None Include="wwwroot\login\sass\base\bases\_variables.scss" />
+    <None Include="wwwroot\login\sass\base\_bases.scss" />
+    <None Include="wwwroot\login\sass\layout\layouts\_template-layout31.scss" />
+    <None Include="wwwroot\login\sass\layout\_layouts.scss" />
+    <None Include="wwwroot\login\sass\README.md" />
+    <None Include="wwwroot\login\sass\style.scss" />
+    <None Include="wwwroot\login\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\login\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\login\webfonts\fa-solid-900.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Blazored.Modal" Version="7.0.0" />
+    <PackageReference Include="DevExpress.Blazor.Themes" Version="23.2.3" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+    <PackageReference Include="Syncfusion.Blazor.CircularGauge" Version="23.1.43" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="23.1.43" />
+    <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="23.1.43" />
+    <PackageReference Include="Syncfusion.Blazor.Inputs" Version="23.1.43" />
+    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="23.1.43" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="23.1.43" />
+    <PackageReference Include="Syncfusion.Blazor.FileManager" Version="23.1.43" />
+    <PackageReference Include="Syncfusion.Blazor.SplitButtons" Version="23.1.43" />
+    <PackageReference Include="Syncfusion.Blazor.Notifications" Version="23.1.43" />
+    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="23.1.43" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="23.1.43" />
+    <PackageReference Include="Syncfusion.Blazor.PdfViewerServer.Windows" Version="23.1.43" />
+    <PackageReference Include="Syncfusion.Blazor.Cards" Version="23.1.43" />
+    <PackageReference Include="DevExpress.Blazor" Version="23.2.3" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+    <PackageReference Include="System.IO.Ports" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
+    <ProjectReference Include="..\TSI.QueryBuilder\TSI.QueryBuilder.csproj" />
+    <ProjectReference Include="..\TsiErp.Business\TsiErp.Business.csproj" />
+    <ProjectReference Include="..\TsiErp.Connector\TsiErp.Connector.csproj" />
+    <ProjectReference Include="..\TsiErp.Entities\TsiErp.Entities.csproj" />
+    <ProjectReference Include="..\TsiErp.Localizations\TsiErp.Localizations.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" />
+  </ItemGroup>
+</Project>
