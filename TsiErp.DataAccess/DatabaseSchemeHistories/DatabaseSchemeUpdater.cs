@@ -171,6 +171,8 @@ using TsiErp.Entities.Entities.TestManagement.Sector;
 using TsiErp.Entities.Entities.TestManagement.SectorLine;
 using TsiErp.Entities.Entities.TestManagement.District;
 using TsiErp.Entities.Entities.TestManagement.City;
+using System.Data;
+using Microsoft.SqlServer.Management.Common;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -4489,7 +4491,7 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 EmployeeSenioritiesTable.Create();
             }
             #endregion
-            
+
             #region EmployeeAnnualSeniorityDifferences Table Created
             Table EmployeeAnnualSeniorityDifferencesTable = model.CreateTable(Tables.EmployeeAnnualSeniorityDifferences);
 
@@ -4559,7 +4561,7 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 EducationLevelScoresTable.Create();
             }
             #endregion
-            
+
             #region EmployeeGeneralSkillRecords Table Created
             Table EmployeeGeneralSkillRecordsTable = model.CreateTable(Tables.EmployeeGeneralSkillRecords);
 
@@ -4629,7 +4631,7 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 TaskScoringsTable.Create();
             }
             #endregion
-            
+
             #region GeneralSkillRecordPriorities Table Created
             Table GeneralSkillRecordPrioritiesTable = model.CreateTable(Tables.GeneralSkillRecordPriorities);
 
@@ -6001,6 +6003,91 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
             //---------------------
 
             return true;
+        }
+
+
+        public void DbAlterTable()
+        {
+            var queryFactory = new QueryFactory();
+
+            queryFactory.ConnectToDatabase();
+
+            DatabaseModel model = new DatabaseModel(queryFactory.Connection);
+
+            Server server = model.ConnectToServer();
+
+            Database database = server.Databases[queryFactory.Connection.Database];
+
+            var addAttr = (typeof(DatabaseAlterTable)).GetProperties().Where(t => t.IsDefined(typeof(DatabaseAddColumnAttribute), false)).Count();
+
+            var dropAttr = (typeof(DatabaseAlterTable)).GetProperties().Where(t => t.IsDefined(typeof(DatabaseDropColumnAttribute), false)).Count();
+
+            #region Add Column
+
+            if (addAttr > 0)
+            {
+                var groupedAddList = (typeof(DatabaseAlterTable)).GetProperties().GroupBy(t => t.GetCustomAttribute<DatabaseAddColumnAttribute>().TableName).ToList();
+
+                foreach (var grouped in groupedAddList)
+                {
+                    string tableName = grouped.Key;
+
+                    foreach (var item in grouped.ToList())
+                    {
+                        var dbType = item.GetCustomAttribute<DatabaseAddColumnAttribute>().SqlDbType;
+                        var required = item.GetCustomAttribute<DatabaseAddColumnAttribute>().Nullable;
+                        var maxLength = item.GetCustomAttribute<DatabaseAddColumnAttribute>().MaxLength;
+                        var scale = item.GetCustomAttribute<DatabaseAddColumnAttribute>().Scale;
+                        var precision = item.GetCustomAttribute<DatabaseAddColumnAttribute>().Precision;
+                        var isPrimaryKey = item.GetCustomAttribute<DatabaseAddColumnAttribute>().IsPrimaryKey;
+                        var default_ = item.GetCustomAttribute<DatabaseAddColumnAttribute>().Default_;
+
+                        Table table = database.Tables[tableName];
+
+                        Column column = new Column(table, item.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+
+                        column.Nullable = required;
+
+                        var defaultConstraint = column.AddDefaultConstraint("DF_" + tableName + "_" + item.Name + "_");
+                        defaultConstraint.Text = default_;
+                        column.Default = default_;
+
+                        if (!table.Columns.Contains(column.Name))
+                        {
+                            table.Columns.Add(column);
+
+                            table.Alter();
+                        }
+
+                    }
+                }
+            }
+            #endregion
+
+            #region Drop Column
+
+            if (dropAttr > 0)
+            {
+                var groupedDropList = (typeof(DatabaseAlterTable)).GetProperties().GroupBy(t => t.GetCustomAttribute<DatabaseDropColumnAttribute>().TableName).ToList();
+
+                foreach (var grouped in groupedDropList)
+                {
+                    string tableName = grouped.Key;
+
+                    foreach (var item in grouped.ToList())
+                    {
+
+                        var columnName = item.GetCustomAttribute<DatabaseDropColumnAttribute>().ColumnName;
+
+                        Table table = database.Tables[tableName];
+
+                        table.Columns[columnName].DropIfExists();
+
+                        table.Alter();
+                    }
+                }
+            }
+            #endregion
         }
     }
 }

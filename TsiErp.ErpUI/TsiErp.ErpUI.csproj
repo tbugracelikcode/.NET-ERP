@@ -1,150 +1,139 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
-	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-		<Nullable>disable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Version>1.23.4</Version>
-		<Copyright>TSI TEKNOLOJİ YAZILIM HİZMETLERİ A.Ş.</Copyright>
-		<RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
-		<RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
-		<EnableNETAnalyzers>False</EnableNETAnalyzers>
-	</PropertyGroup>
-
-	<ItemGroup>
-	  <Compile Remove="Pages\GeneralSystemIdentifications\GeneralParameter\**" />
-	  <Compile Remove="Pages\GeneralSystemIdentifications\MachineAndWorkforceManagementParameter\**" />
-	  <Compile Remove="Pages\GeneralSystemIdentifications\MaintenanceManagementParameter\**" />
-	  <Compile Remove="Pages\GeneralSystemIdentifications\QualityControlParameter\**" />
-	  <Compile Remove="Pages\GeneralSystemIdentifications\ShippingManagementParameter\**" />
-	  <Content Remove="Pages\GeneralSystemIdentifications\GeneralParameter\**" />
-	  <Content Remove="Pages\GeneralSystemIdentifications\MachineAndWorkforceManagementParameter\**" />
-	  <Content Remove="Pages\GeneralSystemIdentifications\MaintenanceManagementParameter\**" />
-	  <Content Remove="Pages\GeneralSystemIdentifications\QualityControlParameter\**" />
-	  <Content Remove="Pages\GeneralSystemIdentifications\ShippingManagementParameter\**" />
-	  <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\GeneralParameter\**" />
-	  <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\MachineAndWorkforceManagementParameter\**" />
-	  <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\MaintenanceManagementParameter\**" />
-	  <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\QualityControlParameter\**" />
-	  <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\ShippingManagementParameter\**" />
-	  <None Remove="Pages\GeneralSystemIdentifications\GeneralParameter\**" />
-	  <None Remove="Pages\GeneralSystemIdentifications\MachineAndWorkforceManagementParameter\**" />
-	  <None Remove="Pages\GeneralSystemIdentifications\MaintenanceManagementParameter\**" />
-	  <None Remove="Pages\GeneralSystemIdentifications\QualityControlParameter\**" />
-	  <None Remove="Pages\GeneralSystemIdentifications\ShippingManagementParameter\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Remove="Pages\ComponentTest.razor" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<EmbeddedResource Remove="Resources\SfResources.tr-TR.resx" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Blazor.Bootstrap" Version="2.2.1" />
-		<PackageReference Include="Blazored.Menu" Version="2.2.0" />
-		<PackageReference Include="Blazored.Modal" Version="7.0.0" />
-		<PackageReference Include="BlazorInputFile" Version="0.2.0" />
-		<PackageReference Include="DevExpress.Blazor" Version="23.2.3" />
-		<PackageReference Include="DevExpress.Blazor.Reporting.Viewer" Version="23.2.3" />
-		<PackageReference Include="DevExpress.Reporting.Core" Version="23.2.3" />
-		<PackageReference Include="Syncfusion.Blazor.Grid" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Schedule" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Charts" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.CircularGauge" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Diagrams" Version="20.2.0.46" />
-		<PackageReference Include="Syncfusion.Blazor.LinearGauge" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.SmithChart" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.PdfViewerServer.Windows" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Calendars" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.InPlaceEditor" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.DropDowns" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Lists" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Layouts" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Cards" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Inputs" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Buttons" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Navigations" Version="20.3.0.59" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.26" />
-		<PackageReference Include="Syncfusion.Blazor.Spinner" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Pdf.Net.Core" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.DocIO.Net.Core" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Presentation.Net.Core" Version="20.3.0.59" />
-		<PackageReference Include="Syncfusion.Blazor.Themes" Version="20.3.0.59" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
-		<ProjectReference Include="..\TsiErp.Business\TsiErp.Business.csproj" />
-		<ProjectReference Include="..\TsiErp.Entities\TsiErp.Entities.csproj" />
-		<ProjectReference Include="..\TsiErp.Localizations\TsiErp.Localizations.csproj" />
-		<ProjectReference Include="..\TsiErp.WebAPI\TsiErp.WebAPI.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Update="Resources\SfResources.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>SfResources.resx</DependentUpon>
-		</Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-		<EmbeddedResource Update="Resources\SfResources.tr.resx">
-			<SubType>Designer</SubType>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Resources\SfResources.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>SfResources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="wwwroot\ExportedGridFiles\" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="Components\Commons\Loadings\CircleLoading.razor" />
-		<None Include="Components\Layouts\DevGridLayout.razor" />
-		<None Include="Components\Layouts\DevPopupListPageLayout.razor" />
-		<None Include="wwwroot\login\font\Flaticon.svg" />
-		<None Include="wwwroot\login\font\Flaticon.woff2" />
-		<None Include="wwwroot\login\font\_flaticon.scss" />
-		<None Include="wwwroot\login\js\bootstrap.min.js" />
-		<None Include="wwwroot\login\js\imagesloaded.pkgd.min.js" />
-		<None Include="wwwroot\login\js\jquery-3.5.0.min.js" />
-		<None Include="wwwroot\login\js\jquery.mb.YTPlayer.min.js" />
-		<None Include="wwwroot\login\js\main.js" />
-		<None Include="wwwroot\login\js\particles-1.js" />
-		<None Include="wwwroot\login\js\particles-2.js" />
-		<None Include="wwwroot\login\js\particles-3.js" />
-		<None Include="wwwroot\login\js\particles.js" />
-		<None Include="wwwroot\login\js\particles.min.js" />
-		<None Include="wwwroot\login\js\popper.min.js" />
-		<None Include="wwwroot\login\js\star-animation.js" />
-		<None Include="wwwroot\login\js\starfield.js" />
-		<None Include="wwwroot\login\js\validator.min.js" />
-		<None Include="wwwroot\login\js\vegas.min.js" />
-		<None Include="wwwroot\login\less\style.less" />
-		<None Include="wwwroot\login\sass\base\bases\_animation-classes.scss" />
-		<None Include="wwwroot\login\sass\base\bases\_default.scss" />
-		<None Include="wwwroot\login\sass\base\bases\_typography.scss" />
-		<None Include="wwwroot\login\sass\base\bases\_variables.scss" />
-		<None Include="wwwroot\login\sass\base\_bases.scss" />
-		<None Include="wwwroot\login\sass\layout\layouts\_template-layout31.scss" />
-		<None Include="wwwroot\login\sass\layout\_layouts.scss" />
-		<None Include="wwwroot\login\sass\README.md" />
-		<None Include="wwwroot\login\sass\style.scss" />
-		<None Include="wwwroot\login\webfonts\fa-brands-400.woff2" />
-		<None Include="wwwroot\login\webfonts\fa-regular-400.woff2" />
-		<None Include="wwwroot\login\webfonts\fa-solid-900.woff2" />
-	</ItemGroup>
-
-	<PropertyGroup>
-		<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
-	</PropertyGroup>
-	
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Version>1.23.4</Version>
+    <Copyright>TSI TEKNOLOJİ YAZILIM HİZMETLERİ A.Ş.</Copyright>
+    <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
+    <EnableNETAnalyzers>False</EnableNETAnalyzers>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Pages\GeneralSystemIdentifications\GeneralParameter\**" />
+    <Compile Remove="Pages\GeneralSystemIdentifications\MachineAndWorkforceManagementParameter\**" />
+    <Compile Remove="Pages\GeneralSystemIdentifications\MaintenanceManagementParameter\**" />
+    <Compile Remove="Pages\GeneralSystemIdentifications\QualityControlParameter\**" />
+    <Compile Remove="Pages\GeneralSystemIdentifications\ShippingManagementParameter\**" />
+    <Content Remove="Pages\GeneralSystemIdentifications\GeneralParameter\**" />
+    <Content Remove="Pages\GeneralSystemIdentifications\MachineAndWorkforceManagementParameter\**" />
+    <Content Remove="Pages\GeneralSystemIdentifications\MaintenanceManagementParameter\**" />
+    <Content Remove="Pages\GeneralSystemIdentifications\QualityControlParameter\**" />
+    <Content Remove="Pages\GeneralSystemIdentifications\ShippingManagementParameter\**" />
+    <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\GeneralParameter\**" />
+    <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\MachineAndWorkforceManagementParameter\**" />
+    <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\MaintenanceManagementParameter\**" />
+    <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\QualityControlParameter\**" />
+    <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\ShippingManagementParameter\**" />
+    <None Remove="Pages\GeneralSystemIdentifications\GeneralParameter\**" />
+    <None Remove="Pages\GeneralSystemIdentifications\MachineAndWorkforceManagementParameter\**" />
+    <None Remove="Pages\GeneralSystemIdentifications\MaintenanceManagementParameter\**" />
+    <None Remove="Pages\GeneralSystemIdentifications\QualityControlParameter\**" />
+    <None Remove="Pages\GeneralSystemIdentifications\ShippingManagementParameter\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Pages\ComponentTest.razor" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Resources\SfResources.tr-TR.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Blazor.Bootstrap" Version="2.2.1" />
+    <PackageReference Include="Blazored.Menu" Version="2.2.0" />
+    <PackageReference Include="Blazored.Modal" Version="7.0.0" />
+    <PackageReference Include="BlazorInputFile" Version="0.2.0" />
+    <PackageReference Include="DevExpress.Blazor" Version="23.2.3" />
+    <PackageReference Include="DevExpress.Blazor.Reporting.Viewer" Version="23.2.3" />
+    <PackageReference Include="DevExpress.Reporting.Core" Version="23.2.3" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.Schedule" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.Charts" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.CircularGauge" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.Diagrams" Version="20.2.0.46" />
+    <PackageReference Include="Syncfusion.Blazor.LinearGauge" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.SmithChart" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.PdfViewerServer.Windows" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.InPlaceEditor" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.Lists" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.Layouts" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.Cards" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.Inputs" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Pdf.Net.Core" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.DocIO.Net.Core" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Presentation.Net.Core" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="20.3.0.59" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
+    <ProjectReference Include="..\TsiErp.Business\TsiErp.Business.csproj" />
+    <ProjectReference Include="..\TsiErp.Entities\TsiErp.Entities.csproj" />
+    <ProjectReference Include="..\TsiErp.Localizations\TsiErp.Localizations.csproj" />
+    <ProjectReference Include="..\TsiErp.WebAPI\TsiErp.WebAPI.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources\SfResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SfResources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\SfResources.tr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SfResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SfResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\ExportedGridFiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Components\Commons\Loadings\CircleLoading.razor" />
+    <None Include="Components\Layouts\DevGridLayout.razor" />
+    <None Include="Components\Layouts\DevPopupListPageLayout.razor" />
+    <None Include="wwwroot\login\font\Flaticon.svg" />
+    <None Include="wwwroot\login\font\Flaticon.woff2" />
+    <None Include="wwwroot\login\font\_flaticon.scss" />
+    <None Include="wwwroot\login\js\bootstrap.min.js" />
+    <None Include="wwwroot\login\js\imagesloaded.pkgd.min.js" />
+    <None Include="wwwroot\login\js\jquery-3.5.0.min.js" />
+    <None Include="wwwroot\login\js\jquery.mb.YTPlayer.min.js" />
+    <None Include="wwwroot\login\js\main.js" />
+    <None Include="wwwroot\login\js\particles-1.js" />
+    <None Include="wwwroot\login\js\particles-2.js" />
+    <None Include="wwwroot\login\js\particles-3.js" />
+    <None Include="wwwroot\login\js\particles.js" />
+    <None Include="wwwroot\login\js\particles.min.js" />
+    <None Include="wwwroot\login\js\popper.min.js" />
+    <None Include="wwwroot\login\js\star-animation.js" />
+    <None Include="wwwroot\login\js\starfield.js" />
+    <None Include="wwwroot\login\js\validator.min.js" />
+    <None Include="wwwroot\login\js\vegas.min.js" />
+    <None Include="wwwroot\login\less\style.less" />
+    <None Include="wwwroot\login\sass\base\bases\_animation-classes.scss" />
+    <None Include="wwwroot\login\sass\base\bases\_default.scss" />
+    <None Include="wwwroot\login\sass\base\bases\_typography.scss" />
+    <None Include="wwwroot\login\sass\base\bases\_variables.scss" />
+    <None Include="wwwroot\login\sass\base\_bases.scss" />
+    <None Include="wwwroot\login\sass\layout\layouts\_template-layout31.scss" />
+    <None Include="wwwroot\login\sass\layout\_layouts.scss" />
+    <None Include="wwwroot\login\sass\README.md" />
+    <None Include="wwwroot\login\sass\style.scss" />
+    <None Include="wwwroot\login\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\login\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\login\webfonts\fa-solid-900.woff2" />
+  </ItemGroup>
+  <PropertyGroup>
+    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+  </PropertyGroup>
 </Project>
