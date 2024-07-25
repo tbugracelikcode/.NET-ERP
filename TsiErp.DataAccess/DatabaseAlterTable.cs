@@ -34,10 +34,12 @@ namespace TsiErp.DataAccess
         #endregion
         #endregion
 
-        [DatabaseDropColumn(ColumnName = "Deneme", TableName = "CurrentAccountCards")]
-        public int Deneme { get; set; }
+        #region Table DropColumn kullanım örnekleri
+        //[DatabaseDropColumn(ColumnName = "Deneme", TableName = "CurrentAccountCards")]
+        //public int Deneme { get; set; }
 
-        [DatabaseDropColumn(ColumnName = "Deneme2", TableName = "CurrentAccountCards")]
-        public decimal Deneme2 { get; set; }
+        //[DatabaseDropColumn(ColumnName = "Deneme2", TableName = "CurrentAccountCards")]
+        //public decimal Deneme2 { get; set; } 
+        #endregion
     }
 }
