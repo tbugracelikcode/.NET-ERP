@@ -17,6 +17,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.MachineAndWorkforceM
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.MaintenanceManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter;
@@ -173,6 +174,7 @@ using TsiErp.Entities.Entities.TestManagement.District;
 using TsiErp.Entities.Entities.TestManagement.City;
 using System.Data;
 using Microsoft.SqlServer.Management.Common;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -5784,6 +5786,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 ProductionOrderChangeReportsTable.Create();
+            }
+            #endregion
+
+            #region NotificationTemplates Table Created
+            Table NotificationTemplates = model.CreateTable(Tables.NotificationTemplates);
+
+            if (NotificationTemplates != null)
+            {
+                var properties = (typeof(NotificationTemplates)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(NotificationTemplates, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(NotificationTemplates, "PK_" + NotificationTemplates.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        NotificationTemplates.Indexes.Add(pkIndex);
+                    }
+
+                    NotificationTemplates.Columns.Add(column);
+                }
+
+                NotificationTemplates.Create();
             }
             #endregion
 

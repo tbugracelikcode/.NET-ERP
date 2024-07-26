@@ -313,6 +313,8 @@ using TsiErp.Entities.Entities.TestManagement.City;
 using TsiErp.Entities.Entities.TestManagement.City.Dtos;
 using TsiErp.Entities.Entities.TestManagement.District;
 using TsiErp.Entities.Entities.TestManagement.District.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate.Dtos;
 
 
 namespace TsiErp.Business.MapperProfile
@@ -1041,6 +1043,14 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectFinanceManagementParametersDto, CreateFinanceManagementParametersDto>();
             CreateMap<UpdateFinanceManagementParametersDto, FinanceManagementParameters>();
             CreateMap<SelectFinanceManagementParametersDto, UpdateFinanceManagementParametersDto>();
+            ;
+
+            CreateMap<NotificationTemplates, SelectNotificationTemplatesDto>();
+            CreateMap<NotificationTemplates, ListNotificationTemplatesDto>();
+            CreateMap<CreateNotificationTemplatesDto, NotificationTemplates>();
+            CreateMap<SelectNotificationTemplatesDto, CreateNotificationTemplatesDto>();
+            CreateMap<UpdateNotificationTemplatesDto, NotificationTemplates>();
+            CreateMap<SelectNotificationTemplatesDto, UpdateNotificationTemplatesDto>();
 
             CreateMap<GeneralParameters, SelectGeneralParametersDto>();
             CreateMap<GeneralParameters, ListGeneralParametersDto>();
@@ -1534,6 +1544,7 @@ namespace TsiErp.Business.MapperProfile
 
 
 
+
             CreateMap<PurchaseOrdersAwaitingApprovals, SelectPurchaseOrdersAwaitingApprovalsDto>();
             CreateMap<PurchaseOrdersAwaitingApprovals, ListPurchaseOrdersAwaitingApprovalsDto>();
             CreateMap<UpdatePurchaseOrdersAwaitingApprovalsDto, PurchaseOrdersAwaitingApprovals>();
@@ -1549,6 +1560,8 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdatePurchaseOrdersAwaitingApprovalLinesDto, PurchaseOrdersAwaitingApprovalLines>();
             CreateMap<SelectPurchaseOrdersAwaitingApprovalLinesDto, UpdatePurchaseOrdersAwaitingApprovalLinesDto>();
             CreateMap<SelectPurchaseOrdersAwaitingApprovalLinesDto, PurchaseOrdersAwaitingApprovalLines>();
+
+
 
             //TEST -------------------------------------------------------
 
