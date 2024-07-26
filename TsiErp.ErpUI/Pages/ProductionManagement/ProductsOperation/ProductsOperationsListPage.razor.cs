@@ -454,7 +454,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                             };
 
                             AmountsbyProductionOrdersList.Add(amountsbyProductionOrdersModel);
-                            await _AmountsbyProductionOrdersGrid.Refresh();
                             await InvokeAsync(StateHasChanged);
                         }
 
