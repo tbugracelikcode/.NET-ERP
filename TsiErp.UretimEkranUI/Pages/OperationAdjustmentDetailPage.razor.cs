@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.Navigations;
 using System.Timers;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.OperationAdjustment.Dtos;
@@ -311,6 +312,8 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             AdjustmentTimer.Stop();
             AdjustmentTimer.Enabled = false;
+
+
 
             QualityControlApprovalTimer.Stop();
             QualityControlApprovalTimer.Enabled = false;

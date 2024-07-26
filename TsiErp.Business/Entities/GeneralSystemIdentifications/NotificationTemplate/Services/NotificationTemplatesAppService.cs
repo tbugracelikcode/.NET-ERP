@@ -1,27 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TSI.QueryBuilder.BaseClasses;
-using Tsi.Core.Utilities.Guids;
-using TsiErp.Business.Entities.Other.GetSQLDate.Services;
-using TsiErp.Business.Entities.Logging.Services;
-using Newtonsoft.Json;
-using TsiErp.Entities.TableConstant;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate.Dtos;
-using System.Diagnostics.Metrics;
-using Microsoft.Extensions.Localization;
-using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate.Dtos;
+using TsiErp.Entities.TableConstant;
 
 namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services
 {
     [ServiceRegistration(typeof(INotificationTemplatesAppService), DependencyInjectionType.Scoped)]
-    public class NotificationTemplatesAppService 
+    public class NotificationTemplatesAppService : INotificationTemplatesAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
@@ -64,5 +54,29 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
             return new SuccessDataResult<SelectNotificationTemplatesDto>(notificationTemplates);
 
         }
+
+        #region Unused Methods
+
+        public Task<IDataResult<SelectNotificationTemplatesDto>> UpdateAsync(UpdateNotificationTemplatesDto input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<SelectNotificationTemplatesDto>> GetAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<IList<ListNotificationTemplatesDto>>> GetListAsync(ListNotificationTemplatesParameterDto input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<SelectNotificationTemplatesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }
