@@ -1,5 +1,6 @@
 ﻿using BlazorInputFile;
 using DevExpress.Blazor;
+using DevExpress.ClipboardSource.SpreadsheetML;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
@@ -8,6 +9,8 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using System.Text.Json;
+using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
@@ -466,6 +469,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
 
         }
+
 
         #region Teknik Resim Modalı İşlemleri
 
@@ -1592,13 +1596,14 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             _L = L;
 
             #region Context Menü Yetkilendirmesi
-
+            
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
             var parentMenu = MenusList.Where(t => t.MenuName == "ProductsChildMenu").Select(t => t.Id).FirstOrDefault();
             contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
+
             #endregion
             CreateMainContextMenuItems();
             CreateTechnicalDrawingContextMenuItems();
