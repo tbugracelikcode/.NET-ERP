@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Caching.Memory;
@@ -43,11 +44,33 @@ namespace Tsi.Core.CrossCuttingConcerns.Caching.Microsoft
 
         public void RemoveByPattern(string pattern)
         {
-            var cacheEntriesCollectionDefinition = typeof(MemoryCache).GetProperty("EntriesCollection", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var cacheEntriesCollection = cacheEntriesCollectionDefinition.GetValue(_cache) as dynamic;
+            //var cacheEntriesCollectionDefinition = typeof(MemoryCache).GetProperty("EntriesCollection", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            //var cacheEntriesCollection = cacheEntriesCollectionDefinition.GetValue(_cache) as dynamic;
+            //List<ICacheEntry> cacheCollectionValues = new List<ICacheEntry>();
+
+            //foreach (var cacheItem in cacheEntriesCollection)
+            //{
+            //    ICacheEntry cacheItemValue = cacheItem.GetType().GetProperty("Value").GetValue(cacheItem, null);
+            //    cacheCollectionValues.Add(cacheItemValue);
+            //}
+
+            //var regex = new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            //var keysToRemove = cacheCollectionValues.Where(d => regex.IsMatch(d.Key.ToString())).Select(d => d.Key).ToList();
+
+            //foreach (var key in keysToRemove)
+            //{
+            //    _cache.Remove(key);
+            //}
+
+            var fieldInfo = typeof(MemoryCache).GetField("_coherentState", BindingFlags.Instance | BindingFlags.NonPublic);
+            var propertyInfo = fieldInfo.FieldType.GetProperty("EntriesCollection", BindingFlags.Instance | BindingFlags.NonPublic);
+            var value = fieldInfo.GetValue(_cache);
+            var dict = propertyInfo.GetValue(value) as dynamic;
+
+
             List<ICacheEntry> cacheCollectionValues = new List<ICacheEntry>();
 
-            foreach (var cacheItem in cacheEntriesCollection)
+            foreach (var cacheItem in dict)
             {
                 ICacheEntry cacheItemValue = cacheItem.GetType().GetProperty("Value").GetValue(cacheItem, null);
                 cacheCollectionValues.Add(cacheItemValue);
