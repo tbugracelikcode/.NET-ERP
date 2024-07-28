@@ -21,7 +21,7 @@ using TsiErp.DataAccess.Services.Login;
 namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services
 {
     [ServiceRegistration(typeof(INotificationTemplatesAppService), DependencyInjectionType.Scoped)]
-    public class NotificationTemplatesAppService 
+    public class NotificationTemplatesAppService : INotificationTemplatesAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
@@ -63,6 +63,26 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
             await Task.CompletedTask;
             return new SuccessDataResult<SelectNotificationTemplatesDto>(notificationTemplates);
 
+        }
+
+        public Task<IDataResult<SelectNotificationTemplatesDto>> UpdateAsync(UpdateNotificationTemplatesDto input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<SelectNotificationTemplatesDto>> GetAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<IList<ListNotificationTemplatesDto>>> GetListAsync(ListNotificationTemplatesParameterDto input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<SelectNotificationTemplatesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
