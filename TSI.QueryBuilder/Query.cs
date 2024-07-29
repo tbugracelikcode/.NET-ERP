@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Models;
 
 namespace TSI.QueryBuilder
 {
     public partial class Query : QueryFactory
     {
-        //public string Method { get; set; }
-
         public string Sql { get; set; }
 
         public string TableName { get; set; }
