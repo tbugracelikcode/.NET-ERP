@@ -8,13 +8,13 @@ namespace TSI.QueryBuilder.Helpers
 {
     public static class InsertHelper
     {
-        public static List<QuerySQL> InsertQueris;
+        public static List<InsertQuerySQL> InsertQueris;
 
-        public static void InsertQueryList(QuerySQL querySQL)
+        public static void InsertQueryList(InsertQuerySQL querySQL)
         {
             if (InsertQueris == null)
             {
-                InsertQueris = new List<QuerySQL>();
+                InsertQueris = new List<InsertQuerySQL>();
             }
 
             InsertQueris.Add(querySQL);

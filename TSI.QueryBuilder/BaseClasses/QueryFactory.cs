@@ -598,9 +598,11 @@ namespace TSI.QueryBuilder.BaseClasses
 
             try
             {
-                string[] insertQueries = query.Sql.Split(QueryConstants.QueryConstant);
+                //string[] insertQueries = query.Sql.Split(QueryConstants.QueryConstant);
 
-                if (insertQueries.Length == 1)
+                var insertQueries = UpdateHelper.UpdateQueris;
+
+                if (insertQueries.Count == 1)
                 {
                     var command = Connection.CreateCommand();
 
@@ -614,6 +616,16 @@ namespace TSI.QueryBuilder.BaseClasses
 
                         command.CommandText = query.Sql;
                         command.Transaction = transaction;
+
+                        command.Parameters.Clear();
+
+                        foreach (var item in insertQueries[0].ParameterList)
+                        {
+                            var parameter = command.CreateParameter();
+                            parameter.ParameterName = item.Key;
+                            parameter.Value = item.Value ?? DBNull.Value;
+                            command.Parameters.Add(parameter);
+                        }
 
                         Guid _id = (Guid)command.ExecuteScalar();
 
@@ -636,6 +648,7 @@ namespace TSI.QueryBuilder.BaseClasses
                     }
                     else
                     {
+                        UpdateHelper.UpdateQueris.Clear();
                         transaction.Rollback();
 
                         Connection.Close();
@@ -662,7 +675,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                         if (_id != Guid.Empty)
                         {
-                            for (int i = 0; i < insertQueries.Length; i++)
+                            for (int i = 0; i < insertQueries.Count; i++)
                             {
                                 if (i == 0)
                                 {
@@ -674,19 +687,31 @@ namespace TSI.QueryBuilder.BaseClasses
                                 if (commandLine != null)
                                 {
                                     commandLine.CommandTimeout = CommandTimeOut;
-                                    string lineQuery = insertQueries[i];
+                                    string lineQuery = insertQueries[i].Sql;
 
-                                    if (insertQueries[i].StartsWith("insert"))
+                                    if (insertQueries[i].Sql.StartsWith("insert"))
                                     {
-                                        lineQuery = insertQueries[i].Replace("values", "output INSERTED." + returnIdCaption + " values");
+                                        lineQuery = insertQueries[i].Sql.Replace("values", "output INSERTED." + returnIdCaption + " values");
                                     }
                                     else
                                     {
-                                        lineQuery = insertQueries[i].Replace("where", "output INSERTED." + returnIdCaption + " where");
+                                        lineQuery = insertQueries[i].Sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
                                     }
 
                                     commandLine.CommandText = lineQuery;
                                     commandLine.Transaction = transaction;
+
+                                    commandLine.Parameters.Clear();
+
+                                    foreach (var item in insertQueries[i].ParameterList)
+                                    {
+                                        var parameter = commandLine.CreateParameter();
+                                        parameter.ParameterName = item.Key;
+                                        parameter.Value = item.Value ?? DBNull.Value;
+                                        commandLine.Parameters.Add(parameter);
+                                    }
+
+
                                     commandLine.ExecuteScalar();
                                 }
                             }
@@ -712,10 +737,12 @@ namespace TSI.QueryBuilder.BaseClasses
                     }
                 }
 
+                UpdateHelper.UpdateQueris.Clear();
                 return returnValue;
             }
             catch (Exception exp)
             {
+                UpdateHelper.UpdateQueris.Clear();
                 transaction.Rollback();
 
                 Connection.Close();
