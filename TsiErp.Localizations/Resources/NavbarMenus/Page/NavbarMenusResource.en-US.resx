@@ -348,6 +348,9 @@
   <data name="MRPIIChildMenu" xml:space="preserve">
     <value>Production Resource Planning (MRPII)</value>
   </data>
+  <data name="NotificationTemplatesChildMenu" xml:space="preserve">
+    <value>Notification Templates</value>
+  </data>
   <data name="OperationalQualityPlansChildMenu" xml:space="preserve">
     <value>Operational Quality Plans</value>
   </data>

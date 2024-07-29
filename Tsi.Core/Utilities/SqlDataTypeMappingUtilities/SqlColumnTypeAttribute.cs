@@ -22,6 +22,7 @@ namespace Tsi.Core.Utilities.SqlDataTypeMappingUtilities
 
 
 
+
         //public SqlColumnTypeAttribute(SqlDataType sqlDataType, bool nullable, bool isPrimaryKey)
         //{
         //    SqlDbType = sqlDataType;

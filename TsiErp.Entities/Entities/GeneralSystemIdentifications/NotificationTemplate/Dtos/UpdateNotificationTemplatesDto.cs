@@ -27,6 +27,11 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
         /// </summary>
         public string ProcessName_ { get; set; }
 
+        /// <summary>
+        /// Ad
+        /// </summary>
+        public string Name { get; set; }
+
 
         /// <summary>
         /// Context Menü Adı
@@ -42,7 +47,7 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
         /// <summary>
         /// Hedef Departman ID
         /// </summary>
-        public Guid TargetDepartmentId { get; set; }
+        public string TargetDepartmentId { get; set; }
 
         /// <summary>
         /// Aktiflik
@@ -54,6 +59,10 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
         /// str
         /// </summary>
         public string QueryStr { get; set; }
+        /// <summary>
+        /// userID
+        /// </summary>
+        public string TargetUsersId { get; set; }
 
     }
 }
