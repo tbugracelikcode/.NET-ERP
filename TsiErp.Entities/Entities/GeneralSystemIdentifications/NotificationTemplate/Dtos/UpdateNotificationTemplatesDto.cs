@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tsi.Core.Entities;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate.Dtos
 {
-    public class UpdateNotificationTemplatesDto
+    public class UpdateNotificationTemplatesDto : IEntityDto
     {
 
         /// <summary>

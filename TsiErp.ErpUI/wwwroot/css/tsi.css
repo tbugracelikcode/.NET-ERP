@@ -152,6 +152,10 @@
         cursor: pointer;
     }
 
+.TSIMemoBox120 {
+    height: 120% !important;
+}
+
 .TSIMemoBox100 {
     height: 100% !important;
 }

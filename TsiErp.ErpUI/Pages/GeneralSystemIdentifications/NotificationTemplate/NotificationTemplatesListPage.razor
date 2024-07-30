@@ -112,32 +112,17 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
-                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Name" ShowClearButton=true></SfTextBox>
+                            <SfTextBox  @bind-Value="DataSource.Name" ></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
 
                             <label class="TSIModalLabel"><strong>@L["ModuleName_Label"] </strong></label>
-
-                            <SfMultiSelect @bind-Value="@BindingMenus"
-                                           DataSource="@MultiMenusList"
-                                           AllowFiltering=true
-                                           Mode="VisualMode.CheckBox"
-                                           ShowSelectAll=true
-                                           SelectAllText=@L["SelectAllText"]
-                                           UnSelectAllText=@L["UnSelectAllText"]
-                                           ShowDropDownIcon="true">
-
-                                <MultiSelectTemplates TItem="ListMenusDto">
-                                    @* <ItemTemplate> *@
-                                        <span class='item'>
-                                            <span style="padding-left: 7% !important;">@((context as ListMenusDto).MenuName)</span>
-                                        </span>
-                                  @*   </ItemTemplate> *@
-                                </MultiSelectTemplates>
-                                <MultiSelectFieldSettings Text="MenuName" Value="Id"></MultiSelectFieldSettings>
-                            </SfMultiSelect>
+                            <SfComboBox TValue="string" TItem="ListMenusDto" PopupHeight="230px"  DataSource="@ModuleList">
+                                <ComboBoxEvents TItem="ListMenusDto" TValue="string" ValueChange="@ModuleNameValueChangeHandler"></ComboBoxEvents>
+                                <ComboBoxFieldSettings Text="MenuName" Value="Id" />
+                            </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -169,14 +154,15 @@ else
                                                        UnSelectAllText=@L["UnSelectAllText"]
                                                        ShowDropDownIcon="true">
 
-                                            <MultiSelectTemplates TItem="ListDepartmentsDto">@* 
-                                                <ItemTemplate> *@
+                                            @* <MultiSelectTemplates TItem="ListDepartmentsDto">
+                                                <ItemTemplate>
                                                     <span class='item'>
                                                         <span style="padding-left: 5% !important;">@((context as ListDepartmentsDto).Name)</span>
-                                                    </span>@* 
-                                                </ItemTemplate> *@
-                                            </MultiSelectTemplates>
+                                                    </span>
+                                                </ItemTemplate>
+                                            </MultiSelectTemplates> *@
                                 <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                <MultiSelectEvents TItem="ListDepartmentsDto" TValue="List<Guid>" ValueChange="@TargetDepartmentValueChangeHandler"></MultiSelectEvents>
                                         </SfMultiSelect>
                         </Template>
                     </DxGridLayoutItem>
@@ -185,8 +171,8 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["TargetUsersIdLabel"] </strong></label>
 
-                            <SfMultiSelect @bind-Value="@BindingUsers"
-                                           DataSource="@MultiUsersList"
+                            <SfMultiSelect @bind-Value="@BindingEmployees"
+                                           DataSource="@MultiEmployeesList"
                                            AllowFiltering=true
                                            Mode="VisualMode.CheckBox"
                                            ShowSelectAll=true
@@ -194,15 +180,15 @@ else
                                            UnSelectAllText=@L["UnSelectAllText"]
                                            ShowDropDownIcon="true">
 
-                                <MultiSelectTemplates TItem="ListUsersDto">
-                                    @*
-                                <ItemTemplate> *@
+                               @*  <MultiSelectTemplates TItem="ListEmployeesDto">
+                                    
+                                <ItemTemplate>
                                     <span class='item'>
-                                        <span style="padding-left: 5% !important;">@((context as ListUsersDto).Name)</span>
-                                    </span>@*
-                                </ItemTemplate> *@
-                                </MultiSelectTemplates>
-                                <MultiSelectFieldSettings Text="UserName" Value="Id"></MultiSelectFieldSettings>
+                                        <span style="padding-left: 5% !important;">@((context as ListEmployeesDto).Name)</span>
+                                    </span>
+                                </ItemTemplate>
+                                </MultiSelectTemplates> *@
+                                <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
                             </SfMultiSelect>
                         </Template>
                     </DxGridLayoutItem>
@@ -219,9 +205,9 @@ else
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ContextMenuName_Label"] </strong></label>
-                            <SfComboBox TValue="string" TItem="ContextMenuName_ComboBox" DataSource="@contextmenuName_ComboBox">
-                                <ComboBoxEvents TItem="ContextMenuName_ComboBox" TValue="string" ValueChange="@ContextMenuName_ComboBoxValueChangeHandler"></ComboBoxEvents>
-                                <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                            <SfComboBox TValue="string" TItem="SelectMenusDto" DataSource="@ModuleContextsList">
+                                <ComboBoxEvents TItem="SelectMenusDto" TValue="string" ValueChange="@ModuleContextValueChangeHandler"></ComboBoxEvents>
+                                <ComboBoxFieldSettings Value="Id" Text="MenuName"></ComboBoxFieldSettings>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -229,23 +215,8 @@ else
 
                     <DxGridLayoutItem Row="3" Column="1" ColumnSpan="5">
                         <Template>
-                            <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
-                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectCityLinesDto"></GridEvents>
-                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                <GridColumns>
-                                    <GridColumn Field=@nameof(SelectCityLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectCityLinesDto.DistrictName) HeaderText="@L["LineGridDistrictName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectCityLinesDto.DistrictPopulation) Type="ColumnType.Number" HeaderText="@L["LineGridDistrictPopulation"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectCityLinesDto.NumberofTown) Type="ColumnType.Number" HeaderText="@L["LineGridNumberofTown"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectCityLinesDto.IsIncludeHospital) DisplayAsCheckBox=true HeaderText="@L["LineGridIsIncludeHospital"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectCityLinesDto.Description_) HeaderText="@L["LineGridDescription_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectCityLinesDto.DistrictInstruction) HeaderText="@L["LineGridDistrictInstruction"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                </GridColumns>
-                            </SfGrid>
+                            <label class="TSIModalLabel"><strong>@L["QueryStrLabel"] </strong></label><br />
+                            <SfTextBox Enabled=false CssClass="TSIMemoBox100" @bind-Value="DataSource.QueryStr"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                 </Items>

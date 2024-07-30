@@ -80,16 +80,15 @@ else
         </GridLayoutItems>
     </DevGridLayout>
 
-
     <DxPopup @bind-Visible="base.EditPageVisible"
              ShowFooter="true"
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["EditModalTitle"]"
-             Width="56%"
-             Height="80%"
-             MinWidth="970px"
-             MinHeight="865px"
+             Width="82%"
+             Height="93%"
+             MinWidth="1400px"
+             MinHeight="850px"
              HeaderCssClass="HeaderTitleCss"
              Showing="CrudModalShowing"
              Closing="CrudModalClosing">
@@ -98,21 +97,25 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="10%" />
                     <DxGridLayoutRow Height="9%" />
                     <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="13%" />
-                    <DxGridLayoutRow Height="55%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="23%" />
+                    <DxGridLayoutRow Height="9%" />
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="4%" />
-                    <DxGridLayoutColumn Width="26%" />
-                    <DxGridLayoutColumn Width="7%" />
-                    <DxGridLayoutColumn Width="26%" />
-                    <DxGridLayoutColumn Width="7%" />
-                    <DxGridLayoutColumn Width="26%" />
-                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
                 </Columns>
 
                 <Items>
@@ -135,72 +138,73 @@ else
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>@L["CurrentAccountCardNameLabel"] </strong></label><br />
-                            <SfTextBox @ref="@ForecastCurrentAccountCardsNameButtonEdit" Created="@ForecastCurrentAccountCardsNameOnCreateIcon" @bind-Value="DataSource.CurrentAccountCardName" ShowClearButton=true ValueChange="ForecastCurrentAccountCardsOnValueChange"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="1" Column="1">
-                        <Template>
                             <label class="TSIModalLabel"><strong>@L["ValidityStartDateLabel"] </strong></label>
                             <SfDatePicker @bind-Value="DataSource.ValidityStartDate"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="3">
+                    <DxGridLayoutItem Row="0" RowSpan="1" Column="7">
                         <Template>
-                            <label class="TSIModalLabel"><strong>@L["ValidityEndDateLabel"] </strong></label>
-                            <SfDatePicker @bind-Value="DataSource.ValidityEndDate"></SfDatePicker>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["Description_Label"]</strong></label><br />
+                            <SfTextBox CssClass="TSIMemoBox120" Multiline=false @bind-Value="@DataSource.Description_"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-
-                    <DxGridLayoutItem Row="1" Column="5" RowSpan="2">
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfUploader AutoUpload="false">
-                                <UploaderEvents ValueChange="OnChange"></UploaderEvents>
-                            </SfUploader>
-                        </Template>
-                    </DxGridLayoutItem>
-
-
-
-
-
-
-                    <DxGridLayoutItem Row="2" Column="1">
-                        <Template>
+                            <br />
                             <label class="TSIModalLabel"><strong>@L["BranchNameLabel"] </strong></label><br />
 
                             <SfTextBox @ref="@ForecastBranchesButtonEdit" Created="@ForecastBranchesOnCreateIcon" @bind-Value="DataSource.BranchCode" ShowClearButton=true ValueChange="ForecastBranchesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="3">
+                    <DxGridLayoutItem Row="1" Column="3">
                         <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["CurrentAccountCardNameLabel"] </strong></label><br />
+                            <SfTextBox @ref="@ForecastCurrentAccountCardsNameButtonEdit" Created="@ForecastCurrentAccountCardsNameOnCreateIcon" @bind-Value="DataSource.CurrentAccountCardName" ShowClearButton=true ValueChange="ForecastCurrentAccountCardsOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="5">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["ValidityEndDateLabel"] </strong></label>
+                            <SfDatePicker @bind-Value="DataSource.ValidityEndDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <br />
                             <label class="TSIModalLabel"><strong>@L["PeriodNameLabel"] </strong></label><br />
                             <SfTextBox @ref="@ForecastPeriodsButtonEdit" Created="@ForecastPeriodsOnCreateIcon" @bind-Value="DataSource.PeriodCode" ShowClearButton=true ValueChange="ForecastPeriodsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="1">
+                    <DxGridLayoutItem Row="2" Column="3">
                         <Template>
+                            <br />
                             <label class="TSIModalLabel"><strong>@L["TotalLabel"] </strong></label>
                             <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.Total"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="3">
+                    <DxGridLayoutItem Row="2" Column="5" ColumnSpan="7" RowSpan="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label><br />
-                            <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.Description_"></SfTextBox>
+                            <br />
+                            <SfUploader AutoUpload="false">
+                                <UploaderEvents ValueChange="OnChange"></UploaderEvents>
+                            </SfUploader>
                         </Template>
                     </DxGridLayoutItem>
 
-
-
-                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="5">
+                    <br/>
+                    <DxGridLayoutItem Row="5" Column="1" ColumnSpan="7">
                         <Template>
+                            <br />
                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectForecastLinesDto"></GridEvents>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
@@ -239,11 +243,11 @@ else
              ShowFooter="true"
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
-             HeaderText="@L["LinePopupTitle"]"
-             Width="38%"
-             Height="25%"
-             MinWidth="650px"
-             MinHeight="300px"
+             HeaderText="@L["EditLineModalTitle"]"
+             Width="64%"
+             Height="65%"
+             MinWidth="1100px"
+             MinHeight="700px"
              HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>

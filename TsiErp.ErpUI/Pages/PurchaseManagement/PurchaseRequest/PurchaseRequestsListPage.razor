@@ -143,17 +143,21 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                <DxGridLayoutItem Row="0" Column="5">
-                    <Template>
-                        <label class="TSIModalLabel"><strong>@L["CurrentAccountCardNameLabel"] </strong></label>
-
-
-                        <SfTextBox @ref="@CurrentAccountCardsNameButtonEdit" Created="@CurrentAccountCardsNameOnCreateIcon" @bind-Value="DataSource.CurrentAccountCardName" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
-
-                    </Template>
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["SpecialCodeLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.SpecialCode"></SfTextBox>
+                        </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="0" Column="7">
+                    <DxGridLayoutItem Row="0" Column="7" RowSpan="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label><br />
+                            <SfTextBox  CssClass="TSIMemoBox120" Multiline=true @bind-Value="@DataSource.Description_"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["Date_Label"] </strong></label><br />
                             <SfDatePicker TValue="DateTime" Value="@DataSource.Date_" Max=@MaxDate>
@@ -164,42 +168,38 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["SpecialCodeLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.SpecialCode"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
+                <DxGridLayoutItem Row="1" Column="3">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>@L["CurrentAccountCardNameLabel"] </strong></label>
 
-                    <DxGridLayoutItem Row="1" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["WarehouseNameLabel"] </strong></label><br />
-                            <SfTextBox @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="DataSource.WarehouseName" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
-                        </Template>
+
+                        <SfTextBox @ref="@CurrentAccountCardsNameButtonEdit" Created="@CurrentAccountCardsNameOnCreateIcon" @bind-Value="DataSource.CurrentAccountCardName" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
+
+                    </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ProductionOrderFicheNoLabel"] </strong></label>
+                            <SfTextBox @ref="@ProductionOrdersButtonEdit" Created="@ProductionOrdersOnCreateIcon" @bind-Value="DataSource.ProductionOrderFicheNo" ShowClearButton=true ValueChange="ProductionOrdersOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["BranchNameLabel"] </strong></label>
                             <SfTextBox @ref="@BranchesButtonEdit" Created="@BranchesOnCreateIcon" @bind-Value="DataSource.BranchName" ShowClearButton=true ValueChange="BranchesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="7">
+                    <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong> @L["PaymentPlanNameLabel"] </strong></label>
                             <SfTextBox @ref="@PaymentPlansButtonEdit" Created="@PaymentPlansOnCreateIcon" @bind-Value="DataSource.PaymentPlanName" ShowClearButton=true ValueChange="PaymentPlansOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="1" RowSpan="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label><br />
-                            <SfTextBox  CssClass="TSIMemoBox30" Multiline=true @bind-Value="@DataSource.Description_"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="2" Column="3">
+                    <DxGridLayoutItem Row="2" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["CurrencyCodeLabel"] </strong></label><br />
                             <SfTextBox @ref="@CurrenciesButtonEdit" Created="@CurrenciesOnCreateIcon" @bind-Value="DataSource.CurrencyCode" ShowClearButton=true ValueChange="CurrenciesOnValueChange"></SfTextBox>
@@ -207,41 +207,42 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="5">
+                    <DxGridLayoutItem Row="2" Column="7">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ExchangeRateLabel"] </strong></label>
                             <SfNumericTextBox CssClass="TSITxtBox" Min="0" TValue="decimal" @bind-Value="DataSource.ExchangeRate"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="7">
+
+                    <DxGridLayoutItem Row="3" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>@L["ProductionOrderFicheNoLabel"] </strong></label>
-                            <SfTextBox @ref="@ProductionOrdersButtonEdit" Created="@ProductionOrdersOnCreateIcon" @bind-Value="DataSource.ProductionOrderFicheNo" ShowClearButton=true ValueChange="ProductionOrdersOnValueChange"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["WarehouseNameLabel"] </strong></label><br />
+                            <SfTextBox @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="DataSource.WarehouseName" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ValidityDate_Label"] </strong></label>
+                            <SfDatePicker @bind-Value="@DataSource.ValidityDate_"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["TransactionExchangeLabel"] </strong></label>
                             <SfTextBox @ref="@TransactionExchangeCurrenciesButtonEdit" Created="@TransactionExchangeCurrenciesOnCreateIcon" @bind-Value="DataSource.TransactionExchangeCurrencyCode" ShowClearButton=true ValueChange="TransactionExchangeCurrenciesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="5">
+                    <DxGridLayoutItem Row="3" Column="7">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PricingCurrencyLabel"] </strong></label><br />
                             <SfDropDownList TItem="SelectPurchaseRequestsDto" TValue="PricingCurrencyEnum" PopupHeight="230px" @bind-Value="@DataSource.PricingCurrency" DataSource="@PricingCurrencyList" ShowClearButton=true>
                                 <DropDownListEvents TItem="SelectPurchaseRequestsDto" TValue="PricingCurrencyEnum" ValueChange="@PricingCurrencyValueChangeHandler"></DropDownListEvents>
                                 <DropDownListFieldSettings Text="PricingCurrencyName" Value="PricingCurrency"></DropDownListFieldSettings>
                             </SfDropDownList>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="3" Column="7">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["ValidityDate_Label"] </strong></label>
-                            <SfDatePicker @bind-Value="@DataSource.ValidityDate_"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -292,6 +293,7 @@ else
                         
                         <DxGridLayoutItem Row="5" Column="1">
                             <Template>
+                                <br/>
                                 <label class="TSIModalLabel"><strong>@L["GrossAmountLabel"] </strong></label>
                                 <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.GrossAmount" Enabled=false></SfNumericTextBox>
                             </Template>
@@ -299,6 +301,7 @@ else
 
                         <DxGridLayoutItem Row="5" Column="3">
                             <Template>
+                                <br/>
                                 <label class="TSIModalLabel"><strong>@L["TotalDiscountAmountLabel"] </strong></label>
                                 <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.TotalDiscountAmount" Enabled=false></SfNumericTextBox>
                             </Template>
@@ -306,6 +309,7 @@ else
 
                         <DxGridLayoutItem Row="5" Column="5">
                             <Template>
+                                <br/>
                                 <label class="TSIModalLabel"><strong>@L["NetAmountLabel"] </strong></label>
                                 <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.NetAmount" Enabled=false></SfNumericTextBox>
                             </Template>
@@ -313,6 +317,7 @@ else
 
                         <DxGridLayoutItem Row="5" Column="7">
                             <Template>
+                                <br/>
                                 <label class="TSIModalLabel"><strong>@L["TotalVatExcludedAmountLabel"] </strong></label>
                                 <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.TotalVatExcludedAmount" Enabled=false></SfNumericTextBox>
                             </Template>
@@ -320,6 +325,7 @@ else
 
                         <DxGridLayoutItem Row="6" Column="1">
                             <Template>
+                                <br/>
                                 <label class="TSIModalLabel"><strong>@L["TransactionExchangeGrossAmountLabel"] </strong></label>
                                 <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.TransactionExchangeGrossAmount" Enabled=false></SfNumericTextBox>
                             </Template>
@@ -327,12 +333,14 @@ else
 
                         <DxGridLayoutItem Row="6" Column="3">
                             <Template>
+                                <br/>
                                 <label class="TSIModalLabel"><strong>@L["TransactionExchangeTotalDiscountAmountLabel"] </strong></label>
                                 <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.TransactionExchangeTotalDiscountAmount" Enabled=false></SfNumericTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="6" Column="5">
                             <Template>
+                                <br/>
                                 <label class="TSIModalLabel"><strong>@L["TransactionExchangeNetAmountLabel"] </strong></label>
                                 <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.TransactionExchangeNetAmount" Enabled=false></SfNumericTextBox>
                             </Template>
@@ -340,12 +348,14 @@ else
 
                         <DxGridLayoutItem Row="6" Column="7">
                             <Template>
+                                <br/>
                                 <label class="TSIModalLabel"><strong>@L["TransactionExchangeTotalVatExcludedAmountLabel"] </strong></label>
                                 <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.TransactionExchangeTotalVatExcludedAmount" Enabled=false></SfNumericTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="7" Column="1">
                             <Template>
+                                <br/>
                                 <label class="TSIModalLabel"><strong>@L["TotalVatAmountLabel"] </strong></label>
                                 <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.TotalVatAmount" Enabled=false></SfNumericTextBox>
                             </Template>
@@ -353,6 +363,7 @@ else
 
                         <DxGridLayoutItem Row="7" Column="3">
                             <Template>
+                                <br/>
                                 <label class="TSIModalLabel"><strong>@L["TransactionExchangeTotalVatAmountLabel"]</strong></label>
                                 <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.TransactionExchangeTotalVatAmount" Enabled=false></SfNumericTextBox>
                             </Template>

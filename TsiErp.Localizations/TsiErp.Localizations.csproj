@@ -852,7 +852,7 @@
       <LastGenOutput>NavbarMenusResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\NotificationTemplates\Page\NotificationTemplatesResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NotificationTemplatesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\OperationalQualityPlans\Page\OperationalQualityPlansResource.resx">

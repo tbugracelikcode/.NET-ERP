@@ -837,6 +837,9 @@
                 <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.UserGrpChildMenu)">
                     <NavLink href="user-groups">@L["UserGrpChildMenu"]</NavLink>
                 </BlazoredMenuItem>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.NotificationTemplatesChildMenu)">
+                    <NavLink href="notification-templates">@L["NotificationTemplatesChildMenu"]</NavLink>
+                </BlazoredMenuItem>
                 <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.GeneralSystemParametersParentMenu)">
                     <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
                         <HeaderTemplate>
@@ -876,9 +879,7 @@
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.GeneralParametersChildMenu)">
                                 <NavLink>@L["GeneralParametersChildMenu"]</NavLink>
                             </BlazoredMenuItem>
-                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.GeneralParametersChildMenu)">
-                                <NavLink>@L["NotificationTemplatesChildMenu"]</NavLink>
-                            </BlazoredMenuItem>
+                          
                         </MenuTemplate>
                     </BlazoredSubMenu>
                 </BlazoredMenuItem>

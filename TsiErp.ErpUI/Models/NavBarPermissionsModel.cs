@@ -187,5 +187,6 @@
         public static bool ProductReceiptTransactionsChildMenu { get; set; } = true;
         public static bool BankAccountsChildMenu { get; set; } = true;
         public static bool ProdOrderChangeRecordsChildMenu { get; set; } = true;
+        public static bool NotificationTemplatesChildMenu { get; set; } = true;
     }
 }
