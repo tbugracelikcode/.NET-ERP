@@ -102,6 +102,8 @@ namespace TSI.QueryBuilder.BaseClasses
 
                 command.CommandTimeout = CommandTimeOut;
 
+                var queries = WhereHelper.WhereQueries;
+
                 if (command != null)
                 {
                     if (_IsSoftDelete)
@@ -142,7 +144,18 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     command.CommandText = query.Sql;
 
-                    if(query.IsMapQuery)
+                    if (queries.Count > 0)
+                    {
+                        foreach (var item in queries[0].ParameterList)
+                        {
+                            var parameter = command.CreateParameter();
+                            parameter.ParameterName = item.Key;
+                            parameter.Value = item.Value ?? DBNull.Value;
+                            command.Parameters.Add(parameter);
+                        }
+                    }
+
+                    if (query.IsMapQuery)
                     {
                         query.SqlResult = command.ExecuteReader().DataReaderMapToGet<T>();
                     }
@@ -150,18 +163,19 @@ namespace TSI.QueryBuilder.BaseClasses
                     {
                         query.SqlResult = command.ExecuteScalar();
                     }
-                    
+
 
                     query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
+                    WhereHelper.WhereQueries.Clear();
                     Connection.Close();
                     Connection.Dispose();
                     GC.Collect();
-
                     return (T)query.SqlResult;
                 }
                 else
                 {
+                    WhereHelper.WhereQueries.Clear();
                     Connection.Close();
                     Connection.Dispose();
                     GC.Collect();
@@ -171,6 +185,7 @@ namespace TSI.QueryBuilder.BaseClasses
             }
             catch (Exception exp)
             {
+                WhereHelper.WhereQueries.Clear();
                 Connection.Close();
                 Connection.Dispose();
                 GC.Collect();
@@ -239,10 +254,11 @@ namespace TSI.QueryBuilder.BaseClasses
             {
                 ConnectToDatabase();
 
-
                 var command = Connection.CreateCommand();
 
                 command.CommandTimeout = CommandTimeOut;
+
+                var queries = WhereHelper.WhereQueries;
 
                 if (command != null)
                 {
@@ -285,10 +301,22 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     command.CommandText = query.Sql;
 
+                    if (queries.Count > 0)
+                    {
+                        foreach (var item in queries[0].ParameterList)
+                        {
+                            var parameter = command.CreateParameter();
+                            parameter.ParameterName = item.Key;
+                            parameter.Value = item.Value ?? DBNull.Value;
+                            command.Parameters.Add(parameter);
+                        }
+                    }
+
                     query.SqlResult = command.ExecuteReader().DataReaderMapToList<T>();
 
                     query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
+                    WhereHelper.WhereQueries.Clear();
                     Connection.Close();
                     Connection.Dispose();
                     GC.Collect();
@@ -297,6 +325,7 @@ namespace TSI.QueryBuilder.BaseClasses
                 }
                 else
                 {
+                    WhereHelper.WhereQueries.Clear();
                     Connection.Close();
                     Connection.Dispose();
                     GC.Collect();
@@ -306,6 +335,7 @@ namespace TSI.QueryBuilder.BaseClasses
             }
             catch (Exception exp)
             {
+                WhereHelper.WhereQueries.Clear();
                 Connection.Close();
                 Connection.Dispose();
                 GC.Collect();
@@ -340,71 +370,6 @@ namespace TSI.QueryBuilder.BaseClasses
                 }
                 else
                 {
-                    Connection.Close();
-                    Connection.Dispose();
-                    GC.Collect();
-
-                    return null;
-                }
-            }
-            catch (Exception exp)
-            {
-                Connection.Close();
-                Connection.Dispose();
-                GC.Collect();
-
-                var error = ErrorException.ThrowException(exp);
-                return null;
-            }
-        }
-
-        public IEnumerable<T> GetArray<T>(Query query)
-        {
-            try
-            {
-                ConnectToDatabase();
-
-                var command = Connection.CreateCommand();
-
-                command.CommandTimeout = CommandTimeOut;
-
-                if (command != null)
-                {
-                    if (_IsSoftDelete)
-                    {
-                        string isDeleted = IsDeletedField + "=" + "'" + "0" + "'";
-
-                        if (!string.IsNullOrEmpty(query.JoinSeperator))
-                        {
-                            isDeleted = query.JoinSeperator + "." + isDeleted;
-                        }
-
-                        if (string.IsNullOrEmpty(query.WhereSentence))
-                        {
-                            query.Sql = query.Sql + " where " + isDeleted;
-                        }
-                        else
-                        {
-                            query.WhereSentence = query.WhereSentence + " and " + isDeleted;
-                            query.Sql = query.Sql + " where " + query.WhereSentence;
-                        }
-                    }
-
-
-                    command.CommandText = query.Sql;
-
-                    query.SqlResult = command.ExecuteReader().DataReaderMapToArray<T>();
-
-                    Connection.Close();
-                    Connection.Dispose();
-                    GC.Collect();
-
-
-                    return query.SqlResult as IEnumerable<T>;
-                }
-                else
-                {
-
                     Connection.Close();
                     Connection.Dispose();
                     GC.Collect();
@@ -600,9 +565,11 @@ namespace TSI.QueryBuilder.BaseClasses
             {
                 //string[] insertQueries = query.Sql.Split(QueryConstants.QueryConstant);
 
-                var insertQueries = UpdateHelper.UpdateQueris;
+                var updateQueries = UpdateHelper.UpdateQueris;
 
-                if (insertQueries.Count == 1)
+                var whereQueries = WhereHelper.WhereQueries;
+
+                if (updateQueries.Count == 1)
                 {
                     var command = Connection.CreateCommand();
 
@@ -619,12 +586,26 @@ namespace TSI.QueryBuilder.BaseClasses
 
                         command.Parameters.Clear();
 
-                        foreach (var item in insertQueries[0].ParameterList)
+                        if (updateQueries.Count > 0)
                         {
-                            var parameter = command.CreateParameter();
-                            parameter.ParameterName = item.Key;
-                            parameter.Value = item.Value ?? DBNull.Value;
-                            command.Parameters.Add(parameter);
+                            foreach (var item in updateQueries[0].ParameterList)
+                            {
+                                var parameter = command.CreateParameter();
+                                parameter.ParameterName = item.Key;
+                                parameter.Value = item.Value ?? DBNull.Value;
+                                command.Parameters.Add(parameter);
+                            }
+                        }
+
+                        if (whereQueries.Count > 0)
+                        {
+                            foreach (var item in whereQueries[0].ParameterList)
+                            {
+                                var parameter = command.CreateParameter();
+                                parameter.ParameterName = item.Key;
+                                parameter.Value = item.Value ?? DBNull.Value;
+                                command.Parameters.Add(parameter);
+                            }
                         }
 
                         Guid _id = (Guid)command.ExecuteScalar();
@@ -649,6 +630,7 @@ namespace TSI.QueryBuilder.BaseClasses
                     else
                     {
                         UpdateHelper.UpdateQueris.Clear();
+                        WhereHelper.WhereQueries.Clear();
                         transaction.Rollback();
 
                         Connection.Close();
@@ -665,7 +647,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     if (command != null)
                     {
-                        query.Sql = insertQueries[0] + " where " + query.WhereSentence;
+                        query.Sql = updateQueries[0] + " where " + query.WhereSentence;
                         query.Sql = query.Sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
 
                         command.CommandText = query.Sql;
@@ -675,7 +657,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                         if (_id != Guid.Empty)
                         {
-                            for (int i = 0; i < insertQueries.Count; i++)
+                            for (int i = 0; i < updateQueries.Count; i++)
                             {
                                 if (i == 0)
                                 {
@@ -687,15 +669,15 @@ namespace TSI.QueryBuilder.BaseClasses
                                 if (commandLine != null)
                                 {
                                     commandLine.CommandTimeout = CommandTimeOut;
-                                    string lineQuery = insertQueries[i].Sql;
+                                    string lineQuery = updateQueries[i].Sql;
 
-                                    if (insertQueries[i].Sql.StartsWith("insert"))
+                                    if (updateQueries[i].Sql.StartsWith("insert"))
                                     {
-                                        lineQuery = insertQueries[i].Sql.Replace("values", "output INSERTED." + returnIdCaption + " values");
+                                        lineQuery = updateQueries[i].Sql.Replace("values", "output INSERTED." + returnIdCaption + " values");
                                     }
                                     else
                                     {
-                                        lineQuery = insertQueries[i].Sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
+                                        lineQuery = updateQueries[i].Sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
                                     }
 
                                     commandLine.CommandText = lineQuery;
@@ -703,12 +685,26 @@ namespace TSI.QueryBuilder.BaseClasses
 
                                     commandLine.Parameters.Clear();
 
-                                    foreach (var item in insertQueries[i].ParameterList)
+                                    if(updateQueries.Count>0)
                                     {
-                                        var parameter = commandLine.CreateParameter();
-                                        parameter.ParameterName = item.Key;
-                                        parameter.Value = item.Value ?? DBNull.Value;
-                                        commandLine.Parameters.Add(parameter);
+                                        foreach (var item in updateQueries[i].ParameterList)
+                                        {
+                                            var parameter = commandLine.CreateParameter();
+                                            parameter.ParameterName = item.Key;
+                                            parameter.Value = item.Value ?? DBNull.Value;
+                                            commandLine.Parameters.Add(parameter);
+                                        }
+                                    }
+
+                                    if (whereQueries.Count > 0)
+                                    {
+                                        foreach (var item in whereQueries[i].ParameterList)
+                                        {
+                                            var parameter = commandLine.CreateParameter();
+                                            parameter.ParameterName = item.Key;
+                                            parameter.Value = item.Value ?? DBNull.Value;
+                                            commandLine.Parameters.Add(parameter);
+                                        }
                                     }
 
 
@@ -738,11 +734,13 @@ namespace TSI.QueryBuilder.BaseClasses
                 }
 
                 UpdateHelper.UpdateQueris.Clear();
+                WhereHelper.WhereQueries.Clear();
                 return returnValue;
             }
             catch (Exception exp)
             {
                 UpdateHelper.UpdateQueris.Clear();
+                WhereHelper.WhereQueries.Clear();
                 transaction.Rollback();
 
                 Connection.Close();
@@ -752,89 +750,5 @@ namespace TSI.QueryBuilder.BaseClasses
                 return default(T);
             }
         }
-
-        public bool Delete(Query query)
-        {
-            try
-            {
-                ConnectToDatabase();
-
-                var command = Connection.CreateCommand();
-
-                command.CommandTimeout = CommandTimeOut;
-
-                if (command != null)
-                {
-                    command.CommandText = query.Sql + " " + query.WhereSentence;
-
-                    query.SqlResult = command.ExecuteReader();
-
-                    Connection.Close();
-                    Connection.Dispose();
-                    GC.Collect();
-
-                    return true;
-                }
-                else
-                {
-                    Connection.Close();
-                    Connection.Dispose();
-                    GC.Collect();
-                    return false;
-                }
-            }
-            catch (Exception exp)
-            {
-                Connection.Close();
-                Connection.Dispose();
-                GC.Collect();
-                var error = ErrorException.ThrowException(exp);
-                return false;
-            }
-        }
-
-        public bool Delete(Query query, bool useTransaction = true)
-        {
-            ConnectToDatabase();
-            IDbTransaction transaction = Connection.BeginTransaction();
-            try
-            {
-                var command = Connection.CreateCommand();
-
-                command.CommandTimeout = CommandTimeOut;
-
-                if (command != null)
-                {
-                    command.CommandText = query.Sql + " " + query.WhereSentence;
-                    command.Transaction = transaction;
-
-                    query.SqlResult = command.ExecuteReader();
-                    transaction.Commit();
-
-                    Connection.Close();
-                    Connection.Dispose();
-                    GC.Collect();
-                    return true;
-                }
-                else
-                {
-                    transaction.Rollback();
-                    Connection.Close();
-                    Connection.Dispose();
-                    GC.Collect();
-                    return false;
-                }
-            }
-            catch (Exception exp)
-            {
-                transaction.Rollback();
-                Connection.Close();
-                Connection.Dispose();
-                GC.Collect();
-                var error = ErrorException.ThrowException(exp);
-                return false;
-            }
-        }
-
     }
 }
