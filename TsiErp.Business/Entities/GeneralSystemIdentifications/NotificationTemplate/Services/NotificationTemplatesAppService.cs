@@ -106,6 +106,29 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
         {
             throw new NotImplementedException();
         }
+
+        #region Unused Methods
+
+        public Task<IDataResult<SelectNotificationTemplatesDto>> UpdateAsync(UpdateNotificationTemplatesDto input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<SelectNotificationTemplatesDto>> GetAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<IList<ListNotificationTemplatesDto>>> GetListAsync(ListNotificationTemplatesParameterDto input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<SelectNotificationTemplatesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }
