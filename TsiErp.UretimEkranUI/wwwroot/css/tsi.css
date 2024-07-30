@@ -18,8 +18,8 @@
     box-shadow: rgb(0 0 0 / 60%) 0px 8px 32px;
     height: 600px;
     width: 600px;
-    margin-top: -46%;
-    margin-left: 28%;
+    margin-top: -54%;
+    margin-left: 25%;
     position: relative;
 }
 
@@ -213,9 +213,9 @@
     font-family: Verdana !important;
     background-image: linear-gradient(135deg, rgb(168 20 20) 20%, #f82121 90%) !important;
     color: #ffffff !important;
-    font-size: 16px !important;
+    font-size: 15px !important;
     font-weight: bold !important;
-    width: 210px;
+    width: 100%;
     border-radius: 5px;
     height: 50px;
     border: 2px solid;

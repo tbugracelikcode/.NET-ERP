@@ -1,6 +1,14 @@
 ﻿@layout OperationDetailLayout
 
+@inject OperationDetailPageService OperationDetailPage
+
+@{
+    OperationDetailPage["OperationDetailPage"] = this;
+}
+
 @page "/work-order-detail"
+
+
 
 @inject AppService AppService
 @inject Navigation NavigationManager
@@ -74,13 +82,13 @@
 
                                     <td style="width:20%">
 
-                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ProducedQuantityAdded" Disabled=StartOperationButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.Play"></SfIcon>&nbsp;Başlat</SfButton>
+                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="OperationStartButtonClicked" Disabled=StartOperationButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.Play"></SfIcon>&nbsp;Başlat</SfButton>
                                     </td>
 
                                     <td style="width:20%">
 
 
-                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ProducedQuantityAdded" Disabled=PauseOperationButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.Pause"></SfIcon>&nbsp;Duraklat</SfButton>
+                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="OperationStopButtonClicked" Disabled=PauseOperationButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.Pause"></SfIcon>&nbsp;Duraklat</SfButton>
                                     </td>
 
                                     <td style="width:20%">
@@ -198,7 +206,7 @@
 
 
                                             <br />
-                                            <SfButton CssClass="TSIOperationPageAdjustmentButton"><SfIcon Size="IconSize.Large" Name="IconName.ArrowRight"></SfIcon>&nbsp;&nbsp;Adet Arttır</SfButton>
+                                            <SfButton OnClick="IncreaseQuantity" CssClass="TSIOperationPageAdjustmentButton"><SfIcon Size="IconSize.Large" Name="IconName.ArrowRight"></SfIcon>&nbsp;&nbsp;Adet Arttır</SfButton>
                                         </Template>
                                     </DxGridLayoutItem>
 
@@ -284,7 +292,8 @@
                                                         </center>
                                                         <br />
                                                         <center>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value=TotalOperationTime Readonly=true></SfTextBox>
+                                                            <SfTextBox  CssClass="TSITxtBox" @bind-Value=TotalOperationTime Readonly=true>
+                                                            </SfTextBox>
                                                         </center>
                                                     </strong>
                                                 </label>
