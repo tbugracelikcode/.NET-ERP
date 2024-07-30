@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Syncfusion.Blazor.Inputs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,13 @@ namespace TsiErp.UretimEkranUI.Pages
     {
 
         #region Button Disable Properties
-        public bool StartOperationButtonDisabled { get; set; } = true;
-        public bool PauseOperationButtonDisabled { get; set; } = true;
-        public bool EndOperationButtonDisabled { get; set; } = true;
-        public bool ScrapQuantityButtonDisabled { get; set; } = true;
-        public bool ChangeOperationButtonDisabled { get; set; } = true;
-        public bool ChangeShiftButtonDisabled { get; set; } = true;
-        public bool ChangeCaseButtonDisabled { get; set; } = true;
+        public bool StartOperationButtonDisabled { get; set; } = false;
+        public bool PauseOperationButtonDisabled { get; set; } = false;
+        public bool EndOperationButtonDisabled { get; set; } = false;
+        public bool ScrapQuantityButtonDisabled { get; set; } = false;
+        public bool ChangeOperationButtonDisabled { get; set; } = false;
+        public bool ChangeShiftButtonDisabled { get; set; } = false;
+        public bool ChangeCaseButtonDisabled { get; set; } = false;
         #endregion
 
         public string TotalAdjusmentTime { get; set; }
@@ -60,6 +61,54 @@ namespace TsiErp.UretimEkranUI.Pages
             await InvokeAsync(StateHasChanged);
         }
 
+        #region Operation Start
+
+        public decimal FirstProducedQuantity = 0;
+
+
+        public async void OperationStartButtonClicked()
+        {
+            FirstProducedQuantity = AppService.CurrentOperation.ProducedQuantity;
+
+            StartOperationTimer();
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+    
+        public void IncreaseQuantity()
+        {
+            AppService.CurrentOperation.ProducedQuantity = AppService.CurrentOperation.ProducedQuantity + 1;
+
+            FirstProducedQuantity = AppService.CurrentOperation.ProducedQuantity;
+
+            UpdatedOperationStartTime = DateTime.Now;
+
+
+        }
+
+        #endregion
+
+        #region Operation Stop
+
+        public async void OperationStopButtonClicked()
+        {
+            StopOperationTimer();
+
+            NavigationManager.NavigateTo("/halt-reasons");
+
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        void StopOperationTimer()
+        {
+            operationStartTimer.Stop();
+            operationStartTimer.Enabled = false;
+        }
+
+        #endregion
+
         private async void ScrapQuantityCalculate()
         {
             if (AppService.CurrentOperation.ScrapQuantity > 0)
@@ -81,26 +130,47 @@ namespace TsiErp.UretimEkranUI.Pages
 
         public string TotalOperationTime { get; set; } = "0:0:0";
 
-        System.Timers.Timer _timer = new System.Timers.Timer(1000);
+        System.Timers.Timer operationStartTimer = new System.Timers.Timer(1000);
 
-        DateTime StartTime = DateTime.Now;
+        DateTime OperationStartTime = DateTime.Now;
+
+        DateTime UpdatedOperationStartTime = DateTime.Now;
 
         void StartOperationTimer()
         {
-            StartTime = DateTime.Now;
-            _timer = new System.Timers.Timer(1000);
-            _timer.Elapsed += OnTimedEvent;
-            _timer.AutoReset = true;
-            _timer.Enabled = true;
+            OperationStartTime = DateTime.Now;
+            UpdatedOperationStartTime = DateTime.Now;
+            operationStartTimer = new System.Timers.Timer(1000);
+            operationStartTimer.Elapsed += OnTimedEvent;
+            operationStartTimer.AutoReset = true;
+            operationStartTimer.Enabled = true;
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             DateTime currentTime = e.SignalTime;
 
-            TotalOperationTime = currentTime.Subtract(StartTime).Hours + ":" + currentTime.Subtract(StartTime).Minutes + ":" + currentTime.Subtract(StartTime).Seconds;
+            TotalOperationTime = currentTime.Subtract(OperationStartTime).Hours + ":" + currentTime.Subtract(OperationStartTime).Minutes + ":" + currentTime.Subtract(OperationStartTime).Seconds;
+
+
+            if (currentTime.Subtract(UpdatedOperationStartTime).Minutes == 3 && AppService.CurrentOperation.ProducedQuantity == FirstProducedQuantity)
+            {
+                StopOperationTimer();
+
+                NavigationManager.NavigateTo("/halt-reasons");
+            }
 
             InvokeAsync(StateHasChanged);
+        }
+
+        public void OperationStartDispose()
+        {
+            if (operationStartTimer != null)
+            {
+               operationStartTimer.Stop();
+               operationStartTimer.Enabled = false;
+                operationStartTimer.Dispose();
+            }
         }
 
         #endregion
@@ -272,13 +342,15 @@ namespace TsiErp.UretimEkranUI.Pages
 
         }
 
+       
+
         public void Dispose()
         {
-            if (_timer != null)
+            if (operationStartTimer != null)
             {
-                _timer.Stop();
-                _timer.Enabled = false;
-                _timer.Dispose();
+                operationStartTimer.Stop();
+                operationStartTimer.Enabled = false;
+                //operationStartTimer.Dispose();
             }
         }
     }
