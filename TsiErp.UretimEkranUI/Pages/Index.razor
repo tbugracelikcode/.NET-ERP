@@ -68,7 +68,7 @@
                 <Template>
                     <br />
                     <br />
-                    <label class="TSIOperationPageModalLabel"><strong>Devam Eden İş Emri numarası</strong></label>
+                    <label class="TSIOperationPageModalLabel"><strong>Devam Eden İş Emri Numarası</strong></label>
 
                     <SfTextBox @bind-Value=AppService.CurrentOperation.WorkOrderNo Enabled=false></SfTextBox>
                 </Template>
@@ -79,6 +79,8 @@
                     <br />
                     <br />
                     <label class="TSIOperationPageModalLabel"><strong>Planlanan Adet</strong></label>
+                    <br />
+                    <br />
 
                     <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="AppService.CurrentOperation.PlannedQuantity" Enabled=false Decimals="0"></SfNumericTextBox>
                 </Template>
@@ -89,6 +91,8 @@
                     <br />
                     <br />
                     <label class="TSIOperationPageModalLabel"><strong>Gerçekleşen Adet</strong></label>
+                    <br />
+                    <br />
 
                     <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="AppService.CurrentOperation.ProducedQuantity" Enabled=false Decimals="0"></SfNumericTextBox>
                 </Template>

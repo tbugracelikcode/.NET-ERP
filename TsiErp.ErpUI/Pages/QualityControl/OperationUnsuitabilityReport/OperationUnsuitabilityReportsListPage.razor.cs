@@ -360,6 +360,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
                 DataSource.OperationCode = selectedOrder.ProductsOperationCode;
                 DataSource.ProductionOrderID = selectedOrder.ProductionOrderID;
                 DataSource.ProductionOrderFicheNo = selectedOrder.ProductionOrderFicheNo;
+
+                DataSource.StationID = Guid.Empty;
+                DataSource.StationCode = string.Empty;
+                DataSource.StationName = string.Empty;
                 SelectWorkOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

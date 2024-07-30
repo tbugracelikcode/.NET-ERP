@@ -99,6 +99,7 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<AppService>();
             builder.Services.AddScoped<ConnectorService>();
             builder.Services.AddScoped<NavMenuService>();
+            builder.Services.AddScoped<OperationDetailPageService>();
             builder.Services.AddScoped<IFicheNumbersAppService, FicheNumbersAppService>();
             builder.Services.AddScoped<IUsersAppService, UsersAppService>();
             builder.Services.AddScoped<IWorkOrdersAppService, WorkOrdersAppService>();

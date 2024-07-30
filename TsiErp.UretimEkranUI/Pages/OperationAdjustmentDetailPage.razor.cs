@@ -312,6 +312,8 @@ namespace TsiErp.UretimEkranUI.Pages
             AdjustmentTimer.Stop();
             AdjustmentTimer.Enabled = false;
 
+
+
             QualityControlApprovalTimer.Stop();
             QualityControlApprovalTimer.Enabled = false;
 

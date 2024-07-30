@@ -754,6 +754,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bildirim Şablonları.
+        /// </summary>
+        public static string NotificationTemplatesChildMenu {
+            get {
+                return ResourceManager.GetString("NotificationTemplatesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operasyon Kalite Planları.
         /// </summary>
         public static string OperationalQualityPlansChildMenu {

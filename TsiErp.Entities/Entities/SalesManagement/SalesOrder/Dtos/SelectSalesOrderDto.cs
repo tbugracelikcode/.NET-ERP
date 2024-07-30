@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Enums;

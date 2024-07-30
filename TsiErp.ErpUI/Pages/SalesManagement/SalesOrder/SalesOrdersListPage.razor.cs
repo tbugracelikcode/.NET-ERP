@@ -365,7 +365,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         #region Cari Hesap ButtonEdit
 
         SfTextBox CurrentAccountCardsCodeButtonEdit = new();
-        SfTextBox CurrentAccountCardsCustomerCodeButtonEdit = new();
         SfTextBox CurrentAccountCardsNameButtonEdit = new();
         bool SelectCurrentAccountCardsPopupVisible = false;
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
@@ -377,19 +376,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         }
 
         public async void CurrentAccountCardsCodeButtonClickEvent()
-        {
-            SelectCurrentAccountCardsPopupVisible = true;
-            await GetCurrentAccountCardsList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public async Task CurrentAccountCardsCustomerCodeOnCreateIcon()
-        {
-            var CurrentAccountCardsCustomerCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsCustomerCodeButtonClickEvent);
-            await CurrentAccountCardsCustomerCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsCustomerCodeButtonClick } });
-        }
-
-        public async void CurrentAccountCardsCustomerCodeButtonClickEvent()
         {
             SelectCurrentAccountCardsPopupVisible = true;
             await GetCurrentAccountCardsList();
@@ -434,7 +420,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 DataSource.CurrentAccountCardName = selectedUnitSet.Name;
                 DataSource.TransactionExchangeCurrencyCode = selectedUnitSet.Currency;
                 DataSource.TransactionExchangeCurrencyID = selectedUnitSet.CurrencyID;
-                DataSource.CustomerCode = selectedUnitSet.CustomerCode;
+                DataSource.CustomerCode = selectedUnitSet.CustomerCode ;
                 SelectCurrentAccountCardsPopupVisible = false;
                 ShippingAdressEnable = true;
                 await InvokeAsync(StateHasChanged);

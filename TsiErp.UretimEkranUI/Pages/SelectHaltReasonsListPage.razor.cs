@@ -1,17 +1,4 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Http;
-using Microsoft.JSInterop;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.Services;
-using TsiErp.Business.Entities.Menu.Services;
-using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+﻿using System.Timers;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 
 namespace TsiErp.UretimEkranUI.Pages
@@ -20,9 +7,18 @@ namespace TsiErp.UretimEkranUI.Pages
     {
         public bool EndHaltReasonButtonDisable { get; set; } = true;
 
+        WorkOrderOperationDetailPage WorkOrderOperationDetailPages;
+
+        WorkOrderOperationDetailPage workOrderOperationDetailPage;
+
         protected override async void OnInitialized()
         {
+
+            workOrderOperationDetailPage = (WorkOrderOperationDetailPage)OperationDetailPage["OperationDetailPage"];
+            
             StartTimer();
+
+            await InvokeAsync(() => StateHasChanged());
         }
 
         #region Halt Reasons
@@ -71,39 +67,68 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private async void EndHaltReasonButtonClick()
         {
-            Navigation.NavigateTo("/home");
+            if(workOrderOperationDetailPage!=null)
+            {
+
+                //workOrderOperationDetailPage.OperationStartButtonClicked();
+
+                //Operasyonun devamıyla alakalı metod yazılacak
+
+                Navigation.NavigateTo("/work-order-detail");
+
+
+                HaltTimerDispose();
+            }
+
+            await InvokeAsync(() => StateHasChanged());
         }
 
         #region Timer
 
         public string TotalHaltReasonTime { get; set; } = "0:0:0";
 
-        System.Timers.Timer _timer = new System.Timers.Timer(1000);
+        System.Timers.Timer _haltTimer = new System.Timers.Timer(1000);
 
-        DateTime StartTime = DateTime.Now;
+        DateTime HaltStartTime = DateTime.Now;
 
         void StartTimer()
         {
-            StartTime = DateTime.Now;
-            _timer = new System.Timers.Timer(1000);
-            _timer.Elapsed += OnTimedEvent;
-            _timer.AutoReset = true;
-            _timer.Enabled = true;
+            HaltStartTime = DateTime.Now;
+            _haltTimer = new System.Timers.Timer(1000);
+            _haltTimer.Elapsed += OnTimedEvent;
+            _haltTimer.AutoReset = true;
+            _haltTimer.Enabled = true;
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             DateTime currentTime = e.SignalTime;
 
-            TotalHaltReasonTime = currentTime.Subtract(StartTime).Hours + ":" + currentTime.Subtract(StartTime).Minutes + ":" + currentTime.Subtract(StartTime).Seconds;
+            TotalHaltReasonTime = currentTime.Subtract(HaltStartTime).Hours + ":" + currentTime.Subtract(HaltStartTime).Minutes + ":" + currentTime.Subtract(HaltStartTime).Seconds;
 
             InvokeAsync(StateHasChanged);
+        }
+
+        public void HaltTimerDispose()
+        {
+            if (_haltTimer != null)
+            {
+                _haltTimer.Stop();
+                _haltTimer.Enabled = false;
+                _haltTimer.Dispose();
+            }
         }
 
         #endregion
 
         public void Dispose()
         {
+            if (_haltTimer != null)
+            {
+                _haltTimer.Stop();
+                _haltTimer.Enabled = false;
+                _haltTimer.Dispose();
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using TsiErp.Business.Entities.ShippingAdress.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
@@ -480,9 +481,10 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                 DataSource.CurrentAccountCardCode = string.Empty;
                 DataSource.CurrentAccountCardName = string.Empty;
                 DataSource.CustomerCode = string.Empty;
-                ShippingAdressEnable = false;
                 DataSource.ShippingAdressCode = string.Empty;
                 DataSource.ShippingAdressID = Guid.Empty;
+
+
             }
         }
 
@@ -499,7 +501,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                 DataSource.TransactionExchangeCurrencyCode = selectedUnitSet.Currency;
                 DataSource.TransactionExchangeCurrencyID = selectedUnitSet.CurrencyID;
                 SelectCurrentAccountCardsPopupVisible = false;
-                ShippingAdressEnable = true;
+                DataSource.ShippingAdressCode = selectedUnitSet.ShippingAddress;
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -508,7 +510,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
         #region Sevkiyat Adresi ButtonEdit
 
         SfTextBox ShippingAdressesButtonEdit;
-        bool ShippingAdressEnable = false;
         bool SelectShippingAdressesPopupVisible = false;
         List<ListShippingAdressesDto> ShippingAdressesList = new List<ListShippingAdressesDto>();
 
@@ -1341,6 +1342,10 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
         private async Task GetProductsList()
         {
             ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
+        }
+        private async Task GetShippingAdressList()
+        {
+            ShippingAdressesList = (await ShippingAdressesAppService.GetListAsync(new ListShippingAdressesParameterDto())).Data.ToList();
         }
 
         private async Task GetCurrentAccountCardsList()

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tsi.Core.Entities;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate.Dtos
 {
-    public class ListNotificationTemplatesDto
+    public class ListNotificationTemplatesDto : IEntityDto
     {
 
         /// <summary>
@@ -32,6 +33,11 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
         /// </summary>
         public string ContextMenuName_ { get; set; }
 
+        /// <summary>
+        /// Ad
+        /// </summary>
+        public string Name { get; set; }
+
 
         /// <summary>
         /// Kaynak Departman ID
@@ -41,7 +47,7 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
         /// <summary>
         /// Hedef Departman ID
         /// </summary>
-        public Guid TargetDepartmentId { get; set; }
+        public string TargetDepartmentId { get; set; }
 
         /// <summary>
         /// Aktiflik
@@ -53,6 +59,10 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
         /// str
         /// </summary>
         public string QueryStr { get; set; }
+        /// <summary>
+        /// userID
+        /// </summary>
+        public string TargetUsersId { get; set; }
 
     }
 }

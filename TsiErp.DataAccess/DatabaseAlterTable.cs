@@ -34,6 +34,7 @@ namespace TsiErp.DataAccess
         #endregion
         #endregion
 
+
         #region Table DropColumn kullanım örnekleri
         //[DatabaseDropColumn(ColumnName = "Deneme", TableName = "CurrentAccountCards")]
         //public int Deneme { get; set; }
@@ -41,5 +42,13 @@ namespace TsiErp.DataAccess
         //[DatabaseDropColumn(ColumnName = "Deneme2", TableName = "CurrentAccountCards")]
         //public decimal Deneme2 { get; set; } 
         #endregion
+
+
+        //[DatabaseAddColumn(Nullable = true, SqlDbType = SqlDataType.NVarCharMax, TableName = "NotificationTemplates", Default_ = "NULL")]
+        //public string TargetUsersId { get; set; }
+
+        //[DatabaseAddColumn(MaxLength = 200, Nullable = true, SqlDbType = SqlDataType.NVarChar, TableName = "NotificationTemplates", Default_ = "NULL")]
+        //public string Name { get; set; }
+
     }
 }

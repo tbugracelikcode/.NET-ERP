@@ -671,7 +671,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     )
                      .Join<CurrentAccountCards>
                     (
-                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
+                        ca => new { CurrentAccountCard = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
                         nameof(SalesOrders.CurrentAccountCardID),
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left)
@@ -816,7 +816,6 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 OrderAcceptanceRecordID = input.OrderAcceptanceRecordID.GetValueOrDefault(),
                 BranchID = input.BranchID,
                 CurrencyID = input.CurrencyID,
-                CurrentAccountCardID = input.CurrentAccountCardID,
                 TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
