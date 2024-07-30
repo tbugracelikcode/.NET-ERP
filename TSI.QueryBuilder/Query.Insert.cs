@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using TSI.QueryBuilder.Helpers;
 using TSI.QueryBuilder.MappingAttributes;
+using TSI.QueryBuilder.Models;
 
 namespace TSI.QueryBuilder
 {
@@ -76,6 +78,8 @@ namespace TSI.QueryBuilder
 
         public Query Insert(object dto)
         {
+            InsertQuerySQL querySQL = new InsertQuerySQL();
+
             var valuesList = dto.GetType().GetProperties().Where(t => t.CustomAttributes.Count() == 0).ToList();
 
             string[] columns = new string[valuesList.Count];
@@ -88,11 +92,13 @@ namespace TSI.QueryBuilder
                 counter++;
             }
 
-            string valuesQuery = string.Empty;
-
             string columnsQuery = string.Empty;
 
+            string QueryParametersStr = string.Empty;
+
             string insertQuery = "insert into " + TableName;
+
+            querySQL.ParameterList.Clear();
 
             for (int i = 0; i < valuesList.Count; i++)
             {
@@ -100,32 +106,90 @@ namespace TSI.QueryBuilder
                 {
                     if (i == 0)
                     {
+                        object value = null;
+
+                        if (valuesList[i].PropertyType == typeof(Nullable<DateTime>))
+                        {
+                            var date = valuesList[i].GetValue(dto, null);
+
+                            if (date == null)
+                            {
+                                value = new DateTime(1900, 1, 1);
+                            }
+                        }
+                        else if (valuesList[i].PropertyType == typeof(Nullable<Guid>))
+                        {
+                            value = Guid.Empty;
+                        }
+                        else if (valuesList[i].PropertyType == typeof(Decimal))
+                        {
+                            value = Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".");
+                        }
+                        else
+                        {
+                            value = valuesList[i].GetValue(dto, null);
+                        }
+
                         columnsQuery = " (" + columns[i] + ")";
-                        valuesQuery = " (" + "'" + (valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",",".") : valuesList[i].GetValue(dto, null)) + "'" + ")";
+                        QueryParametersStr = " (" + "@" + columns[i] + ")";
+                        querySQL.ParameterList.Add("@" + columns[i], value);
                     }
                 }
                 else
                 {
+                    object value = null;
+
+                    if (valuesList[i].PropertyType == typeof(Nullable<DateTime>))
+                    {
+                        var date = valuesList[i].GetValue(dto, null);
+
+                        if (date == null)
+                        {
+                            value = new DateTime(1900, 1, 1);
+                        }
+                    }
+                    else if (valuesList[i].PropertyType == typeof(Nullable<Guid>))
+                    {
+                        value = Guid.Empty;
+                    }
+                    else if (valuesList[i].PropertyType == typeof(Decimal))
+                    {
+                        value = Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".");
+                    }
+                    else
+                    {
+                        value = valuesList[i].GetValue(dto, null);
+                    }
+
                     if (i == 0)
                     {
                         columnsQuery = " (" + columns[i] + ",";
-                        valuesQuery = " (" + "'" + (valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'" + ",";
+                        QueryParametersStr = " (" + "@" + columns[i] + ",";
+                        querySQL.ParameterList.Add("@" + columns[i], value);
                     }
                     else
                     {
                         columnsQuery = columnsQuery + columns[i] + ",";
-                        valuesQuery = valuesQuery + "'" + (valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'" + ",";
+                        QueryParametersStr = QueryParametersStr + "@" + columns[i] + ",";
+                        querySQL.ParameterList.Add("@" + columns[i], value);
 
                     }
                 }
             }
 
-            valuesQuery = valuesQuery.Substring(0, valuesQuery.Length - 1);
             columnsQuery = columnsQuery.Substring(0, columnsQuery.Length - 1);
 
-            insertQuery = insertQuery + columnsQuery + ")" + " values " + valuesQuery + ")";
+            QueryParametersStr = QueryParametersStr.Substring(0, QueryParametersStr.Length - 1);
 
-            Sql = insertQuery;
+            QueryParametersStr = QueryParametersStr + ")";
+
+            insertQuery = insertQuery + columnsQuery + ")" + " values " + QueryParametersStr;
+
+            querySQL.Sql = insertQuery;
+
+            InsertHelper.InsertQueryList(querySQL);
+
+            Sql = querySQL.Sql;
 
             return this;
         }

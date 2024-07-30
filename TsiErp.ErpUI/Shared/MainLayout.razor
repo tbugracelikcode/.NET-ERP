@@ -389,13 +389,13 @@
 
     protected async override void OnInitialized()
     {
-        errorBoundary = new ErrorBoundary();
+        // errorBoundary = new ErrorBoundary();
 
-        Version version = typeof(Program).Assembly.GetName().Version;
+        // Version version = typeof(Program).Assembly.GetName().Version;
 
-        string progVersion = version.Major + "." + version.Minor + "." + version.Build;
+        // string progVersion = version.Major + "." + version.Minor + "." + version.Build;
 
-        bool control = await VersionControlService.CheckVersion(progVersion);
+        // bool control = await VersionControlService.CheckVersion(progVersion);
 
         //DatabaseSchemeUpdater updater = new DatabaseSchemeUpdater();
 

@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using TSI.QueryBuilder.Helpers;
+using TSI.QueryBuilder.Models;
 
 namespace TSI.QueryBuilder
 {
@@ -57,6 +60,7 @@ namespace TSI.QueryBuilder
 
         public Query Update(object dto)
         {
+            UpdateQuerySQL querySQL = new UpdateQuerySQL();
 
             var valuesList = dto.GetType().GetProperties().Where(t => t.CustomAttributes.Count() == 0).ToList();
 
@@ -70,28 +74,47 @@ namespace TSI.QueryBuilder
                 counter++;
             }
 
+
             string valuesQuery = string.Empty;
 
             string updateQuery = "update " + TableName + " set ";
 
+            querySQL.ParameterList.Clear();
+
             for (int i = 0; i < valuesList.Count; i++)
             {
-
                 if (i == 0)
                 {
-                    valuesQuery = columns[i] + "=" + "'" + (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'";
+
+                    object value = valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null);
+
+                    querySQL.ParameterList.Add("@" + columns[i], value);
+
+                    valuesQuery = columns[i] + "=" + "@" + columns[i];
                 }
                 else
                 {
-                    valuesQuery = valuesQuery + "," + columns[i] + "=" + "'" + (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'";
-                }
 
+                    object value = valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null);
+
+                    querySQL.ParameterList.Add("@" + columns[i], value);
+
+
+                    valuesQuery = valuesQuery + "," + columns[i] + "=" + "@" + columns[i];
+
+                    //valuesQuery = valuesQuery + "," + columns[i] + "=" + "'" + (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'";
+                }
             }
+
 
 
             updateQuery = updateQuery + valuesQuery;
 
-            Sql = updateQuery;
+            querySQL.Sql = updateQuery;
+
+            UpdateHelper.UpdateQueryList(querySQL);
+
+            Sql = querySQL.Sql;
 
             return this;
         }
