@@ -219,6 +219,42 @@ namespace TsiErp.Business.Entities.Employee.Services
         }
 
 
+        public async Task<IDataResult<IList<ListEmployeesDto>>> GetListbyDepartmentAsync(Guid departmentID)
+        {
+            var query = queryFactory
+               .Query()
+               .From(Tables.Employees)
+               .Select<Employees>(null)
+                   .Join<Departments>
+                   (
+                       d => new { Department = d.Name },
+                         nameof(Employees.DepartmentID),
+                         nameof(Departments.Id),
+                         JoinType.Left
+                   )
+
+                     .Join<EmployeeSeniorities>
+                   (
+                       d => new { SeniorityName = d.Name, SeniorityID = d.Id },
+                       nameof(Employees.SeniorityID),
+                       nameof(EmployeeSeniorities.Id),
+                       JoinType.Left
+                   )
+                       .Join<EducationLevelScores>
+                   (
+                       d => new { EducationLevelName = d.Name, EducationLevelID = d.Id },
+                       nameof(Employees.EducationLevelID),
+                       nameof(EducationLevelScores.Id),
+                       JoinType.Left
+                   ).Where(new { DepartmentID = departmentID }, true, true, Tables.Employees);
+
+            var employees = queryFactory.GetList<ListEmployeesDto>(query).ToList();
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListEmployeesDto>>(employees);
+        }
+
+
         [ValidationAspect(typeof(UpdateEmployeesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeesDto>> UpdateAsync(UpdateEmployeesDto input)

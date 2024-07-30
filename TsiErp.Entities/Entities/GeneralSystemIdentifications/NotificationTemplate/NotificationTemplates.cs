@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,13 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
         /// ID
         /// </summary>
         public Guid Id { get; set; }
+
+        [SqlColumnType(MaxLength = 200, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+
+        /// <summary>
+        /// Ad
+        /// </summary>
+        public string Name { get; set; }
 
         [SqlColumnType(MaxLength = 50, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
 
@@ -46,11 +54,11 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
         /// </summary>
         public Guid SourceDepartmentId { get; set; }
 
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.VarCharMax)]
         /// <summary>
         /// Hedef Departman ID
         /// </summary>
-        public Guid TargetDepartmentId { get; set; }
+        public string TargetDepartmentId { get; set; }
 
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
@@ -64,6 +72,13 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
         /// str
         /// </summary>
         public string QueryStr { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.VarCharMax)]
+
+        /// <summary>
+        /// userID
+        /// </summary>
+        public string TargetUsersId { get; set; }
 
     }
 }

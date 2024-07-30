@@ -348,6 +348,9 @@
   <data name="MRPIIChildMenu" xml:space="preserve">
     <value>Üretim Kaynak Planlaması (MRPII)</value>
   </data>
+  <data name="NotificationTemplatesChildMenu" xml:space="preserve">
+    <value>Bildirim Şablonları</value>
+  </data>
   <data name="OperationalQualityPlansChildMenu" xml:space="preserve">
     <value>Operasyon Kalite Planları</value>
   </data>
