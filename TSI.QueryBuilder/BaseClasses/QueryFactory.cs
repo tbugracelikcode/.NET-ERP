@@ -358,9 +358,22 @@ namespace TSI.QueryBuilder.BaseClasses
                 if (command != null)
                 {
 
+                    var whereQueries = WhereHelper.WhereQueries;
+
                     query.Sql = query.Sql + " where " + query.WhereSentence;
 
                     command.CommandText = query.Sql;
+
+                    if(whereQueries.Count > 0)
+                    {
+                        foreach (var item in whereQueries[0].ParameterList)
+                        {
+                            var parameter = command.CreateParameter();
+                            parameter.ParameterName = item.Key;
+                            parameter.Value = item.Value ?? DBNull.Value;
+                            command.Parameters.Add(parameter);
+                        }
+                    }
 
                     query.SqlResult = command.ExecuteReader().DataReaderMapToList<T>();
 
