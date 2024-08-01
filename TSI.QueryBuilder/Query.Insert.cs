@@ -119,7 +119,12 @@ namespace TSI.QueryBuilder
                         }
                         else if (valuesList[i].PropertyType == typeof(Nullable<Guid>))
                         {
-                            value = Guid.Empty;
+                            var guidValue = valuesList[i].GetValue(dto, null);
+
+                            if (guidValue == null)
+                            {
+                                value = Guid.Empty;
+                            }
                         }
                         else if (valuesList[i].PropertyType == typeof(Decimal))
                         {
@@ -147,10 +152,23 @@ namespace TSI.QueryBuilder
                         {
                             value = new DateTime(1900, 1, 1);
                         }
+                        else
+                        {
+                            value = date;
+                        }
                     }
                     else if (valuesList[i].PropertyType == typeof(Nullable<Guid>))
                     {
-                        value = Guid.Empty;
+                        var guidValue = valuesList[i].GetValue(dto, null);
+
+                        if (guidValue == null)
+                        {
+                            value = Guid.Empty;
+                        }
+                        else
+                        {
+                            value = guidValue;
+                        }
                     }
                     else if (valuesList[i].PropertyType == typeof(Decimal))
                     {

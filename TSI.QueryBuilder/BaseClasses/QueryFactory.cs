@@ -309,7 +309,10 @@ namespace TSI.QueryBuilder.BaseClasses
                             var parameter = command.CreateParameter();
                             parameter.ParameterName = item.Key;
                             parameter.Value = item.Value ?? DBNull.Value;
-                            command.Parameters.Add(parameter);
+                            if (!command.Parameters.Contains(parameter.ParameterName))
+                            {
+                                command.Parameters.Add(parameter);
+                            }
                         }
                     }
 
@@ -372,7 +375,10 @@ namespace TSI.QueryBuilder.BaseClasses
                             var parameter = command.CreateParameter();
                             parameter.ParameterName = item.Key;
                             parameter.Value = item.Value ?? DBNull.Value;
-                            command.Parameters.Add(parameter);
+                            if (!command.Parameters.Contains(parameter.ParameterName))
+                            {
+                                command.Parameters.Add(parameter);
+                            }
                         }
                     }
 
@@ -444,7 +450,10 @@ namespace TSI.QueryBuilder.BaseClasses
                             var parameter = command.CreateParameter();
                             parameter.ParameterName = item.Key;
                             parameter.Value = item.Value ?? DBNull.Value;
-                            command.Parameters.Add(parameter);
+                            if (!command.Parameters.Contains(parameter.ParameterName))
+                            {
+                                command.Parameters.Add(parameter);
+                            }
                         }
 
                         Guid _id = (Guid)command.ExecuteScalar();
@@ -497,7 +506,10 @@ namespace TSI.QueryBuilder.BaseClasses
                             var parameter = command.CreateParameter();
                             parameter.ParameterName = item.Key;
                             parameter.Value = item.Value ?? DBNull.Value;
-                            command.Parameters.Add(parameter);
+                            if (!command.Parameters.Contains(parameter.ParameterName))
+                            {
+                                command.Parameters.Add(parameter);
+                            }
                         }
 
                         Guid _id = (Guid)command.ExecuteScalar();
@@ -528,7 +540,10 @@ namespace TSI.QueryBuilder.BaseClasses
                                         var parameter = commandLine.CreateParameter();
                                         parameter.ParameterName = item.Key;
                                         parameter.Value = item.Value ?? DBNull.Value;
-                                        commandLine.Parameters.Add(parameter);
+                                        if (!commandLine.Parameters.Contains(parameter.ParameterName))
+                                        {
+                                            commandLine.Parameters.Add(parameter);
+                                        }
                                     }
 
                                     commandLine.ExecuteScalar();
@@ -726,7 +741,11 @@ namespace TSI.QueryBuilder.BaseClasses
                                             var parameter = commandLine.CreateParameter();
                                             parameter.ParameterName = item.Key;
                                             parameter.Value = item.Value ?? DBNull.Value;
-                                            commandLine.Parameters.Add(parameter);
+
+                                            if (!commandLine.Parameters.Contains(parameter.ParameterName))
+                                            {
+                                                commandLine.Parameters.Add(parameter);
+                                            }
                                         }
                                     }
 
@@ -737,7 +756,11 @@ namespace TSI.QueryBuilder.BaseClasses
                                             var parameter = commandLine.CreateParameter();
                                             parameter.ParameterName = item.Key;
                                             parameter.Value = item.Value ?? DBNull.Value;
-                                            commandLine.Parameters.Add(parameter);
+
+                                            if (!commandLine.Parameters.Contains(parameter.ParameterName))
+                                            {
+                                                commandLine.Parameters.Add(parameter);
+                                            }
                                         }
                                     }
 
