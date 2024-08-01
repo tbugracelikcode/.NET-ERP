@@ -138,6 +138,21 @@
   <data name="8DContextState" xml:space="preserve">
     <value>Complete the 8D Report</value>
   </data>
+  <data name="BankAccountsChildMenu" xml:space="preserve">
+    <value>Bank Accounts</value>
+  </data>
+  <data name="BankAccountsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="BankAccountsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="BankAccountsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="BankAccountsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="BOMChildMenu" xml:space="preserve">
     <value>Bills of Materials</value>
   </data>
@@ -201,6 +216,9 @@
   <data name="ByProdGrpScrapAnalysisChildMenu" xml:space="preserve">
     <value>Scrap Analysis by Product Group</value>
   </data>
+  <data name="CalendarChildMenu" xml:space="preserve">
+    <value>Work Calendar</value>
+  </data>
   <data name="CalendarContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -258,6 +276,9 @@
   <data name="CalVerificationsChildMenu" xml:space="preserve">
     <value>Calibration Verification Records</value>
   </data>
+  <data name="CitiesChildMenu" xml:space="preserve">
+    <value>Cities</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -294,11 +315,14 @@
   <data name="ContextOprPicRefresh" xml:space="preserve">
     <value>Operation Picture Refresh</value>
   </data>
+  <data name="ContinentsChildMenu" xml:space="preserve">
+    <value>Continents</value>
+  </data>
   <data name="ContractOfProductsOperationContextDelete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Delete Contract Supplier</value>
   </data>
   <data name="ContractOfProductsOperationContextSelectSupplier" xml:space="preserve">
-    <value>Select Supplier</value>
+    <value>Select Contract Supplier</value>
   </data>
   <data name="ContractOprContextAdd" xml:space="preserve">
     <value>Contract Operation Add</value>
@@ -354,14 +378,26 @@
   <data name="ContractTrackingFicheAmountEntryLineContextAdd" xml:space="preserve">
     <value>Amount Line Add</value>
   </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="ContractTrackingFicheAmountEntryLineContextChange" xml:space="preserve">
     <value>Amount Line Change</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextChange1" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="ContractTrackingFicheAmountEntryLineContextDelete" xml:space="preserve">
     <value>Amount Line Delete</value>
   </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="ContractTrackingFicheAmountEntryLineContextRefresh" xml:space="preserve">
     <value>Amount Line Refresh</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="ContractTrackingFicheContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -538,7 +574,7 @@
     <value>Departments</value>
   </data>
   <data name="EditModalTitle" xml:space="preserve">
-    <value>Notifications</value>
+    <value>Notification Templates</value>
   </data>
   <data name="EditModalTitle1" xml:space="preserve">
     <value>User Identifications</value>
@@ -681,6 +717,9 @@
   <data name="ExchangeRateContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="ExchangeRateContextCentralBankExchange" xml:space="preserve">
+    <value>Pull Central Bank Exchange Rates</value>
+  </data>
   <data name="ExchangeRateContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
@@ -770,6 +809,9 @@
   </data>
   <data name="ForecastContextDelete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="ForecastContextMRP" xml:space="preserve">
+    <value>Material Requirement List</value>
   </data>
   <data name="ForecastContextRefresh" xml:space="preserve">
     <value>Refresh</value>
@@ -1077,6 +1119,27 @@
   <data name="MRPIIChildMenu" xml:space="preserve">
     <value>Production Resource Planning (MRPII)</value>
   </data>
+  <data name="MRPIILineContextCalculate" xml:space="preserve">
+    <value>Calculate Estimated End Date</value>
+  </data>
+  <data name="MRPIILineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="MRPIILineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="MRPIIsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="MRPIIsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="MRPIIsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MRPIIsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="MRPLineContextChange" xml:space="preserve">
     <value>Line Change</value>
   </data>
@@ -1092,8 +1155,14 @@
   <data name="MRPLineContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
+  <data name="MRPLineContextReservePurchase" xml:space="preserve">
+    <value>Reserve the Purchase</value>
+  </data>
   <data name="MRPLineContextStockUsage" xml:space="preserve">
     <value>Line Use From Stock</value>
+  </data>
+  <data name="MRPLineContextSupplier" xml:space="preserve">
+    <value>Select a Supplier</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>NAME</value>
@@ -1116,8 +1185,11 @@
   <data name="NotificationTemplatesContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="NotificationTemplatesContextIsActive" xml:space="preserve">
+    <value>Activity</value>
+  </data>
   <data name="NotificationTemplatesContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Set Activity Status</value>
   </data>
   <data name="OperationalQualityPlanContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -1227,14 +1299,32 @@
   <data name="OrderAcceptanceRecordsContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextControl" xml:space="preserve">
+    <value>Order Acceptance Control</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextConverttoOrder" xml:space="preserve">
     <value>Convert to Sales Order</value>
   </data>
   <data name="OrderAcceptanceRecordsContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextMRP" xml:space="preserve">
+    <value>Material Requirement List</value>
+  </data>
+  <data name="OrderAcceptanceRecordsContextOrderLines" xml:space="preserve">
+    <value>Order Lines</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="OrderAcceptanceRecordsContextStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="PackageFicheLinesContextChange" xml:space="preserve">
+    <value>Change Line</value>
+  </data>
+  <data name="PackageFicheLinesContextRefresh" xml:space="preserve">
+    <value>Refresh Line</value>
   </data>
   <data name="PackageFichesChildMenu" xml:space="preserve">
     <value>Package Fiches</value>
@@ -1272,8 +1362,14 @@
   <data name="PackingListsContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PackingListsContextPrint" xml:space="preserve">
+    <value>Print</value>
+  </data>
   <data name="PackingListsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="PackingListsPalletLineContextRemovePallet" xml:space="preserve">
+    <value>Remove the Pallet</value>
   </data>
   <data name="PackingListsPalletLineContextSelectPallet" xml:space="preserve">
     <value>Select Pallet</value>
@@ -1320,8 +1416,23 @@
   <data name="PalletRecordsContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PalletRecordsContextLoadingDetail" xml:space="preserve">
+    <value>Loading Detail</value>
+  </data>
+  <data name="PalletRecordsContextPalletDetail" xml:space="preserve">
+    <value>Pallet Detail</value>
+  </data>
+  <data name="PalletRecordsContextPrintTicket" xml:space="preserve">
+    <value>Print</value>
+  </data>
   <data name="PalletRecordsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="PalletRecordsContextState" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="PalletRecordsContextTicketState" xml:space="preserve">
+    <value>Ticket Status</value>
   </data>
   <data name="PalletRecordsListChildMenu" xml:space="preserve">
     <value>List of Pallet Records</value>
@@ -1440,6 +1551,9 @@
   <data name="ProdOperationsChildMenu" xml:space="preserve">
     <value>Products Operations</value>
   </data>
+  <data name="ProdOrderChangeRecordsChildMenu" xml:space="preserve">
+    <value>Production Order Change Reports</value>
+  </data>
   <data name="ProdOrderRecordsChildMenu" xml:space="preserve">
     <value>Production Order Unsuitability Records</value>
   </data>
@@ -1497,6 +1611,9 @@
   <data name="ProductGroupContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ProductGroupContextProductProperties" xml:space="preserve">
+    <value>Product Properties</value>
+  </data>
   <data name="ProductGroupContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
@@ -1530,14 +1647,32 @@
   <data name="ProductionManagementTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
   </data>
+  <data name="ProductionOrderChangeReportsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductionOrderChangeReportsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductionOrderChangeReportsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductionOrderChangeReportsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="ProductionOrderContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ProductionOrderContextAddtoShipmentPlanning" xml:space="preserve">
     <value>Add to Shipment Planning List</value>
   </data>
+  <data name="ProductionOrderContextCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="ProductionOrderContextChange" xml:space="preserve">
     <value>Change</value>
+  </data>
+  <data name="ProductionOrderContextChangeTechnicalDrawing" xml:space="preserve">
+    <value>Change Technical Drawing</value>
   </data>
   <data name="ProductionOrderContextConsumptionReceipt" xml:space="preserve">
     <value>Create Consumption Fiche</value>
@@ -1545,14 +1680,29 @@
   <data name="ProductionOrderContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ProductionOrderContextMaterialFiches" xml:space="preserve">
+    <value>Material Fiches</value>
+  </data>
+  <data name="ProductionOrderContextMaterialSupplyStatus" xml:space="preserve">
+    <value>Material Supply Status</value>
+  </data>
   <data name="ProductionOrderContextOccuredAmountEntry" xml:space="preserve">
     <value>Occured Amount Entry</value>
   </data>
   <data name="ProductionOrderContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ProductionOrderContextTrackingChart" xml:space="preserve">
+    <value>R.M. - S.F.P. Tracking Chart</value>
+  </data>
+  <data name="ProductionOrderContextUnsuitabilityRecords" xml:space="preserve">
+    <value>Unsuitability Records</value>
+  </data>
   <data name="ProductionOrderContextWorkOrders" xml:space="preserve">
     <value>Work Orders</value>
+  </data>
+  <data name="ProductionOrderContextWrite" xml:space="preserve">
+    <value>Print</value>
   </data>
   <data name="ProductionOrderListChildMenu" xml:space="preserve">
     <value>Production Orders List</value>
@@ -1592,6 +1742,48 @@
   </data>
   <data name="ProductOrderContextTree" xml:space="preserve">
     <value>Product Tree</value>
+  </data>
+  <data name="ProductPropertyContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductPropertyContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductPropertyContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductPropertyContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProductPropertyLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductPropertyLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductPropertyLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductPropertyLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProductReceiptTransactionsChildMenu" xml:space="preserve">
+    <value>Product Receipt Transactions</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextApproveIncomingQuantity" xml:space="preserve">
+    <value>Approve Incoming Quantity</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="ProductReferanceNumberContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -1695,8 +1887,14 @@
   <data name="PurchaseOrderContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PurchaseOrderContextPriceApproval" xml:space="preserve">
+    <value>Grant Bill Approval</value>
+  </data>
   <data name="PurchaseOrderContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrderContextWayBillApproval" xml:space="preserve">
+    <value>Grant Waybill Approval</value>
   </data>
   <data name="PurchaseOrderFicheListChildMenu" xml:space="preserve">
     <value>List of Purchase Orders</value>
@@ -1712,6 +1910,33 @@
   </data>
   <data name="PurchaseOrderLineContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalLinesContextChange" xml:space="preserve">
+    <value>Add Value</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalLinesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsChildMenu" xml:space="preserve">
+    <value>Purchase Orders Awaiting Approval</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsChildMenu1" xml:space="preserve">
+    <value>Purchase Orders Awaiting Approval</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextPurchaseUnsuitability" xml:space="preserve">
+    <value>Create Purchase Unsuitability Report</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextQualityApproval" xml:space="preserve">
+    <value>Grant Quality Approval</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextQualityApprovalCancel" xml:space="preserve">
+    <value>Cancel Quality Approval</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextReview" xml:space="preserve">
+    <value>Review</value>
   </data>
   <data name="PurchaseOrdersChildMenu" xml:space="preserve">
     <value>Purchase Ordes</value>
@@ -2119,10 +2344,13 @@
     <value>Shipping Management </value>
   </data>
   <data name="SourceDepartmentIdLabel" xml:space="preserve">
-    <value>Source Department:</value>
+    <value>User Group Department:</value>
   </data>
   <data name="SPCFMEAChildMenu" xml:space="preserve">
     <value>SPC &amp; FMEA</value>
+  </data>
+  <data name="SQLCommandButton" xml:space="preserve">
+    <value>Create Query</value>
   </data>
   <data name="StartingSalariesChildMenu" xml:space="preserve">
     <value>Starting Salaries</value>
@@ -2205,6 +2433,48 @@
   <data name="StationsChildMenu" xml:space="preserve">
     <value>Stations</value>
   </data>
+  <data name="StockAddressesChildMenu" xml:space="preserve">
+    <value>Stock Addresses</value>
+  </data>
+  <data name="StockAddressesContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockAddressesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockAddressesContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockAddressesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="StockAddressesLineContextAdd" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
+  <data name="StockAddressesLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="StockAddressesLineContextDelete" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="StockAddressesLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="StockColumnsChildMenu" xml:space="preserve">
+    <value>Stock Columns</value>
+  </data>
+  <data name="StockColumnsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockColumnsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockColumnsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockColumnsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="StockFicheContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -2250,6 +2520,9 @@
   <data name="StockFichesChildMenu" xml:space="preserve">
     <value>Stock Fiches</value>
   </data>
+  <data name="StockFichesGeneralConAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="StockManagementMainRecordsMenu" xml:space="preserve">
     <value>Main Records</value>
   </data>
@@ -2277,6 +2550,21 @@
   <data name="StockManagementTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
   </data>
+  <data name="StockNumbersChildMenu" xml:space="preserve">
+    <value>Stock Numbers</value>
+  </data>
+  <data name="StockNumbersContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockNumbersContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockNumbersContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockNumbersContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="StockReceiptFichesContextMultiSelect" xml:space="preserve">
     <value>Bulk Select</value>
   </data>
@@ -2285,6 +2573,36 @@
   </data>
   <data name="StockReceiptFichesContextSelect" xml:space="preserve">
     <value>Select</value>
+  </data>
+  <data name="StockSectionsChildMenu" xml:space="preserve">
+    <value>Stock Sections</value>
+  </data>
+  <data name="StockSectionsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockSectionsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockSectionsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockSectionsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="StockShelfsChildMenu" xml:space="preserve">
+    <value>Stock Shelfs</value>
+  </data>
+  <data name="StockShelfsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockShelfsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockShelfsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockShelfsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>General Information</value>
@@ -2296,10 +2614,10 @@
     <value>Target Department Id:</value>
   </data>
   <data name="TargetUsersId" xml:space="preserve">
-    <value>TARGET USERS ID</value>
+    <value>TARGET USER GROUP ID</value>
   </data>
   <data name="TargetUsersIdLabel" xml:space="preserve">
-    <value>Target Users Id:</value>
+    <value>Target Users Group Id:</value>
   </data>
   <data name="TaskScoringsChildMenu" xml:space="preserve">
     <value>Task Scorings</value>
@@ -2398,6 +2716,18 @@
     <value>General System Identifications</value>
   </data>
   <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningQueryStrMessage" xml:space="preserve">
+    <value>Saving cannot be done without creating a query.</value>
+  </data>
+  <data name="UIWarningQueryStrTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningSQLCommandMessage" xml:space="preserve">
+    <value>A query cannot be created without selecting the module, process, and target department.</value>
+  </data>
+  <data name="UIWarningSQLCommandTitle" xml:space="preserve">
     <value>Warning</value>
   </data>
   <data name="UnitSetContextAdd" xml:space="preserve">
@@ -2601,11 +2931,26 @@
   <data name="WorkOrderContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="WorkOrderContextChangeOperationCriteria" xml:space="preserve">
+    <value>Change Operation Criteria</value>
+  </data>
+  <data name="WorkOrderContextChangeStation" xml:space="preserve">
+    <value>Change Station</value>
+  </data>
+  <data name="WorkOrderContextContractTracking" xml:space="preserve">
+    <value>Contract Tracking</value>
+  </data>
   <data name="WorkOrderContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="WorkOrderContextProductionTracking" xml:space="preserve">
+    <value>Production Tracking</value>
+  </data>
   <data name="WorkOrderContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="WorkOrderContextSplitWorkOrder" xml:space="preserve">
+    <value>Split the Work Order Into Pieces</value>
   </data>
   <data name="WorkOrderListChildMenu" xml:space="preserve">
     <value>Work Orders List</value>

@@ -222,6 +222,9 @@
   <data name="SectorLinesContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="SectorsChildMenu" xml:space="preserve">
+    <value>Sektörler</value>
+  </data>
   <data name="SectorsContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>

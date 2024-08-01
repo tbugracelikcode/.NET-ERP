@@ -132,6 +132,9 @@
   <data name="BankAccountNameLabel" xml:space="preserve">
     <value>Bank Account Name:</value>
   </data>
+  <data name="BankAccountsChildMenu" xml:space="preserve">
+    <value>Bank Accounts</value>
+  </data>
   <data name="BankAccountsContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>

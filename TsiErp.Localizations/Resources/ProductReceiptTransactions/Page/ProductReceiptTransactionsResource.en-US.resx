@@ -198,6 +198,9 @@
   <data name="ProductNameLabel" xml:space="preserve">
     <value>Product Name:</value>
   </data>
+  <data name="ProductReceiptTransactionsChildMenu" xml:space="preserve">
+    <value>Product Receipt Transactions</value>
+  </data>
   <data name="ProductReceiptTransactionsContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>

@@ -198,6 +198,9 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="StockAddressesChildMenu" xml:space="preserve">
+    <value>Stok Adresleri</value>
+  </data>
   <data name="StockAddressesContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>

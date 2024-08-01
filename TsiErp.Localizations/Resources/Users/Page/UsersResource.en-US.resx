@@ -120,103 +120,223 @@
   <data name="8DContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="8DContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="8DContextAddforCustomer" xml:space="preserve">
+    <value>Add 8D Report for Customer</value>
+  </data>
+  <data name="8DContextAddforCustomer1" xml:space="preserve">
     <value>Add 8D Report for Customer</value>
   </data>
   <data name="8DContextAddforSupplier" xml:space="preserve">
     <value>Add 8D Report for Supplier</value>
   </data>
+  <data name="8DContextAddforSupplier1" xml:space="preserve">
+    <value>Add 8D Report for Supplier</value>
+  </data>
   <data name="8DContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="8DContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="8DContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="8DContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="8DContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="8DContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="8DContextState" xml:space="preserve">
     <value>Complete the 8D Report</value>
   </data>
+  <data name="8DContextState1" xml:space="preserve">
+    <value>Complete the 8D Report</value>
+  </data>
+  <data name="BankAccountsChildMenu" xml:space="preserve">
+    <value>Bank Accounts</value>
+  </data>
+  <data name="BankAccountsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="BankAccountsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="BankAccountsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="BankAccountsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="BOMChildMenu" xml:space="preserve">
+    <value>Bills of Materials</value>
+  </data>
+  <data name="BOMChildMenu1" xml:space="preserve">
     <value>Bills of Materials</value>
   </data>
   <data name="BoMContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="BoMContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="BoMContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="BoMContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="BoMContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="BoMContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="BoMContextExamine" xml:space="preserve">
+    <value>Bills of Material Examine</value>
+  </data>
+  <data name="BoMContextExamine1" xml:space="preserve">
     <value>Bills of Material Examine</value>
   </data>
   <data name="BoMContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="BoMContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="BoMLineContextAdd" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
+  <data name="BoMLineContextAdd1" xml:space="preserve">
     <value>Line Add</value>
   </data>
   <data name="BoMLineContextChange" xml:space="preserve">
     <value>Line Change</value>
   </data>
+  <data name="BoMLineContextChange1" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
   <data name="BoMLineContextDelete" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="BoMLineContextDelete1" xml:space="preserve">
     <value>Line Delete</value>
   </data>
   <data name="BoMLineContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
+  <data name="BoMLineContextRefresh1" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
   <data name="BranchesChildMenu" xml:space="preserve">
+    <value>Branches</value>
+  </data>
+  <data name="BranchesChildMenu1" xml:space="preserve">
     <value>Branches</value>
   </data>
   <data name="BranchesContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="BranchesContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="BranchesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="BranchesContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="BranchesContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="BranchesContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="BranchesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="BranchesContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="ByEmpStationProductivityChildMenu" xml:space="preserve">
     <value>Station Efficiency Analysis by Employees</value>
   </data>
+  <data name="ByEmpStationProductivityChildMenu1" xml:space="preserve">
+    <value>Station Efficiency Analysis by Employees</value>
+  </data>
   <data name="ByHaltEmpProductivityChildMenu" xml:space="preserve">
+    <value>Employee Productivity Analysis by Halt Codes</value>
+  </data>
+  <data name="ByHaltEmpProductivityChildMenu1" xml:space="preserve">
     <value>Employee Productivity Analysis by Halt Codes</value>
   </data>
   <data name="ByHaltStationChildMenu" xml:space="preserve">
     <value>Station Analysis by Halt Codes</value>
   </data>
+  <data name="ByHaltStationChildMenu1" xml:space="preserve">
+    <value>Station Analysis by Halt Codes</value>
+  </data>
   <data name="ByHaltStationPerfChildMenu" xml:space="preserve">
+    <value>Station Performance Analysis by Product Groups</value>
+  </data>
+  <data name="ByHaltStationPerfChildMenu1" xml:space="preserve">
     <value>Station Performance Analysis by Product Groups</value>
   </data>
   <data name="ByProdGrpPerfAnalysisChildMenu" xml:space="preserve">
     <value>Performance Analysis by Product Group</value>
   </data>
+  <data name="ByProdGrpPerfAnalysisChildMenu1" xml:space="preserve">
+    <value>Performance Analysis by Product Group</value>
+  </data>
   <data name="ByProdGrpScrapAnalysisChildMenu" xml:space="preserve">
     <value>Scrap Analysis by Product Group</value>
   </data>
+  <data name="ByProdGrpScrapAnalysisChildMenu1" xml:space="preserve">
+    <value>Scrap Analysis by Product Group</value>
+  </data>
+  <data name="CalendarChildMenu" xml:space="preserve">
+    <value>Work Calendar</value>
+  </data>
   <data name="CalendarContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="CalendarContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="CalendarContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="CalendarContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="CalendarContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="CalendarContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="CalendarContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="CalendarContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="CalendarContextShowCalendar" xml:space="preserve">
     <value>View Calendar</value>
   </data>
+  <data name="CalendarContextShowCalendar1" xml:space="preserve">
+    <value>View Calendar</value>
+  </data>
   <data name="CalendarDayContextDelete" xml:space="preserve">
+    <value>Calendar Day Delete</value>
+  </data>
+  <data name="CalendarDayContextDelete1" xml:space="preserve">
     <value>Calendar Day Delete</value>
   </data>
   <data name="CalendarLineContextWorkStatus" xml:space="preserve">
@@ -225,1300 +345,2854 @@
   <data name="CalendarLineContextWorkStatus1" xml:space="preserve">
     <value>Update Working Status</value>
   </data>
+  <data name="CalendarLineContextWorkStatus11" xml:space="preserve">
+    <value>Update Working Status</value>
+  </data>
+  <data name="CalendarLineContextWorkStatus2" xml:space="preserve">
+    <value>Update Working Status</value>
+  </data>
   <data name="CalendarMenu" xml:space="preserve">
+    <value>Working Calendar</value>
+  </data>
+  <data name="CalendarMenu1" xml:space="preserve">
     <value>Working Calendar</value>
   </data>
   <data name="CalibrationRecordContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="CalibrationRecordContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="CalibrationRecordContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="CalibrationRecordContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="CalibrationRecordContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="CalibrationRecordContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="CalibrationRecordContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="CalibrationRecordContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="CalibrationVerificationContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="CalibrationVerificationContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="CalibrationVerificationContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="CalibrationVerificationContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="CalibrationVerificationContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="CalibrationVerificationContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="CalibrationVerificationContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="CalibrationVerificationContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="CalRecordsChildMenu" xml:space="preserve">
     <value>Calibration Tracking Records</value>
   </data>
+  <data name="CalRecordsChildMenu1" xml:space="preserve">
+    <value>Calibration Tracking Records</value>
+  </data>
   <data name="CalVerificationsChildMenu" xml:space="preserve">
     <value>Calibration Verification Records</value>
   </data>
+  <data name="CalVerificationsChildMenu1" xml:space="preserve">
+    <value>Calibration Verification Records</value>
+  </data>
+  <data name="CitiesChildMenu" xml:space="preserve">
+    <value>Cities</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="CloseButton1" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="CloseButton11" xml:space="preserve">
     <value>Close</value>
   </data>
   <data name="Code" xml:space="preserve">
     <value>USER CODE</value>
   </data>
+  <data name="Code1" xml:space="preserve">
+    <value>USER CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
+    <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeControlManager1" xml:space="preserve">
+    <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeControlManager11" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
   <data name="CodeLabel" xml:space="preserve">
     <value>User Code:</value>
   </data>
+  <data name="CodeLabel1" xml:space="preserve">
+    <value>User Code:</value>
+  </data>
+  <data name="ContextMenuName_" xml:space="preserve">
+    <value>CONTEXT MENU NAME</value>
+  </data>
+  <data name="ContextMenuName_Label" xml:space="preserve">
+    <value>Context Menu Name:</value>
+  </data>
   <data name="ContextOprPicAdd" xml:space="preserve">
+    <value>Operation Picture Add</value>
+  </data>
+  <data name="ContextOprPicAdd1" xml:space="preserve">
     <value>Operation Picture Add</value>
   </data>
   <data name="ContextOprPicChange" xml:space="preserve">
     <value>Operation Picture Change</value>
   </data>
+  <data name="ContextOprPicChange1" xml:space="preserve">
+    <value>Operation Picture Change</value>
+  </data>
   <data name="ContextOprPicDelete" xml:space="preserve">
+    <value>Operation Picture Delete</value>
+  </data>
+  <data name="ContextOprPicDelete1" xml:space="preserve">
     <value>Operation Picture Delete</value>
   </data>
   <data name="ContextOprPicRefresh" xml:space="preserve">
     <value>Operation Picture Refresh</value>
   </data>
+  <data name="ContextOprPicRefresh1" xml:space="preserve">
+    <value>Operation Picture Refresh</value>
+  </data>
+  <data name="ContinentsChildMenu" xml:space="preserve">
+    <value>Continents</value>
+  </data>
   <data name="ContractOfProductsOperationContextDelete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="ContractOfProductsOperationContextDelete1" xml:space="preserve">
+    <value>Delete Contract Supplier</value>
   </data>
   <data name="ContractOfProductsOperationContextSelectSupplier" xml:space="preserve">
     <value>Select Supplier</value>
   </data>
+  <data name="ContractOfProductsOperationContextSelectSupplier1" xml:space="preserve">
+    <value>Select Contract Supplier</value>
+  </data>
   <data name="ContractOprContextAdd" xml:space="preserve">
+    <value>Contract Operation Add</value>
+  </data>
+  <data name="ContractOprContextAdd1" xml:space="preserve">
     <value>Contract Operation Add</value>
   </data>
   <data name="ContractOprContextDelete" xml:space="preserve">
     <value>Contract Operation Delete</value>
   </data>
+  <data name="ContractOprContextDelete1" xml:space="preserve">
+    <value>Contract Operation Delete</value>
+  </data>
   <data name="ContractOprContextRefresh" xml:space="preserve">
+    <value>Contract Operation Refresh</value>
+  </data>
+  <data name="ContractOprContextRefresh1" xml:space="preserve">
     <value>Contract Operation Refresh</value>
   </data>
   <data name="ContractProdTrackingsChildMenu" xml:space="preserve">
     <value>Contract Production Tracking Records</value>
   </data>
+  <data name="ContractProdTrackingsChildMenu1" xml:space="preserve">
+    <value>Contract Production Tracking Records</value>
+  </data>
   <data name="ContractProductionTrackingContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ContractProductionTrackingContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ContractProductionTrackingContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="ContractProductionTrackingContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ContractProductionTrackingContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ContractProductionTrackingContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="ContractProductionTrackingContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ContractProductionTrackingContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="ContractQualityPlanContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ContractQualityPlanContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ContractQualityPlanContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="ContractQualityPlanContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ContractQualityPlanContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ContractQualityPlanContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="ContractQualityPlanContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ContractQualityPlanContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="ContractQualityPlanLineContextAdd" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
+  <data name="ContractQualityPlanLineContextAdd1" xml:space="preserve">
     <value>Line Add</value>
   </data>
   <data name="ContractQualityPlanLineContextChange" xml:space="preserve">
     <value>Line Change</value>
   </data>
+  <data name="ContractQualityPlanLineContextChange1" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
   <data name="ContractQualityPlanLineContextDelete" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="ContractQualityPlanLineContextDelete1" xml:space="preserve">
     <value>Line Delete</value>
   </data>
   <data name="ContractQualityPlanLineContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
+  <data name="ContractQualityPlanLineContextRefresh1" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
   <data name="ContractQualityPlansChildMenu" xml:space="preserve">
+    <value>Contract Quality Plans</value>
+  </data>
+  <data name="ContractQualityPlansChildMenu1" xml:space="preserve">
     <value>Contract Quality Plans</value>
   </data>
   <data name="ContractTrackingFicheAmountEntryLineContextAdd" xml:space="preserve">
     <value>Amount Line Add</value>
   </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextAdd1" xml:space="preserve">
+    <value>Amount Line Add</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextAdd11" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="ContractTrackingFicheAmountEntryLineContextChange" xml:space="preserve">
     <value>Amount Line Change</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextChange1" xml:space="preserve">
+    <value>Amount Line Change</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextChange11" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="ContractTrackingFicheAmountEntryLineContextDelete" xml:space="preserve">
     <value>Amount Line Delete</value>
   </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextDelete1" xml:space="preserve">
+    <value>Amount Line Delete</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextDelete11" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="ContractTrackingFicheAmountEntryLineContextRefresh" xml:space="preserve">
     <value>Amount Line Refresh</value>
   </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextRefresh1" xml:space="preserve">
+    <value>Amount Line Refresh</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextRefresh11" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="ContractTrackingFicheContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ContractTrackingFicheContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ContractTrackingFicheContextAmountEntry" xml:space="preserve">
     <value>Incoming Amount Entry</value>
   </data>
+  <data name="ContractTrackingFicheContextAmountEntry1" xml:space="preserve">
+    <value>Incoming Amount Entry</value>
+  </data>
   <data name="ContractTrackingFicheContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ContractTrackingFicheContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="ContractTrackingFicheContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ContractTrackingFicheContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="ContractTrackingFicheContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ContractTrackingFicheContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="ContractTrackingFicheLineContextAdd" xml:space="preserve">
     <value>Line Add</value>
   </data>
+  <data name="ContractTrackingFicheLineContextAdd1" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
   <data name="ContractTrackingFicheLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="ContractTrackingFicheLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="ContractTrackingFicheLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="ContractTrackingFicheLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="ContractTrackingFicheLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="ContractTrackingFicheLineContextRefresh1" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
   <data name="ContractTrackingFichesChildMenu" xml:space="preserve">
     <value>Contract Tracking Fiches</value>
   </data>
+  <data name="ContractTrackingFichesChildMenu1" xml:space="preserve">
+    <value>Contract Tracking Fiches</value>
+  </data>
   <data name="ContractUnsuitabilityReportContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ContractUnsuitabilityReportContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ContractUnsuitabilityReportContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="ContractUnsuitabilityReportContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ContractUnsuitabilityReportContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ContractUnsuitabilityReportContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="ContractUnsuitabilityReportContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ContractUnsuitabilityReportContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="ControlConditionContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ControlConditionContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ControlConditionContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="ControlConditionContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ControlConditionContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ControlConditionContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="ControlConditionContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ControlConditionContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="ControlConditionsChildMenu" xml:space="preserve">
+    <value>Control Condition Items</value>
+  </data>
+  <data name="ControlConditionsChildMenu1" xml:space="preserve">
     <value>Control Condition Items</value>
   </data>
   <data name="ControlTypeContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="ControlTypeContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="ControlTypeContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ControlTypeContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="ControlTypeContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ControlTypeContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="ControlTypeContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ControlTypeContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="ControlTypesChildMenu" xml:space="preserve">
     <value>Control Types</value>
   </data>
+  <data name="ControlTypesChildMenu1" xml:space="preserve">
+    <value>Control Types</value>
+  </data>
   <data name="ContUnsAnlChildMenu" xml:space="preserve">
+    <value>Contract Unsuitability Records Analysis</value>
+  </data>
+  <data name="ContUnsAnlChildMenu1" xml:space="preserve">
     <value>Contract Unsuitability Records Analysis</value>
   </data>
   <data name="ContUnsRecordsChildMenu" xml:space="preserve">
     <value>Contract Unsuitability Records</value>
   </data>
+  <data name="ContUnsRecordsChildMenu1" xml:space="preserve">
+    <value>Contract Unsuitability Records</value>
+  </data>
   <data name="ConvertContextApprove" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="ConvertContextApprove1" xml:space="preserve">
     <value>Approve</value>
   </data>
   <data name="ConvertContextPending" xml:space="preserve">
     <value>Pending</value>
   </data>
+  <data name="ConvertContextPending1" xml:space="preserve">
+    <value>Pending</value>
+  </data>
   <data name="CostMenu" xml:space="preserve">
+    <value>Costing</value>
+  </data>
+  <data name="CostMenu1" xml:space="preserve">
     <value>Costing</value>
   </data>
   <data name="CPRChildMenu" xml:space="preserve">
     <value>Cost of Product Reports (CPR)</value>
   </data>
+  <data name="CPRChildMenu1" xml:space="preserve">
+    <value>Cost of Product Reports (CPR)</value>
+  </data>
   <data name="CurrenciesChildMenu" xml:space="preserve">
+    <value>Currencies</value>
+  </data>
+  <data name="CurrenciesChildMenu1" xml:space="preserve">
     <value>Currencies</value>
   </data>
   <data name="CurrencyContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="CurrencyContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="CurrencyContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="CurrencyContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="CurrencyContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="CurrencyContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="CurrencyContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="CurrencyContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="CurrentAccountCardContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="CurrentAccountCardContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="CurrentAccountCardContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="CurrentAccountCardContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="CurrentAccountCardContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="CurrentAccountCardContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="CurrentAccountCardContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="CurrentAccountCardContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="CurrentAccountsChildMenu" xml:space="preserve">
     <value>Current Account Cards</value>
   </data>
+  <data name="CurrentAccountsChildMenu1" xml:space="preserve">
+    <value>Current Account Cards</value>
+  </data>
   <data name="CusCompReportContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="CusCompReportContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="CusCompReportContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="CusCompReportContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="CusCompReportContextCreate8D" xml:space="preserve">
+    <value>Create a 8D Report</value>
+  </data>
+  <data name="CusCompReportContextCreate8D1" xml:space="preserve">
     <value>Create a 8D Report</value>
   </data>
   <data name="CusCompReportContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="CusCompReportContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="CusCompReportContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="CusCompReportContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="CustCompRecordsChildMenu" xml:space="preserve">
     <value>Customer Complaint Records</value>
   </data>
+  <data name="CustCompRecordsChildMenu1" xml:space="preserve">
+    <value>Customer Complaint Records</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
+    <value>Are you sure you want to delete?</value>
+  </data>
+  <data name="DeleteConfirmationDescriptionBase1" xml:space="preserve">
+    <value>Are you sure you want to delete?</value>
+  </data>
+  <data name="DeleteConfirmationDescriptionBase11" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
     <value>Confirmation</value>
   </data>
+  <data name="DeleteConfirmationTitleBase1" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="DeleteConfirmationTitleBase11" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="DeleteControlManager" xml:space="preserve">
+    <value>Records with transaction cannot be deleted.</value>
+  </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
+    <value>The record deleted successfully.</value>
+  </data>
+  <data name="DeleteSuccessMessage1" xml:space="preserve">
+    <value>The record deleted successfully.</value>
+  </data>
+  <data name="DeleteSuccessMessage11" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
   <data name="DepartmentContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="DepartmentContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="DepartmentContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="DepartmentContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="DepartmentContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="DepartmentContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="DepartmentContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="DepartmentContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="DepartmentsChildMenu" xml:space="preserve">
     <value>Departments</value>
   </data>
+  <data name="DepartmentsChildMenu1" xml:space="preserve">
+    <value>Departments</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
+    <value>User Identifications</value>
+  </data>
+  <data name="EditModalTitle1" xml:space="preserve">
+    <value>Notification Templates</value>
+  </data>
+  <data name="EditModalTitle11" xml:space="preserve">
     <value>User Identifications</value>
   </data>
   <data name="EducationLevelScoresChildMenu" xml:space="preserve">
     <value>Education Level Scores</value>
   </data>
+  <data name="EducationLevelScoresChildMenu1" xml:space="preserve">
+    <value>Education Level Scores</value>
+  </data>
   <data name="EducationLevelScoresContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="EducationLevelScoresContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="EducationLevelScoresContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="EducationLevelScoresContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="EducationLevelScoresContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="EducationLevelScoresContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="EducationLevelScoresContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="EducationLevelScoresContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="Email" xml:space="preserve">
+    <value>E-MAIL</value>
+  </data>
+  <data name="Email1" xml:space="preserve">
     <value>E-MAIL</value>
   </data>
   <data name="EmailLabel" xml:space="preserve">
     <value>E-Mail:</value>
   </data>
+  <data name="EmailLabel1" xml:space="preserve">
+    <value>E-Mail:</value>
+  </data>
   <data name="EmployeeAnnualSeniorityDifferencesChildMenu" xml:space="preserve">
+    <value>Employee Annual Seniority Differences</value>
+  </data>
+  <data name="EmployeeAnnualSeniorityDifferencesChildMenu1" xml:space="preserve">
     <value>Employee Annual Seniority Differences</value>
   </data>
   <data name="EmployeeAnnualSeniorityDifferencesContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="EmployeeAnnualSeniorityDifferencesContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="EmployeeAnnualSeniorityDifferencesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="EmployeeAnnualSeniorityDifferencesContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="EmployeeAnnualSeniorityDifferencesContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="EmployeeAnnualSeniorityDifferencesContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="EmployeeAnnualSeniorityDifferencesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="EmployeeAnnualSeniorityDifferencesContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="EmployeeContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="EmployeeContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="EmployeeContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="EmployeeContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="EmployeeContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="EmployeeContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="EmployeeContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="EmployeeContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="EmployeeGeneralSkillRecordsChildMenu" xml:space="preserve">
     <value>Employee General Skill Records</value>
   </data>
+  <data name="EmployeeGeneralSkillRecordsChildMenu1" xml:space="preserve">
+    <value>Employee General Skill Records</value>
+  </data>
   <data name="EmployeeGeneralSkillRecordsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="EmployeeGeneralSkillRecordsContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="EmployeeGeneralSkillRecordsContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="EmployeeGeneralSkillRecordsContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="EmployeeGeneralSkillRecordsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="EmployeeGeneralSkillRecordsContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="EmployeeGeneralSkillRecordsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="EmployeeGeneralSkillRecordsContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="EmployeeListChildMenu" xml:space="preserve">
+    <value>List of Employees</value>
+  </data>
+  <data name="EmployeeListChildMenu1" xml:space="preserve">
     <value>List of Employees</value>
   </data>
   <data name="EmployeeProductivityChildMenu" xml:space="preserve">
     <value>Personnel Productivity Analysis</value>
   </data>
+  <data name="EmployeeProductivityChildMenu1" xml:space="preserve">
+    <value>Personnel Productivity Analysis</value>
+  </data>
   <data name="EmployeesChildMenu" xml:space="preserve">
+    <value>Employees</value>
+  </data>
+  <data name="EmployeesChildMenu1" xml:space="preserve">
     <value>Employees</value>
   </data>
   <data name="EmployeeScoreChildMenu" xml:space="preserve">
     <value>Employee Scoring Records</value>
   </data>
+  <data name="EmployeeScoreChildMenu1" xml:space="preserve">
+    <value>Employee Scoring Records</value>
+  </data>
   <data name="EmployeeScoreListChildMenu" xml:space="preserve">
+    <value>List of Employee Scoring Records</value>
+  </data>
+  <data name="EmployeeScoreListChildMenu1" xml:space="preserve">
     <value>List of Employee Scoring Records</value>
   </data>
   <data name="EmployeeScoringLineLinesContextChange" xml:space="preserve">
     <value>Line Details Change</value>
   </data>
+  <data name="EmployeeScoringLineLinesContextChange1" xml:space="preserve">
+    <value>Line Details Change</value>
+  </data>
   <data name="EmployeeScoringLinesContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="EmployeeScoringLinesContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="EmployeeScoringsContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="EmployeeScoringsContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="EmployeeScoringsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="EmployeeScoringsContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="EmployeeScoringsContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="EmployeeScoringsContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="EmployeeScoringsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="EmployeeScoringsContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="EmployeeSenioritiesChildMenu" xml:space="preserve">
     <value>Employee Seniorities</value>
   </data>
+  <data name="EmployeeSenioritiesChildMenu1" xml:space="preserve">
+    <value>Employee Seniorities</value>
+  </data>
   <data name="EmployeeSenioritiesContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="EmployeeSenioritiesContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="EmployeeSenioritiesContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="EmployeeSenioritiesContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="EmployeeSenioritiesContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="EmployeeSenioritiesContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="EmployeeSenioritiesContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="EmployeeSenioritiesContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="EquipmentManagementMenu" xml:space="preserve">
+    <value>Equipment Management</value>
+  </data>
+  <data name="EquipmentManagementMenu1" xml:space="preserve">
     <value>Equipment Management</value>
   </data>
   <data name="EquipmentOperationsMenu" xml:space="preserve">
     <value>Equipment Calibration Operations</value>
   </data>
+  <data name="EquipmentOperationsMenu1" xml:space="preserve">
+    <value>Equipment Calibration Operations</value>
+  </data>
   <data name="EquipmentRecordContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="EquipmentRecordContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="EquipmentRecordContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="EquipmentRecordContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="EquipmentRecordContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="EquipmentRecordContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="EquipmentRecordContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="EquipmentRecordContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="EquipmentRecordsChildMenu" xml:space="preserve">
+    <value>Equipment Records</value>
+  </data>
+  <data name="EquipmentRecordsChildMenu1" xml:space="preserve">
     <value>Equipment Records</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="Error1" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="ExchangeRateContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="ExchangeRateContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ExchangeRateContextCentralBankExchange" xml:space="preserve">
+    <value>Pull Central Bank Exchange Rates</value>
+  </data>
   <data name="ExchangeRateContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ExchangeRateContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="ExchangeRateContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ExchangeRateContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="ExchangeRateContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ExchangeRateContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="ExRatesChildMenu" xml:space="preserve">
     <value>Exchange Rates</value>
   </data>
+  <data name="ExRatesChildMenu1" xml:space="preserve">
+    <value>Exchange Rates</value>
+  </data>
   <data name="FinalControlPlans" xml:space="preserve">
+    <value>Final Control Plans</value>
+  </data>
+  <data name="FinalControlPlans1" xml:space="preserve">
     <value>Final Control Plans</value>
   </data>
   <data name="FinalControlRecordsChildMenu" xml:space="preserve">
     <value>Final Control Records</value>
   </data>
+  <data name="FinalControlRecordsChildMenu1" xml:space="preserve">
+    <value>Final Control Records</value>
+  </data>
   <data name="FinalControlUnsRecordsChildMenu" xml:space="preserve">
+    <value>Final Control Unsuitability Records</value>
+  </data>
+  <data name="FinalControlUnsRecordsChildMenu1" xml:space="preserve">
     <value>Final Control Unsuitability Records</value>
   </data>
   <data name="FinalControlUnsuitabilityReportContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="FinalControlUnsuitabilityReportContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="FinalControlUnsuitabilityReportContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="FinalControlUnsuitabilityReportContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="FinalControlUnsuitabilityReportContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="FinalControlUnsuitabilityReportContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="FinalControlUnsuitabilityReportContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="FinalControlUnsuitabilityReportContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="FinanceManagementMainRecordsMenu" xml:space="preserve">
     <value>Main Records</value>
   </data>
+  <data name="FinanceManagementMainRecordsMenu1" xml:space="preserve">
+    <value>Main Records</value>
+  </data>
   <data name="FinanceManagementParameterContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="FinanceManagementParameterContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="FinanceManagementParameterContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="FinanceManagementParameterContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="FinanceManagementParameterContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="FinanceManagementParameterContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="FinanceManagementParameterContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="FinanceManagementParameterContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="FinanceManagementParametersChildMenu" xml:space="preserve">
+    <value>Finance Management </value>
+  </data>
+  <data name="FinanceManagementParametersChildMenu1" xml:space="preserve">
     <value>Finance Management </value>
   </data>
   <data name="FinanceManagementParentMenu" xml:space="preserve">
     <value>Finance Management</value>
   </data>
+  <data name="FinanceManagementParentMenu1" xml:space="preserve">
+    <value>Finance Management</value>
+  </data>
   <data name="FirstProductApprovalChildMenu" xml:space="preserve">
+    <value>First Product Approvals</value>
+  </data>
+  <data name="FirstProductApprovalChildMenu1" xml:space="preserve">
     <value>First Product Approvals</value>
   </data>
   <data name="FirstProductApprovalContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="FirstProductApprovalContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="FirstProductApprovalContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="FirstProductApprovalContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="FirstProductApprovalContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="FirstProductApprovalContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="FirstProductApprovalContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="FirstProductApprovalContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="FirstProductApprovalLineContextAdd" xml:space="preserve">
     <value>Line Add</value>
   </data>
+  <data name="FirstProductApprovalLineContextAdd1" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
   <data name="FirstProductApprovalLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="FirstProductApprovalLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="FirstProductApprovalLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="FirstProductApprovalLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="FirstProductApprovalLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="FirstProductApprovalLineContextRefresh1" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
   <data name="ForecastContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="ForecastContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="ForecastContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ForecastContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="ForecastContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ForecastContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ForecastContextMRP" xml:space="preserve">
+    <value>Material Requirement List</value>
+  </data>
   <data name="ForecastContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ForecastContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="ForecastLineContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="ForecastLineContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="ForecastLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ForecastLineContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="ForecastLineContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ForecastLineContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="ForecastLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ForecastLineContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="ForecastsChildMenu" xml:space="preserve">
     <value>Forecasts</value>
   </data>
+  <data name="ForecastsChildMenu1" xml:space="preserve">
+    <value>Forecasts</value>
+  </data>
   <data name="GeneralOEEChildMenu" xml:space="preserve">
+    <value>General OEE Analysis</value>
+  </data>
+  <data name="GeneralOEEChildMenu1" xml:space="preserve">
     <value>General OEE Analysis</value>
   </data>
   <data name="GeneralParameterContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="GeneralParameterContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="GeneralParameterContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="GeneralParameterContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="GeneralParameterContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="GeneralParameterContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="GeneralParameterContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="GeneralParameterContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="GeneralParametersChildMenu" xml:space="preserve">
     <value>General Parameters</value>
   </data>
+  <data name="GeneralParametersChildMenu1" xml:space="preserve">
+    <value>General Parameters</value>
+  </data>
   <data name="GeneralSkillRecordPrioritiesChildMenu" xml:space="preserve">
+    <value>General Skill Record Priorities</value>
+  </data>
+  <data name="GeneralSkillRecordPrioritiesChildMenu1" xml:space="preserve">
     <value>General Skill Record Priorities</value>
   </data>
   <data name="GeneralSkillRecordPrioritiesContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="GeneralSkillRecordPrioritiesContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="GeneralSkillRecordPrioritiesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="GeneralSkillRecordPrioritiesContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="GeneralSkillRecordPrioritiesContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="GeneralSkillRecordPrioritiesContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="GeneralSkillRecordPrioritiesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="GeneralSkillRecordPrioritiesContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="GeneralSystemIdentificationsParentMenu" xml:space="preserve">
     <value>General Identifications</value>
   </data>
+  <data name="GeneralSystemIdentificationsParentMenu1" xml:space="preserve">
+    <value>General Identifications</value>
+  </data>
   <data name="GeneralSystemParametersParentMenu" xml:space="preserve">
+    <value>General System Parameters</value>
+  </data>
+  <data name="GeneralSystemParametersParentMenu1" xml:space="preserve">
     <value>General System Parameters</value>
   </data>
   <data name="GroupName" xml:space="preserve">
     <value>USER GROUP</value>
   </data>
+  <data name="GroupName1" xml:space="preserve">
+    <value>USER GROUP</value>
+  </data>
   <data name="GroupNameLabel" xml:space="preserve">
+    <value>User Group:</value>
+  </data>
+  <data name="GroupNameLabel1" xml:space="preserve">
     <value>User Group:</value>
   </data>
   <data name="HaltReasonContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="HaltReasonContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="HaltReasonContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="HaltReasonContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="HaltReasonContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="HaltReasonContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="HaltReasonContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="HaltReasonContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="HaltReasonsChildMenu" xml:space="preserve">
     <value>Halt Reasons</value>
   </data>
+  <data name="HaltReasonsChildMenu1" xml:space="preserve">
+    <value>Halt Reasons</value>
+  </data>
   <data name="InventoryContextChange" xml:space="preserve">
+    <value>Inventory Change</value>
+  </data>
+  <data name="InventoryContextChange1" xml:space="preserve">
     <value>Inventory Change</value>
   </data>
   <data name="InventoryContextDelete" xml:space="preserve">
     <value>Inventory Delete</value>
   </data>
+  <data name="InventoryContextDelete1" xml:space="preserve">
+    <value>Inventory Delete</value>
+  </data>
   <data name="InventoryListChildMenu" xml:space="preserve">
+    <value>Inventory Inventory List</value>
+  </data>
+  <data name="InventoryListChildMenu1" xml:space="preserve">
     <value>Inventory Inventory List</value>
   </data>
   <data name="IoTProdTrackingsChildMenu" xml:space="preserve">
     <value>IoT</value>
   </data>
+  <data name="IoTProdTrackingsChildMenu1" xml:space="preserve">
+    <value>IoT</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>ISACTIVE</value>
+  </data>
   <data name="IsActiveLabel" xml:space="preserve">
+    <value>Activity:</value>
+  </data>
+  <data name="IsActiveLabel1" xml:space="preserve">
+    <value>IsActive:</value>
+  </data>
+  <data name="IsActiveLabel11" xml:space="preserve">
     <value>Activity:</value>
   </data>
   <data name="IsEmailApproved" xml:space="preserve">
     <value>E-MAIL APPROVAL</value>
   </data>
+  <data name="IsEmailApproved1" xml:space="preserve">
+    <value>E-MAIL APPROVAL</value>
+  </data>
   <data name="IsEmailApprovedLabel" xml:space="preserve">
+    <value>E-Mail Approval:</value>
+  </data>
+  <data name="IsEmailApprovedLabel1" xml:space="preserve">
     <value>E-Mail Approval:</value>
   </data>
   <data name="ListofMaterialsChildMenu" xml:space="preserve">
     <value>List of Materials</value>
   </data>
+  <data name="ListofMaterialsChildMenu1" xml:space="preserve">
+    <value>List of Materials</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
+    <value>Please wait..</value>
+  </data>
+  <data name="LoadingCaption1" xml:space="preserve">
+    <value>Please wait..</value>
+  </data>
+  <data name="LoadingCaption11" xml:space="preserve">
     <value>Please wait..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
   </data>
+  <data name="LoadingText1" xml:space="preserve">
+    <value>The records are loading..</value>
+  </data>
   <data name="MachineAndWorkforceManagementParameterContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="MachineAndWorkforceManagementParameterContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="MachineAndWorkforceManagementParameterContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="MachineAndWorkforceManagementParameterContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="MachineAndWorkforceManagementParameterContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MachineAndWorkforceManagementParameterContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="MachineAndWorkforceManagementParameterContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="MachineAndWorkforceManagementParameterContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="MachineAndWorkforceManagementParametersChildMenu" xml:space="preserve">
+    <value>Machine &amp; Workforce Management </value>
+  </data>
+  <data name="MachineAndWorkforceManagementParametersChildMenu1" xml:space="preserve">
     <value>Machine &amp; Workforce Management </value>
   </data>
   <data name="MachWorkForceManagementMainRecordsMenu" xml:space="preserve">
     <value>Main Records</value>
   </data>
+  <data name="MachWorkForceManagementMainRecordsMenu1" xml:space="preserve">
+    <value>Main Records</value>
+  </data>
   <data name="MachWorkForceManagementParentMenu" xml:space="preserve">
+    <value>Machinery and Workforce Management</value>
+  </data>
+  <data name="MachWorkForceManagementParentMenu1" xml:space="preserve">
     <value>Machinery and Workforce Management</value>
   </data>
   <data name="MachWorkForceManagementReportsMenu" xml:space="preserve">
     <value>Reports</value>
   </data>
+  <data name="MachWorkForceManagementReportsMenu1" xml:space="preserve">
+    <value>Reports</value>
+  </data>
   <data name="MachWorkForceManagementTransactionsMenu" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
+  <data name="MachWorkForceManagementTransactionsMenu1" xml:space="preserve">
     <value>Transactions</value>
   </data>
   <data name="MainInstructionsChildMenu" xml:space="preserve">
     <value>Maintenance Instructions</value>
   </data>
+  <data name="MainInstructionsChildMenu1" xml:space="preserve">
+    <value>Maintenance Instructions</value>
+  </data>
   <data name="MainMatPurchaseTrackingChildMenu" xml:space="preserve">
+    <value>Maintenance Material Purchasing Process Tracking</value>
+  </data>
+  <data name="MainMatPurchaseTrackingChildMenu1" xml:space="preserve">
     <value>Maintenance Material Purchasing Process Tracking</value>
   </data>
   <data name="MainMatReqPlanningChildMenu" xml:space="preserve">
     <value>Maintenance Material Requirements Planning</value>
   </data>
+  <data name="MainMatReqPlanningChildMenu1" xml:space="preserve">
+    <value>Maintenance Material Requirements Planning</value>
+  </data>
   <data name="MainPeriodsChildMenu" xml:space="preserve">
+    <value>Maintenance Periods</value>
+  </data>
+  <data name="MainPeriodsChildMenu1" xml:space="preserve">
     <value>Maintenance Periods</value>
   </data>
   <data name="MainRecordsMenu" xml:space="preserve">
     <value>Main Records</value>
   </data>
+  <data name="MainRecordsMenu1" xml:space="preserve">
+    <value>Main Records</value>
+  </data>
   <data name="MaintenaceInfosContextAdd" xml:space="preserve">
+    <value>Maintenance Informations Add</value>
+  </data>
+  <data name="MaintenaceInfosContextAdd1" xml:space="preserve">
     <value>Maintenance Informations Add</value>
   </data>
   <data name="MaintenaceInfosContextChange" xml:space="preserve">
     <value>Maintenance Informations Change</value>
   </data>
+  <data name="MaintenaceInfosContextChange1" xml:space="preserve">
+    <value>Maintenance Informations Change</value>
+  </data>
   <data name="MaintenaceInfosContextDelete" xml:space="preserve">
+    <value>Maintenance Informations Delete</value>
+  </data>
+  <data name="MaintenaceInfosContextDelete1" xml:space="preserve">
     <value>Maintenance Informations Delete</value>
   </data>
   <data name="MaintenaceInfosContextRefresh" xml:space="preserve">
     <value>Maintenance Informations Refresh</value>
   </data>
+  <data name="MaintenaceInfosContextRefresh1" xml:space="preserve">
+    <value>Maintenance Informations Refresh</value>
+  </data>
   <data name="MaintenanceInstructionContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="MaintenanceInstructionContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="MaintenanceInstructionContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="MaintenanceInstructionContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="MaintenanceInstructionContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MaintenanceInstructionContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="MaintenanceInstructionContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="MaintenanceInstructionContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="MaintenanceInstructionLineContextAdd" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
+  <data name="MaintenanceInstructionLineContextAdd1" xml:space="preserve">
     <value>Line Add</value>
   </data>
   <data name="MaintenanceInstructionLineContextChange" xml:space="preserve">
     <value>Line Change</value>
   </data>
+  <data name="MaintenanceInstructionLineContextChange1" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
   <data name="MaintenanceInstructionLineContextDelete" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="MaintenanceInstructionLineContextDelete1" xml:space="preserve">
     <value>Line Delete</value>
   </data>
   <data name="MaintenanceInstructionLineContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
+  <data name="MaintenanceInstructionLineContextRefresh1" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
   <data name="MaintenanceManagementMainRecordsMenu" xml:space="preserve">
+    <value>Main Records</value>
+  </data>
+  <data name="MaintenanceManagementMainRecordsMenu1" xml:space="preserve">
     <value>Main Records</value>
   </data>
   <data name="MaintenanceManagementParameterContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="MaintenanceManagementParameterContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="MaintenanceManagementParameterContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="MaintenanceManagementParameterContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="MaintenanceManagementParameterContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="MaintenanceManagementParameterContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="MaintenanceManagementParameterContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="MaintenanceManagementParameterContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="MaintenanceManagementParametersChildMenu" xml:space="preserve">
     <value>Maintenance Management</value>
   </data>
+  <data name="MaintenanceManagementParametersChildMenu1" xml:space="preserve">
+    <value>Maintenance Management</value>
+  </data>
   <data name="MaintenanceManagementParentMenu" xml:space="preserve">
+    <value>Maintenance Management</value>
+  </data>
+  <data name="MaintenanceManagementParentMenu1" xml:space="preserve">
     <value>Maintenance Management</value>
   </data>
   <data name="MaintenanceManagementTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
   </data>
+  <data name="MaintenanceManagementTransactionsMenu1" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
   <data name="MaintenanceMRPLinesContextAdd" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
+  <data name="MaintenanceMRPLinesContextAdd1" xml:space="preserve">
     <value>Line Add</value>
   </data>
   <data name="MaintenanceMRPLinesContextChange" xml:space="preserve">
     <value>Line Change</value>
   </data>
+  <data name="MaintenanceMRPLinesContextChange1" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
   <data name="MaintenanceMRPLinesContextDelete" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="MaintenanceMRPLinesContextDelete1" xml:space="preserve">
     <value>Line Delete</value>
   </data>
   <data name="MaintenanceMRPLinesContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
+  <data name="MaintenanceMRPLinesContextRefresh1" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
   <data name="MaintenanceMRPLinesContextStockUsage" xml:space="preserve">
+    <value>Line Use From Stock</value>
+  </data>
+  <data name="MaintenanceMRPLinesContextStockUsage1" xml:space="preserve">
     <value>Line Use From Stock</value>
   </data>
   <data name="MaintenanceMRPsContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="MaintenanceMRPsContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="MaintenanceMRPsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="MaintenanceMRPsContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="MaintenanceMRPsContextConvertMRP" xml:space="preserve">
     <value>Convert to MRP</value>
   </data>
+  <data name="MaintenanceMRPsContextConvertMRP1" xml:space="preserve">
+    <value>Convert to MRP</value>
+  </data>
   <data name="MaintenanceMRPsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MaintenanceMRPsContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="MaintenanceMRPsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="MaintenanceMRPsContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="MaintenancePeriodContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="MaintenancePeriodContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="MaintenancePeriodContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="MaintenancePeriodContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="MaintenancePeriodContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MaintenancePeriodContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="MaintenancePeriodContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="MaintenancePeriodContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="MaterialWarehouseStatusChildMenu" xml:space="preserve">
+    <value>Materail/Warehouse Status Report</value>
+  </data>
+  <data name="MaterialWarehouseStatusChildMenu1" xml:space="preserve">
     <value>Materail/Warehouse Status Report</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
   </data>
+  <data name="MessagePopupInformationDescriptionBase1" xml:space="preserve">
+    <value>The record you selected is using by {0}.</value>
+  </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="MessagePopupInformationTitleBase1" xml:space="preserve">
+    <value>İnformation</value>
+  </data>
+  <data name="MessagePopupInformationTitleBase11" xml:space="preserve">
     <value>Information</value>
   </data>
   <data name="MidControlChildMenu" xml:space="preserve">
     <value>Mid Control Items</value>
   </data>
+  <data name="MidControlChildMenu1" xml:space="preserve">
+    <value>Mid Control Items</value>
+  </data>
   <data name="MidControlRecordsChildMenu" xml:space="preserve">
     <value>Mid Control Records</value>
   </data>
+  <data name="MidControlRecordsChildMenu1" xml:space="preserve">
+    <value>Mid Control Records</value>
+  </data>
+  <data name="ModuleName_" xml:space="preserve">
+    <value>MODULE NAME</value>
+  </data>
+  <data name="ModuleName_Label" xml:space="preserve">
+    <value>Modul Name:</value>
+  </data>
   <data name="MRPChildMenu" xml:space="preserve">
+    <value>Material Requirement Planning (MRP)</value>
+  </data>
+  <data name="MRPChildMenu1" xml:space="preserve">
     <value>Material Requirement Planning (MRP)</value>
   </data>
   <data name="MRPContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="MRPContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="MRPContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="MRPContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="MRPContextConvertPurchase" xml:space="preserve">
     <value>Convert to Purchase</value>
   </data>
+  <data name="MRPContextConvertPurchase1" xml:space="preserve">
+    <value>Convert to Purchase</value>
+  </data>
   <data name="MRPContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MRPContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="MRPContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="MRPContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="MRPIIChildMenu" xml:space="preserve">
     <value>Production Resource Planning (MRPII)</value>
   </data>
+  <data name="MRPIIChildMenu1" xml:space="preserve">
+    <value>Production Resource Planning (MRPII)</value>
+  </data>
+  <data name="MRPIILineContextCalculate" xml:space="preserve">
+    <value>Calculate Estimated End Date</value>
+  </data>
+  <data name="MRPIILineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="MRPIILineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="MRPIIsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="MRPIIsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="MRPIIsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MRPIIsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="MRPLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="MRPLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="MRPLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="MRPLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="MRPLineContextDeleteOrderLines" xml:space="preserve">
+    <value>Line Delete Order Lines</value>
+  </data>
+  <data name="MRPLineContextDeleteOrderLines1" xml:space="preserve">
     <value>Line Delete Order Lines</value>
   </data>
   <data name="MRPLineContextDoNotCalculate" xml:space="preserve">
     <value>Line Remove from Calculation</value>
   </data>
+  <data name="MRPLineContextDoNotCalculate1" xml:space="preserve">
+    <value>Line Remove from Calculation</value>
+  </data>
   <data name="MRPLineContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
+  </data>
+  <data name="MRPLineContextRefresh1" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="MRPLineContextReservePurchase" xml:space="preserve">
+    <value>Reserve the Purchase</value>
   </data>
   <data name="MRPLineContextStockUsage" xml:space="preserve">
     <value>Line Use From Stock</value>
   </data>
+  <data name="MRPLineContextStockUsage1" xml:space="preserve">
+    <value>Line Use From Stock</value>
+  </data>
+  <data name="MRPLineContextSupplier" xml:space="preserve">
+    <value>Select a Supplier</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>NAME</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Name:</value>
+  </data>
   <data name="NameSurname" xml:space="preserve">
+    <value>NAME SURNAME</value>
+  </data>
+  <data name="NameSurname1" xml:space="preserve">
     <value>NAME SURNAME</value>
   </data>
   <data name="NameSurnameLabel" xml:space="preserve">
     <value>Name Surname:</value>
   </data>
+  <data name="NameSurnameLabel1" xml:space="preserve">
+    <value>Name Surname:</value>
+  </data>
+  <data name="NotificationTemplatesChildMenu" xml:space="preserve">
+    <value>Notification Templates</value>
+  </data>
+  <data name="NotificationTemplatesContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="NotificationTemplatesContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="NotificationTemplatesContextIsActive" xml:space="preserve">
+    <value>Activity</value>
+  </data>
+  <data name="NotificationTemplatesContextRefresh" xml:space="preserve">
+    <value>Set Activity Status</value>
+  </data>
   <data name="OperationalQualityPlanContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="OperationalQualityPlanContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="OperationalQualityPlanContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="OperationalQualityPlanContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="OperationalQualityPlanContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="OperationalQualityPlanContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="OperationalQualityPlanContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="OperationalQualityPlanContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="OperationalQualityPlanLineContextAdd" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
+  <data name="OperationalQualityPlanLineContextAdd1" xml:space="preserve">
     <value>Line Add</value>
   </data>
   <data name="OperationalQualityPlanLineContextChange" xml:space="preserve">
     <value>Line Change</value>
   </data>
+  <data name="OperationalQualityPlanLineContextChange1" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
   <data name="OperationalQualityPlanLineContextDelete" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="OperationalQualityPlanLineContextDelete1" xml:space="preserve">
     <value>Line Delete</value>
   </data>
   <data name="OperationalQualityPlanLineContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
+  <data name="OperationalQualityPlanLineContextRefresh1" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
   <data name="OperationalQualityPlansChildMenu" xml:space="preserve">
+    <value>Operational Quality Plans</value>
+  </data>
+  <data name="OperationalQualityPlansChildMenu1" xml:space="preserve">
     <value>Operational Quality Plans</value>
   </data>
   <data name="OperationalSPCChildMenu" xml:space="preserve">
     <value>Operational SPC Tables</value>
   </data>
+  <data name="OperationalSPCChildMenu1" xml:space="preserve">
+    <value>Operational SPC Tables</value>
+  </data>
   <data name="OperationalSPCComparingChildMenu" xml:space="preserve">
+    <value>Operational SPC Comparing</value>
+  </data>
+  <data name="OperationalSPCComparingChildMenu1" xml:space="preserve">
     <value>Operational SPC Comparing</value>
   </data>
   <data name="OperationalSPCContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="OperationalSPCContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="OperationalSPCContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="OperationalSPCContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="OperationalSPCContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="OperationalSPCContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="OperationalSPCContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="OperationalSPCContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="OperationalSPCLineContextAdd" xml:space="preserve">
     <value>Line Add</value>
   </data>
+  <data name="OperationalSPCLineContextAdd1" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
   <data name="OperationalSPCLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="OperationalSPCLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="OperationalSPCLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="OperationalSPCLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="OperationalSPCLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="OperationalSPCLineContextRefresh1" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
   <data name="OperationsMenu" xml:space="preserve">
     <value>Operations</value>
   </data>
+  <data name="OperationsMenu1" xml:space="preserve">
+    <value>Operations</value>
+  </data>
   <data name="OperationUnsuitabilityReportContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="OperationUnsuitabilityReportContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="OperationUnsuitabilityReportContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="OperationUnsuitabilityReportContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="OperationUnsuitabilityReportContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="OperationUnsuitabilityReportContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="OperationUnsuitabilityReportContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="OperationUnsuitabilityReportContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="OprPictureContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="OprPictureContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="OprPictureContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="OprPictureContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="OprPictureContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="OprPictureContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="OprPictureContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="OprPictureContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="OprUnsRecordsChildMenu" xml:space="preserve">
+    <value>Operation Unsuitability Records</value>
+  </data>
+  <data name="OprUnsRecordsChildMenu1" xml:space="preserve">
     <value>Operation Unsuitability Records</value>
   </data>
   <data name="OrderAcceptanceRecordLineContextAdd" xml:space="preserve">
     <value>Line Add</value>
   </data>
+  <data name="OrderAcceptanceRecordLineContextAdd1" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
   <data name="OrderAcceptanceRecordLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="OrderAcceptanceRecordLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="OrderAcceptanceRecordLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="OrderAcceptanceRecordLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="OrderAcceptanceRecordLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="OrderAcceptanceRecordLineContextRefresh1" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
   <data name="OrderAcceptanceRecordsChildMenu" xml:space="preserve">
     <value>Order Acceptance Records</value>
   </data>
+  <data name="OrderAcceptanceRecordsChildMenu1" xml:space="preserve">
+    <value>Order Acceptance Records</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="OrderAcceptanceRecordsContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="OrderAcceptanceRecordsContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="OrderAcceptanceRecordsContextControl" xml:space="preserve">
+    <value>Order Acceptance Control</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextConverttoOrder" xml:space="preserve">
+    <value>Convert to Sales Order</value>
+  </data>
+  <data name="OrderAcceptanceRecordsContextConverttoOrder1" xml:space="preserve">
     <value>Convert to Sales Order</value>
   </data>
   <data name="OrderAcceptanceRecordsContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="OrderAcceptanceRecordsContextMRP" xml:space="preserve">
+    <value>Material Requirement List</value>
+  </data>
+  <data name="OrderAcceptanceRecordsContextOrderLines" xml:space="preserve">
+    <value>Order Lines</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="OrderAcceptanceRecordsContextStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="PackageFicheLinesContextChange" xml:space="preserve">
+    <value>Change Line</value>
+  </data>
+  <data name="PackageFicheLinesContextRefresh" xml:space="preserve">
+    <value>Refresh Line</value>
+  </data>
   <data name="PackageFichesChildMenu" xml:space="preserve">
+    <value>Package Fiches</value>
+  </data>
+  <data name="PackageFichesChildMenu1" xml:space="preserve">
     <value>Package Fiches</value>
   </data>
   <data name="PackageFichesContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="PackageFichesContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="PackageFichesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PackageFichesContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="PackageFichesContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PackageFichesContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="PackageFichesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PackageFichesContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="PackageFichesListChildMenu" xml:space="preserve">
     <value>List of Package Fiches</value>
   </data>
+  <data name="PackageFichesListChildMenu1" xml:space="preserve">
+    <value>List of Package Fiches</value>
+  </data>
   <data name="PackingListChildMenu" xml:space="preserve">
+    <value>Packing Lists</value>
+  </data>
+  <data name="PackingListChildMenu1" xml:space="preserve">
     <value>Packing Lists</value>
   </data>
   <data name="PackingListsChildMenu" xml:space="preserve">
     <value>Packing List</value>
   </data>
+  <data name="PackingListsChildMenu1" xml:space="preserve">
+    <value>Packing List</value>
+  </data>
   <data name="PackingListsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PackingListsContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="PackingListsContextApprove" xml:space="preserve">
     <value>Approve the Packing List</value>
   </data>
+  <data name="PackingListsContextApprove1" xml:space="preserve">
+    <value>Approve the Packing List</value>
+  </data>
   <data name="PackingListsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PackingListsContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="PackingListsContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PackingListsContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PackingListsContextPrint" xml:space="preserve">
+    <value>Print</value>
+  </data>
   <data name="PackingListsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PackingListsContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PackingListsPalletLineContextRemovePallet" xml:space="preserve">
+    <value>Remove the Pallet</value>
+  </data>
   <data name="PackingListsPalletLineContextSelectPallet" xml:space="preserve">
+    <value>Select Pallet</value>
+  </data>
+  <data name="PackingListsPalletLineContextSelectPallet1" xml:space="preserve">
     <value>Select Pallet</value>
   </data>
   <data name="PackingListsPalletPackageLineContextEnumarate" xml:space="preserve">
     <value>Pallet Package Enumarate</value>
   </data>
+  <data name="PackingListsPalletPackageLineContextEnumarate1" xml:space="preserve">
+    <value>Pallet Package Enumarate</value>
+  </data>
   <data name="PackingListsPalletSelectionContextRemove" xml:space="preserve">
+    <value>Pallet Selection Remove the Selection</value>
+  </data>
+  <data name="PackingListsPalletSelectionContextRemove1" xml:space="preserve">
     <value>Pallet Selection Remove the Selection</value>
   </data>
   <data name="PackingListsPalletSelectionContextSelect" xml:space="preserve">
     <value>Pallet Selection Select</value>
   </data>
+  <data name="PackingListsPalletSelectionContextSelect1" xml:space="preserve">
+    <value>Pallet Selection Select</value>
+  </data>
   <data name="PackingListsPalletSelectionContextSelectAll" xml:space="preserve">
+    <value>Pallet Selection Select All</value>
+  </data>
+  <data name="PackingListsPalletSelectionContextSelectAll1" xml:space="preserve">
     <value>Pallet Selection Select All</value>
   </data>
   <data name="PalletRecordLinesContextAdd" xml:space="preserve">
     <value>Line Add</value>
   </data>
+  <data name="PalletRecordLinesContextAdd1" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
   <data name="PalletRecordLinesContextAddPackageFiche" xml:space="preserve">
+    <value>Line Transfer Package Fiche</value>
+  </data>
+  <data name="PalletRecordLinesContextAddPackageFiche1" xml:space="preserve">
     <value>Line Transfer Package Fiche</value>
   </data>
   <data name="PalletRecordLinesContextChange" xml:space="preserve">
     <value>Line Change</value>
   </data>
+  <data name="PalletRecordLinesContextChange1" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
   <data name="PalletRecordLinesContextDelete" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="PalletRecordLinesContextDelete1" xml:space="preserve">
     <value>Line Delete</value>
   </data>
   <data name="PalletRecordLinesContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
+  <data name="PalletRecordLinesContextRefresh1" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
   <data name="PalletRecordLinesContextRemovePackageFiche" xml:space="preserve">
+    <value>Line Remove Package Fiche</value>
+  </data>
+  <data name="PalletRecordLinesContextRemovePackageFiche1" xml:space="preserve">
     <value>Line Remove Package Fiche</value>
   </data>
   <data name="PalletRecordsChildMenu" xml:space="preserve">
     <value>Pallet Records</value>
   </data>
+  <data name="PalletRecordsChildMenu1" xml:space="preserve">
+    <value>Pallet Records</value>
+  </data>
   <data name="PalletRecordsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PalletRecordsContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="PalletRecordsContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="PalletRecordsContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="PalletRecordsContextDelete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="PalletRecordsContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PalletRecordsContextLoadingDetail" xml:space="preserve">
+    <value>Loading Detail</value>
+  </data>
+  <data name="PalletRecordsContextPalletDetail" xml:space="preserve">
+    <value>Pallet Detail</value>
+  </data>
+  <data name="PalletRecordsContextPrintTicket" xml:space="preserve">
+    <value>Print</value>
   </data>
   <data name="PalletRecordsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PalletRecordsContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PalletRecordsContextState" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="PalletRecordsContextTicketState" xml:space="preserve">
+    <value>Ticket Status</value>
+  </data>
   <data name="PalletRecordsListChildMenu" xml:space="preserve">
+    <value>List of Pallet Records</value>
+  </data>
+  <data name="PalletRecordsListChildMenu1" xml:space="preserve">
     <value>List of Pallet Records</value>
   </data>
   <data name="PasswordLabel" xml:space="preserve">
     <value>Password:</value>
   </data>
+  <data name="PasswordLabel1" xml:space="preserve">
+    <value>Password:</value>
+  </data>
   <data name="PaymentPlanContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PaymentPlanContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="PaymentPlanContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="PaymentPlanContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="PaymentPlanContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PaymentPlanContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="PaymentPlanContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PaymentPlanContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="PaymentPlansChildMenu" xml:space="preserve">
+    <value>Payment Plans</value>
+  </data>
+  <data name="PaymentPlansChildMenu1" xml:space="preserve">
     <value>Payment Plans</value>
   </data>
   <data name="PeriodContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="PeriodContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="PeriodContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PeriodContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="PeriodContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PeriodContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="PeriodContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PeriodContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="PeriodsChildMenu" xml:space="preserve">
     <value>Periods</value>
   </data>
+  <data name="PeriodsChildMenu1" xml:space="preserve">
+    <value>Periods</value>
+  </data>
   <data name="PermissionModalTitle" xml:space="preserve">
+    <value>User Permissions</value>
+  </data>
+  <data name="PermissionModalTitle1" xml:space="preserve">
     <value>User Permissions</value>
   </data>
   <data name="PermissionsLoadingMessage" xml:space="preserve">
     <value>Permissions are Loading...</value>
   </data>
+  <data name="PermissionsLoadingMessage1" xml:space="preserve">
+    <value>Permissions are Loading...</value>
+  </data>
   <data name="PFMEAChildMenu" xml:space="preserve">
+    <value>P-FMEA</value>
+  </data>
+  <data name="PFMEAChildMenu1" xml:space="preserve">
     <value>P-FMEA</value>
   </data>
   <data name="PFMEAContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="PFMEAContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="PFMEAContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PFMEAContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="PFMEAContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PFMEAContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="PFMEAContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PFMEAContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="PlannedMainChildMenu" xml:space="preserve">
     <value>Preventive/Planned Maintenance Records</value>
   </data>
+  <data name="PlannedMainChildMenu1" xml:space="preserve">
+    <value>Preventive/Planned Maintenance Records</value>
+  </data>
   <data name="PlannedMaintenanceContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PlannedMaintenanceContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="PlannedMaintenanceContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="PlannedMaintenanceContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="PlannedMaintenanceContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PlannedMaintenanceContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="PlannedMaintenanceContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PlannedMaintenanceContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="PlannedMaintenanceLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="PlannedMaintenanceLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="PlannedMaintenanceLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="PlannedMaintenanceLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="PlannedMaintenanceLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="PlannedMaintenanceLineContextRefresh1" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
   <data name="PlanningManagementParameterContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="PlanningManagementParameterContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="PlanningManagementParameterContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PlanningManagementParameterContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="PlanningManagementParameterContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PlanningManagementParameterContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="PlanningManagementParameterContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PlanningManagementParameterContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="PlanningManagementParametersChildMenu" xml:space="preserve">
     <value>Planning Management </value>
   </data>
+  <data name="PlanningManagementParametersChildMenu1" xml:space="preserve">
+    <value>Planning Management </value>
+  </data>
   <data name="PlanningParentMenu" xml:space="preserve">
     <value>Planning</value>
+  </data>
+  <data name="PlanningParentMenu1" xml:space="preserve">
+    <value>Planning</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessName_" xml:space="preserve">
+    <value>PROCESS NAME</value>
+  </data>
+  <data name="ProcessName_Label" xml:space="preserve">
+    <value>Process Name:</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="ProdOperationsChildMenu" xml:space="preserve">
     <value>Products Operations</value>
   </data>
+  <data name="ProdOperationsChildMenu1" xml:space="preserve">
+    <value>Products Operations</value>
+  </data>
+  <data name="ProdOrderChangeRecordsChildMenu" xml:space="preserve">
+    <value>Production Order Change Reports</value>
+  </data>
   <data name="ProdOrderRecordsChildMenu" xml:space="preserve">
+    <value>Production Order Unsuitability Records</value>
+  </data>
+  <data name="ProdOrderRecordsChildMenu1" xml:space="preserve">
     <value>Production Order Unsuitability Records</value>
   </data>
   <data name="ProdOrderUnsAnlChildMenu" xml:space="preserve">
     <value>Production Order Unsuitability Records Analysis</value>
   </data>
+  <data name="ProdOrderUnsAnlChildMenu1" xml:space="preserve">
+    <value>Production Order Unsuitability Records Analysis</value>
+  </data>
   <data name="ProdTrackingListChildMenu" xml:space="preserve">
+    <value>Production Tracking Records List</value>
+  </data>
+  <data name="ProdTrackingListChildMenu1" xml:space="preserve">
     <value>Production Tracking Records List</value>
   </data>
   <data name="ProdTrackingsChildMenu" xml:space="preserve">
     <value>Manuel</value>
   </data>
+  <data name="ProdTrackingsChildMenu1" xml:space="preserve">
+    <value>Manuel</value>
+  </data>
   <data name="ProductContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ProductContextBOMs" xml:space="preserve">
     <value>Bills of Materials</value>
   </data>
+  <data name="ProductContextBOMs1" xml:space="preserve">
+    <value>Bills of Materials</value>
+  </data>
   <data name="ProductContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="ProductContextContProdTrackings" xml:space="preserve">
     <value>Contract Production Trackings</value>
   </data>
+  <data name="ProductContextContProdTrackings1" xml:space="preserve">
+    <value>Contract Production Trackings</value>
+  </data>
   <data name="ProductContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="ProductContextProductRefNr" xml:space="preserve">
     <value>Product Reference Numbers</value>
   </data>
+  <data name="ProductContextProductRefNr1" xml:space="preserve">
+    <value>Product Reference Numbers</value>
+  </data>
   <data name="ProductContextPurchasePrices" xml:space="preserve">
+    <value>Purchase Prices</value>
+  </data>
+  <data name="ProductContextPurchasePrices1" xml:space="preserve">
     <value>Purchase Prices</value>
   </data>
   <data name="ProductContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ProductContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="ProductContextRoutes" xml:space="preserve">
+    <value>Routes</value>
+  </data>
+  <data name="ProductContextRoutes1" xml:space="preserve">
     <value>Routes</value>
   </data>
   <data name="ProductContextSalesPrices" xml:space="preserve">
     <value>Sales Prices</value>
   </data>
+  <data name="ProductContextSalesPrices1" xml:space="preserve">
+    <value>Sales Prices</value>
+  </data>
   <data name="ProductContextStockAmounts" xml:space="preserve">
+    <value>Stock Amounts</value>
+  </data>
+  <data name="ProductContextStockAmounts1" xml:space="preserve">
     <value>Stock Amounts</value>
   </data>
   <data name="ProductContextTechnicalDrawings" xml:space="preserve">
     <value>Technical Drawings</value>
   </data>
+  <data name="ProductContextTechnicalDrawings1" xml:space="preserve">
+    <value>Technical Drawings</value>
+  </data>
   <data name="ProductGroupContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductGroupContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ProductGroupContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="ProductGroupContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProductGroupContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ProductGroupContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductGroupContextProductProperties" xml:space="preserve">
+    <value>Product Properties</value>
+  </data>
   <data name="ProductGroupContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProductGroupContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="ProductGroupsChildMenu" xml:space="preserve">
     <value>Product Groups</value>
   </data>
+  <data name="ProductGroupsChildMenu1" xml:space="preserve">
+    <value>Product Groups</value>
+  </data>
   <data name="ProductionManagementMainRecordsMenu" xml:space="preserve">
+    <value>Main Records</value>
+  </data>
+  <data name="ProductionManagementMainRecordsMenu1" xml:space="preserve">
     <value>Main Records</value>
   </data>
   <data name="ProductionManagementParameterContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="ProductionManagementParameterContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="ProductionManagementParameterContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductionManagementParameterContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="ProductionManagementParameterContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ProductionManagementParameterContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="ProductionManagementParameterContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProductionManagementParameterContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="ProductionManagementParametersChildMenu" xml:space="preserve">
     <value>Production Management </value>
   </data>
+  <data name="ProductionManagementParametersChildMenu1" xml:space="preserve">
+    <value>Production Management </value>
+  </data>
   <data name="ProductionManagementParentMenu" xml:space="preserve">
+    <value>Production Management</value>
+  </data>
+  <data name="ProductionManagementParentMenu1" xml:space="preserve">
     <value>Production Management</value>
   </data>
   <data name="ProductionManagementReportsMenu" xml:space="preserve">
     <value>Reports</value>
   </data>
+  <data name="ProductionManagementReportsMenu1" xml:space="preserve">
+    <value>Reports</value>
+  </data>
   <data name="ProductionManagementTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
   </data>
+  <data name="ProductionManagementTransactionsMenu1" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
+  <data name="ProductionOrderChangeReportsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductionOrderChangeReportsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductionOrderChangeReportsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductionOrderChangeReportsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="ProductionOrderContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductionOrderContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ProductionOrderContextAddtoShipmentPlanning" xml:space="preserve">
     <value>Add to Shipment Planning List</value>
   </data>
+  <data name="ProductionOrderContextAddtoShipmentPlanning1" xml:space="preserve">
+    <value>Add to Shipment Planning List</value>
+  </data>
+  <data name="ProductionOrderContextCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="ProductionOrderContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="ProductionOrderContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductionOrderContextChangeTechnicalDrawing" xml:space="preserve">
+    <value>Change Technical Drawing</value>
+  </data>
   <data name="ProductionOrderContextConsumptionReceipt" xml:space="preserve">
+    <value>Create Consumption Fiche</value>
+  </data>
+  <data name="ProductionOrderContextConsumptionReceipt1" xml:space="preserve">
     <value>Create Consumption Fiche</value>
   </data>
   <data name="ProductionOrderContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ProductionOrderContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductionOrderContextMaterialFiches" xml:space="preserve">
+    <value>Material Fiches</value>
+  </data>
+  <data name="ProductionOrderContextMaterialSupplyStatus" xml:space="preserve">
+    <value>Material Supply Status</value>
+  </data>
   <data name="ProductionOrderContextOccuredAmountEntry" xml:space="preserve">
+    <value>Occured Amount Entry</value>
+  </data>
+  <data name="ProductionOrderContextOccuredAmountEntry1" xml:space="preserve">
     <value>Occured Amount Entry</value>
   </data>
   <data name="ProductionOrderContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ProductionOrderContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProductionOrderContextTrackingChart" xml:space="preserve">
+    <value>R.M. - S.F.P. Tracking Chart</value>
+  </data>
+  <data name="ProductionOrderContextUnsuitabilityRecords" xml:space="preserve">
+    <value>Unsuitability Records</value>
+  </data>
   <data name="ProductionOrderContextWorkOrders" xml:space="preserve">
     <value>Work Orders</value>
   </data>
+  <data name="ProductionOrderContextWorkOrders1" xml:space="preserve">
+    <value>Work Orders</value>
+  </data>
+  <data name="ProductionOrderContextWrite" xml:space="preserve">
+    <value>Print</value>
+  </data>
   <data name="ProductionOrderListChildMenu" xml:space="preserve">
+    <value>Production Orders List</value>
+  </data>
+  <data name="ProductionOrderListChildMenu1" xml:space="preserve">
     <value>Production Orders List</value>
   </data>
   <data name="ProductionOrdersChildMenu" xml:space="preserve">
     <value>Production Orders</value>
   </data>
+  <data name="ProductionOrdersChildMenu1" xml:space="preserve">
+    <value>Production Orders</value>
+  </data>
   <data name="ProductionPlanningMenu" xml:space="preserve">
+    <value>Production Planning</value>
+  </data>
+  <data name="ProductionPlanningMenu1" xml:space="preserve">
     <value>Production Planning</value>
   </data>
   <data name="ProductionTrackingContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="ProductionTrackingContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="ProductionTrackingContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductionTrackingContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="ProductionTrackingContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ProductionTrackingContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="ProductionTrackingContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProductionTrackingContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="ProductionTrackingLineContextAdd" xml:space="preserve">
     <value>Line Add</value>
   </data>
+  <data name="ProductionTrackingLineContextAdd1" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
   <data name="ProductionTrackingLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="ProductionTrackingLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="ProductionTrackingLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="ProductionTrackingLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="ProductionTrackingLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="ProductionTrackingLineContextRefresh1" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
   <data name="ProductionTrackingRecordsMenu" xml:space="preserve">
     <value>Production Tracking Records</value>
   </data>
+  <data name="ProductionTrackingRecordsMenu1" xml:space="preserve">
+    <value>Production Tracking Records</value>
+  </data>
   <data name="ProductOrderContextTree" xml:space="preserve">
     <value>Product Tree</value>
+  </data>
+  <data name="ProductOrderContextTree1" xml:space="preserve">
+    <value>Product Tree</value>
+  </data>
+  <data name="ProductPropertyContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductPropertyContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductPropertyContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductPropertyContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProductPropertyLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductPropertyLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductPropertyLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductPropertyLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProductReceiptTransactionsChildMenu" xml:space="preserve">
+    <value>Product Receipt Transactions</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextApproveIncomingQuantity" xml:space="preserve">
+    <value>Approve Incoming Quantity</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="ProductReferanceNumberContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ProductReferanceNumberContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductReferanceNumberContextAdd11" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductReferanceNumberContextAdd2" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ProductReferanceNumberContextChange" xml:space="preserve">
@@ -1527,10 +3201,22 @@
   <data name="ProductReferanceNumberContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="ProductReferanceNumberContextChange11" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductReferanceNumberContextChange2" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProductReferanceNumberContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="ProductReferanceNumberContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductReferanceNumberContextDelete11" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductReferanceNumberContextDelete2" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="ProductReferanceNumberContextRefresh" xml:space="preserve">
@@ -1539,679 +3225,1513 @@
   <data name="ProductReferanceNumberContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ProductReferanceNumberContextRefresh11" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProductReferanceNumberContextRefresh2" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="ProductRefNumbersChildMenu" xml:space="preserve">
+    <value>Product Referance Numbers</value>
+  </data>
+  <data name="ProductRefNumbersChildMenu1" xml:space="preserve">
     <value>Product Referance Numbers</value>
   </data>
   <data name="ProductsChildMenu" xml:space="preserve">
     <value>Products</value>
   </data>
+  <data name="ProductsChildMenu1" xml:space="preserve">
+    <value>Products</value>
+  </data>
   <data name="ProductsOperationContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductsOperationContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ProductsOperationContextAmounts" xml:space="preserve">
     <value>Amounts by Production Orders</value>
   </data>
+  <data name="ProductsOperationContextAmounts1" xml:space="preserve">
+    <value>Amounts by Production Orders</value>
+  </data>
   <data name="ProductsOperationContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductsOperationContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="ProductsOperationContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ProductsOperationContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="ProductsOperationContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProductsOperationContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="ProductsOperationLineContextAdd" xml:space="preserve">
     <value>Line Add</value>
   </data>
+  <data name="ProductsOperationLineContextAdd1" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
   <data name="ProductsOperationLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="ProductsOperationLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="ProductsOperationLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="ProductsOperationLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="ProductsOperationLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="ProductsOperationLineContextRefresh1" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
   <data name="PurchaseManagementMainRecordsMenu" xml:space="preserve">
     <value>Main Records</value>
   </data>
+  <data name="PurchaseManagementMainRecordsMenu1" xml:space="preserve">
+    <value>Main Records</value>
+  </data>
   <data name="PurchaseManagementParameterContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchaseManagementParameterContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="PurchaseManagementParameterContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="PurchaseManagementParameterContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="PurchaseManagementParameterContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseManagementParameterContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="PurchaseManagementParameterContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PurchaseManagementParameterContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="PurchaseManagementParametersChildMenu" xml:space="preserve">
+    <value>Purchase Management </value>
+  </data>
+  <data name="PurchaseManagementParametersChildMenu1" xml:space="preserve">
     <value>Purchase Management </value>
   </data>
   <data name="PurchaseManagementParentMenu" xml:space="preserve">
     <value>Purchase Management</value>
   </data>
+  <data name="PurchaseManagementParentMenu1" xml:space="preserve">
+    <value>Purchase Management</value>
+  </data>
   <data name="PurchaseManagementReportsMenu" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="PurchaseManagementReportsMenu1" xml:space="preserve">
     <value>Reports</value>
   </data>
   <data name="PurchaseManagementTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
   </data>
+  <data name="PurchaseManagementTransactionsMenu1" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
   <data name="PurchaseOrderContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchaseOrderContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="PurchaseOrderContextApproveOrder" xml:space="preserve">
     <value>Approve the Purchase Order</value>
   </data>
+  <data name="PurchaseOrderContextApproveOrder1" xml:space="preserve">
+    <value>Approve the Purchase Order</value>
+  </data>
   <data name="PurchaseOrderContextCancelOrder" xml:space="preserve">
+    <value>Cancel the Order</value>
+  </data>
+  <data name="PurchaseOrderContextCancelOrder1" xml:space="preserve">
     <value>Cancel the Order</value>
   </data>
   <data name="PurchaseOrderContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="PurchaseOrderContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="PurchaseOrderContextCreateStockFiches" xml:space="preserve">
+    <value>Create Stock Receipt Fiches</value>
+  </data>
+  <data name="PurchaseOrderContextCreateStockFiches1" xml:space="preserve">
     <value>Create Stock Receipt Fiches</value>
   </data>
   <data name="PurchaseOrderContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PurchaseOrderContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseOrderContextPriceApproval" xml:space="preserve">
+    <value>Grant Bill Approval</value>
+  </data>
   <data name="PurchaseOrderContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PurchaseOrderContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrderContextWayBillApproval" xml:space="preserve">
+    <value>Grant Waybill Approval</value>
+  </data>
   <data name="PurchaseOrderFicheListChildMenu" xml:space="preserve">
+    <value>List of Purchase Orders</value>
+  </data>
+  <data name="PurchaseOrderFicheListChildMenu1" xml:space="preserve">
     <value>List of Purchase Orders</value>
   </data>
   <data name="PurchaseOrderLineContextAdd" xml:space="preserve">
     <value>Line Add</value>
   </data>
+  <data name="PurchaseOrderLineContextAdd1" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
   <data name="PurchaseOrderLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="PurchaseOrderLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="PurchaseOrderLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="PurchaseOrderLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="PurchaseOrderLineContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
+  <data name="PurchaseOrderLineContextRefresh1" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalLinesContextChange" xml:space="preserve">
+    <value>Add Value</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalLinesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsChildMenu" xml:space="preserve">
+    <value>Purchase Orders Awaiting Approval</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsChildMenu1" xml:space="preserve">
+    <value>Purchase Orders Awaiting Approval</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextPurchaseUnsuitability" xml:space="preserve">
+    <value>Create Purchase Unsuitability Report</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextQualityApproval" xml:space="preserve">
+    <value>Grant Quality Approval</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextQualityApprovalCancel" xml:space="preserve">
+    <value>Cancel Quality Approval</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextReview" xml:space="preserve">
+    <value>Review</value>
+  </data>
   <data name="PurchaseOrdersChildMenu" xml:space="preserve">
+    <value>Purchase Ordes</value>
+  </data>
+  <data name="PurchaseOrdersChildMenu1" xml:space="preserve">
     <value>Purchase Ordes</value>
   </data>
   <data name="PurchasePriceContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="PurchasePriceContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="PurchasePriceContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PurchasePriceContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="PurchasePriceContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="PurchasePriceContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="PurchasePriceContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchasePriceContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="PurchasePriceLineContextAdd" xml:space="preserve">
     <value>Line Add</value>
   </data>
+  <data name="PurchasePriceLineContextAdd1" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
   <data name="PurchasePriceLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="PurchasePriceLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="PurchasePriceLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="PurchasePriceLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="PurchasePriceLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="PurchasePriceLineContextRefresh1" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
   <data name="PurchasePricesChildMenu" xml:space="preserve">
     <value>Purchase Prices</value>
   </data>
+  <data name="PurchasePricesChildMenu1" xml:space="preserve">
+    <value>Purchase Prices</value>
+  </data>
   <data name="PurchaseQualityPlanContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchaseQualityPlanContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="PurchaseQualityPlanContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="PurchaseQualityPlanContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="PurchaseQualityPlanContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseQualityPlanContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="PurchaseQualityPlanContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PurchaseQualityPlanContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="PurchaseQualityPlanLineContextAdd" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
+  <data name="PurchaseQualityPlanLineContextAdd1" xml:space="preserve">
     <value>Line Add</value>
   </data>
   <data name="PurchaseQualityPlanLineContextChange" xml:space="preserve">
     <value>Line Change</value>
   </data>
+  <data name="PurchaseQualityPlanLineContextChange1" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
   <data name="PurchaseQualityPlanLineContextDelete" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="PurchaseQualityPlanLineContextDelete1" xml:space="preserve">
     <value>Line Delete</value>
   </data>
   <data name="PurchaseQualityPlanLineContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
+  <data name="PurchaseQualityPlanLineContextRefresh1" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
   <data name="PurchaseQualityPlansChildMenu" xml:space="preserve">
+    <value>Purchase Quality Plans</value>
+  </data>
+  <data name="PurchaseQualityPlansChildMenu1" xml:space="preserve">
     <value>Purchase Quality Plans</value>
   </data>
   <data name="PurchaseRequestContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="PurchaseRequestContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="PurchaseRequestContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PurchaseRequestContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="PurchaseRequestContextConverttoOrder" xml:space="preserve">
     <value>Convert to Order</value>
   </data>
+  <data name="PurchaseRequestContextConverttoOrder1" xml:space="preserve">
+    <value>Convert to Order</value>
+  </data>
   <data name="PurchaseRequestContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseRequestContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="PurchaseRequestContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PurchaseRequestContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="PurchaseRequestFicheListChildMenu" xml:space="preserve">
+    <value>List of Purchase Requests</value>
+  </data>
+  <data name="PurchaseRequestFicheListChildMenu1" xml:space="preserve">
     <value>List of Purchase Requests</value>
   </data>
   <data name="PurchaseRequestLineContextAdd" xml:space="preserve">
     <value>Line Add</value>
   </data>
+  <data name="PurchaseRequestLineContextAdd1" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
   <data name="PurchaseRequestLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="PurchaseRequestLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="PurchaseRequestLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="PurchaseRequestLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="PurchaseRequestLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="PurchaseRequestLineContextRefresh1" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
   <data name="PurchaseRequestsChildMenu" xml:space="preserve">
     <value>Purchase Requests</value>
   </data>
+  <data name="PurchaseRequestsChildMenu1" xml:space="preserve">
+    <value>Purchase Requests</value>
+  </data>
   <data name="PurchaseUnsuitabilityReportContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchaseUnsuitabilityReportContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="PurchaseUnsuitabilityReportContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="PurchaseUnsuitabilityReportContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="PurchaseUnsuitabilityReportContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseUnsuitabilityReportContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="PurchaseUnsuitabilityReportContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PurchaseUnsuitabilityReportContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="PurchUnsRecordsChildMenu" xml:space="preserve">
+    <value>Purchase Unsuitability Records</value>
+  </data>
+  <data name="PurchUnsRecordsChildMenu1" xml:space="preserve">
     <value>Purchase Unsuitability Records</value>
   </data>
   <data name="PurcUnsAnlChildMenu" xml:space="preserve">
     <value>Purchase Unsuitability Records Analysis</value>
   </data>
+  <data name="PurcUnsAnlChildMenu1" xml:space="preserve">
+    <value>Purchase Unsuitability Records Analysis</value>
+  </data>
   <data name="QualityControlAnalysisMenu" xml:space="preserve">
+    <value>Analysis</value>
+  </data>
+  <data name="QualityControlAnalysisMenu1" xml:space="preserve">
     <value>Analysis</value>
   </data>
   <data name="QualityControlFMEAMenu" xml:space="preserve">
     <value>FMEA</value>
   </data>
+  <data name="QualityControlFMEAMenu1" xml:space="preserve">
+    <value>FMEA</value>
+  </data>
   <data name="QualityControlMainRecordsMenu" xml:space="preserve">
+    <value>Main Records</value>
+  </data>
+  <data name="QualityControlMainRecordsMenu1" xml:space="preserve">
     <value>Main Records</value>
   </data>
   <data name="QualityControlParameterContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="QualityControlParameterContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="QualityControlParameterContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="QualityControlParameterContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="QualityControlParameterContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="QualityControlParameterContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="QualityControlParameterContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="QualityControlParameterContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="QualityControlParametersChildMenu" xml:space="preserve">
     <value>Quality Control </value>
   </data>
+  <data name="QualityControlParametersChildMenu1" xml:space="preserve">
+    <value>Quality Control </value>
+  </data>
   <data name="QualityControlParentMenu" xml:space="preserve">
+    <value>Quality Control</value>
+  </data>
+  <data name="QualityControlParentMenu1" xml:space="preserve">
     <value>Quality Control</value>
   </data>
   <data name="QualityControlReportsMenu" xml:space="preserve">
     <value>Reports</value>
   </data>
+  <data name="QualityControlReportsMenu1" xml:space="preserve">
+    <value>Reports</value>
+  </data>
   <data name="QualityControlSPCAnalysisMenu" xml:space="preserve">
+    <value>SPC Comparing</value>
+  </data>
+  <data name="QualityControlSPCAnalysisMenu1" xml:space="preserve">
     <value>SPC Comparing</value>
   </data>
   <data name="QualityControlSPCMenu" xml:space="preserve">
     <value>SPC</value>
   </data>
+  <data name="QualityControlSPCMenu1" xml:space="preserve">
+    <value>SPC</value>
+  </data>
   <data name="QualityControlTransactionsMenu" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
+  <data name="QualityControlTransactionsMenu1" xml:space="preserve">
     <value>Transactions</value>
   </data>
   <data name="QualityPlansMenu" xml:space="preserve">
     <value>Quality Plans</value>
   </data>
+  <data name="QualityPlansMenu1" xml:space="preserve">
+    <value>Quality Plans</value>
+  </data>
+  <data name="QueryStr" xml:space="preserve">
+    <value>QUERY</value>
+  </data>
+  <data name="QueryStrLabel" xml:space="preserve">
+    <value>Query:</value>
+  </data>
   <data name="Report8DChildMenu" xml:space="preserve">
+    <value>8D Reports</value>
+  </data>
+  <data name="Report8DChildMenu1" xml:space="preserve">
     <value>8D Reports</value>
   </data>
   <data name="ReportsMenu" xml:space="preserve">
     <value>Reports</value>
   </data>
+  <data name="ReportsMenu1" xml:space="preserve">
+    <value>Reports</value>
+  </data>
   <data name="RoleDefinitionsChildMenu" xml:space="preserve">
+    <value>Role Identifications</value>
+  </data>
+  <data name="RoleDefinitionsChildMenu1" xml:space="preserve">
     <value>Role Identifications</value>
   </data>
   <data name="RouteContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="RouteContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="RouteContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="RouteContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="RouteContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="RouteContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="RouteContextExamine" xml:space="preserve">
+    <value>Examine</value>
+  </data>
+  <data name="RouteContextExamine1" xml:space="preserve">
     <value>Examine</value>
   </data>
   <data name="RouteContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="RouteContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="RoutesChildMenu" xml:space="preserve">
+    <value>Routes</value>
+  </data>
+  <data name="RoutesChildMenu1" xml:space="preserve">
     <value>Routes</value>
   </data>
   <data name="SalesManagementMainRecordsMenu" xml:space="preserve">
     <value>Main Records</value>
   </data>
+  <data name="SalesManagementMainRecordsMenu1" xml:space="preserve">
+    <value>Main Records</value>
+  </data>
   <data name="SalesManagementParameterContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SalesManagementParameterContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="SalesManagementParameterContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="SalesManagementParameterContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="SalesManagementParameterContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SalesManagementParameterContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="SalesManagementParameterContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="SalesManagementParameterContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="SalesManagementParametersChildMenu" xml:space="preserve">
+    <value>Sales Management </value>
+  </data>
+  <data name="SalesManagementParametersChildMenu1" xml:space="preserve">
     <value>Sales Management </value>
   </data>
   <data name="SalesManagementParentMenu" xml:space="preserve">
     <value>Sales Management</value>
   </data>
+  <data name="SalesManagementParentMenu1" xml:space="preserve">
+    <value>Sales Management</value>
+  </data>
   <data name="SalesManagementReportsMenu" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="SalesManagementReportsMenu1" xml:space="preserve">
     <value>Reports</value>
   </data>
   <data name="SalesManagementTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
   </data>
+  <data name="SalesManagementTransactionsMenu1" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
   <data name="SalesOrderContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SalesOrderContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="SalesOrderContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="SalesOrderContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="SalesOrderContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SalesOrderContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="SalesOrderContextProdOrder" xml:space="preserve">
     <value>Create Production Order</value>
   </data>
+  <data name="SalesOrderContextProdOrder1" xml:space="preserve">
+    <value>Create Production Order</value>
+  </data>
   <data name="SalesOrderContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="SalesOrderContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="SalesOrderFicheListChildMenu" xml:space="preserve">
     <value>List of Sales Orders</value>
   </data>
+  <data name="SalesOrderFicheListChildMenu1" xml:space="preserve">
+    <value>List of Sales Orders</value>
+  </data>
   <data name="SalesOrderLineContextAdd" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
+  <data name="SalesOrderLineContextAdd1" xml:space="preserve">
     <value>Line Add</value>
   </data>
   <data name="SalesOrderLineContextChange" xml:space="preserve">
     <value>Line Change</value>
   </data>
+  <data name="SalesOrderLineContextChange1" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
   <data name="SalesOrderLineContextDelete" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="SalesOrderLineContextDelete1" xml:space="preserve">
     <value>Line Delete</value>
   </data>
   <data name="SalesOrderLineContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
+  <data name="SalesOrderLineContextRefresh1" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
   <data name="SalesOrdersChildMenu" xml:space="preserve">
+    <value>Sales Orders</value>
+  </data>
+  <data name="SalesOrdersChildMenu1" xml:space="preserve">
     <value>Sales Orders</value>
   </data>
   <data name="SalesPriceContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="SalesPriceContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="SalesPriceContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="SalesPriceContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="SalesPriceContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="SalesPriceContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="SalesPriceContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="SalesPriceContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="SalesPriceLineContextAdd" xml:space="preserve">
     <value>Line Add</value>
   </data>
+  <data name="SalesPriceLineContextAdd1" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
   <data name="SalesPriceLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="SalesPriceLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="SalesPriceLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="SalesPriceLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="SalesPriceLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="SalesPriceLineContextRefresh1" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
   <data name="SalesPricesChildMenu" xml:space="preserve">
     <value>Sales Prices</value>
   </data>
+  <data name="SalesPricesChildMenu1" xml:space="preserve">
+    <value>Sales Prices</value>
+  </data>
   <data name="SalesPropositionContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SalesPropositionContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="SalesPropositionContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="SalesPropositionContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="SalesPropositionContextConverttoOrder" xml:space="preserve">
+    <value>Convert to Order</value>
+  </data>
+  <data name="SalesPropositionContextConverttoOrder1" xml:space="preserve">
     <value>Convert to Order</value>
   </data>
   <data name="SalesPropositionContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="SalesPropositionContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="SalesPropositionContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="SalesPropositionContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="SalesPropositionFicheListChildMenu" xml:space="preserve">
     <value>List of Sales Propositions</value>
   </data>
+  <data name="SalesPropositionFicheListChildMenu1" xml:space="preserve">
+    <value>List of Sales Propositions</value>
+  </data>
   <data name="SalesPropositionLineContextAdd" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
+  <data name="SalesPropositionLineContextAdd1" xml:space="preserve">
     <value>Line Add</value>
   </data>
   <data name="SalesPropositionLineContextChange" xml:space="preserve">
     <value>Line Change</value>
   </data>
+  <data name="SalesPropositionLineContextChange1" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
   <data name="SalesPropositionLineContextDelete" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="SalesPropositionLineContextDelete1" xml:space="preserve">
     <value>Line Delete</value>
   </data>
   <data name="SalesPropositionLineContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
+  <data name="SalesPropositionLineContextRefresh1" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
   <data name="SalesPropositionsChildMenu" xml:space="preserve">
+    <value>SAles Propositions</value>
+  </data>
+  <data name="SalesPropositionsChildMenu1" xml:space="preserve">
     <value>SAles Propositions</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SaveButton1" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveButton11" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SelectAllText" xml:space="preserve">
+    <value>Select All Text</value>
+  </data>
   <data name="ShiftContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ShiftContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ShiftContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="ShiftContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ShiftContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ShiftContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="ShiftContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ShiftContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="ShiftLineContextAdd" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
+  <data name="ShiftLineContextAdd1" xml:space="preserve">
     <value>Line Add</value>
   </data>
   <data name="ShiftLineContextChange" xml:space="preserve">
     <value>Line Change</value>
   </data>
+  <data name="ShiftLineContextChange1" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
   <data name="ShiftLineContextDelete" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="ShiftLineContextDelete1" xml:space="preserve">
     <value>Line Delete</value>
   </data>
   <data name="ShiftLineContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
+  <data name="ShiftLineContextRefresh1" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
   <data name="ShiftsChildMenu" xml:space="preserve">
+    <value>Shifts</value>
+  </data>
+  <data name="ShiftsChildMenu1" xml:space="preserve">
     <value>Shifts</value>
   </data>
   <data name="ShipmentManagementMainRecordsMenu" xml:space="preserve">
     <value>Main Records</value>
   </data>
+  <data name="ShipmentManagementMainRecordsMenu1" xml:space="preserve">
+    <value>Main Records</value>
+  </data>
   <data name="ShipmentManagementReportsMenu" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="ShipmentManagementReportsMenu1" xml:space="preserve">
     <value>Reports</value>
   </data>
   <data name="ShipmentManagementTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
   </data>
+  <data name="ShipmentManagementTransactionsMenu1" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
   <data name="ShipmentParentMenu" xml:space="preserve">
+    <value>Shipment Management</value>
+  </data>
+  <data name="ShipmentParentMenu1" xml:space="preserve">
     <value>Shipment Management</value>
   </data>
   <data name="ShipmentPlanningChildMenu" xml:space="preserve">
     <value>Shipment Planning Lists</value>
   </data>
+  <data name="ShipmentPlanningChildMenu1" xml:space="preserve">
+    <value>Shipment Planning Lists</value>
+  </data>
   <data name="ShipmentPlanningLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="ShipmentPlanningLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="ShipmentPlanningLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="ShipmentPlanningLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="ShipmentPlanningLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="ShipmentPlanningLineContextRefresh1" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
   <data name="ShipmentPlanningsContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="ShipmentPlanningsContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="ShipmentPlanningsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ShipmentPlanningsContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="ShipmentPlanningsContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ShipmentPlanningsContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="ShipmentPlanningsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ShipmentPlanningsContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="ShippingAdressContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="ShippingAdressContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="ShippingAdressContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ShippingAdressContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="ShippingAdressContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ShippingAdressContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="ShippingAdressContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ShippingAdressContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="ShippingAdressesChildMenu" xml:space="preserve">
     <value>Shipping Addresses</value>
   </data>
+  <data name="ShippingAdressesChildMenu1" xml:space="preserve">
+    <value>Shipping Addresses</value>
+  </data>
   <data name="ShippingManagementParameterContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ShippingManagementParameterContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ShippingManagementParameterContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="ShippingManagementParameterContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ShippingManagementParameterContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ShippingManagementParameterContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="ShippingManagementParameterContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ShippingManagementParameterContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="ShippingManagementParametersChildMenu" xml:space="preserve">
     <value>Shipping Management </value>
+  </data>
+  <data name="ShippingManagementParametersChildMenu1" xml:space="preserve">
+    <value>Shipping Management </value>
+  </data>
+  <data name="SourceDepartmentIdLabel" xml:space="preserve">
+    <value>User Group Department:</value>
   </data>
   <data name="SPCFMEAChildMenu" xml:space="preserve">
     <value>SPC &amp; FMEA</value>
   </data>
+  <data name="SPCFMEAChildMenu1" xml:space="preserve">
+    <value>SPC &amp; FMEA</value>
+  </data>
+  <data name="SQLCommandButton" xml:space="preserve">
+    <value>Create Query</value>
+  </data>
   <data name="StartingSalariesChildMenu" xml:space="preserve">
+    <value>Starting Salaries</value>
+  </data>
+  <data name="StartingSalariesChildMenu1" xml:space="preserve">
     <value>Starting Salaries</value>
   </data>
   <data name="StartingSalariesContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="StartingSalariesContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="StartingSalariesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StartingSalariesContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="StartingSalariesContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="StartingSalariesContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="StartingSalariesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="StartingSalariesContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="StartingSalaryLinesContextAdd" xml:space="preserve">
     <value>Line Add</value>
   </data>
+  <data name="StartingSalaryLinesContextAdd1" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
   <data name="StartingSalaryLinesContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="StartingSalaryLinesContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="StartingSalaryLinesContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="StartingSalaryLinesContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="StartingSalaryLinesContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="StartingSalaryLinesContextRefresh1" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
   <data name="StationContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="StationContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="StationContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StationContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="StationContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="StationContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="StationContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="StationContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="StationCostChildMenu" xml:space="preserve">
     <value>Station Cost Records</value>
   </data>
+  <data name="StationCostChildMenu1" xml:space="preserve">
+    <value>Station Cost Records</value>
+  </data>
   <data name="StationCostListChildMenu" xml:space="preserve">
+    <value>List of Station Cost Records</value>
+  </data>
+  <data name="StationCostListChildMenu1" xml:space="preserve">
     <value>List of Station Cost Records</value>
   </data>
   <data name="StationGroupChildMenu" xml:space="preserve">
     <value>Work Centers</value>
   </data>
+  <data name="StationGroupChildMenu1" xml:space="preserve">
+    <value>Work Centers</value>
+  </data>
   <data name="StationGroupContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StationGroupContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="StationGroupContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="StationGroupContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="StationGroupContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StationGroupContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="StationGroupContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="StationGroupContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="StationInventoryContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StationInventoryContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="StationInventoryContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="StationInventoryContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="StationInventoryContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StationInventoryContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="StationInventoryContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="StationInventoryContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="StationListChildMenu" xml:space="preserve">
+    <value>List of Stations</value>
+  </data>
+  <data name="StationListChildMenu1" xml:space="preserve">
     <value>List of Stations</value>
   </data>
   <data name="StationOEEChildMenu" xml:space="preserve">
     <value>Station OEE Analysis</value>
   </data>
+  <data name="StationOEEChildMenu1" xml:space="preserve">
+    <value>Station OEE Analysis</value>
+  </data>
   <data name="StationsChildMenu" xml:space="preserve">
     <value>Stations</value>
   </data>
+  <data name="StationsChildMenu1" xml:space="preserve">
+    <value>Stations</value>
+  </data>
+  <data name="StockAddressesChildMenu" xml:space="preserve">
+    <value>Stock Addresses</value>
+  </data>
+  <data name="StockAddressesContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockAddressesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockAddressesContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockAddressesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="StockAddressesLineContextAdd" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
+  <data name="StockAddressesLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="StockAddressesLineContextDelete" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="StockAddressesLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="StockColumnsChildMenu" xml:space="preserve">
+    <value>Stock Columns</value>
+  </data>
+  <data name="StockColumnsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockColumnsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockColumnsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockColumnsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="StockFicheContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockFicheContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="StockFicheContextAddConsume" xml:space="preserve">
     <value>Add Consumption Fiche</value>
   </data>
+  <data name="StockFicheContextAddConsume1" xml:space="preserve">
+    <value>Add Consumption Fiche</value>
+  </data>
   <data name="StockFicheContextAddProductionIncome" xml:space="preserve">
+    <value>Add Production Input Fiche</value>
+  </data>
+  <data name="StockFicheContextAddProductionIncome1" xml:space="preserve">
     <value>Add Production Input Fiche</value>
   </data>
   <data name="StockFicheContextAddStockIncome" xml:space="preserve">
     <value>Add Stock Input Fiche</value>
   </data>
+  <data name="StockFicheContextAddStockIncome1" xml:space="preserve">
+    <value>Add Stock Input Fiche</value>
+  </data>
   <data name="StockFicheContextAddStockOutput" xml:space="preserve">
+    <value>Add Stock Output Fiche</value>
+  </data>
+  <data name="StockFicheContextAddStockOutput1" xml:space="preserve">
     <value>Add Stock Output Fiche</value>
   </data>
   <data name="StockFicheContextAddWarehouse" xml:space="preserve">
     <value>Add Shipping to Warehouse Fiche</value>
   </data>
+  <data name="StockFicheContextAddWarehouse1" xml:space="preserve">
+    <value>Add Shipping to Warehouse Fiche</value>
+  </data>
   <data name="StockFicheContextAddWastege" xml:space="preserve">
+    <value>Add Wastage Fiche</value>
+  </data>
+  <data name="StockFicheContextAddWastege1" xml:space="preserve">
     <value>Add Wastage Fiche</value>
   </data>
   <data name="StockFicheContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="StockFicheContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="StockFicheContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockFicheContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="StockFicheContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="StockFicheContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="StockFicheLineContextAdd" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
+  <data name="StockFicheLineContextAdd1" xml:space="preserve">
     <value>Line Add</value>
   </data>
   <data name="StockFicheLineContextChange" xml:space="preserve">
     <value>Line Change</value>
   </data>
+  <data name="StockFicheLineContextChange1" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
   <data name="StockFicheLineContextDelete" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="StockFicheLineContextDelete1" xml:space="preserve">
     <value>Line Delete</value>
   </data>
   <data name="StockFicheLineContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
+  <data name="StockFicheLineContextRefresh1" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
   <data name="StockFichesChildMenu" xml:space="preserve">
     <value>Stock Fiches</value>
   </data>
+  <data name="StockFichesChildMenu1" xml:space="preserve">
+    <value>Stock Fiches</value>
+  </data>
+  <data name="StockFichesGeneralConAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="StockManagementMainRecordsMenu" xml:space="preserve">
+    <value>Main Records</value>
+  </data>
+  <data name="StockManagementMainRecordsMenu1" xml:space="preserve">
     <value>Main Records</value>
   </data>
   <data name="StockManagementParameterContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="StockManagementParameterContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="StockManagementParameterContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockManagementParameterContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="StockManagementParameterContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="StockManagementParameterContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="StockManagementParameterContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="StockManagementParameterContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="StockManagementParametersChildMenu" xml:space="preserve">
     <value>Stock Management </value>
   </data>
+  <data name="StockManagementParametersChildMenu1" xml:space="preserve">
+    <value>Stock Management </value>
+  </data>
   <data name="StockManagementParentMenu" xml:space="preserve">
+    <value>Stock Management</value>
+  </data>
+  <data name="StockManagementParentMenu1" xml:space="preserve">
     <value>Stock Management</value>
   </data>
   <data name="StockManagementReportsMenu" xml:space="preserve">
     <value>Reports</value>
   </data>
+  <data name="StockManagementReportsMenu1" xml:space="preserve">
+    <value>Reports</value>
+  </data>
   <data name="StockManagementTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
   </data>
+  <data name="StockManagementTransactionsMenu1" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
+  <data name="StockNumbersChildMenu" xml:space="preserve">
+    <value>Stock Numbers</value>
+  </data>
+  <data name="StockNumbersContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockNumbersContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockNumbersContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockNumbersContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="StockReceiptFichesContextMultiSelect" xml:space="preserve">
+    <value>Bulk Select</value>
+  </data>
+  <data name="StockReceiptFichesContextMultiSelect1" xml:space="preserve">
     <value>Bulk Select</value>
   </data>
   <data name="StockReceiptFichesContextRemoveAll" xml:space="preserve">
     <value>Remove Bulk Selection</value>
   </data>
+  <data name="StockReceiptFichesContextRemoveAll1" xml:space="preserve">
+    <value>Remove Bulk Selection</value>
+  </data>
   <data name="StockReceiptFichesContextSelect" xml:space="preserve">
     <value>Select</value>
+  </data>
+  <data name="StockReceiptFichesContextSelect1" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="StockSectionsChildMenu" xml:space="preserve">
+    <value>Stock Sections</value>
+  </data>
+  <data name="StockSectionsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockSectionsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockSectionsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockSectionsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="StockShelfsChildMenu" xml:space="preserve">
+    <value>Stock Shelfs</value>
+  </data>
+  <data name="StockShelfsContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockShelfsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockShelfsContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockShelfsContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>General Information</value>
   </data>
+  <data name="Tab1Name1" xml:space="preserve">
+    <value>General Information</value>
+  </data>
+  <data name="TargetDepartmentId" xml:space="preserve">
+    <value>TARGET DEPARTMENT ID</value>
+  </data>
+  <data name="TargetDepartmentIdLabel" xml:space="preserve">
+    <value>Target Department Id:</value>
+  </data>
+  <data name="TargetUsersId" xml:space="preserve">
+    <value>TARGET USER GROUP ID</value>
+  </data>
+  <data name="TargetUsersIdLabel" xml:space="preserve">
+    <value>Target Users Group Id:</value>
+  </data>
   <data name="TaskScoringsChildMenu" xml:space="preserve">
+    <value>Task Scorings</value>
+  </data>
+  <data name="TaskScoringsChildMenu1" xml:space="preserve">
     <value>Task Scorings</value>
   </data>
   <data name="TaskScoringsContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="TaskScoringsContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="TaskScoringsContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="TaskScoringsContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="TaskScoringsContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="TaskScoringsContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="TaskScoringsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="TaskScoringsContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="TechAnlChildMenu" xml:space="preserve">
+    <value>Technical Analysis</value>
+  </data>
+  <data name="TechAnlChildMenu1" xml:space="preserve">
     <value>Technical Analysis</value>
   </data>
   <data name="TechnicalDrawingContextAdd" xml:space="preserve">
@@ -2220,11 +4740,23 @@
   <data name="TechnicalDrawingContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="TechnicalDrawingContextAdd11" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="TechnicalDrawingContextAdd2" xml:space="preserve">
+    <value>Technical Drawing Add</value>
+  </data>
   <data name="TechnicalDrawingContextChange" xml:space="preserve">
     <value>Technical Drawing Change</value>
   </data>
   <data name="TechnicalDrawingContextChange1" xml:space="preserve">
     <value>Change</value>
+  </data>
+  <data name="TechnicalDrawingContextChange11" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="TechnicalDrawingContextChange2" xml:space="preserve">
+    <value>Technical Drawing Change</value>
   </data>
   <data name="TechnicalDrawingContextDelete" xml:space="preserve">
     <value>Technical Drawing Delete</value>
@@ -2232,265 +4764,574 @@
   <data name="TechnicalDrawingContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="TechnicalDrawingContextDelete11" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="TechnicalDrawingContextDelete2" xml:space="preserve">
+    <value>Technical Drawing Delete</value>
+  </data>
   <data name="TechnicalDrawingContextRefresh" xml:space="preserve">
     <value>Technical Drawing Refresh</value>
   </data>
   <data name="TechnicalDrawingContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="TechnicalDrawingContextRefresh11" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="TechnicalDrawingContextRefresh2" xml:space="preserve">
+    <value>Technical Drawing Refresh</value>
+  </data>
   <data name="TechnicalDrawingsChildMenu" xml:space="preserve">
+    <value>Technical Drawings</value>
+  </data>
+  <data name="TechnicalDrawingsChildMenu1" xml:space="preserve">
     <value>Technical Drawings</value>
   </data>
   <data name="TemplateOperationContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="TemplateOperationContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="TemplateOperationContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="TemplateOperationContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="TemplateOperationContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="TemplateOperationContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="TemplateOperationContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="TemplateOperationContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="TemplateOperationLineContextAdd" xml:space="preserve">
     <value>Line Add</value>
   </data>
+  <data name="TemplateOperationLineContextAdd1" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
   <data name="TemplateOperationLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="TemplateOperationLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="TemplateOperationLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="TemplateOperationLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="TemplateOperationLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="TemplateOperationLineContextRefresh1" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
   <data name="TempOperationsChildMenu" xml:space="preserve">
     <value>Template Operations</value>
   </data>
+  <data name="TempOperationsChildMenu1" xml:space="preserve">
+    <value>Template Operations</value>
+  </data>
   <data name="TransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
   </data>
+  <data name="TransactionsMenu1" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
   <data name="UICurrentMenu" xml:space="preserve">
+    <value>User Identifications</value>
+  </data>
+  <data name="UICurrentMenu1" xml:space="preserve">
+    <value>Notification Templates</value>
+  </data>
+  <data name="UICurrentMenu11" xml:space="preserve">
     <value>User Identifications</value>
   </data>
   <data name="UIExportFileName" xml:space="preserve">
     <value>Users</value>
   </data>
+  <data name="UIExportFileName1" xml:space="preserve">
+    <value>Users</value>
+  </data>
   <data name="UIExportTitle" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="UIExportTitle1" xml:space="preserve">
     <value>Users</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>General System Identifications</value>
   </data>
+  <data name="UIPreviousMenu1" xml:space="preserve">
+    <value>General System Identifications</value>
+  </data>
+  <data name="UIPreviousMenu11" xml:space="preserve">
+    <value>General System Identifications</value>
+  </data>
+  <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningQueryStrMessage" xml:space="preserve">
+    <value>Saving cannot be done without creating a query.</value>
+  </data>
+  <data name="UIWarningQueryStrTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningSQLCommandMessage" xml:space="preserve">
+    <value>A query cannot be created without selecting the module, process, and target department.</value>
+  </data>
+  <data name="UIWarningSQLCommandTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UnitSetContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="UnitSetContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="UnitSetContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="UnitSetContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="UnitSetContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="UnitSetContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="UnitSetContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="UnitSetContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="UnitSetsChildMenu" xml:space="preserve">
+    <value>Unit Sets</value>
+  </data>
+  <data name="UnitSetsChildMenu1" xml:space="preserve">
     <value>Unit Sets</value>
   </data>
   <data name="UnplannedMainChildMenu" xml:space="preserve">
     <value>Failure/Unplanned Maintenance Records</value>
   </data>
+  <data name="UnplannedMainChildMenu1" xml:space="preserve">
+    <value>Failure/Unplanned Maintenance Records</value>
+  </data>
   <data name="UnplannedMaintenanceContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="UnplannedMaintenanceContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="UnplannedMaintenanceContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="UnplannedMaintenanceContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="UnplannedMaintenanceContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="UnplannedMaintenanceContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="UnplannedMaintenanceContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="UnplannedMaintenanceContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="UnplannedMaintenanceLineContextAdd" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
+  <data name="UnplannedMaintenanceLineContextAdd1" xml:space="preserve">
     <value>Line Add</value>
   </data>
   <data name="UnplannedMaintenanceLineContextChange" xml:space="preserve">
     <value>Line Change</value>
   </data>
+  <data name="UnplannedMaintenanceLineContextChange1" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
   <data name="UnplannedMaintenanceLineContextDelete" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
+  <data name="UnplannedMaintenanceLineContextDelete1" xml:space="preserve">
     <value>Line Delete</value>
   </data>
   <data name="UnplannedMaintenanceLineContextRefresh" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
+  <data name="UnplannedMaintenanceLineContextRefresh1" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="UnSelectAllText" xml:space="preserve">
+    <value>Unselect All Text</value>
+  </data>
   <data name="UnsItemsChildMenu" xml:space="preserve">
+    <value>Unsuitability Items</value>
+  </data>
+  <data name="UnsItemsChildMenu1" xml:space="preserve">
     <value>Unsuitability Items</value>
   </data>
   <data name="UnsRecordsMenu" xml:space="preserve">
     <value>Unsuitability Records</value>
   </data>
+  <data name="UnsRecordsMenu1" xml:space="preserve">
+    <value>Unsuitability Records</value>
+  </data>
   <data name="UnsTypesItemsChildMenu" xml:space="preserve">
+    <value>Unsuitability Type Items</value>
+  </data>
+  <data name="UnsTypesItemsChildMenu1" xml:space="preserve">
     <value>Unsuitability Type Items</value>
   </data>
   <data name="UnsuitabilityItemContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="UnsuitabilityItemContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="UnsuitabilityItemContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="UnsuitabilityItemContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="UnsuitabilityItemContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="UnsuitabilityItemContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="UnsuitabilityItemContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="UnsuitabilityItemContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="UnsuitabilityItemSPCContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="UnsuitabilityItemSPCContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="UnsuitabilityItemSPCContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="UnsuitabilityItemSPCContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="UnsuitabilityItemSPCContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="UnsuitabilityItemSPCContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="UnsuitabilityItemSPCContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="UnsuitabilityItemSPCContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="UnsuitabilityItemSPCLineContextAdd" xml:space="preserve">
     <value>Line Add</value>
   </data>
+  <data name="UnsuitabilityItemSPCLineContextAdd1" xml:space="preserve">
+    <value>Line Add</value>
+  </data>
   <data name="UnsuitabilityItemSPCLineContextChange" xml:space="preserve">
+    <value>Line Change</value>
+  </data>
+  <data name="UnsuitabilityItemSPCLineContextChange1" xml:space="preserve">
     <value>Line Change</value>
   </data>
   <data name="UnsuitabilityItemSPCLineContextDelete" xml:space="preserve">
     <value>Line Delete</value>
   </data>
+  <data name="UnsuitabilityItemSPCLineContextDelete1" xml:space="preserve">
+    <value>Line Delete</value>
+  </data>
   <data name="UnsuitabilityItemSPCLineContextRefresh" xml:space="preserve">
+    <value>Line Refresh</value>
+  </data>
+  <data name="UnsuitabilityItemSPCLineContextRefresh1" xml:space="preserve">
     <value>Line Refresh</value>
   </data>
   <data name="UnsuitabilityItemSPSChildMenu" xml:space="preserve">
     <value>SPC Tables by Unsuitability Items</value>
   </data>
+  <data name="UnsuitabilityItemSPSChildMenu1" xml:space="preserve">
+    <value>SPC Tables by Unsuitability Items</value>
+  </data>
   <data name="UnsuitabilityItemSPSComparingChildMenu" xml:space="preserve">
+    <value>SPC by Unsuitability Items Comparing</value>
+  </data>
+  <data name="UnsuitabilityItemSPSComparingChildMenu1" xml:space="preserve">
     <value>SPC by Unsuitability Items Comparing</value>
   </data>
   <data name="UnsuitabilityTypesItemContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="UnsuitabilityTypesItemContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="UnsuitabilityTypesItemContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="UnsuitabilityTypesItemContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="UnsuitabilityTypesItemContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="UnsuitabilityTypesItemContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="UnsuitabilityTypesItemContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="UnsuitabilityTypesItemContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
+  <data name="UpdateControlManager1" xml:space="preserve">
+    <value>There is a record with the same code.</value>
+  </data>
   <data name="UserContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="UserContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="UserContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="UserContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="UserContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="UserContextDelete1" xml:space="preserve">
     <value>Delete</value>
   </data>
   <data name="UserContextPermission" xml:space="preserve">
     <value>User Permissions</value>
   </data>
+  <data name="UserContextPermission1" xml:space="preserve">
+    <value>User Permissions</value>
+  </data>
   <data name="UserContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="UserContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="UserGroupContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="UserGroupContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="UserGroupContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="UserGroupContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="UserGroupContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="UserGroupContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="UserGroupContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="UserGroupContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="UserGroupModalGridCode" xml:space="preserve">
     <value>USER GROUP CODE</value>
   </data>
+  <data name="UserGroupModalGridCode1" xml:space="preserve">
+    <value>USER GROUP CODE</value>
+  </data>
   <data name="UserGroupModalGridName" xml:space="preserve">
+    <value>USER GROUP NAME</value>
+  </data>
+  <data name="UserGroupModalGridName1" xml:space="preserve">
     <value>USER GROUP NAME</value>
   </data>
   <data name="UserGroupModalTitle" xml:space="preserve">
     <value>User Groups</value>
   </data>
+  <data name="UserGroupModalTitle1" xml:space="preserve">
+    <value>User Groups</value>
+  </data>
   <data name="UserGrpChildMenu" xml:space="preserve">
+    <value>User Groups</value>
+  </data>
+  <data name="UserGrpChildMenu1" xml:space="preserve">
     <value>User Groups</value>
   </data>
   <data name="UserName" xml:space="preserve">
     <value>USER NAME</value>
   </data>
+  <data name="UserName1" xml:space="preserve">
+    <value>USER NAME</value>
+  </data>
   <data name="UserNameLabel" xml:space="preserve">
+    <value>User Name:</value>
+  </data>
+  <data name="UserNameLabel1" xml:space="preserve">
     <value>User Name:</value>
   </data>
   <data name="UsersChildMenu" xml:space="preserve">
     <value>Users</value>
   </data>
+  <data name="UsersChildMenu1" xml:space="preserve">
+    <value>Users</value>
+  </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the user code.</value>
+  </data>
+  <data name="ValidatorCodeEmpty1" xml:space="preserve">
     <value>Please enter the user code.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
     <value>User code cannot exceed 17 characters.</value>
   </data>
+  <data name="ValidatorCodeMaxLenght1" xml:space="preserve">
+    <value>User code cannot exceed 17 characters.</value>
+  </data>
   <data name="ValidatorNameSurnameEmpty" xml:space="preserve">
+    <value>Please enter the name and surname.</value>
+  </data>
+  <data name="ValidatorNameSurnameEmpty1" xml:space="preserve">
     <value>Please enter the name and surname.</value>
   </data>
   <data name="ValidatorNameSurnameMaxLength" xml:space="preserve">
     <value>Name and surname cannot exceed 300 characters.</value>
   </data>
+  <data name="ValidatorNameSurnameMaxLength1" xml:space="preserve">
+    <value>Name and surname cannot exceed 300 characters.</value>
+  </data>
   <data name="ValidatorUserGroupID" xml:space="preserve">
+    <value>Please select a user group.</value>
+  </data>
+  <data name="ValidatorUserGroupID1" xml:space="preserve">
     <value>Please select a user group.</value>
   </data>
   <data name="ValidatorUserNameEmpty" xml:space="preserve">
     <value>Please enter the user name.</value>
   </data>
+  <data name="ValidatorUserNameEmpty1" xml:space="preserve">
+    <value>Please enter the user name.</value>
+  </data>
   <data name="ValidatorUserNameMaxLenght" xml:space="preserve">
+    <value>User name cannot exceed 300 characters.</value>
+  </data>
+  <data name="ValidatorUserNameMaxLenght1" xml:space="preserve">
     <value>User name cannot exceed 300 characters.</value>
   </data>
   <data name="WarehouseContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="WarehouseContextAdd1" xml:space="preserve">
+    <value>Add</value>
+  </data>
   <data name="WarehouseContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="WarehouseContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="WarehouseContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="WarehouseContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="WarehouseContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="WarehouseContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="WarehousesChildMenu" xml:space="preserve">
     <value>Warehouses</value>
   </data>
+  <data name="WarehousesChildMenu1" xml:space="preserve">
+    <value>Warehouses</value>
+  </data>
   <data name="WorkOrderContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="WorkOrderContextAdd1" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="WorkOrderContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="WorkOrderContextChange1" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="WorkOrderContextChangeOperationCriteria" xml:space="preserve">
+    <value>Change Operation Criteria</value>
+  </data>
+  <data name="WorkOrderContextChangeStation" xml:space="preserve">
+    <value>Change Station</value>
+  </data>
+  <data name="WorkOrderContextContractTracking" xml:space="preserve">
+    <value>Contract Tracking</value>
+  </data>
   <data name="WorkOrderContextDelete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="WorkOrderContextDelete1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="WorkOrderContextProductionTracking" xml:space="preserve">
+    <value>Production Tracking</value>
   </data>
   <data name="WorkOrderContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="WorkOrderContextRefresh1" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="WorkOrderContextSplitWorkOrder" xml:space="preserve">
+    <value>Split the Work Order Into Pieces</value>
+  </data>
   <data name="WorkOrderListChildMenu" xml:space="preserve">
     <value>Work Orders List</value>
   </data>
+  <data name="WorkOrderListChildMenu1" xml:space="preserve">
+    <value>Work Orders List</value>
+  </data>
   <data name="WorkOrdersChildMenu" xml:space="preserve">
+    <value>Work Orders</value>
+  </data>
+  <data name="WorkOrdersChildMenu1" xml:space="preserve">
     <value>Work Orders</value>
   </data>
 </root>

@@ -289,7 +289,7 @@
     <value>Güncelle</value>
   </data>
   <data name="ProductsOperationLineContextAdd" xml:space="preserve">
-    <value>Ekle</value>
+    <value> Ekle</value>
   </data>
   <data name="ProductsOperationLineContextChange" xml:space="preserve">
     <value>Değiştir</value>

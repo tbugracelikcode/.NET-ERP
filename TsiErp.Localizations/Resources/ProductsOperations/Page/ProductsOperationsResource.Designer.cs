@@ -575,7 +575,7 @@ namespace TsiErp.Localizations.Resources.ProductsOperations.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
+        ///   Looks up a localized string similar to  Ekle.
         /// </summary>
         public static string ProductsOperationLineContextAdd {
             get {

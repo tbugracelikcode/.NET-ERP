@@ -171,6 +171,9 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="StockSectionsChildMenu" xml:space="preserve">
+    <value>Stock Sections</value>
+  </data>
   <data name="StockSectionsContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>

@@ -180,6 +180,9 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="ProdOrderChangeRecordsChildMenu" xml:space="preserve">
+    <value>Üretim Emri Değişiklik Kayıtları</value>
+  </data>
   <data name="ProductCode" xml:space="preserve">
     <value>STOK KODU</value>
   </data>

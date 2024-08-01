@@ -132,6 +132,9 @@
   <data name="BankAccountNameLabel" xml:space="preserve">
     <value>Banka Hesap Adı:</value>
   </data>
+  <data name="BankAccountsChildMenu" xml:space="preserve">
+    <value>Banka Hesapları</value>
+  </data>
   <data name="BankAccountsContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
