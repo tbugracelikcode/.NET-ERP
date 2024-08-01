@@ -90,6 +90,10 @@
                                         <SfButton OnClick=@GetHaltReasonsIsManagement CssClass="TSIOperationPageAdjustmentButton">Yönetim Kaynaklı Duruşlar</SfButton>
                                     </td>
 
+                                    <td style="width:20%">
+                                        <SfButton OnClick=@GetHaltReasonsIsIncidental CssClass="TSIOperationPageAdjustmentButton">Plansız/Arızi Duruşlar</SfButton>
+                                    </td>
+
                                 </tr>
                             </table>
                         </CardContent>
@@ -129,21 +133,43 @@
 
                                             @foreach (var item in HaltReasonsList)
                                             {
-                                                <div id="card_sample_1" class="card_sample" onclick="@(()=>OnSelectHaltReason(item))" style=" float:left;width: 270px;">
-                                                    <SfCard CssClass="TSIStationCards">
-                                                        <div style="background-color:#00ff14">
-                                                            <br>
-                                                            <center> <CardHeader Title="@item.Name" /></center>
-                                                            <CardContent>
-                                                                <ChildContent>
-                                                                </ChildContent>
-                                                            </CardContent>
+                                                if (!item.IsIncidentalHalt)
+                                                {
+                                                    <div id="card_sample_1" class="card_sample" onclick="@(()=>OnSelectHaltReason(item))" style=" float:left;width: 270px;">
+                                                        <SfCard CssClass="TSIStationCards">
+                                                            <div style="background-color:#00ff14">
+                                                                <br>
+                                                                <center> <CardHeader Title="@item.Name" /></center>
+                                                                <CardContent>
+                                                                    <ChildContent>
+                                                                    </ChildContent>
+                                                                </CardContent>
 
-                                                            <CardFooter>
-                                                            </CardFooter>
-                                                        </div>
-                                                    </SfCard>
-                                                </div>
+                                                                <CardFooter>
+                                                                </CardFooter>
+                                                            </div>
+                                                        </SfCard>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div id="card_sample_1" class="card_sample" onclick="@(()=>OnSelectIncidentalHaltReason(item))" style=" float:left;width: 270px;">
+                                                        <SfCard CssClass="TSIStationCards">
+                                                            <div style="background-color:#00ff14">
+                                                                <br>
+                                                                <center> <CardHeader Title="@item.Name" /></center>
+                                                                <CardContent>
+                                                                    <ChildContent>
+                                                                    </ChildContent>
+                                                                </CardContent>
+
+                                                                <CardFooter>
+                                                                </CardFooter>
+                                                            </div>
+                                                        </SfCard>
+                                                    </div>
+                                                }
+
                                             }
                                         </Template>
                                     </DxGridLayoutItem>
@@ -160,3 +186,43 @@
         </Items>
     </DxGridLayout>
 </div>
+
+<DxPopup @bind-Visible="isPasswordVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Parola"
+         Width="22%"
+         Height="20%"
+         MinWidth="380px"
+         MinHeight="220px"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+
+        <DxGridLayout CssClass="TSIGridLayout">
+            <Rows>
+                <DxGridLayoutRow Height="90%" />
+            </Rows>
+            <Columns>
+                <DxGridLayoutColumn Width="2%" />
+                <DxGridLayoutColumn Width="96%" />
+                <DxGridLayoutColumn Width="2%" />
+            </Columns>
+            <Items>
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <br />
+                        <label class="TSIModalLabel"><strong>Parola: </strong></label>
+
+                        <SfTextBox @bind-Value="@password" Type="Syncfusion.Blazor.Inputs.InputType.Password"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+               
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSISaveButton" OnClick="OnPasswordSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HidePasswordModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+    </FooterContentTemplate>
+</DxPopup>

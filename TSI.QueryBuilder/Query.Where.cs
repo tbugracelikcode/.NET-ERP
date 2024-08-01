@@ -97,9 +97,9 @@ namespace TSI.QueryBuilder
                 }
             }
 
+            querySQL.Sql = where;
             WhereHelper.WhereQueryList(querySQL);
             //WhereSentence = where;
-            querySQL.Sql = where;
             WhereSentence = querySQL.Sql;
 
 

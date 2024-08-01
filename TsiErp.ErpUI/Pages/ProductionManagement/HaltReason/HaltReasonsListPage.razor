@@ -58,6 +58,8 @@
                                         </GridColumn>
                                         <GridColumn Field=@nameof(ListHaltReasonsDto.IsManagement) DisplayAsCheckBox="true" HeaderText="@L["IsManagement"]" TextAlign="TextAlign.Center" Width="170">
                                         </GridColumn>
+                                            <GridColumn Field=@nameof(ListHaltReasonsDto.IsIncidentalHalt) DisplayAsCheckBox="true" HeaderText="@L["IsIncidentalHalt"]" TextAlign="TextAlign.Center" Width="170">
+                                        </GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>
@@ -145,7 +147,16 @@
                                 <br />
                                 <center>
                                     <label class="TSIModalLabel"><strong>@L["IsPlannedLabel"] </strong></label><br />
-                                    <SfSwitch @bind-Checked="DataSource.IsPlanned"></SfSwitch>
+                                    <SfSwitch Disabled="isPlannedDisabled" TChecked="bool" ValueChange="IsPlannedSwitchValueChange" @bind-Checked="DataSource.IsPlanned"></SfSwitch>
+                                </center>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="2" Column="3">
+                            <Template>
+                                <br />
+                                <center>
+                                    <label class="TSIModalLabel"><strong>@L["IsIncidentalHaltLabel"] </strong></label><br />
+                                    <SfSwitch Disabled="isIncidentalDisabled" TChecked="bool" ValueChange="IsIncidentalSwitchValueChange" @bind-Checked="DataSource.IsIncidentalHalt"></SfSwitch>
                                 </center>
                             </Template>
                         </DxGridLayoutItem>

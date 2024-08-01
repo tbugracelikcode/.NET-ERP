@@ -156,6 +156,12 @@
   <data name="HaltReasonContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="IsIncidentalHalt" xml:space="preserve">
+    <value>INCIDENTAL HALT</value>
+  </data>
+  <data name="IsIncidentalHaltLabel" xml:space="preserve">
+    <value>Incidental Halt:</value>
+  </data>
   <data name="IsMachine" xml:space="preserve">
     <value>CAUSED BY MACHINE</value>
   </data>
