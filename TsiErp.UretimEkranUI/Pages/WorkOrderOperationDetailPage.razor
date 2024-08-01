@@ -93,11 +93,11 @@
 
                                     <td style="width:20%">
 
-                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ProducedQuantityAdded" Disabled=EndOperationButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.Bullet5"></SfIcon>&nbsp;Bitir</SfButton>
+                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="EndOperationButtonClicked" Disabled=EndOperationButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.Bullet5"></SfIcon>&nbsp;Bitir</SfButton>
                                     </td>
 
                                     <td style="width:20%">
-                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ProducedQuantityAdded" Disabled=ScrapQuantityButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.CircleClose"></SfIcon>&nbsp;Hurda Adet Gir</SfButton>
+                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ScrapQuantityEntryButtonClicked" Disabled=ScrapQuantityButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.CircleClose"></SfIcon>&nbsp;Hurda Adet Gir</SfButton>
                                     </td>
                                 </tr>
                             </table>
@@ -124,18 +124,18 @@
                                     </td>
 
                                     <td style="width:20%">
-                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ProducedQuantityAdded" Disabled=ChangeShiftButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.ChangesTrack"></SfIcon>&nbsp;Vardiya Değiştir</SfButton>
-                                    </td>
-
-                                    <td style="width:20%">
                                         <SfButton CssClass="TSIOperationDetailButton" OnClick="ProducedQuantityAdded" Disabled=ChangeCaseButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.TwoRow"></SfIcon>&nbsp;Kasa Değiştir</SfButton>
                                     </td>
 
                                     <td style="width:20%">
+                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ProducedQuantityAdded"><SfIcon Size="IconSize.Large" Name="IconName.Image"></SfIcon>&nbsp;Teknik Resimler</SfButton>
                                     </td>
 
                                     <td style="width:20%">
-                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ProducedQuantityAdded"><SfIcon Size="IconSize.Large" Name="IconName.Image"></SfIcon>&nbsp;Teknik Resimler</SfButton>
+                                    </td>
+
+                                    <td style="width:20%">
+                                       
                                     </td>
                                 </tr>
                             </table>
@@ -477,6 +477,46 @@
             <div style=" height: 105%;background-color: white !important;width: 100%;text-align: end;">
                 <SfButton Disabled=@EndHaltReasonButtonDisable OnClick=@EndHaltReasonButtonClick CssClass="TSIOperationPageAdjustmentButton">Duruşu Bitir</SfButton>
             </div>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="ScrapQuantityEntryModalVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="Hurda Adet Gir"
+             Width="22%"
+             Height="20%"
+             MinWidth="380px"
+             MinHeight="220px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="90%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
+                </Columns>
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Hurda Adet: </strong></label>
+
+                            <SfNumericTextBox @bind-Value="@scrapQuantity"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="ScrapQuantityEntryOnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideScrapQuantityEntryModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 </div>

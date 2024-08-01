@@ -34,5 +34,9 @@ namespace TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos
         /// Yönetim Kaynaklı mı?
         /// </summary>
         public bool IsManagement { get; set; }
+        /// <summary>
+        /// Arızi Duruş
+        /// </summary>
+        public bool IsIncidentalHalt { get; set; }
     }
 }

@@ -156,6 +156,12 @@
   <data name="HaltReasonContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="IsIncidentalHalt" xml:space="preserve">
+    <value>ARIZİ DURUŞ</value>
+  </data>
+  <data name="IsIncidentalHaltLabel" xml:space="preserve">
+    <value>Arızi Duruş:</value>
+  </data>
   <data name="IsMachine" xml:space="preserve">
     <value>MAKİNE KAYNAKLI</value>
   </data>

@@ -36,5 +36,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.HaltReason
         /// Yönetim Kaynaklı mı?
         /// </summary>
         public bool IsManagement { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Arızi Duruş
+        /// </summary>
+        public bool IsIncidentalHalt { get; set; }
     }
 }
