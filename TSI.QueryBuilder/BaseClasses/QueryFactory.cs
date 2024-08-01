@@ -358,27 +358,45 @@ namespace TSI.QueryBuilder.BaseClasses
                 if (command != null)
                 {
 
+                    var whereQueries = WhereHelper.WhereQueries;
+
                     query.Sql = query.Sql + " where " + query.WhereSentence;
 
                     command.CommandText = query.Sql;
+
+                    if (whereQueries.Count > 0)
+                    {
+                        foreach (var item in whereQueries[0].ParameterList)
+                        {
+                            var parameter = command.CreateParameter();
+                            parameter.ParameterName = item.Key;
+                            parameter.Value = item.Value ?? DBNull.Value;
+                            command.Parameters.Add(parameter);
+                        }
+                    }
 
                     query.SqlResult = command.ExecuteReader().DataReaderMapToList<T>();
 
                     query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
+                    WhereHelper.WhereQueries.Clear();
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
+
                     return query.SqlResult as IEnumerable<T>;
                 }
                 else
                 {
-                    Connection.Close();
-                    Connection.Dispose();
-                    GC.Collect();
+                    WhereHelper.WhereQueries.Clear();
+                   
 
                     return null;
                 }
             }
             catch (Exception exp)
             {
+                WhereHelper.WhereQueries.Clear();
                 Connection.Close();
                 Connection.Dispose();
                 GC.Collect();
@@ -590,6 +608,10 @@ namespace TSI.QueryBuilder.BaseClasses
                         {
                             foreach (var item in updateQueries[0].ParameterList)
                             {
+                                if(item.Key == "@Id")
+                                {
+                                    continue;
+                                }
                                 var parameter = command.CreateParameter();
                                 parameter.ParameterName = item.Key;
                                 parameter.Value = item.Value ?? DBNull.Value;
@@ -601,6 +623,10 @@ namespace TSI.QueryBuilder.BaseClasses
                         {
                             foreach (var item in whereQueries[0].ParameterList)
                             {
+                                if (item.Key == "@Id")
+                                {
+                                    continue;
+                                }
                                 var parameter = command.CreateParameter();
                                 parameter.ParameterName = item.Key;
                                 parameter.Value = item.Value ?? DBNull.Value;

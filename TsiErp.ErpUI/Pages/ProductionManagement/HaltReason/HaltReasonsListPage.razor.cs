@@ -19,6 +19,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.HaltReason
         public bool isMachineDisabled = false;
         public bool isOperatorDisabled = false;
         public bool isManagementDisabled = false;
+        public bool isPlannedDisabled = false;
+        public bool isIncidentalDisabled = false;
 
         protected override async void OnInitialized()
         {
@@ -132,6 +134,40 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.HaltReason
                 isMachineDisabled = false;
                 isManagementDisabled = false;
                 DataSource.IsManagement = false;
+            }
+        }
+
+        private void IsPlannedSwitchValueChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (args.Checked)
+            {
+                DataSource.IsPlanned = true;
+                isPlannedDisabled = false;
+                DataSource.IsIncidentalHalt = false;
+                isIncidentalDisabled = true;
+            }
+            else
+            {
+                DataSource.IsPlanned = false;
+                isPlannedDisabled = false;
+                isIncidentalDisabled = false;
+            }
+        }
+
+        private void IsIncidentalSwitchValueChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (args.Checked)
+            {
+                DataSource.IsIncidentalHalt = true;
+                isIncidentalDisabled = false;
+                DataSource.IsPlanned = false;
+                isPlannedDisabled = true;
+            }
+            else
+            {
+                DataSource.IsIncidentalHalt = false;
+                isIncidentalDisabled = false;
+                isPlannedDisabled = false;
             }
         }
 

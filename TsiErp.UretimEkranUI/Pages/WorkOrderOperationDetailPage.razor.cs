@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Syncfusion.Blazor.Inputs;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,9 @@ namespace TsiErp.UretimEkranUI.Pages
 
         #region Button Disable Properties
         public bool StartOperationButtonDisabled { get; set; } = false;
-        public bool PauseOperationButtonDisabled { get; set; } = false;
-        public bool EndOperationButtonDisabled { get; set; } = false;
-        public bool ScrapQuantityButtonDisabled { get; set; } = false;
+        public bool PauseOperationButtonDisabled { get; set; } = true;
+        public bool EndOperationButtonDisabled { get; set; } = true;
+        public bool ScrapQuantityButtonDisabled { get; set; } = true;
         public bool ChangeOperationButtonDisabled { get; set; } = false;
         public bool ChangeShiftButtonDisabled { get; set; } = false;
         public bool ChangeCaseButtonDisabled { get; set; } = false;
@@ -31,11 +32,15 @@ namespace TsiErp.UretimEkranUI.Pages
 
         public decimal QualityPercent { get; set; } = 0;
 
+        public bool ScrapQuantityEntryModalVisible = false;
+
+        public decimal scrapQuantity = 0;
+
         protected override async void OnInitialized()
         {
             var totalAdjusmentTime = (await OperationAdjustmentAppService.GetTotalAdjustmentTimeAsync(AppService.CurrentOperation.WorkOrderID));
 
-            if(totalAdjusmentTime > 0)
+            if (totalAdjusmentTime > 0)
             {
                 TimeSpan time = TimeSpan.FromSeconds(totalAdjusmentTime);
 
@@ -70,12 +75,17 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             FirstProducedQuantity = AppService.CurrentOperation.ProducedQuantity;
 
+            ScrapQuantityButtonDisabled = false;
+            EndOperationButtonDisabled = false;
+            PauseOperationButtonDisabled = false;
+            StartOperationButtonDisabled = true;
+
             StartOperationTimer();
 
             await InvokeAsync(StateHasChanged);
         }
 
-    
+
         public void IncreaseQuantity()
         {
             AppService.CurrentOperation.ProducedQuantity = AppService.CurrentOperation.ProducedQuantity + 1;
@@ -105,6 +115,68 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             operationStartTimer.Stop();
             operationStartTimer.Enabled = false;
+        }
+
+        #endregion
+
+        #region End Operation
+
+        public async void EndOperationButtonClicked()
+        {
+            var plannedQuantity = AppService.CurrentOperation.PlannedQuantity;
+            var producedQuantity = AppService.CurrentOperation.ProducedQuantity;
+            var scrapQuantity = AppService.CurrentOperation.ScrapQuantity;
+
+            if (plannedQuantity == producedQuantity + scrapQuantity)
+            {
+                if (plannedQuantity > producedQuantity)
+                {
+                    ScrapQuantityEntryModalVisible = true;
+                }
+
+                OperationStartTimerDispose();
+
+                TotalOperationTime = "0:0:0";
+
+                ScrapQuantityButtonDisabled = true;
+                PauseOperationButtonDisabled = true;
+                EndOperationButtonDisabled = true;
+                StartOperationButtonDisabled = false;
+
+                AppService.CurrentOperation.PlannedQuantity = 0;
+                AppService.CurrentOperation.ProducedQuantity = 0;
+                AppService.CurrentOperation.ScrapQuantity = 0;
+            }
+
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        #endregion
+
+        #region Scrap Quantity Entry 
+
+        public async void ScrapQuantityEntryButtonClicked()
+        {
+            ScrapQuantityEntryModalVisible = true;
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void ScrapQuantityEntryOnSubmit()
+        {
+            AppService.CurrentOperation.ScrapQuantity = scrapQuantity;
+
+            // Miktar girişi ve girilen hurda için oto Operasyon Uygunsuzluk Kaydı açma kodu
+
+            HideScrapQuantityEntryModal();
+
+            await InvokeAsync(StateHasChanged); 
+        }
+
+        public void HideScrapQuantityEntryModal()
+        {
+            ScrapQuantityEntryModalVisible = false;
         }
 
         #endregion
@@ -163,12 +235,12 @@ namespace TsiErp.UretimEkranUI.Pages
             InvokeAsync(StateHasChanged);
         }
 
-        public void OperationStartDispose()
+        public void OperationStartTimerDispose()
         {
             if (operationStartTimer != null)
             {
-               operationStartTimer.Stop();
-               operationStartTimer.Enabled = false;
+                operationStartTimer.Stop();
+                operationStartTimer.Enabled = false;
                 operationStartTimer.Dispose();
             }
         }
@@ -201,7 +273,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
             if (time.Minutes == (((AppService.ProgramParameters.HaltTriggerSecond) / 1000) / 60))
             {
-                
+
                 HaltReasonModalVisible = true;
                 StartHaltReasonTimer();
                 _systemIdleTimer.Stop();
@@ -322,7 +394,7 @@ namespace TsiErp.UretimEkranUI.Pages
                  0);
             SelectedHaltReason = new ListHaltReasonsDto();
             TotalSystemIdleTime = 0;
-            
+
 
             HaltReasonModalVisible = false;
 
@@ -342,7 +414,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
         }
 
-       
+
 
         public void Dispose()
         {

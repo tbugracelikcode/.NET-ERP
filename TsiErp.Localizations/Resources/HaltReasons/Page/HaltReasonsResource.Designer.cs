@@ -178,6 +178,24 @@ namespace TsiErp.Localizations.Resources.HaltReasons.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ARIZİ DURUŞ.
+        /// </summary>
+        public static string IsIncidentalHalt {
+            get {
+                return ResourceManager.GetString("IsIncidentalHalt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arızi Duruş:.
+        /// </summary>
+        public static string IsIncidentalHaltLabel {
+            get {
+                return ResourceManager.GetString("IsIncidentalHaltLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MAKİNE KAYNAKLI.
         /// </summary>
         public static string IsMachine {
