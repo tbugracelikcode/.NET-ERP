@@ -168,6 +168,9 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="StockShelfsChildMenu" xml:space="preserve">
+    <value>Stock Shelfs</value>
+  </data>
   <data name="StockShelfsContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>

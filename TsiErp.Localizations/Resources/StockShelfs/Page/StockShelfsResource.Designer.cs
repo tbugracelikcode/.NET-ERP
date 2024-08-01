@@ -223,6 +223,15 @@ namespace TsiErp.Localizations.Resources.StockShelfs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok Rafları.
+        /// </summary>
+        public static string StockShelfsChildMenu {
+            get {
+                return ResourceManager.GetString("StockShelfsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string StockShelfsContextAdd {

@@ -377,6 +377,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrdersAwaitingApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Onay Bekleyen Satın Alma Siparişleri.
+        /// </summary>
+        public static string Purchase_Orders_Awaiting_Approval {
+            get {
+                return ResourceManager.GetString("Purchase Orders Awaiting Approval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SİPARİŞ TARİHİ.
         /// </summary>
         public static string PurchaseOrderDate {

@@ -126,6 +126,9 @@
   <data name="BigCityIsLabel" xml:space="preserve">
     <value>Büyük Şehir:</value>
   </data>
+  <data name="CitiesChildMenu" xml:space="preserve">
+    <value>Şehirler</value>
+  </data>
   <data name="CitiesContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>

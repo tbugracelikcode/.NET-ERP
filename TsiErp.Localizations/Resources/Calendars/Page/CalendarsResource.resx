@@ -120,6 +120,9 @@
   <data name="AmountLineLabel" xml:space="preserve">
     <value>Miktar:</value>
   </data>
+  <data name="CalendarChildMenu" xml:space="preserve">
+    <value>Çalışma Takvimi</value>
+  </data>
   <data name="CalendarContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>

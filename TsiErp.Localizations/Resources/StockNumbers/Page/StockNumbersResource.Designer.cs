@@ -223,6 +223,15 @@ namespace TsiErp.Localizations.Resources.StockNumbers.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok Numaraları.
+        /// </summary>
+        public static string StockNumbersChildMenu {
+            get {
+                return ResourceManager.GetString("StockNumbersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string StockNumbersContextAdd {

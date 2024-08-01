@@ -304,6 +304,15 @@ namespace TsiErp.Localizations.Resources.StockAdresses.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok Adresleri.
+        /// </summary>
+        public static string StockAddressesChildMenu {
+            get {
+                return ResourceManager.GetString("StockAddressesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string StockAddressesContextAdd {

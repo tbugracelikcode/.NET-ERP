@@ -141,6 +141,9 @@
   <data name="ContinentLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ContinentsChildMenu" xml:space="preserve">
+    <value>Continents</value>
+  </data>
   <data name="ContinentsContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>

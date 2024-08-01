@@ -34,6 +34,10 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.User.Dtos
         /// </summary>
         public string Password { get; set; }
         /// <summary>
+        /// Grup ID
+        /// </summary>
+        public Guid GroupID { get; set; }
+        /// <summary>
         ///  Grup Adı
         /// </summary>
         public string GroupName { get; set; }

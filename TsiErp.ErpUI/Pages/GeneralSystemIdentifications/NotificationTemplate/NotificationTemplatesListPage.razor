@@ -14,6 +14,7 @@
 @inject IMenusAppService MenusAppService
 @inject IDepartmentsAppService DepartmentsAppService
 @inject IUsersAppService UsersAppService
+@inject IUserGroupsAppService UserGroupsAppService
 
 @if (!base.IsLoaded)
 {
@@ -119,8 +120,8 @@ else
                         <Template>
 
                             <label class="TSIModalLabel"><strong>@L["ModuleName_Label"] </strong></label>
-                            <SfComboBox TValue="string" TItem="ListMenusDto" PopupHeight="230px"  DataSource="@ModuleList">
-                                <ComboBoxEvents TItem="ListMenusDto" TValue="string" ValueChange="@ModuleNameValueChangeHandler"></ComboBoxEvents>
+                            <SfComboBox TValue="string" TItem="ModuleClass" PopupHeight="230px"  DataSource="@ModuleList">
+                                <ComboBoxEvents TItem="ModuleClass" TValue="string" ValueChange="@ModuleNameValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Text="MenuName" Value="Id" />
                             </SfComboBox>
                         </Template>
@@ -162,7 +163,7 @@ else
                                                 </ItemTemplate>
                                             </MultiSelectTemplates> *@
                                 <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
-                                <MultiSelectEvents TItem="ListDepartmentsDto" TValue="List<Guid>" ValueChange="@TargetDepartmentValueChangeHandler"></MultiSelectEvents>
+                                <MultiSelectEvents TItem="ListUserGroupsDto" TValue="List<Guid>" ValueChange="@TargetDepartmentValueChangeHandler"></MultiSelectEvents>
                                         </SfMultiSelect>
                         </Template>
                     </DxGridLayoutItem>
@@ -188,7 +189,7 @@ else
                                     </span>
                                 </ItemTemplate>
                                 </MultiSelectTemplates> *@
-                                <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                <MultiSelectFieldSettings Text="UserName" Value="Id"></MultiSelectFieldSettings>
                             </SfMultiSelect>
                         </Template>
                     </DxGridLayoutItem>
@@ -205,18 +206,34 @@ else
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ContextMenuName_Label"] </strong></label>
-                            <SfComboBox TValue="string" TItem="SelectMenusDto" DataSource="@ModuleContextsList">
-                                <ComboBoxEvents TItem="SelectMenusDto" TValue="string" ValueChange="@ModuleContextValueChangeHandler"></ComboBoxEvents>
+                            <SfComboBox TValue="string" TItem="ModuleContextClass" DataSource="@ModuleContextsList">
+                                <ComboBoxEvents TItem="ModuleContextClass" TValue="string" ValueChange="@ModuleContextValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="Id" Text="MenuName"></ComboBoxFieldSettings>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
 
+                     <DxGridLayoutItem Row="3" Column="5" >
+                        <Template>
 
-                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="5">
+                            <table style="height:100%">
+                                <tr style="height:100%">
+                                    <td>
+                                        <center>
+                                            <SfButton CssClass="TSISaveButton" OnClick="ShowSQLCommandClick"><SfIcon Size="IconSize.Medium" Name="IconName.PrintLayout"></SfIcon>&nbsp;@L["SQLCommandButton"]</SfButton>
+                                        </center>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["QueryStrLabel"] </strong></label><br />
-                            <SfTextBox Enabled=false CssClass="TSIMemoBox100" @bind-Value="DataSource.QueryStr"></SfTextBox>
+                            <SfTextBox Multiline="true" Enabled=false CssClass="TSIMemoBox90" @bind-Value="DataSource.QueryStr"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                 </Items>

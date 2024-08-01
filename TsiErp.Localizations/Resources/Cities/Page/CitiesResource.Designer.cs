@@ -88,6 +88,15 @@ namespace TsiErp.Localizations.Resources.Cities.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Şehirler.
+        /// </summary>
+        public static string CitiesChildMenu {
+            get {
+                return ResourceManager.GetString("CitiesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string CitiesContextAdd {
