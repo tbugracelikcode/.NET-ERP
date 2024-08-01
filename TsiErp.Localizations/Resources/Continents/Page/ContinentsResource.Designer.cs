@@ -133,6 +133,15 @@ namespace TsiErp.Localizations.Resources.Continents.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kıtalar.
+        /// </summary>
+        public static string ContinentsChildMenu {
+            get {
+                return ResourceManager.GetString("ContinentsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ContinentsContextAdd {

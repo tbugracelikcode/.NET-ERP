@@ -70,11 +70,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string _8DContextAdd1 {
+            get {
+                return ResourceManager.GetString("8DContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri İçin 8D Raporu Ekle.
         /// </summary>
         public static string _8DContextAddforCustomer {
             get {
                 return ResourceManager.GetString("8DContextAddforCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteri İçin 8D Raporu Ekle.
+        /// </summary>
+        public static string _8DContextAddforCustomer1 {
+            get {
+                return ResourceManager.GetString("8DContextAddforCustomer1", resourceCulture);
             }
         }
         
@@ -88,11 +106,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tedarikçi İçin 8D Raporu Ekle.
+        /// </summary>
+        public static string _8DContextAddforSupplier1 {
+            get {
+                return ResourceManager.GetString("8DContextAddforSupplier1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string _8DContextChange {
             get {
                 return ResourceManager.GetString("8DContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string _8DContextChange1 {
+            get {
+                return ResourceManager.GetString("8DContextChange1", resourceCulture);
             }
         }
         
@@ -106,11 +142,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string _8DContextDelete1 {
+            get {
+                return ResourceManager.GetString("8DContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string _8DContextRefresh {
             get {
                 return ResourceManager.GetString("8DContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string _8DContextRefresh1 {
+            get {
+                return ResourceManager.GetString("8DContextRefresh1", resourceCulture);
             }
         }
         
@@ -124,11 +178,74 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 8D Raporunu Tamamla.
+        /// </summary>
+        public static string _8DContextState1 {
+            get {
+                return ResourceManager.GetString("8DContextState1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banka Hesapları.
+        /// </summary>
+        public static string BankAccountsChildMenu {
+            get {
+                return ResourceManager.GetString("BankAccountsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string BankAccountsContextAdd {
+            get {
+                return ResourceManager.GetString("BankAccountsContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string BankAccountsContextChange {
+            get {
+                return ResourceManager.GetString("BankAccountsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string BankAccountsContextDelete {
+            get {
+                return ResourceManager.GetString("BankAccountsContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string BankAccountsContextRefresh {
+            get {
+                return ResourceManager.GetString("BankAccountsContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Reçeteleri.
         /// </summary>
         public static string BOMChildMenu {
             get {
                 return ResourceManager.GetString("BOMChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Reçeteleri.
+        /// </summary>
+        public static string BOMChildMenu1 {
+            get {
+                return ResourceManager.GetString("BOMChildMenu1", resourceCulture);
             }
         }
         
@@ -142,11 +259,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string BoMContextAdd1 {
+            get {
+                return ResourceManager.GetString("BoMContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string BoMContextChange {
             get {
                 return ResourceManager.GetString("BoMContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string BoMContextChange1 {
+            get {
+                return ResourceManager.GetString("BoMContextChange1", resourceCulture);
             }
         }
         
@@ -160,11 +295,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string BoMContextDelete1 {
+            get {
+                return ResourceManager.GetString("BoMContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reçete İncele.
         /// </summary>
         public static string BoMContextExamine {
             get {
                 return ResourceManager.GetString("BoMContextExamine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reçete İncele.
+        /// </summary>
+        public static string BoMContextExamine1 {
+            get {
+                return ResourceManager.GetString("BoMContextExamine1", resourceCulture);
             }
         }
         
@@ -178,11 +331,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string BoMContextRefresh1 {
+            get {
+                return ResourceManager.GetString("BoMContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Ekle.
         /// </summary>
         public static string BoMLineContextAdd {
             get {
                 return ResourceManager.GetString("BoMLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string BoMLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("BoMLineContextAdd1", resourceCulture);
             }
         }
         
@@ -196,11 +367,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string BoMLineContextChange1 {
+            get {
+                return ResourceManager.GetString("BoMLineContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Sil.
         /// </summary>
         public static string BoMLineContextDelete {
             get {
                 return ResourceManager.GetString("BoMLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string BoMLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("BoMLineContextDelete1", resourceCulture);
             }
         }
         
@@ -214,11 +403,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string BoMLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("BoMLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Şube Tanımlamaları.
         /// </summary>
         public static string BranchesChildMenu {
             get {
                 return ResourceManager.GetString("BranchesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şube Tanımlamaları.
+        /// </summary>
+        public static string BranchesChildMenu1 {
+            get {
+                return ResourceManager.GetString("BranchesChildMenu1", resourceCulture);
             }
         }
         
@@ -232,11 +439,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string BranchesContextAdd1 {
+            get {
+                return ResourceManager.GetString("BranchesContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string BranchesContextChange {
             get {
                 return ResourceManager.GetString("BranchesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string BranchesContextChange1 {
+            get {
+                return ResourceManager.GetString("BranchesContextChange1", resourceCulture);
             }
         }
         
@@ -250,11 +475,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string BranchesContextDelete1 {
+            get {
+                return ResourceManager.GetString("BranchesContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string BranchesContextRefresh {
             get {
                 return ResourceManager.GetString("BranchesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string BranchesContextRefresh1 {
+            get {
+                return ResourceManager.GetString("BranchesContextRefresh1", resourceCulture);
             }
         }
         
@@ -268,11 +511,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personellere Göre İş İstasyonu Verimlilik Analizi.
+        /// </summary>
+        public static string ByEmpStationProductivityChildMenu1 {
+            get {
+                return ResourceManager.GetString("ByEmpStationProductivityChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duruş Kodlarına Göre Personel Verimlilik Analizi.
         /// </summary>
         public static string ByHaltEmpProductivityChildMenu {
             get {
                 return ResourceManager.GetString("ByHaltEmpProductivityChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duruş Kodlarına Göre Personel Verimlilik Analizi.
+        /// </summary>
+        public static string ByHaltEmpProductivityChildMenu1 {
+            get {
+                return ResourceManager.GetString("ByHaltEmpProductivityChildMenu1", resourceCulture);
             }
         }
         
@@ -286,11 +547,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duruş Kodlarına Göre İş İstasyonu Analizi.
+        /// </summary>
+        public static string ByHaltStationChildMenu1 {
+            get {
+                return ResourceManager.GetString("ByHaltStationChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Gruplarına Göre İş İstasyonu Performans Analizi.
         /// </summary>
         public static string ByHaltStationPerfChildMenu {
             get {
                 return ResourceManager.GetString("ByHaltStationPerfChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Gruplarına Göre İş İstasyonu Performans Analizi.
+        /// </summary>
+        public static string ByHaltStationPerfChildMenu1 {
+            get {
+                return ResourceManager.GetString("ByHaltStationPerfChildMenu1", resourceCulture);
             }
         }
         
@@ -304,11 +583,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ürün Grubuna Göre Performans Analizi.
+        /// </summary>
+        public static string ByProdGrpPerfAnalysisChildMenu1 {
+            get {
+                return ResourceManager.GetString("ByProdGrpPerfAnalysisChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Grubuna Göre Hurda Analizi.
         /// </summary>
         public static string ByProdGrpScrapAnalysisChildMenu {
             get {
                 return ResourceManager.GetString("ByProdGrpScrapAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Grubuna Göre Hurda Analizi.
+        /// </summary>
+        public static string ByProdGrpScrapAnalysisChildMenu1 {
+            get {
+                return ResourceManager.GetString("ByProdGrpScrapAnalysisChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çalışma Takvimi.
+        /// </summary>
+        public static string CalendarChildMenu {
+            get {
+                return ResourceManager.GetString("CalendarChildMenu", resourceCulture);
             }
         }
         
@@ -322,11 +628,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string CalendarContextAdd1 {
+            get {
+                return ResourceManager.GetString("CalendarContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string CalendarContextChange {
             get {
                 return ResourceManager.GetString("CalendarContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string CalendarContextChange1 {
+            get {
+                return ResourceManager.GetString("CalendarContextChange1", resourceCulture);
             }
         }
         
@@ -340,11 +664,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string CalendarContextDelete1 {
+            get {
+                return ResourceManager.GetString("CalendarContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string CalendarContextRefresh {
             get {
                 return ResourceManager.GetString("CalendarContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string CalendarContextRefresh1 {
+            get {
+                return ResourceManager.GetString("CalendarContextRefresh1", resourceCulture);
             }
         }
         
@@ -358,11 +700,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Takvimi Görüntüle.
+        /// </summary>
+        public static string CalendarContextShowCalendar1 {
+            get {
+                return ResourceManager.GetString("CalendarContextShowCalendar1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Takvim Gün Sil.
         /// </summary>
         public static string CalendarDayContextDelete {
             get {
                 return ResourceManager.GetString("CalendarDayContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Takvim Gün Sil.
+        /// </summary>
+        public static string CalendarDayContextDelete1 {
+            get {
+                return ResourceManager.GetString("CalendarDayContextDelete1", resourceCulture);
             }
         }
         
@@ -376,11 +736,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çalışma Durumunu Güncelle.
+        /// </summary>
+        public static string CalendarLineContextWorkStatus1 {
+            get {
+                return ResourceManager.GetString("CalendarLineContextWorkStatus1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Çalışma Takvimi.
         /// </summary>
         public static string CalendarMenu {
             get {
                 return ResourceManager.GetString("CalendarMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çalışma Takvimi.
+        /// </summary>
+        public static string CalendarMenu1 {
+            get {
+                return ResourceManager.GetString("CalendarMenu1", resourceCulture);
             }
         }
         
@@ -394,11 +772,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string CalibrationRecordContextAdd1 {
+            get {
+                return ResourceManager.GetString("CalibrationRecordContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string CalibrationRecordContextChange {
             get {
                 return ResourceManager.GetString("CalibrationRecordContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string CalibrationRecordContextChange1 {
+            get {
+                return ResourceManager.GetString("CalibrationRecordContextChange1", resourceCulture);
             }
         }
         
@@ -412,11 +808,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string CalibrationRecordContextDelete1 {
+            get {
+                return ResourceManager.GetString("CalibrationRecordContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string CalibrationRecordContextRefresh {
             get {
                 return ResourceManager.GetString("CalibrationRecordContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string CalibrationRecordContextRefresh1 {
+            get {
+                return ResourceManager.GetString("CalibrationRecordContextRefresh1", resourceCulture);
             }
         }
         
@@ -430,11 +844,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string CalibrationVerificationContextAdd1 {
+            get {
+                return ResourceManager.GetString("CalibrationVerificationContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string CalibrationVerificationContextChange {
             get {
                 return ResourceManager.GetString("CalibrationVerificationContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string CalibrationVerificationContextChange1 {
+            get {
+                return ResourceManager.GetString("CalibrationVerificationContextChange1", resourceCulture);
             }
         }
         
@@ -448,11 +880,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string CalibrationVerificationContextDelete1 {
+            get {
+                return ResourceManager.GetString("CalibrationVerificationContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string CalibrationVerificationContextRefresh {
             get {
                 return ResourceManager.GetString("CalibrationVerificationContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string CalibrationVerificationContextRefresh1 {
+            get {
+                return ResourceManager.GetString("CalibrationVerificationContextRefresh1", resourceCulture);
             }
         }
         
@@ -466,11 +916,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kalibrasyon Takip Kayıtları.
+        /// </summary>
+        public static string CalRecordsChildMenu1 {
+            get {
+                return ResourceManager.GetString("CalRecordsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kalibrasyon Doğrulama Kayıtları.
         /// </summary>
         public static string CalVerificationsChildMenu {
             get {
                 return ResourceManager.GetString("CalVerificationsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalibrasyon Doğrulama Kayıtları.
+        /// </summary>
+        public static string CalVerificationsChildMenu1 {
+            get {
+                return ResourceManager.GetString("CalVerificationsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şehirler.
+        /// </summary>
+        public static string CitiesChildMenu {
+            get {
+                return ResourceManager.GetString("CitiesChildMenu", resourceCulture);
             }
         }
         
@@ -484,11 +961,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kapat.
+        /// </summary>
+        public static string CloseButton1 {
+            get {
+                return ResourceManager.GetString("CloseButton1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kapat.
+        /// </summary>
+        public static string CloseButton11 {
+            get {
+                return ResourceManager.GetString("CloseButton11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KULLANICI KODU.
         /// </summary>
         public static string Code {
             get {
                 return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KULLANICI KODU.
+        /// </summary>
+        public static string Code1 {
+            get {
+                return ResourceManager.GetString("Code1", resourceCulture);
             }
         }
         
@@ -502,11 +1006,56 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
+        /// </summary>
+        public static string CodeControlManager1 {
+            get {
+                return ResourceManager.GetString("CodeControlManager1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
+        /// </summary>
+        public static string CodeControlManager11 {
+            get {
+                return ResourceManager.GetString("CodeControlManager11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kullanıcı Kodu:.
         /// </summary>
         public static string CodeLabel {
             get {
                 return ResourceManager.GetString("CodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Kodu:.
+        /// </summary>
+        public static string CodeLabel1 {
+            get {
+                return ResourceManager.GetString("CodeLabel1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CONTEXT MENÜ ADI.
+        /// </summary>
+        public static string ContextMenuName_ {
+            get {
+                return ResourceManager.GetString("ContextMenuName_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Context Menü Adı:.
+        /// </summary>
+        public static string ContextMenuName_Label {
+            get {
+                return ResourceManager.GetString("ContextMenuName_Label", resourceCulture);
             }
         }
         
@@ -520,11 +1069,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operasyon Resmi Ekle.
+        /// </summary>
+        public static string ContextOprPicAdd1 {
+            get {
+                return ResourceManager.GetString("ContextOprPicAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operasyon Resmi Değiştir.
         /// </summary>
         public static string ContextOprPicChange {
             get {
                 return ResourceManager.GetString("ContextOprPicChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon Resmi Değiştir.
+        /// </summary>
+        public static string ContextOprPicChange1 {
+            get {
+                return ResourceManager.GetString("ContextOprPicChange1", resourceCulture);
             }
         }
         
@@ -538,11 +1105,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operasyon Resmi Sil.
+        /// </summary>
+        public static string ContextOprPicDelete1 {
+            get {
+                return ResourceManager.GetString("ContextOprPicDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operasyon Resmi Güncelle.
         /// </summary>
         public static string ContextOprPicRefresh {
             get {
                 return ResourceManager.GetString("ContextOprPicRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon Resmi Güncelle.
+        /// </summary>
+        public static string ContextOprPicRefresh1 {
+            get {
+                return ResourceManager.GetString("ContextOprPicRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kıtalar.
+        /// </summary>
+        public static string ContinentsChildMenu {
+            get {
+                return ResourceManager.GetString("ContinentsChildMenu", resourceCulture);
             }
         }
         
@@ -556,11 +1150,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fason Tedarikçi Sil.
+        /// </summary>
+        public static string ContractOfProductsOperationContextDelete1 {
+            get {
+                return ResourceManager.GetString("ContractOfProductsOperationContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tedarikçi Seç.
         /// </summary>
         public static string ContractOfProductsOperationContextSelectSupplier {
             get {
                 return ResourceManager.GetString("ContractOfProductsOperationContextSelectSupplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fason Tedarikçi Seç.
+        /// </summary>
+        public static string ContractOfProductsOperationContextSelectSupplier1 {
+            get {
+                return ResourceManager.GetString("ContractOfProductsOperationContextSelectSupplier1", resourceCulture);
             }
         }
         
@@ -574,11 +1186,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fason Operasyon Ekle.
+        /// </summary>
+        public static string ContractOprContextAdd1 {
+            get {
+                return ResourceManager.GetString("ContractOprContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fason Operasyon Sil.
         /// </summary>
         public static string ContractOprContextDelete {
             get {
                 return ResourceManager.GetString("ContractOprContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fason Operasyon Sil.
+        /// </summary>
+        public static string ContractOprContextDelete1 {
+            get {
+                return ResourceManager.GetString("ContractOprContextDelete1", resourceCulture);
             }
         }
         
@@ -592,11 +1222,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fason Operasyon Güncelle.
+        /// </summary>
+        public static string ContractOprContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ContractOprContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fason İmalat Takip Kayıtları.
         /// </summary>
         public static string ContractProdTrackingsChildMenu {
             get {
                 return ResourceManager.GetString("ContractProdTrackingsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fason İmalat Takip Kayıtları.
+        /// </summary>
+        public static string ContractProdTrackingsChildMenu1 {
+            get {
+                return ResourceManager.GetString("ContractProdTrackingsChildMenu1", resourceCulture);
             }
         }
         
@@ -610,11 +1258,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ContractProductionTrackingContextAdd1 {
+            get {
+                return ResourceManager.GetString("ContractProductionTrackingContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ContractProductionTrackingContextChange {
             get {
                 return ResourceManager.GetString("ContractProductionTrackingContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ContractProductionTrackingContextChange1 {
+            get {
+                return ResourceManager.GetString("ContractProductionTrackingContextChange1", resourceCulture);
             }
         }
         
@@ -628,11 +1294,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ContractProductionTrackingContextDelete1 {
+            get {
+                return ResourceManager.GetString("ContractProductionTrackingContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string ContractProductionTrackingContextRefresh {
             get {
                 return ResourceManager.GetString("ContractProductionTrackingContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ContractProductionTrackingContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ContractProductionTrackingContextRefresh1", resourceCulture);
             }
         }
         
@@ -646,11 +1330,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ContractQualityPlanContextAdd1 {
+            get {
+                return ResourceManager.GetString("ContractQualityPlanContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ContractQualityPlanContextChange {
             get {
                 return ResourceManager.GetString("ContractQualityPlanContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ContractQualityPlanContextChange1 {
+            get {
+                return ResourceManager.GetString("ContractQualityPlanContextChange1", resourceCulture);
             }
         }
         
@@ -664,11 +1366,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ContractQualityPlanContextDelete1 {
+            get {
+                return ResourceManager.GetString("ContractQualityPlanContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string ContractQualityPlanContextRefresh {
             get {
                 return ResourceManager.GetString("ContractQualityPlanContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ContractQualityPlanContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ContractQualityPlanContextRefresh1", resourceCulture);
             }
         }
         
@@ -682,11 +1402,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string ContractQualityPlanLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("ContractQualityPlanLineContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string ContractQualityPlanLineContextChange {
             get {
                 return ResourceManager.GetString("ContractQualityPlanLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string ContractQualityPlanLineContextChange1 {
+            get {
+                return ResourceManager.GetString("ContractQualityPlanLineContextChange1", resourceCulture);
             }
         }
         
@@ -700,11 +1438,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string ContractQualityPlanLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("ContractQualityPlanLineContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string ContractQualityPlanLineContextRefresh {
             get {
                 return ResourceManager.GetString("ContractQualityPlanLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string ContractQualityPlanLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ContractQualityPlanLineContextRefresh1", resourceCulture);
             }
         }
         
@@ -718,11 +1474,65 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fason Giriş Kalite Planları.
+        /// </summary>
+        public static string ContractQualityPlansChildMenu1 {
+            get {
+                return ResourceManager.GetString("ContractQualityPlansChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  Miktar Satır Ekle.
+        /// </summary>
+        public static string ContractTrackingFicheAmountEntryLineContextAdd {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheAmountEntryLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Miktar Satır  Değiştir.
+        /// </summary>
+        public static string ContractTrackingFicheAmountEntryLineContextChange {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheAmountEntryLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Miktar Satır Sil.
+        /// </summary>
+        public static string ContractTrackingFicheAmountEntryLineContextDelete {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheAmountEntryLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Miktar Satır Güncelle.
+        /// </summary>
+        public static string ContractTrackingFicheAmountEntryLineContextRefresh {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheAmountEntryLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ContractTrackingFicheContextAdd {
             get {
                 return ResourceManager.GetString("ContractTrackingFicheContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ContractTrackingFicheContextAdd1 {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheContextAdd1", resourceCulture);
             }
         }
         
@@ -736,11 +1546,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gelen Miktar Girişi.
+        /// </summary>
+        public static string ContractTrackingFicheContextAmountEntry1 {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheContextAmountEntry1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ContractTrackingFicheContextChange {
             get {
                 return ResourceManager.GetString("ContractTrackingFicheContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ContractTrackingFicheContextChange1 {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheContextChange1", resourceCulture);
             }
         }
         
@@ -754,11 +1582,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ContractTrackingFicheContextDelete1 {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string ContractTrackingFicheContextRefresh {
             get {
                 return ResourceManager.GetString("ContractTrackingFicheContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ContractTrackingFicheContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheContextRefresh1", resourceCulture);
             }
         }
         
@@ -772,11 +1618,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string ContractTrackingFicheLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheLineContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string ContractTrackingFicheLineContextChange {
             get {
                 return ResourceManager.GetString("ContractTrackingFicheLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string ContractTrackingFicheLineContextChange1 {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheLineContextChange1", resourceCulture);
             }
         }
         
@@ -790,11 +1654,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string ContractTrackingFicheLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheLineContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string ContractTrackingFicheLineContextRefresh {
             get {
                 return ResourceManager.GetString("ContractTrackingFicheLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string ContractTrackingFicheLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheLineContextRefresh1", resourceCulture);
             }
         }
         
@@ -808,11 +1690,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fason Takip Fişleri.
+        /// </summary>
+        public static string ContractTrackingFichesChildMenu1 {
+            get {
+                return ResourceManager.GetString("ContractTrackingFichesChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ContractUnsuitabilityReportContextAdd {
             get {
                 return ResourceManager.GetString("ContractUnsuitabilityReportContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ContractUnsuitabilityReportContextAdd1 {
+            get {
+                return ResourceManager.GetString("ContractUnsuitabilityReportContextAdd1", resourceCulture);
             }
         }
         
@@ -826,11 +1726,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ContractUnsuitabilityReportContextChange1 {
+            get {
+                return ResourceManager.GetString("ContractUnsuitabilityReportContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string ContractUnsuitabilityReportContextDelete {
             get {
                 return ResourceManager.GetString("ContractUnsuitabilityReportContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ContractUnsuitabilityReportContextDelete1 {
+            get {
+                return ResourceManager.GetString("ContractUnsuitabilityReportContextDelete1", resourceCulture);
             }
         }
         
@@ -844,11 +1762,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ContractUnsuitabilityReportContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ContractUnsuitabilityReportContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ControlConditionContextAdd {
             get {
                 return ResourceManager.GetString("ControlConditionContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ControlConditionContextAdd1 {
+            get {
+                return ResourceManager.GetString("ControlConditionContextAdd1", resourceCulture);
             }
         }
         
@@ -862,11 +1798,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ControlConditionContextChange1 {
+            get {
+                return ResourceManager.GetString("ControlConditionContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string ControlConditionContextDelete {
             get {
                 return ResourceManager.GetString("ControlConditionContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ControlConditionContextDelete1 {
+            get {
+                return ResourceManager.GetString("ControlConditionContextDelete1", resourceCulture);
             }
         }
         
@@ -880,11 +1834,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ControlConditionContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ControlConditionContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kontrol Şartı Başlıkları.
         /// </summary>
         public static string ControlConditionsChildMenu {
             get {
                 return ResourceManager.GetString("ControlConditionsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontrol Şartı Başlıkları.
+        /// </summary>
+        public static string ControlConditionsChildMenu1 {
+            get {
+                return ResourceManager.GetString("ControlConditionsChildMenu1", resourceCulture);
             }
         }
         
@@ -898,11 +1870,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ControlTypeContextAdd1 {
+            get {
+                return ResourceManager.GetString("ControlTypeContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ControlTypeContextChange {
             get {
                 return ResourceManager.GetString("ControlTypeContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ControlTypeContextChange1 {
+            get {
+                return ResourceManager.GetString("ControlTypeContextChange1", resourceCulture);
             }
         }
         
@@ -916,11 +1906,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ControlTypeContextDelete1 {
+            get {
+                return ResourceManager.GetString("ControlTypeContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string ControlTypeContextRefresh {
             get {
                 return ResourceManager.GetString("ControlTypeContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ControlTypeContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ControlTypeContextRefresh1", resourceCulture);
             }
         }
         
@@ -934,11 +1942,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kontrol Türü Başlıkları.
+        /// </summary>
+        public static string ControlTypesChildMenu1 {
+            get {
+                return ResourceManager.GetString("ControlTypesChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fason Tedarikçi Uygunsuzluk Kayıtları Analizi.
         /// </summary>
         public static string ContUnsAnlChildMenu {
             get {
                 return ResourceManager.GetString("ContUnsAnlChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fason Tedarikçi Uygunsuzluk Kayıtları Analizi.
+        /// </summary>
+        public static string ContUnsAnlChildMenu1 {
+            get {
+                return ResourceManager.GetString("ContUnsAnlChildMenu1", resourceCulture);
             }
         }
         
@@ -952,11 +1978,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fason Uygunsuzluk Kayıtları.
+        /// </summary>
+        public static string ContUnsRecordsChildMenu1 {
+            get {
+                return ResourceManager.GetString("ContUnsRecordsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Onayladı.
         /// </summary>
         public static string ConvertContextApprove {
             get {
                 return ResourceManager.GetString("ConvertContextApprove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onayladı.
+        /// </summary>
+        public static string ConvertContextApprove1 {
+            get {
+                return ResourceManager.GetString("ConvertContextApprove1", resourceCulture);
             }
         }
         
@@ -970,11 +2014,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Beklemede.
+        /// </summary>
+        public static string ConvertContextPending1 {
+            get {
+                return ResourceManager.GetString("ConvertContextPending1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maliyetlendirme.
         /// </summary>
         public static string CostMenu {
             get {
                 return ResourceManager.GetString("CostMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maliyetlendirme.
+        /// </summary>
+        public static string CostMenu1 {
+            get {
+                return ResourceManager.GetString("CostMenu1", resourceCulture);
             }
         }
         
@@ -988,11 +2050,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ürün Maliyet Kayıtları (CPR).
+        /// </summary>
+        public static string CPRChildMenu1 {
+            get {
+                return ResourceManager.GetString("CPRChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Para Birimi Tanımlamaları.
         /// </summary>
         public static string CurrenciesChildMenu {
             get {
                 return ResourceManager.GetString("CurrenciesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Para Birimi Tanımlamaları.
+        /// </summary>
+        public static string CurrenciesChildMenu1 {
+            get {
+                return ResourceManager.GetString("CurrenciesChildMenu1", resourceCulture);
             }
         }
         
@@ -1006,11 +2086,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string CurrencyContextAdd1 {
+            get {
+                return ResourceManager.GetString("CurrencyContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string CurrencyContextChange {
             get {
                 return ResourceManager.GetString("CurrencyContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string CurrencyContextChange1 {
+            get {
+                return ResourceManager.GetString("CurrencyContextChange1", resourceCulture);
             }
         }
         
@@ -1024,11 +2122,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string CurrencyContextDelete1 {
+            get {
+                return ResourceManager.GetString("CurrencyContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string CurrencyContextRefresh {
             get {
                 return ResourceManager.GetString("CurrencyContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string CurrencyContextRefresh1 {
+            get {
+                return ResourceManager.GetString("CurrencyContextRefresh1", resourceCulture);
             }
         }
         
@@ -1042,11 +2158,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string CurrentAccountCardContextAdd1 {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string CurrentAccountCardContextChange {
             get {
                 return ResourceManager.GetString("CurrentAccountCardContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string CurrentAccountCardContextChange1 {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardContextChange1", resourceCulture);
             }
         }
         
@@ -1060,11 +2194,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string CurrentAccountCardContextDelete1 {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string CurrentAccountCardContextRefresh {
             get {
                 return ResourceManager.GetString("CurrentAccountCardContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string CurrentAccountCardContextRefresh1 {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardContextRefresh1", resourceCulture);
             }
         }
         
@@ -1078,11 +2230,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cari Hesap Kartları.
+        /// </summary>
+        public static string CurrentAccountsChildMenu1 {
+            get {
+                return ResourceManager.GetString("CurrentAccountsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string CusCompReportContextAdd {
             get {
                 return ResourceManager.GetString("CusCompReportContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string CusCompReportContextAdd1 {
+            get {
+                return ResourceManager.GetString("CusCompReportContextAdd1", resourceCulture);
             }
         }
         
@@ -1096,11 +2266,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string CusCompReportContextChange1 {
+            get {
+                return ResourceManager.GetString("CusCompReportContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 8D Raporu Oluştur.
         /// </summary>
         public static string CusCompReportContextCreate8D {
             get {
                 return ResourceManager.GetString("CusCompReportContextCreate8D", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8D Raporu Oluştur.
+        /// </summary>
+        public static string CusCompReportContextCreate8D1 {
+            get {
+                return ResourceManager.GetString("CusCompReportContextCreate8D1", resourceCulture);
             }
         }
         
@@ -1114,11 +2302,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string CusCompReportContextDelete1 {
+            get {
+                return ResourceManager.GetString("CusCompReportContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string CusCompReportContextRefresh {
             get {
                 return ResourceManager.GetString("CusCompReportContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string CusCompReportContextRefresh1 {
+            get {
+                return ResourceManager.GetString("CusCompReportContextRefresh1", resourceCulture);
             }
         }
         
@@ -1132,11 +2338,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Şikayet (Reklamasyon) Kayıtları.
+        /// </summary>
+        public static string CustCompRecordsChildMenu1 {
+            get {
+                return ResourceManager.GetString("CustCompRecordsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {
             get {
                 return ResourceManager.GetString("DeleteConfirmationDescriptionBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
+        /// </summary>
+        public static string DeleteConfirmationDescriptionBase1 {
+            get {
+                return ResourceManager.GetString("DeleteConfirmationDescriptionBase1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
+        /// </summary>
+        public static string DeleteConfirmationDescriptionBase11 {
+            get {
+                return ResourceManager.GetString("DeleteConfirmationDescriptionBase11", resourceCulture);
             }
         }
         
@@ -1150,11 +2383,56 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string DeleteConfirmationTitleBase1 {
+            get {
+                return ResourceManager.GetString("DeleteConfirmationTitleBase1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string DeleteConfirmationTitleBase11 {
+            get {
+                return ResourceManager.GetString("DeleteConfirmationTitleBase11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareket gören kayıtlar silinemez..
+        /// </summary>
+        public static string DeleteControlManager {
+            get {
+                return ResourceManager.GetString("DeleteControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kayıt başarıyla silindi..
         /// </summary>
         public static string DeleteSuccessMessage {
             get {
                 return ResourceManager.GetString("DeleteSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kayıt başarıyla silindi..
+        /// </summary>
+        public static string DeleteSuccessMessage1 {
+            get {
+                return ResourceManager.GetString("DeleteSuccessMessage1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kayıt başarıyla silindi..
+        /// </summary>
+        public static string DeleteSuccessMessage11 {
+            get {
+                return ResourceManager.GetString("DeleteSuccessMessage11", resourceCulture);
             }
         }
         
@@ -1168,11 +2446,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string DepartmentContextAdd1 {
+            get {
+                return ResourceManager.GetString("DepartmentContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string DepartmentContextChange {
             get {
                 return ResourceManager.GetString("DepartmentContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string DepartmentContextChange1 {
+            get {
+                return ResourceManager.GetString("DepartmentContextChange1", resourceCulture);
             }
         }
         
@@ -1186,11 +2482,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string DepartmentContextDelete1 {
+            get {
+                return ResourceManager.GetString("DepartmentContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string DepartmentContextRefresh {
             get {
                 return ResourceManager.GetString("DepartmentContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string DepartmentContextRefresh1 {
+            get {
+                return ResourceManager.GetString("DepartmentContextRefresh1", resourceCulture);
             }
         }
         
@@ -1204,11 +2518,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personel Departmanları.
+        /// </summary>
+        public static string DepartmentsChildMenu1 {
+            get {
+                return ResourceManager.GetString("DepartmentsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kullanıcı Tanımlamaları.
         /// </summary>
         public static string EditModalTitle {
             get {
                 return ResourceManager.GetString("EditModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bildirim Şablonları.
+        /// </summary>
+        public static string EditModalTitle1 {
+            get {
+                return ResourceManager.GetString("EditModalTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Tanımlamaları.
+        /// </summary>
+        public static string EditModalTitle11 {
+            get {
+                return ResourceManager.GetString("EditModalTitle11", resourceCulture);
             }
         }
         
@@ -1222,11 +2563,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Eğitim Seviyesi Puanları.
+        /// </summary>
+        public static string EducationLevelScoresChildMenu1 {
+            get {
+                return ResourceManager.GetString("EducationLevelScoresChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string EducationLevelScoresContextAdd {
             get {
                 return ResourceManager.GetString("EducationLevelScoresContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string EducationLevelScoresContextAdd1 {
+            get {
+                return ResourceManager.GetString("EducationLevelScoresContextAdd1", resourceCulture);
             }
         }
         
@@ -1240,11 +2599,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string EducationLevelScoresContextChange1 {
+            get {
+                return ResourceManager.GetString("EducationLevelScoresContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string EducationLevelScoresContextDelete {
             get {
                 return ResourceManager.GetString("EducationLevelScoresContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string EducationLevelScoresContextDelete1 {
+            get {
+                return ResourceManager.GetString("EducationLevelScoresContextDelete1", resourceCulture);
             }
         }
         
@@ -1258,11 +2635,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string EducationLevelScoresContextRefresh1 {
+            get {
+                return ResourceManager.GetString("EducationLevelScoresContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-POSTA.
         /// </summary>
         public static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-POSTA.
+        /// </summary>
+        public static string Email1 {
+            get {
+                return ResourceManager.GetString("Email1", resourceCulture);
             }
         }
         
@@ -1276,11 +2671,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-Posta:.
+        /// </summary>
+        public static string EmailLabel1 {
+            get {
+                return ResourceManager.GetString("EmailLabel1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personel Yıllık Kıdem Farkları.
         /// </summary>
         public static string EmployeeAnnualSeniorityDifferencesChildMenu {
             get {
                 return ResourceManager.GetString("EmployeeAnnualSeniorityDifferencesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Yıllık Kıdem Farkları.
+        /// </summary>
+        public static string EmployeeAnnualSeniorityDifferencesChildMenu1 {
+            get {
+                return ResourceManager.GetString("EmployeeAnnualSeniorityDifferencesChildMenu1", resourceCulture);
             }
         }
         
@@ -1294,11 +2707,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string EmployeeAnnualSeniorityDifferencesContextAdd1 {
+            get {
+                return ResourceManager.GetString("EmployeeAnnualSeniorityDifferencesContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string EmployeeAnnualSeniorityDifferencesContextChange {
             get {
                 return ResourceManager.GetString("EmployeeAnnualSeniorityDifferencesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string EmployeeAnnualSeniorityDifferencesContextChange1 {
+            get {
+                return ResourceManager.GetString("EmployeeAnnualSeniorityDifferencesContextChange1", resourceCulture);
             }
         }
         
@@ -1312,11 +2743,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string EmployeeAnnualSeniorityDifferencesContextDelete1 {
+            get {
+                return ResourceManager.GetString("EmployeeAnnualSeniorityDifferencesContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string EmployeeAnnualSeniorityDifferencesContextRefresh {
             get {
                 return ResourceManager.GetString("EmployeeAnnualSeniorityDifferencesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string EmployeeAnnualSeniorityDifferencesContextRefresh1 {
+            get {
+                return ResourceManager.GetString("EmployeeAnnualSeniorityDifferencesContextRefresh1", resourceCulture);
             }
         }
         
@@ -1330,11 +2779,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string EmployeeContextAdd1 {
+            get {
+                return ResourceManager.GetString("EmployeeContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string EmployeeContextChange {
             get {
                 return ResourceManager.GetString("EmployeeContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string EmployeeContextChange1 {
+            get {
+                return ResourceManager.GetString("EmployeeContextChange1", resourceCulture);
             }
         }
         
@@ -1348,11 +2815,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string EmployeeContextDelete1 {
+            get {
+                return ResourceManager.GetString("EmployeeContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string EmployeeContextRefresh {
             get {
                 return ResourceManager.GetString("EmployeeContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string EmployeeContextRefresh1 {
+            get {
+                return ResourceManager.GetString("EmployeeContextRefresh1", resourceCulture);
             }
         }
         
@@ -1366,11 +2851,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personel Genel Beceri Kayıtları.
+        /// </summary>
+        public static string EmployeeGeneralSkillRecordsChildMenu1 {
+            get {
+                return ResourceManager.GetString("EmployeeGeneralSkillRecordsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string EmployeeGeneralSkillRecordsContextAdd {
             get {
                 return ResourceManager.GetString("EmployeeGeneralSkillRecordsContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string EmployeeGeneralSkillRecordsContextAdd1 {
+            get {
+                return ResourceManager.GetString("EmployeeGeneralSkillRecordsContextAdd1", resourceCulture);
             }
         }
         
@@ -1384,11 +2887,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string EmployeeGeneralSkillRecordsContextChange1 {
+            get {
+                return ResourceManager.GetString("EmployeeGeneralSkillRecordsContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string EmployeeGeneralSkillRecordsContextDelete {
             get {
                 return ResourceManager.GetString("EmployeeGeneralSkillRecordsContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string EmployeeGeneralSkillRecordsContextDelete1 {
+            get {
+                return ResourceManager.GetString("EmployeeGeneralSkillRecordsContextDelete1", resourceCulture);
             }
         }
         
@@ -1402,11 +2923,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string EmployeeGeneralSkillRecordsContextRefresh1 {
+            get {
+                return ResourceManager.GetString("EmployeeGeneralSkillRecordsContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personel Listesi.
         /// </summary>
         public static string EmployeeListChildMenu {
             get {
                 return ResourceManager.GetString("EmployeeListChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Listesi.
+        /// </summary>
+        public static string EmployeeListChildMenu1 {
+            get {
+                return ResourceManager.GetString("EmployeeListChildMenu1", resourceCulture);
             }
         }
         
@@ -1420,11 +2959,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personel Verimlilik Analizi.
+        /// </summary>
+        public static string EmployeeProductivityChildMenu1 {
+            get {
+                return ResourceManager.GetString("EmployeeProductivityChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personel Kayıtları.
         /// </summary>
         public static string EmployeesChildMenu {
             get {
                 return ResourceManager.GetString("EmployeesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Kayıtları.
+        /// </summary>
+        public static string EmployeesChildMenu1 {
+            get {
+                return ResourceManager.GetString("EmployeesChildMenu1", resourceCulture);
             }
         }
         
@@ -1438,11 +2995,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personel Puanlama Kayıtları.
+        /// </summary>
+        public static string EmployeeScoreChildMenu1 {
+            get {
+                return ResourceManager.GetString("EmployeeScoreChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personel Puanlama Listesi.
         /// </summary>
         public static string EmployeeScoreListChildMenu {
             get {
                 return ResourceManager.GetString("EmployeeScoreListChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Puanlama Listesi.
+        /// </summary>
+        public static string EmployeeScoreListChildMenu1 {
+            get {
+                return ResourceManager.GetString("EmployeeScoreListChildMenu1", resourceCulture);
             }
         }
         
@@ -1456,11 +3031,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Detayı Değiştir.
+        /// </summary>
+        public static string EmployeeScoringLineLinesContextChange1 {
+            get {
+                return ResourceManager.GetString("EmployeeScoringLineLinesContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string EmployeeScoringLinesContextChange {
             get {
                 return ResourceManager.GetString("EmployeeScoringLinesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string EmployeeScoringLinesContextChange1 {
+            get {
+                return ResourceManager.GetString("EmployeeScoringLinesContextChange1", resourceCulture);
             }
         }
         
@@ -1474,11 +3067,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string EmployeeScoringsContextAdd1 {
+            get {
+                return ResourceManager.GetString("EmployeeScoringsContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string EmployeeScoringsContextChange {
             get {
                 return ResourceManager.GetString("EmployeeScoringsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string EmployeeScoringsContextChange1 {
+            get {
+                return ResourceManager.GetString("EmployeeScoringsContextChange1", resourceCulture);
             }
         }
         
@@ -1492,11 +3103,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string EmployeeScoringsContextDelete1 {
+            get {
+                return ResourceManager.GetString("EmployeeScoringsContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string EmployeeScoringsContextRefresh {
             get {
                 return ResourceManager.GetString("EmployeeScoringsContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string EmployeeScoringsContextRefresh1 {
+            get {
+                return ResourceManager.GetString("EmployeeScoringsContextRefresh1", resourceCulture);
             }
         }
         
@@ -1510,11 +3139,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personel Kıdemleri.
+        /// </summary>
+        public static string EmployeeSenioritiesChildMenu1 {
+            get {
+                return ResourceManager.GetString("EmployeeSenioritiesChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string EmployeeSenioritiesContextAdd {
             get {
                 return ResourceManager.GetString("EmployeeSenioritiesContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string EmployeeSenioritiesContextAdd1 {
+            get {
+                return ResourceManager.GetString("EmployeeSenioritiesContextAdd1", resourceCulture);
             }
         }
         
@@ -1528,11 +3175,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string EmployeeSenioritiesContextChange1 {
+            get {
+                return ResourceManager.GetString("EmployeeSenioritiesContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string EmployeeSenioritiesContextDelete {
             get {
                 return ResourceManager.GetString("EmployeeSenioritiesContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string EmployeeSenioritiesContextDelete1 {
+            get {
+                return ResourceManager.GetString("EmployeeSenioritiesContextDelete1", resourceCulture);
             }
         }
         
@@ -1546,11 +3211,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string EmployeeSenioritiesContextRefresh1 {
+            get {
+                return ResourceManager.GetString("EmployeeSenioritiesContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekipman Yönetimi.
         /// </summary>
         public static string EquipmentManagementMenu {
             get {
                 return ResourceManager.GetString("EquipmentManagementMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekipman Yönetimi.
+        /// </summary>
+        public static string EquipmentManagementMenu1 {
+            get {
+                return ResourceManager.GetString("EquipmentManagementMenu1", resourceCulture);
             }
         }
         
@@ -1564,11 +3247,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekipman Kalibrasyon İşlemleri.
+        /// </summary>
+        public static string EquipmentOperationsMenu1 {
+            get {
+                return ResourceManager.GetString("EquipmentOperationsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string EquipmentRecordContextAdd {
             get {
                 return ResourceManager.GetString("EquipmentRecordContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string EquipmentRecordContextAdd1 {
+            get {
+                return ResourceManager.GetString("EquipmentRecordContextAdd1", resourceCulture);
             }
         }
         
@@ -1582,11 +3283,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string EquipmentRecordContextChange1 {
+            get {
+                return ResourceManager.GetString("EquipmentRecordContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string EquipmentRecordContextDelete {
             get {
                 return ResourceManager.GetString("EquipmentRecordContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string EquipmentRecordContextDelete1 {
+            get {
+                return ResourceManager.GetString("EquipmentRecordContextDelete1", resourceCulture);
             }
         }
         
@@ -1600,11 +3319,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string EquipmentRecordContextRefresh1 {
+            get {
+                return ResourceManager.GetString("EquipmentRecordContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekipman Kayıtları.
         /// </summary>
         public static string EquipmentRecordsChildMenu {
             get {
                 return ResourceManager.GetString("EquipmentRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekipman Kayıtları.
+        /// </summary>
+        public static string EquipmentRecordsChildMenu1 {
+            get {
+                return ResourceManager.GetString("EquipmentRecordsChildMenu1", resourceCulture);
             }
         }
         
@@ -1618,11 +3355,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hata.
+        /// </summary>
+        public static string Error1 {
+            get {
+                return ResourceManager.GetString("Error1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ExchangeRateContextAdd {
             get {
                 return ResourceManager.GetString("ExchangeRateContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ExchangeRateContextAdd1 {
+            get {
+                return ResourceManager.GetString("ExchangeRateContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merkez Bankası Kurlarını Çek.
+        /// </summary>
+        public static string ExchangeRateContextCentralBankExchange {
+            get {
+                return ResourceManager.GetString("ExchangeRateContextCentralBankExchange", resourceCulture);
             }
         }
         
@@ -1636,11 +3400,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ExchangeRateContextChange1 {
+            get {
+                return ResourceManager.GetString("ExchangeRateContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string ExchangeRateContextDelete {
             get {
                 return ResourceManager.GetString("ExchangeRateContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ExchangeRateContextDelete1 {
+            get {
+                return ResourceManager.GetString("ExchangeRateContextDelete1", resourceCulture);
             }
         }
         
@@ -1654,11 +3436,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ExchangeRateContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ExchangeRateContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Döviz Kuru Tablosu.
         /// </summary>
         public static string ExRatesChildMenu {
             get {
                 return ResourceManager.GetString("ExRatesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Döviz Kuru Tablosu.
+        /// </summary>
+        public static string ExRatesChildMenu1 {
+            get {
+                return ResourceManager.GetString("ExRatesChildMenu1", resourceCulture);
             }
         }
         
@@ -1672,11 +3472,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Final Kontrol Planları.
+        /// </summary>
+        public static string FinalControlPlans1 {
+            get {
+                return ResourceManager.GetString("FinalControlPlans1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Final Kontrol Kayıtları.
         /// </summary>
         public static string FinalControlRecordsChildMenu {
             get {
                 return ResourceManager.GetString("FinalControlRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Final Kontrol Kayıtları.
+        /// </summary>
+        public static string FinalControlRecordsChildMenu1 {
+            get {
+                return ResourceManager.GetString("FinalControlRecordsChildMenu1", resourceCulture);
             }
         }
         
@@ -1690,11 +3508,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Final Kontrol Uygunsuzluk Kayıtları.
+        /// </summary>
+        public static string FinalControlUnsRecordsChildMenu1 {
+            get {
+                return ResourceManager.GetString("FinalControlUnsRecordsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string FinalControlUnsuitabilityReportContextAdd {
             get {
                 return ResourceManager.GetString("FinalControlUnsuitabilityReportContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string FinalControlUnsuitabilityReportContextAdd1 {
+            get {
+                return ResourceManager.GetString("FinalControlUnsuitabilityReportContextAdd1", resourceCulture);
             }
         }
         
@@ -1708,11 +3544,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string FinalControlUnsuitabilityReportContextChange1 {
+            get {
+                return ResourceManager.GetString("FinalControlUnsuitabilityReportContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string FinalControlUnsuitabilityReportContextDelete {
             get {
                 return ResourceManager.GetString("FinalControlUnsuitabilityReportContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string FinalControlUnsuitabilityReportContextDelete1 {
+            get {
+                return ResourceManager.GetString("FinalControlUnsuitabilityReportContextDelete1", resourceCulture);
             }
         }
         
@@ -1726,11 +3580,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string FinalControlUnsuitabilityReportContextRefresh1 {
+            get {
+                return ResourceManager.GetString("FinalControlUnsuitabilityReportContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ana Kayıtlar.
         /// </summary>
         public static string FinanceManagementMainRecordsMenu {
             get {
                 return ResourceManager.GetString("FinanceManagementMainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string FinanceManagementMainRecordsMenu1 {
+            get {
+                return ResourceManager.GetString("FinanceManagementMainRecordsMenu1", resourceCulture);
             }
         }
         
@@ -1744,11 +3616,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string FinanceManagementParameterContextAdd1 {
+            get {
+                return ResourceManager.GetString("FinanceManagementParameterContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string FinanceManagementParameterContextChange {
             get {
                 return ResourceManager.GetString("FinanceManagementParameterContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string FinanceManagementParameterContextChange1 {
+            get {
+                return ResourceManager.GetString("FinanceManagementParameterContextChange1", resourceCulture);
             }
         }
         
@@ -1762,11 +3652,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string FinanceManagementParameterContextDelete1 {
+            get {
+                return ResourceManager.GetString("FinanceManagementParameterContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string FinanceManagementParameterContextRefresh {
             get {
                 return ResourceManager.GetString("FinanceManagementParameterContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string FinanceManagementParameterContextRefresh1 {
+            get {
+                return ResourceManager.GetString("FinanceManagementParameterContextRefresh1", resourceCulture);
             }
         }
         
@@ -1780,11 +3688,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finans Yönetimi .
+        /// </summary>
+        public static string FinanceManagementParametersChildMenu1 {
+            get {
+                return ResourceManager.GetString("FinanceManagementParametersChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Finans Yönetimi.
         /// </summary>
         public static string FinanceManagementParentMenu {
             get {
                 return ResourceManager.GetString("FinanceManagementParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finans Yönetimi.
+        /// </summary>
+        public static string FinanceManagementParentMenu1 {
+            get {
+                return ResourceManager.GetString("FinanceManagementParentMenu1", resourceCulture);
             }
         }
         
@@ -1798,11 +3724,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İlk Ürün Onayları.
+        /// </summary>
+        public static string FirstProductApprovalChildMenu1 {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string FirstProductApprovalContextAdd {
             get {
                 return ResourceManager.GetString("FirstProductApprovalContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string FirstProductApprovalContextAdd1 {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalContextAdd1", resourceCulture);
             }
         }
         
@@ -1816,11 +3760,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string FirstProductApprovalContextChange1 {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string FirstProductApprovalContextDelete {
             get {
                 return ResourceManager.GetString("FirstProductApprovalContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string FirstProductApprovalContextDelete1 {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalContextDelete1", resourceCulture);
             }
         }
         
@@ -1834,11 +3796,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string FirstProductApprovalContextRefresh1 {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Ekle.
         /// </summary>
         public static string FirstProductApprovalLineContextAdd {
             get {
                 return ResourceManager.GetString("FirstProductApprovalLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string FirstProductApprovalLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalLineContextAdd1", resourceCulture);
             }
         }
         
@@ -1852,11 +3832,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string FirstProductApprovalLineContextChange1 {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalLineContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Sil.
         /// </summary>
         public static string FirstProductApprovalLineContextDelete {
             get {
                 return ResourceManager.GetString("FirstProductApprovalLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string FirstProductApprovalLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalLineContextDelete1", resourceCulture);
             }
         }
         
@@ -1870,11 +3868,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string FirstProductApprovalLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ForecastContextAdd {
             get {
                 return ResourceManager.GetString("ForecastContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ForecastContextAdd1 {
+            get {
+                return ResourceManager.GetString("ForecastContextAdd1", resourceCulture);
             }
         }
         
@@ -1888,11 +3904,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ForecastContextChange1 {
+            get {
+                return ResourceManager.GetString("ForecastContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string ForecastContextDelete {
             get {
                 return ResourceManager.GetString("ForecastContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ForecastContextDelete1 {
+            get {
+                return ResourceManager.GetString("ForecastContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Malzeme İhtiyaç Listesi.
+        /// </summary>
+        public static string ForecastContextMRP {
+            get {
+                return ResourceManager.GetString("ForecastContextMRP", resourceCulture);
             }
         }
         
@@ -1906,11 +3949,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ForecastContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ForecastContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Ekle.
         /// </summary>
         public static string ForecastLineContextAdd {
             get {
                 return ResourceManager.GetString("ForecastLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string ForecastLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("ForecastLineContextAdd1", resourceCulture);
             }
         }
         
@@ -1924,11 +3985,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string ForecastLineContextChange1 {
+            get {
+                return ResourceManager.GetString("ForecastLineContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Sil.
         /// </summary>
         public static string ForecastLineContextDelete {
             get {
                 return ResourceManager.GetString("ForecastLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string ForecastLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("ForecastLineContextDelete1", resourceCulture);
             }
         }
         
@@ -1942,11 +4021,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string ForecastLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ForecastLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Forecast Kayıtları.
         /// </summary>
         public static string ForecastsChildMenu {
             get {
                 return ResourceManager.GetString("ForecastsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satış Forecast Kayıtları.
+        /// </summary>
+        public static string ForecastsChildMenu1 {
+            get {
+                return ResourceManager.GetString("ForecastsChildMenu1", resourceCulture);
             }
         }
         
@@ -1960,11 +4057,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Genel Fabrika OEE Analizi.
+        /// </summary>
+        public static string GeneralOEEChildMenu1 {
+            get {
+                return ResourceManager.GetString("GeneralOEEChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string GeneralParameterContextAdd {
             get {
                 return ResourceManager.GetString("GeneralParameterContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string GeneralParameterContextAdd1 {
+            get {
+                return ResourceManager.GetString("GeneralParameterContextAdd1", resourceCulture);
             }
         }
         
@@ -1978,11 +4093,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string GeneralParameterContextChange1 {
+            get {
+                return ResourceManager.GetString("GeneralParameterContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string GeneralParameterContextDelete {
             get {
                 return ResourceManager.GetString("GeneralParameterContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string GeneralParameterContextDelete1 {
+            get {
+                return ResourceManager.GetString("GeneralParameterContextDelete1", resourceCulture);
             }
         }
         
@@ -1996,11 +4129,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string GeneralParameterContextRefresh1 {
+            get {
+                return ResourceManager.GetString("GeneralParameterContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Genel Parametreler.
         /// </summary>
         public static string GeneralParametersChildMenu {
             get {
                 return ResourceManager.GetString("GeneralParametersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Parametreler.
+        /// </summary>
+        public static string GeneralParametersChildMenu1 {
+            get {
+                return ResourceManager.GetString("GeneralParametersChildMenu1", resourceCulture);
             }
         }
         
@@ -2014,11 +4165,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Genel Beceri Kayıtları Öncelikleri.
+        /// </summary>
+        public static string GeneralSkillRecordPrioritiesChildMenu1 {
+            get {
+                return ResourceManager.GetString("GeneralSkillRecordPrioritiesChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string GeneralSkillRecordPrioritiesContextAdd {
             get {
                 return ResourceManager.GetString("GeneralSkillRecordPrioritiesContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string GeneralSkillRecordPrioritiesContextAdd1 {
+            get {
+                return ResourceManager.GetString("GeneralSkillRecordPrioritiesContextAdd1", resourceCulture);
             }
         }
         
@@ -2032,11 +4201,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string GeneralSkillRecordPrioritiesContextChange1 {
+            get {
+                return ResourceManager.GetString("GeneralSkillRecordPrioritiesContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string GeneralSkillRecordPrioritiesContextDelete {
             get {
                 return ResourceManager.GetString("GeneralSkillRecordPrioritiesContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string GeneralSkillRecordPrioritiesContextDelete1 {
+            get {
+                return ResourceManager.GetString("GeneralSkillRecordPrioritiesContextDelete1", resourceCulture);
             }
         }
         
@@ -2050,11 +4237,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string GeneralSkillRecordPrioritiesContextRefresh1 {
+            get {
+                return ResourceManager.GetString("GeneralSkillRecordPrioritiesContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Genel Sistem Tanımlamaları.
         /// </summary>
         public static string GeneralSystemIdentificationsParentMenu {
             get {
                 return ResourceManager.GetString("GeneralSystemIdentificationsParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Sistem Tanımlamaları.
+        /// </summary>
+        public static string GeneralSystemIdentificationsParentMenu1 {
+            get {
+                return ResourceManager.GetString("GeneralSystemIdentificationsParentMenu1", resourceCulture);
             }
         }
         
@@ -2068,11 +4273,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Genel Sistem Parametreleri.
+        /// </summary>
+        public static string GeneralSystemParametersParentMenu1 {
+            get {
+                return ResourceManager.GetString("GeneralSystemParametersParentMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KULLANICI GRUBU.
         /// </summary>
         public static string GroupName {
             get {
                 return ResourceManager.GetString("GroupName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KULLANICI GRUBU.
+        /// </summary>
+        public static string GroupName1 {
+            get {
+                return ResourceManager.GetString("GroupName1", resourceCulture);
             }
         }
         
@@ -2086,11 +4309,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Grubu:.
+        /// </summary>
+        public static string GroupNameLabel1 {
+            get {
+                return ResourceManager.GetString("GroupNameLabel1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string HaltReasonContextAdd {
             get {
                 return ResourceManager.GetString("HaltReasonContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string HaltReasonContextAdd1 {
+            get {
+                return ResourceManager.GetString("HaltReasonContextAdd1", resourceCulture);
             }
         }
         
@@ -2104,11 +4345,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string HaltReasonContextChange1 {
+            get {
+                return ResourceManager.GetString("HaltReasonContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string HaltReasonContextDelete {
             get {
                 return ResourceManager.GetString("HaltReasonContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string HaltReasonContextDelete1 {
+            get {
+                return ResourceManager.GetString("HaltReasonContextDelete1", resourceCulture);
             }
         }
         
@@ -2122,11 +4381,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string HaltReasonContextRefresh1 {
+            get {
+                return ResourceManager.GetString("HaltReasonContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duruş Kodları.
         /// </summary>
         public static string HaltReasonsChildMenu {
             get {
                 return ResourceManager.GetString("HaltReasonsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duruş Kodları.
+        /// </summary>
+        public static string HaltReasonsChildMenu1 {
+            get {
+                return ResourceManager.GetString("HaltReasonsChildMenu1", resourceCulture);
             }
         }
         
@@ -2140,11 +4417,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Envanter Değiştir.
+        /// </summary>
+        public static string InventoryContextChange1 {
+            get {
+                return ResourceManager.GetString("InventoryContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Envanter Sil.
         /// </summary>
         public static string InventoryContextDelete {
             get {
                 return ResourceManager.GetString("InventoryContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Envanter Sil.
+        /// </summary>
+        public static string InventoryContextDelete1 {
+            get {
+                return ResourceManager.GetString("InventoryContextDelete1", resourceCulture);
             }
         }
         
@@ -2158,11 +4453,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Envanter Envanter Listesi.
+        /// </summary>
+        public static string InventoryListChildMenu1 {
+            get {
+                return ResourceManager.GetString("InventoryListChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IoT.
         /// </summary>
         public static string IoTProdTrackingsChildMenu {
             get {
                 return ResourceManager.GetString("IoTProdTrackingsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IoT.
+        /// </summary>
+        public static string IoTProdTrackingsChildMenu1 {
+            get {
+                return ResourceManager.GetString("IoTProdTrackingsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AKTİFLİK.
+        /// </summary>
+        public static string IsActive {
+            get {
+                return ResourceManager.GetString("IsActive", resourceCulture);
             }
         }
         
@@ -2176,11 +4498,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aktiflik:.
+        /// </summary>
+        public static string IsActiveLabel1 {
+            get {
+                return ResourceManager.GetString("IsActiveLabel1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aktiflik:.
+        /// </summary>
+        public static string IsActiveLabel11 {
+            get {
+                return ResourceManager.GetString("IsActiveLabel11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-POSTA ONAY.
         /// </summary>
         public static string IsEmailApproved {
             get {
                 return ResourceManager.GetString("IsEmailApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-POSTA ONAY.
+        /// </summary>
+        public static string IsEmailApproved1 {
+            get {
+                return ResourceManager.GetString("IsEmailApproved1", resourceCulture);
             }
         }
         
@@ -2194,11 +4543,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-Posta Onay:.
+        /// </summary>
+        public static string IsEmailApprovedLabel1 {
+            get {
+                return ResourceManager.GetString("IsEmailApprovedLabel1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Malzeme Listesi.
         /// </summary>
         public static string ListofMaterialsChildMenu {
             get {
                 return ResourceManager.GetString("ListofMaterialsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Malzeme Listesi.
+        /// </summary>
+        public static string ListofMaterialsChildMenu1 {
+            get {
+                return ResourceManager.GetString("ListofMaterialsChildMenu1", resourceCulture);
             }
         }
         
@@ -2212,11 +4579,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen Bekleyin...
+        /// </summary>
+        public static string LoadingCaption1 {
+            get {
+                return ResourceManager.GetString("LoadingCaption1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen Bekleyin...
+        /// </summary>
+        public static string LoadingCaption11 {
+            get {
+                return ResourceManager.GetString("LoadingCaption11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kayıtlar Yükleniyor...
         /// </summary>
         public static string LoadingText {
             get {
                 return ResourceManager.GetString("LoadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kayıtlar Yükleniyor...
+        /// </summary>
+        public static string LoadingText1 {
+            get {
+                return ResourceManager.GetString("LoadingText1", resourceCulture);
             }
         }
         
@@ -2230,11 +4624,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string MachineAndWorkforceManagementParameterContextAdd1 {
+            get {
+                return ResourceManager.GetString("MachineAndWorkforceManagementParameterContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string MachineAndWorkforceManagementParameterContextChange {
             get {
                 return ResourceManager.GetString("MachineAndWorkforceManagementParameterContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MachineAndWorkforceManagementParameterContextChange1 {
+            get {
+                return ResourceManager.GetString("MachineAndWorkforceManagementParameterContextChange1", resourceCulture);
             }
         }
         
@@ -2248,11 +4660,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string MachineAndWorkforceManagementParameterContextDelete1 {
+            get {
+                return ResourceManager.GetString("MachineAndWorkforceManagementParameterContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string MachineAndWorkforceManagementParameterContextRefresh {
             get {
                 return ResourceManager.GetString("MachineAndWorkforceManagementParameterContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string MachineAndWorkforceManagementParameterContextRefresh1 {
+            get {
+                return ResourceManager.GetString("MachineAndWorkforceManagementParameterContextRefresh1", resourceCulture);
             }
         }
         
@@ -2266,11 +4696,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Makine &amp; İş Gücü Yönetimi .
+        /// </summary>
+        public static string MachineAndWorkforceManagementParametersChildMenu1 {
+            get {
+                return ResourceManager.GetString("MachineAndWorkforceManagementParametersChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ana Kayıtlar.
         /// </summary>
         public static string MachWorkForceManagementMainRecordsMenu {
             get {
                 return ResourceManager.GetString("MachWorkForceManagementMainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string MachWorkForceManagementMainRecordsMenu1 {
+            get {
+                return ResourceManager.GetString("MachWorkForceManagementMainRecordsMenu1", resourceCulture);
             }
         }
         
@@ -2284,11 +4732,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Makine &amp; İş Gücü Yönetimi.
+        /// </summary>
+        public static string MachWorkForceManagementParentMenu1 {
+            get {
+                return ResourceManager.GetString("MachWorkForceManagementParentMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Raporlar.
         /// </summary>
         public static string MachWorkForceManagementReportsMenu {
             get {
                 return ResourceManager.GetString("MachWorkForceManagementReportsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string MachWorkForceManagementReportsMenu1 {
+            get {
+                return ResourceManager.GetString("MachWorkForceManagementReportsMenu1", resourceCulture);
             }
         }
         
@@ -2302,11 +4768,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string MachWorkForceManagementTransactionsMenu1 {
+            get {
+                return ResourceManager.GetString("MachWorkForceManagementTransactionsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bakım Talimatları.
         /// </summary>
         public static string MainInstructionsChildMenu {
             get {
                 return ResourceManager.GetString("MainInstructionsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bakım Talimatları.
+        /// </summary>
+        public static string MainInstructionsChildMenu1 {
+            get {
+                return ResourceManager.GetString("MainInstructionsChildMenu1", resourceCulture);
             }
         }
         
@@ -2320,11 +4804,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bakım Malzemesi Satın Alma Süreç Takibi.
+        /// </summary>
+        public static string MainMatPurchaseTrackingChildMenu1 {
+            get {
+                return ResourceManager.GetString("MainMatPurchaseTrackingChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bakım Malzemesi İhtiyaç Planlaması.
         /// </summary>
         public static string MainMatReqPlanningChildMenu {
             get {
                 return ResourceManager.GetString("MainMatReqPlanningChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bakım Malzemesi İhtiyaç Planlaması.
+        /// </summary>
+        public static string MainMatReqPlanningChildMenu1 {
+            get {
+                return ResourceManager.GetString("MainMatReqPlanningChildMenu1", resourceCulture);
             }
         }
         
@@ -2338,11 +4840,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bakım Periyotları.
+        /// </summary>
+        public static string MainPeriodsChildMenu1 {
+            get {
+                return ResourceManager.GetString("MainPeriodsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ana Kayıtlar.
         /// </summary>
         public static string MainRecordsMenu {
             get {
                 return ResourceManager.GetString("MainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string MainRecordsMenu1 {
+            get {
+                return ResourceManager.GetString("MainRecordsMenu1", resourceCulture);
             }
         }
         
@@ -2356,11 +4876,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bakım Bilgileri Ekle.
+        /// </summary>
+        public static string MaintenaceInfosContextAdd1 {
+            get {
+                return ResourceManager.GetString("MaintenaceInfosContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bakım Bilgileri Değiştir.
         /// </summary>
         public static string MaintenaceInfosContextChange {
             get {
                 return ResourceManager.GetString("MaintenaceInfosContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bakım Bilgileri Değiştir.
+        /// </summary>
+        public static string MaintenaceInfosContextChange1 {
+            get {
+                return ResourceManager.GetString("MaintenaceInfosContextChange1", resourceCulture);
             }
         }
         
@@ -2374,11 +4912,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bakım Bilgileri Sil.
+        /// </summary>
+        public static string MaintenaceInfosContextDelete1 {
+            get {
+                return ResourceManager.GetString("MaintenaceInfosContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bakım Bilgileri Güncelle.
         /// </summary>
         public static string MaintenaceInfosContextRefresh {
             get {
                 return ResourceManager.GetString("MaintenaceInfosContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bakım Bilgileri Güncelle.
+        /// </summary>
+        public static string MaintenaceInfosContextRefresh1 {
+            get {
+                return ResourceManager.GetString("MaintenaceInfosContextRefresh1", resourceCulture);
             }
         }
         
@@ -2392,11 +4948,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string MaintenanceInstructionContextAdd1 {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string MaintenanceInstructionContextChange {
             get {
                 return ResourceManager.GetString("MaintenanceInstructionContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MaintenanceInstructionContextChange1 {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionContextChange1", resourceCulture);
             }
         }
         
@@ -2410,11 +4984,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string MaintenanceInstructionContextDelete1 {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string MaintenanceInstructionContextRefresh {
             get {
                 return ResourceManager.GetString("MaintenanceInstructionContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string MaintenanceInstructionContextRefresh1 {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionContextRefresh1", resourceCulture);
             }
         }
         
@@ -2428,11 +5020,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string MaintenanceInstructionLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionLineContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string MaintenanceInstructionLineContextChange {
             get {
                 return ResourceManager.GetString("MaintenanceInstructionLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string MaintenanceInstructionLineContextChange1 {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionLineContextChange1", resourceCulture);
             }
         }
         
@@ -2446,11 +5056,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string MaintenanceInstructionLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionLineContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string MaintenanceInstructionLineContextRefresh {
             get {
                 return ResourceManager.GetString("MaintenanceInstructionLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string MaintenanceInstructionLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionLineContextRefresh1", resourceCulture);
             }
         }
         
@@ -2464,11 +5092,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string MaintenanceManagementMainRecordsMenu1 {
+            get {
+                return ResourceManager.GetString("MaintenanceManagementMainRecordsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string MaintenanceManagementParameterContextAdd {
             get {
                 return ResourceManager.GetString("MaintenanceManagementParameterContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string MaintenanceManagementParameterContextAdd1 {
+            get {
+                return ResourceManager.GetString("MaintenanceManagementParameterContextAdd1", resourceCulture);
             }
         }
         
@@ -2482,11 +5128,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MaintenanceManagementParameterContextChange1 {
+            get {
+                return ResourceManager.GetString("MaintenanceManagementParameterContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string MaintenanceManagementParameterContextDelete {
             get {
                 return ResourceManager.GetString("MaintenanceManagementParameterContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string MaintenanceManagementParameterContextDelete1 {
+            get {
+                return ResourceManager.GetString("MaintenanceManagementParameterContextDelete1", resourceCulture);
             }
         }
         
@@ -2500,11 +5164,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string MaintenanceManagementParameterContextRefresh1 {
+            get {
+                return ResourceManager.GetString("MaintenanceManagementParameterContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bakım Yönetimi .
         /// </summary>
         public static string MaintenanceManagementParametersChildMenu {
             get {
                 return ResourceManager.GetString("MaintenanceManagementParametersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bakım Yönetimi .
+        /// </summary>
+        public static string MaintenanceManagementParametersChildMenu1 {
+            get {
+                return ResourceManager.GetString("MaintenanceManagementParametersChildMenu1", resourceCulture);
             }
         }
         
@@ -2518,11 +5200,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bakım Yönetimi.
+        /// </summary>
+        public static string MaintenanceManagementParentMenu1 {
+            get {
+                return ResourceManager.GetString("MaintenanceManagementParentMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hareketler.
         /// </summary>
         public static string MaintenanceManagementTransactionsMenu {
             get {
                 return ResourceManager.GetString("MaintenanceManagementTransactionsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string MaintenanceManagementTransactionsMenu1 {
+            get {
+                return ResourceManager.GetString("MaintenanceManagementTransactionsMenu1", resourceCulture);
             }
         }
         
@@ -2536,11 +5236,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string MaintenanceMRPLinesContextAdd1 {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPLinesContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string MaintenanceMRPLinesContextChange {
             get {
                 return ResourceManager.GetString("MaintenanceMRPLinesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string MaintenanceMRPLinesContextChange1 {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPLinesContextChange1", resourceCulture);
             }
         }
         
@@ -2554,11 +5272,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string MaintenanceMRPLinesContextDelete1 {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPLinesContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string MaintenanceMRPLinesContextRefresh {
             get {
                 return ResourceManager.GetString("MaintenanceMRPLinesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string MaintenanceMRPLinesContextRefresh1 {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPLinesContextRefresh1", resourceCulture);
             }
         }
         
@@ -2572,11 +5308,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Stoktan Kullan.
+        /// </summary>
+        public static string MaintenanceMRPLinesContextStockUsage1 {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPLinesContextStockUsage1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string MaintenanceMRPsContextAdd {
             get {
                 return ResourceManager.GetString("MaintenanceMRPsContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string MaintenanceMRPsContextAdd1 {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPsContextAdd1", resourceCulture);
             }
         }
         
@@ -2590,11 +5344,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MaintenanceMRPsContextChange1 {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPsContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MRP&apos;ye Dönüştür.
         /// </summary>
         public static string MaintenanceMRPsContextConvertMRP {
             get {
                 return ResourceManager.GetString("MaintenanceMRPsContextConvertMRP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MRP&apos;ye Dönüştür.
+        /// </summary>
+        public static string MaintenanceMRPsContextConvertMRP1 {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPsContextConvertMRP1", resourceCulture);
             }
         }
         
@@ -2608,11 +5380,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string MaintenanceMRPsContextDelete1 {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPsContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string MaintenanceMRPsContextRefresh {
             get {
                 return ResourceManager.GetString("MaintenanceMRPsContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string MaintenanceMRPsContextRefresh1 {
+            get {
+                return ResourceManager.GetString("MaintenanceMRPsContextRefresh1", resourceCulture);
             }
         }
         
@@ -2626,11 +5416,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string MaintenancePeriodContextAdd1 {
+            get {
+                return ResourceManager.GetString("MaintenancePeriodContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string MaintenancePeriodContextChange {
             get {
                 return ResourceManager.GetString("MaintenancePeriodContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MaintenancePeriodContextChange1 {
+            get {
+                return ResourceManager.GetString("MaintenancePeriodContextChange1", resourceCulture);
             }
         }
         
@@ -2644,11 +5452,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string MaintenancePeriodContextDelete1 {
+            get {
+                return ResourceManager.GetString("MaintenancePeriodContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string MaintenancePeriodContextRefresh {
             get {
                 return ResourceManager.GetString("MaintenancePeriodContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string MaintenancePeriodContextRefresh1 {
+            get {
+                return ResourceManager.GetString("MaintenancePeriodContextRefresh1", resourceCulture);
             }
         }
         
@@ -2662,11 +5488,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Malzeme/Depo Durum Raporu.
+        /// </summary>
+        public static string MaterialWarehouseStatusChildMenu1 {
+            get {
+                return ResourceManager.GetString("MaterialWarehouseStatusChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçtiğiniz kayıt {0} tarafından kullanılmaktadır..
         /// </summary>
         public static string MessagePopupInformationDescriptionBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationDescriptionBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz kayıt {0} tarafından kullanılmaktadır..
+        /// </summary>
+        public static string MessagePopupInformationDescriptionBase1 {
+            get {
+                return ResourceManager.GetString("MessagePopupInformationDescriptionBase1", resourceCulture);
             }
         }
         
@@ -2680,11 +5524,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string MessagePopupInformationTitleBase1 {
+            get {
+                return ResourceManager.GetString("MessagePopupInformationTitleBase1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string MessagePopupInformationTitleBase11 {
+            get {
+                return ResourceManager.GetString("MessagePopupInformationTitleBase11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ara Kontrol Başlıkları.
         /// </summary>
         public static string MidControlChildMenu {
             get {
                 return ResourceManager.GetString("MidControlChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ara Kontrol Başlıkları.
+        /// </summary>
+        public static string MidControlChildMenu1 {
+            get {
+                return ResourceManager.GetString("MidControlChildMenu1", resourceCulture);
             }
         }
         
@@ -2698,11 +5569,47 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ara Kontrol Kayıtları.
+        /// </summary>
+        public static string MidControlRecordsChildMenu1 {
+            get {
+                return ResourceManager.GetString("MidControlRecordsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MODÜL ADI.
+        /// </summary>
+        public static string ModuleName_ {
+            get {
+                return ResourceManager.GetString("ModuleName_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modül Adı:.
+        /// </summary>
+        public static string ModuleName_Label {
+            get {
+                return ResourceManager.GetString("ModuleName_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Malzeme İhtiyaç Planlaması (MRP).
         /// </summary>
         public static string MRPChildMenu {
             get {
                 return ResourceManager.GetString("MRPChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Malzeme İhtiyaç Planlaması (MRP).
+        /// </summary>
+        public static string MRPChildMenu1 {
+            get {
+                return ResourceManager.GetString("MRPChildMenu1", resourceCulture);
             }
         }
         
@@ -2716,11 +5623,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string MRPContextAdd1 {
+            get {
+                return ResourceManager.GetString("MRPContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string MRPContextChange {
             get {
                 return ResourceManager.GetString("MRPContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MRPContextChange1 {
+            get {
+                return ResourceManager.GetString("MRPContextChange1", resourceCulture);
             }
         }
         
@@ -2734,11 +5659,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Almaya Dönüştür.
+        /// </summary>
+        public static string MRPContextConvertPurchase1 {
+            get {
+                return ResourceManager.GetString("MRPContextConvertPurchase1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string MRPContextDelete {
             get {
                 return ResourceManager.GetString("MRPContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string MRPContextDelete1 {
+            get {
+                return ResourceManager.GetString("MRPContextDelete1", resourceCulture);
             }
         }
         
@@ -2752,11 +5695,92 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string MRPContextRefresh1 {
+            get {
+                return ResourceManager.GetString("MRPContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Kaynak Planlaması (MRPII).
         /// </summary>
         public static string MRPIIChildMenu {
             get {
                 return ResourceManager.GetString("MRPIIChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Kaynak Planlaması (MRPII).
+        /// </summary>
+        public static string MRPIIChildMenu1 {
+            get {
+                return ResourceManager.GetString("MRPIIChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tahmini Bitiş Tarihi Hesapla.
+        /// </summary>
+        public static string MRPIILineContextCalculate {
+            get {
+                return ResourceManager.GetString("MRPIILineContextCalculate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MRPIILineContextChange {
+            get {
+                return ResourceManager.GetString("MRPIILineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string MRPIILineContextRefresh {
+            get {
+                return ResourceManager.GetString("MRPIILineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string MRPIIsContextAdd {
+            get {
+                return ResourceManager.GetString("MRPIIsContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MRPIIsContextChange {
+            get {
+                return ResourceManager.GetString("MRPIIsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string MRPIIsContextDelete {
+            get {
+                return ResourceManager.GetString("MRPIIsContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string MRPIIsContextRefresh {
+            get {
+                return ResourceManager.GetString("MRPIIsContextRefresh", resourceCulture);
             }
         }
         
@@ -2770,11 +5794,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string MRPLineContextChange1 {
+            get {
+                return ResourceManager.GetString("MRPLineContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Sil.
         /// </summary>
         public static string MRPLineContextDelete {
             get {
                 return ResourceManager.GetString("MRPLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string MRPLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("MRPLineContextDelete1", resourceCulture);
             }
         }
         
@@ -2788,11 +5830,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sipariş Satırlarını Sil.
+        /// </summary>
+        public static string MRPLineContextDeleteOrderLines1 {
+            get {
+                return ResourceManager.GetString("MRPLineContextDeleteOrderLines1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Hesaplamadan Kaldır.
         /// </summary>
         public static string MRPLineContextDoNotCalculate {
             get {
                 return ResourceManager.GetString("MRPLineContextDoNotCalculate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Hesaplamadan Kaldır.
+        /// </summary>
+        public static string MRPLineContextDoNotCalculate1 {
+            get {
+                return ResourceManager.GetString("MRPLineContextDoNotCalculate1", resourceCulture);
             }
         }
         
@@ -2806,11 +5866,65 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string MRPLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("MRPLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Almayı Rezerve Et.
+        /// </summary>
+        public static string MRPLineContextReservePurchase {
+            get {
+                return ResourceManager.GetString("MRPLineContextReservePurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Stoktan Kullan.
         /// </summary>
         public static string MRPLineContextStockUsage {
             get {
                 return ResourceManager.GetString("MRPLineContextStockUsage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Stoktan Kullan.
+        /// </summary>
+        public static string MRPLineContextStockUsage1 {
+            get {
+                return ResourceManager.GetString("MRPLineContextStockUsage1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tedarikçi Seç.
+        /// </summary>
+        public static string MRPLineContextSupplier {
+            get {
+                return ResourceManager.GetString("MRPLineContextSupplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BİLDİRİM ADI.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ad:.
+        /// </summary>
+        public static string NameLabel {
+            get {
+                return ResourceManager.GetString("NameLabel", resourceCulture);
             }
         }
         
@@ -2824,11 +5938,74 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ADI SOYADI.
+        /// </summary>
+        public static string NameSurname1 {
+            get {
+                return ResourceManager.GetString("NameSurname1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adı Soyadı:.
         /// </summary>
         public static string NameSurnameLabel {
             get {
                 return ResourceManager.GetString("NameSurnameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adı Soyadı:.
+        /// </summary>
+        public static string NameSurnameLabel1 {
+            get {
+                return ResourceManager.GetString("NameSurnameLabel1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bildirim Şablonları.
+        /// </summary>
+        public static string NotificationTemplatesChildMenu {
+            get {
+                return ResourceManager.GetString("NotificationTemplatesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string NotificationTemplatesContextAdd {
+            get {
+                return ResourceManager.GetString("NotificationTemplatesContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string NotificationTemplatesContextDelete {
+            get {
+                return ResourceManager.GetString("NotificationTemplatesContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aktiflik Durumunu Ayarla.
+        /// </summary>
+        public static string NotificationTemplatesContextIsActive {
+            get {
+                return ResourceManager.GetString("NotificationTemplatesContextIsActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string NotificationTemplatesContextRefresh {
+            get {
+                return ResourceManager.GetString("NotificationTemplatesContextRefresh", resourceCulture);
             }
         }
         
@@ -2842,11 +6019,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string OperationalQualityPlanContextAdd1 {
+            get {
+                return ResourceManager.GetString("OperationalQualityPlanContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string OperationalQualityPlanContextChange {
             get {
                 return ResourceManager.GetString("OperationalQualityPlanContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string OperationalQualityPlanContextChange1 {
+            get {
+                return ResourceManager.GetString("OperationalQualityPlanContextChange1", resourceCulture);
             }
         }
         
@@ -2860,11 +6055,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string OperationalQualityPlanContextDelete1 {
+            get {
+                return ResourceManager.GetString("OperationalQualityPlanContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string OperationalQualityPlanContextRefresh {
             get {
                 return ResourceManager.GetString("OperationalQualityPlanContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string OperationalQualityPlanContextRefresh1 {
+            get {
+                return ResourceManager.GetString("OperationalQualityPlanContextRefresh1", resourceCulture);
             }
         }
         
@@ -2878,11 +6091,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string OperationalQualityPlanLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("OperationalQualityPlanLineContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string OperationalQualityPlanLineContextChange {
             get {
                 return ResourceManager.GetString("OperationalQualityPlanLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string OperationalQualityPlanLineContextChange1 {
+            get {
+                return ResourceManager.GetString("OperationalQualityPlanLineContextChange1", resourceCulture);
             }
         }
         
@@ -2896,11 +6127,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string OperationalQualityPlanLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("OperationalQualityPlanLineContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string OperationalQualityPlanLineContextRefresh {
             get {
                 return ResourceManager.GetString("OperationalQualityPlanLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string OperationalQualityPlanLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("OperationalQualityPlanLineContextRefresh1", resourceCulture);
             }
         }
         
@@ -2914,11 +6163,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operasyon Kalite Planları.
+        /// </summary>
+        public static string OperationalQualityPlansChildMenu1 {
+            get {
+                return ResourceManager.GetString("OperationalQualityPlansChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operasyonel SPC Tabloları.
         /// </summary>
         public static string OperationalSPCChildMenu {
             get {
                 return ResourceManager.GetString("OperationalSPCChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyonel SPC Tabloları.
+        /// </summary>
+        public static string OperationalSPCChildMenu1 {
+            get {
+                return ResourceManager.GetString("OperationalSPCChildMenu1", resourceCulture);
             }
         }
         
@@ -2932,11 +6199,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operasyonel SPC Karşılaştırma.
+        /// </summary>
+        public static string OperationalSPCComparingChildMenu1 {
+            get {
+                return ResourceManager.GetString("OperationalSPCComparingChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string OperationalSPCContextAdd {
             get {
                 return ResourceManager.GetString("OperationalSPCContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string OperationalSPCContextAdd1 {
+            get {
+                return ResourceManager.GetString("OperationalSPCContextAdd1", resourceCulture);
             }
         }
         
@@ -2950,11 +6235,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string OperationalSPCContextChange1 {
+            get {
+                return ResourceManager.GetString("OperationalSPCContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string OperationalSPCContextDelete {
             get {
                 return ResourceManager.GetString("OperationalSPCContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string OperationalSPCContextDelete1 {
+            get {
+                return ResourceManager.GetString("OperationalSPCContextDelete1", resourceCulture);
             }
         }
         
@@ -2968,11 +6271,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string OperationalSPCContextRefresh1 {
+            get {
+                return ResourceManager.GetString("OperationalSPCContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Ekle.
         /// </summary>
         public static string OperationalSPCLineContextAdd {
             get {
                 return ResourceManager.GetString("OperationalSPCLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string OperationalSPCLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineContextAdd1", resourceCulture);
             }
         }
         
@@ -2986,11 +6307,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string OperationalSPCLineContextChange1 {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Sil.
         /// </summary>
         public static string OperationalSPCLineContextDelete {
             get {
                 return ResourceManager.GetString("OperationalSPCLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string OperationalSPCLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineContextDelete1", resourceCulture);
             }
         }
         
@@ -3004,11 +6343,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string OperationalSPCLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operasyonlar.
         /// </summary>
         public static string OperationsMenu {
             get {
                 return ResourceManager.GetString("OperationsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyonlar.
+        /// </summary>
+        public static string OperationsMenu1 {
+            get {
+                return ResourceManager.GetString("OperationsMenu1", resourceCulture);
             }
         }
         
@@ -3022,11 +6379,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string OperationUnsuitabilityReportContextAdd1 {
+            get {
+                return ResourceManager.GetString("OperationUnsuitabilityReportContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string OperationUnsuitabilityReportContextChange {
             get {
                 return ResourceManager.GetString("OperationUnsuitabilityReportContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string OperationUnsuitabilityReportContextChange1 {
+            get {
+                return ResourceManager.GetString("OperationUnsuitabilityReportContextChange1", resourceCulture);
             }
         }
         
@@ -3040,11 +6415,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string OperationUnsuitabilityReportContextDelete1 {
+            get {
+                return ResourceManager.GetString("OperationUnsuitabilityReportContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string OperationUnsuitabilityReportContextRefresh {
             get {
                 return ResourceManager.GetString("OperationUnsuitabilityReportContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string OperationUnsuitabilityReportContextRefresh1 {
+            get {
+                return ResourceManager.GetString("OperationUnsuitabilityReportContextRefresh1", resourceCulture);
             }
         }
         
@@ -3058,11 +6451,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operasyon Resmi Ekle.
+        /// </summary>
+        public static string OprPictureContextAdd1 {
+            get {
+                return ResourceManager.GetString("OprPictureContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operasyon Resmi Değiştir.
         /// </summary>
         public static string OprPictureContextChange {
             get {
                 return ResourceManager.GetString("OprPictureContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon Resmi Değiştir.
+        /// </summary>
+        public static string OprPictureContextChange1 {
+            get {
+                return ResourceManager.GetString("OprPictureContextChange1", resourceCulture);
             }
         }
         
@@ -3076,11 +6487,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operasyon Resmi Sil.
+        /// </summary>
+        public static string OprPictureContextDelete1 {
+            get {
+                return ResourceManager.GetString("OprPictureContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operasyon Resmi Güncelle.
         /// </summary>
         public static string OprPictureContextRefresh {
             get {
                 return ResourceManager.GetString("OprPictureContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon Resmi Güncelle.
+        /// </summary>
+        public static string OprPictureContextRefresh1 {
+            get {
+                return ResourceManager.GetString("OprPictureContextRefresh1", resourceCulture);
             }
         }
         
@@ -3094,11 +6523,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operasyon Uygunsuzluk Kayıtları.
+        /// </summary>
+        public static string OprUnsRecordsChildMenu1 {
+            get {
+                return ResourceManager.GetString("OprUnsRecordsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Ekle.
         /// </summary>
         public static string OrderAcceptanceRecordLineContextAdd {
             get {
                 return ResourceManager.GetString("OrderAcceptanceRecordLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string OrderAcceptanceRecordLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordLineContextAdd1", resourceCulture);
             }
         }
         
@@ -3112,11 +6559,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string OrderAcceptanceRecordLineContextChange1 {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordLineContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Sil.
         /// </summary>
         public static string OrderAcceptanceRecordLineContextDelete {
             get {
                 return ResourceManager.GetString("OrderAcceptanceRecordLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string OrderAcceptanceRecordLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordLineContextDelete1", resourceCulture);
             }
         }
         
@@ -3130,11 +6595,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string OrderAcceptanceRecordLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sipariş Kabul Kayıtları.
         /// </summary>
         public static string OrderAcceptanceRecordsChildMenu {
             get {
                 return ResourceManager.GetString("OrderAcceptanceRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sipariş Kabul Kayıtları.
+        /// </summary>
+        public static string OrderAcceptanceRecordsChildMenu1 {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsChildMenu1", resourceCulture);
             }
         }
         
@@ -3148,11 +6631,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextAdd1 {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string OrderAcceptanceRecordsContextChange {
             get {
                 return ResourceManager.GetString("OrderAcceptanceRecordsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextChange1 {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sipariş Kabul Kontrol.
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextControl {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextControl", resourceCulture);
             }
         }
         
@@ -3166,11 +6676,47 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satış Siparişine Dönüştür.
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextConverttoOrder1 {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextConverttoOrder1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string OrderAcceptanceRecordsContextDelete {
             get {
                 return ResourceManager.GetString("OrderAcceptanceRecordsContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextDelete1 {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Malzeme İhtiyaç Listesi.
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextMRP {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextMRP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sipariş Satırları.
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextOrderLines {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextOrderLines", resourceCulture);
             }
         }
         
@@ -3184,11 +6730,56 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextRefresh1 {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durum.
+        /// </summary>
+        public static string OrderAcceptanceRecordsContextStatus {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsContextStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string PackageFicheLinesContextChange {
+            get {
+                return ResourceManager.GetString("PackageFicheLinesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string PackageFicheLinesContextRefresh {
+            get {
+                return ResourceManager.GetString("PackageFicheLinesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paket Fişleri.
         /// </summary>
         public static string PackageFichesChildMenu {
             get {
                 return ResourceManager.GetString("PackageFichesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paket Fişleri.
+        /// </summary>
+        public static string PackageFichesChildMenu1 {
+            get {
+                return ResourceManager.GetString("PackageFichesChildMenu1", resourceCulture);
             }
         }
         
@@ -3202,11 +6793,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PackageFichesContextAdd1 {
+            get {
+                return ResourceManager.GetString("PackageFichesContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string PackageFichesContextChange {
             get {
                 return ResourceManager.GetString("PackageFichesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PackageFichesContextChange1 {
+            get {
+                return ResourceManager.GetString("PackageFichesContextChange1", resourceCulture);
             }
         }
         
@@ -3220,11 +6829,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PackageFichesContextDelete1 {
+            get {
+                return ResourceManager.GetString("PackageFichesContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string PackageFichesContextRefresh {
             get {
                 return ResourceManager.GetString("PackageFichesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PackageFichesContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PackageFichesContextRefresh1", resourceCulture);
             }
         }
         
@@ -3238,11 +6865,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paket Fişleri Listesi.
+        /// </summary>
+        public static string PackageFichesListChildMenu1 {
+            get {
+                return ResourceManager.GetString("PackageFichesListChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Çeki Listesi.
         /// </summary>
         public static string PackingListChildMenu {
             get {
                 return ResourceManager.GetString("PackingListChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çeki Listesi.
+        /// </summary>
+        public static string PackingListChildMenu1 {
+            get {
+                return ResourceManager.GetString("PackingListChildMenu1", resourceCulture);
             }
         }
         
@@ -3256,11 +6901,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çeki Listeleri.
+        /// </summary>
+        public static string PackingListsChildMenu1 {
+            get {
+                return ResourceManager.GetString("PackingListsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string PackingListsContextAdd {
             get {
                 return ResourceManager.GetString("PackingListsContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PackingListsContextAdd1 {
+            get {
+                return ResourceManager.GetString("PackingListsContextAdd1", resourceCulture);
             }
         }
         
@@ -3274,11 +6937,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çeki Listesini Onayla.
+        /// </summary>
+        public static string PackingListsContextApprove1 {
+            get {
+                return ResourceManager.GetString("PackingListsContextApprove1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string PackingListsContextChange {
             get {
                 return ResourceManager.GetString("PackingListsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PackingListsContextChange1 {
+            get {
+                return ResourceManager.GetString("PackingListsContextChange1", resourceCulture);
             }
         }
         
@@ -3292,11 +6973,47 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PackingListsContextDelete1 {
+            get {
+                return ResourceManager.GetString("PackingListsContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yazdır.
+        /// </summary>
+        public static string PackingListsContextPrint {
+            get {
+                return ResourceManager.GetString("PackingListsContextPrint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string PackingListsContextRefresh {
             get {
                 return ResourceManager.GetString("PackingListsContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PackingListsContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PackingListsContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet Çıkar.
+        /// </summary>
+        public static string PackingListsPalletLineContextRemovePallet {
+            get {
+                return ResourceManager.GetString("PackingListsPalletLineContextRemovePallet", resourceCulture);
             }
         }
         
@@ -3310,11 +7027,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Palet Seç.
+        /// </summary>
+        public static string PackingListsPalletLineContextSelectPallet1 {
+            get {
+                return ResourceManager.GetString("PackingListsPalletLineContextSelectPallet1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Palet Paket Satır Numaralandır.
         /// </summary>
         public static string PackingListsPalletPackageLineContextEnumarate {
             get {
                 return ResourceManager.GetString("PackingListsPalletPackageLineContextEnumarate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet Paket Satır Numaralandır.
+        /// </summary>
+        public static string PackingListsPalletPackageLineContextEnumarate1 {
+            get {
+                return ResourceManager.GetString("PackingListsPalletPackageLineContextEnumarate1", resourceCulture);
             }
         }
         
@@ -3328,11 +7063,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Palet Seçimi Seçimi Kaldır.
+        /// </summary>
+        public static string PackingListsPalletSelectionContextRemove1 {
+            get {
+                return ResourceManager.GetString("PackingListsPalletSelectionContextRemove1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Palet Seçimi Seç.
         /// </summary>
         public static string PackingListsPalletSelectionContextSelect {
             get {
                 return ResourceManager.GetString("PackingListsPalletSelectionContextSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet Seçimi Seç.
+        /// </summary>
+        public static string PackingListsPalletSelectionContextSelect1 {
+            get {
+                return ResourceManager.GetString("PackingListsPalletSelectionContextSelect1", resourceCulture);
             }
         }
         
@@ -3346,11 +7099,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Palet Seçimi Hepsini Seç.
+        /// </summary>
+        public static string PackingListsPalletSelectionContextSelectAll1 {
+            get {
+                return ResourceManager.GetString("PackingListsPalletSelectionContextSelectAll1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Ekle.
         /// </summary>
         public static string PalletRecordLinesContextAdd {
             get {
                 return ResourceManager.GetString("PalletRecordLinesContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string PalletRecordLinesContextAdd1 {
+            get {
+                return ResourceManager.GetString("PalletRecordLinesContextAdd1", resourceCulture);
             }
         }
         
@@ -3364,11 +7135,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Paket Fişi Aktar .
+        /// </summary>
+        public static string PalletRecordLinesContextAddPackageFiche1 {
+            get {
+                return ResourceManager.GetString("PalletRecordLinesContextAddPackageFiche1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string PalletRecordLinesContextChange {
             get {
                 return ResourceManager.GetString("PalletRecordLinesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string PalletRecordLinesContextChange1 {
+            get {
+                return ResourceManager.GetString("PalletRecordLinesContextChange1", resourceCulture);
             }
         }
         
@@ -3382,11 +7171,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string PalletRecordLinesContextDelete1 {
+            get {
+                return ResourceManager.GetString("PalletRecordLinesContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string PalletRecordLinesContextRefresh {
             get {
                 return ResourceManager.GetString("PalletRecordLinesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string PalletRecordLinesContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PalletRecordLinesContextRefresh1", resourceCulture);
             }
         }
         
@@ -3400,11 +7207,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Paket Fişi Çıkar.
+        /// </summary>
+        public static string PalletRecordLinesContextRemovePackageFiche1 {
+            get {
+                return ResourceManager.GetString("PalletRecordLinesContextRemovePackageFiche1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Palet Kayıtları.
         /// </summary>
         public static string PalletRecordsChildMenu {
             get {
                 return ResourceManager.GetString("PalletRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet Kayıtları.
+        /// </summary>
+        public static string PalletRecordsChildMenu1 {
+            get {
+                return ResourceManager.GetString("PalletRecordsChildMenu1", resourceCulture);
             }
         }
         
@@ -3418,11 +7243,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PalletRecordsContextAdd1 {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string PalletRecordsContextChange {
             get {
                 return ResourceManager.GetString("PalletRecordsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PalletRecordsContextChange1 {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextChange1", resourceCulture);
             }
         }
         
@@ -3436,11 +7279,74 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PalletRecordsContextDelete1 {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yükleme Detayı.
+        /// </summary>
+        public static string PalletRecordsContextLoadingDetail {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextLoadingDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Palet Detayı.
+        /// </summary>
+        public static string PalletRecordsContextPalletDetail {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextPalletDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yazdır.
+        /// </summary>
+        public static string PalletRecordsContextPrintTicket {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextPrintTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string PalletRecordsContextRefresh {
             get {
                 return ResourceManager.GetString("PalletRecordsContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PalletRecordsContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durum.
+        /// </summary>
+        public static string PalletRecordsContextState {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Etiket Basım.
+        /// </summary>
+        public static string PalletRecordsContextTicketState {
+            get {
+                return ResourceManager.GetString("PalletRecordsContextTicketState", resourceCulture);
             }
         }
         
@@ -3454,11 +7360,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Palet Kayıtları Listesi.
+        /// </summary>
+        public static string PalletRecordsListChildMenu1 {
+            get {
+                return ResourceManager.GetString("PalletRecordsListChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parola:.
         /// </summary>
         public static string PasswordLabel {
             get {
                 return ResourceManager.GetString("PasswordLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parola:.
+        /// </summary>
+        public static string PasswordLabel1 {
+            get {
+                return ResourceManager.GetString("PasswordLabel1", resourceCulture);
             }
         }
         
@@ -3472,11 +7396,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PaymentPlanContextAdd1 {
+            get {
+                return ResourceManager.GetString("PaymentPlanContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string PaymentPlanContextChange {
             get {
                 return ResourceManager.GetString("PaymentPlanContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PaymentPlanContextChange1 {
+            get {
+                return ResourceManager.GetString("PaymentPlanContextChange1", resourceCulture);
             }
         }
         
@@ -3490,11 +7432,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PaymentPlanContextDelete1 {
+            get {
+                return ResourceManager.GetString("PaymentPlanContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string PaymentPlanContextRefresh {
             get {
                 return ResourceManager.GetString("PaymentPlanContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PaymentPlanContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PaymentPlanContextRefresh1", resourceCulture);
             }
         }
         
@@ -3508,11 +7468,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ödeme Planları.
+        /// </summary>
+        public static string PaymentPlansChildMenu1 {
+            get {
+                return ResourceManager.GetString("PaymentPlansChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string PeriodContextAdd {
             get {
                 return ResourceManager.GetString("PeriodContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PeriodContextAdd1 {
+            get {
+                return ResourceManager.GetString("PeriodContextAdd1", resourceCulture);
             }
         }
         
@@ -3526,11 +7504,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PeriodContextChange1 {
+            get {
+                return ResourceManager.GetString("PeriodContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string PeriodContextDelete {
             get {
                 return ResourceManager.GetString("PeriodContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PeriodContextDelete1 {
+            get {
+                return ResourceManager.GetString("PeriodContextDelete1", resourceCulture);
             }
         }
         
@@ -3544,11 +7540,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PeriodContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PeriodContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dönem Kayıtları.
         /// </summary>
         public static string PeriodsChildMenu {
             get {
                 return ResourceManager.GetString("PeriodsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dönem Kayıtları.
+        /// </summary>
+        public static string PeriodsChildMenu1 {
+            get {
+                return ResourceManager.GetString("PeriodsChildMenu1", resourceCulture);
             }
         }
         
@@ -3562,11 +7576,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Yetkileri.
+        /// </summary>
+        public static string PermissionModalTitle1 {
+            get {
+                return ResourceManager.GetString("PermissionModalTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yetkiler Yükleniyor....
         /// </summary>
         public static string PermissionsLoadingMessage {
             get {
                 return ResourceManager.GetString("PermissionsLoadingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yetkiler Yükleniyor....
+        /// </summary>
+        public static string PermissionsLoadingMessage1 {
+            get {
+                return ResourceManager.GetString("PermissionsLoadingMessage1", resourceCulture);
             }
         }
         
@@ -3580,11 +7612,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to P-FMEA.
+        /// </summary>
+        public static string PFMEAChildMenu1 {
+            get {
+                return ResourceManager.GetString("PFMEAChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string PFMEAContextAdd {
             get {
                 return ResourceManager.GetString("PFMEAContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PFMEAContextAdd1 {
+            get {
+                return ResourceManager.GetString("PFMEAContextAdd1", resourceCulture);
             }
         }
         
@@ -3598,11 +7648,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PFMEAContextChange1 {
+            get {
+                return ResourceManager.GetString("PFMEAContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string PFMEAContextDelete {
             get {
                 return ResourceManager.GetString("PFMEAContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PFMEAContextDelete1 {
+            get {
+                return ResourceManager.GetString("PFMEAContextDelete1", resourceCulture);
             }
         }
         
@@ -3616,11 +7684,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PFMEAContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PFMEAContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Önleyici/Planlı Bakım Kayıtları.
         /// </summary>
         public static string PlannedMainChildMenu {
             get {
                 return ResourceManager.GetString("PlannedMainChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Önleyici/Planlı Bakım Kayıtları.
+        /// </summary>
+        public static string PlannedMainChildMenu1 {
+            get {
+                return ResourceManager.GetString("PlannedMainChildMenu1", resourceCulture);
             }
         }
         
@@ -3634,11 +7720,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PlannedMaintenanceContextAdd1 {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string PlannedMaintenanceContextChange {
             get {
                 return ResourceManager.GetString("PlannedMaintenanceContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PlannedMaintenanceContextChange1 {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceContextChange1", resourceCulture);
             }
         }
         
@@ -3652,11 +7756,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PlannedMaintenanceContextDelete1 {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string PlannedMaintenanceContextRefresh {
             get {
                 return ResourceManager.GetString("PlannedMaintenanceContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PlannedMaintenanceContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceContextRefresh1", resourceCulture);
             }
         }
         
@@ -3670,11 +7792,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string PlannedMaintenanceLineContextChange1 {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceLineContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Sil.
         /// </summary>
         public static string PlannedMaintenanceLineContextDelete {
             get {
                 return ResourceManager.GetString("PlannedMaintenanceLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string PlannedMaintenanceLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceLineContextDelete1", resourceCulture);
             }
         }
         
@@ -3688,11 +7828,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string PlannedMaintenanceLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string PlanningManagementParameterContextAdd {
             get {
                 return ResourceManager.GetString("PlanningManagementParameterContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PlanningManagementParameterContextAdd1 {
+            get {
+                return ResourceManager.GetString("PlanningManagementParameterContextAdd1", resourceCulture);
             }
         }
         
@@ -3706,11 +7864,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PlanningManagementParameterContextChange1 {
+            get {
+                return ResourceManager.GetString("PlanningManagementParameterContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string PlanningManagementParameterContextDelete {
             get {
                 return ResourceManager.GetString("PlanningManagementParameterContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PlanningManagementParameterContextDelete1 {
+            get {
+                return ResourceManager.GetString("PlanningManagementParameterContextDelete1", resourceCulture);
             }
         }
         
@@ -3724,11 +7900,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PlanningManagementParameterContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PlanningManagementParameterContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Planlama Yönetimi .
         /// </summary>
         public static string PlanningManagementParametersChildMenu {
             get {
                 return ResourceManager.GetString("PlanningManagementParametersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Planlama Yönetimi .
+        /// </summary>
+        public static string PlanningManagementParametersChildMenu1 {
+            get {
+                return ResourceManager.GetString("PlanningManagementParametersChildMenu1", resourceCulture);
             }
         }
         
@@ -3742,11 +7936,83 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Planlama.
+        /// </summary>
+        public static string PlanningParentMenu1 {
+            get {
+                return ResourceManager.GetString("PlanningParentMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞLEM ADI.
+        /// </summary>
+        public static string ProcessName_ {
+            get {
+                return ResourceManager.GetString("ProcessName_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Adı:.
+        /// </summary>
+        public static string ProcessName_Label {
+            get {
+                return ResourceManager.GetString("ProcessName_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Operasyon Kayıtları.
         /// </summary>
         public static string ProdOperationsChildMenu {
             get {
                 return ResourceManager.GetString("ProdOperationsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Operasyon Kayıtları.
+        /// </summary>
+        public static string ProdOperationsChildMenu1 {
+            get {
+                return ResourceManager.GetString("ProdOperationsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Emri Değişiklik Kayıtları.
+        /// </summary>
+        public static string ProdOrderChangeRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("ProdOrderChangeRecordsChildMenu", resourceCulture);
             }
         }
         
@@ -3760,11 +8026,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Emri Uygunsuzluk Kayıtları.
+        /// </summary>
+        public static string ProdOrderRecordsChildMenu1 {
+            get {
+                return ResourceManager.GetString("ProdOrderRecordsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Emri Uygunsuzluk Kayıtları Analizi.
         /// </summary>
         public static string ProdOrderUnsAnlChildMenu {
             get {
                 return ResourceManager.GetString("ProdOrderUnsAnlChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Emri Uygunsuzluk Kayıtları Analizi.
+        /// </summary>
+        public static string ProdOrderUnsAnlChildMenu1 {
+            get {
+                return ResourceManager.GetString("ProdOrderUnsAnlChildMenu1", resourceCulture);
             }
         }
         
@@ -3778,11 +8062,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Takip Kayıtları Listesi.
+        /// </summary>
+        public static string ProdTrackingListChildMenu1 {
+            get {
+                return ResourceManager.GetString("ProdTrackingListChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manuel.
         /// </summary>
         public static string ProdTrackingsChildMenu {
             get {
                 return ResourceManager.GetString("ProdTrackingsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manuel.
+        /// </summary>
+        public static string ProdTrackingsChildMenu1 {
+            get {
+                return ResourceManager.GetString("ProdTrackingsChildMenu1", resourceCulture);
             }
         }
         
@@ -3796,11 +8098,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductContextAdd1 {
+            get {
+                return ResourceManager.GetString("ProductContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok Reçeteleri.
         /// </summary>
         public static string ProductContextBOMs {
             get {
                 return ResourceManager.GetString("ProductContextBOMs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Reçeteleri.
+        /// </summary>
+        public static string ProductContextBOMs1 {
+            get {
+                return ResourceManager.GetString("ProductContextBOMs1", resourceCulture);
             }
         }
         
@@ -3814,11 +8134,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductContextChange1 {
+            get {
+                return ResourceManager.GetString("ProductContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fason Takip Fişleri.
         /// </summary>
         public static string ProductContextContProdTrackings {
             get {
                 return ResourceManager.GetString("ProductContextContProdTrackings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fason Takip Fişleri.
+        /// </summary>
+        public static string ProductContextContProdTrackings1 {
+            get {
+                return ResourceManager.GetString("ProductContextContProdTrackings1", resourceCulture);
             }
         }
         
@@ -3832,11 +8170,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductContextDelete1 {
+            get {
+                return ResourceManager.GetString("ProductContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Referans Numaraları.
         /// </summary>
         public static string ProductContextProductRefNr {
             get {
                 return ResourceManager.GetString("ProductContextProductRefNr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Referans Numaraları.
+        /// </summary>
+        public static string ProductContextProductRefNr1 {
+            get {
+                return ResourceManager.GetString("ProductContextProductRefNr1", resourceCulture);
             }
         }
         
@@ -3850,11 +8206,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Fiyatları.
+        /// </summary>
+        public static string ProductContextPurchasePrices1 {
+            get {
+                return ResourceManager.GetString("ProductContextPurchasePrices1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string ProductContextRefresh {
             get {
                 return ResourceManager.GetString("ProductContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ProductContextRefresh1", resourceCulture);
             }
         }
         
@@ -3868,11 +8242,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ürün Rotaları.
+        /// </summary>
+        public static string ProductContextRoutes1 {
+            get {
+                return ResourceManager.GetString("ProductContextRoutes1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Fiyatları.
         /// </summary>
         public static string ProductContextSalesPrices {
             get {
                 return ResourceManager.GetString("ProductContextSalesPrices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satış Fiyatları.
+        /// </summary>
+        public static string ProductContextSalesPrices1 {
+            get {
+                return ResourceManager.GetString("ProductContextSalesPrices1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Adresleri.
+        /// </summary>
+        public static string ProductContextStockAddress {
+            get {
+                return ResourceManager.GetString("ProductContextStockAddress", resourceCulture);
             }
         }
         
@@ -3886,11 +8287,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Depo Toplamları.
+        /// </summary>
+        public static string ProductContextStockAmounts1 {
+            get {
+                return ResourceManager.GetString("ProductContextStockAmounts1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Teknik Resimler.
         /// </summary>
         public static string ProductContextTechnicalDrawings {
             get {
                 return ResourceManager.GetString("ProductContextTechnicalDrawings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teknik Resimler.
+        /// </summary>
+        public static string ProductContextTechnicalDrawings1 {
+            get {
+                return ResourceManager.GetString("ProductContextTechnicalDrawings1", resourceCulture);
             }
         }
         
@@ -3904,11 +8323,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductGroupContextAdd1 {
+            get {
+                return ResourceManager.GetString("ProductGroupContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ProductGroupContextChange {
             get {
                 return ResourceManager.GetString("ProductGroupContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductGroupContextChange1 {
+            get {
+                return ResourceManager.GetString("ProductGroupContextChange1", resourceCulture);
             }
         }
         
@@ -3922,11 +8359,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductGroupContextDelete1 {
+            get {
+                return ResourceManager.GetString("ProductGroupContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellikleri.
+        /// </summary>
+        public static string ProductGroupContextProductProperties {
+            get {
+                return ResourceManager.GetString("ProductGroupContextProductProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string ProductGroupContextRefresh {
             get {
                 return ResourceManager.GetString("ProductGroupContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductGroupContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ProductGroupContextRefresh1", resourceCulture);
             }
         }
         
@@ -3940,11 +8404,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ürün Grupları.
+        /// </summary>
+        public static string ProductGroupsChildMenu1 {
+            get {
+                return ResourceManager.GetString("ProductGroupsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ana Kayıtlar.
         /// </summary>
         public static string ProductionManagementMainRecordsMenu {
             get {
                 return ResourceManager.GetString("ProductionManagementMainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string ProductionManagementMainRecordsMenu1 {
+            get {
+                return ResourceManager.GetString("ProductionManagementMainRecordsMenu1", resourceCulture);
             }
         }
         
@@ -3958,11 +8440,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductionManagementParameterContextAdd1 {
+            get {
+                return ResourceManager.GetString("ProductionManagementParameterContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ProductionManagementParameterContextChange {
             get {
                 return ResourceManager.GetString("ProductionManagementParameterContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductionManagementParameterContextChange1 {
+            get {
+                return ResourceManager.GetString("ProductionManagementParameterContextChange1", resourceCulture);
             }
         }
         
@@ -3976,11 +8476,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductionManagementParameterContextDelete1 {
+            get {
+                return ResourceManager.GetString("ProductionManagementParameterContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string ProductionManagementParameterContextRefresh {
             get {
                 return ResourceManager.GetString("ProductionManagementParameterContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductionManagementParameterContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ProductionManagementParameterContextRefresh1", resourceCulture);
             }
         }
         
@@ -3994,11 +8512,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Yönetimi .
+        /// </summary>
+        public static string ProductionManagementParametersChildMenu1 {
+            get {
+                return ResourceManager.GetString("ProductionManagementParametersChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Yönetimi.
         /// </summary>
         public static string ProductionManagementParentMenu {
             get {
                 return ResourceManager.GetString("ProductionManagementParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Yönetimi.
+        /// </summary>
+        public static string ProductionManagementParentMenu1 {
+            get {
+                return ResourceManager.GetString("ProductionManagementParentMenu1", resourceCulture);
             }
         }
         
@@ -4012,11 +8548,65 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string ProductionManagementReportsMenu1 {
+            get {
+                return ResourceManager.GetString("ProductionManagementReportsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hareketler.
         /// </summary>
         public static string ProductionManagementTransactionsMenu {
             get {
                 return ResourceManager.GetString("ProductionManagementTransactionsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string ProductionManagementTransactionsMenu1 {
+            get {
+                return ResourceManager.GetString("ProductionManagementTransactionsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductionOrderChangeReportsContextAdd {
+            get {
+                return ResourceManager.GetString("ProductionOrderChangeReportsContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductionOrderChangeReportsContextChange {
+            get {
+                return ResourceManager.GetString("ProductionOrderChangeReportsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductionOrderChangeReportsContextDelete {
+            get {
+                return ResourceManager.GetString("ProductionOrderChangeReportsContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductionOrderChangeReportsContextRefresh {
+            get {
+                return ResourceManager.GetString("ProductionOrderChangeReportsContextRefresh", resourceCulture);
             }
         }
         
@@ -4030,11 +8620,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductionOrderContextAdd1 {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sevkiyat Planlamasına Aktar.
         /// </summary>
         public static string ProductionOrderContextAddtoShipmentPlanning {
             get {
                 return ResourceManager.GetString("ProductionOrderContextAddtoShipmentPlanning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sevkiyat Planlamasına Aktar.
+        /// </summary>
+        public static string ProductionOrderContextAddtoShipmentPlanning1 {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextAddtoShipmentPlanning1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İptal.
+        /// </summary>
+        public static string ProductionOrderContextCancel {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextCancel", resourceCulture);
             }
         }
         
@@ -4048,11 +8665,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductionOrderContextChange1 {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teknik Resim Değiştir.
+        /// </summary>
+        public static string ProductionOrderContextChangeTechnicalDrawing {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextChangeTechnicalDrawing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sarf Fişi Oluştur.
         /// </summary>
         public static string ProductionOrderContextConsumptionReceipt {
             get {
                 return ResourceManager.GetString("ProductionOrderContextConsumptionReceipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sarf Fişi Oluştur.
+        /// </summary>
+        public static string ProductionOrderContextConsumptionReceipt1 {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextConsumptionReceipt1", resourceCulture);
             }
         }
         
@@ -4066,11 +8710,47 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductionOrderContextDelete1 {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Malzeme Fişleri.
+        /// </summary>
+        public static string ProductionOrderContextMaterialFiches {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextMaterialFiches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Malzeme Temin Durumu.
+        /// </summary>
+        public static string ProductionOrderContextMaterialSupplyStatus {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextMaterialSupplyStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gerçekleşen Miktar Girişi.
         /// </summary>
         public static string ProductionOrderContextOccuredAmountEntry {
             get {
                 return ResourceManager.GetString("ProductionOrderContextOccuredAmountEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gerçekleşen Miktar Girişi.
+        /// </summary>
+        public static string ProductionOrderContextOccuredAmountEntry1 {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextOccuredAmountEntry1", resourceCulture);
             }
         }
         
@@ -4084,11 +8764,56 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductionOrderContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to H.M. - Y.M. İzleme Tablosu.
+        /// </summary>
+        public static string ProductionOrderContextTrackingChart {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextTrackingChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Kayıtları.
+        /// </summary>
+        public static string ProductionOrderContextUnsuitabilityRecords {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextUnsuitabilityRecords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İş Emirleri.
         /// </summary>
         public static string ProductionOrderContextWorkOrders {
             get {
                 return ResourceManager.GetString("ProductionOrderContextWorkOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş Emirleri.
+        /// </summary>
+        public static string ProductionOrderContextWorkOrders1 {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextWorkOrders1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yaz.
+        /// </summary>
+        public static string ProductionOrderContextWrite {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextWrite", resourceCulture);
             }
         }
         
@@ -4102,11 +8827,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Emirleri Listesi.
+        /// </summary>
+        public static string ProductionOrderListChildMenu1 {
+            get {
+                return ResourceManager.GetString("ProductionOrderListChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Emirleri.
         /// </summary>
         public static string ProductionOrdersChildMenu {
             get {
                 return ResourceManager.GetString("ProductionOrdersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Emirleri.
+        /// </summary>
+        public static string ProductionOrdersChildMenu1 {
+            get {
+                return ResourceManager.GetString("ProductionOrdersChildMenu1", resourceCulture);
             }
         }
         
@@ -4120,11 +8863,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Planlama.
+        /// </summary>
+        public static string ProductionPlanningMenu1 {
+            get {
+                return ResourceManager.GetString("ProductionPlanningMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ProductionTrackingContextAdd {
             get {
                 return ResourceManager.GetString("ProductionTrackingContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductionTrackingContextAdd1 {
+            get {
+                return ResourceManager.GetString("ProductionTrackingContextAdd1", resourceCulture);
             }
         }
         
@@ -4138,11 +8899,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductionTrackingContextChange1 {
+            get {
+                return ResourceManager.GetString("ProductionTrackingContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string ProductionTrackingContextDelete {
             get {
                 return ResourceManager.GetString("ProductionTrackingContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductionTrackingContextDelete1 {
+            get {
+                return ResourceManager.GetString("ProductionTrackingContextDelete1", resourceCulture);
             }
         }
         
@@ -4156,11 +8935,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductionTrackingContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ProductionTrackingContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Ekle.
         /// </summary>
         public static string ProductionTrackingLineContextAdd {
             get {
                 return ResourceManager.GetString("ProductionTrackingLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string ProductionTrackingLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("ProductionTrackingLineContextAdd1", resourceCulture);
             }
         }
         
@@ -4174,11 +8971,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string ProductionTrackingLineContextChange1 {
+            get {
+                return ResourceManager.GetString("ProductionTrackingLineContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Sil.
         /// </summary>
         public static string ProductionTrackingLineContextDelete {
             get {
                 return ResourceManager.GetString("ProductionTrackingLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string ProductionTrackingLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("ProductionTrackingLineContextDelete1", resourceCulture);
             }
         }
         
@@ -4192,6 +9007,15 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string ProductionTrackingLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ProductionTrackingLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Takip Kayıtları.
         /// </summary>
         public static string ProductionTrackingRecordsMenu {
@@ -4201,11 +9025,155 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Takip Kayıtları.
+        /// </summary>
+        public static string ProductionTrackingRecordsMenu1 {
+            get {
+                return ResourceManager.GetString("ProductionTrackingRecordsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Ağacı.
         /// </summary>
         public static string ProductOrderContextTree {
             get {
                 return ResourceManager.GetString("ProductOrderContextTree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Ağacı.
+        /// </summary>
+        public static string ProductOrderContextTree1 {
+            get {
+                return ResourceManager.GetString("ProductOrderContextTree1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellikleri Ekle.
+        /// </summary>
+        public static string ProductPropertyContextAdd {
+            get {
+                return ResourceManager.GetString("ProductPropertyContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellikleri Değiştir.
+        /// </summary>
+        public static string ProductPropertyContextChange {
+            get {
+                return ResourceManager.GetString("ProductPropertyContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellikleri Sil.
+        /// </summary>
+        public static string ProductPropertyContextDelete {
+            get {
+                return ResourceManager.GetString("ProductPropertyContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellikleri Güncelle.
+        /// </summary>
+        public static string ProductPropertyContextRefresh {
+            get {
+                return ResourceManager.GetString("ProductPropertyContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellikleri Satır Ekle.
+        /// </summary>
+        public static string ProductPropertyLineContextAdd {
+            get {
+                return ResourceManager.GetString("ProductPropertyLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellikleri Satır Değiştir.
+        /// </summary>
+        public static string ProductPropertyLineContextChange {
+            get {
+                return ResourceManager.GetString("ProductPropertyLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellikleri Satır Sil.
+        /// </summary>
+        public static string ProductPropertyLineContextDelete {
+            get {
+                return ResourceManager.GetString("ProductPropertyLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Özellikleri Satır Güncelle.
+        /// </summary>
+        public static string ProductPropertyLineContextRefresh {
+            get {
+                return ResourceManager.GetString("ProductPropertyLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Giriş Hareketleri.
+        /// </summary>
+        public static string ProductReceiptTransactionsChildMenu {
+            get {
+                return ResourceManager.GetString("ProductReceiptTransactionsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductReceiptTransactionsContextAdd {
+            get {
+                return ResourceManager.GetString("ProductReceiptTransactionsContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gelen Miktarı Onayla.
+        /// </summary>
+        public static string ProductReceiptTransactionsContextApproveIncomingQuantity {
+            get {
+                return ResourceManager.GetString("ProductReceiptTransactionsContextApproveIncomingQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductReceiptTransactionsContextChange {
+            get {
+                return ResourceManager.GetString("ProductReceiptTransactionsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductReceiptTransactionsContextDelete {
+            get {
+                return ResourceManager.GetString("ProductReceiptTransactionsContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductReceiptTransactionsContextRefresh {
+            get {
+                return ResourceManager.GetString("ProductReceiptTransactionsContextRefresh", resourceCulture);
             }
         }
         
@@ -4228,6 +9196,24 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductReferanceNumberContextAdd11 {
+            get {
+                return ResourceManager.GetString("ProductReferanceNumberContextAdd11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductReferanceNumberContextAdd2 {
+            get {
+                return ResourceManager.GetString("ProductReferanceNumberContextAdd2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ProductReferanceNumberContextChange {
@@ -4242,6 +9228,24 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         public static string ProductReferanceNumberContextChange1 {
             get {
                 return ResourceManager.GetString("ProductReferanceNumberContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductReferanceNumberContextChange11 {
+            get {
+                return ResourceManager.GetString("ProductReferanceNumberContextChange11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductReferanceNumberContextChange2 {
+            get {
+                return ResourceManager.GetString("ProductReferanceNumberContextChange2", resourceCulture);
             }
         }
         
@@ -4264,6 +9268,24 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductReferanceNumberContextDelete11 {
+            get {
+                return ResourceManager.GetString("ProductReferanceNumberContextDelete11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductReferanceNumberContextDelete2 {
+            get {
+                return ResourceManager.GetString("ProductReferanceNumberContextDelete2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string ProductReferanceNumberContextRefresh {
@@ -4282,11 +9304,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductReferanceNumberContextRefresh11 {
+            get {
+                return ResourceManager.GetString("ProductReferanceNumberContextRefresh11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductReferanceNumberContextRefresh2 {
+            get {
+                return ResourceManager.GetString("ProductReferanceNumberContextRefresh2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Referans Numaraları.
         /// </summary>
         public static string ProductRefNumbersChildMenu {
             get {
                 return ResourceManager.GetString("ProductRefNumbersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Referans Numaraları.
+        /// </summary>
+        public static string ProductRefNumbersChildMenu1 {
+            get {
+                return ResourceManager.GetString("ProductRefNumbersChildMenu1", resourceCulture);
             }
         }
         
@@ -4300,11 +9349,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok Kartları.
+        /// </summary>
+        public static string ProductsChildMenu1 {
+            get {
+                return ResourceManager.GetString("ProductsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ProductsOperationContextAdd {
             get {
                 return ResourceManager.GetString("ProductsOperationContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductsOperationContextAdd1 {
+            get {
+                return ResourceManager.GetString("ProductsOperationContextAdd1", resourceCulture);
             }
         }
         
@@ -4318,11 +9385,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Emirlerine Göre Toplamlar.
+        /// </summary>
+        public static string ProductsOperationContextAmounts1 {
+            get {
+                return ResourceManager.GetString("ProductsOperationContextAmounts1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ProductsOperationContextChange {
             get {
                 return ResourceManager.GetString("ProductsOperationContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductsOperationContextChange1 {
+            get {
+                return ResourceManager.GetString("ProductsOperationContextChange1", resourceCulture);
             }
         }
         
@@ -4336,11 +9421,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductsOperationContextDelete1 {
+            get {
+                return ResourceManager.GetString("ProductsOperationContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string ProductsOperationContextRefresh {
             get {
                 return ResourceManager.GetString("ProductsOperationContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductsOperationContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ProductsOperationContextRefresh1", resourceCulture);
             }
         }
         
@@ -4354,11 +9457,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string ProductsOperationLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("ProductsOperationLineContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string ProductsOperationLineContextChange {
             get {
                 return ResourceManager.GetString("ProductsOperationLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string ProductsOperationLineContextChange1 {
+            get {
+                return ResourceManager.GetString("ProductsOperationLineContextChange1", resourceCulture);
             }
         }
         
@@ -4372,11 +9493,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string ProductsOperationLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("ProductsOperationLineContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string ProductsOperationLineContextRefresh {
             get {
                 return ResourceManager.GetString("ProductsOperationLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string ProductsOperationLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ProductsOperationLineContextRefresh1", resourceCulture);
             }
         }
         
@@ -4390,11 +9529,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string PurchaseManagementMainRecordsMenu1 {
+            get {
+                return ResourceManager.GetString("PurchaseManagementMainRecordsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string PurchaseManagementParameterContextAdd {
             get {
                 return ResourceManager.GetString("PurchaseManagementParameterContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PurchaseManagementParameterContextAdd1 {
+            get {
+                return ResourceManager.GetString("PurchaseManagementParameterContextAdd1", resourceCulture);
             }
         }
         
@@ -4408,11 +9565,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PurchaseManagementParameterContextChange1 {
+            get {
+                return ResourceManager.GetString("PurchaseManagementParameterContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string PurchaseManagementParameterContextDelete {
             get {
                 return ResourceManager.GetString("PurchaseManagementParameterContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PurchaseManagementParameterContextDelete1 {
+            get {
+                return ResourceManager.GetString("PurchaseManagementParameterContextDelete1", resourceCulture);
             }
         }
         
@@ -4426,11 +9601,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchaseManagementParameterContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PurchaseManagementParameterContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satın Alma Yönetimi .
         /// </summary>
         public static string PurchaseManagementParametersChildMenu {
             get {
                 return ResourceManager.GetString("PurchaseManagementParametersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Yönetimi .
+        /// </summary>
+        public static string PurchaseManagementParametersChildMenu1 {
+            get {
+                return ResourceManager.GetString("PurchaseManagementParametersChildMenu1", resourceCulture);
             }
         }
         
@@ -4444,11 +9637,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Yönetimi.
+        /// </summary>
+        public static string PurchaseManagementParentMenu1 {
+            get {
+                return ResourceManager.GetString("PurchaseManagementParentMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Raporlar.
         /// </summary>
         public static string PurchaseManagementReportsMenu {
             get {
                 return ResourceManager.GetString("PurchaseManagementReportsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string PurchaseManagementReportsMenu1 {
+            get {
+                return ResourceManager.GetString("PurchaseManagementReportsMenu1", resourceCulture);
             }
         }
         
@@ -4462,11 +9673,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string PurchaseManagementTransactionsMenu1 {
+            get {
+                return ResourceManager.GetString("PurchaseManagementTransactionsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string PurchaseOrderContextAdd {
             get {
                 return ResourceManager.GetString("PurchaseOrderContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PurchaseOrderContextAdd1 {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextAdd1", resourceCulture);
             }
         }
         
@@ -4480,11 +9709,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Siparişi Onayla.
+        /// </summary>
+        public static string PurchaseOrderContextApproveOrder1 {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextApproveOrder1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Siparişi İptal Et.
         /// </summary>
         public static string PurchaseOrderContextCancelOrder {
             get {
                 return ResourceManager.GetString("PurchaseOrderContextCancelOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Siparişi İptal Et.
+        /// </summary>
+        public static string PurchaseOrderContextCancelOrder1 {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextCancelOrder1", resourceCulture);
             }
         }
         
@@ -4498,11 +9745,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PurchaseOrderContextChange1 {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok Giriş Fişlerini Oluştur.
         /// </summary>
         public static string PurchaseOrderContextCreateStockFiches {
             get {
                 return ResourceManager.GetString("PurchaseOrderContextCreateStockFiches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Giriş Fişlerini Oluştur.
+        /// </summary>
+        public static string PurchaseOrderContextCreateStockFiches1 {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextCreateStockFiches1", resourceCulture);
             }
         }
         
@@ -4516,11 +9781,47 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PurchaseOrderContextDelete1 {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fatura Onayı Ver.
+        /// </summary>
+        public static string PurchaseOrderContextPriceApproval {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextPriceApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string PurchaseOrderContextRefresh {
             get {
                 return ResourceManager.GetString("PurchaseOrderContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchaseOrderContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İrsaliye Onayı Ver.
+        /// </summary>
+        public static string PurchaseOrderContextWayBillApproval {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextWayBillApproval", resourceCulture);
             }
         }
         
@@ -4534,11 +9835,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Siparişleri Listesi.
+        /// </summary>
+        public static string PurchaseOrderFicheListChildMenu1 {
+            get {
+                return ResourceManager.GetString("PurchaseOrderFicheListChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Ekle.
         /// </summary>
         public static string PurchaseOrderLineContextAdd {
             get {
                 return ResourceManager.GetString("PurchaseOrderLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string PurchaseOrderLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("PurchaseOrderLineContextAdd1", resourceCulture);
             }
         }
         
@@ -4552,11 +9871,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string PurchaseOrderLineContextChange1 {
+            get {
+                return ResourceManager.GetString("PurchaseOrderLineContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Sil.
         /// </summary>
         public static string PurchaseOrderLineContextDelete {
             get {
                 return ResourceManager.GetString("PurchaseOrderLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string PurchaseOrderLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("PurchaseOrderLineContextDelete1", resourceCulture);
             }
         }
         
@@ -4570,11 +9907,101 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string PurchaseOrderLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PurchaseOrderLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değer Ekle.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalLinesContextChange {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalLinesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalLinesContextRefresh {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalLinesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay Bekleyen Satın Alma Siparişleri.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalsChildMenu {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Uygunsuzluk Kaydı Oluştur.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalsContextPurchaseUnsuitability {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalsContextPurchaseUnsuitability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalite Onayı Ver.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalsContextQualityApproval {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalsContextQualityApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalite Onayını İptal Et.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalsContextQualityApprovalCancel {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalsContextQualityApprovalCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalsContextRefresh {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalsContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İncele.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalsContextReview {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalsContextReview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satın Alma Siparişleri.
         /// </summary>
         public static string PurchaseOrdersChildMenu {
             get {
                 return ResourceManager.GetString("PurchaseOrdersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Siparişleri.
+        /// </summary>
+        public static string PurchaseOrdersChildMenu1 {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersChildMenu1", resourceCulture);
             }
         }
         
@@ -4588,11 +10015,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PurchasePriceContextAdd1 {
+            get {
+                return ResourceManager.GetString("PurchasePriceContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string PurchasePriceContextChange {
             get {
                 return ResourceManager.GetString("PurchasePriceContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PurchasePriceContextChange1 {
+            get {
+                return ResourceManager.GetString("PurchasePriceContextChange1", resourceCulture);
             }
         }
         
@@ -4606,11 +10051,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PurchasePriceContextDelete1 {
+            get {
+                return ResourceManager.GetString("PurchasePriceContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string PurchasePriceContextRefresh {
             get {
                 return ResourceManager.GetString("PurchasePriceContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchasePriceContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PurchasePriceContextRefresh1", resourceCulture);
             }
         }
         
@@ -4624,11 +10087,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string PurchasePriceLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("PurchasePriceLineContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string PurchasePriceLineContextChange {
             get {
                 return ResourceManager.GetString("PurchasePriceLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string PurchasePriceLineContextChange1 {
+            get {
+                return ResourceManager.GetString("PurchasePriceLineContextChange1", resourceCulture);
             }
         }
         
@@ -4642,11 +10123,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string PurchasePriceLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("PurchasePriceLineContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string PurchasePriceLineContextRefresh {
             get {
                 return ResourceManager.GetString("PurchasePriceLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string PurchasePriceLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PurchasePriceLineContextRefresh1", resourceCulture);
             }
         }
         
@@ -4660,11 +10159,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Fiyat Listeleri.
+        /// </summary>
+        public static string PurchasePricesChildMenu1 {
+            get {
+                return ResourceManager.GetString("PurchasePricesChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string PurchaseQualityPlanContextAdd {
             get {
                 return ResourceManager.GetString("PurchaseQualityPlanContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PurchaseQualityPlanContextAdd1 {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanContextAdd1", resourceCulture);
             }
         }
         
@@ -4678,11 +10195,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PurchaseQualityPlanContextChange1 {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string PurchaseQualityPlanContextDelete {
             get {
                 return ResourceManager.GetString("PurchaseQualityPlanContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PurchaseQualityPlanContextDelete1 {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanContextDelete1", resourceCulture);
             }
         }
         
@@ -4696,11 +10231,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchaseQualityPlanContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Ekle.
         /// </summary>
         public static string PurchaseQualityPlanLineContextAdd {
             get {
                 return ResourceManager.GetString("PurchaseQualityPlanLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string PurchaseQualityPlanLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanLineContextAdd1", resourceCulture);
             }
         }
         
@@ -4714,11 +10267,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string PurchaseQualityPlanLineContextChange1 {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanLineContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Sil.
         /// </summary>
         public static string PurchaseQualityPlanLineContextDelete {
             get {
                 return ResourceManager.GetString("PurchaseQualityPlanLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string PurchaseQualityPlanLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanLineContextDelete1", resourceCulture);
             }
         }
         
@@ -4732,11 +10303,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string PurchaseQualityPlanLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satın Alma Giriş Kalite Planları.
         /// </summary>
         public static string PurchaseQualityPlansChildMenu {
             get {
                 return ResourceManager.GetString("PurchaseQualityPlansChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Giriş Kalite Planları.
+        /// </summary>
+        public static string PurchaseQualityPlansChildMenu1 {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlansChildMenu1", resourceCulture);
             }
         }
         
@@ -4750,11 +10339,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PurchaseRequestContextAdd1 {
+            get {
+                return ResourceManager.GetString("PurchaseRequestContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string PurchaseRequestContextChange {
             get {
                 return ResourceManager.GetString("PurchaseRequestContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PurchaseRequestContextChange1 {
+            get {
+                return ResourceManager.GetString("PurchaseRequestContextChange1", resourceCulture);
             }
         }
         
@@ -4768,11 +10375,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Siparişe Dönüştür.
+        /// </summary>
+        public static string PurchaseRequestContextConverttoOrder1 {
+            get {
+                return ResourceManager.GetString("PurchaseRequestContextConverttoOrder1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string PurchaseRequestContextDelete {
             get {
                 return ResourceManager.GetString("PurchaseRequestContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PurchaseRequestContextDelete1 {
+            get {
+                return ResourceManager.GetString("PurchaseRequestContextDelete1", resourceCulture);
             }
         }
         
@@ -4786,11 +10411,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchaseRequestContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PurchaseRequestContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satın Alma Talep Fişi Listesi.
         /// </summary>
         public static string PurchaseRequestFicheListChildMenu {
             get {
                 return ResourceManager.GetString("PurchaseRequestFicheListChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Talep Fişi Listesi.
+        /// </summary>
+        public static string PurchaseRequestFicheListChildMenu1 {
+            get {
+                return ResourceManager.GetString("PurchaseRequestFicheListChildMenu1", resourceCulture);
             }
         }
         
@@ -4804,11 +10447,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string PurchaseRequestLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("PurchaseRequestLineContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string PurchaseRequestLineContextChange {
             get {
                 return ResourceManager.GetString("PurchaseRequestLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string PurchaseRequestLineContextChange1 {
+            get {
+                return ResourceManager.GetString("PurchaseRequestLineContextChange1", resourceCulture);
             }
         }
         
@@ -4822,11 +10483,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string PurchaseRequestLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("PurchaseRequestLineContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string PurchaseRequestLineContextRefresh {
             get {
                 return ResourceManager.GetString("PurchaseRequestLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string PurchaseRequestLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PurchaseRequestLineContextRefresh1", resourceCulture);
             }
         }
         
@@ -4840,11 +10519,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Talep Fişleri.
+        /// </summary>
+        public static string PurchaseRequestsChildMenu1 {
+            get {
+                return ResourceManager.GetString("PurchaseRequestsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string PurchaseUnsuitabilityReportContextAdd {
             get {
                 return ResourceManager.GetString("PurchaseUnsuitabilityReportContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PurchaseUnsuitabilityReportContextAdd1 {
+            get {
+                return ResourceManager.GetString("PurchaseUnsuitabilityReportContextAdd1", resourceCulture);
             }
         }
         
@@ -4858,11 +10555,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PurchaseUnsuitabilityReportContextChange1 {
+            get {
+                return ResourceManager.GetString("PurchaseUnsuitabilityReportContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string PurchaseUnsuitabilityReportContextDelete {
             get {
                 return ResourceManager.GetString("PurchaseUnsuitabilityReportContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PurchaseUnsuitabilityReportContextDelete1 {
+            get {
+                return ResourceManager.GetString("PurchaseUnsuitabilityReportContextDelete1", resourceCulture);
             }
         }
         
@@ -4876,11 +10591,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchaseUnsuitabilityReportContextRefresh1 {
+            get {
+                return ResourceManager.GetString("PurchaseUnsuitabilityReportContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satın Alma Uygunsuzluk Kayıtları.
         /// </summary>
         public static string PurchUnsRecordsChildMenu {
             get {
                 return ResourceManager.GetString("PurchUnsRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Uygunsuzluk Kayıtları.
+        /// </summary>
+        public static string PurchUnsRecordsChildMenu1 {
+            get {
+                return ResourceManager.GetString("PurchUnsRecordsChildMenu1", resourceCulture);
             }
         }
         
@@ -4894,11 +10627,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Uygunsuzluk Kayıtları Analizi.
+        /// </summary>
+        public static string PurcUnsAnlChildMenu1 {
+            get {
+                return ResourceManager.GetString("PurcUnsAnlChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Analizler.
         /// </summary>
         public static string QualityControlAnalysisMenu {
             get {
                 return ResourceManager.GetString("QualityControlAnalysisMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analizler.
+        /// </summary>
+        public static string QualityControlAnalysisMenu1 {
+            get {
+                return ResourceManager.GetString("QualityControlAnalysisMenu1", resourceCulture);
             }
         }
         
@@ -4912,11 +10663,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FMEA.
+        /// </summary>
+        public static string QualityControlFMEAMenu1 {
+            get {
+                return ResourceManager.GetString("QualityControlFMEAMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ana Kayıtlar.
         /// </summary>
         public static string QualityControlMainRecordsMenu {
             get {
                 return ResourceManager.GetString("QualityControlMainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string QualityControlMainRecordsMenu1 {
+            get {
+                return ResourceManager.GetString("QualityControlMainRecordsMenu1", resourceCulture);
             }
         }
         
@@ -4930,11 +10699,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string QualityControlParameterContextAdd1 {
+            get {
+                return ResourceManager.GetString("QualityControlParameterContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string QualityControlParameterContextChange {
             get {
                 return ResourceManager.GetString("QualityControlParameterContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string QualityControlParameterContextChange1 {
+            get {
+                return ResourceManager.GetString("QualityControlParameterContextChange1", resourceCulture);
             }
         }
         
@@ -4948,11 +10735,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string QualityControlParameterContextDelete1 {
+            get {
+                return ResourceManager.GetString("QualityControlParameterContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string QualityControlParameterContextRefresh {
             get {
                 return ResourceManager.GetString("QualityControlParameterContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string QualityControlParameterContextRefresh1 {
+            get {
+                return ResourceManager.GetString("QualityControlParameterContextRefresh1", resourceCulture);
             }
         }
         
@@ -4966,11 +10771,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kalite Kontrol .
+        /// </summary>
+        public static string QualityControlParametersChildMenu1 {
+            get {
+                return ResourceManager.GetString("QualityControlParametersChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kalite Kontrol.
         /// </summary>
         public static string QualityControlParentMenu {
             get {
                 return ResourceManager.GetString("QualityControlParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalite Kontrol.
+        /// </summary>
+        public static string QualityControlParentMenu1 {
+            get {
+                return ResourceManager.GetString("QualityControlParentMenu1", resourceCulture);
             }
         }
         
@@ -4984,11 +10807,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string QualityControlReportsMenu1 {
+            get {
+                return ResourceManager.GetString("QualityControlReportsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SPC Karşılaştırmaları.
         /// </summary>
         public static string QualityControlSPCAnalysisMenu {
             get {
                 return ResourceManager.GetString("QualityControlSPCAnalysisMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SPC Karşılaştırmaları.
+        /// </summary>
+        public static string QualityControlSPCAnalysisMenu1 {
+            get {
+                return ResourceManager.GetString("QualityControlSPCAnalysisMenu1", resourceCulture);
             }
         }
         
@@ -5002,11 +10843,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SPC.
+        /// </summary>
+        public static string QualityControlSPCMenu1 {
+            get {
+                return ResourceManager.GetString("QualityControlSPCMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hareketler.
         /// </summary>
         public static string QualityControlTransactionsMenu {
             get {
                 return ResourceManager.GetString("QualityControlTransactionsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string QualityControlTransactionsMenu1 {
+            get {
+                return ResourceManager.GetString("QualityControlTransactionsMenu1", resourceCulture);
             }
         }
         
@@ -5020,11 +10879,47 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kalite Planları.
+        /// </summary>
+        public static string QualityPlansMenu1 {
+            get {
+                return ResourceManager.GetString("QualityPlansMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SORGU.
+        /// </summary>
+        public static string QueryStr {
+            get {
+                return ResourceManager.GetString("QueryStr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorgu:.
+        /// </summary>
+        public static string QueryStrLabel {
+            get {
+                return ResourceManager.GetString("QueryStrLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 8D Raporları.
         /// </summary>
         public static string Report8DChildMenu {
             get {
                 return ResourceManager.GetString("Report8DChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8D Raporları.
+        /// </summary>
+        public static string Report8DChildMenu1 {
+            get {
+                return ResourceManager.GetString("Report8DChildMenu1", resourceCulture);
             }
         }
         
@@ -5038,11 +10933,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string ReportsMenu1 {
+            get {
+                return ResourceManager.GetString("ReportsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rol Tanımlamaları.
         /// </summary>
         public static string RoleDefinitionsChildMenu {
             get {
                 return ResourceManager.GetString("RoleDefinitionsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rol Tanımlamaları.
+        /// </summary>
+        public static string RoleDefinitionsChildMenu1 {
+            get {
+                return ResourceManager.GetString("RoleDefinitionsChildMenu1", resourceCulture);
             }
         }
         
@@ -5056,11 +10969,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string RouteContextAdd1 {
+            get {
+                return ResourceManager.GetString("RouteContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string RouteContextChange {
             get {
                 return ResourceManager.GetString("RouteContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string RouteContextChange1 {
+            get {
+                return ResourceManager.GetString("RouteContextChange1", resourceCulture);
             }
         }
         
@@ -5074,11 +11005,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string RouteContextDelete1 {
+            get {
+                return ResourceManager.GetString("RouteContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İncele.
         /// </summary>
         public static string RouteContextExamine {
             get {
                 return ResourceManager.GetString("RouteContextExamine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İncele.
+        /// </summary>
+        public static string RouteContextExamine1 {
+            get {
+                return ResourceManager.GetString("RouteContextExamine1", resourceCulture);
             }
         }
         
@@ -5092,11 +11041,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string RouteContextRefresh1 {
+            get {
+                return ResourceManager.GetString("RouteContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Rotaları.
         /// </summary>
         public static string RoutesChildMenu {
             get {
                 return ResourceManager.GetString("RoutesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Rotaları.
+        /// </summary>
+        public static string RoutesChildMenu1 {
+            get {
+                return ResourceManager.GetString("RoutesChildMenu1", resourceCulture);
             }
         }
         
@@ -5110,11 +11077,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string SalesManagementMainRecordsMenu1 {
+            get {
+                return ResourceManager.GetString("SalesManagementMainRecordsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string SalesManagementParameterContextAdd {
             get {
                 return ResourceManager.GetString("SalesManagementParameterContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string SalesManagementParameterContextAdd1 {
+            get {
+                return ResourceManager.GetString("SalesManagementParameterContextAdd1", resourceCulture);
             }
         }
         
@@ -5128,11 +11113,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string SalesManagementParameterContextChange1 {
+            get {
+                return ResourceManager.GetString("SalesManagementParameterContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string SalesManagementParameterContextDelete {
             get {
                 return ResourceManager.GetString("SalesManagementParameterContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string SalesManagementParameterContextDelete1 {
+            get {
+                return ResourceManager.GetString("SalesManagementParameterContextDelete1", resourceCulture);
             }
         }
         
@@ -5146,11 +11149,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string SalesManagementParameterContextRefresh1 {
+            get {
+                return ResourceManager.GetString("SalesManagementParameterContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Yönetimi .
         /// </summary>
         public static string SalesManagementParametersChildMenu {
             get {
                 return ResourceManager.GetString("SalesManagementParametersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satış Yönetimi .
+        /// </summary>
+        public static string SalesManagementParametersChildMenu1 {
+            get {
+                return ResourceManager.GetString("SalesManagementParametersChildMenu1", resourceCulture);
             }
         }
         
@@ -5164,11 +11185,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satış Yönetimi.
+        /// </summary>
+        public static string SalesManagementParentMenu1 {
+            get {
+                return ResourceManager.GetString("SalesManagementParentMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Raporlar.
         /// </summary>
         public static string SalesManagementReportsMenu {
             get {
                 return ResourceManager.GetString("SalesManagementReportsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string SalesManagementReportsMenu1 {
+            get {
+                return ResourceManager.GetString("SalesManagementReportsMenu1", resourceCulture);
             }
         }
         
@@ -5182,11 +11221,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string SalesManagementTransactionsMenu1 {
+            get {
+                return ResourceManager.GetString("SalesManagementTransactionsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string SalesOrderContextAdd {
             get {
                 return ResourceManager.GetString("SalesOrderContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string SalesOrderContextAdd1 {
+            get {
+                return ResourceManager.GetString("SalesOrderContextAdd1", resourceCulture);
             }
         }
         
@@ -5200,11 +11257,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string SalesOrderContextChange1 {
+            get {
+                return ResourceManager.GetString("SalesOrderContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string SalesOrderContextDelete {
             get {
                 return ResourceManager.GetString("SalesOrderContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string SalesOrderContextDelete1 {
+            get {
+                return ResourceManager.GetString("SalesOrderContextDelete1", resourceCulture);
             }
         }
         
@@ -5218,11 +11293,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Emri Oluştur.
+        /// </summary>
+        public static string SalesOrderContextProdOrder1 {
+            get {
+                return ResourceManager.GetString("SalesOrderContextProdOrder1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string SalesOrderContextRefresh {
             get {
                 return ResourceManager.GetString("SalesOrderContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string SalesOrderContextRefresh1 {
+            get {
+                return ResourceManager.GetString("SalesOrderContextRefresh1", resourceCulture);
             }
         }
         
@@ -5236,11 +11329,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satış Siparişleri Listesi.
+        /// </summary>
+        public static string SalesOrderFicheListChildMenu1 {
+            get {
+                return ResourceManager.GetString("SalesOrderFicheListChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Ekle.
         /// </summary>
         public static string SalesOrderLineContextAdd {
             get {
                 return ResourceManager.GetString("SalesOrderLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string SalesOrderLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("SalesOrderLineContextAdd1", resourceCulture);
             }
         }
         
@@ -5254,11 +11365,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string SalesOrderLineContextChange1 {
+            get {
+                return ResourceManager.GetString("SalesOrderLineContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Sil.
         /// </summary>
         public static string SalesOrderLineContextDelete {
             get {
                 return ResourceManager.GetString("SalesOrderLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string SalesOrderLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("SalesOrderLineContextDelete1", resourceCulture);
             }
         }
         
@@ -5272,11 +11401,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string SalesOrderLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("SalesOrderLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Siparişleri.
         /// </summary>
         public static string SalesOrdersChildMenu {
             get {
                 return ResourceManager.GetString("SalesOrdersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satış Siparişleri.
+        /// </summary>
+        public static string SalesOrdersChildMenu1 {
+            get {
+                return ResourceManager.GetString("SalesOrdersChildMenu1", resourceCulture);
             }
         }
         
@@ -5290,11 +11437,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string SalesPriceContextAdd1 {
+            get {
+                return ResourceManager.GetString("SalesPriceContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string SalesPriceContextChange {
             get {
                 return ResourceManager.GetString("SalesPriceContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string SalesPriceContextChange1 {
+            get {
+                return ResourceManager.GetString("SalesPriceContextChange1", resourceCulture);
             }
         }
         
@@ -5308,11 +11473,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string SalesPriceContextDelete1 {
+            get {
+                return ResourceManager.GetString("SalesPriceContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string SalesPriceContextRefresh {
             get {
                 return ResourceManager.GetString("SalesPriceContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string SalesPriceContextRefresh1 {
+            get {
+                return ResourceManager.GetString("SalesPriceContextRefresh1", resourceCulture);
             }
         }
         
@@ -5326,11 +11509,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string SalesPriceLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("SalesPriceLineContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string SalesPriceLineContextChange {
             get {
                 return ResourceManager.GetString("SalesPriceLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string SalesPriceLineContextChange1 {
+            get {
+                return ResourceManager.GetString("SalesPriceLineContextChange1", resourceCulture);
             }
         }
         
@@ -5344,11 +11545,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string SalesPriceLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("SalesPriceLineContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string SalesPriceLineContextRefresh {
             get {
                 return ResourceManager.GetString("SalesPriceLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string SalesPriceLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("SalesPriceLineContextRefresh1", resourceCulture);
             }
         }
         
@@ -5362,11 +11581,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satış Fiyat Listeleri.
+        /// </summary>
+        public static string SalesPricesChildMenu1 {
+            get {
+                return ResourceManager.GetString("SalesPricesChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string SalesPropositionContextAdd {
             get {
                 return ResourceManager.GetString("SalesPropositionContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string SalesPropositionContextAdd1 {
+            get {
+                return ResourceManager.GetString("SalesPropositionContextAdd1", resourceCulture);
             }
         }
         
@@ -5380,11 +11617,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string SalesPropositionContextChange1 {
+            get {
+                return ResourceManager.GetString("SalesPropositionContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Siparişe Dönüştür.
         /// </summary>
         public static string SalesPropositionContextConverttoOrder {
             get {
                 return ResourceManager.GetString("SalesPropositionContextConverttoOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Siparişe Dönüştür.
+        /// </summary>
+        public static string SalesPropositionContextConverttoOrder1 {
+            get {
+                return ResourceManager.GetString("SalesPropositionContextConverttoOrder1", resourceCulture);
             }
         }
         
@@ -5398,11 +11653,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string SalesPropositionContextDelete1 {
+            get {
+                return ResourceManager.GetString("SalesPropositionContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string SalesPropositionContextRefresh {
             get {
                 return ResourceManager.GetString("SalesPropositionContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string SalesPropositionContextRefresh1 {
+            get {
+                return ResourceManager.GetString("SalesPropositionContextRefresh1", resourceCulture);
             }
         }
         
@@ -5416,11 +11689,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Verilen Teklif Listesi.
+        /// </summary>
+        public static string SalesPropositionFicheListChildMenu1 {
+            get {
+                return ResourceManager.GetString("SalesPropositionFicheListChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Ekle.
         /// </summary>
         public static string SalesPropositionLineContextAdd {
             get {
                 return ResourceManager.GetString("SalesPropositionLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string SalesPropositionLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("SalesPropositionLineContextAdd1", resourceCulture);
             }
         }
         
@@ -5434,11 +11725,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string SalesPropositionLineContextChange1 {
+            get {
+                return ResourceManager.GetString("SalesPropositionLineContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Sil.
         /// </summary>
         public static string SalesPropositionLineContextDelete {
             get {
                 return ResourceManager.GetString("SalesPropositionLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string SalesPropositionLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("SalesPropositionLineContextDelete1", resourceCulture);
             }
         }
         
@@ -5452,11 +11761,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string SalesPropositionLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("SalesPropositionLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verilen Teklifler.
         /// </summary>
         public static string SalesPropositionsChildMenu {
             get {
                 return ResourceManager.GetString("SalesPropositionsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verilen Teklifler.
+        /// </summary>
+        public static string SalesPropositionsChildMenu1 {
+            get {
+                return ResourceManager.GetString("SalesPropositionsChildMenu1", resourceCulture);
             }
         }
         
@@ -5470,11 +11797,56 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kaydet.
+        /// </summary>
+        public static string SaveButton1 {
+            get {
+                return ResourceManager.GetString("SaveButton1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydet.
+        /// </summary>
+        public static string SaveButton11 {
+            get {
+                return ResourceManager.GetString("SaveButton11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sektörler.
+        /// </summary>
+        public static string SectorsChildMenu {
+            get {
+                return ResourceManager.GetString("SectorsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tümünü Seç.
+        /// </summary>
+        public static string SelectAllText {
+            get {
+                return ResourceManager.GetString("SelectAllText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ShiftContextAdd {
             get {
                 return ResourceManager.GetString("ShiftContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ShiftContextAdd1 {
+            get {
+                return ResourceManager.GetString("ShiftContextAdd1", resourceCulture);
             }
         }
         
@@ -5488,11 +11860,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ShiftContextChange1 {
+            get {
+                return ResourceManager.GetString("ShiftContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string ShiftContextDelete {
             get {
                 return ResourceManager.GetString("ShiftContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ShiftContextDelete1 {
+            get {
+                return ResourceManager.GetString("ShiftContextDelete1", resourceCulture);
             }
         }
         
@@ -5506,11 +11896,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ShiftContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ShiftContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Ekle.
         /// </summary>
         public static string ShiftLineContextAdd {
             get {
                 return ResourceManager.GetString("ShiftLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string ShiftLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("ShiftLineContextAdd1", resourceCulture);
             }
         }
         
@@ -5524,11 +11932,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string ShiftLineContextChange1 {
+            get {
+                return ResourceManager.GetString("ShiftLineContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Sil.
         /// </summary>
         public static string ShiftLineContextDelete {
             get {
                 return ResourceManager.GetString("ShiftLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string ShiftLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("ShiftLineContextDelete1", resourceCulture);
             }
         }
         
@@ -5542,11 +11968,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string ShiftLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ShiftLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vardiya Tanımlamaları.
         /// </summary>
         public static string ShiftsChildMenu {
             get {
                 return ResourceManager.GetString("ShiftsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vardiya Tanımlamaları.
+        /// </summary>
+        public static string ShiftsChildMenu1 {
+            get {
+                return ResourceManager.GetString("ShiftsChildMenu1", resourceCulture);
             }
         }
         
@@ -5560,11 +12004,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string ShipmentManagementMainRecordsMenu1 {
+            get {
+                return ResourceManager.GetString("ShipmentManagementMainRecordsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Raporlar.
         /// </summary>
         public static string ShipmentManagementReportsMenu {
             get {
                 return ResourceManager.GetString("ShipmentManagementReportsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string ShipmentManagementReportsMenu1 {
+            get {
+                return ResourceManager.GetString("ShipmentManagementReportsMenu1", resourceCulture);
             }
         }
         
@@ -5578,11 +12040,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string ShipmentManagementTransactionsMenu1 {
+            get {
+                return ResourceManager.GetString("ShipmentManagementTransactionsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sevkiyat Yönetimi.
         /// </summary>
         public static string ShipmentParentMenu {
             get {
                 return ResourceManager.GetString("ShipmentParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sevkiyat Yönetimi.
+        /// </summary>
+        public static string ShipmentParentMenu1 {
+            get {
+                return ResourceManager.GetString("ShipmentParentMenu1", resourceCulture);
             }
         }
         
@@ -5596,11 +12076,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sevkiyat Planlama Listeleri.
+        /// </summary>
+        public static string ShipmentPlanningChildMenu1 {
+            get {
+                return ResourceManager.GetString("ShipmentPlanningChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string ShipmentPlanningLineContextChange {
             get {
                 return ResourceManager.GetString("ShipmentPlanningLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string ShipmentPlanningLineContextChange1 {
+            get {
+                return ResourceManager.GetString("ShipmentPlanningLineContextChange1", resourceCulture);
             }
         }
         
@@ -5614,11 +12112,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string ShipmentPlanningLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("ShipmentPlanningLineContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string ShipmentPlanningLineContextRefresh {
             get {
                 return ResourceManager.GetString("ShipmentPlanningLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string ShipmentPlanningLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ShipmentPlanningLineContextRefresh1", resourceCulture);
             }
         }
         
@@ -5632,11 +12148,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ShipmentPlanningsContextAdd1 {
+            get {
+                return ResourceManager.GetString("ShipmentPlanningsContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ShipmentPlanningsContextChange {
             get {
                 return ResourceManager.GetString("ShipmentPlanningsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ShipmentPlanningsContextChange1 {
+            get {
+                return ResourceManager.GetString("ShipmentPlanningsContextChange1", resourceCulture);
             }
         }
         
@@ -5650,11 +12184,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ShipmentPlanningsContextDelete1 {
+            get {
+                return ResourceManager.GetString("ShipmentPlanningsContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string ShipmentPlanningsContextRefresh {
             get {
                 return ResourceManager.GetString("ShipmentPlanningsContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ShipmentPlanningsContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ShipmentPlanningsContextRefresh1", resourceCulture);
             }
         }
         
@@ -5668,11 +12220,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ShippingAdressContextAdd1 {
+            get {
+                return ResourceManager.GetString("ShippingAdressContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ShippingAdressContextChange {
             get {
                 return ResourceManager.GetString("ShippingAdressContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ShippingAdressContextChange1 {
+            get {
+                return ResourceManager.GetString("ShippingAdressContextChange1", resourceCulture);
             }
         }
         
@@ -5686,11 +12256,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ShippingAdressContextDelete1 {
+            get {
+                return ResourceManager.GetString("ShippingAdressContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string ShippingAdressContextRefresh {
             get {
                 return ResourceManager.GetString("ShippingAdressContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ShippingAdressContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ShippingAdressContextRefresh1", resourceCulture);
             }
         }
         
@@ -5704,11 +12292,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sevkiyat Adresleri.
+        /// </summary>
+        public static string ShippingAdressesChildMenu1 {
+            get {
+                return ResourceManager.GetString("ShippingAdressesChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ShippingManagementParameterContextAdd {
             get {
                 return ResourceManager.GetString("ShippingManagementParameterContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ShippingManagementParameterContextAdd1 {
+            get {
+                return ResourceManager.GetString("ShippingManagementParameterContextAdd1", resourceCulture);
             }
         }
         
@@ -5722,11 +12328,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ShippingManagementParameterContextChange1 {
+            get {
+                return ResourceManager.GetString("ShippingManagementParameterContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string ShippingManagementParameterContextDelete {
             get {
                 return ResourceManager.GetString("ShippingManagementParameterContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ShippingManagementParameterContextDelete1 {
+            get {
+                return ResourceManager.GetString("ShippingManagementParameterContextDelete1", resourceCulture);
             }
         }
         
@@ -5740,11 +12364,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ShippingManagementParameterContextRefresh1 {
+            get {
+                return ResourceManager.GetString("ShippingManagementParameterContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sevkiyat Yönetimi .
         /// </summary>
         public static string ShippingManagementParametersChildMenu {
             get {
                 return ResourceManager.GetString("ShippingManagementParametersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sevkiyat Yönetimi .
+        /// </summary>
+        public static string ShippingManagementParametersChildMenu1 {
+            get {
+                return ResourceManager.GetString("ShippingManagementParametersChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Grubu Departmanı:.
+        /// </summary>
+        public static string SourceDepartmentIdLabel {
+            get {
+                return ResourceManager.GetString("SourceDepartmentIdLabel", resourceCulture);
             }
         }
         
@@ -5758,11 +12409,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SPC &amp; FMEA.
+        /// </summary>
+        public static string SPCFMEAChildMenu1 {
+            get {
+                return ResourceManager.GetString("SPCFMEAChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorguyu Oluştur.
+        /// </summary>
+        public static string SQLCommandButton {
+            get {
+                return ResourceManager.GetString("SQLCommandButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Başlangıç Maaşları.
         /// </summary>
         public static string StartingSalariesChildMenu {
             get {
                 return ResourceManager.GetString("StartingSalariesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başlangıç Maaşları.
+        /// </summary>
+        public static string StartingSalariesChildMenu1 {
+            get {
+                return ResourceManager.GetString("StartingSalariesChildMenu1", resourceCulture);
             }
         }
         
@@ -5776,11 +12454,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StartingSalariesContextAdd1 {
+            get {
+                return ResourceManager.GetString("StartingSalariesContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string StartingSalariesContextChange {
             get {
                 return ResourceManager.GetString("StartingSalariesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string StartingSalariesContextChange1 {
+            get {
+                return ResourceManager.GetString("StartingSalariesContextChange1", resourceCulture);
             }
         }
         
@@ -5794,11 +12490,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string StartingSalariesContextDelete1 {
+            get {
+                return ResourceManager.GetString("StartingSalariesContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string StartingSalariesContextRefresh {
             get {
                 return ResourceManager.GetString("StartingSalariesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string StartingSalariesContextRefresh1 {
+            get {
+                return ResourceManager.GetString("StartingSalariesContextRefresh1", resourceCulture);
             }
         }
         
@@ -5812,11 +12526,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string StartingSalaryLinesContextAdd1 {
+            get {
+                return ResourceManager.GetString("StartingSalaryLinesContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string StartingSalaryLinesContextChange {
             get {
                 return ResourceManager.GetString("StartingSalaryLinesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string StartingSalaryLinesContextChange1 {
+            get {
+                return ResourceManager.GetString("StartingSalaryLinesContextChange1", resourceCulture);
             }
         }
         
@@ -5830,11 +12562,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string StartingSalaryLinesContextDelete1 {
+            get {
+                return ResourceManager.GetString("StartingSalaryLinesContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string StartingSalaryLinesContextRefresh {
             get {
                 return ResourceManager.GetString("StartingSalaryLinesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string StartingSalaryLinesContextRefresh1 {
+            get {
+                return ResourceManager.GetString("StartingSalaryLinesContextRefresh1", resourceCulture);
             }
         }
         
@@ -5848,11 +12598,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StationContextAdd1 {
+            get {
+                return ResourceManager.GetString("StationContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string StationContextChange {
             get {
                 return ResourceManager.GetString("StationContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string StationContextChange1 {
+            get {
+                return ResourceManager.GetString("StationContextChange1", resourceCulture);
             }
         }
         
@@ -5866,11 +12634,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string StationContextDelete1 {
+            get {
+                return ResourceManager.GetString("StationContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string StationContextRefresh {
             get {
                 return ResourceManager.GetString("StationContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string StationContextRefresh1 {
+            get {
+                return ResourceManager.GetString("StationContextRefresh1", resourceCulture);
             }
         }
         
@@ -5884,11 +12670,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İş İstasyonu Maliyet Kayıtları.
+        /// </summary>
+        public static string StationCostChildMenu1 {
+            get {
+                return ResourceManager.GetString("StationCostChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İş İstasyon Maliyetleri Listesi.
         /// </summary>
         public static string StationCostListChildMenu {
             get {
                 return ResourceManager.GetString("StationCostListChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş İstasyon Maliyetleri Listesi.
+        /// </summary>
+        public static string StationCostListChildMenu1 {
+            get {
+                return ResourceManager.GetString("StationCostListChildMenu1", resourceCulture);
             }
         }
         
@@ -5902,11 +12706,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İş Merkezleri.
+        /// </summary>
+        public static string StationGroupChildMenu1 {
+            get {
+                return ResourceManager.GetString("StationGroupChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string StationGroupContextAdd {
             get {
                 return ResourceManager.GetString("StationGroupContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StationGroupContextAdd1 {
+            get {
+                return ResourceManager.GetString("StationGroupContextAdd1", resourceCulture);
             }
         }
         
@@ -5920,11 +12742,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string StationGroupContextChange1 {
+            get {
+                return ResourceManager.GetString("StationGroupContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string StationGroupContextDelete {
             get {
                 return ResourceManager.GetString("StationGroupContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string StationGroupContextDelete1 {
+            get {
+                return ResourceManager.GetString("StationGroupContextDelete1", resourceCulture);
             }
         }
         
@@ -5938,11 +12778,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string StationGroupContextRefresh1 {
+            get {
+                return ResourceManager.GetString("StationGroupContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string StationInventoryContextAdd {
             get {
                 return ResourceManager.GetString("StationInventoryContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StationInventoryContextAdd1 {
+            get {
+                return ResourceManager.GetString("StationInventoryContextAdd1", resourceCulture);
             }
         }
         
@@ -5956,11 +12814,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string StationInventoryContextChange1 {
+            get {
+                return ResourceManager.GetString("StationInventoryContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string StationInventoryContextDelete {
             get {
                 return ResourceManager.GetString("StationInventoryContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string StationInventoryContextDelete1 {
+            get {
+                return ResourceManager.GetString("StationInventoryContextDelete1", resourceCulture);
             }
         }
         
@@ -5974,11 +12850,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string StationInventoryContextRefresh1 {
+            get {
+                return ResourceManager.GetString("StationInventoryContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İş İstasyonları Listesi.
         /// </summary>
         public static string StationListChildMenu {
             get {
                 return ResourceManager.GetString("StationListChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş İstasyonları Listesi.
+        /// </summary>
+        public static string StationListChildMenu1 {
+            get {
+                return ResourceManager.GetString("StationListChildMenu1", resourceCulture);
             }
         }
         
@@ -5992,11 +12886,155 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İş İstasyonları OEE Analizi.
+        /// </summary>
+        public static string StationOEEChildMenu1 {
+            get {
+                return ResourceManager.GetString("StationOEEChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İş İstasyonları.
         /// </summary>
         public static string StationsChildMenu {
             get {
                 return ResourceManager.GetString("StationsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş İstasyonları.
+        /// </summary>
+        public static string StationsChildMenu1 {
+            get {
+                return ResourceManager.GetString("StationsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Adresleri.
+        /// </summary>
+        public static string StockAddressesChildMenu {
+            get {
+                return ResourceManager.GetString("StockAddressesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StockAddressesContextAdd {
+            get {
+                return ResourceManager.GetString("StockAddressesContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string StockAddressesContextChange {
+            get {
+                return ResourceManager.GetString("StockAddressesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string StockAddressesContextDelete {
+            get {
+                return ResourceManager.GetString("StockAddressesContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string StockAddressesContextRefresh {
+            get {
+                return ResourceManager.GetString("StockAddressesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string StockAddressesLineContextAdd {
+            get {
+                return ResourceManager.GetString("StockAddressesLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string StockAddressesLineContextChange {
+            get {
+                return ResourceManager.GetString("StockAddressesLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string StockAddressesLineContextDelete {
+            get {
+                return ResourceManager.GetString("StockAddressesLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string StockAddressesLineContextRefresh {
+            get {
+                return ResourceManager.GetString("StockAddressesLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Sütunları.
+        /// </summary>
+        public static string StockColumnsChildMenu {
+            get {
+                return ResourceManager.GetString("StockColumnsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StockColumnsContextAdd {
+            get {
+                return ResourceManager.GetString("StockColumnsContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string StockColumnsContextChange {
+            get {
+                return ResourceManager.GetString("StockColumnsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string StockColumnsContextDelete {
+            get {
+                return ResourceManager.GetString("StockColumnsContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string StockColumnsContextRefresh {
+            get {
+                return ResourceManager.GetString("StockColumnsContextRefresh", resourceCulture);
             }
         }
         
@@ -6010,11 +13048,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StockFicheContextAdd1 {
+            get {
+                return ResourceManager.GetString("StockFicheContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sarf Fişi Ekle.
         /// </summary>
         public static string StockFicheContextAddConsume {
             get {
                 return ResourceManager.GetString("StockFicheContextAddConsume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sarf Fişi Ekle.
+        /// </summary>
+        public static string StockFicheContextAddConsume1 {
+            get {
+                return ResourceManager.GetString("StockFicheContextAddConsume1", resourceCulture);
             }
         }
         
@@ -6028,11 +13084,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretimden Giriş Fişi Ekle.
+        /// </summary>
+        public static string StockFicheContextAddProductionIncome1 {
+            get {
+                return ResourceManager.GetString("StockFicheContextAddProductionIncome1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok Giriş Fişi Ekle.
         /// </summary>
         public static string StockFicheContextAddStockIncome {
             get {
                 return ResourceManager.GetString("StockFicheContextAddStockIncome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Giriş Fişi Ekle.
+        /// </summary>
+        public static string StockFicheContextAddStockIncome1 {
+            get {
+                return ResourceManager.GetString("StockFicheContextAddStockIncome1", resourceCulture);
             }
         }
         
@@ -6046,11 +13120,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok Çıkış Fişi Ekle.
+        /// </summary>
+        public static string StockFicheContextAddStockOutput1 {
+            get {
+                return ResourceManager.GetString("StockFicheContextAddStockOutput1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Depo Sevk Fişi Ekle.
         /// </summary>
         public static string StockFicheContextAddWarehouse {
             get {
                 return ResourceManager.GetString("StockFicheContextAddWarehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depo Sevk Fişi Ekle.
+        /// </summary>
+        public static string StockFicheContextAddWarehouse1 {
+            get {
+                return ResourceManager.GetString("StockFicheContextAddWarehouse1", resourceCulture);
             }
         }
         
@@ -6064,11 +13156,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fire Fişi Ekle.
+        /// </summary>
+        public static string StockFicheContextAddWastege1 {
+            get {
+                return ResourceManager.GetString("StockFicheContextAddWastege1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string StockFicheContextChange {
             get {
                 return ResourceManager.GetString("StockFicheContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string StockFicheContextChange1 {
+            get {
+                return ResourceManager.GetString("StockFicheContextChange1", resourceCulture);
             }
         }
         
@@ -6082,11 +13192,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string StockFicheContextDelete1 {
+            get {
+                return ResourceManager.GetString("StockFicheContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string StockFicheContextRefresh {
             get {
                 return ResourceManager.GetString("StockFicheContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string StockFicheContextRefresh1 {
+            get {
+                return ResourceManager.GetString("StockFicheContextRefresh1", resourceCulture);
             }
         }
         
@@ -6100,11 +13228,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string StockFicheLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("StockFicheLineContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string StockFicheLineContextChange {
             get {
                 return ResourceManager.GetString("StockFicheLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string StockFicheLineContextChange1 {
+            get {
+                return ResourceManager.GetString("StockFicheLineContextChange1", resourceCulture);
             }
         }
         
@@ -6118,11 +13264,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string StockFicheLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("StockFicheLineContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string StockFicheLineContextRefresh {
             get {
                 return ResourceManager.GetString("StockFicheLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string StockFicheLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("StockFicheLineContextRefresh1", resourceCulture);
             }
         }
         
@@ -6136,11 +13300,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok Fişleri.
+        /// </summary>
+        public static string StockFichesChildMenu1 {
+            get {
+                return ResourceManager.GetString("StockFichesChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StockFichesGeneralConAdd {
+            get {
+                return ResourceManager.GetString("StockFichesGeneralConAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ana Kayıtlar.
         /// </summary>
         public static string StockManagementMainRecordsMenu {
             get {
                 return ResourceManager.GetString("StockManagementMainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string StockManagementMainRecordsMenu1 {
+            get {
+                return ResourceManager.GetString("StockManagementMainRecordsMenu1", resourceCulture);
             }
         }
         
@@ -6154,11 +13345,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StockManagementParameterContextAdd1 {
+            get {
+                return ResourceManager.GetString("StockManagementParameterContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string StockManagementParameterContextChange {
             get {
                 return ResourceManager.GetString("StockManagementParameterContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string StockManagementParameterContextChange1 {
+            get {
+                return ResourceManager.GetString("StockManagementParameterContextChange1", resourceCulture);
             }
         }
         
@@ -6172,11 +13381,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string StockManagementParameterContextDelete1 {
+            get {
+                return ResourceManager.GetString("StockManagementParameterContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string StockManagementParameterContextRefresh {
             get {
                 return ResourceManager.GetString("StockManagementParameterContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string StockManagementParameterContextRefresh1 {
+            get {
+                return ResourceManager.GetString("StockManagementParameterContextRefresh1", resourceCulture);
             }
         }
         
@@ -6190,11 +13417,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok Yönetimi .
+        /// </summary>
+        public static string StockManagementParametersChildMenu1 {
+            get {
+                return ResourceManager.GetString("StockManagementParametersChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok Yönetimi.
         /// </summary>
         public static string StockManagementParentMenu {
             get {
                 return ResourceManager.GetString("StockManagementParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Yönetimi.
+        /// </summary>
+        public static string StockManagementParentMenu1 {
+            get {
+                return ResourceManager.GetString("StockManagementParentMenu1", resourceCulture);
             }
         }
         
@@ -6208,11 +13453,74 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string StockManagementReportsMenu1 {
+            get {
+                return ResourceManager.GetString("StockManagementReportsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hareketler.
         /// </summary>
         public static string StockManagementTransactionsMenu {
             get {
                 return ResourceManager.GetString("StockManagementTransactionsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string StockManagementTransactionsMenu1 {
+            get {
+                return ResourceManager.GetString("StockManagementTransactionsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Numaraları.
+        /// </summary>
+        public static string StockNumbersChildMenu {
+            get {
+                return ResourceManager.GetString("StockNumbersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StockNumbersContextAdd {
+            get {
+                return ResourceManager.GetString("StockNumbersContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string StockNumbersContextChange {
+            get {
+                return ResourceManager.GetString("StockNumbersContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string StockNumbersContextDelete {
+            get {
+                return ResourceManager.GetString("StockNumbersContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string StockNumbersContextRefresh {
+            get {
+                return ResourceManager.GetString("StockNumbersContextRefresh", resourceCulture);
             }
         }
         
@@ -6226,11 +13534,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toplu Seç.
+        /// </summary>
+        public static string StockReceiptFichesContextMultiSelect1 {
+            get {
+                return ResourceManager.GetString("StockReceiptFichesContextMultiSelect1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Toplu Seçimi Kaldır.
         /// </summary>
         public static string StockReceiptFichesContextRemoveAll {
             get {
                 return ResourceManager.GetString("StockReceiptFichesContextRemoveAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplu Seçimi Kaldır.
+        /// </summary>
+        public static string StockReceiptFichesContextRemoveAll1 {
+            get {
+                return ResourceManager.GetString("StockReceiptFichesContextRemoveAll1", resourceCulture);
             }
         }
         
@@ -6244,11 +13570,155 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seç.
+        /// </summary>
+        public static string StockReceiptFichesContextSelect1 {
+            get {
+                return ResourceManager.GetString("StockReceiptFichesContextSelect1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Bölümleri.
+        /// </summary>
+        public static string StockSectionsChildMenu {
+            get {
+                return ResourceManager.GetString("StockSectionsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StockSectionsContextAdd {
+            get {
+                return ResourceManager.GetString("StockSectionsContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string StockSectionsContextChange {
+            get {
+                return ResourceManager.GetString("StockSectionsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string StockSectionsContextDelete {
+            get {
+                return ResourceManager.GetString("StockSectionsContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string StockSectionsContextRefresh {
+            get {
+                return ResourceManager.GetString("StockSectionsContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Rafları.
+        /// </summary>
+        public static string StockShelfsChildMenu {
+            get {
+                return ResourceManager.GetString("StockShelfsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StockShelfsContextAdd {
+            get {
+                return ResourceManager.GetString("StockShelfsContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string StockShelfsContextChange {
+            get {
+                return ResourceManager.GetString("StockShelfsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string StockShelfsContextDelete {
+            get {
+                return ResourceManager.GetString("StockShelfsContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string StockShelfsContextRefresh {
+            get {
+                return ResourceManager.GetString("StockShelfsContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Genel Bilgiler.
         /// </summary>
         public static string Tab1Name {
             get {
                 return ResourceManager.GetString("Tab1Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Bilgiler.
+        /// </summary>
+        public static string Tab1Name1 {
+            get {
+                return ResourceManager.GetString("Tab1Name1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KULLANICI GRUBU ID.
+        /// </summary>
+        public static string TargetDepartmentId {
+            get {
+                return ResourceManager.GetString("TargetDepartmentId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Grubu Id:.
+        /// </summary>
+        public static string TargetDepartmentIdLabel {
+            get {
+                return ResourceManager.GetString("TargetDepartmentIdLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HEDEF KULLANICI GRUBU ID.
+        /// </summary>
+        public static string TargetUsersId {
+            get {
+                return ResourceManager.GetString("TargetUsersId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hedef Kullanıcı Grubu Id:.
+        /// </summary>
+        public static string TargetUsersIdLabel {
+            get {
+                return ResourceManager.GetString("TargetUsersIdLabel", resourceCulture);
             }
         }
         
@@ -6262,11 +13732,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Görev Puanlamaları.
+        /// </summary>
+        public static string TaskScoringsChildMenu1 {
+            get {
+                return ResourceManager.GetString("TaskScoringsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string TaskScoringsContextAdd {
             get {
                 return ResourceManager.GetString("TaskScoringsContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string TaskScoringsContextAdd1 {
+            get {
+                return ResourceManager.GetString("TaskScoringsContextAdd1", resourceCulture);
             }
         }
         
@@ -6280,11 +13768,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string TaskScoringsContextChange1 {
+            get {
+                return ResourceManager.GetString("TaskScoringsContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string TaskScoringsContextDelete {
             get {
                 return ResourceManager.GetString("TaskScoringsContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string TaskScoringsContextDelete1 {
+            get {
+                return ResourceManager.GetString("TaskScoringsContextDelete1", resourceCulture);
             }
         }
         
@@ -6298,11 +13804,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string TaskScoringsContextRefresh1 {
+            get {
+                return ResourceManager.GetString("TaskScoringsContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Teknik Analizler.
         /// </summary>
         public static string TechAnlChildMenu {
             get {
                 return ResourceManager.GetString("TechAnlChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teknik Analizler.
+        /// </summary>
+        public static string TechAnlChildMenu1 {
+            get {
+                return ResourceManager.GetString("TechAnlChildMenu1", resourceCulture);
             }
         }
         
@@ -6325,6 +13849,24 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string TechnicalDrawingContextAdd11 {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingContextAdd11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string TechnicalDrawingContextAdd2 {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingContextAdd2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string TechnicalDrawingContextChange {
@@ -6339,6 +13881,24 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         public static string TechnicalDrawingContextChange1 {
             get {
                 return ResourceManager.GetString("TechnicalDrawingContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string TechnicalDrawingContextChange11 {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingContextChange11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string TechnicalDrawingContextChange2 {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingContextChange2", resourceCulture);
             }
         }
         
@@ -6361,6 +13921,24 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string TechnicalDrawingContextDelete11 {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingContextDelete11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string TechnicalDrawingContextDelete2 {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingContextDelete2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string TechnicalDrawingContextRefresh {
@@ -6379,11 +13957,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string TechnicalDrawingContextRefresh11 {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingContextRefresh11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string TechnicalDrawingContextRefresh2 {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingContextRefresh2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Teknik Resimler.
         /// </summary>
         public static string TechnicalDrawingsChildMenu {
             get {
                 return ResourceManager.GetString("TechnicalDrawingsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teknik Resimler.
+        /// </summary>
+        public static string TechnicalDrawingsChildMenu1 {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingsChildMenu1", resourceCulture);
             }
         }
         
@@ -6397,11 +14002,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string TemplateOperationContextAdd1 {
+            get {
+                return ResourceManager.GetString("TemplateOperationContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string TemplateOperationContextChange {
             get {
                 return ResourceManager.GetString("TemplateOperationContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string TemplateOperationContextChange1 {
+            get {
+                return ResourceManager.GetString("TemplateOperationContextChange1", resourceCulture);
             }
         }
         
@@ -6415,11 +14038,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string TemplateOperationContextDelete1 {
+            get {
+                return ResourceManager.GetString("TemplateOperationContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string TemplateOperationContextRefresh {
             get {
                 return ResourceManager.GetString("TemplateOperationContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string TemplateOperationContextRefresh1 {
+            get {
+                return ResourceManager.GetString("TemplateOperationContextRefresh1", resourceCulture);
             }
         }
         
@@ -6433,11 +14074,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string TemplateOperationLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("TemplateOperationLineContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string TemplateOperationLineContextChange {
             get {
                 return ResourceManager.GetString("TemplateOperationLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string TemplateOperationLineContextChange1 {
+            get {
+                return ResourceManager.GetString("TemplateOperationLineContextChange1", resourceCulture);
             }
         }
         
@@ -6451,11 +14110,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string TemplateOperationLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("TemplateOperationLineContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string TemplateOperationLineContextRefresh {
             get {
                 return ResourceManager.GetString("TemplateOperationLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string TemplateOperationLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("TemplateOperationLineContextRefresh1", resourceCulture);
             }
         }
         
@@ -6469,11 +14146,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Şablon Operasyon Kayıtları.
+        /// </summary>
+        public static string TempOperationsChildMenu1 {
+            get {
+                return ResourceManager.GetString("TempOperationsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hareketler.
         /// </summary>
         public static string TransactionsMenu {
             get {
                 return ResourceManager.GetString("TransactionsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string TransactionsMenu1 {
+            get {
+                return ResourceManager.GetString("TransactionsMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string UIConfirmationPopupTitleBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupTitleBase", resourceCulture);
             }
         }
         
@@ -6487,11 +14191,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bildirim Şablonları.
+        /// </summary>
+        public static string UICurrentMenu1 {
+            get {
+                return ResourceManager.GetString("UICurrentMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Tanımlamaları.
+        /// </summary>
+        public static string UICurrentMenu11 {
+            get {
+                return ResourceManager.GetString("UICurrentMenu11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kullanicilar.
         /// </summary>
         public static string UIExportFileName {
             get {
                 return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanicilar.
+        /// </summary>
+        public static string UIExportFileName1 {
+            get {
+                return ResourceManager.GetString("UIExportFileName1", resourceCulture);
             }
         }
         
@@ -6505,11 +14236,83 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kullanıcılar.
+        /// </summary>
+        public static string UIExportTitle1 {
+            get {
+                return ResourceManager.GetString("UIExportTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Genel Sistem Tanımlamaları.
         /// </summary>
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Sistem Tanımlamaları.
+        /// </summary>
+        public static string UIPreviousMenu1 {
+            get {
+                return ResourceManager.GetString("UIPreviousMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Sistem Tanımlamaları.
+        /// </summary>
+        public static string UIPreviousMenu11 {
+            get {
+                return ResourceManager.GetString("UIPreviousMenu11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningPopupTitleBase {
+            get {
+                return ResourceManager.GetString("UIWarningPopupTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorgu oluşturulmadan kaydetme işlemi yapılamaz..
+        /// </summary>
+        public static string UIWarningQueryStrMessage {
+            get {
+                return ResourceManager.GetString("UIWarningQueryStrMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningQueryStrTitle {
+            get {
+                return ResourceManager.GetString("UIWarningQueryStrTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modül, işlem, hedef departman seçilmeden sorgu oluşturulamaz..
+        /// </summary>
+        public static string UIWarningSQLCommandMessage {
+            get {
+                return ResourceManager.GetString("UIWarningSQLCommandMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningSQLCommandTitle {
+            get {
+                return ResourceManager.GetString("UIWarningSQLCommandTitle", resourceCulture);
             }
         }
         
@@ -6523,11 +14326,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string UnitSetContextAdd1 {
+            get {
+                return ResourceManager.GetString("UnitSetContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string UnitSetContextChange {
             get {
                 return ResourceManager.GetString("UnitSetContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string UnitSetContextChange1 {
+            get {
+                return ResourceManager.GetString("UnitSetContextChange1", resourceCulture);
             }
         }
         
@@ -6541,11 +14362,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string UnitSetContextDelete1 {
+            get {
+                return ResourceManager.GetString("UnitSetContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string UnitSetContextRefresh {
             get {
                 return ResourceManager.GetString("UnitSetContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string UnitSetContextRefresh1 {
+            get {
+                return ResourceManager.GetString("UnitSetContextRefresh1", resourceCulture);
             }
         }
         
@@ -6559,11 +14398,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Birim Setleri.
+        /// </summary>
+        public static string UnitSetsChildMenu1 {
+            get {
+                return ResourceManager.GetString("UnitSetsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Arıza/Plansız Bakım Kayıtları.
         /// </summary>
         public static string UnplannedMainChildMenu {
             get {
                 return ResourceManager.GetString("UnplannedMainChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arıza/Plansız Bakım Kayıtları.
+        /// </summary>
+        public static string UnplannedMainChildMenu1 {
+            get {
+                return ResourceManager.GetString("UnplannedMainChildMenu1", resourceCulture);
             }
         }
         
@@ -6577,11 +14434,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string UnplannedMaintenanceContextAdd1 {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string UnplannedMaintenanceContextChange {
             get {
                 return ResourceManager.GetString("UnplannedMaintenanceContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string UnplannedMaintenanceContextChange1 {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceContextChange1", resourceCulture);
             }
         }
         
@@ -6595,11 +14470,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string UnplannedMaintenanceContextDelete1 {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string UnplannedMaintenanceContextRefresh {
             get {
                 return ResourceManager.GetString("UnplannedMaintenanceContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string UnplannedMaintenanceContextRefresh1 {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceContextRefresh1", resourceCulture);
             }
         }
         
@@ -6613,11 +14506,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string UnplannedMaintenanceLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceLineContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Değiştir.
         /// </summary>
         public static string UnplannedMaintenanceLineContextChange {
             get {
                 return ResourceManager.GetString("UnplannedMaintenanceLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string UnplannedMaintenanceLineContextChange1 {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceLineContextChange1", resourceCulture);
             }
         }
         
@@ -6631,11 +14542,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string UnplannedMaintenanceLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceLineContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Güncelle.
         /// </summary>
         public static string UnplannedMaintenanceLineContextRefresh {
             get {
                 return ResourceManager.GetString("UnplannedMaintenanceLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string UnplannedMaintenanceLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tümünü Kaldır.
+        /// </summary>
+        public static string UnSelectAllText {
+            get {
+                return ResourceManager.GetString("UnSelectAllText", resourceCulture);
             }
         }
         
@@ -6649,11 +14587,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıkları.
+        /// </summary>
+        public static string UnsItemsChildMenu1 {
+            get {
+                return ResourceManager.GetString("UnsItemsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uygunsuzluk Kayıtları.
         /// </summary>
         public static string UnsRecordsMenu {
             get {
                 return ResourceManager.GetString("UnsRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Kayıtları.
+        /// </summary>
+        public static string UnsRecordsMenu1 {
+            get {
+                return ResourceManager.GetString("UnsRecordsMenu1", resourceCulture);
             }
         }
         
@@ -6667,11 +14623,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Türü Başlıkları.
+        /// </summary>
+        public static string UnsTypesItemsChildMenu1 {
+            get {
+                return ResourceManager.GetString("UnsTypesItemsChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string UnsuitabilityItemContextAdd {
             get {
                 return ResourceManager.GetString("UnsuitabilityItemContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string UnsuitabilityItemContextAdd1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemContextAdd1", resourceCulture);
             }
         }
         
@@ -6685,11 +14659,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string UnsuitabilityItemContextChange1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string UnsuitabilityItemContextDelete {
             get {
                 return ResourceManager.GetString("UnsuitabilityItemContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string UnsuitabilityItemContextDelete1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemContextDelete1", resourceCulture);
             }
         }
         
@@ -6703,11 +14695,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string UnsuitabilityItemContextRefresh1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string UnsuitabilityItemSPCContextAdd {
             get {
                 return ResourceManager.GetString("UnsuitabilityItemSPCContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string UnsuitabilityItemSPCContextAdd1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCContextAdd1", resourceCulture);
             }
         }
         
@@ -6721,11 +14731,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string UnsuitabilityItemSPCContextChange1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string UnsuitabilityItemSPCContextDelete {
             get {
                 return ResourceManager.GetString("UnsuitabilityItemSPCContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string UnsuitabilityItemSPCContextDelete1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCContextDelete1", resourceCulture);
             }
         }
         
@@ -6739,11 +14767,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string UnsuitabilityItemSPCContextRefresh1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Ekle.
         /// </summary>
         public static string UnsuitabilityItemSPCLineContextAdd {
             get {
                 return ResourceManager.GetString("UnsuitabilityItemSPCLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Ekle.
+        /// </summary>
+        public static string UnsuitabilityItemSPCLineContextAdd1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCLineContextAdd1", resourceCulture);
             }
         }
         
@@ -6757,11 +14803,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Değiştir.
+        /// </summary>
+        public static string UnsuitabilityItemSPCLineContextChange1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCLineContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Sil.
         /// </summary>
         public static string UnsuitabilityItemSPCLineContextDelete {
             get {
                 return ResourceManager.GetString("UnsuitabilityItemSPCLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satır Sil.
+        /// </summary>
+        public static string UnsuitabilityItemSPCLineContextDelete1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCLineContextDelete1", resourceCulture);
             }
         }
         
@@ -6775,11 +14839,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satır Güncelle.
+        /// </summary>
+        public static string UnsuitabilityItemSPCLineContextRefresh1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCLineContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uygunsuzluk Başlığına Göre SPC Tabloları.
         /// </summary>
         public static string UnsuitabilityItemSPSChildMenu {
             get {
                 return ResourceManager.GetString("UnsuitabilityItemSPSChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Başlığına Göre SPC Tabloları.
+        /// </summary>
+        public static string UnsuitabilityItemSPSChildMenu1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPSChildMenu1", resourceCulture);
             }
         }
         
@@ -6793,11 +14875,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıklarına göre SPC Karşlaştırma.
+        /// </summary>
+        public static string UnsuitabilityItemSPSComparingChildMenu1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPSComparingChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string UnsuitabilityTypesItemContextAdd {
             get {
                 return ResourceManager.GetString("UnsuitabilityTypesItemContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string UnsuitabilityTypesItemContextAdd1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityTypesItemContextAdd1", resourceCulture);
             }
         }
         
@@ -6811,11 +14911,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string UnsuitabilityTypesItemContextChange1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityTypesItemContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string UnsuitabilityTypesItemContextDelete {
             get {
                 return ResourceManager.GetString("UnsuitabilityTypesItemContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string UnsuitabilityTypesItemContextDelete1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityTypesItemContextDelete1", resourceCulture);
             }
         }
         
@@ -6829,11 +14947,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string UnsuitabilityTypesItemContextRefresh1 {
+            get {
+                return ResourceManager.GetString("UnsuitabilityTypesItemContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
         /// </summary>
         public static string UpdateControlManager {
             get {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
+        /// </summary>
+        public static string UpdateControlManager1 {
+            get {
+                return ResourceManager.GetString("UpdateControlManager1", resourceCulture);
             }
         }
         
@@ -6847,11 +14983,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string UserContextAdd1 {
+            get {
+                return ResourceManager.GetString("UserContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string UserContextChange {
             get {
                 return ResourceManager.GetString("UserContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string UserContextChange1 {
+            get {
+                return ResourceManager.GetString("UserContextChange1", resourceCulture);
             }
         }
         
@@ -6865,11 +15019,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string UserContextDelete1 {
+            get {
+                return ResourceManager.GetString("UserContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kullanıcı Yetkileri.
         /// </summary>
         public static string UserContextPermission {
             get {
                 return ResourceManager.GetString("UserContextPermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Yetkileri.
+        /// </summary>
+        public static string UserContextPermission1 {
+            get {
+                return ResourceManager.GetString("UserContextPermission1", resourceCulture);
             }
         }
         
@@ -6883,11 +15055,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string UserContextRefresh1 {
+            get {
+                return ResourceManager.GetString("UserContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string UserGroupContextAdd {
             get {
                 return ResourceManager.GetString("UserGroupContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string UserGroupContextAdd1 {
+            get {
+                return ResourceManager.GetString("UserGroupContextAdd1", resourceCulture);
             }
         }
         
@@ -6901,11 +15091,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string UserGroupContextChange1 {
+            get {
+                return ResourceManager.GetString("UserGroupContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string UserGroupContextDelete {
             get {
                 return ResourceManager.GetString("UserGroupContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string UserGroupContextDelete1 {
+            get {
+                return ResourceManager.GetString("UserGroupContextDelete1", resourceCulture);
             }
         }
         
@@ -6919,6 +15127,15 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string UserGroupContextRefresh1 {
+            get {
+                return ResourceManager.GetString("UserGroupContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KULLANICI GRUBU KODU.
         /// </summary>
         public static string UserGroupModalGridCode {
@@ -6928,11 +15145,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KULLANICI GRUBU KODU.
+        /// </summary>
+        public static string UserGroupModalGridCode1 {
+            get {
+                return ResourceManager.GetString("UserGroupModalGridCode1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KULLANICI GRUBU ADI.
         /// </summary>
         public static string UserGroupModalGridName {
             get {
                 return ResourceManager.GetString("UserGroupModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KULLANICI GRUBU ADI.
+        /// </summary>
+        public static string UserGroupModalGridName1 {
+            get {
+                return ResourceManager.GetString("UserGroupModalGridName1", resourceCulture);
             }
         }
         
@@ -6948,9 +15183,27 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         /// <summary>
         ///   Looks up a localized string similar to Kullanıcı Grupları.
         /// </summary>
+        public static string UserGroupModalTitle1 {
+            get {
+                return ResourceManager.GetString("UserGroupModalTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Grupları.
+        /// </summary>
         public static string UserGrpChildMenu {
             get {
                 return ResourceManager.GetString("UserGrpChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Grupları.
+        /// </summary>
+        public static string UserGrpChildMenu1 {
+            get {
+                return ResourceManager.GetString("UserGrpChildMenu1", resourceCulture);
             }
         }
         
@@ -6964,11 +15217,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KULLANICI ADI.
+        /// </summary>
+        public static string UserName1 {
+            get {
+                return ResourceManager.GetString("UserName1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kullanıcı Adı:.
         /// </summary>
         public static string UserNameLabel {
             get {
                 return ResourceManager.GetString("UserNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Adı:.
+        /// </summary>
+        public static string UserNameLabel1 {
+            get {
+                return ResourceManager.GetString("UserNameLabel1", resourceCulture);
             }
         }
         
@@ -6982,11 +15253,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı Tanımlamaları.
+        /// </summary>
+        public static string UsersChildMenu1 {
+            get {
+                return ResourceManager.GetString("UsersChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen kullanıcı kodunu yazın..
         /// </summary>
         public static string ValidatorCodeEmpty {
             get {
                 return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen kullanıcı kodunu yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty1 {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty1", resourceCulture);
             }
         }
         
@@ -7000,11 +15289,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı kodu, 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLenght1 {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLenght1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen ad ve soyad yazın..
         /// </summary>
         public static string ValidatorNameSurnameEmpty {
             get {
                 return ResourceManager.GetString("ValidatorNameSurnameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen ad ve soyad yazın..
+        /// </summary>
+        public static string ValidatorNameSurnameEmpty1 {
+            get {
+                return ResourceManager.GetString("ValidatorNameSurnameEmpty1", resourceCulture);
             }
         }
         
@@ -7018,11 +15325,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adı ve soyad, 300 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorNameSurnameMaxLength1 {
+            get {
+                return ResourceManager.GetString("ValidatorNameSurnameMaxLength1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen kullanıcı grubu seçin..
         /// </summary>
         public static string ValidatorUserGroupID {
             get {
                 return ResourceManager.GetString("ValidatorUserGroupID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen kullanıcı grubu seçin..
+        /// </summary>
+        public static string ValidatorUserGroupID1 {
+            get {
+                return ResourceManager.GetString("ValidatorUserGroupID1", resourceCulture);
             }
         }
         
@@ -7036,11 +15361,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen kullanıcı adını yazın..
+        /// </summary>
+        public static string ValidatorUserNameEmpty1 {
+            get {
+                return ResourceManager.GetString("ValidatorUserNameEmpty1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kullanıcı adı, 300 karakterden fazla olamaz..
         /// </summary>
         public static string ValidatorUserNameMaxLenght {
             get {
                 return ResourceManager.GetString("ValidatorUserNameMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı adı, 300 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorUserNameMaxLenght1 {
+            get {
+                return ResourceManager.GetString("ValidatorUserNameMaxLenght1", resourceCulture);
             }
         }
         
@@ -7063,6 +15406,24 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string WarehouseContextAdd11 {
+            get {
+                return ResourceManager.GetString("WarehouseContextAdd11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string WarehouseContextAdd2 {
+            get {
+                return ResourceManager.GetString("WarehouseContextAdd2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string WarehouseContextChange {
@@ -7077,6 +15438,24 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         public static string WarehouseContextChange1 {
             get {
                 return ResourceManager.GetString("WarehouseContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string WarehouseContextChange11 {
+            get {
+                return ResourceManager.GetString("WarehouseContextChange11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string WarehouseContextChange2 {
+            get {
+                return ResourceManager.GetString("WarehouseContextChange2", resourceCulture);
             }
         }
         
@@ -7099,6 +15478,24 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string WarehouseContextDelete11 {
+            get {
+                return ResourceManager.GetString("WarehouseContextDelete11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string WarehouseContextDelete2 {
+            get {
+                return ResourceManager.GetString("WarehouseContextDelete2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string WarehouseContextRefresh {
@@ -7117,11 +15514,38 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        public static string WarehouseContextRefresh11 {
+            get {
+                return ResourceManager.GetString("WarehouseContextRefresh11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string WarehouseContextRefresh2 {
+            get {
+                return ResourceManager.GetString("WarehouseContextRefresh2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Depo Kartları.
         /// </summary>
         public static string WarehousesChildMenu {
             get {
                 return ResourceManager.GetString("WarehousesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depo Kartları.
+        /// </summary>
+        public static string WarehousesChildMenu1 {
+            get {
+                return ResourceManager.GetString("WarehousesChildMenu1", resourceCulture);
             }
         }
         
@@ -7135,11 +15559,56 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string WorkOrderContextAdd1 {
+            get {
+                return ResourceManager.GetString("WorkOrderContextAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string WorkOrderContextChange {
             get {
                 return ResourceManager.GetString("WorkOrderContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string WorkOrderContextChange1 {
+            get {
+                return ResourceManager.GetString("WorkOrderContextChange1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon Kriterlerini Değiştir.
+        /// </summary>
+        public static string WorkOrderContextChangeOperationCriteria {
+            get {
+                return ResourceManager.GetString("WorkOrderContextChangeOperationCriteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş İstasyonunu Değiştir.
+        /// </summary>
+        public static string WorkOrderContextChangeStation {
+            get {
+                return ResourceManager.GetString("WorkOrderContextChangeStation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fason Takip.
+        /// </summary>
+        public static string WorkOrderContextContractTracking {
+            get {
+                return ResourceManager.GetString("WorkOrderContextContractTracking", resourceCulture);
             }
         }
         
@@ -7153,11 +15622,47 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string WorkOrderContextDelete1 {
+            get {
+                return ResourceManager.GetString("WorkOrderContextDelete1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Takip.
+        /// </summary>
+        public static string WorkOrderContextProductionTracking {
+            get {
+                return ResourceManager.GetString("WorkOrderContextProductionTracking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string WorkOrderContextRefresh {
             get {
                 return ResourceManager.GetString("WorkOrderContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string WorkOrderContextRefresh1 {
+            get {
+                return ResourceManager.GetString("WorkOrderContextRefresh1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş Emri Parçala.
+        /// </summary>
+        public static string WorkOrderContextSplitWorkOrder {
+            get {
+                return ResourceManager.GetString("WorkOrderContextSplitWorkOrder", resourceCulture);
             }
         }
         
@@ -7171,11 +15676,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İş Emirleri Listesi.
+        /// </summary>
+        public static string WorkOrderListChildMenu1 {
+            get {
+                return ResourceManager.GetString("WorkOrderListChildMenu1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İş Emirleri.
         /// </summary>
         public static string WorkOrdersChildMenu {
             get {
                 return ResourceManager.GetString("WorkOrdersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş Emirleri.
+        /// </summary>
+        public static string WorkOrdersChildMenu1 {
+            get {
+                return ResourceManager.GetString("WorkOrdersChildMenu1", resourceCulture);
             }
         }
     }

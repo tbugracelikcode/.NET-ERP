@@ -10,13 +10,13 @@ namespace TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos
     public class CreateHaltReasonsDto : FullAuditedEntityDto
     {
         /// <summary>
-        /// Duruş Sebebi Adı
-        /// </summary>
-        public string Name { get; set; }
-        /// <summary>
         /// Duruş Sebebi Kodu
         /// </summary>
         public string Code { get; set; }
+        /// <summary>
+        /// Duruş Sebebi Adı
+        /// </summary>
+        public string Name { get; set; }
         /// <summary>
         /// Planlı mı?
         /// </summary>
@@ -34,5 +34,9 @@ namespace TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos
         /// Yönetim Kaynaklı mı?
         /// </summary>
         public bool IsManagement { get; set; }
+        /// <summary>
+        /// Arızi Duruş
+        /// </summary>
+        public bool IsIncidentalHalt { get; set; }
     }
 }

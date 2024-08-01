@@ -232,6 +232,15 @@ namespace TsiErp.Localizations.Resources.StockSections.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok Bölümleri.
+        /// </summary>
+        public static string StockSectionsChildMenu {
+            get {
+                return ResourceManager.GetString("StockSectionsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string StockSectionsContextAdd {

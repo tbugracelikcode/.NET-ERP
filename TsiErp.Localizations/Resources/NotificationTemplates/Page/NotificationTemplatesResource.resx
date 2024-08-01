@@ -138,6 +138,21 @@
   <data name="8DContextState" xml:space="preserve">
     <value>8D Raporunu Tamamla</value>
   </data>
+  <data name="BankAccountsChildMenu" xml:space="preserve">
+    <value>Banka Hesapları</value>
+  </data>
+  <data name="BankAccountsContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="BankAccountsContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="BankAccountsContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="BankAccountsContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="BOMChildMenu" xml:space="preserve">
     <value>Üretim Reçeteleri</value>
   </data>
@@ -201,6 +216,9 @@
   <data name="ByProdGrpScrapAnalysisChildMenu" xml:space="preserve">
     <value>Ürün Grubuna Göre Hurda Analizi</value>
   </data>
+  <data name="CalendarChildMenu" xml:space="preserve">
+    <value>Çalışma Takvimi</value>
+  </data>
   <data name="CalendarContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -255,6 +273,9 @@
   <data name="CalVerificationsChildMenu" xml:space="preserve">
     <value>Kalibrasyon Doğrulama Kayıtları</value>
   </data>
+  <data name="CitiesChildMenu" xml:space="preserve">
+    <value>Şehirler</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -291,11 +312,14 @@
   <data name="ContextOprPicRefresh" xml:space="preserve">
     <value>Operasyon Resmi Güncelle</value>
   </data>
+  <data name="ContinentsChildMenu" xml:space="preserve">
+    <value>Kıtalar</value>
+  </data>
   <data name="ContractOfProductsOperationContextDelete" xml:space="preserve">
-    <value>Sil</value>
+    <value>Fason Tedarikçi Sil</value>
   </data>
   <data name="ContractOfProductsOperationContextSelectSupplier" xml:space="preserve">
-    <value>Tedarikçi Seç</value>
+    <value>Fason Tedarikçi Seç</value>
   </data>
   <data name="ContractOprContextAdd" xml:space="preserve">
     <value>Fason Operasyon Ekle</value>
@@ -347,6 +371,18 @@
   </data>
   <data name="ContractQualityPlansChildMenu" xml:space="preserve">
     <value>Fason Giriş Kalite Planları</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextAdd" xml:space="preserve">
+    <value> Miktar Satır Ekle</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextChange" xml:space="preserve">
+    <value>Miktar Satır  Değiştir</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextDelete" xml:space="preserve">
+    <value>Miktar Satır Sil</value>
+  </data>
+  <data name="ContractTrackingFicheAmountEntryLineContextRefresh" xml:space="preserve">
+    <value>Miktar Satır Güncelle</value>
   </data>
   <data name="ContractTrackingFicheContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -523,7 +559,7 @@
     <value>Personel Departmanları</value>
   </data>
   <data name="EditModalTitle" xml:space="preserve">
-    <value>Bildirimler</value>
+    <value>Bildirim Şablonları</value>
   </data>
   <data name="EditModalTitle1" xml:space="preserve">
     <value>Kullanıcı Tanımlamaları</value>
@@ -666,6 +702,9 @@
   <data name="ExchangeRateContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
+  <data name="ExchangeRateContextCentralBankExchange" xml:space="preserve">
+    <value>Merkez Bankası Kurlarını Çek</value>
+  </data>
   <data name="ExchangeRateContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>
@@ -755,6 +794,9 @@
   </data>
   <data name="ForecastContextDelete" xml:space="preserve">
     <value>Sil</value>
+  </data>
+  <data name="ForecastContextMRP" xml:space="preserve">
+    <value>Malzeme İhtiyaç Listesi</value>
   </data>
   <data name="ForecastContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
@@ -1062,6 +1104,27 @@
   <data name="MRPIIChildMenu" xml:space="preserve">
     <value>Üretim Kaynak Planlaması (MRPII)</value>
   </data>
+  <data name="MRPIILineContextCalculate" xml:space="preserve">
+    <value>Tahmini Bitiş Tarihi Hesapla</value>
+  </data>
+  <data name="MRPIILineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="MRPIILineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="MRPIIsContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="MRPIIsContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="MRPIIsContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="MRPIIsContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="MRPLineContextChange" xml:space="preserve">
     <value>Satır Değiştir</value>
   </data>
@@ -1077,8 +1140,14 @@
   <data name="MRPLineContextRefresh" xml:space="preserve">
     <value>Satır Güncelle</value>
   </data>
+  <data name="MRPLineContextReservePurchase" xml:space="preserve">
+    <value>Satın Almayı Rezerve Et</value>
+  </data>
   <data name="MRPLineContextStockUsage" xml:space="preserve">
     <value>Satır Stoktan Kullan</value>
+  </data>
+  <data name="MRPLineContextSupplier" xml:space="preserve">
+    <value>Tedarikçi Seç</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>BİLDİRİM ADI</value>
@@ -1100,6 +1169,9 @@
   </data>
   <data name="NotificationTemplatesContextDelete" xml:space="preserve">
     <value>Sil</value>
+  </data>
+  <data name="NotificationTemplatesContextIsActive" xml:space="preserve">
+    <value>Aktiflik Durumunu Ayarla</value>
   </data>
   <data name="NotificationTemplatesContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
@@ -1212,14 +1284,32 @@
   <data name="OrderAcceptanceRecordsContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextControl" xml:space="preserve">
+    <value>Sipariş Kabul Kontrol</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextConverttoOrder" xml:space="preserve">
     <value>Satış Siparişine Dönüştür</value>
   </data>
   <data name="OrderAcceptanceRecordsContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="OrderAcceptanceRecordsContextMRP" xml:space="preserve">
+    <value>Malzeme İhtiyaç Listesi</value>
+  </data>
+  <data name="OrderAcceptanceRecordsContextOrderLines" xml:space="preserve">
+    <value>Sipariş Satırları</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="OrderAcceptanceRecordsContextStatus" xml:space="preserve">
+    <value>Durum</value>
+  </data>
+  <data name="PackageFicheLinesContextChange" xml:space="preserve">
+    <value>Satır Değiştir</value>
+  </data>
+  <data name="PackageFicheLinesContextRefresh" xml:space="preserve">
+    <value>Satır Güncelle</value>
   </data>
   <data name="PackageFichesChildMenu" xml:space="preserve">
     <value>Paket Fişleri</value>
@@ -1257,8 +1347,14 @@
   <data name="PackingListsContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="PackingListsContextPrint" xml:space="preserve">
+    <value>Yazdır</value>
+  </data>
   <data name="PackingListsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="PackingListsPalletLineContextRemovePallet" xml:space="preserve">
+    <value>Palet Çıkar</value>
   </data>
   <data name="PackingListsPalletLineContextSelectPallet" xml:space="preserve">
     <value>Palet Seç</value>
@@ -1305,8 +1401,23 @@
   <data name="PalletRecordsContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="PalletRecordsContextLoadingDetail" xml:space="preserve">
+    <value>Yükleme Detayı</value>
+  </data>
+  <data name="PalletRecordsContextPalletDetail" xml:space="preserve">
+    <value>Palet Detayı</value>
+  </data>
+  <data name="PalletRecordsContextPrintTicket" xml:space="preserve">
+    <value>Yazdır</value>
+  </data>
   <data name="PalletRecordsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="PalletRecordsContextState" xml:space="preserve">
+    <value>Durum</value>
+  </data>
+  <data name="PalletRecordsContextTicketState" xml:space="preserve">
+    <value>Etiket Basım</value>
   </data>
   <data name="PalletRecordsListChildMenu" xml:space="preserve">
     <value>Palet Kayıtları Listesi</value>
@@ -1425,6 +1536,9 @@
   <data name="ProdOperationsChildMenu" xml:space="preserve">
     <value>Ürün Operasyon Kayıtları</value>
   </data>
+  <data name="ProdOrderChangeRecordsChildMenu" xml:space="preserve">
+    <value>Üretim Emri Değişiklik Kayıtları</value>
+  </data>
   <data name="ProdOrderRecordsChildMenu" xml:space="preserve">
     <value>Üretim Emri Uygunsuzluk Kayıtları</value>
   </data>
@@ -1467,6 +1581,9 @@
   <data name="ProductContextSalesPrices" xml:space="preserve">
     <value>Satış Fiyatları</value>
   </data>
+  <data name="ProductContextStockAddress" xml:space="preserve">
+    <value>Stok Adresleri</value>
+  </data>
   <data name="ProductContextStockAmounts" xml:space="preserve">
     <value>Depo Toplamları</value>
   </data>
@@ -1481,6 +1598,9 @@
   </data>
   <data name="ProductGroupContextDelete" xml:space="preserve">
     <value>Sil</value>
+  </data>
+  <data name="ProductGroupContextProductProperties" xml:space="preserve">
+    <value>Ürün Özellikleri</value>
   </data>
   <data name="ProductGroupContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
@@ -1515,14 +1635,32 @@
   <data name="ProductionManagementTransactionsMenu" xml:space="preserve">
     <value>Hareketler</value>
   </data>
+  <data name="ProductionOrderChangeReportsContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProductionOrderChangeReportsContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ProductionOrderChangeReportsContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProductionOrderChangeReportsContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="ProductionOrderContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
   <data name="ProductionOrderContextAddtoShipmentPlanning" xml:space="preserve">
     <value>Sevkiyat Planlamasına Aktar</value>
   </data>
+  <data name="ProductionOrderContextCancel" xml:space="preserve">
+    <value>İptal</value>
+  </data>
   <data name="ProductionOrderContextChange" xml:space="preserve">
     <value>Değiştir</value>
+  </data>
+  <data name="ProductionOrderContextChangeTechnicalDrawing" xml:space="preserve">
+    <value>Teknik Resim Değiştir</value>
   </data>
   <data name="ProductionOrderContextConsumptionReceipt" xml:space="preserve">
     <value>Sarf Fişi Oluştur</value>
@@ -1530,14 +1668,29 @@
   <data name="ProductionOrderContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="ProductionOrderContextMaterialFiches" xml:space="preserve">
+    <value>Malzeme Fişleri</value>
+  </data>
+  <data name="ProductionOrderContextMaterialSupplyStatus" xml:space="preserve">
+    <value>Malzeme Temin Durumu</value>
+  </data>
   <data name="ProductionOrderContextOccuredAmountEntry" xml:space="preserve">
     <value>Gerçekleşen Miktar Girişi</value>
   </data>
   <data name="ProductionOrderContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="ProductionOrderContextTrackingChart" xml:space="preserve">
+    <value>H.M. - Y.M. İzleme Tablosu</value>
+  </data>
+  <data name="ProductionOrderContextUnsuitabilityRecords" xml:space="preserve">
+    <value>Uygunsuzluk Kayıtları</value>
+  </data>
   <data name="ProductionOrderContextWorkOrders" xml:space="preserve">
     <value>İş Emirleri</value>
+  </data>
+  <data name="ProductionOrderContextWrite" xml:space="preserve">
+    <value>Yaz</value>
   </data>
   <data name="ProductionOrderListChildMenu" xml:space="preserve">
     <value>Üretim Emirleri Listesi</value>
@@ -1577,6 +1730,48 @@
   </data>
   <data name="ProductOrderContextTree" xml:space="preserve">
     <value>Ürün Ağacı</value>
+  </data>
+  <data name="ProductPropertyContextAdd" xml:space="preserve">
+    <value>Ürün Özellikleri Ekle</value>
+  </data>
+  <data name="ProductPropertyContextChange" xml:space="preserve">
+    <value>Ürün Özellikleri Değiştir</value>
+  </data>
+  <data name="ProductPropertyContextDelete" xml:space="preserve">
+    <value>Ürün Özellikleri Sil</value>
+  </data>
+  <data name="ProductPropertyContextRefresh" xml:space="preserve">
+    <value>Ürün Özellikleri Güncelle</value>
+  </data>
+  <data name="ProductPropertyLineContextAdd" xml:space="preserve">
+    <value>Ürün Özellikleri Satır Ekle</value>
+  </data>
+  <data name="ProductPropertyLineContextChange" xml:space="preserve">
+    <value>Ürün Özellikleri Satır Değiştir</value>
+  </data>
+  <data name="ProductPropertyLineContextDelete" xml:space="preserve">
+    <value>Ürün Özellikleri Satır Sil</value>
+  </data>
+  <data name="ProductPropertyLineContextRefresh" xml:space="preserve">
+    <value>Ürün Özellikleri Satır Güncelle</value>
+  </data>
+  <data name="ProductReceiptTransactionsChildMenu" xml:space="preserve">
+    <value>Stok Giriş Hareketleri</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextApproveIncomingQuantity" xml:space="preserve">
+    <value>Gelen Miktarı Onayla</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProductReceiptTransactionsContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="ProductReferanceNumberContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -1680,8 +1875,14 @@
   <data name="PurchaseOrderContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="PurchaseOrderContextPriceApproval" xml:space="preserve">
+    <value>Fatura Onayı Ver</value>
+  </data>
   <data name="PurchaseOrderContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="PurchaseOrderContextWayBillApproval" xml:space="preserve">
+    <value>İrsaliye Onayı Ver</value>
   </data>
   <data name="PurchaseOrderFicheListChildMenu" xml:space="preserve">
     <value>Satın Alma Siparişleri Listesi</value>
@@ -1697,6 +1898,30 @@
   </data>
   <data name="PurchaseOrderLineContextRefresh" xml:space="preserve">
     <value>Satır Güncelle</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalLinesContextChange" xml:space="preserve">
+    <value>Değer Ekle</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalLinesContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsChildMenu" xml:space="preserve">
+    <value>Onay Bekleyen Satın Alma Siparişleri</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextPurchaseUnsuitability" xml:space="preserve">
+    <value>Satın Alma Uygunsuzluk Kaydı Oluştur</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextQualityApproval" xml:space="preserve">
+    <value>Kalite Onayı Ver</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextQualityApprovalCancel" xml:space="preserve">
+    <value>Kalite Onayını İptal Et</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsContextReview" xml:space="preserve">
+    <value>İncele</value>
   </data>
   <data name="PurchaseOrdersChildMenu" xml:space="preserve">
     <value>Satın Alma Siparişleri</value>
@@ -1849,10 +2074,10 @@
     <value>Kalite Planları</value>
   </data>
   <data name="QueryStr" xml:space="preserve">
-    <value>SATIR</value>
+    <value>SORGU</value>
   </data>
   <data name="QueryStrLabel" xml:space="preserve">
-    <value>Satır:</value>
+    <value>Sorgu:</value>
   </data>
   <data name="Report8DChildMenu" xml:space="preserve">
     <value>8D Raporları</value>
@@ -2007,6 +2232,9 @@
   <data name="SaveButton1" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="SectorsChildMenu" xml:space="preserve">
+    <value>Sektörler</value>
+  </data>
   <data name="SelectAllText" xml:space="preserve">
     <value>Tümünü Seç</value>
   </data>
@@ -2104,10 +2332,13 @@
     <value>Sevkiyat Yönetimi </value>
   </data>
   <data name="SourceDepartmentIdLabel" xml:space="preserve">
-    <value>Kaynak Departman:</value>
+    <value>Kullanıcı Grubu Departmanı:</value>
   </data>
   <data name="SPCFMEAChildMenu" xml:space="preserve">
     <value>SPC &amp; FMEA</value>
+  </data>
+  <data name="SQLCommandButton" xml:space="preserve">
+    <value>Sorguyu Oluştur</value>
   </data>
   <data name="StartingSalariesChildMenu" xml:space="preserve">
     <value>Başlangıç Maaşları</value>
@@ -2190,6 +2421,48 @@
   <data name="StationsChildMenu" xml:space="preserve">
     <value>İş İstasyonları</value>
   </data>
+  <data name="StockAddressesChildMenu" xml:space="preserve">
+    <value>Stok Adresleri</value>
+  </data>
+  <data name="StockAddressesContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="StockAddressesContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="StockAddressesContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="StockAddressesContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="StockAddressesLineContextAdd" xml:space="preserve">
+    <value>Satır Ekle</value>
+  </data>
+  <data name="StockAddressesLineContextChange" xml:space="preserve">
+    <value>Satır Değiştir</value>
+  </data>
+  <data name="StockAddressesLineContextDelete" xml:space="preserve">
+    <value>Satır Sil</value>
+  </data>
+  <data name="StockAddressesLineContextRefresh" xml:space="preserve">
+    <value>Satır Güncelle</value>
+  </data>
+  <data name="StockColumnsChildMenu" xml:space="preserve">
+    <value>Stok Sütunları</value>
+  </data>
+  <data name="StockColumnsContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="StockColumnsContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="StockColumnsContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="StockColumnsContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="StockFicheContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -2235,6 +2508,9 @@
   <data name="StockFichesChildMenu" xml:space="preserve">
     <value>Stok Fişleri</value>
   </data>
+  <data name="StockFichesGeneralConAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
   <data name="StockManagementMainRecordsMenu" xml:space="preserve">
     <value>Ana Kayıtlar</value>
   </data>
@@ -2262,6 +2538,21 @@
   <data name="StockManagementTransactionsMenu" xml:space="preserve">
     <value>Hareketler</value>
   </data>
+  <data name="StockNumbersChildMenu" xml:space="preserve">
+    <value>Stok Numaraları</value>
+  </data>
+  <data name="StockNumbersContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="StockNumbersContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="StockNumbersContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="StockNumbersContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="StockReceiptFichesContextMultiSelect" xml:space="preserve">
     <value>Toplu Seç</value>
   </data>
@@ -2271,20 +2562,50 @@
   <data name="StockReceiptFichesContextSelect" xml:space="preserve">
     <value>Seç</value>
   </data>
+  <data name="StockSectionsChildMenu" xml:space="preserve">
+    <value>Stok Bölümleri</value>
+  </data>
+  <data name="StockSectionsContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="StockSectionsContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="StockSectionsContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="StockSectionsContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="StockShelfsChildMenu" xml:space="preserve">
+    <value>Stok Rafları</value>
+  </data>
+  <data name="StockShelfsContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="StockShelfsContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="StockShelfsContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="StockShelfsContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>Genel Bilgiler</value>
   </data>
   <data name="TargetDepartmentId" xml:space="preserve">
-    <value>HEDEF DEPARTMAN ID</value>
+    <value>KULLANICI GRUBU ID</value>
   </data>
   <data name="TargetDepartmentIdLabel" xml:space="preserve">
-    <value>Hedef Departman Id:</value>
+    <value>Kullanıcı Grubu Id:</value>
   </data>
   <data name="TargetUsersId" xml:space="preserve">
-    <value>HEDEF KULLANICI ID</value>
+    <value>HEDEF KULLANICI GRUBU ID</value>
   </data>
   <data name="TargetUsersIdLabel" xml:space="preserve">
-    <value>Hedef Kullanıcı Id:</value>
+    <value>Hedef Kullanıcı Grubu Id:</value>
   </data>
   <data name="TaskScoringsChildMenu" xml:space="preserve">
     <value>Görev Puanlamaları</value>
@@ -2383,6 +2704,18 @@
     <value>Genel Sistem Tanımlamaları</value>
   </data>
   <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningQueryStrMessage" xml:space="preserve">
+    <value>Sorgu oluşturulmadan kaydetme işlemi yapılamaz.</value>
+  </data>
+  <data name="UIWarningQueryStrTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningSQLCommandMessage" xml:space="preserve">
+    <value>Modül, işlem, hedef departman seçilmeden sorgu oluşturulamaz.</value>
+  </data>
+  <data name="UIWarningSQLCommandTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>
   <data name="UnitSetContextAdd" xml:space="preserve">
@@ -2598,11 +2931,26 @@
   <data name="WorkOrderContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>
+  <data name="WorkOrderContextChangeOperationCriteria" xml:space="preserve">
+    <value>Operasyon Kriterlerini Değiştir</value>
+  </data>
+  <data name="WorkOrderContextChangeStation" xml:space="preserve">
+    <value>İş İstasyonunu Değiştir</value>
+  </data>
+  <data name="WorkOrderContextContractTracking" xml:space="preserve">
+    <value>Fason Takip</value>
+  </data>
   <data name="WorkOrderContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="WorkOrderContextProductionTracking" xml:space="preserve">
+    <value>Üretim Takip</value>
+  </data>
   <data name="WorkOrderContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="WorkOrderContextSplitWorkOrder" xml:space="preserve">
+    <value>İş Emri Parçala</value>
   </data>
   <data name="WorkOrderListChildMenu" xml:space="preserve">
     <value>İş Emirleri Listesi</value>

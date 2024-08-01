@@ -222,6 +222,9 @@
   <data name="PreviewButton" xml:space="preserve">
     <value>Preview Technical Drawing</value>
   </data>
+  <data name="ProductContextStockAddress" xml:space="preserve">
+    <value>Stok Adresleri</value>
+  </data>
   <data name="PurchaseOrderDate" xml:space="preserve">
     <value>ORDER DATE</value>
   </data>
@@ -236,6 +239,9 @@
   </data>
   <data name="PurchaseOrdersAwaitingApprovalLinesContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalsChildMenu" xml:space="preserve">
+    <value>Purchase Orders Awaiting Approval</value>
   </data>
   <data name="PurchaseOrdersAwaitingApprovalsContextPurchaseUnsuitability" xml:space="preserve">
     <value>Create Purchase Unsuitability Report</value>

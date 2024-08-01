@@ -222,6 +222,9 @@
   <data name="PreviewButton" xml:space="preserve">
     <value>Teknik Resmi Görüntüle</value>
   </data>
+  <data name="Purchase Orders Awaiting Approval" xml:space="preserve">
+    <value>Onay Bekleyen Satın Alma Siparişleri</value>
+  </data>
   <data name="PurchaseOrderDate" xml:space="preserve">
     <value>SİPARİŞ TARİHİ</value>
   </data>

@@ -129,7 +129,14 @@ namespace TsiErp.Business.Entities.User.Services
 
         public async Task<IDataResult<SelectUsersDto>> GetAsyncByUserNameAndPassword(string userName, string password)
         {
-            var query = queryFactory.Query().From(Tables.Users).Select("*").Where(new { UserName = userName, Password = password }, true, true, Tables.Users);
+            var query = queryFactory.Query().From(Tables.Users).Select<Users>(null)
+                        .Join<UserGroups>
+                        (
+                            ug => new { GroupID = ug.Id, GroupName = ug.Name },
+                            nameof(Users.GroupID),
+                            nameof(UserGroups.Id),
+                            JoinType.Left
+                        ).Where(new { UserName = userName, Password = password }, true, true, Tables.Users);
 
             var user = queryFactory.Get<SelectUsersDto>(query);
 

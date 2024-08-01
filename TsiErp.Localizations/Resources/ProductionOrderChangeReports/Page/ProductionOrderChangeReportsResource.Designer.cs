@@ -251,6 +251,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrderChangeReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Emri Değişiklik Kayıtları.
+        /// </summary>
+        public static string ProdOrderChangeRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("ProdOrderChangeRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string ProductCode {

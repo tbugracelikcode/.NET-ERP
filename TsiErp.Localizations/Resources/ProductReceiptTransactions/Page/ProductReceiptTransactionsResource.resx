@@ -198,6 +198,9 @@
   <data name="ProductNameLabel" xml:space="preserve">
     <value>Stok Açıklaması:</value>
   </data>
+  <data name="ProductReceiptTransactionsChildMenu" xml:space="preserve">
+    <value>Stok Giriş Hareketleri</value>
+  </data>
   <data name="ProductReceiptTransactionsContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>

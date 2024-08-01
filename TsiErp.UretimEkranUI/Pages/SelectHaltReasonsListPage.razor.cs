@@ -11,6 +11,13 @@ namespace TsiErp.UretimEkranUI.Pages
 
         WorkOrderOperationDetailPage workOrderOperationDetailPage;
 
+
+        public bool isPasswordVisible = false;
+
+        string password = string.Empty;
+
+        ListHaltReasonsDto haltReasonIncidental = new ListHaltReasonsDto(); 
+
         protected override async void OnInitialized()
         {
 
@@ -48,6 +55,13 @@ namespace TsiErp.UretimEkranUI.Pages
             await Task.CompletedTask;
         }
 
+        private async Task GetHaltReasonsIsIncidental()
+        {
+            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsIncidentalHalt == true).ToList();
+
+            await Task.CompletedTask;
+        }
+
         private async void OnSelectHaltReason(ListHaltReasonsDto haltReason)
         {
             if(!string.IsNullOrEmpty(haltReason.Name))
@@ -63,7 +77,38 @@ namespace TsiErp.UretimEkranUI.Pages
             }
         }
 
+        private void OnSelectIncidentalHaltReason(ListHaltReasonsDto haltReason)
+        {
+            isPasswordVisible = true;
+            password = string.Empty;
+            haltReasonIncidental = haltReason;
+        }
+
         #endregion
+
+        public async void OnPasswordSubmit()
+        {
+            if (!string.IsNullOrEmpty(haltReasonIncidental.Name))
+            {
+                SelectedHaltReason = haltReasonIncidental;
+                EndHaltReasonButtonDisable = false;
+                await InvokeAsync(() => StateHasChanged());
+            }
+            else
+            {
+                EndHaltReasonButtonDisable = true;
+                await InvokeAsync(() => StateHasChanged());
+            }
+
+            HidePasswordModal();
+        }
+
+        public void HidePasswordModal()
+        {
+            isPasswordVisible = false;
+            password = string.Empty;
+            haltReasonIncidental = new ListHaltReasonsDto();
+        }
 
         private async void EndHaltReasonButtonClick()
         {

@@ -631,6 +631,10 @@ namespace TSI.QueryBuilder.BaseClasses
                         {
                             foreach (var item in updateQueries[0].ParameterList)
                             {
+                                if(item.Key == "@Id")
+                                {
+                                    continue;
+                                }
                                 var parameter = command.CreateParameter();
                                 parameter.ParameterName = item.Key;
                                 parameter.Value = item.Value ?? DBNull.Value;
@@ -646,6 +650,10 @@ namespace TSI.QueryBuilder.BaseClasses
                         {
                             foreach (var item in whereQueries[0].ParameterList)
                             {
+                                if (item.Key == "@Id")
+                                {
+                                    continue;
+                                }
                                 var parameter = command.CreateParameter();
                                 parameter.ParameterName = item.Key;
                                 parameter.Value = item.Value ?? DBNull.Value;

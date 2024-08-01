@@ -376,6 +376,15 @@ namespace TsiErp.Localizations.Resources.Sectors.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sektörler.
+        /// </summary>
+        public static string SectorsChildMenu {
+            get {
+                return ResourceManager.GetString("SectorsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string SectorsContextAdd {

@@ -79,6 +79,15 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çalışma Takvimi.
+        /// </summary>
+        public static string CalendarChildMenu {
+            get {
+                return ResourceManager.GetString("CalendarChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string CalendarContextAdd {

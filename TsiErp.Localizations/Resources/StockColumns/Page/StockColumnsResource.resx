@@ -171,6 +171,9 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="StockColumnsChildMenu" xml:space="preserve">
+    <value>Stok Sütunları</value>
+  </data>
   <data name="StockColumnsContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
