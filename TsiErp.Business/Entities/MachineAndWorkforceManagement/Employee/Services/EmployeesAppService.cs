@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Employee.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -359,7 +360,7 @@ namespace TsiErp.Business.Entities.Employee.Services
                 IsProductionScreenUser = entity.IsProductionScreenUser,
                 ProductionScreenPassword = entity.ProductionScreenPassword,
                 IsProductionScreenSettingUser = entity.IsProductionScreenSettingUser
-            }).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
 
             var employees = queryFactory.Update<SelectEmployeesDto>(query, "Id", true);
 

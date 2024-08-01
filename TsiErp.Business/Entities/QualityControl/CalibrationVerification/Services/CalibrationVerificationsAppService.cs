@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CalibrationVerification.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -229,7 +230,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
 
             var calibrationVerifications = queryFactory.Update<SelectCalibrationVerificationsDto>(query, "Id", true);
 

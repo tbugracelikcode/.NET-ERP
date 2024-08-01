@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.EquipmentRecord.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -265,7 +266,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
 
             var equipmentRecords = queryFactory.Update<SelectEquipmentRecordsDto>(query, "Id", true);
 
