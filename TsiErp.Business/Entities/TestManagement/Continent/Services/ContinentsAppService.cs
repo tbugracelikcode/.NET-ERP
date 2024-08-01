@@ -24,6 +24,7 @@ using TsiErp.Entities.Entities.TestManagement.ContinentLine.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Continents.Page;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
+using TSI.QueryBuilder.Models;
 
 namespace TsiErp.Business.Entities.Continent.Services
 {
@@ -363,7 +364,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 Name = entity.Name,
                  
-            }).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
 
             var ContinentsDto = queryFactory.Update<SelectContinentsDto>(query, "Id", true);
             await Task.CompletedTask;

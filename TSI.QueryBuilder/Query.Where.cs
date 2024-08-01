@@ -14,8 +14,6 @@ namespace TSI.QueryBuilder
 
             WhereQuerySQL querySQL = new WhereQuerySQL();
 
-
-
             JoinSeperator = joinSeperator;
 
             var dictionary = new Dictionary<string, object>();
@@ -25,7 +23,7 @@ namespace TSI.QueryBuilder
                 foreach (var item in constraints.GetType().GetRuntimeProperties())
                 {
                     dictionary.Add(item.Name, item.GetValue(constraints));
-                    querySQL.ParameterList.Add(item.Name, item.GetValue(constraints));
+                    querySQL.ParameterList.Add("@"+item.Name, item.GetValue(constraints));
                 }
 
                 int counter = 0;
@@ -98,10 +96,10 @@ namespace TSI.QueryBuilder
             }
 
             querySQL.Sql = where;
-            WhereHelper.WhereQueryList(querySQL);
-            //WhereSentence = where;
-            WhereSentence = querySQL.Sql;
 
+            WhereHelper.WhereQueryList(querySQL);
+
+            WhereSentence = querySQL.Sql;
 
             return this;
         }
@@ -278,7 +276,7 @@ namespace TSI.QueryBuilder
             if (!string.IsNullOrEmpty(tableName))
             {
                 //string whereClause = column + op + " " + "'" + value.ToString() + "'";
-                string whereClause = column + op + " " + "@"+column;
+                string whereClause = column + op + " " + "@" + column;
 
                 if (!string.IsNullOrEmpty(joinSeperator))
                 {

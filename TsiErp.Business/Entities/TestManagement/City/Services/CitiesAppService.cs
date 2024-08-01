@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
@@ -351,13 +352,8 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
                 Name = entity.Name,
                 IsBigCity = entity.IsBigCity,
                 Population_ = entity.Population_,
-                CityTypeForm = (int)entity.CityTypeForm,
-                
-
-
-
-
-            }).Where(new { Id = id }, false, false, "");
+                CityTypeForm = (int)entity.CityTypeForm
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
 
             var CitiesDto = queryFactory.Update<SelectCitiesDto>(query, "Id", true);
             await Task.CompletedTask;

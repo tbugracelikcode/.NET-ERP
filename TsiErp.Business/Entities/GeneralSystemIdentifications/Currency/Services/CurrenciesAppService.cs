@@ -5,6 +5,7 @@ using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Currency.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -226,7 +227,7 @@ namespace TsiErp.Business.Entities.Currency.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
                 CurrencySymbol = entity.CurrencySymbol
-            }).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
 
             var currencies = queryFactory.Update<SelectCurrenciesDto>(query, "Id", true);
             await Task.CompletedTask;

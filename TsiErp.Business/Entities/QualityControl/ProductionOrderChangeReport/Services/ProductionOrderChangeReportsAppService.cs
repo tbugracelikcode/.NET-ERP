@@ -20,6 +20,7 @@ using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ProductionOrderChangeReports.Page;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
+using TSI.QueryBuilder.Models;
 
 namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
 {
@@ -246,7 +247,7 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
                 Id = id,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
-            }).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
 
             var ProductionOrderChangeReport = queryFactory.Update<SelectProductionOrderChangeReportsDto>(query, "Id", true);
 

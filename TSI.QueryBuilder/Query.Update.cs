@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.SqlServer.Management.Smo;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,22 +59,59 @@ namespace TSI.QueryBuilder
             return this;
         }
 
-        public Query Update(object dto)
+        public Query Update(object dto, UpdateType updateType = UpdateType.Update)
         {
             UpdateQuerySQL querySQL = new UpdateQuerySQL();
 
             var valuesList = dto.GetType().GetProperties().Where(t => t.CustomAttributes.Count() == 0).ToList();
 
+            var dtoEntityProperties = valuesList.Where(t => t.DeclaringType.Name == dto.GetType().Name).ToList();
+
+            var auditedEntityProperties = valuesList.Where(t => t.DeclaringType.Name == "FullAuditedEntityDto").ToList();
+
+            //var fullEntityProperties = valuesList.Where(t => t.DeclaringType.Name == "FullEntityDto").ToList();
+
+            if (auditedEntityProperties.Count > 0)
+            {
+                if (updateType == UpdateType.Update)
+                {
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreatorId"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreationTime"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeleterId"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeletionTime"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "IsDeleted"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DataOpenStatus"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DataOpenStatusUserId"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "Id"));
+                }
+
+                if (updateType == UpdateType.ConcurrencyUpdate)
+                {
+                    foreach (var item in dtoEntityProperties)
+                    {
+                        valuesList.Remove(item);
+                    }
+
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreatorId"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreationTime"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeleterId"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeletionTime"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "IsDeleted"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "Id"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "LastModifierId"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "LastModificationTime"));
+                }
+            }
+
             string[] columns = new string[valuesList.Count];
 
             int counter = 0;
 
-            foreach (PropertyInfo prop in dto.GetType().GetProperties().Where(t => t.CustomAttributes.Count() == 0).ToList())
+            foreach (PropertyInfo prop in valuesList)
             {
                 columns[counter] = prop.Name;
                 counter++;
             }
-
 
             string valuesQuery = string.Empty;
 
@@ -85,7 +123,6 @@ namespace TSI.QueryBuilder
             {
                 if (i == 0)
                 {
-
                     object value = valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null);
 
                     querySQL.ParameterList.Add("@" + columns[i], value);
@@ -101,8 +138,6 @@ namespace TSI.QueryBuilder
 
 
                     valuesQuery = valuesQuery + "," + columns[i] + "=" + "@" + columns[i];
-
-                    //valuesQuery = valuesQuery + "," + columns[i] + "=" + "'" + (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'";
                 }
             }
 

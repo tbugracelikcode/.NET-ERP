@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Calendar.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -707,7 +708,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 OfficialHolidayDays = entity.OfficialHolidayDays,
                 TotalDays = entity.TotalDays,
                 Year = entity.Year,
-            }).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
 
             var calendarsDto = queryFactory.Update<SelectCalendarsDto>(query, "Id", true);
             await Task.CompletedTask;

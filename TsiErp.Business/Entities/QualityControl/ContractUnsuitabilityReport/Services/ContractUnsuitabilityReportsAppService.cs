@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ContractUnsuitabilityReport.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -309,7 +310,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
                 CurrentAccountCardID = entity.CurrentAccountCardID,
                 ContractTrackingFicheID = entity.ContractTrackingFicheID,
                 WorkOrderID = entity.WorkOrderID
-            }).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
 
             var ContractUnsuitabilityReport = queryFactory.Update<SelectContractUnsuitabilityReportsDto>(query, "Id", true);
 

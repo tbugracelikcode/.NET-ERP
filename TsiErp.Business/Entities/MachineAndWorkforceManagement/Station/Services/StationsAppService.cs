@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
@@ -412,7 +413,7 @@ namespace TsiErp.Business.Entities.Station.Services
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 IsActive = entity.IsActive,
                 Name = entity.Name,
-            }).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
 
             var stationsDto = queryFactory.Update<SelectStationsDto>(query, "Id", true);
             await Task.CompletedTask;

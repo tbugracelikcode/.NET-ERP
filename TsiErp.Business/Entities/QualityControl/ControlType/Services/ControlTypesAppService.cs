@@ -5,6 +5,7 @@ using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
@@ -195,7 +196,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
                 QualityPlanTypes = entity.QualityPlanTypes
-            }).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
 
             var controlTypes = queryFactory.Update<SelectControlTypesDto>(query, "Id", true);
 

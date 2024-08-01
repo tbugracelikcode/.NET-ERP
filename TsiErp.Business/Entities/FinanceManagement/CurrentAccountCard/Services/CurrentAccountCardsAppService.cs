@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CurrentAccountCard.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -381,7 +382,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 DataOpenStatusUserId = userId,
                 NumberOfStations = entity.NumberOfStations,
                 ContractDailyWorkingCapacity = entity.ContractDailyWorkingCapacity
-            }).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
 
             var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
 

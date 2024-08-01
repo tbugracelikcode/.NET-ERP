@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
@@ -601,7 +602,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                 Month_ = entity.Month_,
                 Year_ = entity.Year_,
                 Description_ = entity.Description_,
-            }).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
 
             var EmployeeScoringsDto = queryFactory.Update<SelectEmployeeScoringsDto>(query, "Id", true);
             await Task.CompletedTask;

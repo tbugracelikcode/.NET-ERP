@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
@@ -473,7 +474,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 IsApproval = entity.IsApproval,
                 ApprovedQuantity = entity.ApprovedQuantity,
                 ScrapQuantity = entity.ScrapQuantity
-            }).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
 
             var FirstProductApprovalsDto = queryFactory.Update<SelectFirstProductApprovalsDto>(query, "Id", true);
             await Task.CompletedTask;
