@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Transactions;
@@ -379,10 +380,16 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
+                    WhereHelper.WhereQueries.Clear();
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
+
                     return query.SqlResult as IEnumerable<T>;
                 }
                 else
                 {
+                    WhereHelper.WhereQueries.Clear();
                     Connection.Close();
                     Connection.Dispose();
                     GC.Collect();
@@ -392,6 +399,7 @@ namespace TSI.QueryBuilder.BaseClasses
             }
             catch (Exception exp)
             {
+                WhereHelper.WhereQueries.Clear();
                 Connection.Close();
                 Connection.Dispose();
                 GC.Collect();
@@ -582,6 +590,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                 var whereQueries = WhereHelper.WhereQueries;
 
+
                 if (updateQueries.Count == 1)
                 {
                     var command = Connection.CreateCommand();
@@ -599,6 +608,10 @@ namespace TSI.QueryBuilder.BaseClasses
 
                         command.Parameters.Clear();
 
+                        //var parameterList = updateQueries[0].ParameterList.Except(whereQueries[0].ParameterList).ToList();
+
+
+
                         if (updateQueries.Count > 0)
                         {
                             foreach (var item in updateQueries[0].ParameterList)
@@ -606,7 +619,11 @@ namespace TSI.QueryBuilder.BaseClasses
                                 var parameter = command.CreateParameter();
                                 parameter.ParameterName = item.Key;
                                 parameter.Value = item.Value ?? DBNull.Value;
-                                command.Parameters.Add(parameter);
+
+                                if(!command.Parameters.Contains(parameter.ParameterName))
+                                {
+                                    command.Parameters.Add(parameter);
+                                }
                             }
                         }
 
@@ -617,7 +634,11 @@ namespace TSI.QueryBuilder.BaseClasses
                                 var parameter = command.CreateParameter();
                                 parameter.ParameterName = item.Key;
                                 parameter.Value = item.Value ?? DBNull.Value;
-                                command.Parameters.Add(parameter);
+
+                                if (!command.Parameters.Contains(parameter.ParameterName))
+                                {
+                                    command.Parameters.Add(parameter);
+                                }
                             }
                         }
 

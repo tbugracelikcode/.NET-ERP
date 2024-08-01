@@ -5,6 +5,7 @@ using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Branch.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -176,7 +177,7 @@ namespace TsiErp.Business.Entities.Branch.Services
                 Code = input.Code,
                 Description_ = input.Description_,
                 Name = input.Name,
-                Id = input.Id,
+                //Id = input.Id,
                 IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
@@ -213,15 +214,15 @@ namespace TsiErp.Business.Entities.Branch.Services
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
-                DeletionTime = entity.DeletionTime.Value,
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = entity.LastModificationTime.Value,
+                LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 Id = id,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
 
             var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
             await Task.CompletedTask;
