@@ -48,6 +48,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 Description_ = input.Description_,
                 SeniorityID = input.SeniorityID.GetValueOrDefault(),
                 Difference = input.Difference,
+                Code = input.Code,
                 Year_ = input.Year_,
                 Id = addedEntityId,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
@@ -58,11 +59,13 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 DeletionTime = null,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
-                IsDeleted = false
+                IsDeleted = false,
             });
 
 
             var EmployeeAnnualSeniorityDifferences = queryFactory.Insert<SelectEmployeeAnnualSeniorityDifferencesDto>(query, "Id", true);
+
+            await FicheNumbersAppService.UpdateFicheNumberAsync("EmployeeAnnualSeniorityDifferencesChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.EmployeeAnnualSeniorityDifferences, LogType.Insert, addedEntityId);
 
@@ -155,7 +158,8 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                LastModifierId = LoginedUserService.UserId
+                LastModifierId = LoginedUserService.UserId,
+                 Code = entity.Code,
             }).Where(new { Id = input.Id }, false, false, "");
 
             var employeeAnnualSeniorityDifferences = queryFactory.Update<SelectEmployeeAnnualSeniorityDifferencesDto>(query, "Id", true);
@@ -187,7 +191,8 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 Id = id,
                 DataOpenStatus = lockRow,
-                DataOpenStatusUserId = userId
+                DataOpenStatusUserId = userId,
+                 Code = entity.Code  
 
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
 

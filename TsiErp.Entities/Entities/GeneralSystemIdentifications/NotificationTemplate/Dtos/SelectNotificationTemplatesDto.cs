@@ -67,6 +67,10 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
         /// userID
         /// </summary>
         public string TargetUsersId { get; set; }
+        /// <summary>
+        /// Mesaj
+        /// </summary>
+        public string Message_ { get; set; }
 
     }
 }

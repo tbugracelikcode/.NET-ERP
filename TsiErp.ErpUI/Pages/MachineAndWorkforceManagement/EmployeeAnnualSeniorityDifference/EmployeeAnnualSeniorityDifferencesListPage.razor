@@ -10,6 +10,7 @@
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 @if (!base.IsLoaded)
 {
@@ -44,6 +45,7 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
+                                    <GridColumn Field=@nameof(ListEmployeeAnnualSeniorityDifferencesDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                     <GridColumn Field=@nameof(ListEmployeeAnnualSeniorityDifferencesDto.SeniorityName) HeaderText=@L["SeniorityName"] TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListEmployeeAnnualSeniorityDifferencesDto.Difference) Type="ColumnType.Number" HeaderText=@L["Difference"] TextAlign="TextAlign.Center" Width="120">
 
@@ -94,14 +96,23 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>@L["SeniorityNameLabel"] </strong></label>
-                            <SfTextBox @ref="@EmployeeSenioritiesButtonEdit" Created="@EmployeeSenioritiesOnCreateIcon" @bind-Value="DataSource.SeniorityName" ShowClearButton=true ValueChange="EmployeeSenioritiesOnValueChange"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
 
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
+                            <label class="TSIModalLabel"><strong>@L["SeniorityNameLabel"] </strong></label>
+                            <SfTextBox @ref="@EmployeeSenioritiesButtonEdit" Created="@EmployeeSenioritiesOnCreateIcon" @bind-Value="DataSource.SeniorityName" ShowClearButton=true ValueChange="EmployeeSenioritiesOnValueChange"></SfTextBox>
+
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
                             <label class="TSIModalLabel"><strong>@L["YearLabel"] </strong></label>
                             <SfDatePicker @bind-Value="dateYear" >
                                 <DatePickerEvents TValue="DateTime" ValueChange="DateValueChangeHandler"></DatePickerEvents>
@@ -109,7 +120,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="1" Column="1">
+                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["DifferenceLabel"] </strong></label>
                             <SfNumericTextBox Min="0" @bind-Value="DataSource.Difference" TValue="decimal"></SfNumericTextBox>

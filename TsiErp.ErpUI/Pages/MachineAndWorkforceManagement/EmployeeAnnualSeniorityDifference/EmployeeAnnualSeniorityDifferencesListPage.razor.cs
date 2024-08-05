@@ -4,6 +4,7 @@ using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
@@ -40,7 +41,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeAnnualSeniori
             DataSource = new SelectEmployeeAnnualSeniorityDifferencesDto()
             {
                 Year_ = GetSQLDateAppService.GetDateFromSQL().Year,
-        };
+            };
 
             dateYear = GetSQLDateAppService.GetDateFromSQL();
 
@@ -121,6 +122,23 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeAnnualSeniori
             }
         }
 
+        #endregion
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("EmployeeAnnualSeniorityDifferencesChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
 
 

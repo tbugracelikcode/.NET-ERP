@@ -447,47 +447,51 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
 
             var purchaseQualityPlans = queryFactory.Get<SelectPurchaseQualityPlansDto>(query);
 
-            #region Satır Get
+            if(purchaseQualityPlans != null && purchaseQualityPlans.Id != Guid.Empty)
+            {
+                #region Satır Get
 
-            var queryLines = queryFactory
-                   .Query()
-                   .From(Tables.PurchaseQualityPlanLines)
-                   .Select<PurchaseQualityPlanLines>(null)
-                   .Join<Products>
-                    (
-                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
-                        nameof(PurchaseQualityPlanLines.ProductID),
-                        nameof(Products.Id),
-                        JoinType.Left
-                    )
-                    .Join<ControlTypes>
-                    (
-                        ct => new { ControlTypesName = ct.Name, ControlTypesID = ct.Id },
-                        nameof(PurchaseQualityPlanLines.ControlTypesID),
-                        nameof(ControlTypes.Id),
-                        JoinType.Left
-                    )
-                     .Join<StationGroups>
-                    (
-                        sg => new { WorkCenterName = sg.Name, WorkCenterID = sg.Id },
-                        nameof(PurchaseQualityPlanLines.WorkCenterID),
-                        nameof(StationGroups.Id),
-                        JoinType.Left
-                    )
-                     .Join<ControlConditions>
-                    (
-                        cc => new { ControlConditionsName = cc.Name, ControlConditionsID = cc.Id },
-                        nameof(PurchaseQualityPlanLines.ControlConditionsID),
-                        nameof(ControlConditions.Id),
-                        JoinType.Left
-                    )
-                    .Where(new { PurchaseQualityPlanID = purchaseQualityPlans.Id }, false, false, Tables.PurchaseQualityPlanLines);
+                var queryLines = queryFactory
+                       .Query()
+                       .From(Tables.PurchaseQualityPlanLines)
+                       .Select<PurchaseQualityPlanLines>(null)
+                       .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(PurchaseQualityPlanLines.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                        .Join<ControlTypes>
+                        (
+                            ct => new { ControlTypesName = ct.Name, ControlTypesID = ct.Id },
+                            nameof(PurchaseQualityPlanLines.ControlTypesID),
+                            nameof(ControlTypes.Id),
+                            JoinType.Left
+                        )
+                         .Join<StationGroups>
+                        (
+                            sg => new { WorkCenterName = sg.Name, WorkCenterID = sg.Id },
+                            nameof(PurchaseQualityPlanLines.WorkCenterID),
+                            nameof(StationGroups.Id),
+                            JoinType.Left
+                        )
+                         .Join<ControlConditions>
+                        (
+                            cc => new { ControlConditionsName = cc.Name, ControlConditionsID = cc.Id },
+                            nameof(PurchaseQualityPlanLines.ControlConditionsID),
+                            nameof(ControlConditions.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { PurchaseQualityPlanID = purchaseQualityPlans.Id }, false, false, Tables.PurchaseQualityPlanLines);
 
-            var purchaseQualityPlanLine = queryFactory.GetList<SelectPurchaseQualityPlanLinesDto>(queryLines).ToList();
+                var purchaseQualityPlanLine = queryFactory.GetList<SelectPurchaseQualityPlanLinesDto>(queryLines).ToList();
 
-            purchaseQualityPlans.SelectPurchaseQualityPlanLines = purchaseQualityPlanLine;
+                purchaseQualityPlans.SelectPurchaseQualityPlanLines = purchaseQualityPlanLine;
 
-            #endregion
+                #endregion
+            }
+
 
 
             await Task.CompletedTask;

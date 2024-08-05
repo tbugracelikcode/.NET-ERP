@@ -11,6 +11,11 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction
 {
     public class ProductReceiptTransactions : FullAuditedEntity
     {
+        [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Kod
+        /// </summary>
+        public string Code { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Satın Alma Sipariş ID

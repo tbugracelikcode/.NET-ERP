@@ -52,6 +52,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 QueryStr = input.QueryStr,
                 IsActive = input.IsActive,
                 TargetUsersId = input.TargetUsersId,
+                 Message_ = input.Message_,
 
             });
 
@@ -77,6 +78,9 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 Name = input.Name,
                 IsActive = input.IsActive,
                 TargetUsersId = input.TargetUsersId,
+                 Message_ = input.Message_,
+                  
+                
 
             });
 
@@ -111,7 +115,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
             }, false, true, "").UseIsDelete(false);
             var notificationTemplate = queryFactory.Get<SelectNotificationTemplatesDto>(query);
 
-            LogsAppService.InsertLogToDatabase(notificationTemplate, notificationTemplate, LoginedUserService.UserId, Tables.Currencies, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(notificationTemplate, notificationTemplate, LoginedUserService.UserId, Tables.NotificationTemplates, LogType.Get, id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectNotificationTemplatesDto>(notificationTemplate);
@@ -120,6 +124,14 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
         public async Task<IDataResult<IList<ListNotificationTemplatesDto>>> GetListAsync(ListNotificationTemplatesParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(null, false, true, "").UseIsDelete(false);
+            var notificationTemplate = queryFactory.GetList<ListNotificationTemplatesDto>(query).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListNotificationTemplatesDto>>(notificationTemplate);
+        }
+
+        public async Task<IDataResult<IList<ListNotificationTemplatesDto>>> GetListbyModuleProcessAsync(string module, string process)
+        {
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { ProcessName_ = process }, false, true, "").Where(new { ModuleName_ = module }, false, true, "").UseIsDelete(false);
             var notificationTemplate = queryFactory.GetList<ListNotificationTemplatesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListNotificationTemplatesDto>>(notificationTemplate);
@@ -154,12 +166,13 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 ModuleName_ = input.ModuleName_,
                 Name = input.Name,
                 ProcessName_ = input.ProcessName_,
+                 Message_ = input.Message_,
             }).Where(new { Id = input.Id }, true, true, "");
 
             var notificationTemplate = queryFactory.Update<SelectNotificationTemplatesDto>(query, "Id", true);
 
 
-            LogsAppService.InsertLogToDatabase(entity, notificationTemplate, LoginedUserService.UserId, Tables.UnsuitabilityItems, LogType.Update, entity.Id);
+            LogsAppService.InsertLogToDatabase(entity, notificationTemplate, LoginedUserService.UserId, Tables.NotificationTemplates, LogType.Update, entity.Id);
 
 
             await Task.CompletedTask;

@@ -9,12 +9,15 @@ using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Branch.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Branches.Page;
 
@@ -27,11 +30,15 @@ namespace TsiErp.Business.Entities.Branch.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public BranchesAppService(IStringLocalizer<BranchesResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public BranchesAppService(IStringLocalizer<BranchesResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         [ValidationAspect(typeof(CreateBranchesValidator), Priority = 1)]
@@ -77,6 +84,35 @@ namespace TsiErp.Business.Entities.Branch.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("BranchesChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Branches, LogType.Insert, branches.Id);
+
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync("BranchesChildMenu", L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                foreach (string user in usersNot)
+                {
+                    CreateNotificationsDto createInput = new CreateNotificationsDto
+                    {
+                        ContextMenuName_ = notTemplate.ContextMenuName_,
+                        IsViewed = false,
+                        Message_ = notTemplate.Message_,
+                        ModuleName_ = notTemplate.ModuleName_,
+                        ProcessName_ = notTemplate.ProcessName_,
+                        RecordNumber = input.Code,
+                        NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                        UserId = new Guid(user),
+                        ViewDate = null,
+                    };
+
+                    await _NotificationsAppService.CreateAsync(createInput);
+                }
+            }
+
+            #endregion
 
             await Task.CompletedTask;
 

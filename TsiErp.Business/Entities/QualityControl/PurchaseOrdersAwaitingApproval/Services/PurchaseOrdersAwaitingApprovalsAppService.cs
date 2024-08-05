@@ -72,6 +72,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
+                 Code = input.Code,
             });
 
             //foreach (var item in input.SelectPurchaseOrdersAwaitingApprovalLines)
@@ -101,7 +102,9 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
             //    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
             //}
 
-            var PurchaseOrdersAwaitingApproval = queryFactory.Insert<SelectPurchaseOrdersAwaitingApprovalsDto>(query, "Id", true);
+            var PurchaseOrdersAwaitingApproval = queryFactory.Insert<SelectPurchaseOrdersAwaitingApprovalsDto>(query, "Id", true); ;
+
+            await FicheNumbersAppService.UpdateFicheNumberAsync("PurchaseOrdersAwaitingApprovalsChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseOrdersAwaitingApprovals, LogType.Insert, addedEntityId);
 
@@ -304,6 +307,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
+                 Code = input.Code,
             }).Where(new { Id = input.Id }, false, false, "");
 
             foreach (var item in input.SelectPurchaseOrdersAwaitingApprovalLines)
@@ -330,6 +334,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                         IsDeleted = false,
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
+                         
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -362,6 +367,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                             IsDeleted = item.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
+                             
                         }).Where(new { Id = line.Id }, false, false, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -407,6 +413,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                 PurchaseOrderLineID = entity.PurchaseOrderLineID,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                 Code = entity.Code,
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
 
             var PurchaseOrdersAwaitingApprovalsDto = queryFactory.Update<SelectPurchaseOrdersAwaitingApprovalsDto>(query, "Id", true);
