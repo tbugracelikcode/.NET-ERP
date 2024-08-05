@@ -17,6 +17,7 @@
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 @if (!base.IsLoaded)
 {
@@ -51,6 +52,7 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
+                                    <GridColumn Field=@nameof(ListContractProductionTrackingsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(ListContractProductionTrackingsDto.WorkOrderCode) HeaderText="@L["WorkOrderCode"]" TextAlign="TextAlign.Center" Width="320"></GridColumn>
                                     <GridColumn Field=@nameof(ListContractProductionTrackingsDto.CurrentAccountCardCode) HeaderText="@L["CurrentAccountCardCode"]" TextAlign="TextAlign.Center" Width="320"></GridColumn>
                                     <GridColumn Field=@nameof(ListContractProductionTrackingsDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="320"></GridColumn>
@@ -110,8 +112,18 @@ else
                 </Columns>
 
                 <Items>
-
                     <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
+
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["WordOrderCodeLabel"] </strong></label><br />
@@ -119,7 +131,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="0" Column="3">
+                    <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label><br />
@@ -127,79 +139,78 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="0" Column="5">
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <br />
                             <label class="TSIModalLabel"><strong>@L["ProductNameLabel"] </strong></label><br />
                             <SfTextBox @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="DataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
 
-                    <DxGridLayoutItem Row="1" Column="1">
+                    <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProducedQuantityLabel"] </strong></label>
                             <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox"  @bind-Value="DataSource.ProducedQuantity"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="3">
+                    <DxGridLayoutItem Row="1" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["OperationStartDateLabel"] </strong></label><br />
                             <SfDatePicker @bind-Value="@DataSource.OperationStartDate" OnChange="OnDateChange" ></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="5">
+                    <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["OperationStartTimeLabel"] </strong></label>
                             <SfTimePicker Step="15" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" @bind-Value="@DataSource.OperationStartTime"></SfTimePicker>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="1">
+                    <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["OperationEndDateLabel"] </strong></label><br />
                             <SfDatePicker @ref="@_endDatePicker" @bind-Value="@DataSource.OperationEndDate" OnFocus="OnDateFocus" Min="@Convert.ToDateTime(DataSource.OperationStartDate)" ></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="3">
+                    <DxGridLayoutItem Row="2" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["OperationEndTimeLabel"] </strong></label>
                             <SfTimePicker Step="15" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" @bind-Value="@DataSource.OperationEndTime"></SfTimePicker>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="5">
+                    <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["OperationTimeLabel"] </strong></label>
                             <SfNumericTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.OperationTime"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="1">
+                    <DxGridLayoutItem Row="3" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong> @L["EmployeeNameLabel"] </strong></label>
                             <SfTextBox @ref="@EmployeesButtonEdit" Created="@EmployeesCodeOnCreateIcon" @bind-Value="DataSource.EmployeeName" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="3">
+                    <DxGridLayoutItem Row="3" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["StationCodeLabel"] </strong></label>
                             <SfTextBox @ref="@StationsButtonEdit" Created="@StationsCodeOnCreateIcon" @bind-Value="DataSource.StationCode" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="5">
+                    <DxGridLayoutItem Row="4" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ShiftCodeLabel"] </strong></label>
                             <SfTextBox @ref="@ShiftsButtonEdit" Created="@ShiftsCodeOnCreateIcon" @bind-Value="DataSource.ShiftCode" ShowClearButton=true ValueChange="ShiftsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="4" Column="1">
+                    <DxGridLayoutItem Row="4" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["CurrentAccountCardCodeLabel"] </strong></label>
                             <SfTextBox @ref="@CurrentAccountCardsButtonEdit" Created="@CurrentAccountCardsCodeOnCreateIcon" @bind-Value="DataSource.CurrentAccountCardCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
@@ -207,7 +218,7 @@ else
                     </DxGridLayoutItem>
 
 
-                    <DxGridLayoutItem Row="4" Column="3">
+                    <DxGridLayoutItem Row="4" Column="5">
                         <Template>
                             <center>
                                 <label class="TSIModalLabel"><strong>@L["IsFinishedLabel"] </strong></label><br />

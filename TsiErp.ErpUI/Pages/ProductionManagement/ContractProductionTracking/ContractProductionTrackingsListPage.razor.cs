@@ -4,6 +4,7 @@ using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
@@ -56,7 +57,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractProductionTracking
 
         protected override async Task BeforeInsertAsync()
         {
-            DataSource = new SelectContractProductionTrackingsDto() { };
+            DataSource = new SelectContractProductionTrackingsDto() 
+            { 
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ContractProdTrackingsChildMenu")
+            };
 
             DataSource.OperationStartDate = _date;
             DataSource.OperationEndDate = null;
@@ -450,6 +454,23 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractProductionTracking
             WorkOrdersList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.ToList();
         }
 
+        #endregion
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("EmployeeAnnualSeniorityDifferencesChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
 
         public void Dispose()

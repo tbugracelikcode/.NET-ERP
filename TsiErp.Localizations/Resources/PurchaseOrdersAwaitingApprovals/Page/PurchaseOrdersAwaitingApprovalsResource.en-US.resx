@@ -123,6 +123,12 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>RECORD CODE</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Record Code:</value>
+  </data>
   <data name="ComboboxContactSupplier" xml:space="preserve">
     <value>Contact with Supplier</value>
   </data>

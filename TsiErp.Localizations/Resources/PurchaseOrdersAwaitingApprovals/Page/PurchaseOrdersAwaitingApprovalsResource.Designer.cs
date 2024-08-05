@@ -80,6 +80,24 @@ namespace TsiErp.Localizations.Resources.PurchaseOrdersAwaitingApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KAYIT KODU.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kayıt Kodu:.
+        /// </summary>
+        public static string CodeLabel {
+            get {
+                return ResourceManager.GetString("CodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tedarikçi ile İrtibat.
         /// </summary>
         public static string ComboboxContactSupplier {

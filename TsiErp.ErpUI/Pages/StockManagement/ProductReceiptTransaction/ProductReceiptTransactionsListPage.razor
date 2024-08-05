@@ -13,6 +13,7 @@
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 @if (!base.IsLoaded)
 {
@@ -46,6 +47,7 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
+                                    <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductReceiptTransactionsDto.ProductReceiptTransactionStateEnum) HeaderText="@L["ProductReceiptTransactionStateEnum"]" TextAlign="TextAlign.Center" Width="260">
                                         <Template>
                                             @{
@@ -126,6 +128,16 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
+                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
+
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
                             <label class="TSIModalLabel"><strong>@L["WaybillNoLabel"] </strong></label>
                             @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
 
@@ -133,28 +145,27 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="0" Column="3">
+                    <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <br />
                                 <label class="TSIModalLabel"><strong>@L["WaybillDateLabel"] </strong></label>
                                 <SfDatePicker @bind-Value="DataSource.WaybillDate"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="0" Column="5">
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <br />
                             <label class="TSIModalLabel"><strong>@L["PartyNoLabel"] </strong></label>
                             <SfTextBox @bind-Value="DataSource.PartyNo"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="1">
+                    <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PurchaseOrderFicheNoLabel"] </strong></label>
                             <SfTextBox @ref="@PurchaseOrdersButtonEdit" Created="@PurchaseOrdersOnCreateIcon" @bind-Value="DataSource.PurchaseOrderFicheNo" ShowClearButton=true ValueChange="PurchaseOrdersOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="3">
+                    <DxGridLayoutItem Row="1" Column="5">
                         <Template>
                                 <label class="TSIModalLabel"><strong>@L["CurrentAccountCardNameLabel"] </strong></label><br />
                                 <SfTextBox Enabled="false" @bind-Value="DataSource.CurrentAccountCardName"></SfTextBox>

@@ -8,6 +8,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ContractProductionTracking.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
@@ -28,11 +29,13 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
     public class ContractProductionTrackingsAppService : ApplicationService<ContractProductionTrackingsResource>, IContractProductionTrackingsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ContractProductionTrackingsAppService(IStringLocalizer<ContractProductionTrackingsResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public ContractProductionTrackingsAppService(IStringLocalizer<ContractProductionTrackingsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             _GetSQLDateAppService = getSQLDateAppService;
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateContractProductionTrackingsValidator), Priority = 1)]
@@ -43,6 +46,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 
                 var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Insert(new CreateContractProductionTrackingsDto
                 {
+                    Code = input.Code,
                     CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
                     EmployeeID = input.EmployeeID.GetValueOrDefault(),
                     IsFinished = input.IsFinished,
@@ -67,12 +71,15 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
+                        
                 });
 
                 var contractProductionTrackings = queryFactory.Insert<SelectContractProductionTrackingsDto>(query, "Id", true);
 
+            await FicheNumbersAppService.UpdateFicheNumberAsync("ContractProdTrackingsChildMenu", input.Code);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractProductionTrackings, LogType.Insert, addedEntityId);
+
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractProductionTrackings, LogType.Insert, addedEntityId);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTrackings);
@@ -238,7 +245,8 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                     DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                    LastModifierId = LoginedUserService.UserId
+                    LastModifierId = LoginedUserService.UserId,
+                     Code = entity.Code,
                 }).Where(new { Id = input.Id }, false, false, "");
 
                 var contractProductionTrackings = queryFactory.Update<SelectContractProductionTrackingsDto>(query, "Id", true);
@@ -338,6 +346,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                     Id = id,
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
+                     Code = entity.Code,
 
                 }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
 

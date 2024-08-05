@@ -123,6 +123,12 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>KAYIT KODU</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Kayıt Kodu:</value>
+  </data>
   <data name="ComboboxContactSupplier" xml:space="preserve">
     <value>Tedarikçi ile İrtibat</value>
   </data>

@@ -71,6 +71,24 @@ namespace TsiErp.Localizations.Resources.ProductReceiptTransactions.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HAREKET KODU.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareket Kodu:.
+        /// </summary>
+        public static string CodeLabel {
+            get {
+                return ResourceManager.GetString("CodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CARİ ÜNVAN.
         /// </summary>
         public static string CurrentAccountCardName {

@@ -120,6 +120,12 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>KIDEM FARKI KODU</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Kıdem Farkı Kodu:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>

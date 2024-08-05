@@ -1,10 +1,14 @@
 ﻿using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeAnnualSeniorityDifference.Dtos
 {
     public class UpdateEmployeeAnnualSeniorityDifferencesDto : FullAuditedEntityDto
     {
-
+        /// <summary>
+        /// Kod
+        /// </summary>
+        public string Code { get; set; }
         /// <summary>
         /// Kıdem ID
         /// </summary>

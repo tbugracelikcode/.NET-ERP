@@ -120,6 +120,12 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>HAREKET KODU</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Hareket Kodu:</value>
+  </data>
   <data name="CurrentAccountCardName" xml:space="preserve">
     <value>CARİ ÜNVAN</value>
   </data>
