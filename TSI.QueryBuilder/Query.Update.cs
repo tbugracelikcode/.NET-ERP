@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using TSI.QueryBuilder.Helpers;
 using TSI.QueryBuilder.Models;
 
 namespace TSI.QueryBuilder
@@ -61,7 +60,6 @@ namespace TSI.QueryBuilder
 
         public Query Update(object dto, UpdateType updateType = UpdateType.Update)
         {
-            UpdateQuerySQL querySQL = new UpdateQuerySQL();
 
             var valuesList = dto.GetType().GetProperties().Where(t => t.CustomAttributes.Count() == 0).ToList();
 
@@ -117,7 +115,6 @@ namespace TSI.QueryBuilder
 
             string updateQuery = "update " + TableName + " set ";
 
-            querySQL.ParameterList.Clear();
 
             for (int i = 0; i < valuesList.Count; i++)
             {
@@ -125,7 +122,6 @@ namespace TSI.QueryBuilder
                 {
                     object value = valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null);
 
-                    querySQL.ParameterList.Add("@" + columns[i], value);
 
                     valuesQuery = columns[i] + "=" + "@" + columns[i];
                 }
@@ -133,9 +129,6 @@ namespace TSI.QueryBuilder
                 {
 
                     object value = valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null);
-
-                    querySQL.ParameterList.Add("@" + columns[i], value);
-
 
                     valuesQuery = valuesQuery + "," + columns[i] + "=" + "@" + columns[i];
                 }
@@ -145,11 +138,8 @@ namespace TSI.QueryBuilder
 
             updateQuery = updateQuery + valuesQuery;
 
-            querySQL.Sql = updateQuery;
 
-            UpdateHelper.UpdateQueryList(querySQL);
-
-            Sql = querySQL.Sql;
+            Sql = updateQuery;
 
             return this;
         }
