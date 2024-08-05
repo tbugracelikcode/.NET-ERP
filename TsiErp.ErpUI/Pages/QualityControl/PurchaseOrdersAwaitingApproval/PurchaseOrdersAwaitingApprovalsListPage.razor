@@ -18,6 +18,7 @@
 @inject IUnsuitabilityTypesItemsAppService UnsuitabilityTypesItemsAppService
 @inject IUnsuitabilityItemsAppService UnsuitabilityItemsAppService
 @inject IPurchaseUnsuitabilityReportsAppService PurchaseUnsuitabilityReportsService
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 @if (!base.IsLoaded)
 {
@@ -54,7 +55,7 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-
+                                    <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.PurchaseOrderFicheNo) HeaderText="@L["PurchaseOrderFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.CurrentAccountCardCode) HeaderText="@L["CurrentAccountCardCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -110,8 +111,9 @@ else
                 <Rows>
                     <DxGridLayoutRow Height="16%" />
                     <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="14%" />
                     <DxGridLayoutRow Height="20%" />
-                    <DxGridLayoutRow Height="40%" />
+                    <DxGridLayoutRow Height="35%" />
                 </Rows>
 
                 <Columns>
@@ -125,22 +127,33 @@ else
                 </Columns>
 
                 <Items>
-                    <br />
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
+
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
                             <label class="TSIModalLabel"><strong>@L["CurrentAccountCardNameLabel"] </strong></label>
                             <SfTextBox  @bind-Value="DataSource.CurrentAccountCardName" Enabled=false></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="0" Column="3">
+                    <DxGridLayoutItem Row="0" Column="5">
                         <Template>
+                            <br />
                             <label class="TSIModalLabel"><strong>@L["PurchaseOrderFicheNoLabel"] </strong></label><br />
                             <SfTextBox @bind-Value="DataSource.PurchaseOrderFicheNo" Enabled=false></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="0" Column="5">
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["UserNameLabel"] </strong></label><br />
                             <SfTextBox @bind-Value="@UserName" Enabled=false></SfTextBox>
@@ -148,28 +161,27 @@ else
                     </DxGridLayoutItem>
 
 
-                    <DxGridLayoutItem Row="1" Column="1">
+                    <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["QualityApprovalDateLabel"] </strong></label><br />
                             <SfDatePicker @bind-Value="DataSource.QualityApprovalDate"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="3">
+                    <DxGridLayoutItem Row="1" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ControlQuantityLabel"] </strong></label><br />
                             <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.ControlQuantity"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="5">
+                    <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <br />
                             <center><SfButton CssClass="TSISaveButton" OnClick="PreviewUploadedImage"><SfIcon Size="IconSize.Medium" Name="IconName.Eye"></SfIcon>&nbsp;@L["PreviewButton"]</SfButton></center>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="1">
+                    <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PurchaseOrdersAwaitingApprovalStateEnumLabel"] </strong></label><br />
                             <SfDropDownList TItem="SelectPurchaseOrdersAwaitingApprovalsDto" TValue="PurchaseOrdersAwaitingApprovalStateEnum" PopupHeight="230px" @bind-Value="@DataSource.PurchaseOrdersAwaitingApprovalStateEnum" DataSource="@states">
@@ -178,21 +190,21 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="3">
+                    <DxGridLayoutItem Row="2" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ApprovedQuantityLabel"] </strong></label><br />
                             <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.ApprovedQuantity"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="5">
+                    <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label><br />
                             <SfTextBox CssClass="TSIMemoBox60" Multiline="true" @bind-Value="DataSource.Description_"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="5">
+                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="5">
                         <Template>
                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectPurchaseOrdersAwaitingApprovalLinesDto"></GridEvents>

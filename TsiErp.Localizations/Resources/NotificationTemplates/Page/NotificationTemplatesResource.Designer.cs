@@ -4301,7 +4301,7 @@ namespace TsiErp.Localizations.Resources.NotificationTemplates.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
+        ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ProcessRefresh {
             get {

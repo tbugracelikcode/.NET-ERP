@@ -175,6 +175,7 @@ using TsiErp.Entities.Entities.TestManagement.City;
 using System.Data;
 using Microsoft.SqlServer.Management.Common;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate;
+using TsiErp.Entities.Entities.Other.Notification;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -5823,6 +5824,42 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 NotificationTemplates.Create();
             }
             #endregion
+
+            #region Notifications Table Created
+            Table Notifications = model.CreateTable(Tables.Notifications);
+
+            if (Notifications != null)
+            {
+                var properties = (typeof(Notifications)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(Notifications, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(Notifications, "PK_" + Notifications.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        Notifications.Indexes.Add(pkIndex);
+                    }
+
+                    Notifications.Columns.Add(column);
+                }
+
+                Notifications.Create();
+            }
+            #endregion
+
 
             //TEST BÖLGESİ
 

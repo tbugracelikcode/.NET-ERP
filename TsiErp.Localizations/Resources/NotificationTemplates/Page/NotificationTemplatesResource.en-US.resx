@@ -1546,7 +1546,7 @@
     <value>Process Name:</value>
   </data>
   <data name="ProcessRefresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Change</value>
   </data>
   <data name="ProdOperationsChildMenu" xml:space="preserve">
     <value>Products Operations</value>

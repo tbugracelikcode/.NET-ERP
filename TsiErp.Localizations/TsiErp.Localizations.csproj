@@ -253,6 +253,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>NavbarMenusResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Notifications\Page\NotificationsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>NotificationsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\NotificationTemplates\Page\NotificationTemplatesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -850,6 +855,10 @@
     <EmbeddedResource Update="Resources\NavbarMenus\Page\NavbarMenusResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NavbarMenusResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Notifications\Page\NotificationsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>NotificationsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\NotificationTemplates\Page\NotificationTemplatesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

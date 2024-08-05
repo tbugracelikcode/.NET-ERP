@@ -27,6 +27,8 @@ using Microsoft.Identity.Client;
 using static TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User.UsersListPage;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.User.Dtos;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
+using TSI.QueryBuilder.Constants.Join;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 {
@@ -103,7 +105,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                 SourceDepartmentName = user.GroupName
             };
 
-            foreach(var item in processName_ComboBox)
+            foreach (var item in processName_ComboBox)
             {
                 item.Text = L[item.Text];
             }
@@ -210,6 +212,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
             if (!string.IsNullOrEmpty(DataSource.ModuleName_) && !string.IsNullOrEmpty(DataSource.ProcessName_) && BindingDepartments.Count > 0 && BindingDepartments != null)
             {
                 #region  Departman ve User Seçimi
+
                 foreach (var departmentId in BindingDepartments)
                 {
                     if (string.IsNullOrEmpty(DataSource.TargetDepartmentId))
@@ -226,13 +229,28 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                 {
                     foreach (var userId in BindingEmployees)
                     {
+                        CreateNotificationsDto creatingEntity = new CreateNotificationsDto
+                        {
+                            IsViewed = false,
+                            Message_ = DataSource.Message_,
+                            ContextMenuName_ = DataSource.ContextMenuName_,
+                            ModuleName_ = DataSource.ModuleName_,
+                            ProcessName_ = DataSource.ProcessName_,
+                            NotificationDate = null,
+                            RecordNumber = string.Empty,
+                            UserId = userId,
+                            ViewDate = null,
+                        };
+
                         if (string.IsNullOrEmpty(DataSource.TargetUsersId))
                         {
                             DataSource.TargetUsersId = userId.ToString();
+                            DataSource.QueryStr = NotificationsAppService.CreateCommandAsync(creatingEntity);
                         }
                         else
                         {
                             DataSource.TargetUsersId = DataSource.TargetUsersId + "," + userId.ToString();
+                            DataSource.QueryStr = DataSource.QueryStr + QueryConstants.QueryConstant + NotificationsAppService.CreateCommandAsync(creatingEntity);
                         }
                     }
                 }
@@ -243,23 +261,37 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                     {
                         foreach (var employee in MultiEmployeesList)
                         {
+                            CreateNotificationsDto creatingEntity = new CreateNotificationsDto
+                            {
+                                IsViewed = false,
+                                Message_ = DataSource.Message_,
+                                ContextMenuName_ = DataSource.ContextMenuName_,
+                                ModuleName_ = DataSource.ModuleName_,
+                                ProcessName_ = DataSource.ProcessName_,
+                                NotificationDate = null,
+                                RecordNumber = string.Empty,
+                                UserId = employee.Id,
+                                ViewDate = null,
+                            };
+
                             if (string.IsNullOrEmpty(DataSource.TargetUsersId))
                             {
                                 DataSource.TargetUsersId = employee.Id.ToString();
+                                DataSource.QueryStr = NotificationsAppService.CreateCommandAsync(creatingEntity);
                             }
                             else
                             {
                                 DataSource.TargetUsersId = DataSource.TargetUsersId + "," + employee.Id.ToString();
+                                DataSource.QueryStr = DataSource.QueryStr + QueryConstants.QueryConstant + NotificationsAppService.CreateCommandAsync(creatingEntity);
                             }
                         }
                     }
 
                 }
+
                 #endregion
 
-                var creatingEntity = ObjectMapper.Map<SelectNotificationTemplatesDto, CreateNotificationTemplatesDto>(DataSource);
 
-                DataSource.QueryStr = NotificationTemplatesService.CreateCommandAsync(creatingEntity);
             }
             else
             {
@@ -310,7 +342,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
         public async Task GetMenusList()
         {
-            ModuleList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.Where(t => t.MenuName.Contains("ChildMenu")&& !t.MenuName.Contains("ShowAmount")).Select(t => new ModuleClass
+            ModuleList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.Where(t => t.MenuName.Contains("ChildMenu") && !t.MenuName.Contains("ShowAmount")).Select(t => new ModuleClass
             {
                 ContextOrderNo = t.ContextOrderNo,
                 Id = t.Id,
@@ -402,7 +434,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
                 foreach (var departmentId in BindingDepartments)
                 {
-                    var addingEmpList = (await UsersAppService.GetListAsync(new ListUsersParameterDto())).Data.Where(t=>t.GroupID == departmentId).ToList();
+                    var addingEmpList = (await UsersAppService.GetListAsync(new ListUsersParameterDto())).Data.Where(t => t.GroupID == departmentId).ToList();
                     MultiEmployeesList.AddRange(addingEmpList);
                 }
             }

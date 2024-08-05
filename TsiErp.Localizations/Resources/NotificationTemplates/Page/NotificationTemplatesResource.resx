@@ -1531,7 +1531,7 @@
     <value>İşlem Adı:</value>
   </data>
   <data name="ProcessRefresh" xml:space="preserve">
-    <value>Güncelle</value>
+    <value>Değiştir</value>
   </data>
   <data name="ProdOperationsChildMenu" xml:space="preserve">
     <value>Ürün Operasyon Kayıtları</value>
