@@ -120,21 +120,14 @@ namespace TSI.QueryBuilder
             {
                 if (i == 0)
                 {
-                    object value = valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null);
-
-
-                    valuesQuery = columns[i] + "=" + "@" + columns[i];
+                    valuesQuery = columns[i] + "=" + "'" + (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'";
                 }
                 else
                 {
-
-                    object value = valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null);
-
-                    valuesQuery = valuesQuery + "," + columns[i] + "=" + "@" + columns[i];
+                    valuesQuery = valuesQuery + "," + columns[i] + "=" + "'" + (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'";
                 }
+
             }
-
-
 
             updateQuery = updateQuery + valuesQuery;
 

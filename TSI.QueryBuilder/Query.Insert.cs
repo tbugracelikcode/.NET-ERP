@@ -118,6 +118,7 @@ namespace TSI.QueryBuilder
 
                     }
                 }
+
             }
 
             valuesQuery = valuesQuery.Substring(0, valuesQuery.Length - 1);
@@ -126,6 +127,7 @@ namespace TSI.QueryBuilder
             insertQuery = insertQuery + columnsQuery + ")" + " values " + valuesQuery + ")";
 
             Sql = insertQuery;
+
 
             return this;
         }
