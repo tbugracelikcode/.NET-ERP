@@ -153,15 +153,8 @@ else
                                                        UnSelectAllText=@L["UnSelectAllText"]
                                                        ShowDropDownIcon="true">
 
-                                            @* <MultiSelectTemplates TItem="ListDepartmentsDto">
-                                                <ItemTemplate>
-                                                    <span class='item'>
-                                                        <span style="padding-left: 5% !important;">@((context as ListDepartmentsDto).Name)</span>
-                                                    </span>
-                                                </ItemTemplate>
-                                            </MultiSelectTemplates> *@
                                 <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
-                                <MultiSelectEvents TItem="ListUserGroupsDto" TValue="List<Guid>" ValueChange="@TargetDepartmentValueChangeHandler"></MultiSelectEvents>
+                                <MultiSelectEvents TItem="ListUserGroupsDto" TValue="List<ListUserGroupsDto>" Closed="@TargetDepartmentValueChangeHandler"></MultiSelectEvents>
                                         </SfMultiSelect>
                         </Template>
                     </DxGridLayoutItem>
@@ -179,14 +172,6 @@ else
                                            UnSelectAllText=@L["UnSelectAllText"]
                                            ShowDropDownIcon="true">
 
-                               @*  <MultiSelectTemplates TItem="ListEmployeesDto">
-                                    
-                                <ItemTemplate>
-                                    <span class='item'>
-                                        <span style="padding-left: 5% !important;">@((context as ListEmployeesDto).Name)</span>
-                                    </span>
-                                </ItemTemplate>
-                                </MultiSelectTemplates> *@
                                 <MultiSelectFieldSettings Text="UserName" Value="Id"></MultiSelectFieldSettings>
                             </SfMultiSelect>
                         </Template>

@@ -9,7 +9,7 @@ namespace TSI.QueryBuilder
     {
         public Query Delete(object deleterId)
         {
-            if (!_IsSoftDelete)
+            if (!UseIsDeleteInQuery)
             {
                 string deleteQuery = " delete from " + TableName;
                 Sql = deleteQuery;

@@ -39,10 +39,10 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         public List<ListUserGroupsDto> MultiDepartmentsList = new List<ListUserGroupsDto>();
-        public List<Guid> BindingDepartments = new List<Guid>();
+        public List<ListUserGroupsDto> BindingDepartments = new List<ListUserGroupsDto>();
 
         public List<ListUsersDto> MultiEmployeesList = new List<ListUsersDto>();
-        public List<Guid> BindingEmployees = new List<Guid>();
+        public List<ListUsersDto> BindingEmployees = new List<ListUsersDto>();
 
         public List<ModuleClass> ModuleList = new List<ModuleClass>();
         public List<ModuleContextClass> ModuleContextsList = new List<ModuleContextClass>();
@@ -94,8 +94,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
         protected override async Task BeforeInsertAsync()
         {
-            var employee = (await EmployeesAppService.GetAsync(LoginedUserService.UserId)).Data;
-
             var user = (await UsersAppService.GetAsync(LoginedUserService.UserId)).Data;
 
             DataSource = new SelectNotificationTemplatesDto()
@@ -112,7 +110,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
             BindingDepartments.Clear();
             BindingEmployees.Clear();
-            MultiEmployeesList.Clear();
 
             EditPageVisible = true;
 
@@ -259,6 +256,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
         }
 
 
+
         #endregion
 
         #region Change Eventleri
@@ -326,15 +324,16 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
         #region Target Department ComboBox
 
-        private async void TargetDepartmentValueChangeHandler(MultiSelectChangeEventArgs<List<Guid>> args)
+        private async void TargetDepartmentValueChangeHandler()
         {
-            if (args.Value != null && args.Value.Count > 0)
+            if (BindingDepartments != null)
             {
                 MultiEmployeesList.Clear();
 
                 foreach (var departmentId in BindingDepartments)
                 {
-                    var addingEmpList = (await UsersAppService.GetListAsync(new ListUsersParameterDto())).Data.Where(t => t.GroupID == departmentId).ToList();
+                    var addingEmpList = (await UsersAppService.GetListAsync(new ListUsersParameterDto())).Data.Where(t => t.GroupID == departmentId.Id).ToList();
+
                     MultiEmployeesList.AddRange(addingEmpList);
                 }
             }
@@ -343,6 +342,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                 MultiEmployeesList.Clear();
             }
 
+            await InvokeAsync(StateHasChanged);
         }
 
         #endregion

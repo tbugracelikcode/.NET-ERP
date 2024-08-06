@@ -688,46 +688,6 @@ namespace TSI.QueryBuilder.BaseClasses
             }
         }
 
-        public bool Delete(Query query)
-        {
-            try
-            {
-                ConnectToDatabase();
-
-                var command = Connection.CreateCommand();
-
-                command.CommandTimeout = CommandTimeOut;
-
-                if (command != null)
-                {
-                    command.CommandText = query.Sql + " " + query.WhereSentence;
-
-                    query.SqlResult = command.ExecuteReader();
-
-                    Connection.Close();
-                    Connection.Dispose();
-                    GC.Collect();
-
-                    return true;
-                }
-                else
-                {
-                    Connection.Close();
-                    Connection.Dispose();
-                    GC.Collect();
-                    return false;
-                }
-            }
-            catch (Exception exp)
-            {
-                Connection.Close();
-                Connection.Dispose();
-                GC.Collect();
-                var error = ErrorException.ThrowException(exp);
-                return false;
-            }
-        }
-
         public bool Delete(Query query, bool useTransaction = true)
         {
             ConnectToDatabase();
@@ -740,7 +700,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                 if (command != null)
                 {
-                    command.CommandText = query.Sql + " " + query.WhereSentence;
+                    command.CommandText = query.Sql + " where " + query.WhereSentence;
                     command.Transaction = transaction;
 
                     query.SqlResult = command.ExecuteReader();
