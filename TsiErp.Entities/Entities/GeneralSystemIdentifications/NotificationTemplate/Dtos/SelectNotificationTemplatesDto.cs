@@ -57,12 +57,6 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
-
-
-        /// <summary>
-        /// str
-        /// </summary>
-        public string QueryStr { get; set; }
         /// <summary>
         /// userID
         /// </summary>

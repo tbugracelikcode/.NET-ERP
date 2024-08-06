@@ -5930,24 +5930,6 @@ namespace TsiErp.Localizations.Resources.NotificationTemplates.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SORGU.
-        /// </summary>
-        public static string QueryStr {
-            get {
-                return ResourceManager.GetString("QueryStr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sorgu:.
-        /// </summary>
-        public static string QueryStrLabel {
-            get {
-                return ResourceManager.GetString("QueryStrLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 8D Raporları.
         /// </summary>
         public static string Report8DChildMenu {

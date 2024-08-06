@@ -2088,12 +2088,6 @@
   <data name="QualityPlansMenu" xml:space="preserve">
     <value>Quality Plans</value>
   </data>
-  <data name="QueryStr" xml:space="preserve">
-    <value>QUERY</value>
-  </data>
-  <data name="QueryStrLabel" xml:space="preserve">
-    <value>Query:</value>
-  </data>
   <data name="Report8DChildMenu" xml:space="preserve">
     <value>8D Reports</value>
   </data>
