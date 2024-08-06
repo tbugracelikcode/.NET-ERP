@@ -2073,12 +2073,6 @@
   <data name="QualityPlansMenu" xml:space="preserve">
     <value>Kalite Planları</value>
   </data>
-  <data name="QueryStr" xml:space="preserve">
-    <value>SORGU</value>
-  </data>
-  <data name="QueryStrLabel" xml:space="preserve">
-    <value>Sorgu:</value>
-  </data>
   <data name="Report8DChildMenu" xml:space="preserve">
     <value>8D Raporları</value>
   </data>

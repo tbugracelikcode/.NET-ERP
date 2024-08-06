@@ -204,102 +204,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
         }
 
-        public async void ShowSQLCommandClick()
-        {
-            if (!string.IsNullOrEmpty(DataSource.ModuleName_) && !string.IsNullOrEmpty(DataSource.ProcessName_) && BindingDepartments.Count > 0 && BindingDepartments != null)
-            {
-                #region  Departman ve User Seçimi
-
-                foreach (var departmentId in BindingDepartments)
-                {
-                    if (string.IsNullOrEmpty(DataSource.TargetDepartmentId))
-                    {
-                        DataSource.TargetDepartmentId = departmentId.ToString();
-                    }
-                    else
-                    {
-                        DataSource.TargetDepartmentId = DataSource.TargetDepartmentId + "," + departmentId.ToString();
-                    }
-                }
-
-                if (BindingEmployees.Count > 0 && BindingEmployees != null)
-                {
-                    foreach (var userId in BindingEmployees)
-                    {
-                        CreateNotificationsDto creatingEntity = new CreateNotificationsDto
-                        {
-                            IsViewed = false,
-                            Message_ = DataSource.Message_,
-                            ContextMenuName_ = DataSource.ContextMenuName_,
-                            ModuleName_ = DataSource.ModuleName_,
-                            ProcessName_ = DataSource.ProcessName_,
-                            NotificationDate = null,
-                            RecordNumber = string.Empty,
-                            UserId = userId.Id,
-                            ViewDate = null,
-                        };
-
-                        if (string.IsNullOrEmpty(DataSource.TargetUsersId))
-                        {
-                            DataSource.TargetUsersId = userId.ToString();
-                            DataSource.QueryStr = NotificationsAppService.CreateCommandAsync(creatingEntity);
-                        }
-                        else
-                        {
-                            DataSource.TargetUsersId = DataSource.TargetUsersId + "," + userId.ToString();
-                            DataSource.QueryStr = DataSource.QueryStr + QueryConstants.QueryConstant + NotificationsAppService.CreateCommandAsync(creatingEntity);
-                        }
-                    }
-                }
-
-                else
-                {
-                    if (MultiEmployeesList.Count > 0 && MultiEmployeesList != null)
-                    {
-                        foreach (var employee in MultiEmployeesList)
-                        {
-                            CreateNotificationsDto creatingEntity = new CreateNotificationsDto
-                            {
-                                IsViewed = false,
-                                Message_ = DataSource.Message_,
-                                ContextMenuName_ = DataSource.ContextMenuName_,
-                                ModuleName_ = DataSource.ModuleName_,
-                                ProcessName_ = DataSource.ProcessName_,
-                                NotificationDate = null,
-                                RecordNumber = string.Empty,
-                                UserId = employee.Id,
-                                ViewDate = null,
-                            };
-
-                            if (string.IsNullOrEmpty(DataSource.TargetUsersId))
-                            {
-                                DataSource.TargetUsersId = employee.Id.ToString();
-                                DataSource.QueryStr = NotificationsAppService.CreateCommandAsync(creatingEntity);
-                            }
-                            else
-                            {
-                                DataSource.TargetUsersId = DataSource.TargetUsersId + "," + employee.Id.ToString();
-                                DataSource.QueryStr = DataSource.QueryStr + QueryConstants.QueryConstant + NotificationsAppService.CreateCommandAsync(creatingEntity);
-                            }
-                        }
-                    }
-
-                }
-
-                #endregion
-
-
-            }
-            else
-            {
-                await ModalManager.WarningPopupAsync(L["UIWarningSQLCommandTitle"], L["UIWarningSQLCommandMessage"]);
-            }
-        }
-
         protected override async Task OnSubmit()
         {
-            if (!string.IsNullOrEmpty(DataSource.QueryStr))
-            {
                 #region Submit 
 
                 SelectNotificationTemplatesDto result;
@@ -324,14 +230,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
                 HideEditPage();
 
-
                 #endregion
-            }
-            else
-            {
-                await ModalManager.WarningPopupAsync(L["UIWarningQueryStrTitle"], L["UIWarningQueryStrMessage"]);
-            }
-
+            
         }
 
 

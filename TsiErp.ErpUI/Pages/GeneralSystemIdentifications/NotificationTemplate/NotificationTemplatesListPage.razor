@@ -50,20 +50,18 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.Name) HeaderText=@L["Name"] TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.ModuleName_) HeaderText="@L["ModuleName_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.Name) HeaderText=@L["Name"] TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.ModuleName_) HeaderText="@L["ModuleName_"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.ProcessName_) HeaderText=@L["ProcessName_"] TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.ProcessName_) HeaderText=@L["ProcessName_"] TextAlign="TextAlign.Center" Width="220"></GridColumn>@* 
 
-                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.TargetDepartmentId) HeaderText=@L["TargetDepartmentId"] TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.TargetDepartmentId) HeaderText=@L["TargetDepartmentId"] TextAlign="TextAlign.Center" Width="220"></GridColumn> *@
 
-                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.ContextMenuName_) HeaderText=@L["ContextMenuName_"] TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.ContextMenuName_) HeaderText=@L["ContextMenuName_"] TextAlign="TextAlign.Center" Width="220"></GridColumn>
+@* 
+                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.TargetUsersId) HeaderText=@L["TargetUsersId"] TextAlign="TextAlign.Center" Width="280"></GridColumn> *@
 
-                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.QueryStr) HeaderText=@L["QueryStr"] TextAlign="TextAlign.Center" Width="120"></GridColumn>
-
-                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.TargetUsersId) HeaderText=@L["TargetUsersId"] TextAlign="TextAlign.Center" Width="120"></GridColumn>
-
-                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.IsActive) HeaderText=@L["IsActive"] DisplayAsCheckBox="true" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.IsActive) HeaderText=@L["IsActive"] DisplayAsCheckBox="true" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -93,10 +91,9 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="13%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="60%" />
+                    <DxGridLayoutRow Height="23%" />
+                    <DxGridLayoutRow Height="21%" />
+                    <DxGridLayoutRow Height="21%" />
                 </Rows>
 
                 <Columns>
@@ -196,30 +193,6 @@ else
                                 <ComboBoxEvents TItem="ModuleContextClass" TValue="string" ValueChange="@ModuleContextValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="Id" Text="MenuName"></ComboBoxFieldSettings>
                             </SfComboBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                     <DxGridLayoutItem Row="3" Column="5" >
-                        <Template>
-
-                            <table style="height:100%">
-                                <tr style="height:100%">
-                                    <td>
-                                        <center>
-                                            <SfButton CssClass="TSISaveButton" OnClick="ShowSQLCommandClick"><SfIcon Size="IconSize.Medium" Name="IconName.PrintLayout"></SfIcon>&nbsp;@L["SQLCommandButton"]</SfButton>
-                                        </center>
-                                    </td>
-                                </tr>
-                            </table>
-                            
-                        </Template>
-                    </DxGridLayoutItem>
-
-
-                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["QueryStrLabel"] </strong></label><br />
-                            <SfTextBox Multiline="true" Enabled=false CssClass="TSIMemoBox90" @bind-Value="DataSource.QueryStr"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                 </Items>
