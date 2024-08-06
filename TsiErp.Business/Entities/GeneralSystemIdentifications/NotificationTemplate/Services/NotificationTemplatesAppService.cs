@@ -49,10 +49,10 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 ModuleName_ = input.ModuleName_,
                 ContextMenuName_ = input.ContextMenuName_,
                 Name = input.Name,
-                QueryStr = input.QueryStr,
+                QueryStr = "",
                 IsActive = input.IsActive,
                 TargetUsersId = input.TargetUsersId,
-                 Message_ = input.Message_,
+                Message_ = input.Message_,
 
             });
 
@@ -78,9 +78,9 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 Name = input.Name,
                 IsActive = input.IsActive,
                 TargetUsersId = input.TargetUsersId,
-                 Message_ = input.Message_,
-                  
-                
+                Message_ = input.Message_,
+
+
 
             });
 
@@ -91,14 +91,14 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.NotificationTemplates).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, true, "").UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).UseIsDelete(false).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-            var notificationTemplates = queryFactory.Update<SelectNotificationTemplatesDto>(query, "Id", true);
+            var notificationTemplates = queryFactory.Delete(query, true);
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.NotificationTemplates, LogType.Delete, id);
+            //LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.NotificationTemplates, LogType.Delete, id);
 
             await Task.CompletedTask;
-            return new SuccessDataResult<SelectNotificationTemplatesDto>(notificationTemplates);
+            return new SuccessDataResult<SelectNotificationTemplatesDto>("");
 
         }
 
@@ -131,8 +131,13 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
         public async Task<IDataResult<IList<ListNotificationTemplatesDto>>> GetListbyModuleProcessAsync(string module, string process)
         {
-            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { ProcessName_ = process }, false, true, "").Where(new { ModuleName_ = module }, false, true, "").UseIsDelete(false);
+            //var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { ProcessName_ = process }, false, false, "").Where(new { ModuleName_ = module }, false, true, "").UseIsDelete(false);
+
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { ProcessName_ = process, ModuleName_ = module }, true, true, "").UseIsDelete(false);
+
+
             var notificationTemplate = queryFactory.GetList<ListNotificationTemplatesDto>(query).ToList();
+
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListNotificationTemplatesDto>>(notificationTemplate);
         }
@@ -166,7 +171,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 ModuleName_ = input.ModuleName_,
                 Name = input.Name,
                 ProcessName_ = input.ProcessName_,
-                 Message_ = input.Message_,
+                Message_ = input.Message_,
             }).Where(new { Id = input.Id }, true, true, "");
 
             var notificationTemplate = queryFactory.Update<SelectNotificationTemplatesDto>(query, "Id", true);
