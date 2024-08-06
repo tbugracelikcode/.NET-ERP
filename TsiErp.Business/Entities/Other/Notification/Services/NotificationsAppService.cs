@@ -41,15 +41,15 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
             var query = queryFactory.Query().From(Tables.Notifications).Insert(new CreateNotificationsDto
             {
                 Id = addedEntityId,
-                 UserId = input.UserId,
-                  NotificationDate = input.NotificationDate,
-                   IsViewed = input.IsViewed,
-                    ViewDate = input.ViewDate,
-                     Message_ = input.Message_,
-                      ContextMenuName_ = input.ContextMenuName_,
-                       ModuleName_ = input.ModuleName_,
-                        ProcessName_ = input.ProcessName_,
-                         RecordNumber = input.RecordNumber
+                UserId = input.UserId,
+                NotificationDate = input.NotificationDate,
+                IsViewed = input.IsViewed,
+                ViewDate = input.ViewDate,
+                Message_ = input.Message_,
+                ContextMenuName_ = input.ContextMenuName_,
+                ModuleName_ = input.ModuleName_,
+                ProcessName_ = input.ProcessName_,
+                RecordNumber = input.RecordNumber
             });
 
             var notifications = queryFactory.Insert<SelectNotificationsDto>(query, "Id", true);
@@ -81,22 +81,22 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
         }
         public async Task<IDataResult<IList<SelectNotificationsDto>>> GetListbyUserIDAsync(Guid userID)
         {
-                var query = queryFactory.Query().From(Tables.Notifications).Select("*").Where(
-                    new 
-                    { 
-                        UserId =userID 
-                    }, false, false, "").UseIsDelete(false);
-                var notification = queryFactory.GetList<SelectNotificationsDto>(query).ToList();
-                return new SuccessDataResult<IList<SelectNotificationsDto>>(notification);
+            var query = queryFactory.Query().From(Tables.Notifications).Select("*").Where(
+                new
+                {
+                    UserId = userID
+                }, false, false, "").UseIsDelete(false);
+            var notification = queryFactory.GetList<SelectNotificationsDto>(query).ToList();
+            return new SuccessDataResult<IList<SelectNotificationsDto>>(notification);
         }
 
-            public async Task<IDataResult<IList<ListNotificationsDto>>> GetListAsync(ListNotificationsParameterDto input)
-            {
-                var query = queryFactory.Query().From(Tables.Notifications).Select("*").Where(null, false, true, "").UseIsDelete(false);
-                var notification = queryFactory.GetList<ListNotificationsDto>(query).ToList();
-                await Task.CompletedTask;
-                return new SuccessDataResult<IList<ListNotificationsDto>>(notification);
-            }
+        public async Task<IDataResult<IList<ListNotificationsDto>>> GetListAsync(ListNotificationsParameterDto input)
+        {
+            var query = queryFactory.Query().From(Tables.Notifications).Select("*").Where(null, false, true, "").UseIsDelete(false);
+            var notification = queryFactory.GetList<ListNotificationsDto>(query).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListNotificationsDto>>(notification);
+        }
         #endregion
 
         public string CreateCommandAsync(CreateNotificationsDto input)
@@ -145,10 +145,10 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
                 NotificationDate = DateTime.Now,
                 UserId = input.UserId,
                 ViewDate = DateTime.Now,
-                 RecordNumber = input.RecordNumber,
-                  ProcessName_ = input.ProcessName_,
-                   ModuleName_ = input.ModuleName_,
-                    ContextMenuName_ = input.ContextMenuName_,
+                RecordNumber = input.RecordNumber,
+                ProcessName_ = input.ProcessName_,
+                ModuleName_ = input.ModuleName_,
+                ContextMenuName_ = input.ContextMenuName_,
 
             }).Where(new { Id = input.Id }, true, true, "");
 

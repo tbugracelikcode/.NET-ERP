@@ -63,43 +63,43 @@ namespace TSI.QueryBuilder
 
             var valuesList = dto.GetType().GetProperties().Where(t => t.CustomAttributes.Count() == 0).ToList();
 
-            var dtoEntityProperties = valuesList.Where(t => t.DeclaringType.Name == dto.GetType().Name).ToList();
+            //var dtoEntityProperties = valuesList.Where(t => t.DeclaringType.Name == dto.GetType().Name).ToList();
 
-            var auditedEntityProperties = valuesList.Where(t => t.DeclaringType.Name == "FullAuditedEntityDto").ToList();
+            //var auditedEntityProperties = valuesList.Where(t => t.DeclaringType.Name == "FullAuditedEntityDto").ToList();
 
             //var fullEntityProperties = valuesList.Where(t => t.DeclaringType.Name == "FullEntityDto").ToList();
 
-            if (auditedEntityProperties.Count > 0)
-            {
-                if (updateType == UpdateType.Update)
-                {
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreatorId"));
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreationTime"));
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeleterId"));
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeletionTime"));
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "IsDeleted"));
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DataOpenStatus"));
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DataOpenStatusUserId"));
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "Id"));
-                }
+            //if (auditedEntityProperties.Count > 0)
+            //{
+            //    if (updateType == UpdateType.Update)
+            //    {
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreatorId"));
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreationTime"));
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeleterId"));
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeletionTime"));
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "IsDeleted"));
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DataOpenStatus"));
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DataOpenStatusUserId"));
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "Id"));
+            //    }
 
-                if (updateType == UpdateType.ConcurrencyUpdate)
-                {
-                    foreach (var item in dtoEntityProperties)
-                    {
-                        valuesList.Remove(item);
-                    }
+            //    if (updateType == UpdateType.ConcurrencyUpdate)
+            //    {
+            //        foreach (var item in dtoEntityProperties)
+            //        {
+            //            valuesList.Remove(item);
+            //        }
 
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreatorId"));
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreationTime"));
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeleterId"));
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeletionTime"));
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "IsDeleted"));
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "Id"));
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "LastModifierId"));
-                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "LastModificationTime"));
-                }
-            }
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreatorId"));
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreationTime"));
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeleterId"));
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeletionTime"));
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "IsDeleted"));
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "Id"));
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "LastModifierId"));
+            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "LastModificationTime"));
+            //    }
+            //}
 
             string[] columns = new string[valuesList.Count];
 

@@ -213,7 +213,7 @@ namespace TsiErp.Business.Entities.Branch.Services
                 Code = input.Code,
                 Description_ = input.Description_,
                 Name = input.Name,
-                //Id = input.Id,
+                Id = input.Id,
                 IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
@@ -237,9 +237,19 @@ namespace TsiErp.Business.Entities.Branch.Services
 
         public async Task<IDataResult<SelectBranchesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
+            Branches entity = null;
+
             var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id }, true, true, "");
 
-            var entity = queryFactory.Get<Branches>(entityQuery);
+            entity = queryFactory.Get<Branches>(entityQuery);
+
+            if (entity.Id==Guid.Empty)
+            {
+                entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id }, false, false, "");
+
+                entity = queryFactory.Get<Branches>(entityQuery);
+            }
+
 
             var query = queryFactory.Query().From(Tables.Branches).Update(new UpdateBranchesDto
             {
