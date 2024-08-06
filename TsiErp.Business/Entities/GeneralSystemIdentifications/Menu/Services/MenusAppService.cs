@@ -50,7 +50,7 @@ namespace TsiErp.Business.Entities.Menu.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Menus).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.Menus).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
             var menus = queryFactory.Update<SelectMenusDto>(query, "Id", true);
 
@@ -66,7 +66,7 @@ namespace TsiErp.Business.Entities.Menu.Services
             new
             {
                 Id = id
-            }, false, false, "").UseIsDelete(false);
+            }, "").UseIsDelete(false);
 
             var menus = queryFactory.Get<SelectMenusDto>(query);
 
@@ -79,7 +79,7 @@ namespace TsiErp.Business.Entities.Menu.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMenusDto>>> GetListAsync(ListMenusParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(null, false, false, "").UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(null, "").UseIsDelete(false);
             var menus = queryFactory.GetList<ListMenusDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListMenusDto>>(menus);
@@ -88,7 +88,7 @@ namespace TsiErp.Business.Entities.Menu.Services
 
         public async Task<IDataResult<IList<SelectMenusDto>>> GetListbyParentIDAsync(Guid parentID)
         {
-            var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(new { ParentMenuId = parentID }, false, false, "").UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(new { ParentMenuId = parentID }, "").UseIsDelete(false);
             var menus = queryFactory.GetList<SelectMenusDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectMenusDto>>(menus);
@@ -99,7 +99,7 @@ namespace TsiErp.Business.Entities.Menu.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMenusDto>> UpdateAsync(UpdateMenusDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Menus).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.Menus).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<Menus>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.Menus).Update(new UpdateMenusDto
@@ -109,7 +109,7 @@ namespace TsiErp.Business.Entities.Menu.Services
                 MenuURL = input.MenuURL,
                 ContextOrderNo = input.ContextOrderNo,
                 MenuName = input.MenuName
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var menus = queryFactory.Update<SelectMenusDto>(query, "Id", true);
 

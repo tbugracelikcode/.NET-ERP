@@ -19,11 +19,7 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department
         /// Açıklama
         /// </summary>
         public string Name { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
+
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Kıdem ID

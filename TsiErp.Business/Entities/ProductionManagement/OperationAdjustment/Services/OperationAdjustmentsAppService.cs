@@ -94,7 +94,7 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Serv
                             "EmployeesOperator",
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.OperationAdjustments);
+                        .Where(new { Id = id },  Tables.OperationAdjustments);
 
             var operationAdjustment = queryFactory.Get<SelectOperationAdjustmentsDto>(query);
 
@@ -133,7 +133,7 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Serv
                             "EmployeesOperator",
                             JoinType.Left
                         )
-                        .Where(null, false, false, Tables.OperationAdjustments);
+                        .Where(null, Tables.OperationAdjustments);
 
             var operationAdjustments = queryFactory.GetList<ListOperationAdjustmentsDto>(query).ToList();
 

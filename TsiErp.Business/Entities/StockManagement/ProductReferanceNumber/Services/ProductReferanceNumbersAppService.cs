@@ -37,7 +37,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> CreateAsync(CreateProductReferanceNumbersDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { ReferanceNo = input.ReferanceNo, ProductID = input.ProductID.Value, CurrentAccountCardID = input.CurrentAccountCardID.Value }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { ReferanceNo = input.ReferanceNo, ProductID = input.ProductID.Value, CurrentAccountCardID = input.CurrentAccountCardID.Value },  "");
 
             var list = queryFactory.ControlList<ProductReferanceNumbers>(listQuery).ToList();
 
@@ -87,7 +87,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var productReferanceNumbers = queryFactory.Update<SelectProductReferanceNumbersDto>(query, "Id", true);
 
@@ -119,7 +119,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.ProductReferanceNumbers);
+                        .Where(new { Id = id }, Tables.ProductReferanceNumbers);
 
             var productReferanceNumber = queryFactory.Get<SelectProductReferanceNumbersDto>(query);
 
@@ -151,7 +151,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-               .Where(null, false, false, Tables.ProductReferanceNumbers);
+               .Where(null, Tables.ProductReferanceNumbers);
 
             var productReferanceNumbers = queryFactory.GetList<ListProductReferanceNumbersDto>(query).ToList();
 
@@ -178,7 +178,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                        .Where(new { ProductID = productId }, false, false, Tables.ProductReferanceNumbers);
+                        .Where(new { ProductID = productId }, Tables.ProductReferanceNumbers);
 
             var productReferanceNumber = queryFactory.GetList<SelectProductReferanceNumbersDto>(query).ToList();
 
@@ -192,12 +192,12 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> UpdateAsync(UpdateProductReferanceNumbersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<ProductReferanceNumbers>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { ReferanceNo = input.ReferanceNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { ReferanceNo = input.ReferanceNo }, "");
             var list = queryFactory.GetList<ProductReferanceNumbers>(listQuery).ToList();
 
             if (list.Count > 0 && entity.ReferanceNo != input.ReferanceNo)
@@ -227,7 +227,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },"");
 
             var productReferanceNumbers = queryFactory.Update<SelectProductReferanceNumbersDto>(query, "Id", true);
 
@@ -240,7 +240,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<ProductReferanceNumbers>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Update(new UpdateProductReferanceNumbersDto
@@ -264,7 +264,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var productReferanceNumbers = queryFactory.Update<SelectProductReferanceNumbersDto>(query, "Id", true);
 
@@ -292,7 +292,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                            nameof(CurrentAccountCards.Id),
                            JoinType.Left
                        )
-                       .Where(new { ProductID = ProductID, CurrentAccountCardID = CurrentAccountID }, false, false, Tables.ProductReferanceNumbers);
+                       .Where(new { ProductID = ProductID, CurrentAccountCardID = CurrentAccountID }, Tables.ProductReferanceNumbers);
 
             var productReferanceNumber = queryFactory.GetList<SelectProductReferanceNumbersDto>(query).ToList().LastOrDefault();
 

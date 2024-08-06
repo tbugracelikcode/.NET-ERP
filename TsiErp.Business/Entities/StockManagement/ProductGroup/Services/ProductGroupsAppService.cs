@@ -40,7 +40,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductGroupsDto>> CreateAsync(CreateProductGroupsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<ProductGroups>(listQuery).ToList();
 
@@ -60,7 +60,6 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
                 Code = input.Code,
                 Name = input.Name,
                 GTIP = input.GTIP,
-                IsActive = true,
                 Id = addedEntityId,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
@@ -106,7 +105,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.ProductGroups).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.ProductGroups).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var productGroups = queryFactory.Update<SelectProductGroupsDto>(query, "Id", true);
 
@@ -124,7 +123,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
             new
             {
                 Id = id
-            }, true, true, "");
+            }, "");
             var productGroup = queryFactory.Get<SelectProductGroupsDto>(query);
 
 
@@ -139,7 +138,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductGroupsDto>>> GetListAsync(ListProductGroupsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(null, true, true, "");
+            var query = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(null, "");
             var productGroups = queryFactory.GetList<ListProductGroupsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListProductGroupsDto>>(productGroups);
@@ -151,12 +150,12 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductGroupsDto>> UpdateAsync(UpdateProductGroupsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Id = input.Id },"");
             var entity = queryFactory.Get<ProductGroups>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Code = input.Code },  "");
             var list = queryFactory.GetList<ProductGroups>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -172,7 +171,6 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
                 Name = input.Name,
                 GTIP = input.GTIP,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = false,
@@ -182,7 +180,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var productGroups = queryFactory.Update<SelectProductGroupsDto>(query, "Id", true);
 
@@ -195,7 +193,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
 
         public async Task<IDataResult<SelectProductGroupsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<ProductGroups>(entityQuery);
 
@@ -204,7 +202,6 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
                 Code = entity.Code,
                 Name = entity.Name,
                 GTIP = entity.GTIP,
-                IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -216,7 +213,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var productGroups = queryFactory.Update<SelectProductGroupsDto>(query, "Id", true);
             await Task.CompletedTask;
@@ -231,7 +228,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
             new
             {
                 Name = name
-            }, true, true, "");
+            },  "");
             var productGroup = queryFactory.Get<SelectProductGroupsDto>(query);
 
 

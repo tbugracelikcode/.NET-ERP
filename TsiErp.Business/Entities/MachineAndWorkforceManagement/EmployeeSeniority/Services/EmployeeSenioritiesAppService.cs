@@ -39,7 +39,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeeSenioritiesDto>> CreateAsync(CreateEmployeeSenioritiesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<EmployeeSeniorities>(listQuery).ToList();
 
@@ -108,7 +108,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.EmployeeSeniorities).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.EmployeeSeniorities).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var EmployeeSeniorities = queryFactory.Update<SelectEmployeeSenioritiesDto>(query, "Id", true);
 
@@ -126,7 +126,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             new
             {
                 Id = id
-            }, false, false, "");
+            }, "");
             var EmployeeSeniority = queryFactory.Get<SelectEmployeeSenioritiesDto>(query);
 
 
@@ -140,7 +140,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEmployeeSenioritiesDto>>> GetListAsync(ListEmployeeSenioritiesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("*").Where(null, "");
             var EmployeeSeniorities = queryFactory.GetList<ListEmployeeSenioritiesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListEmployeeSenioritiesDto>>(EmployeeSeniorities);
@@ -151,12 +151,12 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeeSenioritiesDto>> UpdateAsync(UpdateEmployeeSenioritiesDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<EmployeeSeniorities>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<EmployeeSeniorities>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -181,7 +181,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var EmployeeSeniorities = queryFactory.Update<SelectEmployeeSenioritiesDto>(query, "Id", true);
 
@@ -193,7 +193,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
         public async Task<IDataResult<SelectEmployeeSenioritiesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<EmployeeSeniorities>(entityQuery);
 
@@ -213,7 +213,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var EmployeeSeniorities = queryFactory.Update<SelectEmployeeSenioritiesDto>(query, "Id", true);
             await Task.CompletedTask;

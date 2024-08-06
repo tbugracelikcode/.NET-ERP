@@ -40,7 +40,7 @@ namespace TsiErp.Business.Entities.Period.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPeriodsDto>> CreateAsync(CreatePeriodsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<Periods>(listQuery).ToList();
 
@@ -65,7 +65,6 @@ namespace TsiErp.Business.Entities.Period.Services
                 DeletionTime = null,
                 Description_ = input.Description_,
                 Id = GuidGenerator.CreateGuid(),
-                IsActive = true,
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
@@ -104,7 +103,7 @@ namespace TsiErp.Business.Entities.Period.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.Periods).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.Periods).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var periods = queryFactory.Update<SelectPeriodsDto>(query, "Id", true);
 
@@ -118,7 +117,7 @@ namespace TsiErp.Business.Entities.Period.Services
         public async Task<IDataResult<SelectPeriodsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
-                    .Query().From(Tables.Periods).Select<Periods>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.Description_ })
+                    .Query().From(Tables.Periods).Select<Periods>(p => new { p.Id, p.Code, p.Name, p.DataOpenStatus, p.DataOpenStatusUserId, p.Description_ })
                         .Join<Branches>
                         (
                             b => new { BranchName = b.Name, BranchID = b.Id },
@@ -126,7 +125,7 @@ namespace TsiErp.Business.Entities.Period.Services
                             nameof(Branches.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, true, true, Tables.Periods);
+                        .Where(new { Id = id }, Tables.Periods);
 
             var period = queryFactory.Get<SelectPeriodsDto>(query);
 
@@ -143,14 +142,14 @@ namespace TsiErp.Business.Entities.Period.Services
             var query = queryFactory
                .Query()
                .From(Tables.Periods)
-               .Select<Periods>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.Description_ })
+               .Select<Periods>(p => new { p.Id, p.Code, p.Name, p.Description_ })
                    .Join<Branches>
                    (
                        b => new { BranchName = b.Name },
                        nameof(Periods.BranchID),
                        nameof(Branches.Id),
                        JoinType.Left
-                   ).Where(null, true, true, Tables.Periods);
+                   ).Where(null, Tables.Periods);
 
             var periods = queryFactory.GetList<ListPeriodsDto>(query).ToList();
 
@@ -162,12 +161,12 @@ namespace TsiErp.Business.Entities.Period.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPeriodsDto>> UpdateAsync(UpdatePeriodsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<Periods>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<Periods>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -183,7 +182,6 @@ namespace TsiErp.Business.Entities.Period.Services
                 Description_ = input.Description_,
                 Name = input.Name,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = false,
@@ -194,7 +192,7 @@ namespace TsiErp.Business.Entities.Period.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 BranchID = input.BranchID.GetValueOrDefault(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var periods = queryFactory.Update<SelectPeriodsDto>(query, "Id", true);
 
@@ -208,7 +206,7 @@ namespace TsiErp.Business.Entities.Period.Services
 
         public async Task<IDataResult<SelectPeriodsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<Periods>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.Periods).Update(new UpdatePeriodsDto
@@ -216,7 +214,6 @@ namespace TsiErp.Business.Entities.Period.Services
                 Code = entity.Code,
                 Description_ = entity.Description_,
                 Name = entity.Name,
-                IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -229,7 +226,7 @@ namespace TsiErp.Business.Entities.Period.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var periods = queryFactory.Update<SelectPeriodsDto>(query, "Id", true);
 

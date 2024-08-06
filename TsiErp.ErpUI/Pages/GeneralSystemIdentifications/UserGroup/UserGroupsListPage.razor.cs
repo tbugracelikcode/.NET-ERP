@@ -35,7 +35,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.UserGroup
         {
             DataSource = new SelectUserGroupsDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("UserGrpChildMenu")
             };
 

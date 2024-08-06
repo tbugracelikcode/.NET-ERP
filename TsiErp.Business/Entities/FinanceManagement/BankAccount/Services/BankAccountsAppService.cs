@@ -39,7 +39,7 @@ namespace TsiErp.Business.Entities.BankAccount.Services
         public async Task<IDataResult<SelectBankAccountsDto>> CreateAsync(CreateBankAccountsDto input)
         {
 
-            var listQuery = queryFactory.Query().From(Tables.BankAccounts).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.BankAccounts).Select("*").Where(new { Code = input.Code },  "");
 
             var list = queryFactory.ControlList<BankAccounts>(listQuery).ToList();
 
@@ -116,7 +116,7 @@ namespace TsiErp.Business.Entities.BankAccount.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.BankAccounts).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.BankAccounts).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
                 var BankAccounts = queryFactory.Update<SelectBankAccountsDto>(query, "Id", true);
 
@@ -135,7 +135,7 @@ namespace TsiErp.Business.Entities.BankAccount.Services
             new
             {
                 Id = id
-            }, false, false, "");
+            },  "");
 
             var BankAccount = queryFactory.Get<SelectBankAccountsDto>(query);
 
@@ -151,7 +151,7 @@ namespace TsiErp.Business.Entities.BankAccount.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBankAccountsDto>>> GetListAsync(ListBankAccountsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.BankAccounts).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.BankAccounts).Select("*").Where(null,  "");
 
             var BankAccounts = queryFactory.GetList<ListBankAccountsDto>(query).ToList();
 
@@ -166,12 +166,12 @@ namespace TsiErp.Business.Entities.BankAccount.Services
         public async Task<IDataResult<SelectBankAccountsDto>> UpdateAsync(UpdateBankAccountsDto input)
         {
 
-            var entityQuery = queryFactory.Query().From(Tables.BankAccounts).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.BankAccounts).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<BankAccounts>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.BankAccounts).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.BankAccounts).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<BankAccounts>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -207,7 +207,7 @@ namespace TsiErp.Business.Entities.BankAccount.Services
                 TLAccountNo = input.TLAccountNo,
                 USDAccountIBAN = input.USDAccountIBAN,
                 USDAccountNo = input.USDAccountNo,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var BankAccounts = queryFactory.Update<SelectBankAccountsDto>(query, "Id", true);
 
@@ -223,7 +223,7 @@ namespace TsiErp.Business.Entities.BankAccount.Services
         public async Task<IDataResult<SelectBankAccountsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
 
-            var entityQuery = queryFactory.Query().From(Tables.BankAccounts).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.BankAccounts).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<BankAccounts>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.BankAccounts).Update(new UpdateBankAccountsDto
@@ -252,7 +252,7 @@ namespace TsiErp.Business.Entities.BankAccount.Services
                 Id = id,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var BankAccounts = queryFactory.Update<SelectBankAccountsDto>(query, "Id", true);
 

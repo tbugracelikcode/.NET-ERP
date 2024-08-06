@@ -31,7 +31,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.GeneralParameter
              new
              {
                  Id = id
-             }, false, false, "");
+             },  "");
 
             var GeneralParameter = queryFactory.Get<SelectGeneralParametersDto>(query);
 
@@ -46,7 +46,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.GeneralParameter
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListGeneralParametersDto>>> GetListAsync(ListGeneralParametersParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.GeneralParameters).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.GeneralParameters).Select("*").Where(null, "");
 
             var GeneralParameters = queryFactory.GetList<ListGeneralParametersDto>(query).ToList();
 
@@ -59,13 +59,13 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.GeneralParameter
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectGeneralParametersDto>> UpdateAsync(UpdateGeneralParametersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.GeneralParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.GeneralParameters).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<GeneralParameters>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.GeneralParameters).Update(new UpdateGeneralParametersDto
             {
                 Id = input.Id
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var GeneralParameters = queryFactory.Update<SelectGeneralParametersDto>(query, "Id", true);
 

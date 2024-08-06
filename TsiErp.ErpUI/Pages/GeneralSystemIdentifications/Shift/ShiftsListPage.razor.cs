@@ -136,7 +136,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
         {
             DataSource = new SelectShiftsDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ShiftsChildMenu")
             };
 

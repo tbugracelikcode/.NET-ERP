@@ -216,7 +216,6 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
         {
             DataSource = new SelectStationsDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("StationsChildMenu")
             };
 

@@ -19,9 +19,5 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dt
         /// Toplam Çalışan
         /// </summary>
         public int TotalEmployees { get; set; }
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
     }
 }

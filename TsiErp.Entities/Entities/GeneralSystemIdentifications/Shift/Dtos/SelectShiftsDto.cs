@@ -20,10 +20,6 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos
         /// Vardiya Açıklaması
         /// </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
 
         /// <summary>
         /// Toplam Çalışma Süresi

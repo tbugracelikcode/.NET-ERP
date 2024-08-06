@@ -60,6 +60,5 @@ namespace TsiErp.Entities.Entities.QualityControl.EquipmentRecord.Dtos
         /// </summary>
         public string CancellationReason { get; set; }
 
-        public bool IsActive { get; set; }
     }
 }

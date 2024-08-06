@@ -106,7 +106,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
         {
             DataSource = new SelectBillsofMaterialsDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("BOMChildMenu")
             };
 

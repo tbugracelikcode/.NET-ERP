@@ -44,7 +44,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOrderAcceptanceRecordsDto>> CreateAsync(CreateOrderAcceptanceRecordsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Select("*").Where(new { Code = input.Code },  "");
             var list = queryFactory.ControlList<OrderAcceptanceRecords>(listQuery).ToList();
 
             #region Code Control 
@@ -131,15 +131,15 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Select("*").Where(new { Id = id },  "");
 
             var OrderAcceptanceRecords = queryFactory.Get<SelectOrderAcceptanceRecordsDto>(query);
 
             if (OrderAcceptanceRecords.Id != Guid.Empty && OrderAcceptanceRecords != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Delete(LoginedUserService.UserId).Where(new { OrderAcceptanceRecordID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Delete(LoginedUserService.UserId).Where(new { OrderAcceptanceRecordID = id }, "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -150,7 +150,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
                 var OrderAcceptanceRecordLines = queryFactory.Update<SelectOrderAcceptanceRecordLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OrderAcceptanceRecordLines, LogType.Delete, id);
                 await Task.CompletedTask;
@@ -179,7 +179,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         nameof(Currencies.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id }, false, false, Tables.OrderAcceptanceRecords);
+                    .Where(new { Id = id }, Tables.OrderAcceptanceRecords);
 
             var orderAcceptanceRecords = queryFactory.Get<SelectOrderAcceptanceRecordsDto>(query);
 
@@ -201,7 +201,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         nameof(ProductReferanceNumbers.Id),
                         JoinType.Left
                     )
-                    .Where(new { OrderAcceptanceRecordID = id }, false, false, Tables.OrderAcceptanceRecordLines);
+                    .Where(new { OrderAcceptanceRecordID = id },  Tables.OrderAcceptanceRecordLines);
 
             var OrderAcceptanceRecordLine = queryFactory.GetList<SelectOrderAcceptanceRecordLinesDto>(queryLines).ToList();
 
@@ -235,7 +235,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         nameof(Currencies.Id),
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.OrderAcceptanceRecords);
+                    .Where(null,  Tables.OrderAcceptanceRecords);
 
             var orderAcceptanceRecords = queryFactory.GetList<ListOrderAcceptanceRecordsDto>(query).ToList();
 
@@ -266,7 +266,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         nameof(Currencies.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id }, false, false, Tables.OrderAcceptanceRecords);
+                    .Where(new { Id = input.Id },  Tables.OrderAcceptanceRecords);
 
             var entity = queryFactory.Get<SelectOrderAcceptanceRecordsDto>(entityQuery);
 
@@ -288,7 +288,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         nameof(ProductReferanceNumbers.Id),
                         JoinType.Left
                     )
-                    .Where(new { OrderAcceptanceRecordID = input.Id }, false, false, Tables.OrderAcceptanceRecordLines);
+                    .Where(new { OrderAcceptanceRecordID = input.Id },  Tables.OrderAcceptanceRecordLines);
 
             var OrderAcceptanceRecordLine = queryFactory.GetList<SelectOrderAcceptanceRecordLinesDto>(queryLines).ToList();
 
@@ -313,7 +313,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         nameof(Currencies.Id),
                         JoinType.Left
                     )
-                             .Where(new { Code = input.Code }, false, false, Tables.OrderAcceptanceRecords);
+                             .Where(new { Code = input.Code },  Tables.OrderAcceptanceRecords);
 
             var list = queryFactory.GetList<ListOrderAcceptanceRecordsDto>(listQuery).ToList();
 
@@ -347,7 +347,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectOrderAcceptanceRecordLines)
             {
@@ -386,7 +386,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Select("*").Where(new { Id = item.Id },  "");
 
                     var line = queryFactory.Get<SelectOrderAcceptanceRecordLinesDto>(lineGetQuery);
 
@@ -419,7 +419,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -437,7 +437,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
         public async Task<IDataResult<SelectOrderAcceptanceRecordsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<OrderAcceptanceRecords>(entityQuery);
 
@@ -465,7 +465,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var OrderAcceptanceRecordsDto = queryFactory.Update<SelectOrderAcceptanceRecordsDto>(query, "Id", true);
             await Task.CompletedTask;
@@ -494,7 +494,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         nameof(ProductReferanceNumbers.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = lineID }, false, false, Tables.OrderAcceptanceRecordLines);
+                    .Where(new { Id = lineID }, Tables.OrderAcceptanceRecordLines);
 
             var entityLine = queryFactory.Get<SelectOrderAcceptanceRecordLinesDto>(entityLineQuery);
 
@@ -525,7 +525,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 LastModifierId = LoginedUserService.UserId,
                 LineNr = entityLine.LineNr,
                 ProductID = entityLine.ProductID,
-            }).Where(new { Id = lineID }, false, false, "");
+            }).Where(new { Id = lineID },  "");
 
             var OrderAcceptanceRecordLine = queryFactory.Update<SelectOrderAcceptanceRecordLinesDto>(query, "Id", true);
 

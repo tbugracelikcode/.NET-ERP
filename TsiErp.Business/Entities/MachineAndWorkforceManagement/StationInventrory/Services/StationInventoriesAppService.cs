@@ -36,7 +36,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationInventoriesDto>> CreateAsync(CreateStationInventoriesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.StationInventories).Select("*").Where(new { StationID = input.StationID, ProductID = input.ProductID }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.StationInventories).Select("*").Where(new { StationID = input.StationID, ProductID = input.ProductID }, "");
 
             var list = queryFactory.ControlList<StationInventories>(listQuery).ToList();
 
@@ -81,7 +81,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.StationInventories).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.StationInventories).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var stationInventories = queryFactory.Update<SelectStationInventoriesDto>(query, "Id", true);
 
@@ -103,7 +103,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
                             nameof(Stations.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.StationInventories);
+                        .Where(new { Id = id }, Tables.StationInventories);
 
             var stationInventory = queryFactory.Get<SelectStationInventoriesDto>(query);
 
@@ -126,7 +126,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
                             nameof(StationInventories.StationID),
                             nameof(Stations.Id),
                             JoinType.Left
-                        ).Where(null, false, false, Tables.StationInventories);
+                        ).Where(null, Tables.StationInventories);
 
             var stationInventories = queryFactory.GetList<ListStationInventoriesDto>(query).ToList();
 
@@ -140,12 +140,12 @@ namespace TsiErp.Business.Entities.StationInventory.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationInventoriesDto>> UpdateAsync(UpdateStationInventoriesDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StationInventories).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.StationInventories).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<StationInventories>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.StationInventories).Select("*").Where(new { StationID = input.StationID, ProductID = input.ProductID }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.StationInventories).Select("*").Where(new { StationID = input.StationID, ProductID = input.ProductID }, "");
             var list = queryFactory.GetList<StationInventories>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Id != input.Id)
@@ -171,7 +171,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var stationInventories = queryFactory.Update<SelectStationInventoriesDto>(query, "Id", true);
 
@@ -184,7 +184,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
 
         public async Task<IDataResult<SelectStationInventoriesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StationInventories).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.StationInventories).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<StationInventories>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.StationInventories).Update(new UpdateStationInventoriesDto
@@ -204,7 +204,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var stationInventories = queryFactory.Update<SelectStationInventoriesDto>(query, "Id", true);
 

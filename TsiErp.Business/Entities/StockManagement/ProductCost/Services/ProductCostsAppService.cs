@@ -79,7 +79,7 @@ namespace TsiErp.Business.Entities.ProductCost.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.ProductCosts).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.ProductCosts).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
             var ProductCosts = queryFactory.Update<SelectProductCostsDto>(query, "Id", true);
 
@@ -101,7 +101,7 @@ namespace TsiErp.Business.Entities.ProductCost.Services
                             nameof(Products.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.ProductCosts);
+                        .Where(new { Id = id },  Tables.ProductCosts);
 
             var ProductCost = queryFactory.Get<SelectProductCostsDto>(query);
 
@@ -125,7 +125,7 @@ namespace TsiErp.Business.Entities.ProductCost.Services
                             nameof(ProductCosts.ProductID),
                             nameof(Products.Id),
                             JoinType.Left
-                        ).Where(null, false, false, Tables.ProductCosts);
+                        ).Where(null,  Tables.ProductCosts);
 
             var productCosts = queryFactory.GetList<ListProductCostsDto>(query).ToList();
 
@@ -145,7 +145,7 @@ namespace TsiErp.Business.Entities.ProductCost.Services
                             nameof(ProductCosts.ProductID),
                             nameof(Products.Id),
                             JoinType.Left
-                        ).Where(new { ProductID = productId }, false, false, Tables.ProductCosts);
+                        ).Where(new { ProductID = productId }, Tables.ProductCosts);
 
             var productCosts = queryFactory.GetList<ListProductCostsDto>(query).ToList();
 
@@ -157,7 +157,7 @@ namespace TsiErp.Business.Entities.ProductCost.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductCostsDto>> UpdateAsync(UpdateProductCostsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductCosts).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductCosts).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<ProductCosts>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProductCosts).Update(new UpdateProductCostsDto
@@ -171,7 +171,7 @@ namespace TsiErp.Business.Entities.ProductCost.Services
                 StartDate = input.StartDate,
                 UnitCost = input.UnitCost,
                 ProductID = input.ProductID.GetValueOrDefault(),
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var ProductCosts = queryFactory.Update<SelectProductCostsDto>(query, "Id", true);
 

@@ -126,15 +126,15 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.PackageFiches).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.PackageFiches).Select("*").Where(new { Id = id },  "");
 
             var PackageFiches = queryFactory.Get<SelectPackageFichesDto>(query);
 
             if (PackageFiches.Id != Guid.Empty && PackageFiches != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.PackageFiches).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.PackageFiches).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.PackageFicheLines).Delete(LoginedUserService.UserId).Where(new { PackageFicheID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.PackageFicheLines).Delete(LoginedUserService.UserId).Where(new { PackageFicheID = id },  "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -145,7 +145,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.PackageFicheLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.PackageFicheLines).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
                 var packageFicheLines = queryFactory.Update<SelectPackageFicheLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PackageFicheLines, LogType.Delete, id);
                 await Task.CompletedTask;
@@ -188,7 +188,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id }, false, false, Tables.PackageFiches);
+                    .Where(new { Id = id }, Tables.PackageFiches);
 
             var packageFiches = queryFactory.Get<SelectPackageFichesDto>(query);
 
@@ -211,7 +211,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         "ProductLine",
                         JoinType.Left
                     )
-                    .Where(new { PackageFicheID = id }, false, false, Tables.PackageFicheLines);
+                    .Where(new { PackageFicheID = id },  Tables.PackageFicheLines);
 
             var PackageFicheLine = queryFactory.GetList<SelectPackageFicheLinesDto>(queryLines).ToList();
 
@@ -260,7 +260,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.PackageFiches);
+                    .Where(null, Tables.PackageFiches);
 
             var packageFiches = queryFactory.GetList<ListPackageFichesDto>(query).ToList();
             await Task.CompletedTask;
@@ -305,7 +305,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id }, false, false, Tables.PackageFiches);
+                    .Where(new { Id = input.Id }, Tables.PackageFiches);
 
             var entity = queryFactory.Get<SelectPackageFichesDto>(entityQuery);
 
@@ -328,7 +328,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         "ProductLine",
                         JoinType.Left
                     )
-                    .Where(new { PackageFicheID = input.Id }, false, false, Tables.PackageFicheLines);
+                    .Where(new { PackageFicheID = input.Id },  Tables.PackageFicheLines);
 
             var PackageFicheLine = queryFactory.GetList<SelectPackageFicheLinesDto>(queryLines).ToList();
 
@@ -360,7 +360,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                            .Where(new { Code = input.Code }, false, false, Tables.PackageFiches);
+                            .Where(new { Code = input.Code }, Tables.PackageFiches);
 
             var list = queryFactory.GetList<ListPackageFichesDto>(listQuery).ToList();
 
@@ -395,7 +395,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectPackageFicheLines)
             {
@@ -429,7 +429,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.PackageFicheLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.PackageFicheLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectPackageFicheLinesDto>(lineGetQuery);
 
@@ -457,7 +457,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
                             Quantity = item.Quantity,
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -475,7 +475,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
 
         public async Task<IDataResult<SelectPackageFichesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PackageFiches).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.PackageFiches).Select("*").Where(new { Id = id },"");
 
             var entity = queryFactory.Get<PackageFiches>(entityQuery);
 
@@ -504,7 +504,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var PackageFichesDto = queryFactory.Update<SelectPackageFichesDto>(query, "Id", true);
             await Task.CompletedTask;

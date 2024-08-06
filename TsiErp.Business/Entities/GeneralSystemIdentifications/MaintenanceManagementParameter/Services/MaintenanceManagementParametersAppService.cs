@@ -31,7 +31,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MaintenanceManag
              new
              {
                  Id = id
-             }, false, false, "");
+             }, "");
 
             var MaintenanceManagementParameter = queryFactory.Get<SelectMaintenanceManagementParametersDto>(query);
 
@@ -46,7 +46,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MaintenanceManag
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMaintenanceManagementParametersDto>>> GetListAsync(ListMaintenanceManagementParametersParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Select("*").Where(null,  "");
 
             var MaintenanceManagementParameters = queryFactory.GetList<ListMaintenanceManagementParametersDto>(query).ToList();
 
@@ -59,14 +59,14 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MaintenanceManag
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMaintenanceManagementParametersDto>> UpdateAsync(UpdateMaintenanceManagementParametersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<MaintenanceManagementParameters>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Update(new UpdateMaintenanceManagementParametersDto
             {
                 FutureDateParameter = input.FutureDateParameter,
                 Id = input.Id
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var MaintenanceManagementParameters = queryFactory.Update<SelectMaintenanceManagementParametersDto>(query, "Id", true);
 

@@ -40,7 +40,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectSectorsDto>> CreateAsync(CreateSectorsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Sectors).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Sectors).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<Sectors>(listQuery).ToList();
 
             #region Code Control 
@@ -119,15 +119,15 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Sectors).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.Sectors).Select("*").Where(new { Id = id }, "");
 
             var Sectors = queryFactory.Get<SelectSectorsDto>(query);
 
             if (Sectors.Id != Guid.Empty && Sectors != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.Sectors).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.Sectors).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.SectorLines).Delete(LoginedUserService.UserId).Where(new { SectorID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.SectorLines).Delete(LoginedUserService.UserId).Where(new { SectorID = id },  "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -138,7 +138,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.SectorLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.SectorLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                 var sectorLines = queryFactory.Update<SelectSectorLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.SectorLines, LogType.Delete, id);
                 await Task.CompletedTask;
@@ -152,7 +152,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Sectors)
-                   .Select("*").Where(new { Id = id }, false, false, "");
+                   .Select("*").Where(new { Id = id },  "");
 
             var Sectors = queryFactory.Get<SelectSectorsDto>(query);
 
@@ -160,7 +160,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
                    .Query()
                    .From(Tables.SectorLines)
                    .Select("*")
-                    .Where(new { SectorID = id }, false, false, "");
+                    .Where(new { SectorID = id },  "");
 
             var SectorLine = queryFactory.GetList<SelectSectorLinesDto>(queryLines).ToList();
 
@@ -180,7 +180,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
                    .Query()
                    .From(Tables.Sectors)
                    .Select("*")
-                    .Where(null, false, false, "");
+                    .Where(null,  "");
 
             var Sectors = queryFactory.GetList<ListSectorsDto>(query).ToList();
             await Task.CompletedTask;
@@ -197,7 +197,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
                    .Query()
                    .From(Tables.Sectors)
                    .Select("*")
-                    .Where(new { Id = input.Id }, false, false, "");
+                    .Where(new { Id = input.Id },  "");
 
             var entity = queryFactory.Get<SelectSectorsDto>(entityQuery);
 
@@ -205,7 +205,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
                    .Query()
                    .From(Tables.SectorLines)
                    .Select("*")
-                    .Where(new { SectorID = input.Id }, false, false, "");
+                    .Where(new { SectorID = input.Id },  "");
 
             var SectorLine = queryFactory.GetList<SelectSectorLinesDto>(queryLines).ToList();
 
@@ -216,7 +216,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
                            .Query()
                            .From(Tables.Sectors)
                            .Select("*")
-                            .Where(new { Code = input.Code }, false, false, "");
+                            .Where(new { Code = input.Code },  "");
 
             var list = queryFactory.GetList<ListSectorsDto>(listQuery).ToList();
 
@@ -244,7 +244,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
                  Type_ = input.Type_,
                   IsPrivateSector = input.IsPrivateSector, 
                    SelectSectorLines = input.SelectSectorLines,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },  "");
 
             foreach (var item in input.SelectSectorLines)
             {
@@ -275,7 +275,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.SectorLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.SectorLines).Select("*").Where(new { Id = item.Id },  "");
 
                     var line = queryFactory.Get<SelectSectorLinesDto>(lineGetQuery);
 
@@ -301,7 +301,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
                                IsSoleProprietorship = item.IsSoleProprietorship
                              
 
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id },  "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -319,7 +319,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
 
         public async Task<IDataResult<SelectSectorsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Sectors).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.Sectors).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Sectors>(entityQuery);
 
@@ -340,7 +340,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
                 Name = entity.Name,
                 IsPrivateSector = entity.IsPrivateSector,
                 Type_ = entity.Type_,
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var SectorsDto = queryFactory.Update<SelectSectorsDto>(query, "Id", true);
             await Task.CompletedTask;

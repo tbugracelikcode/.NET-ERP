@@ -71,7 +71,7 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
             new
             {
                 Id = id
-            }, false, true, "").UseIsDelete(false);
+            }, "").UseIsDelete(false);
             var notification = queryFactory.Get<SelectNotificationsDto>(query);
 
             LogsAppService.InsertLogToDatabase(notification, notification, LoginedUserService.UserId, Tables.Notifications, LogType.Get, id);
@@ -85,14 +85,14 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
                 new
                 {
                     UserId = userID
-                }, false, false, "").UseIsDelete(false);
+                }, "").UseIsDelete(false);
             var notification = queryFactory.GetList<SelectNotificationsDto>(query).ToList();
             return new SuccessDataResult<IList<SelectNotificationsDto>>(notification);
         }
 
         public async Task<IDataResult<IList<ListNotificationsDto>>> GetListAsync(ListNotificationsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Notifications).Select("*").Where(null, false, true, "").UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.Notifications).Select("*").Where(null, "").UseIsDelete(false);
             var notification = queryFactory.GetList<ListNotificationsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListNotificationsDto>>(notification);
@@ -122,12 +122,12 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
 
         public async Task<IDataResult<SelectNotificationsDto>> UpdateAsync(UpdateNotificationsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Notifications).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Notifications).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<Notifications>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.Notifications).Select("*").Where(new { Code = input.Id }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Notifications).Select("*").Where(new { Code = input.Id }, "");
             var list = queryFactory.GetList<Notifications>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Id != input.Id)
@@ -150,7 +150,7 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
                 ModuleName_ = input.ModuleName_,
                 ContextMenuName_ = input.ContextMenuName_,
 
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var notification = queryFactory.Update<SelectNotificationsDto>(query, "Id", true);
 

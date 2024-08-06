@@ -52,7 +52,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectSalesPropositionsDto>> CreateAsync(CreateSalesPropositionsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.SalesPropositions).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.SalesPropositions).Select("*").Where(new { FicheNo = input.FicheNo },  "");
             var list = queryFactory.ControlList<SalesPropositions>(listQuery).ToList();
 
             #region Code Control 
@@ -176,7 +176,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.SalesPropositions).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.SalesPropositions).Select("*").Where(new { Id = id },  "");
 
             var salesPropositions = queryFactory.Get<SelectSalesPropositionsDto>(query);
 
@@ -184,9 +184,9 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
             {
                 StockMovementsService.DeleteSalesPropositions(salesPropositions);
 
-                var deleteQuery = queryFactory.Query().From(Tables.SalesPropositions).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.SalesPropositions).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.SalesPropositionLines).Delete(LoginedUserService.UserId).Where(new { SalesPropositionID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.SalesPropositionLines).Delete(LoginedUserService.UserId).Where(new { SalesPropositionID = id },  "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -199,13 +199,13 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
             }
             else
             {
-                var queryLineGet = queryFactory.Query().From(Tables.SalesPropositionLines).Select("*").Where(new { Id = id }, false, false, "");
+                var queryLineGet = queryFactory.Query().From(Tables.SalesPropositionLines).Select("*").Where(new { Id = id },  "");
 
                 var salesPropositionsLineGet = queryFactory.Get<SelectSalesPropositionLinesDto>(queryLineGet);
 
                 StockMovementsService.DeleteSalesPropositionLines(salesPropositionsLineGet);
 
-                var queryLine = queryFactory.Query().From(Tables.SalesPropositionLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.SalesPropositionLines).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
                 var salesPropositionLines = queryFactory.Update<SelectSalesPropositionLinesDto>(queryLine, "Id", true);
 
@@ -273,7 +273,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                         nameof(ShippingAdresses.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id }, false, false, Tables.SalesPropositions);
+                    .Where(new { Id = id },  Tables.SalesPropositions);
 
             var salesPropositions = queryFactory.Get<SelectSalesPropositionsDto>(query);
 
@@ -323,7 +323,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { SalesPropositionID = id }, false, false, Tables.SalesPropositionLines);
+                    .Where(new { SalesPropositionID = id },  Tables.SalesPropositionLines);
 
             var salesPropositionLine = queryFactory.GetList<SelectSalesPropositionLinesDto>(queryLines).ToList();
 
@@ -393,7 +393,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                         nameof(ShippingAdresses.Id),
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.SalesPropositions);
+                    .Where(null,  Tables.SalesPropositions);
 
             var salesPropositions = queryFactory.GetList<ListSalesPropositionsDto>(query).ToList();
             await Task.CompletedTask;
@@ -459,7 +459,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                         nameof(ShippingAdresses.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id }, false, false, Tables.SalesPropositions);
+                    .Where(new { Id = input.Id }, Tables.SalesPropositions);
 
             var entity = queryFactory.Get<SelectSalesPropositionsDto>(entityQuery);
 
@@ -509,7 +509,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { SalesPropositionID = input.Id }, false, false, Tables.SalesPropositionLines);
+                    .Where(new { SalesPropositionID = input.Id },  Tables.SalesPropositionLines);
 
             var salesPropositionLine = queryFactory.GetList<SelectSalesPropositionLinesDto>(queryLines).ToList();
 
@@ -562,7 +562,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                         nameof(ShippingAdresses.Id),
                         JoinType.Left
                     )
-                 .Where(new { FicheNo = input.FicheNo }, false, false, Tables.SalesPropositions);
+                 .Where(new { FicheNo = input.FicheNo }, Tables.SalesPropositions);
 
             var list = queryFactory.GetList<ListSalesPropositionsDto>(listQuery).ToList();
 
@@ -614,7 +614,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 PricingCurrency = input.PricingCurrency
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectSalesPropositionLines)
             {
@@ -664,7 +664,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.SalesPropositionLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.SalesPropositionLines).Select("*").Where(new { Id = item.Id },  "");
 
                     var line = queryFactory.Get<SelectSalesPropositionLinesDto>(lineGetQuery);
 
@@ -708,7 +708,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                             CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                             Date_ = input.Date_,
                             WarehouseID = input.WarehouseID.GetValueOrDefault()
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id },  "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -728,7 +728,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
         public async Task<IDataResult<SelectSalesPropositionsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.SalesPropositions).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.SalesPropositions).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<SalesPropositions>(entityQuery);
 
@@ -774,7 +774,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 PricingCurrency = (int)entity.PricingCurrency
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var salesPropositionDto = queryFactory.Update<SelectSalesPropositionsDto>(query, "Id", true);
             await Task.CompletedTask;
@@ -829,7 +829,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     LastModifierId = LoginedUserService.UserId,
-                }).Where(new { Id = entity.Id }, false, false, "");
+                }).Where(new { Id = entity.Id }, "");
 
                 if (entity.SelectSalesPropositionLines.Count > 0)
                 {
@@ -873,7 +873,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                             CurrentAccountCardID = line.CurrentAccountCardID,
                             Date_ = line.Date_,
                             WarehouseID = line.WarehouseID
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id },  "");
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
 
                     }
@@ -931,7 +931,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.SalesPropositionLines);
+                    .Where(null,  Tables.SalesPropositionLines);
 
             var salesPropositionLine = queryFactory.GetList<SelectSalesPropositionLinesDto>(queryLines).ToList();
             await Task.CompletedTask;

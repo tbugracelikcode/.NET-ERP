@@ -123,14 +123,14 @@ else
                             <SfNumericTextBox Min="0"  @bind-Value="DataSource.Days_"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="4" Column="1">
+                    @* <DxGridLayoutItem Row="4" Column="1">
                         <Template>
                             <center>
                             <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
                             <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
                             </center>
                         </Template>
-                    </DxGridLayoutItem>
+                    </DxGridLayoutItem> *@
 
                 </Items>
             </DxGridLayout>

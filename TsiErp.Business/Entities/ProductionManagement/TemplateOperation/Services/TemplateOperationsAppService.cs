@@ -46,7 +46,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTemplateOperationsDto>> CreateAsync(CreateTemplateOperationsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<TemplateOperations>(listQuery).ToList();
 
             #region Code Control 
@@ -168,17 +168,17 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Id = id },  "");
 
                 var templateOperations = queryFactory.Get<SelectTemplateOperationsDto>(query);
 
                 if (templateOperations.Id != Guid.Empty && templateOperations != null)
                 {
-                    var deleteQuery = queryFactory.Query().From(Tables.TemplateOperations).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                    var deleteQuery = queryFactory.Query().From(Tables.TemplateOperations).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                    var lineDeleteQuery = queryFactory.Query().From(Tables.TemplateOperationLines).Delete(LoginedUserService.UserId).Where(new { TemplateOperationID = id }, false, false, "");
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.TemplateOperationLines).Delete(LoginedUserService.UserId).Where(new { TemplateOperationID = id }, "");
 
-                    var lineUnsuitabilityItemsQuery = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Delete(LoginedUserService.UserId).Where(new { TemplateOperationId = id }, false, false, "");
+                    var lineUnsuitabilityItemsQuery = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Delete(LoginedUserService.UserId).Where(new { TemplateOperationId = id }, "");
 
                     deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + QueryConstants.QueryConstant + lineUnsuitabilityItemsQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -190,7 +190,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 }
                 else
                 {
-                    var queryLine = queryFactory.Query().From(Tables.TemplateOperationLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var queryLine = queryFactory.Query().From(Tables.TemplateOperationLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                     var templateOperationLines = queryFactory.Update<SelectTemplateOperationLinesDto>(queryLine, "Id", true);
 
@@ -216,7 +216,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                     new
                     {
                         Id = id
-                    }, true, true, Tables.TemplateOperations
+                    }, Tables.TemplateOperations
                 );
 
             var templateOperations = queryFactory.Get<SelectTemplateOperationsDto>(query);
@@ -233,7 +233,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                                 nameof(Stations.Id),
                                 JoinType.Left
                             )
-                            .Where(new { TemplateOperationID = id }, false, false, Tables.TemplateOperationLines);
+                            .Where(new { TemplateOperationID = id }, Tables.TemplateOperationLines);
 
             var templateOperationLine = queryFactory.GetList<SelectTemplateOperationLinesDto>(queryLines).ToList();
 
@@ -252,7 +252,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                             nameof(UnsuitabilityItems.Id),
                             JoinType.Left
                         )
-                        .Where(new { TemplateOperationId = id }, false, false, Tables.TemplateOperationUnsuitabilityItems);
+                        .Where(new { TemplateOperationId = id }, Tables.TemplateOperationUnsuitabilityItems);
 
             var unsuitabilityItemsLine = queryFactory.GetList<SelectTemplateOperationUnsuitabilityItemsDto>(queryUnsuitabilityItems).ToList();
 
@@ -260,7 +260,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
             #region UnsuitabilityItems Control
 
-            var unsuitabilityItemsQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { StationGroupId = templateOperations.WorkCenterID }, true, true, "");
+            var unsuitabilityItemsQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { StationGroupId = templateOperations.WorkCenterID }, "");
 
             var unsuitabilityItemsList = queryFactory.GetList<SelectUnsuitabilityItemsDto>(unsuitabilityItemsQuery).ToList();
 
@@ -315,7 +315,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                     g => new { WorkCenterName = g.Name },
                     nameof(TemplateOperations.WorkCenterID),
                     nameof(StationGroups.Id), JoinType.Left
-                ).Where(null, true, true, Tables.TemplateOperations);
+                ).Where(null,Tables.TemplateOperations);
 
             var templateOperations = queryFactory.GetList<ListTemplateOperationsDto>(query).ToList();
 
@@ -331,7 +331,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                               nameof(Stations.Id),
                               JoinType.Left
                           )
-                          .Where(null, false, false, Tables.TemplateOperationLines);
+                          .Where(null, Tables.TemplateOperationLines);
 
             var templateOperationLine = queryFactory.GetList<SelectTemplateOperationLinesDto>(queryLines).ToList();
 
@@ -350,7 +350,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTemplateOperationsDto>> UpdateAsync(UpdateTemplateOperationsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Id = input.Id }, true, true, Tables.TemplateOperations);
+            var entityQuery = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Id = input.Id }, Tables.TemplateOperations);
 
             var entity = queryFactory.Get<SelectTemplateOperationsDto>(entityQuery);
 
@@ -365,7 +365,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                         nameof(Stations.Id),
                         JoinType.Left
                     )
-                    .Where(new { TemplateOperationID = input.Id }, false, false, Tables.TemplateOperationLines);
+                    .Where(new { TemplateOperationID = input.Id }, Tables.TemplateOperationLines);
 
             var templateOperationLine = queryFactory.GetList<SelectTemplateOperationLinesDto>(queryLines).ToList();
 
@@ -383,7 +383,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                             nameof(UnsuitabilityItems.Id),
                             JoinType.Left
                         )
-                        .Where(new { TemplateOperationId = input.Id }, false, false, Tables.TemplateOperationUnsuitabilityItems);
+                        .Where(new { TemplateOperationId = input.Id }, Tables.TemplateOperationUnsuitabilityItems);
 
             var unsuitabilityItemsLine = queryFactory.GetList<SelectTemplateOperationUnsuitabilityItemsDto>(queryUnsuitabilityItems).ToList();
 
@@ -392,7 +392,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             #endregion
 
             #region Update Control
-            var listQuery = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Code = input.Code }, false, false, Tables.TemplateOperations);
+            var listQuery = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Code = input.Code }, Tables.TemplateOperations);
 
             var list = queryFactory.GetList<ListTemplateOperationsDto>(listQuery).ToList();
 
@@ -428,7 +428,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id },  "");
 
             #region TemplateOperationLines
             foreach (var item in input.SelectTemplateOperationLines)
@@ -461,7 +461,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.TemplateOperationLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.TemplateOperationLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectTemplateOperationLinesDto>(lineGetQuery);
 
@@ -487,7 +487,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -523,7 +523,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectTemplateOperationUnsuitabilityItemsDto>(lineGetQuery);
 
@@ -545,7 +545,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                             LineNr = item.LineNr,
                             ToBeUsed = item.ToBeUsed,
                             UnsuitabilityItemsId = item.UnsuitabilityItemsId
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -565,7 +565,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
         public async Task<IDataResult<SelectTemplateOperationsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<TemplateOperations>(entityQuery);
 
@@ -595,7 +595,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 Name = entity.Name,
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var templateOperationsDto = queryFactory.Update<SelectTemplateOperationsDto>(query, "Id", true);
             await Task.CompletedTask;
@@ -620,12 +620,12 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                            nameof(UnsuitabilityItems.Id),
                            JoinType.Left
                        )
-                       .Where(new { TemplateOperationId = templateOperationId }, false, false, Tables.TemplateOperationUnsuitabilityItems);
+                       .Where(new { TemplateOperationId = templateOperationId }, Tables.TemplateOperationUnsuitabilityItems);
 
                 var unsuitabilityItemsLine = queryFactory.GetList<SelectTemplateOperationUnsuitabilityItemsDto>(queryUnsuitabilityItems).ToList();
 
 
-                var unsuitabilityItemsQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { StationGroupId = workCenterId }, true, true, "");
+                var unsuitabilityItemsQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { StationGroupId = workCenterId }, "");
 
                 var unsuitabilityItemsList = queryFactory.GetList<SelectUnsuitabilityItemsDto>(unsuitabilityItemsQuery).ToList();
 
@@ -661,7 +661,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             }
             else
             {
-                var unsuitabilityItemsQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { StationGroupId = workCenterId }, true, true, "");
+                var unsuitabilityItemsQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { StationGroupId = workCenterId },"");
 
                 var unsuitabilityItemsList = queryFactory.GetList<SelectUnsuitabilityItemsDto>(unsuitabilityItemsQuery).ToList();
 

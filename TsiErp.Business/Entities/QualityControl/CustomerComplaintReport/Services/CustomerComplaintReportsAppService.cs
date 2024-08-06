@@ -43,7 +43,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCustomerComplaintReportsDto>> CreateAsync(CreateCustomerComplaintReportsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("*").Where(new { ReportNo = input.ReportNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("*").Where(new { ReportNo = input.ReportNo }, "");
 
             var list = queryFactory.ControlList<CustomerComplaintReports>(listQuery).ToList();
 
@@ -101,7 +101,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.CustomerComplaintReports).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.CustomerComplaintReports).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
             var CustomerComplaintReport = queryFactory.Update<SelectCustomerComplaintReportsDto>(query, "Id", true);
 
@@ -127,7 +127,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
                 (
                    d => new { UnsuitqabilityItemsName = d.Name, UnsuitqabilityItemsID = d.Id }, nameof(CustomerComplaintReports.UnsuitqabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
                 )
-                .Where(new { Id = id }, false, false, Tables.CustomerComplaintReports);
+                .Where(new { Id = id },  Tables.CustomerComplaintReports);
 
             var CustomerComplaintReport = queryFactory.Get<SelectCustomerComplaintReportsDto>(query);
 
@@ -155,7 +155,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
                 (
                    d => new { UnsuitqabilityItemsName = d.Name, UnsuitqabilityItemsID = d.Id }, nameof(CustomerComplaintReports.UnsuitqabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
                 )
-                .Where(null, false, false, Tables.CustomerComplaintReports);
+                .Where(null, Tables.CustomerComplaintReports);
 
             var customerComplaintReports = queryFactory.GetList<ListCustomerComplaintReportsDto>(query).ToList();
 
@@ -169,12 +169,12 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCustomerComplaintReportsDto>> UpdateAsync(UpdateCustomerComplaintReportsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<CustomerComplaintReports>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("*").Where(new { ReportNo = input.ReportNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("*").Where(new { ReportNo = input.ReportNo },  "");
             var list = queryFactory.GetList<CustomerComplaintReports>(listQuery).ToList();
 
             if (list.Count > 0 && entity.ReportNo != input.ReportNo)
@@ -210,7 +210,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },"");
 
             var CustomerComplaintReport = queryFactory.Update<SelectCustomerComplaintReportsDto>(query, "Id", true);
 
@@ -225,7 +225,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
 
         public async Task<IDataResult<SelectCustomerComplaintReportsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<CustomerComplaintReports>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.CustomerComplaintReports).Update(new UpdateCustomerComplaintReportsDto
@@ -254,7 +254,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
                 Id = id,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var CustomerComplaintReport = queryFactory.Update<SelectCustomerComplaintReportsDto>(query, "Id", true);
 
@@ -269,7 +269,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
             new
             {
                 UnsuitabilityTypesDescription = description
-            }, true, true, "");
+            },  "");
             var unsuitabilityTypesItems = queryFactory.Get<SelectCustomerComplaintReportsDto>(query);
 
 

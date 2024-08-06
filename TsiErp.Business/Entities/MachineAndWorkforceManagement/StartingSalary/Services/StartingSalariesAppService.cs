@@ -41,7 +41,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStartingSalariesDto>> CreateAsync(CreateStartingSalariesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.StartingSalaries).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.StartingSalaries).Select("*").Where(new { Code = input.Code },  "");
             var list = queryFactory.ControlList<StartingSalaries>(listQuery).ToList();
 
             #region Code Control 
@@ -113,15 +113,15 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.StartingSalaries).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.StartingSalaries).Select("*").Where(new { Id = id }, "");
 
             var StartingSalaries = queryFactory.Get<SelectStartingSalariesDto>(query);
 
             if (StartingSalaries.Id != Guid.Empty && StartingSalaries != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.StartingSalaries).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.StartingSalaries).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.StartingSalaryLines).Delete(LoginedUserService.UserId).Where(new { StartingSalaryID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.StartingSalaryLines).Delete(LoginedUserService.UserId).Where(new { StartingSalaryID = id }, "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -132,7 +132,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.StartingSalaryLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.StartingSalaryLines).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
                 var billOfMaterialLines = queryFactory.Update<SelectStartingSalaryLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StartingSalaryLines, LogType.Delete, id);
                 await Task.CompletedTask;
@@ -150,7 +150,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
             new
             {
                 Id = id
-            }, false, false, "");
+            }, "");
 
             var StartingSalaries = queryFactory.Get<SelectStartingSalariesDto>(query);
 
@@ -165,7 +165,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                         nameof(EmployeeSeniorities.Id),
                         JoinType.Left
                     )
-                    .Where(new { StartingSalaryID = id }, false, false, Tables.StartingSalaryLines);
+                    .Where(new { StartingSalaryID = id }, Tables.StartingSalaryLines);
 
             var StartingSalaryLine = queryFactory.GetList<SelectStartingSalaryLinesDto>(queryLines).ToList();
 
@@ -184,7 +184,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.StartingSalaries)
-                   .Select("*").Where(null, false, false, "");
+                   .Select("*").Where(null, "");
 
             var StartingSalaries = queryFactory.GetList<ListStartingSalariesDto>(query).ToList();
             await Task.CompletedTask;
@@ -203,7 +203,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
             new
             {
                 Id = input.Id
-            }, false, false, "");
+            },"");
 
             var entity = queryFactory.Get<SelectStartingSalariesDto>(entityQuery);
 
@@ -218,7 +218,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                         nameof(EmployeeSeniorities.Id),
                         JoinType.Left
                     )
-                    .Where(new { StartingSalaryID = input.Id }, false, false, Tables.StartingSalaryLines);
+                    .Where(new { StartingSalaryID = input.Id }, Tables.StartingSalaryLines);
 
             var StartingSalaryLine = queryFactory.GetList<SelectStartingSalaryLinesDto>(queryLines).ToList();
 
@@ -228,7 +228,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
             var listQuery = queryFactory
                            .Query()
                            .From(Tables.StartingSalaries)
-                           .Select("*").Where(new { Code = input.Code }, false, false, "");
+                           .Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.GetList<ListStartingSalariesDto>(listQuery).ToList();
 
@@ -254,7 +254,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },  "");
 
             foreach (var item in input.SelectStartingSalaryLines)
             {
@@ -285,7 +285,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.StartingSalaryLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.StartingSalaryLines).Select("*").Where(new { Id = item.Id },  "");
 
                     var line = queryFactory.Get<SelectStartingSalaryLinesDto>(lineGetQuery);
 
@@ -310,7 +310,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                             CurrentSalaryUpperLimit = item.CurrentSalaryUpperLimit,
                             CurrentSalaryLowerLimit = item.CurrentSalaryLowerLimit,
                             SeniorityID = item.SeniorityID.GetValueOrDefault(),
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -328,7 +328,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
 
         public async Task<IDataResult<SelectStartingSalariesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StartingSalaries).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.StartingSalaries).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<StartingSalaries>(entityQuery);
 
@@ -348,7 +348,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                 Name = entity.Name,
                 Year_ = entity.Year_,
                 Description_ = entity.Description_,
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var StartingSalariesDto = queryFactory.Update<SelectStartingSalariesDto>(query, "Id", true);
             await Task.CompletedTask;

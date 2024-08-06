@@ -69,7 +69,6 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Employee
         {
             DataSource = new SelectEmployeesDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("EmployeesChildMenu"),
                 IsProductionScreenUser = false,
                 IsProductionScreenSettingUser = false,

@@ -38,7 +38,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWarehousesDto>> CreateAsync(CreateWarehousesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(new { Code = input.Code },  "");
 
             var list = queryFactory.ControlList<Warehouses>(listQuery).ToList();
 
@@ -111,7 +111,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.Warehouses).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.Warehouses).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var warehouses = queryFactory.Update<SelectWarehousesDto>(query, "Id", true);
 
@@ -128,7 +128,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
             new
             {
                 Id = id
-            }, true, true, "");
+            }, "");
             var warehouse = queryFactory.Get<SelectWarehousesDto>(query);
 
 
@@ -142,7 +142,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListWarehousesDto>>> GetListAsync(ListWarehousesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(null, true, true, "");
+            var query = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(null, "");
             var warehouses = queryFactory.GetList<ListWarehousesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListWarehousesDto>>(warehouses);
@@ -154,12 +154,12 @@ namespace TsiErp.Business.Entities.Warehouse.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWarehousesDto>> UpdateAsync(UpdateWarehousesDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<Warehouses>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<Warehouses>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -184,7 +184,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var warehouses = queryFactory.Update<SelectWarehousesDto>(query, "Id", true);
 
@@ -197,7 +197,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
 
         public async Task<IDataResult<SelectWarehousesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Warehouses>(entityQuery);
 
@@ -217,7 +217,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var warehouses = queryFactory.Update<SelectWarehousesDto>(query, "Id", true);
             await Task.CompletedTask;

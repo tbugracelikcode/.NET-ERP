@@ -36,7 +36,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUnitSetsDto>> CreateAsync(CreateUnitSetsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(new { Code = input.Code },  "");
 
             var list = queryFactory.ControlList<UnitSets>(listQuery).ToList();
 
@@ -106,7 +106,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.UnitSets).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.UnitSets).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
                 var unitsets = queryFactory.Update<SelectUnitSetsDto>(query, "Id", true);
 
@@ -124,7 +124,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
            new
            {
                Id = id
-           }, true, true, "");
+           }, "");
             var unitset = queryFactory.Get<SelectUnitSetsDto>(query);
 
 
@@ -137,7 +137,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUnitSetsDto>>> GetListAsync(ListUnitSetsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(null, true, true, "");
+            var query = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(null,"");
             var unitsets = queryFactory.GetList<ListUnitSetsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListUnitSetsDto>>(unitsets);
@@ -149,12 +149,12 @@ namespace TsiErp.Business.Entities.UnitSet.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUnitSetsDto>> UpdateAsync(UpdateUnitSetsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(new { Id = input.Id },  "");
             var entity = queryFactory.Get<UnitSets>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<UnitSets>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -179,7 +179,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var unitsets = queryFactory.Update<SelectUnitSetsDto>(query, "Id", true);
 
@@ -194,7 +194,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
 
         public async Task<IDataResult<SelectUnitSetsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<UnitSets>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.UnitSets).Update(new UpdateUnitSetsDto
@@ -213,7 +213,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var unitsets = queryFactory.Update<SelectUnitSetsDto>(query, "Id", true);
 
