@@ -32,10 +32,5 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation
         /// Ürün ID
         /// </summary>
         public Guid ProductID { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
     }
 }

@@ -29,10 +29,6 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem
         /// </summary>
         public string Description_ { get; set; }
 
-
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        public bool IsActive { get; set; }
-
         /// <summary>
         /// Uygunsuzluk Türü Başlığı 
         /// </summary>

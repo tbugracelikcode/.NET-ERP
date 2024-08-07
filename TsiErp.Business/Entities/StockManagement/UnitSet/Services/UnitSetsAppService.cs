@@ -61,7 +61,6 @@ namespace TsiErp.Business.Entities.UnitSet.Services
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 Id = addedEntityId,
-                IsActive = true,
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
@@ -169,7 +168,6 @@ namespace TsiErp.Business.Entities.UnitSet.Services
                 Code = input.Code,
                 Name = input.Name,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = false,
@@ -201,7 +199,6 @@ namespace TsiErp.Business.Entities.UnitSet.Services
             {
                 Code = entity.Code,
                 Name = entity.Name,
-                IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),

@@ -82,7 +82,6 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 Id = addedEntityId,
-                IsActive = true,
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty
@@ -380,7 +379,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             var listQuery = queryFactory
                            .Query()
                             .From(Tables.ProductsOperations)
-                   .Select<ProductsOperations>(po => new { po.WorkCenterID, po.TemplateOperationID, po.ProductID, po.Name, po.IsActive, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code })
+                   .Select<ProductsOperations>(po => new { po.WorkCenterID, po.TemplateOperationID, po.ProductID, po.Name, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code })
                    .Join<Products>
                     (
                         p => new { ProductCode = p.Code, ProductName = p.Name },
@@ -411,7 +410,6 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
-                IsActive = input.IsActive,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
@@ -595,7 +593,6 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = entity.Id,
-                IsActive = entity.IsActive,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),

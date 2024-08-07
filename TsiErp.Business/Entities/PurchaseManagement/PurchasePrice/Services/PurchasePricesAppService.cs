@@ -125,13 +125,13 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.PurchasePrices).Select("*").Where(new { Id = id },  "");
+            var query = queryFactory.Query().From(Tables.PurchasePrices).Select("*").Where(new { Id = id }, "");
 
             var purchasePrices = queryFactory.Get<SelectPurchasePricesDto>(query);
 
             if (purchasePrices.Id != Guid.Empty && purchasePrices != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.PurchasePrices).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+                var deleteQuery = queryFactory.Query().From(Tables.PurchasePrices).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var lineDeleteQuery = queryFactory.Query().From(Tables.PurchasePriceLines).Delete(LoginedUserService.UserId).Where(new { PurchasePriceID = id }, "");
 
@@ -310,7 +310,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id },Tables.PurchasePrices);
+                    .Where(new { Id = input.Id }, Tables.PurchasePrices);
 
             var entity = queryFactory.Get<SelectPurchasePricesDto>(entityQuery);
 
@@ -332,7 +332,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         nameof(Currencies.Id),
                         JoinType.Left
                     )
-                    .Where(new { PurchasePriceID = input.Id },Tables.PurchasePriceLines);
+                    .Where(new { PurchasePriceID = input.Id }, Tables.PurchasePriceLines);
 
             var purchasePriceLines = queryFactory.GetList<SelectPurchasePriceLinesDto>(queryLines).ToList();
 
@@ -371,7 +371,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { Code = input.Code },  Tables.PurchasePrices);
+                    .Where(new { Code = input.Code }, Tables.PurchasePrices);
 
             var list = queryFactory.GetList<ListPurchasePricesDto>(listQuery).ToList();
 
@@ -436,7 +436,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.PurchasePriceLines).Select("*").Where(new { Id = item.Id },  "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.PurchasePriceLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectPurchasePriceLinesDto>(lineGetQuery);
 
@@ -506,7 +506,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { ProductID = productId },  Tables.PurchasePriceLines);
+                    .Where(new { ProductID = productId },Tables.PurchasePriceLines);
 
             var purchasePriceLine = queryFactory.GetList<SelectPurchasePriceLinesDto>(queryLines).ToList();
 

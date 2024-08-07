@@ -44,10 +44,5 @@ namespace TsiErp.Entities.Entities.ProductionManagement.Route
         /// Teknik Onay
         /// </summary>
         public bool TechnicalApproval { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
     }
 }

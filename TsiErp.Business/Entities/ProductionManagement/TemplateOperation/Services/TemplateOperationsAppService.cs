@@ -81,7 +81,6 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 Id = addedEntityId,
-                IsActive = true,
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
@@ -424,7 +423,6 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
-                IsActive = input.IsActive,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
@@ -590,7 +588,6 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = entity.Id,
-                IsActive = entity.IsActive,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),

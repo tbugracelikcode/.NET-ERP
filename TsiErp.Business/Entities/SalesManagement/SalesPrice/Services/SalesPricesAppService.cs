@@ -126,13 +126,13 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.SalesPrices).Select("*").Where(new { Id = id },  "");
+            var query = queryFactory.Query().From(Tables.SalesPrices).Select("*").Where(new { Id = id }, "");
 
             var salesPrices = queryFactory.Get<SelectSalesPricesDto>(query);
 
             if (salesPrices.Id != Guid.Empty && salesPrices != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.SalesPrices).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+                var deleteQuery = queryFactory.Query().From(Tables.SalesPrices).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var lineDeleteQuery = queryFactory.Query().From(Tables.SalesPriceLines).Delete(LoginedUserService.UserId).Where(new { SalesPriceID = id }, "");
 
@@ -145,7 +145,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.SalesPriceLines).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+                var queryLine = queryFactory.Query().From(Tables.SalesPriceLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                 var salesPriceLines = queryFactory.Update<SelectSalesPriceLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.SalesPriceLines, LogType.Delete, id);
                 await Task.CompletedTask;
@@ -188,7 +188,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id }, Tables.SalesPrices);
+                    .Where(new { Id = id },Tables.SalesPrices);
 
             var salesPrices = queryFactory.Get<SelectSalesPricesDto>(query);
 
@@ -324,7 +324,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                         nameof(Currencies.Id),
                         JoinType.Left
                     )
-                    .Where(new { SalesPriceID = input.Id },  Tables.SalesPriceLines);
+                    .Where(new { SalesPriceID = input.Id }, Tables.SalesPriceLines);
 
             var salesPriceLines = queryFactory.GetList<SelectSalesPriceLinesDto>(queryLines).ToList();
 
@@ -427,7 +427,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.SalesPriceLines).Select("*").Where(new { Id = item.Id },  "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.SalesPriceLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectSalesPriceLinesDto>(lineGetQuery);
 
@@ -489,7 +489,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                         nameof(Currencies.Id),
                         JoinType.Left
                     )
-                    .Where(new { ProductID = productId },  Tables.SalesPriceLines);
+                    .Where(new { ProductID = productId }, Tables.SalesPriceLines);
 
             var salesPriceLine = queryFactory.GetList<SelectSalesPriceLinesDto>(queryLines).ToList();
 
@@ -500,7 +500,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
         public async Task<IDataResult<SelectSalesPricesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.SalesPrices).Select("*").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.SalesPrices).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<SalesPrices>(entityQuery);
 
@@ -569,10 +569,9 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                        nameof(CurrentAccountCards.Id),
                        JoinType.Left
                    )
-                   .Where(new { CurrentAccountCardID = CurrentAccountID }, Tables.SalesPrices)
-                   .Where(new { CurrencyID = CurrencyID }, Tables.SalesPrices);
+                   .Where(new { CurrentAccountCardID = CurrentAccountID, CurrencyID = CurrencyID, IsActive = true }, Tables.SalesPrices);
 
-            var salesPrices = queryFactory.GetList<SelectSalesPricesDto>(query).Where(t=>t.StartDate<=LoadingDate && t.EndDate >= LoadingDate).FirstOrDefault();
+            var salesPrices = queryFactory.GetList<SelectSalesPricesDto>(query).Where(t => t.StartDate <= LoadingDate && t.EndDate >= LoadingDate).FirstOrDefault();
 
             var queryLines = queryFactory
                    .Query()
@@ -592,7 +591,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                         nameof(Currencies.Id),
                         JoinType.Left
                     )
-                    .Where(new { SalesPriceID = salesPrices.Id },  Tables.SalesPriceLines);
+                    .Where(new { SalesPriceID = salesPrices.Id }, Tables.SalesPriceLines);
 
             var salesPriceLine = queryFactory.GetList<SelectSalesPriceLinesDto>(queryLines).ToList();
 

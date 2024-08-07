@@ -62,7 +62,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
         {
             DataSource = new SelectRoutesDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("RoutesChildMenu")
             };
 

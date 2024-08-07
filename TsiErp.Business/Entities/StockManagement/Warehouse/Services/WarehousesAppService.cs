@@ -57,7 +57,6 @@ namespace TsiErp.Business.Entities.Warehouse.Services
             {
                 Code = input.Code,
                 Name = input.Name,
-                IsActive = true,
                 Id = addedEntityId,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
@@ -174,7 +173,6 @@ namespace TsiErp.Business.Entities.Warehouse.Services
                 Code = input.Code,
                 Name = input.Name,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = false,
@@ -205,7 +203,6 @@ namespace TsiErp.Business.Entities.Warehouse.Services
             {
                 Code = entity.Code,
                 Name = entity.Name,
-                IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),

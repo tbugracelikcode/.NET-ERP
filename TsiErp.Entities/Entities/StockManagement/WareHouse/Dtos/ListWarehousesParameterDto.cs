@@ -9,9 +9,5 @@ namespace TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos
 {
     public class ListWarehousesParameterDto : FullAuditedEntityDto
     {
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; } = true;
     }
 }

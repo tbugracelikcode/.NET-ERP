@@ -93,7 +93,6 @@ namespace TsiErp.Business.Entities.Product.Services
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 Id = addedEntityId,
-                IsActive = true,
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
@@ -378,7 +377,6 @@ namespace TsiErp.Business.Entities.Product.Services
                 Code = input.Code,
                 Name = input.Name,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 CoatingWeight = input.CoatingWeight,
                 Confirmation = input.Confirmation,
                 EnglishDefinition = input.EnglishDefinition,
@@ -501,7 +499,6 @@ namespace TsiErp.Business.Entities.Product.Services
             {
                 Code = entity.Code,
                 Name = entity.Name,
-                IsActive = entity.IsActive,
                 CoatingWeight = entity.CoatingWeight,
                 Confirmation = entity.Confirmation,
                 EnglishDefinition = entity.EnglishDefinition,

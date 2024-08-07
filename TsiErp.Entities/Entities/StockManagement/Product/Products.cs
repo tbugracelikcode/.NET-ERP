@@ -20,11 +20,6 @@ namespace TsiErp.Entities.Entities.StockManagement.Product
         /// Açıklama
         /// </summary>
         public string Name { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
         /// <summary>
         /// Temin Şekli

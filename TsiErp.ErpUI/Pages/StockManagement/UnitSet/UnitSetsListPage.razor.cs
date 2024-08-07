@@ -32,7 +32,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.UnitSet
         {
             DataSource = new SelectUnitSetsDto()
             {
-                IsActive = true
             };
 
             EditPageVisible = true;
