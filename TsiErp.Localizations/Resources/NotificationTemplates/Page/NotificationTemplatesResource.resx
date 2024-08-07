@@ -1167,6 +1167,9 @@
   <data name="NotificationTemplatesContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
+  <data name="NotificationTemplatesContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
   <data name="NotificationTemplatesContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>

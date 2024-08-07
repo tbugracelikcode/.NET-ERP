@@ -51,13 +51,34 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListNotificationTemplatesDto.Name) HeaderText=@L["Name"] TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.ModuleName_) HeaderText="@L["ModuleName_"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.ModuleName_) HeaderText="@L["ModuleName_"]" TextAlign="TextAlign.Center" Width="220">
+                                        <Template>
+                                            @{
+                                                string ModuleName = L[(context as ListNotificationTemplatesDto).ModuleName_];
+                                            }
+                                            @ModuleName
+                                        </Template>
+                                    </GridColumn>
 
-                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.ProcessName_) HeaderText=@L["ProcessName_"] TextAlign="TextAlign.Center" Width="220"></GridColumn>@* 
+                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.ProcessName_) HeaderText=@L["ProcessName_"] TextAlign="TextAlign.Center" Width="220">
+                                        <Template>
+                                            @{
+                                                string ProcessName = L[(context as ListNotificationTemplatesDto).ProcessName_];
+                                            }
+                                            @ProcessName
+                                        </Template>
+                                    </GridColumn>@* 
 
                                     <GridColumn Field=@nameof(ListNotificationTemplatesDto.TargetDepartmentId) HeaderText=@L["TargetDepartmentId"] TextAlign="TextAlign.Center" Width="220"></GridColumn> *@
 
-                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.ContextMenuName_) HeaderText=@L["ContextMenuName_"] TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListNotificationTemplatesDto.ContextMenuName_) HeaderText=@L["ContextMenuName_"] TextAlign="TextAlign.Center" Width="220">
+                                        <Template>
+                                            @{
+                                                string ContextName = L[(context as ListNotificationTemplatesDto).ContextMenuName_];
+                                            }
+                                            @ContextName
+                                        </Template>
+                                    </GridColumn>
 @* 
                                     <GridColumn Field=@nameof(ListNotificationTemplatesDto.TargetUsersId) HeaderText=@L["TargetUsersId"] TextAlign="TextAlign.Center" Width="280"></GridColumn> *@
 
@@ -118,7 +139,7 @@ else
                         <Template>
 
                             <label class="TSIModalLabel"><strong>@L["ModuleName_Label"] </strong></label>
-                            <SfComboBox TValue="string" TItem="ModuleClass" PopupHeight="230px"  DataSource="@ModuleList">
+                            <SfComboBox Index="moduleIndex" TValue="string" TItem="ModuleClass" PopupHeight="230px" DataSource="@ModuleList">
                                 <ComboBoxEvents TItem="ModuleClass" TValue="string" ValueChange="@ModuleNameValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Text="MenuName" Value="Id" />
                             </SfComboBox>
@@ -128,7 +149,7 @@ else
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProcessName_Label"] </strong></label>
-                            <SfComboBox TValue="string" TItem="ProcessName_ComboBox" DataSource="@processName_ComboBox">
+                            <SfComboBox Index="processIndex" TValue="string" TItem="ProcessName_ComboBox" DataSource="@processName_ComboBox">
                                 <ComboBoxEvents TItem="ProcessName_ComboBox" TValue="string" ValueChange="@ProcessName_ComboBoxValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                             </SfComboBox>
@@ -154,7 +175,7 @@ else
                                                        ShowDropDownIcon="true">
 
                                 <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
-                                <MultiSelectEvents TItem="ListUserGroupsDto" TValue="List<ListUserGroupsDto>" Closed="@TargetDepartmentValueChangeHandler"></MultiSelectEvents>
+                                <MultiSelectEvents TItem="ListUserGroupsDto" TValue="List<Guid>" Closed="@TargetDepartmentValueChangeHandler"></MultiSelectEvents>
                                         </SfMultiSelect>
                         </Template>
                     </DxGridLayoutItem>
@@ -165,6 +186,9 @@ else
 
                             <SfMultiSelect @bind-Value="@BindingEmployees"
                                            DataSource="@MultiEmployeesList"
+                                           TItem="ListUsersDto"
+                                           TValue="List<Guid>"
+                                           @ref="UserMultiSelect"
                                            AllowFiltering=true
                                            Mode="VisualMode.CheckBox"
                                            ShowSelectAll=true
@@ -189,7 +213,7 @@ else
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ContextMenuName_Label"] </strong></label>
-                            <SfComboBox TValue="string" TItem="ModuleContextClass" DataSource="@ModuleContextsList">
+                            <SfComboBox Index="contextIndex" TValue="string" TItem="ModuleContextClass" DataSource="@ModuleContextsList">
                                 <ComboBoxEvents TItem="ModuleContextClass" TValue="string" ValueChange="@ModuleContextValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="Id" Text="MenuName"></ComboBoxFieldSettings>
                             </SfComboBox>

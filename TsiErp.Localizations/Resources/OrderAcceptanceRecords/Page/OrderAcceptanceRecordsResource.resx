@@ -147,6 +147,9 @@
   <data name="ControlModalTitle" xml:space="preserve">
     <value>Sipariş Kabul Kontrol</value>
   </data>
+  <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
+    <value>Cari Hesap Kodu:</value>
+  </data>
   <data name="CurrentAccountCardCustomerCodeLabel" xml:space="preserve">
     <value>Müşteri Kodu:</value>
   </data>

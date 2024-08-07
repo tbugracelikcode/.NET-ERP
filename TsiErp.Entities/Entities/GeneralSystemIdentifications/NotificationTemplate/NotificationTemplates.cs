@@ -5,19 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities;
+using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate
 {
-    public class NotificationTemplates : IEntity
+    public class NotificationTemplates : FullAuditedEntity
     {
-
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
-
-        /// <summary>
-        /// ID
-        /// </summary>
-        public Guid Id { get; set; }
 
         [SqlColumnType(MaxLength = 200, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
 
