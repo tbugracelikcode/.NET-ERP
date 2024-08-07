@@ -23,7 +23,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
         public bool FinishAdjustmentButtonDisabled { get; set; } = true;
 
-        OperationAdjustmentDto Adjustment = new OperationAdjustmentDto();
+        OperationAdjustmentTable Adjustment = new OperationAdjustmentTable();
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -57,7 +57,7 @@ namespace TsiErp.UretimEkranUI.Pages
             {
                 if (args.Value == null)
                 {
-                    Adjustment.AdjustmentUserId = Guid.Empty;
+                    Adjustment.AdjustmentUserID = Guid.Empty;
                     Adjustment.AdjustmentUserName = string.Empty;
                     Adjustment.AdjustmentUserPassword = string.Empty;
                     await InvokeAsync(StateHasChanged);
@@ -71,7 +71,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
             if (selectedEmployee != null)
             {
-                Adjustment.AdjustmentUserId = selectedEmployee.Id;
+                Adjustment.AdjustmentUserID = selectedEmployee.Id;
                 Adjustment.AdjustmentUserName = selectedEmployee.Name + " " + selectedEmployee.Surname;
                 Adjustment.AdjustmentUserPassword = selectedEmployee.ProductionScreenPassword;
                 SelectEmployeesPopupVisible = false;
@@ -107,7 +107,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
         async void StartAdjustmentButtonClick()
         {
-            if (Adjustment.AdjustmentUserId != Guid.Empty)
+            if (Adjustment.AdjustmentUserID != Guid.Empty)
             {
                 if (Adjustment.AdjustmentUserPassword == AdjustmentUserWrittenPassword)
                 {
@@ -191,7 +191,7 @@ namespace TsiErp.UretimEkranUI.Pages
                 {
                     Code = FicheNumbersAppService.GetFicheNumberAsync("FirstProductApprovalChildMenu"),
                     WorkOrderID = AppService.CurrentOperation.WorkOrderID,
-                    CreatorId = Adjustment.AdjustmentUserId,
+                    CreatorId = Adjustment.AdjustmentUserID,
                     Description_ = string.Empty,
                     EmployeeID = Guid.Empty,
                     ControlDate = null,
@@ -199,7 +199,7 @@ namespace TsiErp.UretimEkranUI.Pages
                     OperationQualityPlanID = OperationQualityPlanID,
                     SelectFirstProductApprovalLines = new List<SelectFirstProductApprovalLinesDto>(),
                     IsApproval = false,
-                    AdjustmentUserID = Adjustment.AdjustmentUserId,
+                    AdjustmentUserID = Adjustment.AdjustmentUserID,
                     ApprovedQuantity = 0,
                     ScrapQuantity = 0,
                     ProductionOrderID = AppService.CurrentOperation.ProductionOrderID
@@ -216,7 +216,7 @@ namespace TsiErp.UretimEkranUI.Pages
                         LineNr = createdFirstProductApproval.SelectFirstProductApprovalLines.Count + 1,
                         UpperTolerance = qualityplanline.UpperTolerance,
                         MeasurementValue = string.Empty,
-                        CreatorId = Adjustment.AdjustmentUserId
+                        CreatorId = Adjustment.AdjustmentUserID
                     };
 
                     createdFirstProductApproval.SelectFirstProductApprovalLines.Add(firstProductApprovalLineModel);
@@ -332,7 +332,7 @@ namespace TsiErp.UretimEkranUI.Pages
             var createAdjustmentDto = new CreateOperationAdjustmentsDto
             {
                 AdjustmentStartDate = Adjustment.AdjustmentDate,
-                AdjustmentUserId = Adjustment.AdjustmentUserId,
+                AdjustmentUserId = Adjustment.AdjustmentUserID,
                 TotalAdjustmentTime = Adjustment.TotalAdjustmentTime,
                 WorkOrderId = AppService.CurrentOperation.WorkOrderID,
                 ApprovedQuantity = AppService.CurrentOperation.ApprovedQuantity,

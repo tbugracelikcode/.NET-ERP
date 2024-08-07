@@ -36,21 +36,21 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private async Task GetHaltReasonsIsOperator()
         {
-            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t=>t.IsOperator==true).ToList();
+            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t=>t.IsOperator== true && t.IsIncidentalHalt == false).ToList();
 
             await Task.CompletedTask;
         }
 
         private async Task GetHaltReasonsIsMachine()
         {
-            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t=>t.IsMachine==true).ToList();
+            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t=>t.IsMachine== true && t.IsIncidentalHalt == false).ToList();
 
             await Task.CompletedTask;
         }
 
         private async Task GetHaltReasonsIsManagement()
         {
-            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t=>t.IsManagement==true).ToList();
+            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t=>t.IsManagement==true && t.IsIncidentalHalt == false).ToList();
 
             await Task.CompletedTask;
         }

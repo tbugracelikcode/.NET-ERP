@@ -1,9 +1,4 @@
 ﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TsiErp.UretimEkranUI.Models;
 
 namespace TsiErp.UretimEkranUI.Services
@@ -22,37 +17,37 @@ namespace TsiErp.UretimEkranUI.Services
             }
 
             _connection = new SQLiteAsyncConnection(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LocalDatabase", DB_NAME));
-            _connection.CreateTableAsync<OperationDetailDto>();
+            _connection.CreateTableAsync<OperationDetailTable>();
         }
 
-        public async Task InsertAsync(OperationDetailDto operationDetail)
+        public async Task InsertAsync(OperationDetailTable operationDetail)
         {
             await _connection.InsertAsync(operationDetail);
         }
 
-        public async Task<OperationDetailDto> GetAsync(int id)
+        public async Task<OperationDetailTable> GetAsync(int id)
         {
-            return await _connection.Table<OperationDetailDto>().Where(t => t.Id == id).FirstOrDefaultAsync();
+            return await _connection.Table<OperationDetailTable>().Where(t => t.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<List<OperationDetailDto>> GetListAsync()
+        public async Task<List<OperationDetailTable>> GetListAsync()
         {
-            return await _connection.Table<OperationDetailDto>().ToListAsync();
+            return await _connection.Table<OperationDetailTable>().ToListAsync();
         }
 
-        public async Task UpdateAsync(OperationDetailDto operationDetail)
+        public async Task UpdateAsync(OperationDetailTable operationDetail)
         {
             await _connection.UpdateAsync(operationDetail);
         }
 
-        public async Task DeleteAsync(OperationDetailDto operationDetail)
+        public async Task DeleteAsync(OperationDetailTable operationDetail)
         {
             await _connection.DeleteAsync(operationDetail);
         }
 
         public async Task<int> WorkOrderControl(Guid workOrderId)
         {
-            return await _connection.Table<OperationDetailDto>().CountAsync() > 0 ? (await _connection.Table<OperationDetailDto>().Where(t => t.WorkOrderID == workOrderId).FirstOrDefaultAsync()).Id : 0;
+            return await _connection.Table<OperationDetailTable>().CountAsync() > 0 ? (await _connection.Table<OperationDetailTable>().Where(t => t.WorkOrderID == workOrderId).FirstOrDefaultAsync()).Id : 0;
         }
 
         public async Task<string> GetCurrentTimeStamp()

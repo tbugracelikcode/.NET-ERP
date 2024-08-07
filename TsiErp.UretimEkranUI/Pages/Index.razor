@@ -9,6 +9,10 @@
 @inject ParametersTableLocalDbService ParametersTableLocalDbService
 @inject IHaltReasonsAppService HaltReasonsService
 @inject OperationHaltReasonsTableLocalDbService OperationHaltReasonsTableLocalDbService
+@inject SystemGeneralStatusLocalDbService SystemGeneralStatusLocalDbService
+@inject ScrapLocalDbService ScrapLocalDbService
+@inject OperationAdjustmentLocalDbService OperationAdjustmentLocalDbService
+@inject LoggedUserLocalDbService LoggedUserLocalDbService
 @inject IProtocolServices ProtocolServices
 
 <div style="height:800px">
@@ -235,7 +239,6 @@
 
                                                     @foreach (var item in HaltReasonsList)
                                                     {
-                                                        for(int i = 0; i<=30;i++){
                                                         <div id="card_sample_1" class="card_sample" onclick="@(()=>OnSelectHaltReason(item))" style=" float:left;width: 290px;">
                                                             <SfCard CssClass="TSIStationCards">
                                                                 <div style="background-color:#00ff14">
@@ -251,7 +254,7 @@
                                                                 </div>
                                                             </SfCard>
                                                         </div>
-                                                        }
+                                                        
                                                     }
                                                 </Template>
                                             </DxGridLayoutItem>

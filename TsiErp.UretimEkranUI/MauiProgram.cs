@@ -1,6 +1,8 @@
 ﻿using Blazored.Modal;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Blazor;
+using System.Reflection;
+using TsiErp.Business;
 using TsiErp.Business.Entities.Employee.Services;
 using TsiErp.Business.Entities.FirstProductApproval.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -94,6 +96,10 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddSingleton<OperationDetailLocalDbService>();
             builder.Services.AddSingleton<ParametersTableLocalDbService>();
             builder.Services.AddSingleton<OperationHaltReasonsTableLocalDbService>();
+            builder.Services.AddSingleton<LoggedUserLocalDbService>();
+            builder.Services.AddSingleton<ScrapLocalDbService>();
+            builder.Services.AddSingleton<OperationAdjustmentLocalDbService>();
+            builder.Services.AddSingleton<SystemGeneralStatusLocalDbService>();
             builder.Services.AddScoped<ModalManager>();
             builder.Services.AddScoped<Navigation>();
             builder.Services.AddScoped<AppService>();
@@ -115,9 +121,20 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<IProtocolServices, ProtocolServices>();
 
 
+            ConfigureBusiness(builder);
+
 
             return builder.Build();
         }
 
+        static void ConfigureBusiness(MauiAppBuilder builder)
+        {
+            var instance = (TsiBusinessModule)Activator.CreateInstance(typeof(TsiBusinessModule));
+
+            instance.ConfigureServices(builder.Services);
+        }
+
     }
+
+
 }

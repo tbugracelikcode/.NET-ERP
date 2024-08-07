@@ -184,16 +184,10 @@ namespace TsiErp.UretimEkranUI.Pages
 
             TotalHaltReasonTime = 0; 
             
-            HaltReasonTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
-                 0,
-                 0,
-                 0);
+            HaltReasonTime = "0:0:0";
             SelectedHaltReason = new ListHaltReasonsDto();
             TotalSystemIdleTime = 0;
-            SystemIdleTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
-                 0,
-                 0,
-                 0);
+            SystemIdleTime = "0:0:0";
 
             HaltReasonModalVisible = false;
             

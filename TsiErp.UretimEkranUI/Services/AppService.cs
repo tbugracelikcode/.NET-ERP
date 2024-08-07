@@ -11,9 +11,9 @@ namespace TsiErp.UretimEkranUI.Services
 
         public static string EmployeePassword { get; set; }
 
-        public static OperationDetailDto CurrentOperation { get; set; } = new OperationDetailDto();
+        public static OperationDetailTable CurrentOperation { get; set; } = new OperationDetailTable();
 
-        public static OperationAdjustmentDto OperationAdjustment { get; set; } = new OperationAdjustmentDto();
+        public static OperationAdjustmentTable OperationAdjustment { get; set; } = new OperationAdjustmentTable();
 
         public static ParametersTable ProgramParameters { get; set; } = new ParametersTable();
         public static OperationHaltReasonsTable OperationHaltReasons { get; set; } = new OperationHaltReasonsTable();
