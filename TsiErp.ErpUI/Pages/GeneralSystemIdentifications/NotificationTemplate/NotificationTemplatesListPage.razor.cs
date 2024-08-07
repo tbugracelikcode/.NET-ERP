@@ -5,6 +5,7 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
+using System.Data;
 using TsiErp.Localizations.Resources.NotificationTemplates;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate.Dtos;
@@ -24,11 +25,19 @@ using TsiErp.Business.Entities.CurrentAccountCard.Services;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Business.Entities.BillsofMaterial.Services;
 using Microsoft.Identity.Client;
-using static TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User.UsersListPage;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.User.Dtos;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TSI.QueryBuilder.Constants.Join;
+using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Calendars;
+using Syncfusion.Blazor.Data;
+using Syncfusion.Blazor.Inputs;
+using Syncfusion.XlsIO;
+using System.Dynamic;
+using TsiErp.ErpUI.Models;
+using DevExpress.Blazor.Internal;
+
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 {
@@ -39,10 +48,10 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         public List<ListUserGroupsDto> MultiDepartmentsList = new List<ListUserGroupsDto>();
-        public List<ListUserGroupsDto> BindingDepartments = new List<ListUserGroupsDto>();
+        public List<Guid> BindingDepartments = new List<Guid>();
 
         public List<ListUsersDto> MultiEmployeesList = new List<ListUsersDto>();
-        public List<ListUsersDto> BindingEmployees = new List<ListUsersDto>();
+        public List<Guid> BindingEmployees = new List<Guid>();
 
         public List<ModuleClass> ModuleList = new List<ModuleClass>();
         public List<ModuleContextClass> ModuleContextsList = new List<ModuleContextClass>();
@@ -72,6 +81,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
             public int ContextOrderNo { get; set; }
             public string MenuURL { get; set; }
         }
+
+        SfMultiSelect<List<Guid>, ListUsersDto> UserMultiSelect { get; set; }
+
+        int? processIndex = null;
+        int? contextIndex = null;
+        int? moduleIndex = null;
 
         protected override async void OnInitialized()
         {
@@ -108,8 +123,13 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                 item.Text = L[item.Text];
             }
 
-            BindingDepartments.Clear();
-            BindingEmployees.Clear();
+            BindingDepartments = new List<Guid>();
+            BindingEmployees = new List<Guid>();
+            MultiEmployeesList.Clear();
+
+            moduleIndex = null;
+            processIndex = null;
+            contextIndex = null;
 
             EditPageVisible = true;
 
@@ -129,6 +149,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                         {
                             case "NotificationTemplatesContextAdd":
                                 GridContextMenu.Add(new ContextMenuItemModel { Text = L["NotificationTemplatesContextAdd"], Id = "new" }); break;
+                            case "NotificationTemplatesContextChange":
+                                GridContextMenu.Add(new ContextMenuItemModel { Text = L["NotificationTemplatesContextChange"], Id = "changed" }); break;
                             case "NotificationTemplatesContextDelete":
                                 GridContextMenu.Add(new ContextMenuItemModel { Text = L["NotificationTemplatesContextDelete"], Id = "delete" }); break;
 
@@ -145,6 +167,134 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                 }
             }
 
+        }
+
+        public async override void ShowEditPage()
+        {
+            if (DataSource != null)
+            {
+
+                if (DataSource.DataOpenStatus == true && DataSource.DataOpenStatus != null)
+                {
+                    EditPageVisible = false;
+
+                    string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
+
+                    MessagePopupInformationDescriptionBase = MessagePopupInformationDescriptionBase.Replace("{0}", LoginedUserService.UserName);
+
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], MessagePopupInformationDescriptionBase);
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    EditPageVisible = true;
+
+                    #region Seçili Modül
+
+                    var module = ModuleList.Where(t => L[t.MenuName] == DataSource.ModuleName_).FirstOrDefault();
+                    if (module != null)
+                    {
+                        moduleIndex = ModuleList.IndexOf(module);
+                    }
+
+                    #endregion
+
+                    #region Seçili Process
+
+                    var process = processName_ComboBox.Where(t => L[t.Text] == DataSource.ProcessName_).FirstOrDefault();
+                    if (process != null)
+                    {
+                        processIndex = processName_ComboBox.IndexOf(process);
+                    }
+                    #endregion
+
+                    #region Seçili Context
+
+                    ModuleContextsList = (await MenusAppService.GetListbyParentIDAsync(module.Id)).Data.Select(t => new ModuleContextClass
+                    {
+                        MenuName = L[t.MenuName],
+                        ParentMenuId = t.ParentMenuId,
+                        MenuURL = t.MenuURL,
+                        Id = t.Id,
+                        ContextOrderNo = t.ContextOrderNo,
+                    }).ToList();
+
+                    ModuleContextsList = ModuleContextsList.OrderBy(t=>t.ContextOrderNo).ToList();
+
+                    var context = ModuleContextsList.Where(t => L[t.MenuName] == DataSource.ContextMenuName_).FirstOrDefault();
+                    if (context != null)
+                    {
+                        contextIndex = ModuleContextsList.IndexOf(context);
+                    }
+                    #endregion
+
+                    #region Process Localization
+                    foreach (var item in processName_ComboBox)
+                    {
+                        item.Text = L[item.Text];
+                    }
+                    #endregion
+
+                    #region Seçili Departman Multi 
+
+                    if (!string.IsNullOrEmpty(DataSource.TargetDepartmentId))
+                    {
+                        if (DataSource.TargetDepartmentId.Contains(","))
+                        {
+                            string[] selectedDepartments = DataSource.TargetDepartmentId.Split(",");
+
+                            for (int i = 0; i < selectedDepartments.Length; i++)
+                            {
+                                var addedDepartmentId = new Guid(selectedDepartments[i]);
+
+                                BindingDepartments.Add(addedDepartmentId);
+                            }
+                        }
+                        else
+                        {
+                            var addedDepartmentId = new Guid(DataSource.TargetDepartmentId);
+
+                            BindingDepartments.Add(addedDepartmentId);
+                        }
+                    }
+
+                    #region Seçili Kullanıcı Multi
+
+                    foreach(var selectedDepartmentId in BindingDepartments)
+                    {
+                        var addingEmpList = (await UsersAppService.GetListAsync(new ListUsersParameterDto())).Data.Where(t => t.GroupID == selectedDepartmentId).ToList();
+
+                        MultiEmployeesList.AddRange(addingEmpList);
+                    }
+
+                    if (!string.IsNullOrEmpty(DataSource.TargetUsersId))
+                    {
+                        if (DataSource.TargetUsersId.Contains(","))
+                        {
+                            string[] selectedUsers = DataSource.TargetUsersId.Split(",");
+
+                            for (int i = 0; i < selectedUsers.Length; i++)
+                            {
+                                var addedUserId = new Guid(selectedUsers[i]);
+
+                                BindingEmployees.Add(addedUserId);
+                            }
+                        }
+                        else
+                        {
+                            var addedUserId = new Guid(DataSource.TargetUsersId);
+
+                            BindingEmployees.Add(addedUserId);
+                        }
+                    }
+
+                    #endregion
+
+                    #endregion
+
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
         }
 
         public override async void OnContextMenuClick(ContextMenuClickEventArgs<ListNotificationTemplatesDto> args)
@@ -175,6 +325,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                         SelectFirstDataRow = false;
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
+                        await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
 
@@ -182,6 +333,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
                 case "refresh":
                     await GetListDataSourceAsync();
+                    await _grid.Refresh();
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -204,11 +356,61 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
         }
 
+      
+
         protected override async Task OnSubmit()
         {
-                #region Submit 
+            #region  Departman ve User Seçimi
+            foreach (var departmentId in BindingDepartments)
+            {
+                if (string.IsNullOrEmpty(DataSource.TargetDepartmentId))
+                {
+                    DataSource.TargetDepartmentId = departmentId.ToString();
+                }
+                else
+                {
+                    DataSource.TargetDepartmentId = DataSource.TargetDepartmentId + "," + departmentId.ToString();
+                }
+            }
 
-                SelectNotificationTemplatesDto result;
+            if (BindingEmployees.Count > 0 && BindingEmployees != null)
+            {
+                foreach (var userId in BindingEmployees)
+                {
+                    if (string.IsNullOrEmpty(DataSource.TargetUsersId))
+                    {
+                        DataSource.TargetUsersId = userId.ToString();
+                    }
+                    else
+                    {
+                        DataSource.TargetUsersId = DataSource.TargetUsersId + "," + userId.ToString();
+                    }
+                }
+            }
+
+            else
+            {
+                if (MultiEmployeesList.Count > 0 && MultiEmployeesList != null)
+                {
+                    foreach (var employee in MultiEmployeesList)
+                    {
+                        if (string.IsNullOrEmpty(DataSource.TargetUsersId))
+                        {
+                            DataSource.TargetUsersId = employee.Id.ToString();
+                        }
+                        else
+                        {
+                            DataSource.TargetUsersId = DataSource.TargetUsersId + "," + employee.Id.ToString();
+                        }
+                    }
+                }
+
+            }
+            #endregion
+
+            #region Submit 
+
+            SelectNotificationTemplatesDto result;
 
                 if (DataSource.Id == Guid.Empty)
                 {
@@ -226,7 +428,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
                 await GetListDataSourceAsync();
 
-                var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
 
                 HideEditPage();
 
@@ -266,6 +467,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
         private async void ModuleNameValueChangeHandler(ChangeEventArgs<string, ModuleClass> args)
         {
             var parentGuid = new Guid(args.Value);
+
             ModuleContextsList = (await MenusAppService.GetListbyParentIDAsync(parentGuid)).Data.Select(t => new ModuleContextClass
             {
                 MenuName = L[t.MenuName],
@@ -275,7 +477,15 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                 ContextOrderNo = t.ContextOrderNo,
             }).ToList();
 
+            ModuleContextsList = ModuleContextsList.OrderBy(t => t.ContextOrderNo).ToList();
+
             DataSource.ModuleName_ = ModuleList.Where(t => t.Id == parentGuid).Select(t => t.MenuName).FirstOrDefault();
+
+            var module = ModuleList.Where(t => L[t.MenuName] == DataSource.ModuleName_).FirstOrDefault();
+            if (module != null)
+            {
+                moduleIndex = ModuleList.IndexOf(module);
+            }
         }
 
         #endregion
@@ -317,6 +527,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
                     default: break;
                 }
+
+                var process = processName_ComboBox.Where(t => L[t.Text] == DataSource.ProcessName_).FirstOrDefault();
+                if (process != null)
+                {
+                    processIndex = processName_ComboBox.IndexOf(process);
+                }
             }
         }
 
@@ -328,18 +544,47 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
         {
             if (BindingDepartments != null)
             {
-                MultiEmployeesList.Clear();
+                #region Kullanıcı Listesi Azalma Senaryosu
+                List<Guid> deletedBindingEmployees = new List<Guid>();
 
+                foreach (var userId in BindingEmployees)
+                {
+                    var employee = MultiEmployeesList.Where(t => t.Id == userId).FirstOrDefault();
+
+                    if (!BindingDepartments.Contains(employee.GroupID))
+                    {
+                        deletedBindingEmployees.Add(userId);
+                        MultiEmployeesList.Remove(employee);
+                    }
+                }
+
+                BindingEmployees = BindingEmployees.Except(deletedBindingEmployees).ToList();
+
+                await UserMultiSelect.RefreshDataAsync();
+                #endregion
+
+                #region Kullanıcı Listesi Artma Senaryosu
                 foreach (var departmentId in BindingDepartments)
                 {
-                    var addingEmpList = (await UsersAppService.GetListAsync(new ListUsersParameterDto())).Data.Where(t => t.GroupID == departmentId.Id).ToList();
 
-                    MultiEmployeesList.AddRange(addingEmpList);
-                }
+
+                    var addingEmpList = (await UsersAppService.GetListAsync(new ListUsersParameterDto())).Data.Where(t => t.GroupID == departmentId).ToList();
+
+                    foreach(var addingEmp in addingEmpList)
+                    {
+                        if(!MultiEmployeesList.Any(t=>t.Id== addingEmp.Id))
+                        {
+                            MultiEmployeesList.Add(addingEmp);
+                        }
+                    }
+                } 
+                #endregion
             }
             else
             {
                 MultiEmployeesList.Clear();
+                BindingEmployees.Clear();
+                await UserMultiSelect.RefreshDataAsync();
             }
 
             await InvokeAsync(StateHasChanged);
@@ -353,6 +598,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
         {
             var contextGuid = new Guid(args.Value);
             DataSource.ContextMenuName_ = ModuleContextsList.Where(t => t.Id == contextGuid).Select(t => t.MenuName).FirstOrDefault();
+
+            var context = ModuleContextsList.Where(t => L[t.MenuName] == DataSource.ContextMenuName_).FirstOrDefault();
+            if (context != null)
+            {
+                contextIndex = ModuleContextsList.IndexOf(context);
+            }
         }
 
         #endregion

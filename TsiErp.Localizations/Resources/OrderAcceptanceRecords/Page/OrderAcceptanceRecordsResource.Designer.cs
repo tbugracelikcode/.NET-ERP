@@ -152,6 +152,15 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cari Hesap Kodu:.
+        /// </summary>
+        public static string CurrentAccountCardCodeLabel {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri Kodu:.
         /// </summary>
         public static string CurrentAccountCardCustomerCodeLabel {

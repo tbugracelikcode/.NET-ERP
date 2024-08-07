@@ -4,16 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities;
+using Tsi.Core.Entities.Auditing;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate.Dtos
 {
-    public class ListNotificationTemplatesDto : IEntityDto
+    public class ListNotificationTemplatesDto : FullAuditedEntityDto
     {
-
-        /// <summary>
-        /// ID
-        /// </summary>
-        public Guid Id { get; set; }
 
 
         /// <summary>

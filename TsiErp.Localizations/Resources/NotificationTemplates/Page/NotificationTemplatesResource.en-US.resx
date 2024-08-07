@@ -1182,6 +1182,9 @@
   <data name="NotificationTemplatesContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="NotificationTemplatesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="NotificationTemplatesContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>

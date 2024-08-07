@@ -3212,6 +3212,15 @@ namespace TsiErp.Localizations.Resources.NotificationTemplates.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string NotificationTemplatesContextChange {
+            get {
+                return ResourceManager.GetString("NotificationTemplatesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string NotificationTemplatesContextDelete {
