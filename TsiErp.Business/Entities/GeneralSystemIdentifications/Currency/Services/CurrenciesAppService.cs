@@ -39,7 +39,7 @@ namespace TsiErp.Business.Entities.Currency.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCurrenciesDto>> CreateAsync(CreateCurrenciesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Code = input.Code },  "");
 
             var list = queryFactory.ControlList<Currencies>(listQuery).ToList();
 
@@ -60,7 +60,6 @@ namespace TsiErp.Business.Entities.Currency.Services
                 Code = input.Code,
                 Name = input.Name,
                 IsLocalCurrency = input.IsLocalCurrency,
-                IsActive = true,
                 Id = addedEntityId,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
@@ -116,7 +115,7 @@ namespace TsiErp.Business.Entities.Currency.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.Currencies).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.Currencies).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var currencies = queryFactory.Update<SelectCurrenciesDto>(query, "Id", true);
 
@@ -134,7 +133,7 @@ namespace TsiErp.Business.Entities.Currency.Services
             new
             {
                 Id = id
-            }, true, true, "");
+            }, "");
             var currency = queryFactory.Get<SelectCurrenciesDto>(query);
 
 
@@ -149,7 +148,7 @@ namespace TsiErp.Business.Entities.Currency.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCurrenciesDto>>> GetListAsync(ListCurrenciesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Currencies).Select("*").Where(null, true, true, "");
+            var query = queryFactory.Query().From(Tables.Currencies).Select("*").Where(null, "");
             var currencies = queryFactory.GetList<ListCurrenciesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListCurrenciesDto>>(currencies);
@@ -161,12 +160,12 @@ namespace TsiErp.Business.Entities.Currency.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCurrenciesDto>> UpdateAsync(UpdateCurrenciesDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<Currencies>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<Currencies>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -182,7 +181,6 @@ namespace TsiErp.Business.Entities.Currency.Services
                 Name = input.Name,
                 IsLocalCurrency = input.IsLocalCurrency,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = false,
@@ -193,7 +191,7 @@ namespace TsiErp.Business.Entities.Currency.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 CurrencySymbol = input.CurrencySymbol
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var currencies = queryFactory.Update<SelectCurrenciesDto>(query, "Id", true);
 
@@ -206,7 +204,7 @@ namespace TsiErp.Business.Entities.Currency.Services
 
         public async Task<IDataResult<SelectCurrenciesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Currencies>(entityQuery);
 
@@ -215,7 +213,6 @@ namespace TsiErp.Business.Entities.Currency.Services
                 Code = entity.Code,
                 Name = entity.Name,
                 IsLocalCurrency = entity.IsLocalCurrency,
-                IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -227,7 +224,7 @@ namespace TsiErp.Business.Entities.Currency.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
                 CurrencySymbol = entity.CurrencySymbol
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var currencies = queryFactory.Update<SelectCurrenciesDto>(query, "Id", true);
             await Task.CompletedTask;

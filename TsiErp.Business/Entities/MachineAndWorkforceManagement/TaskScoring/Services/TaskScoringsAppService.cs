@@ -81,7 +81,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         public async Task<IResult> DeleteAsync(Guid id)
         {
 
-            var query = queryFactory.Query().From(Tables.TaskScorings).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.TaskScorings).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var TaskScorings = queryFactory.Update<SelectTaskScoringsDto>(query, "Id", true);
 
@@ -102,7 +102,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                             nameof(EmployeeSeniorities.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.TaskScorings);
+                        .Where(new { Id = id },  Tables.TaskScorings);
             var EmployeeSeniority = queryFactory.Get<SelectTaskScoringsDto>(query);
 
             LogsAppService.InsertLogToDatabase(EmployeeSeniority, EmployeeSeniority, LoginedUserService.UserId, Tables.TaskScorings, LogType.Get, id);
@@ -122,7 +122,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                             nameof(TaskScorings.SeniorityID),
                             nameof(EmployeeSeniorities.Id),
                             JoinType.Left
-                        ).Where(null, false, false, Tables.TaskScorings);
+                        ).Where(null,  Tables.TaskScorings);
 
             var taskScorings = queryFactory.GetList<ListTaskScoringsDto>(query).ToList();
             await Task.CompletedTask;
@@ -141,7 +141,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                             nameof(TaskScorings.SeniorityID),
                             nameof(EmployeeSeniorities.Id),
                             JoinType.Left
-                        ).Where(new { Id = input.Id }, false, false, Tables.TaskScorings);
+                        ).Where(new { Id = input.Id }, Tables.TaskScorings);
             var entity = queryFactory.Get<TaskScorings>(entityQuery);
 
 
@@ -166,7 +166,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },  "");
 
             var taskScorings = queryFactory.Update<SelectTaskScoringsDto>(query, "Id", true);
 
@@ -178,7 +178,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
         public async Task<IDataResult<SelectTaskScoringsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.TaskScorings).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.TaskScorings).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<TaskScorings>(entityQuery);
 
@@ -203,7 +203,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var TaskScorings = queryFactory.Update<SelectTaskScoringsDto>(query, "Id", true);
             await Task.CompletedTask;

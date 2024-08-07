@@ -30,11 +30,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial
         /// Genel Açıklama
         /// </summary>
         public string _Description { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
 
 
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]

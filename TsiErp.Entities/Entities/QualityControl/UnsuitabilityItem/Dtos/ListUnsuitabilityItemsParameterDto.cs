@@ -9,6 +9,5 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos
 {
     public class ListUnsuitabilityItemsParameterDto : FullAuditedEntityDto
     {
-        public bool IsActive { get; set; } = true;
     }
 }

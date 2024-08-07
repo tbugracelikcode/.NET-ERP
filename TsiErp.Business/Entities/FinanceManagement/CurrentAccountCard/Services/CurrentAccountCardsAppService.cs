@@ -41,7 +41,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> CreateAsync(CreateCurrentAccountCardsDto input)
         {
 
-            var listQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Code = input.Code },  "");
 
             var list = queryFactory.ControlList<CurrentAccountCards>(listQuery).ToList();
 
@@ -103,7 +103,6 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 Id = addedEntityId,
-                IsActive = true,
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
@@ -175,7 +174,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.CurrentAccountCards).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.CurrentAccountCards).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
 
@@ -199,7 +198,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                             nameof(Currencies.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, true, true, Tables.CurrentAccountCards);
+                        .Where(new { Id = id }, Tables.CurrentAccountCards);
 
             var currentAccountCard = queryFactory.Get<SelectCurrentAccountCardsDto>(query);
 
@@ -225,7 +224,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                        nameof(CurrentAccountCards.CurrencyID),
                        nameof(Currencies.Id),
                        JoinType.Left
-                   ).Where(null, true, true, Tables.CurrentAccountCards);
+                   ).Where(null, Tables.CurrentAccountCards);
 
             var currentAccountCards = queryFactory.GetList<ListCurrentAccountCardsDto>(query).ToList();
 
@@ -240,12 +239,12 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> UpdateAsync(UpdateCurrentAccountCardsDto input)
         {
 
-            var entityQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<CurrentAccountCards>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<CurrentAccountCards>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -297,7 +296,6 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 Web = input.Web,
                 Name = input.Name,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = false,
@@ -309,7 +307,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 LastModifierId = LoginedUserService.UserId,
                 ContractDailyWorkingCapacity = input.ContractDailyWorkingCapacity,
                 NumberOfStations = input.NumberOfStations
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
 
@@ -325,7 +323,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
 
-            var entityQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<CurrentAccountCards>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.CurrentAccountCards).Update(new UpdateCurrentAccountCardsDto
@@ -334,7 +332,6 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 CustomerCode = entity.CustomerCode,
                 ShippingCompany = entity.ShippingCompany,
                 Name = entity.Name,
-                IsActive = entity.IsActive,
                 PaymentTermDay = entity.PaymentTermDay,
                 PlusPercentage = entity.PlusPercentage,
                 PostCode = entity.PostCode,
@@ -382,7 +379,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 DataOpenStatusUserId = userId,
                 NumberOfStations = entity.NumberOfStations,
                 ContractDailyWorkingCapacity = entity.ContractDailyWorkingCapacity
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
 

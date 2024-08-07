@@ -60,7 +60,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
         {
             DataSource = new SelectProductGroupsDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ProductGroupsChildMenu")
             };
 

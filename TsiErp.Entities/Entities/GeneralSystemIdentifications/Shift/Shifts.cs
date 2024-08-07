@@ -19,11 +19,7 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift
         /// Vardiya Açıklaması
         /// </summary>
         public string Name { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
+
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Toplam Çalışma Süresi

@@ -47,7 +47,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWorkOrdersDto>> CreateAsync(CreateWorkOrdersDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { WorkOrderNo = input.WorkOrderNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { WorkOrderNo = input.WorkOrderNo },  "");
 
             var list = queryFactory.ControlList<WorkOrders>(listQuery).ToList();
 
@@ -142,7 +142,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.WorkOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.WorkOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var workOrders = queryFactory.Update<SelectWorkOrdersDto>(query, "Id", true);
 
@@ -220,7 +220,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                             nameof(SalesOrders.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.WorkOrders);
+                        .Where(new { Id = id }, Tables.WorkOrders);
 
             var workOrder = queryFactory.Get<SelectWorkOrdersDto>(query);
 
@@ -297,7 +297,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                             nameof(SalesOrders.Id),
                             JoinType.Left
                         )
-                        .Where(new { LinkedWorkOrderID = linkedWorkOrderID }, false, false, Tables.WorkOrders);
+                        .Where(new { LinkedWorkOrderID = linkedWorkOrderID }, Tables.WorkOrders);
 
             var workOrder = queryFactory.Get<SelectWorkOrdersDto>(query);
 
@@ -371,7 +371,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                             nameof(WorkOrders.CurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
-                        ).Where(null, false, false, Tables.WorkOrders);
+                        ).Where(null,Tables.WorkOrders);
 
             var workOrders = queryFactory.GetList<ListWorkOrdersDto>(query).ToList();
 
@@ -446,7 +446,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                             nameof(SalesOrders.Id),
                             JoinType.Left
                         )
-                        .Where(new { ProductionOrderID = productionOrderID }, false, false, Tables.WorkOrders);
+                        .Where(new { ProductionOrderID = productionOrderID },  Tables.WorkOrders);
 
             var workOrders = queryFactory.GetList<SelectWorkOrdersDto>(query).ToList();
 
@@ -460,12 +460,12 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWorkOrdersDto>> UpdateAsync(UpdateWorkOrdersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<WorkOrders>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { WorkOrderNo = input.WorkOrderNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { WorkOrderNo = input.WorkOrderNo }, "");
             var list = queryFactory.GetList<WorkOrders>(listQuery).ToList();
 
             if (list.Count > 0 && entity.WorkOrderNo != input.WorkOrderNo)
@@ -509,7 +509,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 OrderID = input.OrderID
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var workOrders = queryFactory.Update<SelectWorkOrdersDto>(query, "Id", true);
 
@@ -522,7 +522,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
         public async Task<IDataResult<SelectWorkOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<WorkOrders>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.WorkOrders).Update(new UpdateWorkOrdersDto
@@ -559,7 +559,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
                 OrderID = entity.OrderID
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var workOrders = queryFactory.Update<SelectWorkOrdersDto>(query, "Id", true);
 

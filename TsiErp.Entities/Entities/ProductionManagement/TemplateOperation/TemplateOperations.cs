@@ -26,11 +26,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.TemplateOperation
         public Guid WorkCenterID { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
         /// Yüksek Tamir Maliyeti
         /// </summary>
         public bool IsHighRepairCost { get; set; }

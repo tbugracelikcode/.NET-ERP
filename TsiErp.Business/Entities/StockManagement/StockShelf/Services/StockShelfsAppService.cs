@@ -38,7 +38,7 @@ namespace TsiErp.Business.Entities.StockShelf.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockShelfsDto>> CreateAsync(CreateStockShelfsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.StockShelfs).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.StockShelfs).Select("*").Where(new { Code = input.Code },  "");
 
             var list = queryFactory.ControlList<StockShelfs>(listQuery).ToList();
 
@@ -103,7 +103,7 @@ namespace TsiErp.Business.Entities.StockShelf.Services
             else
             {
 
-                var query = queryFactory.Query().From(Tables.StockShelfs).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.StockShelfs).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
                 var StockShelfs = queryFactory.Update<SelectStockShelfsDto>(query, "Id", true);
 
@@ -121,7 +121,7 @@ namespace TsiErp.Business.Entities.StockShelf.Services
             new
             {
                 Id = id
-            }, false, false, "");
+            }, "");
             var StockShelf = queryFactory.Get<SelectStockShelfsDto>(query);
 
 
@@ -135,7 +135,7 @@ namespace TsiErp.Business.Entities.StockShelf.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStockShelfsDto>>> GetListAsync(ListStockShelfsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.StockShelfs).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.StockShelfs).Select("*").Where(null, "");
             var StockShelfs = queryFactory.GetList<ListStockShelfsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListStockShelfsDto>>(StockShelfs);
@@ -147,12 +147,12 @@ namespace TsiErp.Business.Entities.StockShelf.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockShelfsDto>> UpdateAsync(UpdateStockShelfsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StockShelfs).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.StockShelfs).Select("*").Where(new { Id = input.Id },  "");
             var entity = queryFactory.Get<StockShelfs>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.StockShelfs).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.StockShelfs).Select("*").Where(new { Code = input.Code },  "");
             var list = queryFactory.GetList<StockShelfs>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -177,7 +177,7 @@ namespace TsiErp.Business.Entities.StockShelf.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },"");
 
             var StockShelfs = queryFactory.Update<SelectStockShelfsDto>(query, "Id", true);
 
@@ -190,7 +190,7 @@ namespace TsiErp.Business.Entities.StockShelf.Services
 
         public async Task<IDataResult<SelectStockShelfsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StockShelfs).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.StockShelfs).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<StockShelfs>(entityQuery);
 
@@ -210,7 +210,7 @@ namespace TsiErp.Business.Entities.StockShelf.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var StockShelfs = queryFactory.Update<SelectStockShelfsDto>(query, "Id", true);
             await Task.CompletedTask;

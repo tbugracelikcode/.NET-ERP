@@ -25,10 +25,6 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
         /// </summary>
         public decimal UnitWeight { get; set; }
         /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
-        /// <summary>
         /// Temin Şekli
         /// </summary>
         public ProductSupplyFormEnum SupplyForm { get; set; }

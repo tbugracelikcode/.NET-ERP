@@ -9,9 +9,5 @@ namespace TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos
 {
     public class ListPaymentPlansParameterDto : FullAuditedEntityDto
     {
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; } = true;
     }
 }

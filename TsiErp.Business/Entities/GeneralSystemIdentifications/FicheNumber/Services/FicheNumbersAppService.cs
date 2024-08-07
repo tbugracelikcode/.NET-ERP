@@ -52,7 +52,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
             var query = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new
             {
                 Id = id
-            }, false, false, "").UseIsDelete(false);
+            }, "").UseIsDelete(false);
 
             var ficheNumbers = queryFactory.Get<SelectFicheNumbersDto>(query);
 
@@ -73,7 +73,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
 
         public async Task<IDataResult<SelectFicheNumbersDto>> UpdateAsync(UpdateFicheNumbersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            var entityQuery = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new { Id = input.Id }, "").UseIsDelete(false);
 
             var entity = queryFactory.Get<FicheNumbers>(entityQuery);
 
@@ -84,7 +84,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
                 Length_ = input.Length_,
                 FixedCharacter = input.FixedCharacter,
                 FicheNo = entity.FicheNo + 1
-            }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
             var ficheNumbers = queryFactory.Update<SelectFicheNumbersDto>(query, "Id", true);
 
@@ -103,7 +103,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
             var query = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new
             {
                 Menu_ = menu
-            }, false, false, "").UseIsDelete(false);
+            }, "").UseIsDelete(false);
 
             var ficheNumbers = queryFactory.Get<SelectFicheNumbersDto>(query);
 
@@ -133,7 +133,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
             var query = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new
             {
                 Menu_ = menu
-            }, false, false, "").UseIsDelete(false);
+            }, "").UseIsDelete(false);
 
             var ficheNumbers = queryFactory.Get<SelectFicheNumbersDto>(query);
 
@@ -152,7 +152,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
             }
             #endregion
 
-            var entityQuery = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new { Menu_ = menu }, false, false, "").UseIsDelete(false);
+            var entityQuery = queryFactory.Query().From(Tables.FicheNumbers).Select("*").Where(new { Menu_ = menu }, "").UseIsDelete(false);
 
             var entity = queryFactory.Get<FicheNumbers>(entityQuery);
 
@@ -166,7 +166,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
                     Length_ = entity.Length_,
                     FixedCharacter = entity.FixedCharacter,
                     FicheNo = entity.FicheNo + 1
-                }).Where(new { Menu_ = menu }, false, false, "").UseIsDelete(false);
+                }).Where(new { Menu_ = menu }, "").UseIsDelete(false);
 
                 var updatedFicheNumber = queryFactory.Update<SelectFicheNumbersDto>(updateQuery, "Id", true);
             }

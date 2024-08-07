@@ -37,7 +37,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectHaltReasonsDto>> CreateAsync(CreateHaltReasonsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<HaltReasons>(listQuery).ToList();
 
@@ -104,7 +104,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.HaltReasons).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.HaltReasons).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
                 var haltReasons = queryFactory.Update<SelectHaltReasonsDto>(query, "Id", true);
 
@@ -121,7 +121,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
             new
             {
                 Id = id
-            }, false, false, "");
+            }, "");
             var haltReason = queryFactory.Get<SelectHaltReasonsDto>(query);
 
 
@@ -135,7 +135,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListHaltReasonsDto>>> GetListAsync(ListHaltReasonsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(null, "");
             var haltReasons = queryFactory.GetList<ListHaltReasonsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListHaltReasonsDto>>(haltReasons);
@@ -145,12 +145,12 @@ namespace TsiErp.Business.Entities.HaltReason.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectHaltReasonsDto>> UpdateAsync(UpdateHaltReasonsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<HaltReasons>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<HaltReasons>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -179,7 +179,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var haltReasons = queryFactory.Update<SelectHaltReasonsDto>(query, "Id", true);
 
@@ -193,7 +193,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
 
         public async Task<IDataResult<SelectHaltReasonsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<HaltReasons>(entityQuery);
 
@@ -217,7 +217,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var haltReasons = queryFactory.Update<SelectHaltReasonsDto>(query, "Id", true);
 

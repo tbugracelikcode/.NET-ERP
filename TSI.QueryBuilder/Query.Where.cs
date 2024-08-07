@@ -6,7 +6,7 @@ namespace TSI.QueryBuilder
 {
     public partial class Query
     {
-        public Query Where(object constraints, bool useIsActive, bool IsActive, string joinSeperator)
+        public Query Where(object constraints, string joinSeperator)
         {
             string where = "";
 
@@ -44,45 +44,6 @@ namespace TSI.QueryBuilder
                 }
             }
 
-            if (useIsActive)
-            {
-                if (IsActive)
-                {
-                    string isActiveField = " IsActive='1'";
-
-                    if (!string.IsNullOrEmpty(joinSeperator))
-                    {
-                        isActiveField = joinSeperator + "." + isActiveField.Trim();
-                    }
-
-                    if (!string.IsNullOrEmpty(where))
-                    {
-                        where = where + " And " + isActiveField;
-                    }
-                    else
-                    {
-                        where = isActiveField;
-                    }
-                }
-                else
-                {
-                    string isActiveField = " IsActive='0'";
-
-                    if (!string.IsNullOrEmpty(joinSeperator))
-                    {
-                        isActiveField = joinSeperator + "." + isActiveField.Trim();
-                    }
-
-                    if (!string.IsNullOrEmpty(where))
-                    {
-                        where = where + " And " + isActiveField;
-                    }
-                    else
-                    {
-                        where = isActiveField;
-                    }
-                }
-            }
 
             WhereSentence = where;
 

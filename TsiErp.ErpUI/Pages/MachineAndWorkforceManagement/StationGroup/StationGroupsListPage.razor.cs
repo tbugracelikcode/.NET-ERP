@@ -36,7 +36,6 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StationGroup
         {
             DataSource= new SelectStationGroupsDto()
             { 
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("StationGroupChildMenu")
             };
 

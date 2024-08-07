@@ -116,15 +116,15 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Select("*").Where(new { Id = id },  "");
 
             var PurchaseOrdersAwaitingApprovals = queryFactory.Get<SelectPurchaseOrdersAwaitingApprovalsDto>(query);
 
             if (PurchaseOrdersAwaitingApprovals.Id != Guid.Empty && PurchaseOrdersAwaitingApprovals != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovalLines).Delete(LoginedUserService.UserId).Where(new { PurchaseOrdersAwaitingApprovalID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovalLines).Delete(LoginedUserService.UserId).Where(new { PurchaseOrdersAwaitingApprovalID = id },  "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -135,7 +135,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovalLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovalLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                 var purchaseOrdersAwaitingApprovalLines = queryFactory.Update<SelectPurchaseOrdersAwaitingApprovalLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseOrdersAwaitingApprovalLines, LogType.Delete, id);
                 await Task.CompletedTask;
@@ -171,7 +171,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                         nameof(PurchaseOrders.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id }, false, false, Tables.PurchaseOrdersAwaitingApprovals);
+                    .Where(new { Id = id }, Tables.PurchaseOrdersAwaitingApprovals);
 
             var purchaseOrdersAwaitingApprovals = queryFactory.Get<SelectPurchaseOrdersAwaitingApprovalsDto>(query);
 
@@ -186,7 +186,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                         nameof(ControlTypes.Id),
                         JoinType.Left
                     )
-                    .Where(new { PurchaseOrdersAwaitingApprovalID = id }, false, false, Tables.PurchaseOrdersAwaitingApprovalLines);
+                    .Where(new { PurchaseOrdersAwaitingApprovalID = id }, Tables.PurchaseOrdersAwaitingApprovalLines);
 
             var PurchaseOrdersAwaitingApprovalLine = queryFactory.GetList<SelectPurchaseOrdersAwaitingApprovalLinesDto>(queryLines).ToList();
 
@@ -227,7 +227,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                         nameof(PurchaseOrders.Id),
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.PurchaseOrdersAwaitingApprovals);
+                    .Where(null,  Tables.PurchaseOrdersAwaitingApprovals);
 
             var purchaseOrdersAwaitingApprovals = queryFactory.GetList<ListPurchaseOrdersAwaitingApprovalsDto>(query).ToList();
             await Task.CompletedTask;
@@ -263,7 +263,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                         nameof(PurchaseOrders.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id }, false, false, Tables.PurchaseOrdersAwaitingApprovals);
+                    .Where(new { Id = input.Id }, Tables.PurchaseOrdersAwaitingApprovals);
 
             var entity = queryFactory.Get<SelectPurchaseOrdersAwaitingApprovalsDto>(entityQuery);
 
@@ -278,7 +278,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                         nameof(ControlTypes.Id),
                         JoinType.Left
                     )
-                    .Where(new { PurchaseOrdersAwaitingApprovalID = input.Id }, false, false, Tables.PurchaseOrdersAwaitingApprovalLines);
+                    .Where(new { PurchaseOrdersAwaitingApprovalID = input.Id },  Tables.PurchaseOrdersAwaitingApprovalLines);
 
             var PurchaseOrdersAwaitingApprovalLine = queryFactory.GetList<SelectPurchaseOrdersAwaitingApprovalLinesDto>(queryLines).ToList();
 
@@ -308,7 +308,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                  Code = input.Code,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },  "");
 
             foreach (var item in input.SelectPurchaseOrdersAwaitingApprovalLines)
             {
@@ -341,7 +341,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovalLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovalLines).Select("*").Where(new { Id = item.Id },  "");
 
                     var line = queryFactory.Get<SelectPurchaseOrdersAwaitingApprovalLinesDto>(lineGetQuery);
 
@@ -368,7 +368,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                              
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id },  "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -386,7 +386,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
 
         public async Task<IDataResult<SelectPurchaseOrdersAwaitingApprovalsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<PurchaseOrdersAwaitingApprovals>(entityQuery);
 
@@ -414,7 +414,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                  Code = entity.Code,
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var PurchaseOrdersAwaitingApprovalsDto = queryFactory.Update<SelectPurchaseOrdersAwaitingApprovalsDto>(query, "Id", true);
             await Task.CompletedTask;

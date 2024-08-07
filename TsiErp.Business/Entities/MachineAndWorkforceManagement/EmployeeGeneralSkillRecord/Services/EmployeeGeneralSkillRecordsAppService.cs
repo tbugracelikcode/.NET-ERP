@@ -40,7 +40,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeeGeneralSkillRecordsDto>> CreateAsync(CreateEmployeeGeneralSkillRecordsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<EmployeeGeneralSkillRecords>(listQuery).ToList();
 
@@ -103,7 +103,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var EmployeeGeneralSkillRecords = queryFactory.Update<SelectEmployeeGeneralSkillRecordsDto>(query, "Id", true);
 
@@ -121,7 +121,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
             new
             {
                 Id = id
-            }, false, false, "");
+            }, "");
             var EmployeeGeneralSkillRecord = queryFactory.Get<SelectEmployeeGeneralSkillRecordsDto>(query);
 
 
@@ -135,7 +135,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEmployeeGeneralSkillRecordsDto>>> GetListAsync(ListEmployeeGeneralSkillRecordsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select("*").Where(null, "");
             var EmployeeGeneralSkillRecords = queryFactory.GetList<ListEmployeeGeneralSkillRecordsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListEmployeeGeneralSkillRecordsDto>>(EmployeeGeneralSkillRecords);
@@ -146,12 +146,12 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeeGeneralSkillRecordsDto>> UpdateAsync(UpdateEmployeeGeneralSkillRecordsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<EmployeeGeneralSkillRecords>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<EmployeeGeneralSkillRecords>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -176,7 +176,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var EmployeeGeneralSkillRecords = queryFactory.Update<SelectEmployeeGeneralSkillRecordsDto>(query, "Id", true);
 
@@ -188,7 +188,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
 
         public async Task<IDataResult<SelectEmployeeGeneralSkillRecordsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<EmployeeGeneralSkillRecords>(entityQuery);
 
@@ -208,7 +208,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var EmployeeGeneralSkillRecords = queryFactory.Update<SelectEmployeeGeneralSkillRecordsDto>(query, "Id", true);
             await Task.CompletedTask;

@@ -16,10 +16,6 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
-        /// <summary>
         /// Kıdem ID
         /// </summary>
         public Guid? SeniorityID { get; set; }

@@ -305,7 +305,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         {
             DataSource = new SelectProductsOperationsDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ProdOperationsChildMenu")
             };
 

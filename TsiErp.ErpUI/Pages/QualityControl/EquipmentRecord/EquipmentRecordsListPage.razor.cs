@@ -56,7 +56,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.EquipmentRecord
         {
             DataSource = new SelectEquipmentRecordsDto()
             {
-                IsActive = true,
                 CancellationDate = null,
                 RecordDate = GetSQLDateAppService.GetDateFromSQL(),
                 Code = FicheNumbersAppService.GetFicheNumberAsync("EquipmentRecordsChildMenu")

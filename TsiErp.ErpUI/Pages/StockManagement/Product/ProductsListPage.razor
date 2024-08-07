@@ -199,7 +199,7 @@ else
                             <SfTextBox @bind-Value="DataSource.EnglishDefinition"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="2">
+                   @*  <DxGridLayoutItem Row="1" Column="2">
                         <Template>
                             <center>
                                 <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
@@ -207,7 +207,7 @@ else
 
                             </center>
                         </Template>
-                    </DxGridLayoutItem>
+                    </DxGridLayoutItem> *@
 
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
@@ -1467,12 +1467,12 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="1">
+                    @* <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["IsActiveLabelBoM"] </strong></label><br />
                             <SfSwitch Disabled=true @bind-Checked="BillsofMaterialsDataSource.IsActive"></SfSwitch>
                         </Template>
-                    </DxGridLayoutItem>
+                    </DxGridLayoutItem> *@
 
 
                     <DxGridLayoutItem Row="4" Column="1" ColumnSpan="3">
@@ -1624,12 +1624,12 @@ else
                     </DxGridLayoutItem>
 
 
-                    <DxGridLayoutItem Row="1" Column="5">
+                   @*  <DxGridLayoutItem Row="1" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["IsActiveLabelRoute"] </strong></label><br />
                             <SfSwitch Disabled=true @bind-Checked="RoutesDataSource.IsActive"></SfSwitch>
                         </Template>
-                    </DxGridLayoutItem>
+                    </DxGridLayoutItem> *@
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>

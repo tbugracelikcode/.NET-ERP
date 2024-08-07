@@ -9,10 +9,6 @@ namespace TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos
 {
     public class ListUnitSetsParameterDto : FullAuditedEntityDto
     {
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; } = true;
 
     }
 }

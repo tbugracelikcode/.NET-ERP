@@ -36,7 +36,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductPropertiesDto>> CreateAsync(CreateProductPropertiesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ProductProperties).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ProductProperties).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<ProductProperties>(listQuery).ToList();
 
             #region Code Control 
@@ -110,16 +110,16 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.ProductProperties).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.ProductProperties).Select("*").Where(new { Id = id },  "");
 
             var ProductProperties = queryFactory.Get<SelectProductPropertiesDto>(query);
 
             if (ProductProperties.Id != Guid.Empty && ProductProperties != null)
             {
 
-                var deleteQuery = queryFactory.Query().From(Tables.ProductProperties).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.ProductProperties).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.ProductPropertyLines).Delete(LoginedUserService.UserId).Where(new { ProductPropertyID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.ProductPropertyLines).Delete(LoginedUserService.UserId).Where(new { ProductPropertyID = id },  "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -132,7 +132,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.ProductPropertyLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.ProductPropertyLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var ProductPropertyLines = queryFactory.Update<SelectProductPropertyLinesDto>(queryLine, "Id", true);
 
@@ -153,7 +153,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
             new
             {
                 Id = id
-            }, false, false, "");
+            },  "");
 
             var ProductProperties = queryFactory.Get<SelectProductPropertiesDto>(query);
 
@@ -164,7 +164,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
             new
             {
                 ProductPropertyID = id
-            }, false, false, "");
+            }, "");
 
             var ProductPropertyLine = queryFactory.GetList<SelectProductPropertyLinesDto>(queryLines).ToList();
 
@@ -185,7 +185,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ProductProperties)
-                   .Select("*").Where(null, false, false, "");
+                   .Select("*").Where(null, "");
 
             var ProductPropertiesDto = queryFactory.GetList<ListProductPropertiesDto>(query).ToList();
             await Task.CompletedTask;
@@ -201,7 +201,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
                    .Select("*").Where(new
                    {
                        ProductGroupID = ProductGroupID
-                   }, false, false, "");
+                   }, "");
 
             var ProductPropertiesDto = queryFactory.GetList<ListProductPropertiesDto>(query).ToList();
             await Task.CompletedTask;
@@ -220,7 +220,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
             new
             {
                 Id = input.Id
-            }, false, false, "");
+            }, "");
 
             var entity = queryFactory.Get<SelectProductPropertiesDto>(entityQuery);
 
@@ -231,14 +231,14 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
             new
             {
                 ProductPropertyID = input.Id
-            }, false, false, "");
+            }, "");
 
             var ProductPropertyLine = queryFactory.GetList<SelectProductPropertyLinesDto>(queryLines).ToList();
 
             entity.SelectProductPropertyLines = ProductPropertyLine;
 
             #region Update Control
-            var listQuery = queryFactory.Query().From(Tables.ProductProperties).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ProductProperties).Select("*").Where(new { Code = input.Code },  "");
 
             var list = queryFactory.GetList<ProductProperties>(listQuery).ToList();
 
@@ -266,7 +266,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
                 isChooseFromList = input.isChooseFromList,
                 Code = input.Code,
 
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
 
             foreach (var item in input.SelectProductPropertyLines)
@@ -296,7 +296,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.ProductPropertyLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.ProductPropertyLines).Select("*").Where(new { Id = item.Id },"");
 
                     var line = queryFactory.Get<SelectProductPropertyLinesDto>(lineGetQuery);
 
@@ -319,7 +319,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
                             LineName = item.LineName,
                             LineCode = item.LineCode,
                             ProductPropertyID = item.ProductPropertyID,
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -337,7 +337,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
 
         public async Task<IDataResult<SelectProductPropertiesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductProperties).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductProperties).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<ProductProperties>(entityQuery);
 
@@ -359,7 +359,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
                 Name = entity.Name,
 
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },"");
 
             var ProductPropertiesDto = queryFactory.Update<SelectProductPropertiesDto>(query, "Id", true);
             await Task.CompletedTask;

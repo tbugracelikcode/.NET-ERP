@@ -9,9 +9,5 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Period.Dtos
 {
     public class ListPeriodsParameterDto : FullAuditedEntityDto
     {
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; } = true;
     }
 }

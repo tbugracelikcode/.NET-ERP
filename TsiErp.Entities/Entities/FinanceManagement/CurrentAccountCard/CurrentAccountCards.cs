@@ -179,11 +179,6 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard
         /// Fason Tedarikçi
         /// </summary>
         public bool ContractSupplier { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
 
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>

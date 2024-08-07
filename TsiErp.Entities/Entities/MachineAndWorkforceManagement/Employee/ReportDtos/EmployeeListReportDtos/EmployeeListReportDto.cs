@@ -25,8 +25,6 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Report
 
         public string Email { get; set; }
 
-        public string IsActive { get; set; }
-
         public string SeniorityName { get; set; }
 
         public string EducationLevelName { get; set; }

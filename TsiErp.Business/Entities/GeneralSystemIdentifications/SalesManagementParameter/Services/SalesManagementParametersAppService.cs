@@ -66,7 +66,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
                  new
                  {
                      Id = SalesManagementParameter.Id
-                 }, false, false, "").UseIsDelete(false);
+                 }, "").UseIsDelete(false);
 
                 result = queryFactory.Get<SelectSalesManagementParametersDto>(query);
             }
@@ -81,7 +81,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectSalesManagementParametersDto>> UpdateAsync(UpdateSalesManagementParametersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.SalesManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            var entityQuery = queryFactory.Query().From(Tables.SalesManagementParameters).Select("*").Where(new { Id = input.Id },  "").UseIsDelete(false);
 
             var entity = queryFactory.Get<SalesManagementParameters>(entityQuery);
 
@@ -92,7 +92,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
                 SalesOrderExchangeRateType = input.SalesOrderExchangeRateType,
                 PropositionFutureDateParameter = input.PropositionFutureDateParameter,
                 Id = input.Id
-            }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
 
             var SalesManagementParameters = queryFactory.Update<SelectSalesManagementParametersDto>(query, "Id", true);

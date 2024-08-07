@@ -90,7 +90,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.NotificationTemplates).UseIsDelete(false).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).UseIsDelete(false).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var notificationTemplates = queryFactory.Delete(query, true);
 
@@ -111,7 +111,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
             new
             {
                 Id = id
-            }, false, true, "").UseIsDelete(false);
+            }, "").UseIsDelete(false);
             var notificationTemplate = queryFactory.Get<SelectNotificationTemplatesDto>(query);
 
             LogsAppService.InsertLogToDatabase(notificationTemplate, notificationTemplate, LoginedUserService.UserId, Tables.NotificationTemplates, LogType.Get, id);
@@ -122,7 +122,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
         public async Task<IDataResult<IList<ListNotificationTemplatesDto>>> GetListAsync(ListNotificationTemplatesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(null, false, true, "").UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(null, "").UseIsDelete(false);
             var notificationTemplate = queryFactory.GetList<ListNotificationTemplatesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListNotificationTemplatesDto>>(notificationTemplate);
@@ -132,7 +132,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
         {
             //var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { ProcessName_ = process }, false, false, "").Where(new { ModuleName_ = module }, false, true, "").UseIsDelete(false);
 
-            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { ProcessName_ = process, ModuleName_ = module }, true, true, "").UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { ProcessName_ = process, ModuleName_ = module }, "").UseIsDelete(false);
 
 
             var notificationTemplate = queryFactory.GetList<ListNotificationTemplatesDto>(query).ToList();
@@ -143,12 +143,12 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
         public async Task<IDataResult<SelectNotificationTemplatesDto>> UpdateAsync(UpdateNotificationTemplatesDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<NotificationTemplates>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Code = input.Id }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Code = input.Id }, "");
             var list = queryFactory.GetList<NotificationTemplates>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Id != input.Id)
@@ -170,7 +170,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 Name = input.Name,
                 ProcessName_ = input.ProcessName_,
                 Message_ = input.Message_,
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var notificationTemplate = queryFactory.Update<SelectNotificationTemplatesDto>(query, "Id", true);
 

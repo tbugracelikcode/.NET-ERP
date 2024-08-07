@@ -46,7 +46,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectFirstProductApprovalsDto>> CreateAsync(CreateFirstProductApprovalsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.FirstProductApprovals).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.FirstProductApprovals).Select("*").Where(new { Code = input.Code },  "");
             var list = queryFactory.ControlList<FirstProductApprovals>(listQuery).ToList();
 
             #region Code Control 
@@ -128,15 +128,15 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.FirstProductApprovals).Select("*").Where(new { Id = id }, true, true, "");
+            var query = queryFactory.Query().From(Tables.FirstProductApprovals).Select("*").Where(new { Id = id },  "");
 
             var FirstProductApprovals = queryFactory.Get<SelectFirstProductApprovalsDto>(query);
 
             if (FirstProductApprovals.Id != Guid.Empty && FirstProductApprovals != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.FirstProductApprovals).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                var deleteQuery = queryFactory.Query().From(Tables.FirstProductApprovals).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.FirstProductApprovalLines).Delete(LoginedUserService.UserId).Where(new { FirstProductApprovalID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.FirstProductApprovalLines).Delete(LoginedUserService.UserId).Where(new { FirstProductApprovalID = id },  "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -147,7 +147,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.FirstProductApprovalLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.FirstProductApprovalLines).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
                 var billOfMaterialLines = queryFactory.Update<SelectFirstProductApprovalLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.FirstProductApprovalLines, LogType.Delete, id);
                 await Task.CompletedTask;
@@ -198,7 +198,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         nameof(OperationalQualityPlans.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id }, false, false, Tables.FirstProductApprovals);
+                    .Where(new { Id = id },  Tables.FirstProductApprovals);
 
             var firstProductApprovals = queryFactory.Get<SelectFirstProductApprovalsDto>(query);
 
@@ -206,7 +206,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                    .Query()
                    .From(Tables.FirstProductApprovalLines)
                    .Select("*")
-                    .Where(new { FirstProductApprovalID = id }, false, false, Tables.FirstProductApprovalLines);
+                    .Where(new { FirstProductApprovalID = id }, Tables.FirstProductApprovalLines);
 
             var FirstProductApprovalLine = queryFactory.GetList<SelectFirstProductApprovalLinesDto>(queryLines).ToList();
 
@@ -270,7 +270,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         "PO",
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.FirstProductApprovals);
+                    .Where(null, Tables.FirstProductApprovals);
 
             var firstProductApprovals = queryFactory.GetList<ListFirstProductApprovalsDto>(query).ToList();
             await Task.CompletedTask;
@@ -315,7 +315,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         nameof(OperationalQualityPlans.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id }, false, false, Tables.FirstProductApprovals);
+                    .Where(new { Id = input.Id }, Tables.FirstProductApprovals);
 
             var entity = queryFactory.Get<SelectFirstProductApprovalsDto>(entityQuery);
 
@@ -323,7 +323,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                    .Query()
                     .From(Tables.FirstProductApprovalLines)
                    .Select("*")
-                    .Where(new { FirstProductApprovalID = input.Id }, false, false, Tables.FirstProductApprovalLines);
+                    .Where(new { FirstProductApprovalID = input.Id }, Tables.FirstProductApprovalLines);
 
             var FirstProductApprovalLine = queryFactory.GetList<SelectFirstProductApprovalLinesDto>(queryLines).ToList();
 
@@ -334,7 +334,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                            .Query()
                            .From(Tables.FirstProductApprovals)
                    .Select("*")
-                    .Where(new { Code = input.Code }, false, false, Tables.FirstProductApprovals);
+                    .Where(new { Code = input.Code }, Tables.FirstProductApprovals);
 
             var list = queryFactory.GetList<ListFirstProductApprovalsDto>(listQuery).ToList();
 
@@ -369,7 +369,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 IsApproval = input.IsApproval,
                 ApprovedQuantity = input.ApprovedQuantity,
                 ScrapQuantity = input.ScrapQuantity
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectFirstProductApprovalLines)
             {
@@ -401,7 +401,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.FirstProductApprovalLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.FirstProductApprovalLines).Select("*").Where(new { Id = item.Id },  "");
 
                     var line = queryFactory.Get<SelectFirstProductApprovalLinesDto>(lineGetQuery);
 
@@ -427,7 +427,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                             IsDeleted = item.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -445,7 +445,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
         public async Task<IDataResult<SelectFirstProductApprovalsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.FirstProductApprovals).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.FirstProductApprovals).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<FirstProductApprovals>(entityQuery);
 
@@ -474,7 +474,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 IsApproval = entity.IsApproval,
                 ApprovedQuantity = entity.ApprovedQuantity,
                 ScrapQuantity = entity.ScrapQuantity
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var FirstProductApprovalsDto = queryFactory.Update<SelectFirstProductApprovalsDto>(query, "Id", true);
             await Task.CompletedTask;

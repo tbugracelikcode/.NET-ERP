@@ -93,7 +93,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.PFMEAs).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.PFMEAs).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var PFMEAs = queryFactory.Update<SelectPFMEAsDto>(query, "Id", true);
 
@@ -145,7 +145,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
                             nameof(UnsuitabilityItems.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.PFMEAs);
+                        .Where(new { Id = id }, Tables.PFMEAs);
 
             var PFMEA = queryFactory.Get<SelectPFMEAsDto>(query);
 
@@ -199,7 +199,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
                             nameof(PFMEAs.UnsuitabilityItemID),
                             nameof(UnsuitabilityItems.Id),
                             JoinType.Left
-                        ).Where(null, false, false, Tables.PFMEAs);
+                        ).Where(null,  Tables.PFMEAs);
 
 
             var pFMEAs = queryFactory.GetList<ListPFMEAsDto>(query).ToList();
@@ -214,7 +214,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPFMEAsDto>> UpdateAsync(UpdatePFMEAsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PFMEAs).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.PFMEAs).Select("*").Where(new { Id = input.Id },  "");
             var entity = queryFactory.Get<PFMEAs>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.PFMEAs).Update(new UpdatePFMEAsDto
@@ -255,7 +255,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var PFMEAs = queryFactory.Update<SelectPFMEAsDto>(query, "Id", true);
 
@@ -270,7 +270,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
 
         public async Task<IDataResult<SelectPFMEAsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PFMEAs).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.PFMEAs).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<PFMEAs>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.PFMEAs).Update(new UpdatePFMEAsDto
@@ -312,7 +312,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var PFMEAs = queryFactory.Update<SelectPFMEAsDto>(query, "Id", true);
 

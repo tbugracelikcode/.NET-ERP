@@ -44,7 +44,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItem
         {
             DataSource = new SelectUnsuitabilityItemsDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("UnsItemsChildMenu")
             };
 

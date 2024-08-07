@@ -78,7 +78,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         public async Task<IResult> DeleteAsync(Guid id)
         {
 
-            var query = queryFactory.Query().From(Tables.EmployeeAnnualSeniorityDifferences).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.EmployeeAnnualSeniorityDifferences).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var EmployeeAnnualSeniorityDifferences = queryFactory.Update<SelectEmployeeAnnualSeniorityDifferencesDto>(query, "Id", true);
 
@@ -99,7 +99,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                             nameof(EmployeeSeniorities.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.EmployeeAnnualSeniorityDifferences);
+                        .Where(new { Id = id }, Tables.EmployeeAnnualSeniorityDifferences);
             var EmployeeSeniority = queryFactory.Get<SelectEmployeeAnnualSeniorityDifferencesDto>(query);
 
             LogsAppService.InsertLogToDatabase(EmployeeSeniority, EmployeeSeniority, LoginedUserService.UserId, Tables.EmployeeAnnualSeniorityDifferences, LogType.Get, id);
@@ -119,7 +119,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                             nameof(EmployeeAnnualSeniorityDifferences.SeniorityID),
                             nameof(EmployeeSeniorities.Id),
                             JoinType.Left
-                        ).Where(null, false, false, Tables.EmployeeAnnualSeniorityDifferences);
+                        ).Where(null, Tables.EmployeeAnnualSeniorityDifferences);
 
             var employeeAnnualSeniorityDifferences = queryFactory.GetList<ListEmployeeAnnualSeniorityDifferencesDto>(query).ToList();
             await Task.CompletedTask;
@@ -138,7 +138,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                             nameof(EmployeeAnnualSeniorityDifferences.SeniorityID),
                             nameof(EmployeeSeniorities.Id),
                             JoinType.Left
-                        ).Where(new { Id = input.Id }, false, false, Tables.EmployeeAnnualSeniorityDifferences);
+                        ).Where(new { Id = input.Id }, Tables.EmployeeAnnualSeniorityDifferences);
             var entity = queryFactory.Get<EmployeeAnnualSeniorityDifferences>(entityQuery);
 
 
@@ -160,7 +160,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                  Code = entity.Code,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var employeeAnnualSeniorityDifferences = queryFactory.Update<SelectEmployeeAnnualSeniorityDifferencesDto>(query, "Id", true);
 
@@ -172,7 +172,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
         public async Task<IDataResult<SelectEmployeeAnnualSeniorityDifferencesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.EmployeeAnnualSeniorityDifferences).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.EmployeeAnnualSeniorityDifferences).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<EmployeeAnnualSeniorityDifferences>(entityQuery);
 
@@ -194,7 +194,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 DataOpenStatusUserId = userId,
                  Code = entity.Code  
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var EmployeeAnnualSeniorityDifferences = queryFactory.Update<SelectEmployeeAnnualSeniorityDifferencesDto>(query, "Id", true);
             await Task.CompletedTask;

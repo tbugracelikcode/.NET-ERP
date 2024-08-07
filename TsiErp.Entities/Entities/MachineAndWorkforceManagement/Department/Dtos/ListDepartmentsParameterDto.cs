@@ -9,9 +9,5 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos
 {
     public class ListDepartmentsParameterDto : FullAuditedEntityDto
     {
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; } = true;
     }
 }

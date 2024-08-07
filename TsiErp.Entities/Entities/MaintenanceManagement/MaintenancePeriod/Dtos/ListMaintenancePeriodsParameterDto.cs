@@ -9,9 +9,5 @@ namespace TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos
 {
     public class ListMaintenancePeriodsParameterDto : FullAuditedEntityDto
     {
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; } = true;
     }
 }

@@ -48,7 +48,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPalletRecordsDto>> CreateAsync(CreatePalletRecordsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.PalletRecords).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.PalletRecords).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<PalletRecords>(listQuery).ToList();
 
             #region Code Control 
@@ -193,15 +193,15 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.PalletRecords).Select("*").Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.PalletRecords).Select("*").Where(new { Id = id },  "");
 
                 var PalletRecords = queryFactory.Get<SelectPalletRecordsDto>(query);
 
                 if (PalletRecords.Id != Guid.Empty && PalletRecords != null)
                 {
-                    var deleteQuery = queryFactory.Query().From(Tables.PalletRecords).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var deleteQuery = queryFactory.Query().From(Tables.PalletRecords).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                    var lineDeleteQuery = queryFactory.Query().From(Tables.PalletRecordLines).Delete(LoginedUserService.UserId).Where(new { PalletRecordID = id }, false, false, "");
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.PalletRecordLines).Delete(LoginedUserService.UserId).Where(new { PalletRecordID = id },  "");
 
                     deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -212,7 +212,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 }
                 else
                 {
-                    var queryLine = queryFactory.Query().From(Tables.PalletRecordLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var queryLine = queryFactory.Query().From(Tables.PalletRecordLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                     var PalletRecordLines = queryFactory.Update<SelectPalletRecordLinesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PalletRecordLines, LogType.Delete, id);
                     await Task.CompletedTask;
@@ -241,7 +241,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         nameof(PackingLists.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id }, false, false, Tables.PalletRecords);
+                    .Where(new { Id = id },  Tables.PalletRecords);
 
             var palletRecords = queryFactory.Get<SelectPalletRecordsDto>(query);
 
@@ -265,7 +265,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         "ProductLine",
                         JoinType.Left
                     )
-                    .Where(new { PalletRecordID = id }, false, false, Tables.PalletRecordLines);
+                    .Where(new { PalletRecordID = id }, Tables.PalletRecordLines);
 
             var PalletRecordLine = queryFactory.GetList<SelectPalletRecordLinesDto>(queryLines).ToList();
 
@@ -299,7 +299,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         nameof(PackingLists.Id),
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.PalletRecords);
+                    .Where(null,  Tables.PalletRecords);
 
             var palletRecords = queryFactory.GetList<ListPalletRecordsDto>(query).ToList();
             await Task.CompletedTask;
@@ -329,7 +329,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         nameof(PackingLists.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id }, false, false, Tables.PalletRecords);
+                    .Where(new { Id = input.Id },  Tables.PalletRecords);
 
             var entity = queryFactory.Get<SelectPalletRecordsDto>(entityQuery);
 
@@ -353,7 +353,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         "ProductLine",
                         JoinType.Left
                     )
-                    .Where(new { PalletRecordID = input.Id }, false, false, Tables.PalletRecordLines);
+                    .Where(new { PalletRecordID = input.Id },  Tables.PalletRecordLines);
 
             var PalletRecordLine = queryFactory.GetList<SelectPalletRecordLinesDto>(queryLines).ToList();
 
@@ -371,7 +371,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                            .Where(new { Code = input.Code }, false, false, Tables.PalletRecords);
+                            .Where(new { Code = input.Code },  Tables.PalletRecords);
 
             var list = queryFactory.GetList<ListPalletRecordsDto>(listQuery).ToList();
 
@@ -418,7 +418,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectPalletRecordLines)
             {
@@ -456,7 +456,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.PalletRecordLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.PalletRecordLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectPalletRecordLinesDto>(lineGetQuery);
 
@@ -488,7 +488,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -532,7 +532,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
 
         public async Task<IDataResult<SelectPalletRecordsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PalletRecords).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.PalletRecords).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<PalletRecords>(entityQuery);
 
@@ -562,7 +562,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var PalletRecordsDto = queryFactory.Update<SelectPalletRecordsDto>(query, "Id", true);
             await Task.CompletedTask;
@@ -573,7 +573,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
 
         public async Task<List<SelectPalletRecordLinesDto>> GetPalletLines()
         {
-            var query = queryFactory.Query().From(Tables.PalletRecordLines).Select("*").Where(null, false, false, Tables.PalletRecordLines);
+            var query = queryFactory.Query().From(Tables.PalletRecordLines).Select("*").Where(null, Tables.PalletRecordLines);
             var lines = queryFactory.GetList<SelectPalletRecordLinesDto>(query).ToList();
             await Task.CompletedTask;
             return lines;

@@ -24,10 +24,5 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup
         /// Toplam Çalışan
         /// </summary>
         public int TotalEmployees { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
     }
 }

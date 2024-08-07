@@ -54,7 +54,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseRequestsDto>> CreateAsync(CreatePurchaseRequestsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.PurchaseRequests).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.PurchaseRequests).Select("*").Where(new { FicheNo = input.FicheNo },  "");
             var list = queryFactory.ControlList<PurchaseRequests>(listQuery).ToList();
 
             #region Code Control 
@@ -184,7 +184,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
         public async Task<IResult> DeleteAsync(Guid id)
         {
 
-            var query = queryFactory.Query().From(Tables.PurchaseRequests).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.PurchaseRequests).Select("*").Where(new { Id = id }, "");
 
             var purchaseRequests = queryFactory.Get<SelectPurchaseRequestsDto>(query);
 
@@ -192,9 +192,9 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
             {
                 StockMovementsService.DeletePurchaseRequests(purchaseRequests);
 
-                var deleteQuery = queryFactory.Query().From(Tables.PurchaseRequests).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.PurchaseRequests).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.PurchaseRequestLines).Delete(LoginedUserService.UserId).Where(new { PurchaseRequestID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.PurchaseRequestLines).Delete(LoginedUserService.UserId).Where(new { PurchaseRequestID = id },  "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -205,13 +205,13 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
             }
             else
             {
-                var queryLineGet = queryFactory.Query().From(Tables.PurchaseRequestLines).Select("*").Where(new { Id = id }, false, false, "");
+                var queryLineGet = queryFactory.Query().From(Tables.PurchaseRequestLines).Select("*").Where(new { Id = id },  "");
 
                 var purchaseRequestsLineGet = queryFactory.Get<SelectPurchaseRequestLinesDto>(queryLineGet);
 
                 StockMovementsService.DeletePurchaseRequestLines(purchaseRequestsLineGet);
 
-                var queryLine = queryFactory.Query().From(Tables.PurchaseRequestLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.PurchaseRequestLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var purchaseRequestLines = queryFactory.Update<SelectPurchaseRequestLinesDto>(queryLine, "Id", true);
 
@@ -280,7 +280,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         JoinType.Left
                     )
 
-                    .Where(new { Id = id }, false, false, Tables.PurchaseRequests);
+                    .Where(new { Id = id },  Tables.PurchaseRequests);
 
             var purchaseRequests = queryFactory.Get<SelectPurchaseRequestsDto>(query);
 
@@ -330,7 +330,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { PurchaseRequestID = id }, false, false, Tables.PurchaseRequestLines);
+                    .Where(new { PurchaseRequestID = id }, Tables.PurchaseRequestLines);
 
             var purchaseRequestLine = queryFactory.GetList<SelectPurchaseRequestLinesDto>(queryLines).ToList();
 
@@ -401,7 +401,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         JoinType.Left
                     )
 
-                    .Where(null, false, false, Tables.PurchaseRequests);
+                    .Where(null, Tables.PurchaseRequests);
 
             var purchaseRequests = queryFactory.GetList<ListPurchaseRequestsDto>(query).ToList();
             await Task.CompletedTask;
@@ -468,7 +468,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         JoinType.Left
                     )
 
-                    .Where(new { Id = input.Id }, false, false, Tables.PurchaseRequests);
+                    .Where(new { Id = input.Id }, Tables.PurchaseRequests);
 
             var entity = queryFactory.Get<SelectPurchaseRequestsDto>(entityQuery);
 
@@ -518,7 +518,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { PurchaseRequestID = input.Id }, false, false, Tables.PurchaseRequestLines);
+                    .Where(new { PurchaseRequestID = input.Id },  Tables.PurchaseRequestLines);
 
             var purchaseRequestLine = queryFactory.GetList<SelectPurchaseRequestLinesDto>(queryLines).ToList();
 
@@ -565,7 +565,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         JoinType.Left
                     )
 
-                            .Where(new { FicheNo = input.FicheNo }, false, false, Tables.PurchaseRequests);
+                            .Where(new { FicheNo = input.FicheNo }, Tables.PurchaseRequests);
 
             var list = queryFactory.GetList<ListPurchaseRequestsDto>(listQuery).ToList();
 
@@ -618,7 +618,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 PricingCurrency = input.PricingCurrency
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectPurchaseRequestLines)
             {
@@ -672,7 +672,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.PurchaseRequestLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.PurchaseRequestLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectPurchaseRequestLinesDto>(lineGetQuery);
 
@@ -720,7 +720,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             Date_ = input.Date_,
                             WarehouseID = input.WarehouseID.GetValueOrDefault(),
                             SupplierReferenceNo = item.SupplierReferenceNo
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -740,7 +740,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
         public async Task<IDataResult<SelectPurchaseRequestsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PurchaseRequests).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.PurchaseRequests).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<PurchaseRequests>(entityQuery);
 
@@ -787,7 +787,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 PricingCurrency = (int)entity.PricingCurrency
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var purchaseRequestsDto = queryFactory.Update<SelectPurchaseRequestsDto>(query, "Id", true);
             await Task.CompletedTask;
@@ -839,7 +839,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     LastModifierId = LoginedUserService.UserId,
-                }).Where(new { Id = entity.Id }, false, false, "");
+                }).Where(new { Id = entity.Id }, "");
 
                 if (entity.SelectPurchaseRequestLines.Count > 0)
                 {
@@ -882,7 +882,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             WarehouseID = line.WarehouseID,
                             Date_ = line.Date_,
                             SupplierReferenceNo = line.SupplierReferenceNo
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
 
                     }
@@ -941,7 +941,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.PurchaseRequestLines);
+                    .Where(null, Tables.PurchaseRequestLines);
 
             var purchaseRequestLine = queryFactory.GetList<SelectPurchaseRequestLinesDto>(queryLines).ToList();
             await Task.CompletedTask;

@@ -51,7 +51,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShipmentPlanningsDto>> CreateAsync(CreateShipmentPlanningsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<ShipmentPlannings>(listQuery).ToList();
 
             #region Code Control 
@@ -148,15 +148,15 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = id }, "");
 
                 var ShipmentPlannings = queryFactory.Get<SelectShipmentPlanningsDto>(query);
 
                 if (ShipmentPlannings.Id != Guid.Empty && ShipmentPlannings != null)
                 {
-                    var deleteQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var deleteQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                    var lineDeleteQuery = queryFactory.Query().From(Tables.ShipmentPlanningLines).Delete(LoginedUserService.UserId).Where(new { BomID = id }, false, false, "");
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.ShipmentPlanningLines).Delete(LoginedUserService.UserId).Where(new { BomID = id },  "");
 
                     deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -167,7 +167,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                 }
                 else
                 {
-                    var queryLine = queryFactory.Query().From(Tables.ShipmentPlanningLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var queryLine = queryFactory.Query().From(Tables.ShipmentPlanningLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                     var ShipmentPlanningLines = queryFactory.Update<SelectShipmentPlanningLinesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ShipmentPlanningLines, LogType.Delete, id);
                     await Task.CompletedTask;
@@ -178,7 +178,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
         public async Task<IDataResult<SelectShipmentPlanningsDto>> GetAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = id }, "");
             var ShipmentPlanning = queryFactory.Get<SelectShipmentPlanningsDto>(query);
 
 
@@ -209,7 +209,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                         JoinType.Left
                     )
 
-                    .Where(new { ShipmentPlanningID = id }, false, false, Tables.ShipmentPlanningLines);
+                    .Where(new { ShipmentPlanningID = id }, Tables.ShipmentPlanningLines);
 
             var ShipmentPlanningLine = queryFactory.GetList<SelectShipmentPlanningLinesDto>(queryLines).ToList();
 
@@ -252,7 +252,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                         JoinType.Left
                     )
 
-                    .Where(new { ProductionOrderID = productionOrderID }, false, false, Tables.ShipmentPlanningLines);
+                    .Where(new { ProductionOrderID = productionOrderID }, Tables.ShipmentPlanningLines);
 
             var ShipmentPlanningLine = queryFactory.Get<SelectShipmentPlanningLinesDto>(queryLines);
 
@@ -268,7 +268,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListShipmentPlanningsDto>>> GetListAsync(ListShipmentPlanningsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(null, "");
             var ShipmentPlannings = queryFactory.GetList<ListShipmentPlanningsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListShipmentPlanningsDto>>(ShipmentPlannings);
@@ -278,7 +278,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShipmentPlanningsDto>> UpdateAsync(UpdateShipmentPlanningsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<SelectShipmentPlanningsDto>(entityQuery);
 
             var queryLines = queryFactory
@@ -307,7 +307,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                         nameof(ProductionOrders.Id),
                         JoinType.Left
                     )
-                  .Where(new { ShipmentPlanningID = input.Id }, false, false, Tables.ShipmentPlanningLines);
+                  .Where(new { ShipmentPlanningID = input.Id }, Tables.ShipmentPlanningLines);
 
             var ShipmentPlanningLine = queryFactory.GetList<SelectShipmentPlanningLinesDto>(queryLines).ToList();
 
@@ -316,7 +316,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
             #region Update Control
             var listQuery = queryFactory
                            .Query()
-                           .From(Tables.ShipmentPlannings).Select("*").Where(new { Code = input.Code }, false, false, Tables.ShipmentPlannings);
+                           .From(Tables.ShipmentPlannings).Select("*").Where(new { Code = input.Code },Tables.ShipmentPlannings);
 
             var list = queryFactory.GetList<ListShipmentPlanningsDto>(listQuery).ToList();
 
@@ -345,7 +345,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectShipmentPlanningLines)
             {
@@ -382,7 +382,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.ShipmentPlanningLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.ShipmentPlanningLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectShipmentPlanningLinesDto>(lineGetQuery);
 
@@ -413,7 +413,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                             IsDeleted = item.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -431,7 +431,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
         public async Task<IDataResult<SelectShipmentPlanningsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<ShipmentPlannings>(entityQuery);
 
@@ -454,7 +454,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var ShipmentPlanningsDto = queryFactory.Update<SelectShipmentPlanningsDto>(query, "Id", true);
             await Task.CompletedTask;

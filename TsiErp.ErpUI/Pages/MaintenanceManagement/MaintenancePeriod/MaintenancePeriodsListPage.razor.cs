@@ -38,7 +38,6 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenancePeriod
         {
             DataSource = new SelectMaintenancePeriodsDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("MainPeriodsChildMenu")
             };
 

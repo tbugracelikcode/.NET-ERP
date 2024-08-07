@@ -21,10 +21,6 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
 
 
 

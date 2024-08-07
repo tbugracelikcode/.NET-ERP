@@ -76,7 +76,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
                  new
                  {
                      Id = PlanningManagementParameter.Id
-                 }, false, false, "").UseIsDelete(false);
+                 }, "").UseIsDelete(false);
 
                 result = queryFactory.Get<SelectPlanningManagementParametersDto>(query);
             }
@@ -92,7 +92,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPlanningManagementParametersDto>> UpdateAsync(UpdatePlanningManagementParametersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            var entityQuery = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(new { Id = input.Id }, "").UseIsDelete(false);
             var entity = queryFactory.Get<PlanningManagementParameters>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Update(new UpdatePlanningManagementParametersDto
@@ -101,7 +101,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
                  MRPIISourceModule = input.MRPIISourceModule,
                  MRPPurchaseTransaction = input.MRPPurchaseTransaction,
                 Id = input.Id
-            }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
             var PlanningManagementParameters = queryFactory.Update<SelectPlanningManagementParametersDto>(query, "Id", true);
 
