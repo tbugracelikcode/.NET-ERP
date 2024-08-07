@@ -19,6 +19,8 @@ using TsiErp.Connector.Services;
 using TsiErp.UretimEkranUI.Services;
 using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
 using TsiErp.UretimEkranUI.Utilities.NavigationUtilities;
+using TsiErp.Business.Entities.Station.Services;
+using TsiErp.Business.Entities.OperationUnsuitabilityReport.Services;
 #if WINDOWS
 #endif
 
@@ -119,6 +121,8 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<IHaltReasonsAppService, HaltReasonsAppService>();
             builder.Services.AddScoped<IGetSQLDateAppService, GetSQLDateAppService>();
             builder.Services.AddScoped<IProtocolServices, ProtocolServices>();
+            builder.Services.AddScoped<IStationsAppService, StationsAppService>();
+            builder.Services.AddScoped<IOperationUnsuitabilityReportsAppService, OperationUnsuitabilityReportsAppService>();
 
 
             ConfigureBusiness(builder);

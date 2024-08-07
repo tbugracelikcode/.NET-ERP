@@ -14,6 +14,7 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.UretimEkranUI.Models;
 using TsiErp.UretimEkranUI.Services;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
@@ -161,22 +162,18 @@ namespace TsiErp.UretimEkranUI.Pages
                 AppService.CurrentOperation.PlannedQuantity = 0;
                 AppService.CurrentOperation.ProducedQuantity = 0;
                 AppService.CurrentOperation.ScrapQuantity = 0;
+
+                var workOrder = (await WorkOrdersAppService.GetAsync(AppService.CurrentOperation.WorkOrderID)).Data;
+
+                if (workOrder != null && workOrder.Id != Guid.Empty)
+                {
+                    workOrder.ProducedQuantity = producedQuantity;
+
+                    var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrder);
+
+                    await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
+                }
             }
-
-            var workOrder = (await WorkOrdersAppService.GetAsync(AppService.CurrentOperation.WorkOrderID)).Data;
-
-            if (workOrder != null && workOrder.Id != Guid.Empty)
-            {
-                workOrder.ProducedQuantity = producedQuantity;
-
-                var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrder);
-
-                await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
-            }
-
-
-
-
 
             await InvokeAsync(StateHasChanged);
         }
@@ -189,16 +186,64 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             ScrapQuantityEntryModalVisible = true;
 
+            scrapQuantity = 0;
+
             await InvokeAsync(StateHasChanged);
         }
 
         public async void ScrapQuantityEntryOnSubmit()
         {
-            AppService.CurrentOperation.ScrapQuantity = scrapQuantity;
 
-            // Miktar girişi ve girilen hurda için oto Operasyon Uygunsuzluk Kaydı açma kodu
+            #region ERP DB OperationUnsuitabilityReport Create
+            Guid stationGroupID = (await StationsAppService.GetAsync(AppService.CurrentOperation.StationID)).Data.GroupID;
+
+            CreateOperationUnsuitabilityReportsDto createOperationUnsuitabilityReportsModel = new CreateOperationUnsuitabilityReportsDto
+            {
+                Description_ = string.Empty,
+                Action_ = string.Empty,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                EmployeeID = AppService.CurrentOperation.EmployeeID,
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("OprUnsRecordsChildMenu"),
+                IsUnsuitabilityWorkOrder = false,
+                OperationID = AppService.CurrentOperation.ProductsOperationID,
+                ProductID = AppService.CurrentOperation.ProductID,
+                ProductionOrderID = AppService.CurrentOperation.ProductionOrderID,
+                StationID = AppService.CurrentOperation.StationID,
+                StationGroupID = stationGroupID,
+                UnsuitabilityItemsID = Guid.Empty,
+                WorkOrderID = AppService.CurrentOperation.WorkOrderID,
+                UnsuitableAmount = scrapQuantity,
+            };
+
+            var result = (await OperationUnsuitabilityReportsAppService.CreateAsync(createOperationUnsuitabilityReportsModel)).Data;
+            #endregion
+
+            #region Local DB ScrapTable Scrap Quantity 
+
+
+            ScrapTable scrapTableModel = new ScrapTable
+            {
+                OperationUnsuitabilityRecordCode = result.FicheNo,
+                OperationUnsuitabilityRecordID = result.Id,
+                ScrapQuantity = scrapQuantity,
+                WorkOrderID = AppService.CurrentOperation.WorkOrderID,
+                WorkOrderNo = AppService.CurrentOperation.WorkOrderNo,
+                EmployeeName = AppService.CurrentOperation.EmployeeName,
+                StationCode = AppService.CurrentOperation.StationCode,
+                Action_ = string.Empty,
+                EmployeeID = AppService.CurrentOperation.EmployeeID,
+                StationID = AppService.CurrentOperation.StationID,
+            };
+
+            await ScrapLocalDbService.InsertAsync(scrapTableModel);
+
+
+
+            #endregion
 
             HideScrapQuantityEntryModal();
+
+            StartScrapTimer();
 
             await InvokeAsync(StateHasChanged);
         }
@@ -223,6 +268,111 @@ namespace TsiErp.UretimEkranUI.Pages
                 }
             }
         }
+
+        #region Scrap Timer
+
+
+        System.Timers.Timer scrapTimer = new System.Timers.Timer(1000);
+
+        DateTime ScrapStartTime = DateTime.Now;
+
+        DateTime UpdatedScrapStartTime = DateTime.Now;
+
+        void StartScrapTimer()
+        {
+            ScrapStartTime = DateTime.Now;
+            UpdatedScrapStartTime = DateTime.Now;
+            operationStartTimer = new System.Timers.Timer(1000);
+            scrapTimer.Elapsed += ScrapTimerOnTimedEvent;
+            scrapTimer.AutoReset = true;
+            scrapTimer.Enabled = true;
+        }
+
+        private async void ScrapTimerOnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            DateTime currentTime = e.SignalTime;
+
+            if (currentTime.Subtract(UpdatedScrapStartTime).Seconds == 10 && AppService.CurrentOperation.ScrapQuantity > 0)
+            {
+
+                var operationUnsuitabilityReportList = (await OperationUnsuitabilityReportsAppService.GetListAsync(new ListOperationUnsuitabilityReportsParameterDto())).Data.Where(t => t.WorkOrderID == AppService.CurrentOperation.WorkOrderID && t.StationCode == AppService.CurrentOperation.StationCode).ToList();
+                scrapQuantity = operationUnsuitabilityReportList.Where(t => t.Action_ == "Hurda").Sum(t => t.UnsuitableAmount);
+
+                #region Local DB CurrentWorkOrder Scrap Quantity Update
+                AppService.CurrentOperation.ScrapQuantity = scrapQuantity;
+
+                var updatedWorkOrder = await OperationDetailLocalDbService.GetAsync(AppService.CurrentOperation.Id);
+
+                updatedWorkOrder.ScrapQuantity = scrapQuantity;
+
+                await OperationDetailLocalDbService.UpdateAsync(updatedWorkOrder);
+                #endregion
+
+                #region Local DB ScrapTable Scrap Quantity 
+
+                var operationUnsuitabilitybyEmployeeReportList = operationUnsuitabilityReportList.Where(t => t.EmployeeName == AppService.CurrentOperation.EmployeeName).ToList();
+
+                var scrapTableList = await ScrapLocalDbService.GetListAsync();
+
+                foreach (var operationUnsuitabilitybyEmployeeReport in operationUnsuitabilitybyEmployeeReportList)
+                {
+                    if(scrapTableList.Any(t=>t.OperationUnsuitabilityRecordID == operationUnsuitabilitybyEmployeeReport.Id))
+                    {
+                        var updatedScrap = scrapTableList.Where(t => t.OperationUnsuitabilityRecordID == operationUnsuitabilitybyEmployeeReport.Id).FirstOrDefault();
+
+                        updatedScrap.ScrapQuantity = scrapQuantity;
+
+                        updatedScrap.Action_ = operationUnsuitabilitybyEmployeeReport.Action_;
+
+                        await ScrapLocalDbService.UpdateAsync(updatedScrap);
+                    }
+                    else
+                    {
+                        ScrapTable scrapTableModel = new ScrapTable
+                        {
+                            OperationUnsuitabilityRecordCode = operationUnsuitabilitybyEmployeeReport.FicheNo,
+                            OperationUnsuitabilityRecordID = operationUnsuitabilitybyEmployeeReport.Id,
+                            ScrapQuantity = scrapQuantity,
+                            WorkOrderID = AppService.CurrentOperation.WorkOrderID,
+                            WorkOrderNo = AppService.CurrentOperation.WorkOrderNo,
+                            EmployeeName = AppService.CurrentOperation.EmployeeName,
+                            StationCode = AppService.CurrentOperation.StationCode,
+                            Action_ = string.Empty,
+                            EmployeeID = AppService.CurrentOperation.EmployeeID,
+                            StationID = AppService.CurrentOperation.StationID,
+                        };
+
+                        await ScrapLocalDbService.InsertAsync(scrapTableModel);
+                    }
+                }
+                #endregion
+
+
+                UpdatedOperationStartTime = currentTime;
+
+                ScrapQuantityCalculate();
+            }
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        void StopScrapTimer()
+        {
+            scrapTimer.Stop();
+            scrapTimer.Enabled = false;
+        }
+
+        public void ScrapTimerDispose()
+        {
+            if (scrapTimer != null)
+            {
+                scrapTimer.Stop();
+                scrapTimer.Enabled = false;
+                scrapTimer.Dispose();
+            }
+        }
+
+        #endregion
 
         #endregion
 

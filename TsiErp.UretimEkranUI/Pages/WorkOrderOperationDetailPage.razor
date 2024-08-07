@@ -18,6 +18,11 @@
 @inject OperationDetailLocalDbService OperationDetailLocalDbService
 @inject IEmployeesAppService EmployeesAppService
 @inject IWorkOrdersAppService WorkOrdersAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
+@inject IStationsAppService StationsAppService
+@inject IOperationUnsuitabilityReportsAppService OperationUnsuitabilityReportsAppService
+@inject ScrapLocalDbService ScrapLocalDbService
 
 
 <div style="height:800px">
@@ -100,7 +105,7 @@
                                     </td>
 
                                     <td style="width:20%">
-                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ScrapQuantityEntryButtonClicked" Disabled=ScrapQuantityButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.CircleClose"></SfIcon>&nbsp;Hurda Adet Gir</SfButton>
+                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ScrapQuantityEntryButtonClicked" Disabled=ScrapQuantityButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.CircleClose"></SfIcon>&nbsp;Uygunsuzluk Adet Gir</SfButton>
                                     </td>
                                 </tr>
                             </table>
@@ -209,7 +214,7 @@
 
 
                                             <br />
-                                            <SfButton Disabled="IncreaseQuantityDisabled" OnClick="IncreaseQuantity" CssClass="TSIOperationPageAdjustmentButton"><SfIcon Size="IconSize.Large" Name="IconName.ArrowRight" ></SfIcon>&nbsp;&nbsp;Adet Arttır</SfButton>
+                                            <SfButton Disabled="IncreaseQuantityDisabled" OnClick="IncreaseQuantity" CssClass="TSIOperationPageAdjustmentButton"><SfIcon Size="IconSize.Large" Name="IconName.ArrowRight"></SfIcon>&nbsp;&nbsp;Adet Arttır</SfButton>&nbsp;&nbsp;&nbsp;&nbsp; HURDA = @Convert.ToInt32(AppService.CurrentOperation.ScrapQuantity)
                                         </Template>
                                     </DxGridLayoutItem>
 
