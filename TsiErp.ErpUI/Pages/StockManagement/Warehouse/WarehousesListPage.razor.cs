@@ -35,7 +35,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Warehouse
         {
             DataSource = new SelectWarehousesDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("WarehousesChildMenu")
             };
 

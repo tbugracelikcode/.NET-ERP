@@ -173,7 +173,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
         {
             DataSource = new SelectTemplateOperationsDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("TempOperationsChildMenu"),
                 WorkScore = 0
             };

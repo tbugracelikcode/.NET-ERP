@@ -48,7 +48,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUnsuitabilityItemSPCsDto>> CreateAsync(CreateUnsuitabilityItemSPCsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.UnsuitabilityItemSPCs).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.UnsuitabilityItemSPCs).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<UnsuitabilityItemSPCs>(listQuery).ToList();
 
             #region Code Control 
@@ -132,16 +132,16 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.UnsuitabilityItemSPCs).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.UnsuitabilityItemSPCs).Select("*").Where(new { Id = id },  "");
 
             var UnsuitabilityItemSPCs = queryFactory.Get<SelectUnsuitabilityItemSPCsDto>(query);
 
             if (UnsuitabilityItemSPCs.Id != Guid.Empty && UnsuitabilityItemSPCs != null)
             {
 
-                var deleteQuery = queryFactory.Query().From(Tables.UnsuitabilityItemSPCs).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.UnsuitabilityItemSPCs).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.UnsuitabilityItemSPCLines).Delete(LoginedUserService.UserId).Where(new { UnsuitabilitySPCID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.UnsuitabilityItemSPCLines).Delete(LoginedUserService.UserId).Where(new { UnsuitabilitySPCID = id }, "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -154,11 +154,11 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
             }
             else
             {
-                var queryLineGet = queryFactory.Query().From(Tables.UnsuitabilityItemSPCLines).Select("*").Where(new { Id = id }, false, false, "");
+                var queryLineGet = queryFactory.Query().From(Tables.UnsuitabilityItemSPCLines).Select("*").Where(new { Id = id }, "");
 
                 var UnsuitabilityItemSPCsLineGet = queryFactory.Get<SelectUnsuitabilityItemSPCLinesDto>(queryLineGet);
 
-                var queryLine = queryFactory.Query().From(Tables.UnsuitabilityItemSPCLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.UnsuitabilityItemSPCLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var UnsuitabilityItemSPCLines = queryFactory.Update<SelectUnsuitabilityItemSPCLinesDto>(queryLine, "Id", true);
 
@@ -176,7 +176,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                    .Query()
                    .From(Tables.UnsuitabilityItemSPCs)
                    .Select("*")
-                    .Where(new { Id = id }, false, false, Tables.UnsuitabilityItemSPCs);
+                    .Where(new { Id = id }, Tables.UnsuitabilityItemSPCs);
 
             var UnsuitabilityItemSPCs = queryFactory.Get<SelectUnsuitabilityItemSPCsDto>(query);
 
@@ -205,7 +205,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                         nameof(UnsuitabilityItems.Id),
                         JoinType.Left
                     )
-                    .Where(new { UnsuitabilitySPCID = id }, false, false, Tables.UnsuitabilityItemSPCLines);
+                    .Where(new { UnsuitabilitySPCID = id }, Tables.UnsuitabilityItemSPCLines);
 
             var UnsuitabilityItemSPCLine = queryFactory.GetList<SelectUnsuitabilityItemSPCLinesDto>(queryLines).ToList();
 
@@ -225,7 +225,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                    .Query()
                     .From(Tables.UnsuitabilityItemSPCs)
                    .Select("*")
-                    .Where(null, false, false, Tables.UnsuitabilityItemSPCs);
+                    .Where(null,  Tables.UnsuitabilityItemSPCs);
 
             var UnsuitabilityItemSPCs = queryFactory.GetList<ListUnsuitabilityItemSPCsDto>(query).ToList();
             await Task.CompletedTask;
@@ -241,7 +241,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                    .Query()
                    .From(Tables.UnsuitabilityItemSPCs)
                    .Select("*")
-                    .Where(new { Id = input.Id }, false, false, Tables.UnsuitabilityItemSPCs);
+                    .Where(new { Id = input.Id }, Tables.UnsuitabilityItemSPCs);
 
             var entity = queryFactory.Get<SelectUnsuitabilityItemSPCsDto>(entityQuery);
 
@@ -270,7 +270,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                         nameof(UnsuitabilityItems.Id),
                         JoinType.Left
                     )
-                    .Where(new { UnsuitabilitySPCID = input.Id }, false, false, Tables.UnsuitabilityItemSPCLines);
+                    .Where(new { UnsuitabilitySPCID = input.Id }, Tables.UnsuitabilityItemSPCLines);
 
             var UnsuitabilityItemSPCLine = queryFactory.GetList<SelectUnsuitabilityItemSPCLinesDto>(queryLines).ToList();
 
@@ -281,7 +281,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                            .Query()
                            .From(Tables.UnsuitabilityItemSPCs)
                    .Select("*")
-                    .Where(new { Code = input.Code }, false, false, Tables.UnsuitabilityItemSPCs);
+                    .Where(new { Code = input.Code },  Tables.UnsuitabilityItemSPCs);
 
             var list = queryFactory.GetList<ListUnsuitabilityItemSPCsDto>(listQuery).ToList();
 
@@ -308,7 +308,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },  "");
 
             foreach (var item in input.SelectUnsuitabilityItemSPCLines)
             {
@@ -343,7 +343,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.UnsuitabilityItemSPCLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.UnsuitabilityItemSPCLines).Select("*").Where(new { Id = item.Id },  "");
 
                     var line = queryFactory.Get<SelectUnsuitabilityItemSPCLinesDto>(lineGetQuery);
 
@@ -372,7 +372,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                             IsDeleted = item.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id },  "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -390,7 +390,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
 
         public async Task<IDataResult<SelectUnsuitabilityItemSPCsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.UnsuitabilityItemSPCs).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.UnsuitabilityItemSPCs).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<UnsuitabilityItemSPCs>(entityQuery);
 
@@ -411,7 +411,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var UnsuitabilityItemSPCsDto = queryFactory.Update<SelectUnsuitabilityItemSPCsDto>(query, "Id", true);
             await Task.CompletedTask;

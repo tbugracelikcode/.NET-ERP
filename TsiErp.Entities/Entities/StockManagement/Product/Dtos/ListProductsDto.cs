@@ -19,10 +19,6 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
-        /// <summary>
         /// Birim Ağırlığı
         /// </summary>
         public decimal UnitWeight { get; set; }

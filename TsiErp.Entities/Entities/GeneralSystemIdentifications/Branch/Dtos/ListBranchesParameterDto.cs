@@ -9,9 +9,5 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos
 {
     public class ListBranchesParameterDto : FullAuditedEntityDto
     {
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; } = true;
     }
 }

@@ -40,7 +40,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEducationLevelScoresDto>> CreateAsync(CreateEducationLevelScoresDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<EducationLevelScores>(listQuery).ToList();
 
@@ -105,7 +105,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.EducationLevelScores).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.EducationLevelScores).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var EducationLevelScores = queryFactory.Update<SelectEducationLevelScoresDto>(query, "Id", true);
 
@@ -123,7 +123,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
             new
             {
                 Id = id
-            }, false, false, "");
+            },  "");
             var EducationLevelScore = queryFactory.Get<SelectEducationLevelScoresDto>(query);
 
 
@@ -137,7 +137,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEducationLevelScoresDto>>> GetListAsync(ListEducationLevelScoresParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(null, "");
             var EducationLevelScores = queryFactory.GetList<ListEducationLevelScoresDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListEducationLevelScoresDto>>(EducationLevelScores);
@@ -148,12 +148,12 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEducationLevelScoresDto>> UpdateAsync(UpdateEducationLevelScoresDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<EducationLevelScores>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<EducationLevelScores>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -179,7 +179,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var EducationLevelScores = queryFactory.Update<SelectEducationLevelScoresDto>(query, "Id", true);
 
@@ -191,7 +191,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
 
         public async Task<IDataResult<SelectEducationLevelScoresDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<EducationLevelScores>(entityQuery);
 
@@ -212,7 +212,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var EducationLevelScores = queryFactory.Update<SelectEducationLevelScoresDto>(query, "Id", true);
             await Task.CompletedTask;

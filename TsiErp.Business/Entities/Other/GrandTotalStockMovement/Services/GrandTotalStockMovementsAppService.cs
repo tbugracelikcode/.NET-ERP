@@ -76,7 +76,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Delete(LoginedUserService.UserId).Where(new { Id = id },"");
 
             var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
 
@@ -112,7 +112,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                             nameof(Warehouses.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.GrandTotalStockMovements);
+                        .Where(new { Id = id }, Tables.GrandTotalStockMovements);
 
             var grandTotalStockMovement = queryFactory.Get<SelectGrandTotalStockMovementsDto>(query);
 
@@ -151,7 +151,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                             nameof(GrandTotalStockMovements.WarehouseID),
                             nameof(Warehouses.Id),
                             JoinType.Left
-                        ).Where(null, false, false, Tables.GrandTotalStockMovements);
+                        ).Where(null, Tables.GrandTotalStockMovements);
 
             var grandTotalStockMovements = queryFactory.GetList<ListGrandTotalStockMovementsDto>(query).ToList();
 
@@ -165,7 +165,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> UpdateAsync(UpdateGrandTotalStockMovementsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<GrandTotalStockMovements>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
@@ -194,7 +194,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 BranchID = input.BranchID.GetValueOrDefault(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
 

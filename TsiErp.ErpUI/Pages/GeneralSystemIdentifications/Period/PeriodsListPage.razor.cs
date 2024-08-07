@@ -39,7 +39,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Period
         {
             DataSource = new SelectPeriodsDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("PeriodsChildMenu")
             };
 

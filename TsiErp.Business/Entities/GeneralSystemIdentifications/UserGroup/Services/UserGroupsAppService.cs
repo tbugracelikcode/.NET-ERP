@@ -37,7 +37,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUserGroupsDto>> CreateAsync(CreateUserGroupsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.UserGroups).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.UserGroups).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<UserGroups>(listQuery).ToList();
 
@@ -56,7 +56,6 @@ namespace TsiErp.Business.Entities.UserGroup.Services
             {
                 Code = input.Code,
                 Name = input.Name,
-                IsActive = true,
                 Id = addedEntityId,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
@@ -84,7 +83,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.UserGroups).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            var query = queryFactory.Query().From(Tables.UserGroups).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var userGroups = queryFactory.Update<SelectUserGroupsDto>(query, "Id", true);
 
@@ -100,7 +99,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
             new
             {
                 Id = id
-            }, true, true, "");
+            }, "");
             var userGroup = queryFactory.Get<SelectUserGroupsDto>(query);
 
 
@@ -114,7 +113,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUserGroupsDto>>> GetListAsync(ListUserGroupsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.UserGroups).Select("*").Where(null, true, true, "");
+            var query = queryFactory.Query().From(Tables.UserGroups).Select("*").Where(null, "");
             var userGroups = queryFactory.GetList<ListUserGroupsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListUserGroupsDto>>(userGroups);
@@ -125,12 +124,12 @@ namespace TsiErp.Business.Entities.UserGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUserGroupsDto>> UpdateAsync(UpdateUserGroupsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.UserGroups).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.UserGroups).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<UserGroups>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.UserGroups).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.UserGroups).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<UserGroups>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -145,7 +144,6 @@ namespace TsiErp.Business.Entities.UserGroup.Services
                 Code = input.Code,
                 Name = input.Name,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = false,
@@ -155,7 +153,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var userGroups = queryFactory.Update<SelectUserGroupsDto>(query, "Id", true);
 
@@ -167,7 +165,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
 
         public async Task<IDataResult<SelectUserGroupsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.UserGroups).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.UserGroups).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<UserGroups>(entityQuery);
 
@@ -175,7 +173,6 @@ namespace TsiErp.Business.Entities.UserGroup.Services
             {
                 Code = entity.Code,
                 Name = entity.Name,
-                IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -187,7 +184,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var userGroups = queryFactory.Update<SelectUserGroupsDto>(query, "Id", true);
             await Task.CompletedTask;

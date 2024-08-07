@@ -50,10 +50,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos
         /// Ürün Id
         /// </summary>
         public Guid ProductID { get; set; }
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
 
         /// <summary>
         /// Toplam Miktar

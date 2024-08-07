@@ -40,7 +40,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShippingAdressesDto>> CreateAsync(CreateShippingAdressesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("*").Where(new { Code = input.Code },  "");
 
             var list = queryFactory.ControlList<ShippingAdresses>(listQuery).ToList();
 
@@ -114,7 +114,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.ShippingAdresses).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.ShippingAdresses).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var shippingAdresses = queryFactory.Update<SelectShippingAdressesDto>(query, "Id", true);
 
@@ -137,7 +137,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.ShippingAdresses);
+                        .Where(new { Id = id }, Tables.ShippingAdresses);
 
             var shippingAdress = queryFactory.Get<SelectShippingAdressesDto>(query);
 
@@ -163,7 +163,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
                             nameof(ShippingAdresses.CustomerCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
-                        ).Where(null, false, false, Tables.ShippingAdresses);
+                        ).Where(null, Tables.ShippingAdresses);
 
             var shippingAdresses = queryFactory.GetList<ListShippingAdressesDto>(query).ToList();
 
@@ -178,12 +178,12 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShippingAdressesDto>> UpdateAsync(UpdateShippingAdressesDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("*").Where(new { Id = input.Id },  "");
             var entity = queryFactory.Get<ShippingAdresses>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("*").Where(new { Code = input.Code },  "");
             var list = queryFactory.GetList<ShippingAdresses>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -218,7 +218,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },  "");
 
             var shippingAdresses = queryFactory.Update<SelectShippingAdressesDto>(query, "Id", true);
 
@@ -233,7 +233,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
 
         public async Task<IDataResult<SelectShippingAdressesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<ShippingAdresses>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ShippingAdresses).Update(new UpdateShippingAdressesDto
@@ -262,7 +262,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var shippingAdresses = queryFactory.Update<SelectShippingAdressesDto>(query, "Id", true);
 

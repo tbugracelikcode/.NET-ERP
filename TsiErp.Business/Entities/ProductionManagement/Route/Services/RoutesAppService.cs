@@ -44,7 +44,7 @@ namespace TsiErp.Business.Entities.Route.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectRoutesDto>> CreateAsync(CreateRoutesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Routes).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Routes).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<Routes>(listQuery).ToList();
 
             #region Code Control 
@@ -73,7 +73,6 @@ namespace TsiErp.Business.Entities.Route.Services
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 Id = addedEntityId,
-                IsActive = true,
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
@@ -139,15 +138,15 @@ namespace TsiErp.Business.Entities.Route.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.Routes).Select("*").Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.Routes).Select("*").Where(new { Id = id }, "");
 
                 var routes = queryFactory.Get<SelectRoutesDto>(query);
 
                 if (routes.Id != Guid.Empty && routes != null)
                 {
-                    var deleteQuery = queryFactory.Query().From(Tables.Routes).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                    var deleteQuery = queryFactory.Query().From(Tables.Routes).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                    var lineDeleteQuery = queryFactory.Query().From(Tables.RouteLines).Delete(LoginedUserService.UserId).Where(new { RouteID = id }, false, false, "");
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.RouteLines).Delete(LoginedUserService.UserId).Where(new { RouteID = id }, "");
 
                     deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -158,7 +157,7 @@ namespace TsiErp.Business.Entities.Route.Services
                 }
                 else
                 {
-                    var queryLine = queryFactory.Query().From(Tables.RouteLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var queryLine = queryFactory.Query().From(Tables.RouteLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                     var routeLines = queryFactory.Update<SelectRouteLinesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.RouteLines, LogType.Delete, id);
                     await Task.CompletedTask;
@@ -187,7 +186,7 @@ namespace TsiErp.Business.Entities.Route.Services
                         nameof(StationGroups.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id }, true, true, Tables.Routes);
+                    .Where(new { Id = id }, Tables.Routes);
 
             var routes = queryFactory.Get<SelectRoutesDto>(query);
 
@@ -209,7 +208,7 @@ namespace TsiErp.Business.Entities.Route.Services
                         nameof(ProductsOperations.Id),
                         JoinType.Left
                     )
-                    .Where(new { RouteID = id }, false, false, Tables.RouteLines);
+                    .Where(new { RouteID = id }, Tables.RouteLines);
 
             var routeLine = queryFactory.GetList<SelectRouteLinesDto>(queryLines).ToList();
 
@@ -243,7 +242,7 @@ namespace TsiErp.Business.Entities.Route.Services
                         nameof(StationGroups.Id),
                         JoinType.Left
                     )
-                    .Where(new { ProductID = productId }, true, true, Tables.Routes);
+                    .Where(new { ProductID = productId }, Tables.Routes);
 
             var routes = queryFactory.Get<SelectRoutesDto>(query);
 
@@ -265,7 +264,7 @@ namespace TsiErp.Business.Entities.Route.Services
                         nameof(ProductsOperations.Id),
                         JoinType.Left
                     )
-                    .Where(new { RouteID = routes.Id }, false, false, Tables.RouteLines);
+                    .Where(new { RouteID = routes.Id }, Tables.RouteLines);
 
             var routeLine = queryFactory.GetList<SelectRouteLinesDto>(queryLines).ToList();
 
@@ -299,7 +298,7 @@ namespace TsiErp.Business.Entities.Route.Services
                         nameof(StationGroups.Id),
                         JoinType.Left
                     )
-                    .Where(null, true, true, Tables.Routes);
+                    .Where(null, Tables.Routes);
 
             var routes = queryFactory.GetList<ListRoutesDto>(query).ToList();
 
@@ -330,7 +329,7 @@ namespace TsiErp.Business.Entities.Route.Services
                         nameof(StationGroups.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id }, true, true, Tables.Routes);
+                    .Where(new { Id = input.Id }, Tables.Routes);
 
             var entity = queryFactory.Get<SelectRoutesDto>(entityQuery);
 
@@ -352,7 +351,7 @@ namespace TsiErp.Business.Entities.Route.Services
                         nameof(ProductsOperations.Id),
                         JoinType.Left
                     )
-                    .Where(new { RouteID = input.Id }, false, false, Tables.RouteLines);
+                    .Where(new { RouteID = input.Id }, Tables.RouteLines);
 
             var routeLine = queryFactory.GetList<SelectRouteLinesDto>(queryLines).ToList();
 
@@ -377,7 +376,7 @@ namespace TsiErp.Business.Entities.Route.Services
                         nameof(StationGroups.Id),
                         JoinType.Left
                     )
-                            .Where(new { Code = input.Code }, false, false, Tables.Routes);
+                            .Where(new { Code = input.Code }, Tables.Routes);
 
             var list = queryFactory.GetList<ListRoutesDto>(listQuery).ToList();
 
@@ -402,12 +401,11 @@ namespace TsiErp.Business.Entities.Route.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
-                IsActive = input.IsActive,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectRouteLines)
             {
@@ -440,7 +438,7 @@ namespace TsiErp.Business.Entities.Route.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.RouteLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.RouteLines).Select("*").Where(new { Id = item.Id },"");
 
                     var line = queryFactory.Get<SelectRouteLinesDto>(lineGetQuery);
 
@@ -467,7 +465,7 @@ namespace TsiErp.Business.Entities.Route.Services
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -496,7 +494,7 @@ namespace TsiErp.Business.Entities.Route.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
-                    .Where(new { ProductID = productId }, true, true, Tables.ProductsOperations);
+                    .Where(new { ProductID = productId }, Tables.ProductsOperations);
 
             var productsOperations = queryFactory.GetList<ListProductsOperationsDto>(query).ToList();
 
@@ -508,7 +506,7 @@ namespace TsiErp.Business.Entities.Route.Services
 
         public async Task<IDataResult<SelectRoutesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Routes).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Routes).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Routes>(entityQuery);
 
@@ -527,12 +525,11 @@ namespace TsiErp.Business.Entities.Route.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = entity.Id,
-                IsActive = entity.IsActive,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 Name = entity.Name,
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var routesDto = queryFactory.Update<SelectRoutesDto>(query, "Id", true);
             await Task.CompletedTask;
@@ -561,7 +558,7 @@ namespace TsiErp.Business.Entities.Route.Services
                        nameof(ProductsOperations.Id),
                        JoinType.Left
                    )
-                   .Where(new { ProductsOperationID = productsOperationID }, false, false, Tables.RouteLines);
+                   .Where(new { ProductsOperationID = productsOperationID }, Tables.RouteLines);
 
             var routeLine = queryFactory.Get<SelectRouteLinesDto>(queryLines);
 

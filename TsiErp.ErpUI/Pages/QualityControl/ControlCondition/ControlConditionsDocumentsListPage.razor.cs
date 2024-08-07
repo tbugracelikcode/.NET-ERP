@@ -40,7 +40,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ControlCondition
         {
             DataSource = new SelectControlConditionsDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ControlConditionsChildMenu")
             };
 

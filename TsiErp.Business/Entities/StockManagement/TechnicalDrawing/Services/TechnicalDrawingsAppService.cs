@@ -37,7 +37,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> CreateAsync(CreateTechnicalDrawingsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { RevisionNo = input.RevisionNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { RevisionNo = input.RevisionNo },  "");
 
             var list = queryFactory.ControlList<TechnicalDrawings>(listQuery).ToList();
 
@@ -107,7 +107,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.TechnicalDrawings).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.TechnicalDrawings).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
                 var technicalDrawings = queryFactory.Update<SelectTechnicalDrawingsDto>(query, "Id", true);
 
@@ -137,7 +137,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.TechnicalDrawings);
+                        .Where(new { Id = id },  Tables.TechnicalDrawings);
 
             var technicalDrawing = queryFactory.Get<SelectTechnicalDrawingsDto>(query);
 
@@ -169,7 +169,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                             nameof(TechnicalDrawings.CustomerCurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
-                        ).Where(null, false, false, Tables.TechnicalDrawings);
+                        ).Where(null,  Tables.TechnicalDrawings);
 
             var technicalDrawings = queryFactory.GetList<ListTechnicalDrawingsDto>(query).ToList();
 
@@ -197,7 +197,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                             nameof(TechnicalDrawings.CustomerCurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
-                        ).Where(new { ProductID = productId }, false, false, Tables.TechnicalDrawings);
+                        ).Where(new { ProductID = productId },  Tables.TechnicalDrawings);
 
             var technicalDrawings = queryFactory.GetList<SelectTechnicalDrawingsDto>(query).ToList();
 
@@ -211,12 +211,12 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> UpdateAsync(UpdateTechnicalDrawingsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<TechnicalDrawings>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { RevisionNo = input.RevisionNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { RevisionNo = input.RevisionNo }, "");
             var list = queryFactory.GetList<TechnicalDrawings>(listQuery).ToList();
 
             if (list.Count > 0 && entity.RevisionNo != input.RevisionNo)
@@ -250,7 +250,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var technicalDrawings = queryFactory.Update<SelectTechnicalDrawingsDto>(query, "Id", true);
 
@@ -263,7 +263,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<TechnicalDrawings>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.TechnicalDrawings).Update(new UpdateTechnicalDrawingsDto
@@ -291,7 +291,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var technicalDrawings = queryFactory.Update<SelectTechnicalDrawingsDto>(query, "Id", true);
 

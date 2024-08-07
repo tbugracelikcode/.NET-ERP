@@ -169,9 +169,5 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos
         /// Fason Tedarikçi
         /// </summary>
         public bool ContractSupplier { get; set; }
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
     }
 }

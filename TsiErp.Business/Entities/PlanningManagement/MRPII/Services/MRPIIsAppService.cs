@@ -46,7 +46,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMRPIIsDto>> CreateAsync(CreateMRPIIsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.MRPIIs).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.MRPIIs).Select("*").Where(new { Code = input.Code },  "");
             var list = queryFactory.ControlList<MRPIIs>(listQuery).ToList();
 
             #region Code Control 
@@ -123,15 +123,15 @@ namespace TsiErp.Business.Entities.MRPII.Services
         public async Task<IResult> DeleteAsync(Guid id)
         {
 
-            var query = queryFactory.Query().From(Tables.MRPIIs).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.MRPIIs).Select("*").Where(new { Id = id },  "");
 
             var MRPIIs = queryFactory.Get<SelectMRPIIsDto>(query);
 
             if (MRPIIs.Id != Guid.Empty && MRPIIs != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.MRPIIs).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.MRPIIs).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.MRPIILines).Delete(LoginedUserService.UserId).Where(new { MRPIIID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.MRPIILines).Delete(LoginedUserService.UserId).Where(new { MRPIIID = id },  "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -142,7 +142,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.MRPIILines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.MRPIILines).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
                 var MRPIILines = queryFactory.Update<SelectMRPIILinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MRPIILines, LogType.Delete, id);
                 await Task.CompletedTask;
@@ -157,7 +157,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
             new
             {
                 Id = id
-            }, false, false, "");
+            }, "");
             var MRPII = queryFactory.Get<SelectMRPIIsDto>(query);
 
             var queryLines = queryFactory
@@ -194,7 +194,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                         JoinType.Left
                     )
 
-                    .Where(new { MRPIIID = id }, false, false, Tables.MRPIILines);
+                    .Where(new { MRPIIID = id }, Tables.MRPIILines);
 
             var MRPIILine = queryFactory.GetList<SelectMRPIILinesDto>(queryLines).ToList();
 
@@ -211,7 +211,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMRPIIsDto>>> GetListAsync(ListMRPIIsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.MRPIIs).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.MRPIIs).Select("*").Where(null, "");
             var MRPIIs = queryFactory.GetList<ListMRPIIsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListMRPIIsDto>>(MRPIIs);
@@ -225,7 +225,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
             new
             {
                 Id = input.Id
-            }, false, false, "");
+            }, "");
             var entity = queryFactory.Get<SelectMRPIIsDto>(entityQuery);
 
             var queryLines = queryFactory
@@ -261,7 +261,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                         nameof(OrderAcceptanceRecords.Id),
                         JoinType.Left
                     )
-                  .Where(new { MRPIIID = input.Id }, false, false, Tables.MRPIILines);
+                  .Where(new { MRPIIID = input.Id }, Tables.MRPIILines);
 
             var MRPIILine = queryFactory.GetList<SelectMRPIILinesDto>(queryLines).ToList();
 
@@ -270,7 +270,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
             #region Update Control
             var listQuery = queryFactory
                            .Query()
-                           .From(Tables.MRPIIs).Select("*").Where(new { Code = input.Code }, false, false, Tables.MRPIIs);
+                           .From(Tables.MRPIIs).Select("*").Where(new { Code = input.Code }, Tables.MRPIIs);
 
             var list = queryFactory.GetList<ListMRPIIsDto>(listQuery).ToList();
 
@@ -295,7 +295,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectMRPIILines)
             {
@@ -330,7 +330,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.MRPIILines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.MRPIILines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectMRPIILinesDto>(lineGetQuery);
 
@@ -359,7 +359,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                             IsDeleted = item.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -377,7 +377,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
 
         public async Task<IDataResult<SelectMRPIIsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.MRPIIs).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.MRPIIs).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<MRPIIs>(entityQuery);
 
@@ -396,7 +396,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var MRPIIsDto = queryFactory.Update<SelectMRPIIsDto>(query, "Id", true);
             await Task.CompletedTask;

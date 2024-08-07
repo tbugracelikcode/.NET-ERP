@@ -30,9 +30,6 @@ namespace TsiErp.Entities.Entities.QualityControl.ControlCondition
         public string Description_ { get; set; }
 
 
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        public bool IsActive { get; set; }
-
         [SqlColumnType(MaxLength = 50, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Kalite Plan Türü Açıklaması

@@ -44,7 +44,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectForecastsDto>> CreateAsync(CreateForecastsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Forecasts).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Forecasts).Select("*").Where(new { Code = input.Code },  "");
             var list = queryFactory.ControlList<Forecasts>(listQuery).ToList();
 
             #region Code Control 
@@ -122,15 +122,15 @@ namespace TsiErp.Business.Entities.Forecast.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Forecasts).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.Forecasts).Select("*").Where(new { Id = id }, "");
 
             var forecasts = queryFactory.Get<SelectForecastsDto>(query);
 
             if (forecasts.Id != Guid.Empty && forecasts != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.Forecasts).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.Forecasts).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.ForecastLines).Delete(LoginedUserService.UserId).Where(new { ForecastID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.ForecastLines).Delete(LoginedUserService.UserId).Where(new { ForecastID = id }, "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -141,7 +141,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.ForecastLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.ForecastLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                 var forecastLines = queryFactory.Update<SelectForecastLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ForecastLines, LogType.Delete, id);
                 await Task.CompletedTask;
@@ -177,7 +177,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id }, false, false, Tables.Forecasts);
+                    .Where(new { Id = id },  Tables.Forecasts);
 
             var forecasts = queryFactory.Get<SelectForecastsDto>(query);
 
@@ -192,7 +192,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
-                    .Where(new { ForecastID = id }, false, false, Tables.ForecastLines);
+                    .Where(new { ForecastID = id },  Tables.ForecastLines);
 
             var forecastLine = queryFactory.GetList<SelectForecastLinesDto>(queryLines).ToList();
 
@@ -233,7 +233,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.Forecasts);
+                    .Where(null, Tables.Forecasts);
 
             var forecasts = queryFactory.GetList<ListForecastsDto>(query).ToList();
 
@@ -271,7 +271,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id }, false, false, Tables.Forecasts);
+                    .Where(new { Id = input.Id },  Tables.Forecasts);
 
             var entity = queryFactory.Get<SelectForecastsDto>(entityQuery);
 
@@ -286,7 +286,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
-                    .Where(new { ForecastID = input.Id }, false, false, Tables.ForecastLines);
+                    .Where(new { ForecastID = input.Id }, Tables.ForecastLines);
 
             var forecastLine = queryFactory.GetList<SelectForecastLinesDto>(queryLines).ToList();
 
@@ -318,7 +318,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                                  nameof(CurrentAccountCards.Id),
                                  JoinType.Left
                              )
-                             .Where(new { Code = input.Code }, false, false, Tables.Forecasts);
+                             .Where(new { Code = input.Code },  Tables.Forecasts);
 
             var list = queryFactory.GetList<ListForecastsDto>(listQuery).ToList();
 
@@ -350,7 +350,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },  "");
 
             foreach (var item in input.SelectForecastLines)
             {
@@ -381,7 +381,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.ForecastLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.ForecastLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectForecastLinesDto>(lineGetQuery);
 
@@ -406,7 +406,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                             ProductID = item.ProductID.GetValueOrDefault(),
                             EndDate = item.EndDate,
                             StartDate = item.StartDate
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id },  "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -424,7 +424,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
         public async Task<IDataResult<SelectForecastsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Forecasts).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.Forecasts).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Forecasts>(entityQuery);
 
@@ -450,7 +450,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault()
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var forecastsDto = queryFactory.Update<SelectForecastsDto>(query, "Id", true);
             await Task.CompletedTask;

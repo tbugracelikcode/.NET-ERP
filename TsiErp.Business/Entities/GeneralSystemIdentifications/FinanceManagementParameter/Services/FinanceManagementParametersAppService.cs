@@ -63,7 +63,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagemen
                  new
                  {
                      Id = FinanceManagementParameter.Id
-                 }, false, false, "").UseIsDelete(false);
+                 }, "").UseIsDelete(false);
 
                 result = queryFactory.Get<SelectFinanceManagementParametersDto>(query);
             }
@@ -79,14 +79,14 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagemen
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectFinanceManagementParametersDto>> UpdateAsync(UpdateFinanceManagementParametersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.FinanceManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            var entityQuery = queryFactory.Query().From(Tables.FinanceManagementParameters).Select("*").Where(new { Id = input.Id }, "").UseIsDelete(false);
 
             var entity = queryFactory.Get<FinanceManagementParameters>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.FinanceManagementParameters).Update(new UpdateFinanceManagementParametersDto
             {
                 Id = input.Id
-            }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            }).Where(new { Id = input.Id },  "").UseIsDelete(false);
 
 
             var FinanceManagementParameters = queryFactory.Update<SelectFinanceManagementParametersDto>(query, "Id", true);

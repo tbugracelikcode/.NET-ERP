@@ -42,7 +42,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectReport8DsDto>> CreateAsync(CreateReport8DsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Report8Ds).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Report8Ds).Select("*").Where(new { Code = input.Code },  "");
 
             var list = queryFactory.ControlList<Report8Ds>(listQuery).ToList();
 
@@ -282,7 +282,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.Report8Ds).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.Report8Ds).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
                 var Report8Ds = queryFactory.Update<SelectReport8DsDto>(query, "Id", true);
 
@@ -327,7 +327,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
                             nameof(TechnicalDrawings.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.Report8Ds);
+                        .Where(new { Id = id }, Tables.Report8Ds);
 
             var Report8D = queryFactory.Get<SelectReport8DsDto>(query);
 
@@ -374,7 +374,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
                             nameof(Report8Ds.TechnicalDrawingID),
                             nameof(TechnicalDrawings.Id),
                             JoinType.Left
-                        ).Where(null, false, false, Tables.Report8Ds);
+                        ).Where(null,  Tables.Report8Ds);
 
 
             var Report8D = queryFactory.GetList<ListReport8DsDto>(query).ToList();
@@ -387,12 +387,12 @@ namespace TsiErp.Business.Entities.Report8D.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectReport8DsDto>> UpdateAsync(UpdateReport8DsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Report8Ds).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.Report8Ds).Select("*").Where(new { Id = input.Id },  "");
             var entity = queryFactory.Get<Report8Ds>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.Report8Ds).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Report8Ds).Select("*").Where(new { Code = input.Code },  "");
             var list = queryFactory.GetList<Report8Ds>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -608,7 +608,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },  "");
 
             var Report8Ds = queryFactory.Update<SelectReport8DsDto>(query, "Id", true);
 
@@ -622,7 +622,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
         public async Task<IDataResult<SelectReport8DsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Report8Ds).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.Report8Ds).Select("*").Where(new { Id = id },  "");
             var entity = queryFactory.Get<Report8Ds>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.Report8Ds).Update(new UpdateReport8DsDto
@@ -832,7 +832,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var Report8Ds = queryFactory.Update<SelectReport8DsDto>(query, "Id", true);
 

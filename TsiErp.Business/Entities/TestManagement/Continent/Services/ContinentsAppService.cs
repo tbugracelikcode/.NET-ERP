@@ -45,7 +45,7 @@ namespace TsiErp.Business.Entities.Continent.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContinentsDto>> CreateAsync(CreateContinentsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Continents).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Continents).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<Continents>(listQuery).ToList();
 
             #region Code Control 
@@ -118,15 +118,15 @@ namespace TsiErp.Business.Entities.Continent.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Continents).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.Continents).Select("*").Where(new { Id = id },  "");
 
             var Continents = queryFactory.Get<SelectContinentsDto>(query);
 
             if (Continents.Id != Guid.Empty && Continents != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.Continents).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.Continents).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.ContinentLines).Delete(LoginedUserService.UserId).Where(new { ContinentID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.ContinentLines).Delete(LoginedUserService.UserId).Where(new { ContinentID = id },  "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -137,7 +137,7 @@ namespace TsiErp.Business.Entities.Continent.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.ContinentLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.ContinentLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                 var continentLines = queryFactory.Update<SelectContinentLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContinentLines, LogType.Delete, id);
                 await Task.CompletedTask;
@@ -159,7 +159,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                             nameof(Employees.Id),
                             JoinType.Left
                         )
-                   .Where(new { Id = id }, false, false, Tables.Continents);
+                   .Where(new { Id = id },  Tables.Continents);
 
 
             var continents = queryFactory.Get<SelectContinentsDto>(query);
@@ -168,7 +168,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                    .Query()
                    .From(Tables.ContinentLines)
                    .Select("*")
-                    .Where(new { ContinentID = id }, false, false, "");
+                    .Where(new { ContinentID = id },  "");
 
             var ContinentLine = queryFactory.GetList<SelectContinentLinesDto>(queryLines).ToList();
 
@@ -195,7 +195,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                             nameof(Employees.Id),
                             JoinType.Left
                         )
-                    .Where(null, false, false, Tables.Continents);
+                    .Where(null,  Tables.Continents);
 
             var continents = queryFactory.GetList<ListContinentsDto>(query).ToList();
             await Task.CompletedTask;
@@ -218,7 +218,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                             nameof(Employees.Id),
                             JoinType.Left
                         )
-                    .Where(new { Id = input.Id }, false, false, Tables.Continents);
+                    .Where(new { Id = input.Id },  Tables.Continents);
 
             var entity = queryFactory.Get<SelectContinentsDto>(entityQuery);
 
@@ -226,7 +226,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                    .Query()
                    .From(Tables.ContinentLines)
                    .Select("*")
-                    .Where(new { ContinentID = input.Id }, false, false, "");
+                    .Where(new { ContinentID = input.Id },  "");
 
             var ContinentLine = queryFactory.GetList<SelectContinentLinesDto>(queryLines).ToList();
 
@@ -243,7 +243,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                             nameof(Employees.Id),
                             JoinType.Left
                         )
-                            .Where(new { Code = input.Code }, false, false, Tables.Continents);
+                            .Where(new { Code = input.Code },  Tables.Continents);
 
             var list = queryFactory.GetList<ListContinentsDto>(listQuery).ToList();
 
@@ -270,7 +270,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                 Name = input.Name,
                 Description_ = input.Description_,
                 Population_ = input.Population_
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },  "");
 
             foreach (var item in input.SelectContinentLines)
             {
@@ -300,7 +300,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.ContinentLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.ContinentLines).Select("*").Where(new { Id = item.Id },  "");
 
                     var line = queryFactory.Get<SelectContinentLinesDto>(lineGetQuery);
 
@@ -324,7 +324,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                             IsNATOMember = item.IsNATOMember,
                             Description_ = item.Description_,
                             ContinentID = input.Id,
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id },  "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -342,7 +342,7 @@ namespace TsiErp.Business.Entities.Continent.Services
 
         public async Task<IDataResult<SelectContinentsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Continents).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.Continents).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Continents>(entityQuery);
 
@@ -364,7 +364,7 @@ namespace TsiErp.Business.Entities.Continent.Services
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 Name = entity.Name,
                  
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var ContinentsDto = queryFactory.Update<SelectContinentsDto>(query, "Id", true);
             await Task.CompletedTask;

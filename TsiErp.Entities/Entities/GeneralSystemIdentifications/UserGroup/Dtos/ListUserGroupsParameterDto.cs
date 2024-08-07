@@ -9,9 +9,5 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup.Dtos
 {
     public class ListUserGroupsParameterDto : FullAuditedEntityDto
     {
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; } = true;
     }
 }

@@ -76,7 +76,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
             var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
 
@@ -111,7 +111,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
                             nameof(Warehouses.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.ByDateStockMovements);
+                        .Where(new { Id = id }, Tables.ByDateStockMovements);
 
             var byDateStockMovement = queryFactory.Get<SelectByDateStockMovementsDto>(query);
 
@@ -147,7 +147,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
                             nameof(ByDateStockMovements.WarehouseID),
                             nameof(Warehouses.Id),
                             JoinType.Left
-                        ).Where(null, false, false, Tables.ByDateStockMovements);
+                        ).Where(null, Tables.ByDateStockMovements);
 
             var byDateStockMovements = queryFactory.GetList<ListByDateStockMovementsDto>(query).ToList();
 
@@ -159,7 +159,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectByDateStockMovementsDto>> UpdateAsync(UpdateByDateStockMovementsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<ByDateStockMovements>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
@@ -188,7 +188,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
 

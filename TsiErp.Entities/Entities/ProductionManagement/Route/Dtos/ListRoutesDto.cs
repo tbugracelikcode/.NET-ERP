@@ -47,9 +47,5 @@ namespace TsiErp.Entities.Entities.ProductionManagement.Route.Dtos
         /// Teknik Onay
         /// </summary>
         public bool TechnicalApproval { get; set; }
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
     }
 }

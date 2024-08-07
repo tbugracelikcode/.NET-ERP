@@ -76,7 +76,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.S
                     IsUserPermitted = item.IsUserPermitted,
                     MenuId = item.MenuId,
                     UserId = item.UserId
-                }).Where(new { Id = item.Id }, false, false, "").UseIsDelete(false);
+                }).Where(new { Id = item.Id }, "").UseIsDelete(false);
 
                 var updatedPermissin = queryFactory.Update<SelectUserPermissionsDto>(query, "Id", true);
             }

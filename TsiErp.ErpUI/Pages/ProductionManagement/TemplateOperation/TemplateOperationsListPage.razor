@@ -113,14 +113,14 @@ else
                             <SfTextBox @ref="@StationGroupButtonEdit" Created="@StationGroupOnCreateIcon" @bind-Value="DataSource.WorkCenterName" ShowClearButton=true ValueChange="StationGroupOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="3">
+                   @*  <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <center>
                                 <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
                                 <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                             </center>
                         </Template>
-                    </DxGridLayoutItem>
+                    </DxGridLayoutItem> *@
 
                     <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
                         <Template>

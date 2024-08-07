@@ -31,7 +31,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.QualityControlPa
              new
              {
                  Id = id
-             }, false, false, "");
+             }, "");
 
             var QualityControlParameter = queryFactory.Get<SelectQualityControlParametersDto>(query);
 
@@ -45,7 +45,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.QualityControlPa
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListQualityControlParametersDto>>> GetListAsync(ListQualityControlParametersParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.QualityControlParameters).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.QualityControlParameters).Select("*").Where(null, "");
 
             var QualityControlParameters = queryFactory.GetList<ListQualityControlParametersDto>(query).ToList();
 
@@ -57,14 +57,14 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.QualityControlPa
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectQualityControlParametersDto>> UpdateAsync(UpdateQualityControlParametersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.QualityControlParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.QualityControlParameters).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<QualityControlParameters>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.QualityControlParameters).Update(new UpdateQualityControlParametersDto
             {
                 FutureDateParameter = input.FutureDateParameter,
                 Id = input.Id
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var QualityControlParameters = queryFactory.Update<SelectQualityControlParametersDto>(query, "Id", true);
 

@@ -769,7 +769,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         bool isBoM = false;
                         bool isApproved = false;
 
-                        var route = RoutesList.Where(t => t.ProductID == line.ProductID && t.IsActive == true).FirstOrDefault();
+                        var route = RoutesList.Where(t => t.ProductID == line.ProductID).FirstOrDefault();
                         var boM = (await BillsofMaterialsAppService.GetbyCurrentAccountIDAsync(DataSource.CurrentAccountCardID.GetValueOrDefault(), line.ProductID.GetValueOrDefault())).Data;
                         var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
 

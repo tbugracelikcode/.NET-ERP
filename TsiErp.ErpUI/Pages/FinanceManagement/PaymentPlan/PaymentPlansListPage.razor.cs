@@ -36,7 +36,6 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.PaymentPlan
         {
             DataSource = new SelectPaymentPlansDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("PaymentPlansChildMenu")
             };
 

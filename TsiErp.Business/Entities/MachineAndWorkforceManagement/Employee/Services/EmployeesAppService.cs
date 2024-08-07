@@ -43,7 +43,7 @@ namespace TsiErp.Business.Entities.Employee.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeesDto>> CreateAsync(CreateEmployeesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Employees).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Employees).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<Employees>(listQuery).ToList();
 
@@ -85,7 +85,6 @@ namespace TsiErp.Business.Entities.Employee.Services
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 Id = addedEntityId,
-                IsActive = true,
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
@@ -135,7 +134,7 @@ namespace TsiErp.Business.Entities.Employee.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.Employees).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.Employees).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var employees = queryFactory.Update<SelectEmployeesDto>(query, "Id", true);
 
@@ -172,7 +171,7 @@ namespace TsiErp.Business.Entities.Employee.Services
                             nameof(EducationLevelScores.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, true, true, Tables.Employees);
+                        .Where(new { Id = id }, Tables.Employees);
 
             var employee = queryFactory.Get<SelectEmployeesDto>(query);
 
@@ -211,7 +210,7 @@ namespace TsiErp.Business.Entities.Employee.Services
                        nameof(Employees.EducationLevelID),
                        nameof(EducationLevelScores.Id),
                        JoinType.Left
-                   ).Where(null, true, true, Tables.Employees);
+                   ).Where(null, Tables.Employees);
 
             var employees = queryFactory.GetList<ListEmployeesDto>(query).ToList();
 
@@ -247,7 +246,7 @@ namespace TsiErp.Business.Entities.Employee.Services
                        nameof(Employees.EducationLevelID),
                        nameof(EducationLevelScores.Id),
                        JoinType.Left
-                   ).Where(new { DepartmentID = departmentID }, true, true, Tables.Employees);
+                   ).Where(new { DepartmentID = departmentID }, Tables.Employees);
 
             var employees = queryFactory.GetList<ListEmployeesDto>(query).ToList();
 
@@ -260,12 +259,12 @@ namespace TsiErp.Business.Entities.Employee.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeesDto>> UpdateAsync(UpdateEmployeesDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Employees).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Employees).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<Employees>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.Employees).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Employees).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<Employees>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -296,7 +295,6 @@ namespace TsiErp.Business.Entities.Employee.Services
                 Email = input.Email,
                 HomePhone = input.HomePhone,
                 Surname = input.Surname,
-                IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = false,
@@ -309,7 +307,7 @@ namespace TsiErp.Business.Entities.Employee.Services
                 IsProductionScreenUser = input.IsProductionScreenUser,
                 ProductionScreenPassword = input.ProductionScreenPassword,
                 IsProductionScreenSettingUser = input.IsProductionScreenSettingUser
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var employees = queryFactory.Update<SelectEmployeesDto>(query, "Id", true);
 
@@ -323,7 +321,7 @@ namespace TsiErp.Business.Entities.Employee.Services
 
         public async Task<IDataResult<SelectEmployeesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Employees).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Employees).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<Employees>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.Periods).Update(new UpdateEmployeesDto
@@ -346,7 +344,6 @@ namespace TsiErp.Business.Entities.Employee.Services
                 CellPhone = entity.CellPhone,
                 City = entity.City,
                 IDnumber = entity.IDnumber,
-                IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -360,7 +357,7 @@ namespace TsiErp.Business.Entities.Employee.Services
                 IsProductionScreenUser = entity.IsProductionScreenUser,
                 ProductionScreenPassword = entity.ProductionScreenPassword,
                 IsProductionScreenSettingUser = entity.IsProductionScreenSettingUser
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var employees = queryFactory.Update<SelectEmployeesDto>(query, "Id", true);
 

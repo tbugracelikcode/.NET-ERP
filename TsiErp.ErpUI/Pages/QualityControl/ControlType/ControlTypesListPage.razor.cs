@@ -40,7 +40,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ControlType
         {
             DataSource = new SelectControlTypesDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ControlTypesChildMenu")
             };
 

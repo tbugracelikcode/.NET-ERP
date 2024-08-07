@@ -39,7 +39,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationGroupsDto>> CreateAsync(CreateStationGroupsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<StationGroups>(listQuery).ToList();
 
@@ -65,7 +65,6 @@ namespace TsiErp.Business.Entities.StationGroup.Services
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 Id = addedEntityId,
-                IsActive = true,
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
@@ -124,7 +123,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.StationGroups).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.StationGroups).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var stationGroups = queryFactory.Update<SelectStationGroupsDto>(query, "Id", true);
 
@@ -141,7 +140,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
             new
             {
                 Id = id
-            }, true, true, "");
+            }, "");
             var stationGroup = queryFactory.Get<SelectStationGroupsDto>(query);
 
 
@@ -154,7 +153,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStationGroupsDto>>> GetListAsync(ListStationGroupsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(null, true, true, "");
+            var query = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(null, "");
             var stationGroups = queryFactory.GetList<ListStationGroupsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListStationGroupsDto>>(stationGroups);
@@ -165,12 +164,12 @@ namespace TsiErp.Business.Entities.StationGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationGroupsDto>> UpdateAsync(UpdateStationGroupsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<StationGroups>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<StationGroups>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -186,7 +185,6 @@ namespace TsiErp.Business.Entities.StationGroup.Services
                 TotalEmployees = input.TotalEmployees,
                 Name = input.Name,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = false,
@@ -196,7 +194,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var stationGroups = queryFactory.Update<SelectStationGroupsDto>(query, "Id", true);
 
@@ -208,7 +206,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
 
         public async Task<IDataResult<SelectStationGroupsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<StationGroups>(entityQuery);
 
@@ -217,7 +215,6 @@ namespace TsiErp.Business.Entities.StationGroup.Services
                 Code = entity.Code,
                 TotalEmployees = entity.TotalEmployees,
                 Name = entity.Name,
-                IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -229,7 +226,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var stationGroups = queryFactory.Update<SelectStationGroupsDto>(query, "Id", true);
             await Task.CompletedTask;

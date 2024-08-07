@@ -31,11 +31,6 @@ namespace TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod
         public string Description_ { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
         /// Günlük Bakım
         /// </summary>
         public bool IsDaily { get; set; }

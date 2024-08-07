@@ -9,6 +9,5 @@ namespace TsiErp.Entities.Entities.QualityControl.ControlCondition.Dtos
 {
     public class ListControlConditionsParameterDto : FullAuditedEntityDto
     {
-        public bool IsActive { get; set; } = true;
     }
 }

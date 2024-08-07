@@ -1619,7 +1619,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             DataSource = new SelectProductsDto()
             {
-                IsActive = true
             };
 
 

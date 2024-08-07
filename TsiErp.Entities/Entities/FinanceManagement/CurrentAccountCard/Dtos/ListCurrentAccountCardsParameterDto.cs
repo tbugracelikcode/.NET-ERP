@@ -9,6 +9,5 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos
 {
     public class ListCurrentAccountCardsParameterDto : FullAuditedEntityDto
     {
-        public bool IsActive { get; set; } = true;
     }
 }

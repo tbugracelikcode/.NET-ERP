@@ -25,10 +25,5 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductGroup
         /// GTIP
         /// </summary>
         public string GTIP { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
     }
 }

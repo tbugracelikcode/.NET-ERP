@@ -46,7 +46,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeeScoringsDto>> CreateAsync(CreateEmployeeScoringsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.EmployeeScorings).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.EmployeeScorings).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<EmployeeScorings>(listQuery).ToList();
 
             #region Code Control 
@@ -163,17 +163,17 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.EmployeeScorings).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.EmployeeScorings).Select("*").Where(new { Id = id }, "");
 
             var EmployeeScorings = queryFactory.Get<SelectEmployeeScoringsDto>(query);
 
             if (EmployeeScorings.Id != Guid.Empty && EmployeeScorings != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.EmployeeScorings).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.EmployeeScorings).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.EmployeeScoringLines).Delete(LoginedUserService.UserId).Where(new { EmployeeScoringID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.EmployeeScoringLines).Delete(LoginedUserService.UserId).Where(new { EmployeeScoringID = id }, "");
 
-                var lineLineDeleteQuery = queryFactory.Query().From(Tables.EmployeeOperations).Delete(LoginedUserService.UserId).Where(new { EmployeeScoringID = id }, false, false, "");
+                var lineLineDeleteQuery = queryFactory.Query().From(Tables.EmployeeOperations).Delete(LoginedUserService.UserId).Where(new { EmployeeScoringID = id }, "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -186,8 +186,8 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.EmployeeScoringLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
-                var lineLineDeleteQuery = queryFactory.Query().From(Tables.EmployeeOperations).Delete(LoginedUserService.UserId).Where(new { EmployeeScoringLineID = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.EmployeeScoringLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
+                var lineLineDeleteQuery = queryFactory.Query().From(Tables.EmployeeOperations).Delete(LoginedUserService.UserId).Where(new { EmployeeScoringLineID = id }, "");
                 queryLine.Sql = queryLine.Sql + QueryConstants.QueryConstant + lineLineDeleteQuery.Sql + " where " + lineLineDeleteQuery.WhereSentence;
                 var employeeScoringLines = queryFactory.Update<SelectEmployeeScoringLinesDto>(queryLine, "Id", true);
                 var employeeScoringLinesLine = queryFactory.Update<SelectEmployeeOperationsDto>(lineLineDeleteQuery, "Id", true);
@@ -207,7 +207,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
             new
             {
                 Id = id
-            }, false, false, "");
+            }, "");
 
             var EmployeeScorings = queryFactory.Get<SelectEmployeeScoringsDto>(query);
 
@@ -251,7 +251,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                         nameof(EducationLevelScores.Id),
                         JoinType.Left
                     )
-                    .Where(new { EmployeeScoringID = id }, false, false, Tables.EmployeeScoringLines);
+                    .Where(new { EmployeeScoringID = id }, Tables.EmployeeScoringLines);
 
             var EmployeeScoringLine = queryFactory.GetList<SelectEmployeeScoringLinesDto>(queryLines).ToList();
 
@@ -270,7 +270,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                         JoinType.Left
                     )
 
-                    .Where(new { EmployeeScoringID = id, EmployeeScoringLineID = linesline.Id }, false, false, Tables.EmployeeOperations);
+                    .Where(new { EmployeeScoringID = id, EmployeeScoringLineID = linesline.Id }, Tables.EmployeeOperations);
 
                 var EmployeeScoringLinesLine = queryFactory.GetList<SelectEmployeeOperationsDto>(queryLines).ToList();
 
@@ -293,7 +293,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.EmployeeScorings)
-                   .Select("*").Where(null, false, false, "");
+                   .Select("*").Where(null, "");
 
             var EmployeeScorings = queryFactory.GetList<ListEmployeeScoringsDto>(query).ToList();
             await Task.CompletedTask;
@@ -312,7 +312,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
             new
             {
                 Id = input.Id
-            }, false, false, "");
+            }, "");
 
             var entity = queryFactory.Get<SelectEmployeeScoringsDto>(entityQuery);
 
@@ -356,7 +356,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                         nameof(EducationLevelScores.Id),
                         JoinType.Left
                     )
-                    .Where(new { EmployeeScoringID = input.Id }, false, false, Tables.EmployeeScoringLines);
+                    .Where(new { EmployeeScoringID = input.Id }, Tables.EmployeeScoringLines);
 
             var EmployeeScoringLine = queryFactory.GetList<SelectEmployeeScoringLinesDto>(queryLines).ToList();
 
@@ -375,7 +375,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                       JoinType.Left
                   )
 
-                  .Where(new { EmployeeScoringID = input.Id, EmployeeScoringLineID = line.Id }, false, false, Tables.EmployeeOperations);
+                  .Where(new { EmployeeScoringID = input.Id, EmployeeScoringLineID = line.Id }, Tables.EmployeeOperations);
 
                 var EmployeeScoringLinesLine = queryFactory.GetList<SelectEmployeeOperationsDto>(queryLines).ToList();
 
@@ -389,7 +389,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
             var listQuery = queryFactory
                            .Query()
                            .From(Tables.EmployeeScorings)
-                           .Select("*").Where(new { Code = input.Code }, false, false, "");
+                           .Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.GetList<ListEmployeeScoringsDto>(listQuery).ToList();
 
@@ -418,7 +418,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },  "");
 
             foreach (var item in input.SelectEmployeeScoringLines)
             {
@@ -490,7 +490,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.EmployeeScoringLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.EmployeeScoringLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectEmployeeScoringLinesDto>(lineGetQuery);
 
@@ -531,13 +531,13 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             SeniorityID = item.SeniorityID,
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
 
                         foreach (var empoprline in item.SelectEmployeeOperations)
                         {
-                            var lineslineGetQuery = queryFactory.Query().From(Tables.EmployeeOperations).Select("*").Where(new { EmployeeScoringLineID = item.Id }, false, false, "");
+                            var lineslineGetQuery = queryFactory.Query().From(Tables.EmployeeOperations).Select("*").Where(new { EmployeeScoringLineID = item.Id }, "");
 
                             var linesline = queryFactory.Get<SelectEmployeeOperationsDto>(lineslineGetQuery);
 
@@ -560,7 +560,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                                 LastModifierId = LoginedUserService.UserId,
                                 LineNr = empoprline.LineNr,
-                            }).Where(new { Id = empoprline.Id }, false, false, ""); ;
+                            }).Where(new { Id = empoprline.Id }, ""); ;
 
                             query.Sql = query.Sql + QueryConstants.QueryConstant + queryLinesLine.Sql + " where " + queryLinesLine.WhereSentence;
                         }
@@ -579,7 +579,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
 
         public async Task<IDataResult<SelectEmployeeScoringsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.EmployeeScorings).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.EmployeeScorings).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<EmployeeScorings>(entityQuery);
 
@@ -602,7 +602,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                 Month_ = entity.Month_,
                 Year_ = entity.Year_,
                 Description_ = entity.Description_,
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var EmployeeScoringsDto = queryFactory.Update<SelectEmployeeScoringsDto>(query, "Id", true);
             await Task.CompletedTask;

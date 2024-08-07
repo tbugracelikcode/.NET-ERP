@@ -48,7 +48,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOperationalSPCsDto>> CreateAsync(CreateOperationalSPCsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.OperationalSPCs).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.OperationalSPCs).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<OperationalSPCs>(listQuery).ToList();
 
             #region Code Control 
@@ -158,16 +158,16 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.OperationalSPCs).Select("*").Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.OperationalSPCs).Select("*").Where(new { Id = id }, "");
 
                 var OperationalSPCs = queryFactory.Get<SelectOperationalSPCsDto>(query);
 
                 if (OperationalSPCs.Id != Guid.Empty && OperationalSPCs != null)
                 {
 
-                    var deleteQuery = queryFactory.Query().From(Tables.OperationalSPCs).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var deleteQuery = queryFactory.Query().From(Tables.OperationalSPCs).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
-                    var lineDeleteQuery = queryFactory.Query().From(Tables.OperationalSPCLines).Delete(LoginedUserService.UserId).Where(new { OperationalSPCID = id }, false, false, "");
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.OperationalSPCLines).Delete(LoginedUserService.UserId).Where(new { OperationalSPCID = id },  "");
 
                     deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -180,11 +180,11 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                 }
                 else
                 {
-                    var queryLineGet = queryFactory.Query().From(Tables.OperationalSPCLines).Select("*").Where(new { Id = id }, false, false, "");
+                    var queryLineGet = queryFactory.Query().From(Tables.OperationalSPCLines).Select("*").Where(new { Id = id },  "");
 
                     var OperationalSPCsLineGet = queryFactory.Get<SelectOperationalSPCLinesDto>(queryLineGet);
 
-                    var queryLine = queryFactory.Query().From(Tables.OperationalSPCLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var queryLine = queryFactory.Query().From(Tables.OperationalSPCLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                     var OperationalSPCLines = queryFactory.Update<SelectOperationalSPCLinesDto>(queryLine, "Id", true);
 
@@ -202,7 +202,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                    .Query()
                    .From(Tables.OperationalSPCs)
                    .Select("*")
-                    .Where(new { Id = id }, false, false, Tables.OperationalSPCs);
+                    .Where(new { Id = id },  Tables.OperationalSPCs);
 
             var OperationalSPCs = queryFactory.Get<SelectOperationalSPCsDto>(query);
 
@@ -224,7 +224,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                         nameof(ProductsOperations.Id),
                         JoinType.Left
                     )
-                    .Where(new { OperationalSPCID = id }, false, false, Tables.OperationalSPCLines);
+                    .Where(new { OperationalSPCID = id }, Tables.OperationalSPCLines);
 
             var OperationalSPCLine = queryFactory.GetList<SelectOperationalSPCLinesDto>(queryLines).ToList();
 
@@ -244,7 +244,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                    .Query()
                     .From(Tables.OperationalSPCs)
                    .Select("*")
-                    .Where(null, false, false, Tables.OperationalSPCs);
+                    .Where(null,Tables.OperationalSPCs);
 
             var OperationalSPCs = queryFactory.GetList<ListOperationalSPCsDto>(query).ToList();
             await Task.CompletedTask;
@@ -260,7 +260,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                    .Query()
                    .From(Tables.OperationalSPCs)
                    .Select("*")
-                    .Where(new { Id = input.Id }, false, false, Tables.OperationalSPCs);
+                    .Where(new { Id = input.Id },Tables.OperationalSPCs);
 
             var entity = queryFactory.Get<SelectOperationalSPCsDto>(entityQuery);
 
@@ -282,7 +282,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                         nameof(ProductsOperations.Id),
                         JoinType.Left
                     )
-                    .Where(new { OperationalSPCID = input.Id }, false, false, Tables.OperationalSPCLines);
+                    .Where(new { OperationalSPCID = input.Id },  Tables.OperationalSPCLines);
 
             var OperationalSPCLine = queryFactory.GetList<SelectOperationalSPCLinesDto>(queryLines).ToList();
 
@@ -293,7 +293,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                            .Query()
                            .From(Tables.OperationalSPCs)
                    .Select("*")
-                    .Where(new { Code = input.Code }, false, false, Tables.OperationalSPCs);
+                    .Where(new { Code = input.Code },  Tables.OperationalSPCs);
 
             var list = queryFactory.GetList<ListOperationalSPCsDto>(listQuery).ToList();
 
@@ -320,7 +320,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectOperationalSPCLines)
             {
@@ -360,7 +360,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.OperationalSPCLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.OperationalSPCLines).Select("*").Where(new { Id = item.Id },  "");
 
                     var line = queryFactory.Get<SelectOperationalSPCLinesDto>(lineGetQuery);
 
@@ -394,7 +394,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                             IsDeleted = item.IsDeleted,
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -412,7 +412,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
 
         public async Task<IDataResult<SelectOperationalSPCsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.OperationalSPCs).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.OperationalSPCs).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<OperationalSPCs>(entityQuery);
 
@@ -433,7 +433,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var OperationalSPCsDto = queryFactory.Update<SelectOperationalSPCsDto>(query, "Id", true);
             await Task.CompletedTask;

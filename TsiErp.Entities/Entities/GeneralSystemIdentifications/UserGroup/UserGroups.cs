@@ -19,11 +19,6 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup
         /// Kullanıcı Grubu Adı
         /// </summary>
         public string Name { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
 
     }
 }

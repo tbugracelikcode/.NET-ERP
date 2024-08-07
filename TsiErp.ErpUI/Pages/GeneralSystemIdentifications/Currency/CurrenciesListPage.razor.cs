@@ -41,7 +41,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Currency
         {
             DataSource = new SelectCurrenciesDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("CurrenciesChildMenu")
             };
 

@@ -40,7 +40,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
         public async Task<IDataResult<SelectPaymentPlansDto>> CreateAsync(CreatePaymentPlansDto input)
         {
 
-            var listQuery = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<PaymentPlans>(listQuery).ToList();
 
@@ -68,7 +68,6 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 Id = addedEntityId,
-                IsActive = true,
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
@@ -114,7 +113,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.PaymentPlans).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.PaymentPlans).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var paymentPlans = queryFactory.Update<SelectPaymentPlansDto>(query, "Id", true);
 
@@ -132,7 +131,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
             new
             {
                 Id = id
-            }, true, true, "");
+            }, "");
             var paymentPlan = queryFactory.Get<SelectPaymentPlansDto>(query);
 
 
@@ -147,7 +146,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPaymentPlansDto>>> GetListAsync(ListPaymentPlansParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(null, true, true, "");
+            var query = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(null, "");
             var paymentPlans = queryFactory.GetList<ListPaymentPlansDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPaymentPlansDto>>(paymentPlans);
@@ -159,12 +158,12 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPaymentPlansDto>> UpdateAsync(UpdatePaymentPlansDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<PaymentPlans>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<PaymentPlans>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -181,7 +180,6 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
                 DelayMaturityDifference = input.DelayMaturityDifference,
                 Days_ = input.Days_,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = false,
@@ -191,7 +189,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var paymentPlans = queryFactory.Update<SelectPaymentPlansDto>(query, "Id", true);
 
@@ -204,7 +202,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
         public async Task<IDataResult<SelectPaymentPlansDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<PaymentPlans>(entityQuery);
 
@@ -214,7 +212,6 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
                 Days_ = entity.Days_,
                 DelayMaturityDifference = entity.DelayMaturityDifference,
                 Name = entity.Name,
-                IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -226,7 +223,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var paymentPlans = queryFactory.Update<SelectPaymentPlansDto>(query, "Id", true);
             await Task.CompletedTask;

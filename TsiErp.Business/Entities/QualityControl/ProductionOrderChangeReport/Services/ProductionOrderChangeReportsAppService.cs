@@ -43,7 +43,7 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrderChangeReportsDto>> CreateAsync(CreateProductionOrderChangeReportsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select("*").Where(new { FicheNo = input.FicheNo }, "");
 
             var list = queryFactory.ControlList<ProductionOrderChangeReports>(listQuery).ToList();
 
@@ -96,7 +96,7 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
             var ProductionOrderChangeReport = queryFactory.Update<SelectProductionOrderChangeReportsDto>(query, "Id", true);
 
@@ -126,7 +126,7 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
                 (
                    d => new { ProductionOrderFicheNo = d.FicheNo, ProductionOrderID = d.Id }, nameof(ProductionOrderChangeReports.ProductionOrderID), nameof(ProductionOrders.Id), JoinType.Left
                 )
-                .Where(new { Id = id }, false, false, Tables.ProductionOrderChangeReports);
+                .Where(new { Id = id }, Tables.ProductionOrderChangeReports);
 
             var ProductionOrderChangeReport = queryFactory.Get<SelectProductionOrderChangeReportsDto>(query);
 
@@ -158,7 +158,7 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
                 (
                    d => new { ProductionOrderFicheNo = d.FicheNo, ProductionOrderID = d.Id }, nameof(ProductionOrderChangeReports.ProductionOrderID), nameof(ProductionOrders.Id), JoinType.Left
                 )
-                .Where(null, false, false, Tables.ProductionOrderChangeReports);
+                .Where(null, Tables.ProductionOrderChangeReports);
 
             var productionOrderChangeReports = queryFactory.GetList<ListProductionOrderChangeReportsDto>(query).ToList();
 
@@ -172,12 +172,12 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrderChangeReportsDto>> UpdateAsync(UpdateProductionOrderChangeReportsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<ProductionOrderChangeReports>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select("*").Where(new { FicheNo = input.FicheNo },  "");
             var list = queryFactory.GetList<ProductionOrderChangeReports>(listQuery).ToList();
 
             if (list.Count > 0 && entity.FicheNo != input.FicheNo)
@@ -208,7 +208,7 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },"");
 
             var ProductionOrderChangeReport = queryFactory.Update<SelectProductionOrderChangeReportsDto>(query, "Id", true);
 
@@ -223,7 +223,7 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
 
         public async Task<IDataResult<SelectProductionOrderChangeReportsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<ProductionOrderChangeReports>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Update(new UpdateProductionOrderChangeReportsDto
@@ -247,7 +247,7 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
                 Id = id,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var ProductionOrderChangeReport = queryFactory.Update<SelectProductionOrderChangeReportsDto>(query, "Id", true);
 

@@ -62,7 +62,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseOrdersDto>> CreateAsync(CreatePurchaseOrdersDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { FicheNo = input.FicheNo }, "");
             var list = queryFactory.ControlList<PurchaseOrders>(listQuery).ToList();
 
             #region Code Control 
@@ -212,7 +212,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseOrdersDto>> ConvertToPurchaseOrderAsync(CreatePurchaseOrdersDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { FicheNo = input.FicheNo }, "");
             var list = queryFactory.ControlList<PurchaseOrders>(listQuery).ToList();
 
             #region Code Control 
@@ -364,7 +364,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { Id = id }, "");
 
                 var purchaseOrders = queryFactory.Get<SelectPurchaseOrdersDto>(query);
 
@@ -372,9 +372,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 {
                     StockMovementsService.DeletePurchaseOrders(purchaseOrders);
 
-                    var deleteQuery = queryFactory.Query().From(Tables.PurchaseOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var deleteQuery = queryFactory.Query().From(Tables.PurchaseOrders).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
-                    var lineDeleteQuery = queryFactory.Query().From(Tables.PurchaseOrderLines).Delete(LoginedUserService.UserId).Where(new { PurchaseOrderID = id }, false, false, "");
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.PurchaseOrderLines).Delete(LoginedUserService.UserId).Where(new { PurchaseOrderID = id }, "");
 
                     deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -387,13 +387,13 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 }
                 else
                 {
-                    var queryLineGet = queryFactory.Query().From(Tables.PurchaseOrderLines).Select("*").Where(new { Id = id }, false, false, "");
+                    var queryLineGet = queryFactory.Query().From(Tables.PurchaseOrderLines).Select("*").Where(new { Id = id }, "");
 
                     var purchaseOrdersLineGet = queryFactory.Get<SelectPurchaseOrderLinesDto>(queryLineGet);
 
                     StockMovementsService.DeletePurchaseOrderLines(purchaseOrdersLineGet);
 
-                    var queryLine = queryFactory.Query().From(Tables.PurchaseOrderLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var queryLine = queryFactory.Query().From(Tables.PurchaseOrderLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                     var purchaseOrderLines = queryFactory.Update<SelectPurchaseOrderLinesDto>(queryLine, "Id", true);
 
@@ -468,7 +468,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(ShippingAdresses.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id }, false, false, Tables.PurchaseOrders);
+                    .Where(new { Id = id },  Tables.PurchaseOrders);
 
             var purchaseOrders = queryFactory.Get<SelectPurchaseOrdersDto>(query);
 
@@ -517,7 +517,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { PurchaseOrderID = id }, false, false, Tables.PurchaseOrderLines);
+                    .Where(new { PurchaseOrderID = id }, Tables.PurchaseOrderLines);
 
             var purchaseOrderLine = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
 
@@ -593,7 +593,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(ShippingAdresses.Id),
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.PurchaseOrders);
+                    .Where(null, Tables.PurchaseOrders);
 
             var purchaseOrders = queryFactory.GetList<ListPurchaseOrdersDto>(query).ToList();
             await Task.CompletedTask;
@@ -666,7 +666,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(ShippingAdresses.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id }, false, false, Tables.PurchaseOrders);
+                    .Where(new { Id = input.Id },Tables.PurchaseOrders);
 
             var entity = queryFactory.Get<SelectPurchaseOrdersDto>(entityQuery);
 
@@ -716,7 +716,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { PurchaseOrderID = input.Id }, false, false, Tables.PurchaseOrderLines);
+                    .Where(new { PurchaseOrderID = input.Id }, Tables.PurchaseOrderLines);
 
             var purchaseOrderLine = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
 
@@ -769,7 +769,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(ShippingAdresses.Id),
                         JoinType.Left
                     )
-                    .Where(new { FicheNo = input.FicheNo }, false, false, Tables.PurchaseOrders);
+                    .Where(new { FicheNo = input.FicheNo }, Tables.PurchaseOrders);
 
             var list = queryFactory.GetList<ListPurchaseOrdersDto>(listQuery).ToList();
 
@@ -844,7 +844,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 LastModifierId = LoginedUserService.UserId,
                 PriceApprovalState = input.PriceApprovalState,
                 PricingCurrency = input.PricingCurrency
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             DateTime biggestDate = input.SelectPurchaseOrderLinesDto.Select(t => t.SupplyDate).Max().GetValueOrDefault();
 
@@ -916,7 +916,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.PurchaseOrderLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.PurchaseOrderLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectPurchaseOrderLinesDto>(lineGetQuery);
 
@@ -972,7 +972,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             WarehouseID = input.WarehouseID.GetValueOrDefault(),
                             Date_ = input.Date_,
                             SupplierReferenceNo = item.SupplierReferenceNo
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
 
@@ -1000,7 +1000,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
         public async Task<IDataResult<SelectPurchaseOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { Id = id },"");
 
             var entity = queryFactory.Get<PurchaseOrders>(entityQuery);
 
@@ -1049,7 +1049,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 PriceApprovalState = (int)entity.PriceApprovalState,
                 PricingCurrency = (int)entity.PricingCurrency
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var purchaseOrdersDto = queryFactory.Update<SelectPurchaseOrdersDto>(query, "Id", true);
             await Task.CompletedTask;
@@ -1106,7 +1106,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.PurchaseOrderLines);
+                    .Where(null, Tables.PurchaseOrderLines);
 
             var purchaseOrderLine = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
             await Task.CompletedTask;
@@ -1126,7 +1126,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.PurchaseOrders);
+                    .Where(null,Tables.PurchaseOrders);
 
             var purchaseOrders = queryFactory.GetList<ListPurchaseOrdersDto>(query).ToList();
             await Task.CompletedTask;
@@ -1184,8 +1184,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                        nameof(CurrentAccountCards.Id),
                        JoinType.Left
                    )
-                   .Where(new { PurchaseOrderLineStateEnum = 1 }, false, false, Tables.PurchaseOrderLines)
-                   .Where(new { PurchaseOrderLineStateEnum = 5 }, false, false, Tables.PurchaseOrderLines);
+                   .Where(new { PurchaseOrderLineStateEnum = 1 }, Tables.PurchaseOrderLines)
+                   .Where(new { PurchaseOrderLineStateEnum = 5 }, Tables.PurchaseOrderLines);
 
             var purchaseOrderLines = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
 
@@ -1250,7 +1250,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(ShippingAdresses.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = orderId }, false, false, Tables.PurchaseOrders);
+                    .Where(new { Id = orderId }, Tables.PurchaseOrders);
 
                 var purchaseOrders = queryFactory.Get<SelectPurchaseOrdersDto>(query);
 

@@ -32,10 +32,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos
         /// Şablon Operasyon ID
         /// </summary>
         public Guid? TemplateOperationID { get; set; }
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
 
         [NoDatabaseAction]
         public List<SelectProductsOperationLinesDto> SelectProductsOperationLines { get; set; }

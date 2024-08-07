@@ -45,7 +45,7 @@ namespace TsiErp.Business.Entities.Product.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductsDto>> CreateAsync(CreateProductsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Code = input.Code },  "");
 
             var list = queryFactory.ControlList<Products>(listQuery).ToList();
 
@@ -93,7 +93,6 @@ namespace TsiErp.Business.Entities.Product.Services
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 Id = addedEntityId,
-                IsActive = true,
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
@@ -212,16 +211,16 @@ namespace TsiErp.Business.Entities.Product.Services
             else
             {
 
-                var query = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Id = id },  "");
 
                 var products = queryFactory.Get<SelectProductsDto>(query);
 
                 if (products.Id != Guid.Empty && products != null)
                 {
 
-                    var deleteQuery = queryFactory.Query().From(Tables.Products).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                    var deleteQuery = queryFactory.Query().From(Tables.Products).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                    var lineDeleteQuery = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Delete(LoginedUserService.UserId).Where(new { ProductID = id }, false, false, "");
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Delete(LoginedUserService.UserId).Where(new { ProductID = id }, "");
 
                     deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -244,7 +243,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 }
                 else
                 {
-                    var queryLine = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var queryLine = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                     var ProductRelatedProductProperties = queryFactory.Update<SelectProductRelatedProductPropertiesDto>(queryLine, "Id", true);
 
@@ -275,7 +274,7 @@ namespace TsiErp.Business.Entities.Product.Services
                             nameof(ProductGroups.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, true, true, Tables.Products);
+                        .Where(new { Id = id }, Tables.Products);
 
             var product = queryFactory.Get<SelectProductsDto>(query);
 
@@ -286,7 +285,7 @@ namespace TsiErp.Business.Entities.Product.Services
            new
            {
                ProductID = id
-           }, false, false, "");
+           }, "");
 
             var ProductRelatedProductProperties = queryFactory.GetList<SelectProductRelatedProductPropertiesDto>(queryLines).ToList();
 
@@ -327,7 +326,7 @@ namespace TsiErp.Business.Entities.Product.Services
                             nameof(Products.ProductGrpID),
                             nameof(ProductGroups.Id),
                        JoinType.Left
-                    ).Where(null, true, true, Tables.Products);
+                    ).Where(null, Tables.Products);
 
             var products = queryFactory.GetList<ListProductsDto>(query).ToList();
 
@@ -358,12 +357,12 @@ namespace TsiErp.Business.Entities.Product.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductsDto>> UpdateAsync(UpdateProductsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Id = input.Id },  "");
             var entity = queryFactory.Get<Products>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<Products>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -378,7 +377,6 @@ namespace TsiErp.Business.Entities.Product.Services
                 Code = input.Code,
                 Name = input.Name,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 CoatingWeight = input.CoatingWeight,
                 Confirmation = input.Confirmation,
                 EnglishDefinition = input.EnglishDefinition,
@@ -417,7 +415,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
 
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectProductRelatedProductProperties)
             {
@@ -449,7 +447,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectProductRelatedProductPropertiesDto>(lineGetQuery);
 
@@ -475,7 +473,7 @@ namespace TsiErp.Business.Entities.Product.Services
                             ProductID = item.ProductID,
                             PropertyName = item.PropertyName,
                             PropertyValue = item.PropertyValue,
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id },  "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -494,14 +492,13 @@ namespace TsiErp.Business.Entities.Product.Services
 
         public async Task<IDataResult<SelectProductsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<Products>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.Products).Update(new UpdateProductsDto
             {
                 Code = entity.Code,
                 Name = entity.Name,
-                IsActive = entity.IsActive,
                 CoatingWeight = entity.CoatingWeight,
                 Confirmation = entity.Confirmation,
                 EnglishDefinition = entity.EnglishDefinition,
@@ -542,7 +539,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 Tickness_ = entity.Tickness_
 
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var products = queryFactory.Update<SelectProductsDto>(query, "Id", true);
 

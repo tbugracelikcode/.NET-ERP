@@ -84,7 +84,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrdersDto>> ConverttoProductionOrder(CreateProductionOrdersDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo },  "");
 
             var list = queryFactory.ControlList<ProductionOrders>(listQuery).ToList();
 
@@ -336,7 +336,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrdersDto>> CreateAsync(CreateProductionOrdersDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo }, "");
 
             var list = queryFactory.ControlList<ProductionOrders>(listQuery).ToList();
 
@@ -438,7 +438,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.ProductionOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.ProductionOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
 
@@ -552,7 +552,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.ProductionOrders);
+                        .Where(new { Id = id }, Tables.ProductionOrders);
 
             var productionOrder = queryFactory.Get<SelectProductionOrdersDto>(query);
 
@@ -652,7 +652,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                   .Where(null, false, false, Tables.ProductionOrders);
+                   .Where(null, Tables.ProductionOrders);
 
             var productionOrders = queryFactory.GetList<ListProductionOrdersDto>(query).ToList();
 
@@ -750,7 +750,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                   .Where(new { Cancel_ = false }, false, false, Tables.ProductionOrders);
+                   .Where(new { Cancel_ = false },Tables.ProductionOrders);
 
             var productionOrders = queryFactory.GetList<ListProductionOrdersDto>(query).ToList();
 
@@ -848,7 +848,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                   .Where(new { Cancel_ = true }, false, false, Tables.ProductionOrders);
+                   .Where(new { Cancel_ = true }, Tables.ProductionOrders);
 
             var productionOrders = queryFactory.GetList<ListProductionOrdersDto>(query).ToList();
 
@@ -861,12 +861,12 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrdersDto>> UpdateAsync(UpdateProductionOrdersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<ProductionOrders>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo }, "");
             var list = queryFactory.GetList<ProductionOrders>(listQuery).ToList();
 
             if (list.Count > 0 && entity.FicheNo != input.FicheNo)
@@ -914,7 +914,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },"");
 
             var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
 
@@ -929,7 +929,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         public async Task<IDataResult<SelectProductionOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<ProductionOrders>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProductionOrders).Update(new UpdateProductionOrdersDto
@@ -971,7 +971,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
 

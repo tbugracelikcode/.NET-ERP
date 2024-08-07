@@ -53,10 +53,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos
         /// Ürün Açıklaması
         /// </summary>
         public string ProductName { get; set; }
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
 
 
         [NoDatabaseAction]
