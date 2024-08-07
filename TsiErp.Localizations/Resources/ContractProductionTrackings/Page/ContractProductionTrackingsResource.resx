@@ -120,8 +120,14 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>FASON TAKİP KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Fason Takip Kodu:</value>
   </data>
   <data name="ContractProductionTrackingContextAdd" xml:space="preserve">
     <value>Ekle</value>

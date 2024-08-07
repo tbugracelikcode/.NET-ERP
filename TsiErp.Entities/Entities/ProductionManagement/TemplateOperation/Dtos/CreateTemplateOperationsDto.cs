@@ -26,10 +26,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos
         /// </summary>
         public Guid? WorkCenterID { get; set; }
         /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
-        /// <summary>
         /// Yüksek Tamir Maliyeti
         /// </summary>
         public bool IsHighRepairCost { get; set; }

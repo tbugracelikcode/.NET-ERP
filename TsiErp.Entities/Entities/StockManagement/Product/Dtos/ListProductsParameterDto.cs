@@ -9,6 +9,5 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
 {
     public class ListProductsParameterDto : FullAuditedEntityDto
     {
-        public bool IsActive { get; set; } = true;
     }
 }

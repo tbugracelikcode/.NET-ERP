@@ -8,6 +8,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ContractProductionTracking.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
@@ -28,11 +29,13 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
     public class ContractProductionTrackingsAppService : ApplicationService<ContractProductionTrackingsResource>, IContractProductionTrackingsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
-        public ContractProductionTrackingsAppService(IStringLocalizer<ContractProductionTrackingsResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public ContractProductionTrackingsAppService(IStringLocalizer<ContractProductionTrackingsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
         {
             _GetSQLDateAppService = getSQLDateAppService;
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateContractProductionTrackingsValidator), Priority = 1)]
@@ -43,6 +46,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 
                 var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Insert(new CreateContractProductionTrackingsDto
                 {
+                    Code = input.Code,
                     CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
                     EmployeeID = input.EmployeeID.GetValueOrDefault(),
                     IsFinished = input.IsFinished,
@@ -67,12 +71,15 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
+                        
                 });
 
                 var contractProductionTrackings = queryFactory.Insert<SelectContractProductionTrackingsDto>(query, "Id", true);
 
+            await FicheNumbersAppService.UpdateFicheNumberAsync("ContractProdTrackingsChildMenu", input.Code);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractProductionTrackings, LogType.Insert, addedEntityId);
+
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractProductionTrackings, LogType.Insert, addedEntityId);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTrackings);
@@ -82,7 +89,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-                var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var contractProductionTrackings = queryFactory.Update<SelectContractProductionTrackingsDto>(query, "Id", true);
 
@@ -139,7 +146,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                                 nameof(CurrentAccountCards.Id),
                                 JoinType.Left
                             )
-                            .Where(new { Id = id }, false, false, Tables.ContractProductionTrackings);
+                            .Where(new { Id = id }, Tables.ContractProductionTrackings);
 
                 var contractProductionTracking = queryFactory.Get<SelectContractProductionTrackingsDto>(query);
 
@@ -197,7 +204,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                                nameof(CurrentAccountCards.Id),
                                JoinType.Left
                            )
-                           .Where(null, false, false, Tables.ContractProductionTrackings);
+                           .Where(null, Tables.ContractProductionTrackings);
 
 
                 var contractProductionTrackings = queryFactory.GetList<ListContractProductionTrackingsDto>(query).ToList();
@@ -210,7 +217,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContractProductionTrackingsDto>> UpdateAsync(UpdateContractProductionTrackingsDto input)
         {
-                var entityQuery = queryFactory.Query().From(Tables.ContractProductionTrackings).Select("*").Where(new { Id = input.Id }, false, false, "");
+                var entityQuery = queryFactory.Query().From(Tables.ContractProductionTrackings).Select("*").Where(new { Id = input.Id }, "");
                 var entity = queryFactory.Get<ContractProductionTrackings>(entityQuery);
 
                 var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Update(new UpdateContractProductionTrackingsDto
@@ -238,8 +245,9 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                     DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                    LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = input.Id }, false, false, "");
+                    LastModifierId = LoginedUserService.UserId,
+                     Code = entity.Code,
+                }).Where(new { Id = input.Id }, "");
 
                 var contractProductionTrackings = queryFactory.Update<SelectContractProductionTrackingsDto>(query, "Id", true);
 
@@ -298,7 +306,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                                nameof(CurrentAccountCards.Id),
                                JoinType.Left
                            )
-                           .Where(new { ProductID = productId }, false, false, Tables.ContractProductionTrackings);
+                           .Where(new { ProductID = productId }, Tables.ContractProductionTrackings);
 
 
                 var contractProductionTrackings = queryFactory.GetList<SelectContractProductionTrackingsDto>(query).ToList();
@@ -309,7 +317,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 
         public async Task<IDataResult<SelectContractProductionTrackingsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-                var entityQuery = queryFactory.Query().From(Tables.ContractProductionTrackings).Select("*").Where(new { Id = id }, false, false, "");
+                var entityQuery = queryFactory.Query().From(Tables.ContractProductionTrackings).Select("*").Where(new { Id = id }, "");
                 var entity = queryFactory.Get<ContractProductionTrackings>(entityQuery);
 
                 var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Update(new UpdateContractProductionTrackingsDto
@@ -338,8 +346,9 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                     Id = id,
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
+                     Code = entity.Code,
 
-                }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+                }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
                 var contractProductionTrackings = queryFactory.Update<SelectContractProductionTrackingsDto>(query, "Id", true);
 

@@ -36,7 +36,7 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMaintenancePeriodsDto>> CreateAsync(CreateMaintenancePeriodsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<MaintenancePeriods>(listQuery).ToList();
 
@@ -57,7 +57,6 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
                 PeriodTime = input.PeriodTime,
                 Description_ = input.Description_,
                 Name = input.Name,
-                IsActive = true,
                 Id = GuidGenerator.CreateGuid(),
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
@@ -86,7 +85,7 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.MaintenancePeriods).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            var query = queryFactory.Query().From(Tables.MaintenancePeriods).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var maintenancePeriods = queryFactory.Update<SelectMaintenancePeriodsDto>(query, "Id", true);
 
@@ -103,7 +102,7 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
             new
             {
                 Id = id
-            }, true, true, "");
+            }, "");
             var maintenancePeriod = queryFactory.Get<SelectMaintenancePeriodsDto>(query);
 
 
@@ -117,7 +116,7 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMaintenancePeriodsDto>>> GetListAsync(ListMaintenancePeriodsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(null, true, true, "");
+            var query = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(null, "");
             var maintenancePeriods = queryFactory.GetList<ListMaintenancePeriodsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListMaintenancePeriodsDto>>(maintenancePeriods);
@@ -128,12 +127,12 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMaintenancePeriodsDto>> UpdateAsync(UpdateMaintenancePeriodsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<MaintenancePeriods>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<MaintenancePeriods>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -151,7 +150,6 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
                 Description_ = input.Description_,
                 Name = input.Name,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = false,
@@ -161,7 +159,7 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var maintenancePeriods = queryFactory.Update<SelectMaintenancePeriodsDto>(query, "Id", true);
 
@@ -173,7 +171,7 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
 
         public async Task<IDataResult<SelectMaintenancePeriodsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<MaintenancePeriods>(entityQuery);
 
@@ -184,7 +182,6 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
                 PeriodTime = entity.PeriodTime,
                 Description_ = entity.Description_,
                 Name = entity.Name,
-                IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -196,7 +193,7 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var maintenancePeriods = queryFactory.Update<SelectMaintenancePeriodsDto>(query, "Id", true);
             await Task.CompletedTask;

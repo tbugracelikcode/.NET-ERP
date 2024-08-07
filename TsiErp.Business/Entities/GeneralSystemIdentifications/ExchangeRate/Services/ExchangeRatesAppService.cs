@@ -70,7 +70,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.ExchangeRates).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.ExchangeRates).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var exchangeRates = queryFactory.Update<SelectExchangeRatesDto>(query, "Id", true);
 
@@ -93,7 +93,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
                             nameof(Currencies.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.ExchangeRates);
+                        .Where(new { Id = id }, Tables.ExchangeRates);
 
             var exchangeRate = queryFactory.Get<SelectExchangeRatesDto>(query);
 
@@ -118,7 +118,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
                        nameof(ExchangeRates.CurrencyID),
                             nameof(Currencies.Id),
                        JoinType.Left
-                   ).Where(null, false, false, Tables.ExchangeRates);
+                   ).Where(null, Tables.ExchangeRates);
 
             var exchangeRates = queryFactory.GetList<ListExchangeRatesDto>(query).ToList();
 
@@ -131,7 +131,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectExchangeRatesDto>> UpdateAsync(UpdateExchangeRatesDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ExchangeRates).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ExchangeRates).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<ExchangeRates>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ExchangeRates).Update(new UpdateExchangeRatesDto
@@ -152,7 +152,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var exchangeRates = queryFactory.Update<SelectExchangeRatesDto>(query, "Id", true);
 
@@ -167,7 +167,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
         public async Task<IDataResult<SelectExchangeRatesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ExchangeRates).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ExchangeRates).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<ExchangeRates>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ExchangeRates).Update(new UpdateExchangeRatesDto
@@ -189,7 +189,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var exchangeRates = queryFactory.Update<SelectExchangeRatesDto>(query, "Id", true);
 

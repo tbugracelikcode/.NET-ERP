@@ -1,9 +1,14 @@
 ﻿using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ContractProductionTracking.Dtos
 {
     public class UpdateContractProductionTrackingsDto : FullAuditedEntityDto
     {
+        /// <summary>
+        /// Kod
+        /// </summary>
+        public string Code { get; set; }
         /// <summary>
         /// İş Emri ID
         /// </summary>

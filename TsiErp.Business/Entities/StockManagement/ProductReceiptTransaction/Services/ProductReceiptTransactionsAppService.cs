@@ -7,6 +7,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services;
@@ -27,11 +28,14 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
     public class ProductReceiptTransactionsAppService : ApplicationService<ProductReceiptTransactionsResource>, IProductReceiptTransactionsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
         private readonly IPurchaseOrdersAwaitingApprovalsAppService _PurchaseOrdersAwaitingApprovalsAppService;
 
-        public ProductReceiptTransactionsAppService(IStringLocalizer<ProductReceiptTransactionsResource> l, IGetSQLDateAppService getSQLDateAppService, IPurchaseOrdersAwaitingApprovalsAppService purchaseOrdersAwaitingApprovalsAppService) : base(l)
+        public ProductReceiptTransactionsAppService(IStringLocalizer<ProductReceiptTransactionsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, IPurchaseOrdersAwaitingApprovalsAppService purchaseOrdersAwaitingApprovalsAppService) : base(l)
         {
+
+            FicheNumbersAppService = ficheNumbersAppService; 
             _GetSQLDateAppService = getSQLDateAppService;
             _PurchaseOrdersAwaitingApprovalsAppService = purchaseOrdersAwaitingApprovalsAppService;
         }
@@ -68,10 +72,13 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
                 Id = addedEntityId,
                 IsDeleted = false,
                 LastModificationTime = null,
-                LastModifierId = Guid.Empty
+                LastModifierId = Guid.Empty,
+                 Code = input.Code
             });
 
             var ProductReceiptTransactions = queryFactory.Insert<SelectProductReceiptTransactionsDto>(query, "Id", true);
+
+            await FicheNumbersAppService.UpdateFicheNumberAsync("ProductReceiptTransactionsChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductReceiptTransactions, LogType.Insert, addedEntityId);
 
@@ -100,7 +107,7 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.ProductReceiptTransactions).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.ProductReceiptTransactions).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
             var ProductReceiptTransactions = queryFactory.Update<SelectProductReceiptTransactionsDto>(query, "Id", true);
 
@@ -140,7 +147,7 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
                             JoinType.Left
                         )
 
-                        .Where(new { Id = id }, false, false, Tables.ProductReceiptTransactions);
+                        .Where(new { Id = id },  Tables.ProductReceiptTransactions);
 
             var ProductReceiptTransaction = queryFactory.Get<SelectProductReceiptTransactionsDto>(query);
 
@@ -179,7 +186,7 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
                             nameof(Products.Id),
                             JoinType.Left
                         )
-               .Where(null, false, false, Tables.ProductReceiptTransactions);
+               .Where(null,  Tables.ProductReceiptTransactions);
 
             var productReceiptTransactions = queryFactory.GetList<ListProductReceiptTransactionsDto>(query).ToList();
 
@@ -192,7 +199,7 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductReceiptTransactionsDto>> UpdateAsync(UpdateProductReceiptTransactionsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductReceiptTransactions).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductReceiptTransactions).Select("*").Where(new { Id = input.Id },  "");
             var entity = queryFactory.Get<ProductReceiptTransactions>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProductReceiptTransactions).Update(new UpdateProductReceiptTransactionsDto
@@ -219,8 +226,9 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+                LastModifierId = LoginedUserService.UserId,
+                 Code = input.Code,
+            }).Where(new { Id = input.Id }, "");
 
             var ProductReceiptTransactions = queryFactory.Update<SelectProductReceiptTransactionsDto>(query, "Id", true);
 
@@ -233,7 +241,7 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
 
         public async Task<IDataResult<SelectProductReceiptTransactionsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductReceiptTransactions).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductReceiptTransactions).Select("*").Where(new { Id = id },  "");
             var entity = queryFactory.Get<ProductReceiptTransactions>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProductReceiptTransactions).Update(new UpdateProductReceiptTransactionsDto
@@ -261,8 +269,9 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
                 Id = id,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
+                 Code   = entity.Code,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var ProductReceiptTransactions = queryFactory.Update<SelectProductReceiptTransactionsDto>(query, "Id", true);
 

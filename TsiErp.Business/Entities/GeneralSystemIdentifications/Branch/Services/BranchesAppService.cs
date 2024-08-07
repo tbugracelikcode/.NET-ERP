@@ -9,12 +9,15 @@ using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Branch.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Branches.Page;
 
@@ -27,11 +30,15 @@ namespace TsiErp.Business.Entities.Branch.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public BranchesAppService(IStringLocalizer<BranchesResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public BranchesAppService(IStringLocalizer<BranchesResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         [ValidationAspect(typeof(CreateBranchesValidator), Priority = 1)]
@@ -39,7 +46,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         public async Task<IDataResult<SelectBranchesDto>> CreateAsync(CreateBranchesDto input)
         {
 
-            var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<Branches>(listQuery).ToList();
 
@@ -58,7 +65,6 @@ namespace TsiErp.Business.Entities.Branch.Services
                 Code = input.Code,
                 Description_ = input.Description_,
                 Name = input.Name,
-                IsActive = true,
                 Id = GuidGenerator.CreateGuid(),
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
@@ -77,6 +83,35 @@ namespace TsiErp.Business.Entities.Branch.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("BranchesChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Branches, LogType.Insert, branches.Id);
+
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync("BranchesChildMenu", L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                foreach (string user in usersNot)
+                {
+                    CreateNotificationsDto createInput = new CreateNotificationsDto
+                    {
+                        ContextMenuName_ = notTemplate.ContextMenuName_,
+                        IsViewed = false,
+                        Message_ = notTemplate.Message_,
+                        ModuleName_ = notTemplate.ModuleName_,
+                        ProcessName_ = notTemplate.ProcessName_,
+                        RecordNumber = input.Code,
+                        NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                        UserId = new Guid(user),
+                        ViewDate = null,
+                    };
+
+                    await _NotificationsAppService.CreateAsync(createInput);
+                }
+            }
+
+            #endregion
 
             await Task.CompletedTask;
 
@@ -114,7 +149,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.Branches).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.Branches).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
 
@@ -132,7 +167,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             new
             {
                 Id = id
-            }, true, true, "");
+            },  "");
             var branch = queryFactory.Get<SelectBranchesDto>(query);
 
 
@@ -146,7 +181,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync(ListBranchesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, true, "");
+            var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, "");
             var branches = queryFactory.GetList<ListBranchesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListBranchesDto>>(branches);
@@ -157,12 +192,12 @@ namespace TsiErp.Business.Entities.Branch.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> UpdateAsync(UpdateBranchesDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<Branches>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<Branches>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -177,8 +212,7 @@ namespace TsiErp.Business.Entities.Branch.Services
                 Code = input.Code,
                 Description_ = input.Description_,
                 Name = input.Name,
-                //Id = input.Id,
-                IsActive = input.IsActive,
+                Id = input.Id,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = false,
@@ -188,7 +222,7 @@ namespace TsiErp.Business.Entities.Branch.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
 
@@ -201,7 +235,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
         public async Task<IDataResult<SelectBranchesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Branches>(entityQuery);
 
@@ -210,7 +244,6 @@ namespace TsiErp.Business.Entities.Branch.Services
                 Code = entity.Code,
                 Description_ = entity.Description_,
                 Name = entity.Name,
-                IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -222,7 +255,7 @@ namespace TsiErp.Business.Entities.Branch.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
             await Task.CompletedTask;

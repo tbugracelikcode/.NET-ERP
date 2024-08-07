@@ -75,7 +75,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
                  new
                  {
                      Id = ProductionManagementParameter.Id
-                 }, false, false, "").UseIsDelete(false);
+                 }, "").UseIsDelete(false);
 
                 result = queryFactory.Get<SelectProductionManagementParametersDto>(query);
             }
@@ -91,7 +91,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionManagementParametersDto>> UpdateAsync(UpdateProductionManagementParametersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductionManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            var entityQuery = queryFactory.Query().From(Tables.ProductionManagementParameters).Select("*").Where(new { Id = input.Id },  "").UseIsDelete(false);
             var entity = queryFactory.Get<ProductionManagementParameters>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProductionManagementParameters).Update(new UpdateProductionManagementParametersDto
@@ -99,7 +99,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
                 FutureDateParameter = input.FutureDateParameter,
                 Density_ = input.Density_,
                 Id = input.Id
-            }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
             var ProductionManagementParameters = queryFactory.Update<SelectProductionManagementParametersDto>(query, "Id", true);
 

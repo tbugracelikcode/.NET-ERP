@@ -71,6 +71,24 @@ namespace TsiErp.Localizations.Resources.EmployeeAnnualSeniorityDifferences.Page
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KIDEM FARKI KODU.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kıdem Farkı Kodu:.
+        /// </summary>
+        public static string CodeLabel {
+            get {
+                return ResourceManager.GetString("CodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {

@@ -57,10 +57,6 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos
         /// EPosta
         /// </summary>
         public string Email { get; set; }
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
 
         /// <summary>
         /// Üretim Ekran Kullanıcısı

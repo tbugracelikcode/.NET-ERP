@@ -75,7 +75,6 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.Employee.Report
                     FullName = employee.Name + " " + employee.Surname,
                     HiringDate = employee.HiringDate,
                     IDnumber = employee.IDnumber,
-                    IsActive = employee.IsActive ? "Aktif" : "Pasif",
                     SeniorityName = employee.SeniorityName,
                     TaskDefinition = employee.TaskDefinition
                 });

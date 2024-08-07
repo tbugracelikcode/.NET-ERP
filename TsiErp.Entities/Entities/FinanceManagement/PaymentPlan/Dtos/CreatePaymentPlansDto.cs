@@ -23,9 +23,5 @@ namespace TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos
         /// Gecikme Vade Farkı
         /// </summary>
         public decimal DelayMaturityDifference { get; set; }
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
     }
 }

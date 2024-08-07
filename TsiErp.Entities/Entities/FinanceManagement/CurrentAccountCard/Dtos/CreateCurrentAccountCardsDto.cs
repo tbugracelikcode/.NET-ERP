@@ -165,10 +165,6 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos
         /// </summary>
         public bool ContractSupplier { get; set; }
         /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
-        /// <summary>
         /// Fason Günlük Çalışma Kapasitesi (Saniye)
         /// </summary>
         public int ContractDailyWorkingCapacity { get; set; }

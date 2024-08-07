@@ -1,26 +1,22 @@
 ﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using Tsi.Core.Utilities.Guids;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate.Dtos;
-using TsiErp.Entities.TableConstant;
-using TsiErp.Localizations.Resources.BillsofMaterials.Page;
-using TsiErp.Localizations.Resources.NotificationTemplates.Page;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate;
-using TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services;
-using TsiErp.Localizations.Resources.UnsuitabilityItems.Page;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup;
+using TsiErp.Entities.Entities.SalesManagement.Forecast;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Localizations.Resources.NotificationTemplates.Page;
 
 namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services
 {
@@ -49,9 +45,18 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 ModuleName_ = input.ModuleName_,
                 ContextMenuName_ = input.ContextMenuName_,
                 Name = input.Name,
-                QueryStr = input.QueryStr,
                 IsActive = input.IsActive,
                 TargetUsersId = input.TargetUsersId,
+                Message_ = input.Message_,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreatorId = LoginedUserService.UserId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = Guid.Empty,
+                DeletionTime = null,
+                IsDeleted = false,
+                LastModificationTime = null,
+                LastModifierId = Guid.Empty,
 
             });
 
@@ -77,24 +82,31 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 Name = input.Name,
                 IsActive = input.IsActive,
                 TargetUsersId = input.TargetUsersId,
-
+                Message_ = input.Message_,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreatorId = LoginedUserService.UserId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = Guid.Empty,
+                DeletionTime = null,
+                IsDeleted = false,
+                LastModificationTime = null,
+                LastModifierId = Guid.Empty,
             });
-
             return query.Sql;
-
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.NotificationTemplates).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, true, "").UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).UseIsDelete(false).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-            var notificationTemplates = queryFactory.Update<SelectNotificationTemplatesDto>(query, "Id", true);
+            var notificationTemplates = queryFactory.Delete(query, true);
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.NotificationTemplates, LogType.Delete, id);
+            //LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.NotificationTemplates, LogType.Delete, id);
 
             await Task.CompletedTask;
-            return new SuccessDataResult<SelectNotificationTemplatesDto>(notificationTemplates);
+            return new SuccessDataResult<SelectNotificationTemplatesDto>("");
 
         }
 
@@ -104,14 +116,17 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
         public async Task<IDataResult<SelectNotificationTemplatesDto>> GetAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(
-            new
-            {
-                Id = id
-            }, false, true, "").UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select<NotificationTemplates>(null)
+                   .Join<UserGroups>
+                    (
+                        p => new { SourceDepartmentId = p.Id, SourceDepartmentName = p.Name },
+                        nameof(NotificationTemplates.SourceDepartmentId),
+                        nameof(UserGroups.Id),
+                        JoinType.Left
+                    ).Where( new{Id = id }, true, true, Tables.NotificationTemplates);
             var notificationTemplate = queryFactory.Get<SelectNotificationTemplatesDto>(query);
 
-            LogsAppService.InsertLogToDatabase(notificationTemplate, notificationTemplate, LoginedUserService.UserId, Tables.Currencies, LogType.Get, id);
+            LogsAppService.InsertLogToDatabase(notificationTemplate, notificationTemplate, LoginedUserService.UserId, Tables.NotificationTemplates, LogType.Get, id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectNotificationTemplatesDto>(notificationTemplate);
@@ -119,8 +134,21 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
         public async Task<IDataResult<IList<ListNotificationTemplatesDto>>> GetListAsync(ListNotificationTemplatesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(null, false, true, "").UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(null, "").UseIsDelete(false);
             var notificationTemplate = queryFactory.GetList<ListNotificationTemplatesDto>(query).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListNotificationTemplatesDto>>(notificationTemplate);
+        }
+
+        public async Task<IDataResult<IList<ListNotificationTemplatesDto>>> GetListbyModuleProcessAsync(string module, string process)
+        {
+            //var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { ProcessName_ = process }, false, false, "").Where(new { ModuleName_ = module }, false, true, "").UseIsDelete(false);
+
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { ProcessName_ = process, ModuleName_ = module }, "").UseIsDelete(false);
+
+
+            var notificationTemplate = queryFactory.GetList<ListNotificationTemplatesDto>(query).ToList();
+
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListNotificationTemplatesDto>>(notificationTemplate);
         }
@@ -128,11 +156,11 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
         public async Task<IDataResult<SelectNotificationTemplatesDto>> UpdateAsync(UpdateNotificationTemplatesDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Id = input.Id }, true, true, "");
-            var entity = queryFactory.Get<NotificationTemplates>(entityQuery);
+            var entity = queryFactory.Get<SelectNotificationTemplatesDto>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Code = input.Id }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Code = input.Id }, "");
             var list = queryFactory.GetList<NotificationTemplates>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Id != input.Id)
@@ -148,31 +176,66 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 TargetUsersId = input.TargetUsersId,
                 SourceDepartmentId = input.SourceDepartmentId,
                 TargetDepartmentId = input.TargetDepartmentId,
-                QueryStr = input.QueryStr,
                 ContextMenuName_ = input.ContextMenuName_,
                 IsActive = input.IsActive,
                 ModuleName_ = input.ModuleName_,
                 Name = input.Name,
                 ProcessName_ = input.ProcessName_,
+                Message_ = input.Message_,
+                CreationTime = entity.CreationTime,
+                CreatorId = entity.CreatorId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, true, true, "");
 
             var notificationTemplate = queryFactory.Update<SelectNotificationTemplatesDto>(query, "Id", true);
 
 
-            LogsAppService.InsertLogToDatabase(entity, notificationTemplate, LoginedUserService.UserId, Tables.UnsuitabilityItems, LogType.Update, entity.Id);
+            LogsAppService.InsertLogToDatabase(entity, notificationTemplate, LoginedUserService.UserId, Tables.NotificationTemplates, LogType.Update, entity.Id);
 
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectNotificationTemplatesDto>(notificationTemplate);
         }
 
-        public Task<IDataResult<SelectNotificationTemplatesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        public async Task<IDataResult<SelectNotificationTemplatesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            throw new NotImplementedException();
+            var entityQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Id = id }, true, true, "");
+
+            var entity = queryFactory.Get<NotificationTemplates>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).Update(new UpdateNotificationTemplatesDto
+            {
+                ProcessName_ = entity.ProcessName_,
+                Message_ = entity.Message_,
+                ContextMenuName_ = entity.ContextMenuName_,
+                IsActive = entity.IsActive,
+                ModuleName_ = entity.ModuleName_,
+                Name = entity.Name,
+                SourceDepartmentId = entity.SourceDepartmentId,
+                TargetDepartmentId = entity.TargetDepartmentId,
+                TargetUsersId = entity.TargetUsersId,
+                DataOpenStatus = lockRow,
+                DataOpenStatusUserId = userId,
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.GetValueOrDefault(),
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                IsDeleted = entity.IsDeleted,
+                Id = entity.Id,
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+
+            var NotificationTemplatesDto = queryFactory.Update<SelectNotificationTemplatesDto>(query, "Id", true);
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectNotificationTemplatesDto>(NotificationTemplatesDto);
         }
-
-
-
+    }
         #endregion
     }
-}

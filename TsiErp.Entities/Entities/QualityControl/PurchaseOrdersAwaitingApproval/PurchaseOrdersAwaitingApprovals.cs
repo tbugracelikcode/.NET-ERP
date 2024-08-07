@@ -6,6 +6,11 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval
 {
     public class PurchaseOrdersAwaitingApprovals : FullAuditedEntity
     {
+        [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Kod
+        /// </summary>
+        public string Code { get; set; }
         [SqlColumnType( Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Satın Alma Sipariş ID

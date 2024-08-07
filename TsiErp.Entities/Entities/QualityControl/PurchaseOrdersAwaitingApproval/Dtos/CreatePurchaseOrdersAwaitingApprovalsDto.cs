@@ -1,4 +1,5 @@
 ﻿using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine.Dtos;
 
@@ -6,6 +7,11 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval
 {
     public class CreatePurchaseOrdersAwaitingApprovalsDto : FullAuditedEntityDto
     {
+        [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Kod
+        /// </summary>
+        public string Code { get; set; }
         /// <summary>
         /// Satın Alma Sipariş ID
         /// </summary>

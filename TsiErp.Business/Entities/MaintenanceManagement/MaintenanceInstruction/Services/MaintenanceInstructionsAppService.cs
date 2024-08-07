@@ -43,7 +43,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMaintenanceInstructionsDto>> CreateAsync(CreateMaintenanceInstructionsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.MaintenanceInstructions).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.MaintenanceInstructions).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<MaintenanceInstructions>(listQuery).ToList();
 
             #region Code Control 
@@ -117,15 +117,15 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.MaintenanceInstructions).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.MaintenanceInstructions).Select("*").Where(new { Id = id }, "");
 
             var maintenanceInstructions = queryFactory.Get<SelectMaintenanceInstructionsDto>(query);
 
             if (maintenanceInstructions.Id != Guid.Empty && maintenanceInstructions != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.MaintenanceInstructions).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.MaintenanceInstructions).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.MaintenanceInstructionLines).Delete(LoginedUserService.UserId).Where(new { InstructionID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.MaintenanceInstructionLines).Delete(LoginedUserService.UserId).Where(new { InstructionID = id }, "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -136,7 +136,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.MaintenanceInstructionLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.MaintenanceInstructionLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                 var maintenanceInstructionLines = queryFactory.Update<SelectMaintenanceInstructionLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MaintenanceInstructionLines, LogType.Delete, id);
                 await Task.CompletedTask;
@@ -164,7 +164,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                         nameof(MaintenancePeriods.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id }, false, false, Tables.MaintenanceInstructions);
+                    .Where(new { Id = id }, Tables.MaintenanceInstructions);
 
             var maintenanceInstructions = queryFactory.Get<SelectMaintenanceInstructionsDto>(query);
 
@@ -186,7 +186,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                         nameof(UnitSets.Id),
                         JoinType.Left
                     )
-                    .Where(new { InstructionID = id }, false, false, Tables.MaintenanceInstructionLines);
+                    .Where(new { InstructionID = id }, Tables.MaintenanceInstructionLines);
 
             var maintenanceInstructionLine = queryFactory.GetList<SelectMaintenanceInstructionLinesDto>(queryLines).ToList();
 
@@ -219,7 +219,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                         nameof(MaintenancePeriods.Id),
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.MaintenanceInstructions);
+                    .Where(null, Tables.MaintenanceInstructions);
 
             var maintenanceInstructions = queryFactory.GetList<ListMaintenanceInstructionsDto>(query).ToList();
             await Task.CompletedTask;
@@ -247,7 +247,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                         nameof(MaintenancePeriods.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id }, false, false, Tables.MaintenanceInstructions);
+                    .Where(new { Id = input.Id }, Tables.MaintenanceInstructions);
 
             var entity = queryFactory.Get<SelectMaintenanceInstructionsDto>(entityQuery);
 
@@ -269,7 +269,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                         nameof(UnitSets.Id),
                         JoinType.Left
                     )
-                    .Where(new { InstructionID = input.Id }, false, false, Tables.MaintenanceInstructionLines);
+                    .Where(new { InstructionID = input.Id }, Tables.MaintenanceInstructionLines);
 
             var maintenanceInstructionLine = queryFactory.GetList<SelectMaintenanceInstructionLinesDto>(queryLines).ToList();
 
@@ -294,7 +294,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                                 nameof(MaintenancePeriods.Id),
                                 JoinType.Left
                             )
-                            .Where(new { Code = input.Code }, false, false, Tables.MaintenanceInstructions);
+                            .Where(new { Code = input.Code }, Tables.MaintenanceInstructions);
 
             var list = queryFactory.GetList<ListMaintenanceInstructionsDto>(listQuery).ToList();
 
@@ -323,7 +323,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectMaintenanceInstructionLines)
             {
@@ -353,7 +353,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.MaintenanceInstructionLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.MaintenanceInstructionLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectMaintenanceInstructionLinesDto>(lineGetQuery);
 
@@ -377,7 +377,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                             LineNr = item.LineNr,
                             ProductID = item.ProductID,
                             UnitSetID = item.UnitSetID,
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -412,7 +412,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                         nameof(MaintenancePeriods.Id),
                         JoinType.Left
                     )
-                    .Where(new { StationID = stationID, PeriodID = periodID }, false, false, Tables.MaintenanceInstructions);
+                    .Where(new { StationID = stationID, PeriodID = periodID }, Tables.MaintenanceInstructions);
 
             var maintenanceInstructions = queryFactory.Get<SelectMaintenanceInstructionsDto>(query);
 
@@ -434,7 +434,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                         nameof(UnitSets.Id),
                         JoinType.Left
                     )
-                    .Where(new { InstructionID = maintenanceInstructions.Id }, false, false, Tables.MaintenanceInstructionLines);
+                    .Where(new { InstructionID = maintenanceInstructions.Id }, Tables.MaintenanceInstructionLines);
 
             var maintenanceInstructionLine = queryFactory.GetList<SelectMaintenanceInstructionLinesDto>(queryLines).ToList();
 
@@ -448,7 +448,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
 
         public async Task<IDataResult<SelectMaintenanceInstructionsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.MaintenanceInstructions).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.MaintenanceInstructions).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<MaintenanceInstructions>(entityQuery);
 
@@ -471,7 +471,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var maintenanceInstructionsDto = queryFactory.Update<SelectMaintenanceInstructionsDto>(query, "Id", true);
             await Task.CompletedTask;

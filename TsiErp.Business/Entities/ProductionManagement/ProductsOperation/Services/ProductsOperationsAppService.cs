@@ -54,7 +54,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductsOperationsDto>> CreateAsync(CreateProductsOperationsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ProductsOperations).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ProductsOperations).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<ProductsOperations>(listQuery).ToList();
 
             #region Code Control 
@@ -82,7 +82,6 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 Id = addedEntityId,
-                IsActive = true,
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty
@@ -177,19 +176,19 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.ProductsOperations).Select("*").Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.ProductsOperations).Select("*").Where(new { Id = id },"");
 
                 var productsOperations = queryFactory.Get<SelectProductsOperationsDto>(query);
 
                 if (productsOperations.Id != Guid.Empty && productsOperations != null)
                 {
-                    var deleteQuery = queryFactory.Query().From(Tables.ProductsOperations).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                    var deleteQuery = queryFactory.Query().From(Tables.ProductsOperations).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
-                    var lineDeleteQuery = queryFactory.Query().From(Tables.ProductsOperationLines).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, false, false, "");
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.ProductsOperationLines).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, "");
 
-                    var lineQualityPlansDeleteQuery = queryFactory.Query().From(Tables.ProductOperationQualityPlans).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, false, false, "");
+                    var lineQualityPlansDeleteQuery = queryFactory.Query().From(Tables.ProductOperationQualityPlans).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id },  "");
 
-                    var lineContractDeleteQuery = queryFactory.Query().From(Tables.ContractOfProductsOperations).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, false, false, "");
+                    var lineContractDeleteQuery = queryFactory.Query().From(Tables.ContractOfProductsOperations).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, "");
 
                     deleteQuery.Sql = deleteQuery.Sql
                         + QueryConstants.QueryConstant + lineDeleteQuery.Sql
@@ -204,7 +203,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 }
                 else
                 {
-                    var queryLine = queryFactory.Query().From(Tables.ProductsOperationLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var queryLine = queryFactory.Query().From(Tables.ProductsOperationLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                     var productsOperationLines = queryFactory.Update<SelectProductsOperationLinesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductsOperationLines, LogType.Delete, id);
                     await Task.CompletedTask;
@@ -240,7 +239,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                         nameof(ProductsOperations.WorkCenterID),
                         nameof(StationGroups.Id), JoinType.Left
                     )
-                    .Where(new { Id = id }, true, true, Tables.ProductsOperations);
+                    .Where(new { Id = id }, Tables.ProductsOperations);
 
             var productsOperations = queryFactory.Get<SelectProductsOperationsDto>(query);
 
@@ -256,7 +255,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                                 nameof(Stations.Id),
                                 JoinType.Left
                             )
-                            .Where(new { ProductsOperationID = id }, false, false, Tables.ProductsOperationLines);
+                            .Where(new { ProductsOperationID = id },Tables.ProductsOperationLines);
 
             var productsOperationLine = queryFactory.GetList<SelectProductsOperationLinesDto>(queryLines).ToList();
 
@@ -275,7 +274,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                        .Where(new { ProductsOperationID = id }, false, false, Tables.ContractOfProductsOperations);
+                        .Where(new { ProductsOperationID = id }, Tables.ContractOfProductsOperations);
 
             var contractOfProductionOperations = queryFactory.GetList<SelectContractOfProductsOperationsDto>(contractOfProductionOperationQuery).ToList();
 
@@ -311,7 +310,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                         nameof(ProductsOperations.WorkCenterID),
                         nameof(StationGroups.Id), JoinType.Left
                     )
-                    .Where(null, true, true, Tables.ProductsOperations);
+                    .Where(null, Tables.ProductsOperations);
 
             var productsOperations = queryFactory.GetList<ListProductsOperationsDto>(query).ToList();
             await Task.CompletedTask;
@@ -334,7 +333,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id }, true, true, Tables.ProductsOperations);
+                    .Where(new { Id = input.Id }, Tables.ProductsOperations);
 
             var entity = queryFactory.Get<SelectProductsOperationsDto>(entityQuery);
 
@@ -350,7 +349,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                                 nameof(Stations.Id),
                                 JoinType.Left
                             )
-                            .Where(new { ProductsOperationID = input.Id }, false, false, Tables.ProductsOperationLines);
+                            .Where(new { ProductsOperationID = input.Id }, Tables.ProductsOperationLines);
 
             var productsOperationLine = queryFactory.GetList<SelectProductsOperationLinesDto>(queryLines).ToList();
 
@@ -369,7 +368,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                        .Where(new { ProductsOperationID = input.Id }, false, false, Tables.ContractOfProductsOperations);
+                        .Where(new { ProductsOperationID = input.Id }, Tables.ContractOfProductsOperations);
 
             var contractOfProductionOperations = queryFactory.GetList<SelectContractOfProductsOperationsDto>(contractOfProductionOperationQuery).ToList();
 
@@ -380,7 +379,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             var listQuery = queryFactory
                            .Query()
                             .From(Tables.ProductsOperations)
-                   .Select<ProductsOperations>(po => new { po.WorkCenterID, po.TemplateOperationID, po.ProductID, po.Name, po.IsActive, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code })
+                   .Select<ProductsOperations>(po => new { po.WorkCenterID, po.TemplateOperationID, po.ProductID, po.Name, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code })
                    .Join<Products>
                     (
                         p => new { ProductCode = p.Code, ProductName = p.Name },
@@ -388,7 +387,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
-                            .Where(new { Code = input.Code }, false, false, Tables.ProductsOperations);
+                            .Where(new { Code = input.Code }, Tables.ProductsOperations);
 
             var list = queryFactory.GetList<ListProductsOperationsDto>(listQuery).ToList();
 
@@ -411,12 +410,11 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
-                IsActive = input.IsActive,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             #region Product Operation Lines
             foreach (var item in input.SelectProductsOperationLines)
@@ -454,7 +452,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.ProductsOperationLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.ProductsOperationLines).Select("*").Where(new { Id = item.Id },  "");
 
                     var line = queryFactory.Get<SelectProductsOperationLinesDto>(lineGetQuery);
 
@@ -480,7 +478,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                             LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
 
@@ -536,7 +534,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.ContractOfProductsOperations).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.ContractOfProductsOperations).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectContractOfProductsOperationsDto>(lineGetQuery);
 
@@ -557,7 +555,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             CurrentAccountCardID = item.CurrentAccountCardID
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id },  "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -578,7 +576,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
         public async Task<IDataResult<SelectProductsOperationsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductsOperations).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductsOperations).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<ProductsOperations>(entityQuery);
 
@@ -595,12 +593,11 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = entity.Id,
-                IsActive = entity.IsActive,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 Name = entity.Name,
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var productsOperationsDto = queryFactory.Update<SelectProductsOperationsDto>(query, "Id", true);
             await Task.CompletedTask;

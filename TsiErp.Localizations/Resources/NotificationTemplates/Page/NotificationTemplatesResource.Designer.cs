@@ -3212,6 +3212,15 @@ namespace TsiErp.Localizations.Resources.NotificationTemplates.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string NotificationTemplatesContextChange {
+            get {
+                return ResourceManager.GetString("NotificationTemplatesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string NotificationTemplatesContextDelete {
@@ -4301,7 +4310,7 @@ namespace TsiErp.Localizations.Resources.NotificationTemplates.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
+        ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ProcessRefresh {
             get {
@@ -5926,24 +5935,6 @@ namespace TsiErp.Localizations.Resources.NotificationTemplates.Page {
         public static string QualityPlansMenu {
             get {
                 return ResourceManager.GetString("QualityPlansMenu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SORGU.
-        /// </summary>
-        public static string QueryStr {
-            get {
-                return ResourceManager.GetString("QueryStr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sorgu:.
-        /// </summary>
-        public static string QueryStrLabel {
-            get {
-                return ResourceManager.GetString("QueryStrLabel", resourceCulture);
             }
         }
         

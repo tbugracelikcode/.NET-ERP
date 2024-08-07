@@ -38,7 +38,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectControlConditionsDto>> CreateAsync(CreateControlConditionsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ControlConditions).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ControlConditions).Select("*").Where(new { Code = input.Code },  "");
 
             var list = queryFactory.ControlList<ControlConditions>(listQuery).ToList();
 
@@ -57,7 +57,6 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
                 Code = input.Code,
                 Description_ = input.Description_,
                 Name = input.Name,
-                IsActive = true,
                 Id = GuidGenerator.CreateGuid(),
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
@@ -87,7 +86,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.ControlConditions).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+            var query = queryFactory.Query().From(Tables.ControlConditions).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
             var controlConditions = queryFactory.Update<SelectControlConditionsDto>(query, "Id", true);
 
@@ -104,7 +103,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
             new
             {
                 Id = id
-            }, true, true, "");
+            }, "");
 
             var controlConditions = queryFactory.Get<SelectControlConditionsDto>(query);
 
@@ -118,7 +117,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
         public async Task<IDataResult<IList<ListControlConditionsDto>>> GetListAsync(ListControlConditionsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.ControlConditions).Select("*").Where(null, true, true, "");
+            var query = queryFactory.Query().From(Tables.ControlConditions).Select("*").Where(null, "");
 
             var controlConditions = queryFactory.GetList<ListControlConditionsDto>(query).ToList();
 
@@ -131,12 +130,12 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectControlConditionsDto>> UpdateAsync(UpdateControlConditionsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ControlConditions).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.ControlConditions).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<ControlConditions>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.ControlConditions).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.ControlConditions).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<ControlConditions>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -152,7 +151,6 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
                 Description_ = input.Description_,
                 Name = input.Name,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = false,
@@ -163,7 +161,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 QualityPlanTypes = input.QualityPlanTypes
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var controlConditions = queryFactory.Update<SelectControlConditionsDto>(query, "Id", true);
 
@@ -176,7 +174,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
         public async Task<IDataResult<SelectControlConditionsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ControlConditions).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.ControlConditions).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<ControlConditions>(entityQuery);
 
@@ -185,7 +183,6 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
                 Code = entity.Code,
                 Description_ = entity.Description_,
                 Name = entity.Name,
-                IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -197,7 +194,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
                 QualityPlanTypes = entity.QualityPlanTypes
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var controlConditions = queryFactory.Update<SelectControlConditionsDto>(query, "Id", true);
 

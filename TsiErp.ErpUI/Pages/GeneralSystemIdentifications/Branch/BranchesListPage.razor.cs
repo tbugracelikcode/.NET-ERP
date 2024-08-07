@@ -36,7 +36,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Branch
         {
             DataSource = new SelectBranchesDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("BranchesChildMenu")
             };
 

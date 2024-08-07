@@ -103,7 +103,6 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CurrentAccountCard
         {
             DataSource = new SelectCurrentAccountCardsDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("CurrentAccountsChildMenu")
             };
 

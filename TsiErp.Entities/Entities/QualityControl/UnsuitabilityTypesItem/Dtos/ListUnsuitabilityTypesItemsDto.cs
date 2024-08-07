@@ -20,11 +20,6 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos
         public string Description_ { get; set; }
 
         /// <summary>
-        /// Aktif
-        /// </summary>
-        public bool IsActive { get; set; }
-
-        /// <summary>
         /// Uygunsuzluk Türü Açıklaması
         /// </summary>
         public string UnsuitabilityTypesDescription { get; set; }

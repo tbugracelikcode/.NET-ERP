@@ -57,7 +57,7 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
 
         public async Task<IDataResult<SelectOperationStockMovementsDto>> GetByProductionOrderIdAsync(Guid productionOrderId, Guid productOperationId)
         {
-            var query = queryFactory.Query().From(Tables.OperationStockMovements).Select("*").Where(new { ProductionorderID = productionOrderId, OperationID = productOperationId }, false, false, "").UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.OperationStockMovements).Select("*").Where(new { ProductionorderID = productionOrderId, OperationID = productOperationId }, "").UseIsDelete(false);
 
             var entity = queryFactory.Get<SelectOperationStockMovementsDto>(query);
 
@@ -71,7 +71,7 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
 
         public async Task<IDataResult<IList<ListOperationStockMovementsDto>>> GetListAsync(ListOperationStockMovementsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.OperationStockMovements).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.OperationStockMovements).Select("*").Where(null, "");
             var entity = queryFactory.GetList<ListOperationStockMovementsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListOperationStockMovementsDto>>(entity);

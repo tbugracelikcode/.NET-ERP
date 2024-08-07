@@ -68,7 +68,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
                  new
                  {
                      Id = PurchaseManagementParameter.Id
-                 }, false, false, "").UseIsDelete(false);
+                 }, "").UseIsDelete(false);
 
                 result = queryFactory.Get<SelectPurchaseManagementParametersDto>(query);
             }
@@ -83,7 +83,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseManagementParametersDto>> UpdateAsync(UpdatePurchaseManagementParametersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            var entityQuery = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select("*").Where(new { Id = input.Id }, "").UseIsDelete(false);
 
             var entity = queryFactory.Get<PurchaseManagementParameters>(entityQuery);
 
@@ -96,7 +96,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
                 PurchaseOrderExchangeRateType = input.PurchaseOrderExchangeRateType,
                 WarehouseID = input.WarehouseID,
                 BranchID = input.BranchID,
-            }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
 
             var PurchaseManagementParameters = queryFactory.Update<SelectPurchaseManagementParametersDto>(query, "Id", true);

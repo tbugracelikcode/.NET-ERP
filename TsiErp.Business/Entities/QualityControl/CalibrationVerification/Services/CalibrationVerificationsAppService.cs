@@ -40,7 +40,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalibrationVerificationsDto>> CreateAsync(CreateCalibrationVerificationsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.CalibrationVerifications).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.CalibrationVerifications).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<CalibrationVerifications>(listQuery).ToList();
 
@@ -93,7 +93,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.CalibrationVerifications).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.CalibrationVerifications).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var calibrationVerifications = queryFactory.Update<SelectCalibrationVerificationsDto>(query, "Id", true);
 
@@ -116,7 +116,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                             nameof(EquipmentRecords.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.CalibrationVerifications);
+                        .Where(new { Id = id }, Tables.CalibrationVerifications);
 
             var calibrationVerification = queryFactory.Get<SelectCalibrationVerificationsDto>(query);
 
@@ -142,7 +142,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                             nameof(CalibrationVerifications.EquipmentID),
                             nameof(EquipmentRecords.Id),
                             JoinType.Left
-                        ).Where(null, false, false, Tables.CalibrationVerifications);
+                        ).Where(null, Tables.CalibrationVerifications);
 
 
             var calibrationVerifications = queryFactory.GetList<ListCalibrationVerificationsDto>(query).ToList();
@@ -156,12 +156,12 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalibrationVerificationsDto>> UpdateAsync(UpdateCalibrationVerificationsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.CalibrationVerifications).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.CalibrationVerifications).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<CalibrationVerifications>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.CalibrationVerifications).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.CalibrationVerifications).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<CalibrationVerifications>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -191,7 +191,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var calibrationVerifications = queryFactory.Update<SelectCalibrationVerificationsDto>(query, "Id", true);
 
@@ -206,7 +206,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
 
         public async Task<IDataResult<SelectCalibrationVerificationsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.CalibrationVerifications).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.CalibrationVerifications).Select("*").Where(new { Id = id },  "");
             var entity = queryFactory.Get<CalibrationVerifications>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.CalibrationVerifications).Update(new UpdateCalibrationVerificationsDto
@@ -230,7 +230,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var calibrationVerifications = queryFactory.Update<SelectCalibrationVerificationsDto>(query, "Id", true);
 

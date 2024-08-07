@@ -4,17 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities;
+using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate.Dtos
 {
-    public class CreateNotificationTemplatesDto : IEntityDto
+    public class CreateNotificationTemplatesDto : FullAuditedEntityDto
     {
 
-        /// <summary>
-        /// ID
-        /// </summary>
-        public Guid Id { get; set; }
 
 
         /// <summary>
@@ -54,16 +51,14 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
-
-
-        /// <summary>
-        /// str
-        /// </summary>
-        public string QueryStr { get; set; }
         /// <summary>
         /// userID
         /// </summary>
         public string TargetUsersId { get; set; }
+        /// <summary>
+        /// Mesaj
+        /// </summary>
+        public string Message_ { get; set; }
 
 
     }

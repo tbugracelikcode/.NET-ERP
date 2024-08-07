@@ -74,10 +74,6 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
         /// </summary>
         public decimal PowerFactor { get; set; }
         /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
-        /// <summary>
         /// Demir Başlar
         /// </summary>
         public bool IsFixtures { get; set; }

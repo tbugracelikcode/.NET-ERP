@@ -42,7 +42,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCitiesDto>> CreateAsync(CreateCitiesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Cities).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Cities).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<Cities>(listQuery).ToList();
 
             #region Code Control 
@@ -127,15 +127,15 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Cities).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.Cities).Select("*").Where(new { Id = id }, "");
 
             var Cities = queryFactory.Get<SelectCitiesDto>(query);
 
             if (Cities.Id != Guid.Empty && Cities != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.Cities).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.Cities).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.CityLines).Delete(LoginedUserService.UserId).Where(new { CityID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.CityLines).Delete(LoginedUserService.UserId).Where(new { CityID = id }, "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -146,7 +146,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.CityLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.CityLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                 var cityLines = queryFactory.Update<SelectCityLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.CityLines, LogType.Delete, id);
                 await Task.CompletedTask;
@@ -160,7 +160,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Cities)
-                   .Select("*").Where(new { Id = id }, false, false, "");
+                   .Select("*").Where(new { Id = id }, "");
 
             var Cities = queryFactory.Get<SelectCitiesDto>(query);
 
@@ -168,7 +168,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
                    .Query()
                    .From(Tables.CityLines)
                    .Select("*")
-                    .Where(new { CityID = id }, false, false, "");
+                    .Where(new { CityID = id }, "");
 
             var CityLine = queryFactory.GetList<SelectCityLinesDto>(queryLines).ToList();
 
@@ -188,7 +188,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
                    .Query()
                    .From(Tables.Cities)
                    .Select("*")
-                    .Where(null, false, false, "");
+                    .Where(null, "");
 
             var Cities = queryFactory.GetList<ListCitiesDto>(query).ToList();
             await Task.CompletedTask;
@@ -206,7 +206,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
                 .Query()
                 .From(Tables.Cities)
                 .Select("*")
-                .Where(new { Id = input.Id }, false, false, "");
+                .Where(new { Id = input.Id }, "");
 
             var entity = queryFactory.Get<Cities>(entityQuery);
 
@@ -215,13 +215,13 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
                    .Query()
                    .From(Tables.CityLines)
                    .Select("*")
-                    .Where(new { CityID = input.Id }, false, false, "");
+                    .Where(new { CityID = input.Id }, "");
 
             var CityLine = queryFactory.GetList<SelectCityLinesDto>(queryLines).ToList();
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.Cities).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Cities).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<Cities>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -251,7 +251,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
                 IsBigCity = input.IsBigCity,
                 SelectCityLines = input.SelectCityLines,
                 CityTypeForm = input.CityTypeForm,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
 
             foreach (var item in input.SelectCityLines)
@@ -285,7 +285,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.CityLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.CityLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectCityLinesDto>(lineGetQuery);
 
@@ -312,7 +312,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
                             DistrictInstruction = item.DistrictInstruction,
 
 
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -331,7 +331,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
 
         public async Task<IDataResult<SelectCitiesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Cities).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.Cities).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Cities>(entityQuery);
 
@@ -353,7 +353,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
                 IsBigCity = entity.IsBigCity,
                 Population_ = entity.Population_,
                 CityTypeForm = (int)entity.CityTypeForm
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var CitiesDto = queryFactory.Update<SelectCitiesDto>(query, "Id", true);
             await Task.CompletedTask;

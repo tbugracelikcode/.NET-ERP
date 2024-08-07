@@ -51,7 +51,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> CreateAsync(CreateOperationUnsuitabilityReportsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*").Where(new { FicheNo = input.FicheNo },  "");
 
             var list = queryFactory.ControlList<OperationUnsuitabilityReports>(listQuery).ToList();
 
@@ -142,7 +142,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var operationUnsuitabilityReport = queryFactory.Update<SelectOperationUnsuitabilityReportsDto>(query, "Id", true);
 
@@ -197,7 +197,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                    nameof(UnsuitabilityItems.Id), 
                    JoinType.Left
                 )
-                .Where(null, false, false, Tables.OperationUnsuitabilityReports);
+                .Where(null, Tables.OperationUnsuitabilityReports);
 
             var operationUnsuitabilityReport = queryFactory.Get<SelectOperationUnsuitabilityReportsDto>(query);
 
@@ -245,7 +245,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 (
                    d => new { UnsuitabilityItemsName = d.Name }, nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
                 )
-                .Where(null, false, false, Tables.OperationUnsuitabilityReports);
+                .Where(null, Tables.OperationUnsuitabilityReports);
 
             var operationUnsuitabilityReports = queryFactory.GetList<ListOperationUnsuitabilityReportsDto>(query).ToList();
 
@@ -259,12 +259,12 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> UpdateAsync(UpdateOperationUnsuitabilityReportsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<OperationUnsuitabilityReports>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*").Where(new { FicheNo = input.FicheNo }, "");
             var list = queryFactory.GetList<OperationUnsuitabilityReports>(listQuery).ToList();
 
             if (list.Count > 0 && entity.FicheNo != input.FicheNo)
@@ -300,7 +300,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 StationGroupID = input.StationGroupID.GetValueOrDefault(),
                 StationID = input.StationID.GetValueOrDefault(),
                 WorkOrderID = input.WorkOrderID.GetValueOrDefault()
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var operationUnsuitabilityReport = queryFactory.Update<SelectOperationUnsuitabilityReportsDto>(query, "Id", true);
 
@@ -347,7 +347,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
         public async Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*").Where(new { Id = id },  "");
             var entity = queryFactory.Get<OperationUnsuitabilityReports>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Update(new UpdateOperationUnsuitabilityReportsDto
@@ -376,7 +376,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 StationGroupID = entity.StationGroupID,
                 StationID = entity.StationID,
                 WorkOrderID = entity.WorkOrderID
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var operationUnsuitabilityReport = queryFactory.Update<SelectOperationUnsuitabilityReportsDto>(query, "Id", true);
 

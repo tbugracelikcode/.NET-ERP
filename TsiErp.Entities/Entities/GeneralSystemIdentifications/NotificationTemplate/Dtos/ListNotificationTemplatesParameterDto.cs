@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tsi.Core.Entities.Auditing;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate.Dtos
 {
-    public class ListNotificationTemplatesParameterDto
+    public class ListNotificationTemplatesParameterDto : FullAuditedEntityDto
     {
     }
 }

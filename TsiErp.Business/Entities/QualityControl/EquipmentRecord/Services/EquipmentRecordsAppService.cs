@@ -42,7 +42,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEquipmentRecordsDto>> CreateAsync(CreateEquipmentRecordsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<EquipmentRecords>(listQuery).ToList();
 
@@ -78,7 +78,6 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 Id = addedEntityId,
-                IsActive = true,
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
@@ -118,7 +117,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.EquipmentRecords).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.EquipmentRecords).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var equipmentRecords = queryFactory.Update<SelectEquipmentRecordsDto>(query, "Id", true);
 
@@ -141,7 +140,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
                             nameof(Departments.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, true, true, Tables.EquipmentRecords);
+                        .Where(new { Id = id }, Tables.EquipmentRecords);
 
             var equipmentRecord = queryFactory.Get<SelectEquipmentRecordsDto>(query);
 
@@ -168,7 +167,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
                        nameof(EquipmentRecords.Department),
                        nameof(Departments.Id),
                        JoinType.Left
-                   ).Where(null, true, true, Tables.EquipmentRecords);
+                   ).Where(null, Tables.EquipmentRecords);
 
             var equipmentRecords = queryFactory.GetList<ListEquipmentRecordsDto>(query).ToList();
 
@@ -182,12 +181,12 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEquipmentRecordsDto>> UpdateAsync(UpdateEquipmentRecordsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Id = input.Id },  "");
             var entity = queryFactory.Get<EquipmentRecords>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Code = input.Code },  "");
             var list = queryFactory.GetList<EquipmentRecords>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -202,7 +201,6 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
                 Code = input.Code,
                 Name = input.Name,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 Responsible = input.Responsible,
                 MeasuringRange = input.MeasuringRange,
                 MeasuringAccuracy = input.MeasuringAccuracy,
@@ -222,7 +220,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var equipmentRecords = queryFactory.Update<SelectEquipmentRecordsDto>(query, "Id", true);
 
@@ -237,14 +235,13 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
         public async Task<IDataResult<SelectEquipmentRecordsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Id = id },  "");
             var entity = queryFactory.Get<EquipmentRecords>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.EquipmentRecords).Update(new UpdateEquipmentRecordsDto
             {
                 Code = entity.Code,
                 Name = entity.Name,
-                IsActive = entity.IsActive,
                 Responsible = entity.Responsible,
                 MeasuringRange = entity.MeasuringRange,
                 MeasuringAccuracy = entity.MeasuringAccuracy,
@@ -266,7 +263,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var equipmentRecords = queryFactory.Update<SelectEquipmentRecordsDto>(query, "Id", true);
 

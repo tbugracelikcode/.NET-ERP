@@ -9,6 +9,5 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos
 {
     public class ListCurrenciesParameterDto : FullAuditedEntityDto
     {
-        public bool IsActive { get; set; } = true;
     }
 }

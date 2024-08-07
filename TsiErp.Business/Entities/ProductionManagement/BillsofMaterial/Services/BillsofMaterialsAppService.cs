@@ -43,7 +43,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBillsofMaterialsDto>> CreateAsync(CreateBillsofMaterialsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<BillsofMaterials>(listQuery).ToList();
 
             #region Code Control 
@@ -70,7 +70,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 ProductType = input.ProductType,
                 DeletionTime = null,
                 Id = addedEntityId,
-                IsActive = true,
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
@@ -137,15 +136,15 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id }, "");
 
                 var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
 
                 if (billsOfMaterials.Id != Guid.Empty && billsOfMaterials != null)
                 {
-                    var deleteQuery = queryFactory.Query().From(Tables.BillsofMaterials).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                    var deleteQuery = queryFactory.Query().From(Tables.BillsofMaterials).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
-                    var lineDeleteQuery = queryFactory.Query().From(Tables.BillsofMaterialLines).Delete(LoginedUserService.UserId).Where(new { BomID = id }, false, false, "");
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.BillsofMaterialLines).Delete(LoginedUserService.UserId).Where(new { BomID = id }, "");
 
                     deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -156,7 +155,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 }
                 else
                 {
-                    var queryLine = queryFactory.Query().From(Tables.BillsofMaterialLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var queryLine = queryFactory.Query().From(Tables.BillsofMaterialLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                     var billOfMaterialLines = queryFactory.Update<SelectBillsofMaterialLinesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.BillsofMaterialLines, LogType.Delete, id);
                     await Task.CompletedTask;
@@ -185,7 +184,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id }, true, true, Tables.BillsofMaterials);
+                    .Where(new { Id = id }, Tables.BillsofMaterials);
 
             var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
 
@@ -215,7 +214,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(UnitSets.Id),
                         JoinType.Left
                     )
-                    .Where(new { BoMID = id }, false, false, Tables.BillsofMaterialLines);
+                    .Where(new { BoMID = id }, Tables.BillsofMaterialLines);
 
             var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
 
@@ -248,7 +247,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { CurrentAccountCardID = currentAccountID, FinishedProductID = finishedProductId }, true, true, Tables.BillsofMaterials);
+                    .Where(new { CurrentAccountCardID = currentAccountID, FinishedProductID = finishedProductId },Tables.BillsofMaterials);
 
             var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
 
@@ -278,7 +277,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(UnitSets.Id),
                         JoinType.Left
                     )
-                    .Where(new { BoMID = billsOfMaterials.Id }, false, false, Tables.BillsofMaterialLines);
+                    .Where(new { BoMID = billsOfMaterials.Id }, Tables.BillsofMaterialLines);
 
             var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
 
@@ -311,7 +310,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { FinishedProductID = finishedProductId }, true, true, Tables.BillsofMaterials);
+                    .Where(new { FinishedProductID = finishedProductId }, Tables.BillsofMaterials);
 
             var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
 
@@ -341,7 +340,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(UnitSets.Id),
                         JoinType.Left
                     )
-                    .Where(new { BoMID = billsOfMaterials.Id }, false, false, Tables.BillsofMaterialLines);
+                    .Where(new { BoMID = billsOfMaterials.Id }, Tables.BillsofMaterialLines);
 
             var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
 
@@ -375,7 +374,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(null, true, true, Tables.BillsofMaterials);
+                    .Where(null, Tables.BillsofMaterials);
 
             var billsOfMaterials = queryFactory.GetList<ListBillsofMaterialsDto>(query).ToList();
             await Task.CompletedTask;
@@ -403,7 +402,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { FinishedProductID = finishedProductId }, true, true, Tables.BillsofMaterials);
+                    .Where(new { FinishedProductID = finishedProductId }, Tables.BillsofMaterials);
 
             var billsOfMaterials = queryFactory.GetList<SelectBillsofMaterialsDto>(query).ToList();
 
@@ -435,7 +434,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                        nameof(UnitSets.Id),
                        JoinType.Left
                    )
-                   .Where(new { BoMID = billsOfMaterial.Id }, false, false, Tables.BillsofMaterialLines);
+                   .Where(new { BoMID = billsOfMaterial.Id }, Tables.BillsofMaterialLines);
 
             var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
 
@@ -469,7 +468,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id }, true, true, Tables.BillsofMaterials);
+                    .Where(new { Id = input.Id },  Tables.BillsofMaterials);
 
             var entity = queryFactory.Get<SelectBillsofMaterialsDto>(entityQuery);
 
@@ -499,7 +498,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(UnitSets.Id),
                         JoinType.Left
                     )
-                    .Where(new { BoMID = input.Id }, false, false, Tables.BillsofMaterialLines);
+                    .Where(new { BoMID = input.Id }, Tables.BillsofMaterialLines);
 
             var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
 
@@ -524,7 +523,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                            .Where(new { Code = input.Code }, false, false, Tables.BillsofMaterials);
+                            .Where(new { Code = input.Code },  Tables.BillsofMaterials);
 
             var list = queryFactory.GetList<ListBillsofMaterialsDto>(listQuery).ToList();
 
@@ -545,7 +544,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 ProductType = input.ProductType,
                 Id = input.Id,
-                IsActive = input.IsActive,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
@@ -553,7 +551,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 FinishedProductID = input.FinishedProductID.GetValueOrDefault(),
                 _Description = input._Description,
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault()
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id },"");
 
             foreach (var item in input.SelectBillsofMaterialLines)
             {
@@ -587,7 +585,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.BillsofMaterialLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.BillsofMaterialLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectBillsofMaterialLinesDto>(lineGetQuery);
 
@@ -615,7 +613,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                             Size = item.Size,
                             UnitSetID = item.UnitSetID.GetValueOrDefault(),
                             _Description = item._Description
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -633,7 +631,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
         public async Task<IDataResult<SelectBillsofMaterialsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<BillsofMaterials>(entityQuery);
 
@@ -648,7 +646,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = entity.Id,
-                IsActive = entity.IsActive,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
@@ -656,7 +653,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 FinishedProductID = entity.FinishedProductID,
                 _Description = entity._Description,
                 CurrentAccountCardID = entity.CurrentAccountCardID
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var billsofMaterialsDto = queryFactory.Update<SelectBillsofMaterialsDto>(query, "Id", true);
             await Task.CompletedTask;

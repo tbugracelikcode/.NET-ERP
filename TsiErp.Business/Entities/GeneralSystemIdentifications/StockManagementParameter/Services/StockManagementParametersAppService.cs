@@ -65,7 +65,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
                  new
                  {
                      Id = StockManagementParameter.Id
-                 }, false, false, "").UseIsDelete(false);
+                 }, "").UseIsDelete(false);
 
                 result = queryFactory.Get<SelectStockManagementParametersDto>(query);
             }
@@ -80,7 +80,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockManagementParametersDto>> UpdateAsync(UpdateStockManagementParametersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StockManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            var entityQuery = queryFactory.Query().From(Tables.StockManagementParameters).Select("*").Where(new { Id = input.Id }, "").UseIsDelete(false);
 
             var entity = queryFactory.Get<StockManagementParameters>(entityQuery);
 
@@ -90,7 +90,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
                 AutoCostParameter = input.AutoCostParameter,
                 CostCalculationMethod = input.CostCalculationMethod,
                 Id = input.Id
-            }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
 
             var StockManagementParameters = queryFactory.Update<SelectStockManagementParametersDto>(query, "Id", true);

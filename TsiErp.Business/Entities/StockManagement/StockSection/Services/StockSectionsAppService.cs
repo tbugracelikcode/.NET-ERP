@@ -38,7 +38,7 @@ namespace TsiErp.Business.Entities.StockSection.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockSectionsDto>> CreateAsync(CreateStockSectionsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.StockSections).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.StockSections).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<StockSections>(listQuery).ToList();
 
@@ -102,7 +102,7 @@ namespace TsiErp.Business.Entities.StockSection.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.StockSections).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var query = queryFactory.Query().From(Tables.StockSections).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
                 var StockSections = queryFactory.Update<SelectStockSectionsDto>(query, "Id", true);
 
@@ -120,7 +120,7 @@ namespace TsiErp.Business.Entities.StockSection.Services
             new
             {
                 Id = id
-            }, false, false, "");
+            },  "");
             var StockSection = queryFactory.Get<SelectStockSectionsDto>(query);
 
 
@@ -134,7 +134,7 @@ namespace TsiErp.Business.Entities.StockSection.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStockSectionsDto>>> GetListAsync(ListStockSectionsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.StockSections).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.StockSections).Select("*").Where(null,  "");
             var StockSections = queryFactory.GetList<ListStockSectionsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListStockSectionsDto>>(StockSections);
@@ -146,12 +146,12 @@ namespace TsiErp.Business.Entities.StockSection.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockSectionsDto>> UpdateAsync(UpdateStockSectionsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StockSections).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.StockSections).Select("*").Where(new { Id = input.Id },  "");
             var entity = queryFactory.Get<StockSections>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.StockSections).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.StockSections).Select("*").Where(new { Code = input.Code },  "");
             var list = queryFactory.GetList<StockSections>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -176,7 +176,7 @@ namespace TsiErp.Business.Entities.StockSection.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },"");
 
             var StockSections = queryFactory.Update<SelectStockSectionsDto>(query, "Id", true);
 
@@ -189,7 +189,7 @@ namespace TsiErp.Business.Entities.StockSection.Services
 
         public async Task<IDataResult<SelectStockSectionsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StockSections).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.StockSections).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<StockSections>(entityQuery);
 
@@ -209,7 +209,7 @@ namespace TsiErp.Business.Entities.StockSection.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var StockSections = queryFactory.Update<SelectStockSectionsDto>(query, "Id", true);
             await Task.CompletedTask;

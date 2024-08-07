@@ -36,7 +36,6 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Department
         {
             DataSource = new SelectDepartmentsDto()
             {
-                IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("DepartmentsChildMenu")
             };
 

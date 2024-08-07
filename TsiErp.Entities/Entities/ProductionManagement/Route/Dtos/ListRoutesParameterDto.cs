@@ -9,9 +9,5 @@ namespace TsiErp.Entities.Entities.ProductionManagement.Route.Dtos
 {
     public class ListRoutesParameterDto : FullAuditedEntityDto
     {
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; } = true;
     }
 }

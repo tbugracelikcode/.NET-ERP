@@ -1,18 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using TSI.QueryBuilder.Helpers;
-using TSI.QueryBuilder.Models;
 
 namespace TSI.QueryBuilder
 {
     public partial class Query
     {
-        public Query Where(object constraints, bool useIsActive, bool IsActive, string joinSeperator)
+        public Query Where(object constraints, string joinSeperator)
         {
             string where = "";
-
-            WhereQuerySQL querySQL = new WhereQuerySQL();
 
             JoinSeperator = joinSeperator;
 
@@ -23,20 +19,17 @@ namespace TSI.QueryBuilder
                 foreach (var item in constraints.GetType().GetRuntimeProperties())
                 {
                     dictionary.Add(item.Name, item.GetValue(constraints));
-                    querySQL.ParameterList.Add("@"+item.Name, item.GetValue(constraints));
                 }
 
                 int counter = 0;
 
                 foreach (var dict in dictionary)
                 {
-                    //string whereClause = dict.Key + "=" + "'" + dict.Value + "'";
-                    string whereClause = dict.Key + "=" + "@" + dict.Key;
+                    string whereClause = dict.Key + "=" + "'" + dict.Value + "'";
 
                     if (!string.IsNullOrEmpty(joinSeperator))
                     {
-                        whereClause = joinSeperator + "." + dict.Key + "=" + "@" + dict.Key;
-                        //whereClause = joinSeperator + "." + dict.Key + "=" + "'" + dict.Value + "'";
+                        whereClause = joinSeperator + "." + dict.Key + "=" + "'" + dict.Value + "'";
                     }
 
                     if (counter == 0)
@@ -51,55 +44,8 @@ namespace TSI.QueryBuilder
                 }
             }
 
-            if (useIsActive)
-            {
-                if (IsActive)
-                {
-                    string IsActiveParameter = "@IsActive";
 
-                    querySQL.ParameterList.Add(IsActiveParameter, IsActive);
-
-                    string isActiveField = " IsActive='1'";
-
-                    if (!string.IsNullOrEmpty(joinSeperator))
-                    {
-                        isActiveField = joinSeperator + "." + isActiveField.Trim();
-                    }
-
-                    if (!string.IsNullOrEmpty(where))
-                    {
-                        where = where + " And " + isActiveField;
-                    }
-                    else
-                    {
-                        where = isActiveField;
-                    }
-                }
-                else
-                {
-                    string isActiveField = " IsActive='0'";
-
-                    if (!string.IsNullOrEmpty(joinSeperator))
-                    {
-                        isActiveField = joinSeperator + "." + isActiveField.Trim();
-                    }
-
-                    if (!string.IsNullOrEmpty(where))
-                    {
-                        where = where + " And " + isActiveField;
-                    }
-                    else
-                    {
-                        where = isActiveField;
-                    }
-                }
-            }
-
-            querySQL.Sql = where;
-
-            WhereHelper.WhereQueryList(querySQL);
-
-            WhereSentence = querySQL.Sql;
+            WhereSentence = where;
 
             return this;
         }
@@ -263,25 +209,22 @@ namespace TSI.QueryBuilder
 
         public Query Where(string column, string op, object value, string joinSeperator)
         {
+            //Method = "select * from Branches where Code<>'001'";
 
             string tableName = TableName;
 
             string where = "";
-
-            WhereQuerySQL querySQL = new WhereQuerySQL();
 
             JoinSeperator = joinSeperator;
 
 
             if (!string.IsNullOrEmpty(tableName))
             {
-                //string whereClause = column + op + " " + "'" + value.ToString() + "'";
-                string whereClause = column + op + " " + "@" + column;
+                string whereClause = column + op + " " + "'" + value.ToString() + "'";
 
                 if (!string.IsNullOrEmpty(joinSeperator))
                 {
-                    //whereClause = joinSeperator + "." + column + op + " " + "'" + value.ToString() + "'";
-                    whereClause = joinSeperator + "." + column + op + " " + "@" + column;
+                    whereClause = joinSeperator + "." + column + op + " " + "'" + value.ToString() + "'";
                 }
 
                 if (string.IsNullOrEmpty(WhereSentence))
@@ -294,12 +237,6 @@ namespace TSI.QueryBuilder
                     where = whereClause;
                     WhereSentence = WhereSentence + " And " + where;
                 }
-
-                querySQL.ParameterList.Add("@" + column, value.ToString());
-
-                querySQL.Sql = WhereSentence;
-
-                WhereHelper.WhereQueryList(querySQL);
 
             }
 

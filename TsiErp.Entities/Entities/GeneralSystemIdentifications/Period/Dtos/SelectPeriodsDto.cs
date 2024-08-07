@@ -17,10 +17,6 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Period.Dtos
         /// </summary>
         public string Description_ { get; set; }
         /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
-        /// <summary>
         /// Şube Adı
         /// </summary>
         public string BranchName { get; set; }

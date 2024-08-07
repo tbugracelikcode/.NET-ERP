@@ -49,7 +49,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalendarsDto>> CreateAsync(CreateCalendarsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Calendars).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Calendars).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<Calendars>(listQuery).ToList();
 
             #region Code Control 
@@ -201,15 +201,15 @@ namespace TsiErp.Business.Entities.Calendar.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Calendars).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.Calendars).Select("*").Where(new { Id = id }, "");
 
             var calendars = queryFactory.Get<SelectCalendarsDto>(query);
 
             if (calendars.Id != Guid.Empty && calendars != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.Calendars).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.Calendars).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.CalendarLines).Delete(LoginedUserService.UserId).Where(new { BomID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.CalendarLines).Delete(LoginedUserService.UserId).Where(new { BomID = id },  "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -220,7 +220,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.CalendarLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.CalendarLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                 var calendarLines = queryFactory.Update<SelectCalendarLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.CalendarLines, LogType.Delete, id);
                 await Task.CompletedTask;
@@ -234,7 +234,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
            new
            {
                Id = id
-           }, false, false, "");
+           }, "");
             var calendar = queryFactory.Get<SelectCalendarsDto>(query);
 
             var queryLines = queryFactory
@@ -255,7 +255,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                         nameof(Shifts.Id),
                         JoinType.Left
                     )
-                    .Where(new { CalendarID = id }, false, false, Tables.CalendarLines);
+                    .Where(new { CalendarID = id }, Tables.CalendarLines);
 
             var calendarLine = queryFactory.GetList<SelectCalendarLinesDto>(queryLines).ToList();
 
@@ -264,7 +264,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             var queryDays = queryFactory
                    .Query()
                    .From(Tables.CalendarDays)
-                   .Select("*").Where(new { CalendarID = id }, false, false, Tables.CalendarDays);
+                   .Select("*").Where(new { CalendarID = id }, Tables.CalendarDays);
 
             var calendarDay = queryFactory.GetList<SelectCalendarDaysDto>(queryDays).ToList();
 
@@ -279,7 +279,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
         public async Task<IDataResult<IList<SelectCalendarDaysDto>>> GetDaysListAsync(Guid calendarID)
         {
-            var query = queryFactory.Query().From(Tables.CalendarDays).Select("*").Where(new { CalendarID = calendarID }, false, false, "");
+            var query = queryFactory.Query().From(Tables.CalendarDays).Select("*").Where(new { CalendarID = calendarID }, "");
             var calendarDays = queryFactory.GetList<SelectCalendarDaysDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectCalendarDaysDto>>(calendarDays);
@@ -301,7 +301,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                         nameof(CalendarLines.ShiftID),
                         nameof(Shifts.Id),
                         JoinType.Left
-                    ).Where(new { CalendarID = calendarID }, false, false, "");
+                    ).Where(new { CalendarID = calendarID }, "");
             var calendarLines = queryFactory.GetList<ListCalendarLinesDto>(query).ToList();
 
             await Task.CompletedTask;
@@ -311,7 +311,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCalendarsDto>>> GetListAsync(ListCalendarsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Calendars).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.Calendars).Select("*").Where(null,  "");
             var calendars = queryFactory.GetList<ListCalendarsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListCalendarsDto>>(calendars);
@@ -325,7 +325,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
           new
           {
               Id = input.Id
-          }, false, false, "");
+          }, "");
             var entity = queryFactory.Get<SelectCalendarsDto>(entityQuery);
 
             var queryLines = queryFactory
@@ -346,7 +346,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                         nameof(Shifts.Id),
                         JoinType.Left
                     )
-                    .Where(new { CalendarID = input.Id }, false, false, Tables.CalendarLines);
+                    .Where(new { CalendarID = input.Id }, Tables.CalendarLines);
 
             var calendarLine = queryFactory.GetList<SelectCalendarLinesDto>(queryLines).ToList();
 
@@ -355,7 +355,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             var queryDays = queryFactory
                    .Query()
                    .From(Tables.CalendarDays)
-                   .Select("*").Where(new { CalendarID = input.Id }, false, false, Tables.CalendarDays);
+                   .Select("*").Where(new { CalendarID = input.Id },  Tables.CalendarDays);
 
             var calendarDay = queryFactory.GetList<SelectCalendarDaysDto>(queryDays).ToList();
 
@@ -364,7 +364,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             #region Update Control
             var listQuery = queryFactory
                            .Query()
-                           .From(Tables.Calendars).Select("*").Where(new { Code = input.Code }, false, false, Tables.Calendars);
+                           .From(Tables.Calendars).Select("*").Where(new { Code = input.Code }, Tables.Calendars);
 
             var list = queryFactory.GetList<ListCalendarsDto>(listQuery).ToList();
 
@@ -394,7 +394,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 OfficialHolidayDays = input.OfficialHolidayDays,
                 TotalDays = input.TotalDays,
                 Year = input.Year,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectCalendarLinesDto)
             {
@@ -429,7 +429,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.CalendarLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.CalendarLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectCalendarLinesDto>(lineGetQuery);
 
@@ -458,7 +458,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                             WorkStatus = item.WorkStatus,
                             ShiftTime = item.ShiftTime,
                             StationID = item.StationID.GetValueOrDefault()
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -491,7 +491,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 }
                 else
                 {
-                    var dayGetQuery = queryFactory.Query().From(Tables.CalendarDays).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var dayGetQuery = queryFactory.Query().From(Tables.CalendarDays).Select("*").Where(new { Id = item.Id }, "");
 
                     var day = queryFactory.Get<SelectCalendarDaysDto>(dayGetQuery);
 
@@ -513,7 +513,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                             Date_ = item.Date_,
                             ColorCode = item.ColorCode,
                             CalendarDayStateEnum = item.CalendarDayStateEnum
-                        }).Where(new { Id = day.Id }, false, false, "");
+                        }).Where(new { Id = day.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryDay.Sql + " where " + queryDay.WhereSentence;
                     }
@@ -534,7 +534,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
           new
           {
               Id = input.Id
-          }, false, false, "");
+          }, "");
             var entity = queryFactory.Get<SelectCalendarsDto>(entityQuery);
 
             var queryLines = queryFactory
@@ -555,7 +555,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                         nameof(Shifts.Id),
                         JoinType.Left
                     )
-                    .Where(new { CalendarID = input.Id }, false, false, Tables.CalendarLines);
+                    .Where(new { CalendarID = input.Id }, Tables.CalendarLines);
 
             var calendarLine = queryFactory.GetList<SelectCalendarLinesDto>(queryLines).ToList();
 
@@ -564,7 +564,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             var queryDays = queryFactory
                    .Query()
                    .From(Tables.CalendarDays)
-                   .Select("*").Where(new { CalendarID = input.Id }, false, false, Tables.CalendarDays);
+                   .Select("*").Where(new { CalendarID = input.Id }, Tables.CalendarDays);
 
             var calendarDay = queryFactory.GetList<SelectCalendarDaysDto>(queryDays).ToList();
 
@@ -573,7 +573,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             #region Update Control
             var listQuery = queryFactory
                            .Query()
-                           .From(Tables.Calendars).Select("*").Where(new { Code = input.Code }, false, false, Tables.Calendars);
+                           .From(Tables.Calendars).Select("*").Where(new { Code = input.Code }, Tables.Calendars);
 
             var list = queryFactory.GetList<ListCalendarsDto>(listQuery).ToList();
 
@@ -603,7 +603,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 OfficialHolidayDays = input.OfficialHolidayDays,
                 TotalDays = input.TotalDays,
                 Year = input.Year,
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectCalendarLinesDto)
             {
@@ -638,7 +638,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.CalendarLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.CalendarLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectCalendarLinesDto>(lineGetQuery);
 
@@ -667,7 +667,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                             WorkStatus = item.WorkStatus,
                             ShiftTime = item.ShiftTime,
                             StationID = item.StationID.Value
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -684,7 +684,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
         public async Task<IDataResult<SelectCalendarsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Calendars).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.Calendars).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Calendars>(entityQuery);
 
@@ -708,7 +708,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 OfficialHolidayDays = entity.OfficialHolidayDays,
                 TotalDays = entity.TotalDays,
                 Year = entity.Year,
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var calendarsDto = queryFactory.Update<SelectCalendarsDto>(query, "Id", true);
             await Task.CompletedTask;
@@ -737,7 +737,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 ColorCode = day.ColorCode,
                 CalendarDayStateEnum = day.CalendarDayStateEnum
 
-            }).Where(new { Id = day.Id }, false, false, "");
+            }).Where(new { Id = day.Id }, "");
 
             var calendarsDto = queryFactory.Update<SelectCalendarDaysDto>(query, "Id", true);
 

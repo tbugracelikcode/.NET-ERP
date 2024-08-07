@@ -24,11 +24,7 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
+
 
 
     }

@@ -41,7 +41,7 @@ namespace TsiErp.Business.Entities.Department.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectDepartmentsDto>> CreateAsync(CreateDepartmentsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Departments).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Departments).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<Departments>(listQuery).ToList();
 
@@ -61,7 +61,6 @@ namespace TsiErp.Business.Entities.Department.Services
                 Code = input.Code,
                 Name = input.Name,
                 SeniorityID = input.SeniorityID.GetValueOrDefault(),
-                IsActive = true,
                 Id = addedEntityId,
                 CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 CreatorId = LoginedUserService.UserId,
@@ -106,7 +105,7 @@ namespace TsiErp.Business.Entities.Department.Services
             }
             else
             {
-                var query = queryFactory.Query().From(Tables.Departments).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+                var query = queryFactory.Query().From(Tables.Departments).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var departments = queryFactory.Update<SelectDepartmentsDto>(query, "Id", true);
 
@@ -128,7 +127,7 @@ namespace TsiErp.Business.Entities.Department.Services
                             nameof(EmployeeSeniorities.Id),
                             JoinType.Left
                         )
-                .Where(new { Id = id }, true, true, Tables.Departments);
+                .Where(new { Id = id }, Tables.Departments);
             var department = queryFactory.Get<SelectDepartmentsDto>(query);
 
 
@@ -150,7 +149,7 @@ namespace TsiErp.Business.Entities.Department.Services
                             nameof(EmployeeSeniorities.Id),
                             JoinType.Left
                         )
-                .Where(null, true, true, Tables.Departments);
+                .Where(null, Tables.Departments);
             var departments = queryFactory.GetList<ListDepartmentsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListDepartmentsDto>>(departments);
@@ -161,12 +160,12 @@ namespace TsiErp.Business.Entities.Department.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectDepartmentsDto>> UpdateAsync(UpdateDepartmentsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Departments).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Departments).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<Departments>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.Departments).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.Departments).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<Departments>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -182,7 +181,6 @@ namespace TsiErp.Business.Entities.Department.Services
                 Name = input.Name,
                 SeniorityID = input.SeniorityID.GetValueOrDefault(),
                 Id = input.Id,
-                IsActive = input.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DataOpenStatus = false,
@@ -192,7 +190,7 @@ namespace TsiErp.Business.Entities.Department.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id }, "");
 
             var departments = queryFactory.Update<SelectDepartmentsDto>(query, "Id", true);
 
@@ -204,7 +202,7 @@ namespace TsiErp.Business.Entities.Department.Services
 
         public async Task<IDataResult<SelectDepartmentsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Departments).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.Departments).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Departments>(entityQuery);
 
@@ -213,7 +211,6 @@ namespace TsiErp.Business.Entities.Department.Services
                 Code = entity.Code,
                 Name = entity.Name,
                 SeniorityID = entity.SeniorityID,
-                IsActive = entity.IsActive,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -225,7 +222,7 @@ namespace TsiErp.Business.Entities.Department.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var departments = queryFactory.Update<SelectDepartmentsDto>(query, "Id", true);
             await Task.CompletedTask;

@@ -10,6 +10,7 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractProductionTracking.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine.Dtos;
@@ -72,6 +73,20 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
         }
 
         #region Operasyon Kalite Planı Satır İşlemleri
+
+        protected override async Task BeforeInsertAsync()
+        {
+            DataSource = new SelectPurchaseOrdersAwaitingApprovalsDto()
+            {
+                Code = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersAwaitingApprovalsChildMenu")
+            };
+
+
+            EditPageVisible = true;
+
+
+            await Task.CompletedTask;
+        }
 
         protected void CreateMainContextMenuItems()
         {
@@ -750,6 +765,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
         #endregion
 
+        #region Kod ButtonEdit
+
+        SfTextBox CodeMainButtonEdit;
+
+        public async Task CodeMainOnCreateIcon()
+        {
+            var CodesMainButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeMainButtonClickEvent);
+            await CodeMainButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesMainButtonClick } });
+        }
+
+        public async void CodeMainButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersAwaitingApprovalsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
 
         #region Timer
 
@@ -769,6 +800,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
 
         public void Dispose()
         {

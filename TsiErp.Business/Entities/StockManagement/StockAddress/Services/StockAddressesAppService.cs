@@ -45,7 +45,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockAddressesDto>> CreateAsync(CreateStockAddressesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.StockAddresses).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.StockAddresses).Select("*").Where(new { Code = input.Code },  "");
             var list = queryFactory.ControlList<StockAddresses>(listQuery).ToList();
 
             #region Code Control 
@@ -121,16 +121,16 @@ namespace TsiErp.Business.Entities.StockAddress.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.StockAddresses).Select("*").Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.StockAddresses).Select("*").Where(new { Id = id },  "");
 
             var StockAddresses = queryFactory.Get<SelectStockAddressesDto>(query);
 
             if (StockAddresses.Id != Guid.Empty && StockAddresses != null)
             {
 
-                var deleteQuery = queryFactory.Query().From(Tables.StockAddresses).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var deleteQuery = queryFactory.Query().From(Tables.StockAddresses).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.StockAddressLines).Delete(LoginedUserService.UserId).Where(new { StockAdressID = id }, false, false, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.StockAddressLines).Delete(LoginedUserService.UserId).Where(new { StockAdressID = id },  "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -143,7 +143,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.StockAddressLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var queryLine = queryFactory.Query().From(Tables.StockAddressLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var StockAddressLines = queryFactory.Update<SelectStockAddressLinesDto>(queryLine, "Id", true);
 
@@ -169,7 +169,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id }, false, false, Tables.StockAddresses);
+                    .Where(new { Id = id },Tables.StockAddresses);
 
             var stockAddresses = queryFactory.Get<SelectStockAddressesDto>(query);
 
@@ -205,7 +205,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                         nameof(StockShelfs.Id),
                         JoinType.Left
                     )
-                    .Where(new { StockAdressID = id }, false, false, Tables.StockAddressLines);
+                    .Where(new { StockAdressID = id },  Tables.StockAddressLines);
 
             var StockAddressLine = queryFactory.GetList<SelectStockAddressLinesDto>(queryLines).ToList();
 
@@ -232,7 +232,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
-                    .Where(null, false, false, Tables.StockAddresses);
+                    .Where(null,  Tables.StockAddresses);
 
             var StockAddressesDto = queryFactory.GetList<ListStockAddressesDto>(query).ToList();
             await Task.CompletedTask;
@@ -255,7 +255,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id }, false, false, Tables.StockAddresses);
+                    .Where(new { Id = input.Id }, Tables.StockAddresses);
 
             var entity = queryFactory.Get<SelectStockAddressesDto>(entityQuery);
 
@@ -291,14 +291,14 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                         nameof(StockShelfs.Id),
                         JoinType.Left
                     )
-                    .Where(new { StockAdressID = input.Id }, false, false, Tables.StockAddressLines);
+                    .Where(new { StockAdressID = input.Id },  Tables.StockAddressLines);
 
             var StockAddressLine = queryFactory.GetList<SelectStockAddressLinesDto>(queryLines).ToList();
 
             entity.SelectStockAddressLines = StockAddressLine;
 
             #region Update Control
-            var listQuery = queryFactory.Query().From(Tables.StockAddresses).Select("*").Where(new { Code = input.Code }, false, false, "");
+            var listQuery = queryFactory.Query().From(Tables.StockAddresses).Select("*").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.GetList<StockAddresses>(listQuery).ToList();
 
@@ -325,7 +325,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                 ProductID = input.ProductID.GetValueOrDefault(),
                 Code = input.Code,
 
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id },  "");
 
 
             foreach (var item in input.SelectStockAddressLines)
@@ -357,7 +357,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.StockAddressLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.StockAddressLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectStockAddressLinesDto>(lineGetQuery);
 
@@ -382,7 +382,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                             StockSectionID = item.StockSectionID.GetValueOrDefault(),
                             StockNumberID = item.StockNumberID.GetValueOrDefault(),
                             StockShelfID = item.StockShelfID.GetValueOrDefault(),
-                        }).Where(new { Id = line.Id }, false, false, "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -400,7 +400,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
 
         public async Task<IDataResult<SelectStockAddressesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StockAddresses).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.StockAddresses).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<StockAddresses>(entityQuery);
 
@@ -420,7 +420,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                 Code = entity.Code,
                 ProductID = entity.ProductID,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var StockAddressesDto = queryFactory.Update<SelectStockAddressesDto>(query, "Id", true);
             await Task.CompletedTask;
@@ -462,7 +462,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                         nameof(StockShelfs.Id),
                         JoinType.Left
                     )
-                    .Where(new { ProductID = stockId }, false, false, Tables.StockAddressLines);
+                    .Where(new { ProductID = stockId }, Tables.StockAddressLines);
 
             var StockAddressLine = queryFactory.GetList<SelectStockAddressLinesDto>(queryLines).ToList();
             await Task.CompletedTask;

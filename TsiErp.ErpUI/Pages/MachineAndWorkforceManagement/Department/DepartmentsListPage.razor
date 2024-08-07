@@ -111,12 +111,12 @@
                                 <SfTextBox @ref="@EmployeeSenioritiesButtonEdit" Created="@EmployeeSenioritiesOnCreateIcon" @bind-Value="DataSource.SeniorityName" ShowClearButton=true ValueChange="EmployeeSenioritiesOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="1" Column="3">
+                        @*<DxGridLayoutItem Row="1" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
                                <center> <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch></center>
                             </Template>
-                        </DxGridLayoutItem>
+                        </DxGridLayoutItem>*@
 
                     </Items>
                 </DxGridLayout>

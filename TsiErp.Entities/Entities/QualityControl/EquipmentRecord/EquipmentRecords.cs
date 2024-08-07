@@ -69,8 +69,6 @@ namespace TsiErp.Entities.Entities.QualityControl.EquipmentRecord
         /// İptal Nedeni
         /// </summary>
         public string CancellationReason { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        public bool IsActive { get; set; }
 
 
     }

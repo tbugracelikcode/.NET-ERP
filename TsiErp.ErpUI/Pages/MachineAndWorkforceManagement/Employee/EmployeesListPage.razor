@@ -62,7 +62,7 @@
 
                                         </GridColumn>
                                         <GridColumn Field=@nameof(ListEmployeesDto.Email) HeaderText="@L["Email"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListEmployeesDto.IsActive) HeaderText="@L["IsActive"]" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                      
 
                                     </GridColumns>
                                 </SfGrid>
@@ -124,14 +124,14 @@
                             </Template>
                         </DxGridLayoutItem>
 
-                        <DxGridLayoutItem Row="1" Column="2">
-                            <Template>
-                                <center>
-                                    <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
-                                    <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
-                                </center>
-                            </Template>
-                        </DxGridLayoutItem>
+                         @*<DxGridLayoutItem Row="1" Column="2">
+                             <Template>
+                                 <center>
+                                     <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
+                                     <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                                 </center>
+                             </Template>
+                         </DxGridLayoutItem>*@
 
                         <DxGridLayoutItem Row="2" Column="1">
                             <Template>

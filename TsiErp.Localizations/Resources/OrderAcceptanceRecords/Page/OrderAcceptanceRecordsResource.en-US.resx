@@ -147,6 +147,9 @@
   <data name="ControlModalTitle" xml:space="preserve">
     <value>Order Acceptance Control</value>
   </data>
+  <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
+    <value>Current Account Code:</value>
+  </data>
   <data name="CurrentAccountCardCustomerCodeLabel" xml:space="preserve">
     <value>Customer Code:</value>
   </data>

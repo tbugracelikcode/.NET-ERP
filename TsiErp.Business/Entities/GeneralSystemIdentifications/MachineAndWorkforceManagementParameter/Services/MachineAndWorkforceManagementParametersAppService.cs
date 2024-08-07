@@ -31,7 +31,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MachineAndWorkfo
              new
              {
                  Id = id
-             }, false, false, "");
+             }, "");
 
             var MachineAndWorkforceManagementParameter = queryFactory.Get<SelectMachineAndWorkforceManagementParametersDto>(query);
 
@@ -46,7 +46,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MachineAndWorkfo
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMachineAndWorkforceManagementParametersDto>>> GetListAsync(ListMachineAndWorkforceManagementParametersParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.MachineAndWorkforceManagementParameters).Select("*").Where(null, false, false, "");
+            var query = queryFactory.Query().From(Tables.MachineAndWorkforceManagementParameters).Select("*").Where(null, "");
 
             var MachineAndWorkforceManagementParameters = queryFactory.GetList<ListMachineAndWorkforceManagementParametersDto>(query).ToList();
 
@@ -58,14 +58,14 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MachineAndWorkfo
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMachineAndWorkforceManagementParametersDto>> UpdateAsync(UpdateMachineAndWorkforceManagementParametersDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.MachineAndWorkforceManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.MachineAndWorkforceManagementParameters).Select("*").Where(new { Id = input.Id },  "");
             var entity = queryFactory.Get<MachineAndWorkforceManagementParameters>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.MachineAndWorkforceManagementParameters).Update(new UpdateMachineAndWorkforceManagementParametersDto
             {
                 FutureDateParameter = input.FutureDateParameter,
                 Id = input.Id
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var MachineAndWorkforceManagementParameters = queryFactory.Update<SelectMachineAndWorkforceManagementParametersDto>(query, "Id", true);
 

@@ -18,6 +18,7 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dto
         /// Parabirimi kodu
         /// </summary>
         public string CurrencyCode { get; set; }
+
         public DateTime Date { get; set; }
         /// <summary>
         /// Alış Kuru

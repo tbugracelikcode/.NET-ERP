@@ -315,6 +315,8 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate
 using TsiErp.Entities.Entities.StockManagement.StockShelf;
 using TsiErp.Entities.Entities.StockManagement.StockShelf.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
+using TsiErp.Entities.Entities.Other.Notification;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 
 
 namespace TsiErp.Business.MapperProfile
@@ -1051,6 +1053,14 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectNotificationTemplatesDto, CreateNotificationTemplatesDto>();
             CreateMap<UpdateNotificationTemplatesDto, NotificationTemplates>();
             CreateMap<SelectNotificationTemplatesDto, UpdateNotificationTemplatesDto>();
+
+
+            CreateMap<Notifications, SelectNotificationsDto>();
+            CreateMap<Notifications, ListNotificationsDto>();
+            CreateMap<CreateNotificationsDto, Notifications>();
+            CreateMap<SelectNotificationsDto, CreateNotificationsDto>();
+            CreateMap<UpdateNotificationsDto, Notifications>();
+            CreateMap<SelectNotificationsDto, UpdateNotificationsDto>();
 
             CreateMap<GeneralParameters, SelectGeneralParametersDto>();
             CreateMap<GeneralParameters, ListGeneralParametersDto>();

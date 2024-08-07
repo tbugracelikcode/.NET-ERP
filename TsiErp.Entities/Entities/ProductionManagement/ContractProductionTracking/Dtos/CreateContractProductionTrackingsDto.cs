@@ -5,11 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ContractProductionTracking.Dtos
 {
     public class CreateContractProductionTrackingsDto : FullAuditedEntityDto
     {
+        /// <summary>
+        /// Kod
+        /// </summary>
+        public string Code { get; set; }
         /// <summary>
         /// İş Emri ID
         /// </summary>

@@ -91,11 +91,6 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station
         public decimal PowerFactor { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
         /// Demir Başlar
         /// </summary>
         public bool IsFixtures { get; set; }

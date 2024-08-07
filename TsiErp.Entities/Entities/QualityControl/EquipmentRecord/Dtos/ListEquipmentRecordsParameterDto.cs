@@ -9,6 +9,5 @@ namespace TsiErp.Entities.Entities.QualityControl.EquipmentRecord.Dtos
 {
     public class ListEquipmentRecordsParameterDto : FullAuditedEntityDto
     {
-        public bool IsActive { get; set; } = true;
     }
 }

@@ -15,9 +15,5 @@ namespace TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos
         /// Açıklama
         /// </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
     }
 }

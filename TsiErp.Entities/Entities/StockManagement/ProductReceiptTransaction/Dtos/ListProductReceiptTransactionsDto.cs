@@ -1,10 +1,15 @@
 ﻿using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dtos
 {
     public class ListProductReceiptTransactionsDto : FullAuditedEntityDto
     {
+        /// <summary>
+        /// Kod
+        /// </summary>
+        public string Code { get; set; }
 
         /// <summary>
         /// Satın Alma Sipariş ID

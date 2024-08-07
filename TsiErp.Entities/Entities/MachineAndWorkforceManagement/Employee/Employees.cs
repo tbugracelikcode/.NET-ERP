@@ -75,11 +75,6 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee
         /// EPosta
         /// </summary>
         public string Email { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; }
 
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>

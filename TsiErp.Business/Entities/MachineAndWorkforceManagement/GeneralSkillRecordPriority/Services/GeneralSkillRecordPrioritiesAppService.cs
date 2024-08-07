@@ -77,7 +77,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         public async Task<IResult> DeleteAsync(Guid id)
         {
 
-            var query = queryFactory.Query().From(Tables.GeneralSkillRecordPriorities).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+            var query = queryFactory.Query().From(Tables.GeneralSkillRecordPriorities).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var GeneralSkillRecordPriorities = queryFactory.Update<SelectGeneralSkillRecordPrioritiesDto>(query, "Id", true);
 
@@ -98,7 +98,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                             nameof(EmployeeGeneralSkillRecords.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, false, false, Tables.GeneralSkillRecordPriorities);
+                        .Where(new { Id = id }, Tables.GeneralSkillRecordPriorities);
             var EmployeeSeniority = queryFactory.Get<SelectGeneralSkillRecordPrioritiesDto>(query);
 
             LogsAppService.InsertLogToDatabase(EmployeeSeniority, EmployeeSeniority, LoginedUserService.UserId, Tables.GeneralSkillRecordPriorities, LogType.Get, id);
@@ -118,7 +118,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                             nameof(GeneralSkillRecordPriorities.GeneralSkillID),
                             nameof(EmployeeGeneralSkillRecords.Id),
                             JoinType.Left
-                        ).Where(null, false, false, Tables.GeneralSkillRecordPriorities);
+                        ).Where(null, Tables.GeneralSkillRecordPriorities);
 
             var generalSkillRecordPriorities = queryFactory.GetList<ListGeneralSkillRecordPrioritiesDto>(query).ToList();
             await Task.CompletedTask;
@@ -137,7 +137,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                             nameof(GeneralSkillRecordPriorities.GeneralSkillID),
                             nameof(EmployeeGeneralSkillRecords.Id),
                             JoinType.Left
-                        ).Where(new { Id = input.Id }, false, false, Tables.GeneralSkillRecordPriorities);
+                        ).Where(new { Id = input.Id }, Tables.GeneralSkillRecordPriorities);
             var entity = queryFactory.Get<GeneralSkillRecordPriorities>(entityQuery);
 
 
@@ -159,7 +159,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id }, false, false, "");
+            }).Where(new { Id = input.Id }, "");
 
             var generalSkillRecordPriorities = queryFactory.Update<SelectGeneralSkillRecordPrioritiesDto>(query, "Id", true);
 
@@ -171,7 +171,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
         public async Task<IDataResult<SelectGeneralSkillRecordPrioritiesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.GeneralSkillRecordPriorities).Select("*").Where(new { Id = id }, false, false, "");
+            var entityQuery = queryFactory.Query().From(Tables.GeneralSkillRecordPriorities).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<GeneralSkillRecordPriorities>(entityQuery);
 
@@ -193,7 +193,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, false, false, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var GeneralSkillRecordPriorities = queryFactory.Update<SelectGeneralSkillRecordPrioritiesDto>(query, "Id", true);
             await Task.CompletedTask;

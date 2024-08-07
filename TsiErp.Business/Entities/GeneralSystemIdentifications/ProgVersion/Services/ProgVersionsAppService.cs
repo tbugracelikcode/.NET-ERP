@@ -45,7 +45,7 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
             new
             {
                 Id = id
-            }, false, false, "").UseIsDelete(false);
+            }, "").UseIsDelete(false);
 
             var version = queryFactory.Get<SelectProgVersionsDto>(query);
 
@@ -65,7 +65,7 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
         {
             input.Id = LoginedUserService.VersionTableId;
 
-            var entityQuery = queryFactory.Query().From(Tables.ProgVersions).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            var entityQuery = queryFactory.Query().From(Tables.ProgVersions).Select("*").Where(new { Id = input.Id }, "").UseIsDelete(false);
             var entity = queryFactory.Get<ProgVersions>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProgVersions).Update(new UpdateProgVersionsDto
@@ -77,7 +77,7 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
                 MajDbVersion = input.MajDbVersion,
                 IsUpdating = input.IsUpdating
 
-            }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+            }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
             var version = queryFactory.Update<SelectProgVersionsDto>(query, "Id", true);
 
@@ -100,7 +100,7 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
             new
             {
                 Id = id
-            }, false, false, "").UseIsDelete(false);
+            }, "").UseIsDelete(false);
 
             var version = queryFactory.Get<SelectProgVersionsDto>(query);
 
