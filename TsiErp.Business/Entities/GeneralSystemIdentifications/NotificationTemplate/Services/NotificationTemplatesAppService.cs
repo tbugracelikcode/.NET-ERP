@@ -123,7 +123,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                         nameof(NotificationTemplates.SourceDepartmentId),
                         nameof(UserGroups.Id),
                         JoinType.Left
-                    ).Where( new{Id = id }, true, true, Tables.NotificationTemplates);
+                    ).Where(new { Id = id, IsActive = true }, Tables.NotificationTemplates);
             var notificationTemplate = queryFactory.Get<SelectNotificationTemplatesDto>(query);
 
             LogsAppService.InsertLogToDatabase(notificationTemplate, notificationTemplate, LoginedUserService.UserId, Tables.NotificationTemplates, LogType.Get, id);
@@ -155,7 +155,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
         public async Task<IDataResult<SelectNotificationTemplatesDto>> UpdateAsync(UpdateNotificationTemplatesDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Id = input.Id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<SelectNotificationTemplatesDto>(entityQuery);
 
             #region Update Control
@@ -191,7 +191,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id }, true, true, "");
+            }).Where(new { Id = input.Id },"");
 
             var notificationTemplate = queryFactory.Update<SelectNotificationTemplatesDto>(query, "Id", true);
 
@@ -205,7 +205,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
         public async Task<IDataResult<SelectNotificationTemplatesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Id = id }, true, true, "");
+            var entityQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<NotificationTemplates>(entityQuery);
 
@@ -230,12 +230,12 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
                 Id = entity.Id,
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, true, true, "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var NotificationTemplatesDto = queryFactory.Update<SelectNotificationTemplatesDto>(query, "Id", true);
             await Task.CompletedTask;
             return new SuccessDataResult<SelectNotificationTemplatesDto>(NotificationTemplatesDto);
         }
     }
-        #endregion
-    }
+    #endregion
+}
