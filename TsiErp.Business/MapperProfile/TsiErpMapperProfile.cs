@@ -293,9 +293,6 @@ using TsiErp.Entities.Entities.StockManagement.StockNumber;
 using TsiErp.Entities.Entities.StockManagement.StockNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockSection;
 using TsiErp.Entities.Entities.StockManagement.StockSection.Dtos;
-using TsiErp.Entities.Entities.StockManagement.StockShelf;
-using TsiErp.Entities.Entities.StockManagement.StockShelf.Dtos;
-using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
@@ -315,6 +312,9 @@ using TsiErp.Entities.Entities.TestManagement.District;
 using TsiErp.Entities.Entities.TestManagement.District.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockShelf;
+using TsiErp.Entities.Entities.StockManagement.StockShelf.Dtos;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
 
 
 namespace TsiErp.Business.MapperProfile

@@ -47,7 +47,7 @@ namespace TsiErp.UretimEkranUI.Pages
                 {
 
 
-                    OperationDetailDto operationDetail = new OperationDetailDto()
+                    OperationDetailTable operationDetail = new OperationDetailTable()
                     {
                         EmployeeID = Guid.Empty,
                         EmployeeName = string.Empty,

@@ -15,6 +15,9 @@
 @inject IOperationAdjustmentsAppService OperationAdjustmentAppService
 @inject IHaltReasonsAppService HaltReasonsService
 @inject OperationHaltReasonsTableLocalDbService OperationHaltReasonsTableLocalDbService
+@inject OperationDetailLocalDbService OperationDetailLocalDbService
+@inject IEmployeesAppService EmployeesAppService
+@inject IWorkOrdersAppService WorkOrdersAppService
 
 
 <div style="height:800px">
@@ -120,7 +123,7 @@
                                 <tr>
                                     <td style="width:20%">
 
-                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ProducedQuantityAdded" Disabled=ChangeOperationButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.ChangesTrack"></SfIcon>&nbsp;Operatör Değiştir</SfButton>
+                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="OperatorChangeButtonClicked" Disabled=ChangeOperationButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.ChangesTrack"></SfIcon>&nbsp;Operatör Değiştir</SfButton>
                                     </td>
 
                                     <td style="width:20%">
@@ -206,7 +209,7 @@
 
 
                                             <br />
-                                            <SfButton OnClick="IncreaseQuantity" CssClass="TSIOperationPageAdjustmentButton"><SfIcon Size="IconSize.Large" Name="IconName.ArrowRight"></SfIcon>&nbsp;&nbsp;Adet Arttır</SfButton>
+                                            <SfButton Disabled="IncreaseQuantityDisabled" OnClick="IncreaseQuantity" CssClass="TSIOperationPageAdjustmentButton"><SfIcon Size="IconSize.Large" Name="IconName.ArrowRight" ></SfIcon>&nbsp;&nbsp;Adet Arttır</SfButton>
                                         </Template>
                                     </DxGridLayoutItem>
 
@@ -519,4 +522,141 @@
             <SfButton CssClass="TSICancelButton" OnClick="HideScrapQuantityEntryModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
         </FooterContentTemplate>
     </DxPopup>
+
+    <DxPopup @bind-Visible="NewOperatorModalVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="Operatör Değiştir"
+             Width="31%"
+             Height="51%"
+             MinWidth="540px"
+             MinHeight="550px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="90%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="94%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+
+                            <DxGridLayout CssClass="TSIGridLayout">
+
+                                <Rows>
+                                    <DxGridLayoutRow Height="25%" />
+                                    <DxGridLayoutRow Height="50%" />
+                                </Rows>
+
+                                <Columns>
+                                    <DxGridLayoutColumn Width="10%" />
+                                    <DxGridLayoutColumn Width="80%" />
+                                    <DxGridLayoutColumn Width="10%" />
+                                </Columns>
+
+                                <Items>
+                                    <br />
+                                    <center>
+                                        <img src="tsi.png" style=" border-radius: 0% !important; width: 425px;height: 135px; margin-left: 0% !important;position: relative;   box-shadow: rgb(255 31 31 / 70%) 0px 2px 8px;" />
+                                    </center>
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <DxGridLayoutItem Row="0" Column="1">
+                                        <Template>
+                                            <br />
+                                            <SfTextBox CssClass="TSI40pxHeightOperatorChangeButton" @ref="@EmployeesButtonEdit" Created="@EmployeesCodeOnCreateIcon" @bind-Value="AppService.EmployeeName" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
+                                        </Template>
+                                    </DxGridLayoutItem>
+
+
+                                    <DxGridLayoutItem Row="1" Column="1">
+                                        <Template>
+                                            <SfTextBox CssClass="TSI40pxHeightOperatorChangeButton" @bind-Value="Password" Type="Syncfusion.Blazor.Inputs.InputType.Password"></SfTextBox>
+                                        </Template>
+                                    </DxGridLayoutItem>
+                                </Items>
+                            </DxGridLayout>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="NewOperatorOnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideOperatorChangeButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
 </div>
+
+
+
+
+@if (SelectEmployeesPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectEmployeesPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="Personeller"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="EmployeesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@EmployeesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@EmployeesDoubleClickHandler" TValue="ListEmployeesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListEmployeesDto.Code) HeaderText="PERSONEL KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListEmployeesDto.Name) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120" Context="logincontext">
+                                                <Template>
+                                                    @{
+                                                        string userNameSurname = (logincontext as ListEmployeesDto).Name + " " + (logincontext as ListEmployeesDto).Surname;
+                                                    }
+                                                    @userNameSurname
+                                                </Template>
+                                            </GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}

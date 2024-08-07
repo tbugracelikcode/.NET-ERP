@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using TsiErp.Business.Entities.Employee.Services;
+using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.UretimEkranUI.Models;
@@ -26,15 +31,19 @@ namespace TsiErp.UretimEkranUI.Pages
         public bool ChangeOperationButtonDisabled { get; set; } = false;
         public bool ChangeShiftButtonDisabled { get; set; } = false;
         public bool ChangeCaseButtonDisabled { get; set; } = false;
+        public bool IncreaseQuantityDisabled { get; set; } = true;
         #endregion
 
         public string TotalAdjusmentTime { get; set; }
-
         public decimal QualityPercent { get; set; } = 0;
 
         public bool ScrapQuantityEntryModalVisible = false;
 
         public decimal scrapQuantity = 0;
+
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
+        public bool NewOperatorModalVisible = false;
 
         protected override async void OnInitialized()
         {
@@ -79,6 +88,7 @@ namespace TsiErp.UretimEkranUI.Pages
             EndOperationButtonDisabled = false;
             PauseOperationButtonDisabled = false;
             StartOperationButtonDisabled = true;
+            IncreaseQuantityDisabled = false;
 
             StartOperationTimer();
 
@@ -86,13 +96,19 @@ namespace TsiErp.UretimEkranUI.Pages
         }
 
 
-        public void IncreaseQuantity()
+        public async void IncreaseQuantity()
         {
             AppService.CurrentOperation.ProducedQuantity = AppService.CurrentOperation.ProducedQuantity + 1;
 
             FirstProducedQuantity = AppService.CurrentOperation.ProducedQuantity;
 
             UpdatedOperationStartTime = DateTime.Now;
+
+            var updatedWorkOrder = await OperationDetailLocalDbService.GetAsync(AppService.CurrentOperation.Id);
+
+            updatedWorkOrder.ProducedQuantity += 1;
+
+            await OperationDetailLocalDbService.UpdateAsync(updatedWorkOrder);
 
 
         }
@@ -105,17 +121,15 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             StopOperationTimer();
 
+            StartSystemIdleTimer();
+
             NavigationManager.NavigateTo("/halt-reasons");
 
 
             await InvokeAsync(StateHasChanged);
         }
 
-        void StopOperationTimer()
-        {
-            operationStartTimer.Stop();
-            operationStartTimer.Enabled = false;
-        }
+
 
         #endregion
 
@@ -134,7 +148,7 @@ namespace TsiErp.UretimEkranUI.Pages
                     ScrapQuantityEntryModalVisible = true;
                 }
 
-                OperationStartTimerDispose();
+                StopOperationTimer();
 
                 TotalOperationTime = "0:0:0";
 
@@ -142,11 +156,26 @@ namespace TsiErp.UretimEkranUI.Pages
                 PauseOperationButtonDisabled = true;
                 EndOperationButtonDisabled = true;
                 StartOperationButtonDisabled = false;
+                IncreaseQuantityDisabled = true;
 
                 AppService.CurrentOperation.PlannedQuantity = 0;
                 AppService.CurrentOperation.ProducedQuantity = 0;
                 AppService.CurrentOperation.ScrapQuantity = 0;
             }
+
+            var workOrder = (await WorkOrdersAppService.GetAsync(AppService.CurrentOperation.WorkOrderID)).Data;
+
+            if (workOrder != null && workOrder.Id != Guid.Empty)
+            {
+                workOrder.ProducedQuantity = producedQuantity;
+
+                var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrder);
+
+                await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
+            }
+
+
+
 
 
             await InvokeAsync(StateHasChanged);
@@ -171,15 +200,13 @@ namespace TsiErp.UretimEkranUI.Pages
 
             HideScrapQuantityEntryModal();
 
-            await InvokeAsync(StateHasChanged); 
+            await InvokeAsync(StateHasChanged);
         }
 
         public void HideScrapQuantityEntryModal()
         {
             ScrapQuantityEntryModalVisible = false;
         }
-
-        #endregion
 
         private async void ScrapQuantityCalculate()
         {
@@ -197,6 +224,7 @@ namespace TsiErp.UretimEkranUI.Pages
             }
         }
 
+        #endregion
 
         #region Operation Timer
 
@@ -233,6 +261,12 @@ namespace TsiErp.UretimEkranUI.Pages
             }
 
             InvokeAsync(StateHasChanged);
+        }
+
+        void StopOperationTimer()
+        {
+            operationStartTimer.Stop();
+            operationStartTimer.Enabled = false;
         }
 
         public void OperationStartTimerDispose()
@@ -283,6 +317,12 @@ namespace TsiErp.UretimEkranUI.Pages
             }
 
             InvokeAsync(StateHasChanged);
+        }
+
+        void StopSystemIdleTimer()
+        {
+            _systemIdleTimer.Stop();
+            _systemIdleTimer.Enabled = false;
         }
 
 
@@ -402,19 +442,138 @@ namespace TsiErp.UretimEkranUI.Pages
 
         #endregion
 
+        #region Start Adjustment
+
         public void StartAdjustment()
         {
             AppService.AdjustmentState = Utilities.EnumUtilities.States.AdjustmentState.FromOperation;
             NavigationManager.NavigateTo("/operation-adjustment");
         }
 
+        #endregion
 
-        private void AmountControl()
+        #region Change Employee
+
+        public async void OperatorChangeButtonClicked()
         {
+            NewOperatorModalVisible = true;
 
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void NewOperatorOnSubmit()
+        {
+            #region Loginned User İşlemleri
+
+            // var loginnedUser = (await UsersAppService.GetAsyncByUserNameAndPassword(User, Password)).Data;
+
+            // if (loginnedUser != null)
+            // {
+            //     VisibleSpinner = true;
+
+            //     //LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
+
+            //      LoginedUserService.UserId = loginnedUser.Id;
+
+            //     AppService.EmployeeID = loginnedUser.Id;
+
+            //     LoginedUserService.VersionTableId = Guid.Parse("8A5F698D-D632-4314-A0C4-02E496FEB6CD");
+
+            #region Yetki
+
+            // var permissions = (await UserPermissionsAppService.GetListAsyncByUserId(loginnedUser.Id)).Data;
+
+            // var menus = (typeof(NavBarPermissionsModel)).GetProperties();
+
+            // foreach (var item in permissions)
+            // {
+            //     var menu = menus.Where(t => t.Name == item.MenuName).FirstOrDefault();
+
+            //     if (menu != null)
+            //     {
+            //         menu.SetValue(menu, item.IsUserPermitted);
+            //     }
+            // }
+
+            // NavigationManager.NavigateTo("/home");
+
+            #endregion
+
+            // }
+            // else
+            // {
+            //     vispopup = true;
+            // }
+
+            //if (User == "admin" && Password == "admin")
+            //{
+
+
+            //    LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
+
+            //    LoginedUserService.VersionTableId = Guid.Parse("8A5F698D-D632-4314-A0C4-02E496FEB6CD");
+
+            #endregion
+
+            OperationStopButtonClicked();
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void HideOperatorChangeButtonClicked()
+        {
+            Password = string.Empty;
+            NewOperatorModalVisible = false;
+        }
+
+        #region Operatör ButtonEdit
+
+        SfTextBox EmployeesButtonEdit;
+        bool SelectEmployeesPopupVisible = false;
+        List<ListEmployeesDto> EmployeesList = new List<ListEmployeesDto>();
+        string Password = string.Empty;
+
+        public async Task EmployeesCodeOnCreateIcon()
+        {
+            var EmployeesCodeButtonClick = EventCallback.Factory.Create<Microsoft.AspNetCore.Components.Web.MouseEventArgs>(this, EmployeesButtonClickEvent);
+            await EmployeesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", EmployeesCodeButtonClick } });
+        }
+
+        public async void EmployeesButtonClickEvent()
+        {
+            SelectEmployeesPopupVisible = true;
+            EmployeesList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.Where(t => t.IsProductionScreenUser == true).ToList();
+            await InvokeAsync(StateHasChanged);
         }
 
 
+        public void EmployeesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                LoginedUserService.UserId = Guid.Empty;
+                AppService.EmployeeID = Guid.Empty;
+                Password = string.Empty;
+            }
+        }
+
+        public async void EmployeesDoubleClickHandler(RecordDoubleClickEventArgs<ListEmployeesDto> args)
+        {
+            var selectedEmployee = args.RowData;
+
+            if (selectedEmployee != null)
+            {
+                LoginedUserService.UserId = selectedEmployee.Id;
+                AppService.EmployeeID = selectedEmployee.Id;
+                AppService.EmployeeName = selectedEmployee.Name + " " + selectedEmployee.Surname;
+                AppService.EmployeePassword = selectedEmployee.ProductionScreenPassword;
+                SelectEmployeesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #endregion
 
         public void Dispose()
         {
@@ -423,6 +582,12 @@ namespace TsiErp.UretimEkranUI.Pages
                 operationStartTimer.Stop();
                 operationStartTimer.Enabled = false;
                 //operationStartTimer.Dispose();
+            }
+            if (_systemIdleTimer != null)
+            {
+                _systemIdleTimer.Stop();
+                _systemIdleTimer.Enabled = false;
+                //_systemIdleTimer.Dispose();
             }
         }
     }

@@ -3,7 +3,7 @@
 namespace TsiErp.UretimEkranUI.Models
 {
     [Table("CurrentWorkOrder")]
-    public class OperationDetailDto
+    public class OperationDetailTable
     {
         [PrimaryKey]
         [AutoIncrement]
@@ -81,5 +81,33 @@ namespace TsiErp.UretimEkranUI.Models
 
         [Column("ProductionOrderID")]
         public Guid ProductionOrderID { get; set; }
+
+
+        [Column("ProductionOrderNo")]
+        public string ProductionOrderNo { get; set; }
+
+
+        [Column("FirstProductApprovalID")]
+        public Guid FirstProductApprovalID { get; set; }
+
+
+        [Column("FirstProductApprovalNo")]
+        public string FirstProductApprovalNo { get; set; }
+
+
+        [Column("OperatorID")]
+        public Guid OperatorID { get; set; }
+
+
+        [Column("OperatorName")]
+        public string OperatorName { get; set; }
+
+
+        [Column("TotalAdjustmentTime")]
+        public decimal TotalAdjustmentTime { get; set; } = 0;
+
+
+        [Column("TotalOccuredTime")]
+        public decimal TotalOccuredTime { get; set; } = 0;
     }
 }
