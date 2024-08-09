@@ -140,6 +140,7 @@
                                     </td>
 
                                     <td style="width:20%">
+                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="UnsuitabilityQuantityEntriesButtonClicked"><SfIcon Size="IconSize.Large" Name="IconName.Image"></SfIcon>&nbsp;Uygunsuz Adet Girişleri</SfButton>
                                     </td>
 
                                     <td style="width:20%">
@@ -492,7 +493,7 @@
              ShowFooter="true"
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
-             HeaderText="Hurda Adet Gir"
+             HeaderText="Uygunsuz Adet Gir"
              Width="22%"
              Height="20%"
              MinWidth="380px"
@@ -513,9 +514,9 @@
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Hurda Adet: </strong></label>
+                            <label class="TSIModalLabel"><strong>Uygunsuz Adet: </strong></label>
 
-                            <SfNumericTextBox @bind-Value="@scrapQuantity"></SfNumericTextBox>
+                            <SfNumericTextBox @bind-Value="@scrapQuantityEntry"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -600,6 +601,66 @@
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="NewOperatorOnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideOperatorChangeButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="UnsuitabilityQuantityEntryModalVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="Uygunsuz Miktar Girişi Kayıtları"
+             Width="47%"
+             Height="74%"
+             MinWidth="800px"
+             MinHeight="800px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="90%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="94%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            
+                            <SfGrid ID="UnsuitabilityQuantityEntriesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnsuitabilityQuantityEntriesList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="true" AllowPdfExport=true ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+
+                                <GridGroupSettings ShowGroupedColumn="false"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(Models.ScrapTable.ScrapQuantity) HeaderText="MİKTAR" Type="ColumnType.Decimal" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(Models.ScrapTable.WorkOrderNo) HeaderText="İŞ EMRİ NO"  TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(Models.ScrapTable.Action_) HeaderText="AKSİYON"  TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(Models.ScrapTable.EmployeeName) HeaderText="ÇALIŞAN"  TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                   
+                                   
+
+                                </GridColumns>
+                            </SfGrid>
+                            
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideUnsuitabilityQuantityEntriesModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

@@ -67,6 +67,10 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// </summary>
         public string StationGroupName { get; set; }
         /// <summary>
+        /// Çalışan ID
+        /// </summary>
+        public Guid? EmployeeID { get; set; }
+        /// <summary>
         /// Çalışan Adı
         /// </summary>
         public string EmployeeName { get; set; }

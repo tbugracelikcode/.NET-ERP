@@ -225,7 +225,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 (
                    d => new { StationGroupCode = d.Code, StationGroupName = d.Name }, nameof(OperationUnsuitabilityReports.StationGroupID), nameof(StationGroups.Id), JoinType.Left
                 )
-                .Join<Employees>
+                 .Join<Employees>
                 (
                    d => new { EmployeeName = d.Name + " " + d.Surname }, nameof(OperationUnsuitabilityReports.EmployeeID), nameof(Employees.Id), JoinType.Left
                 )
