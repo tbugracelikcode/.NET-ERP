@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
+using TSI.QueryBuilder.Constants.Join;
 
 namespace TSI.QueryBuilder
 {
@@ -14,6 +15,8 @@ namespace TSI.QueryBuilder
 
             var dictionary = new Dictionary<string, object>();
 
+            string parameterValues = "";
+
             if (constraints != null)
             {
                 foreach (var item in constraints.GetType().GetRuntimeProperties())
@@ -21,31 +24,62 @@ namespace TSI.QueryBuilder
                     dictionary.Add(item.Name, item.GetValue(constraints));
                 }
 
-                int counter = 0;
+                //int counter = 0;
+
+                int parameterCounter = 0;
 
                 foreach (var dict in dictionary)
                 {
-                    string whereClause = dict.Key + "=" + "'" + dict.Value + "'";
+                    //string whereClause = dict.Key + "=" + "'" + dict.Value + "'";
+
+                    string parameterName = "@W" + parameterCounter;
+
+                    string whereClause = dict.Key + "=" + parameterName;
+
+
 
                     if (!string.IsNullOrEmpty(joinSeperator))
                     {
-                        whereClause = joinSeperator + "." + dict.Key + "=" + "'" + dict.Value + "'";
+                        //whereClause = joinSeperator + "." + dict.Key + "=" + "'" + dict.Value + "'";
+                        whereClause = joinSeperator + "." + whereClause;
                     }
 
-                    if (counter == 0)
+                    //if (counter == 0)
+                    //{
+                    //    where = whereClause;
+                    //    counter++;
+                    //}
+                    //else
+                    //{
+                    //    where = where + " And " + whereClause;
+                    //}
+
+                    if (parameterCounter == 0)
                     {
                         where = whereClause;
-                        counter++;
+
+                        parameterValues = parameterName + "=" + dict.Value;
                     }
                     else
                     {
                         where = where + " And " + whereClause;
+
+                        parameterValues = parameterValues + "," + parameterName + "=" + dict.Value;
                     }
+
+                    parameterCounter++;
                 }
+
+                WhereSentence = where + QueryConstants.QueryWhereParamsConstant + parameterValues;
+
+            }
+            else
+            {
+                WhereSentence = where;
             }
 
 
-            WhereSentence = where;
+
 
             return this;
         }
@@ -217,25 +251,35 @@ namespace TSI.QueryBuilder
 
             JoinSeperator = joinSeperator;
 
+            string parameterValues = "";
+
 
             if (!string.IsNullOrEmpty(tableName))
             {
-                string whereClause = column + op + " " + "'" + value.ToString() + "'";
+                string parameterName = "@W0";
+
+                //string whereClause = column + op + " " + "'" + value.ToString() + "'";
+
+                string whereClause = column + op  + parameterName;
 
                 if (!string.IsNullOrEmpty(joinSeperator))
                 {
-                    whereClause = joinSeperator + "." + column + op + " " + "'" + value.ToString() + "'";
+                    //whereClause = joinSeperator + "." + column + op + " " + "'" + value.ToString() + "'";
+                    whereClause = joinSeperator + "." + whereClause;
                 }
 
                 if (string.IsNullOrEmpty(WhereSentence))
                 {
                     where = whereClause;
-                    WhereSentence = where;
+                    parameterValues = parameterName + "=" + value.ToString();
+                    WhereSentence = where + QueryConstants.QueryWhereParamsConstant + parameterValues;
                 }
                 else
                 {
                     where = whereClause;
-                    WhereSentence = WhereSentence + " And " + where;
+                    parameterValues = parameterValues + "," + parameterName + "=" + value.ToString();
+                    //WhereSentence = WhereSentence + " And " + where;
+                    WhereSentence = WhereSentence+" And "+ where + QueryConstants.QueryWhereParamsConstant + parameterValues;
                 }
 
             }

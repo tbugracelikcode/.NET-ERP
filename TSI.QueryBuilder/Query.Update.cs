@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 
 namespace TSI.QueryBuilder
@@ -63,43 +64,45 @@ namespace TSI.QueryBuilder
 
             var valuesList = dto.GetType().GetProperties().Where(t => t.CustomAttributes.Count() == 0).ToList();
 
-            //var dtoEntityProperties = valuesList.Where(t => t.DeclaringType.Name == dto.GetType().Name).ToList();
+            #region Update Type'ına Göre Field Belirleme
+            var dtoEntityProperties = valuesList.Where(t => t.DeclaringType.Name == dto.GetType().Name).ToList();
 
-            //var auditedEntityProperties = valuesList.Where(t => t.DeclaringType.Name == "FullAuditedEntityDto").ToList();
+            var auditedEntityProperties = valuesList.Where(t => t.DeclaringType.Name == "FullAuditedEntityDto").ToList();
 
-            //var fullEntityProperties = valuesList.Where(t => t.DeclaringType.Name == "FullEntityDto").ToList();
+            var fullEntityProperties = valuesList.Where(t => t.DeclaringType.Name == "FullEntityDto").ToList();
 
-            //if (auditedEntityProperties.Count > 0)
-            //{
-            //    if (updateType == UpdateType.Update)
-            //    {
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreatorId"));
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreationTime"));
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeleterId"));
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeletionTime"));
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "IsDeleted"));
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DataOpenStatus"));
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DataOpenStatusUserId"));
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "Id"));
-            //    }
+            if (auditedEntityProperties.Count > 0)
+            {
+                if (updateType == UpdateType.Update)
+                {
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreatorId"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreationTime"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeleterId"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeletionTime"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "IsDeleted"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DataOpenStatus"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DataOpenStatusUserId"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "Id"));
+                }
 
-            //    if (updateType == UpdateType.ConcurrencyUpdate)
-            //    {
-            //        foreach (var item in dtoEntityProperties)
-            //        {
-            //            valuesList.Remove(item);
-            //        }
+                if (updateType == UpdateType.ConcurrencyUpdate)
+                {
+                    foreach (var item in dtoEntityProperties)
+                    {
+                        valuesList.Remove(item);
+                    }
 
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreatorId"));
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreationTime"));
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeleterId"));
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeletionTime"));
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "IsDeleted"));
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "Id"));
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "LastModifierId"));
-            //        valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "LastModificationTime"));
-            //    }
-            //}
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreatorId"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "CreationTime"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeleterId"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "DeletionTime"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "IsDeleted"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "Id"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "LastModifierId"));
+                    valuesList.Remove(valuesList.FirstOrDefault(t => t.Name == "LastModificationTime"));
+                }
+            }
+            #endregion
 
             string[] columns = new string[valuesList.Count];
 
@@ -115,24 +118,44 @@ namespace TSI.QueryBuilder
 
             string updateQuery = "update " + TableName + " set ";
 
+            string parameterValues = "";
+
 
             for (int i = 0; i < valuesList.Count; i++)
             {
+                
+                string parameterName = "@P" + i;
+                
                 if (i == 0)
                 {
-                    valuesQuery = columns[i] + "=" + "'" + (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'";
+                    object value = (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null));
+
+                    //valuesQuery = columns[i] + "=" + "'" + (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'";
+
+                    
+                    valuesQuery = columns[i] + "=" + parameterName;
+                    parameterValues = parameterName + "=" + value;
+
                 }
                 else
                 {
-                    valuesQuery = valuesQuery + "," + columns[i] + "=" + "'" + (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'";
+                    object value = (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null));
+
+                    valuesQuery = valuesQuery+","+ columns[i] + "=" + parameterName;
+                    parameterValues = parameterValues + "," + parameterName + "=" + value;
+
+                    //valuesQuery = valuesQuery + "," + columns[i] + "=" + "'" + (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'";
                 }
 
             }
+
+            valuesQuery = valuesQuery + QueryConstants.QueryParamsConstant + parameterValues;
 
             updateQuery = updateQuery + valuesQuery;
 
 
             Sql = updateQuery;
+
 
             return this;
         }

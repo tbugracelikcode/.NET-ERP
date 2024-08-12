@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 
 namespace TSI.QueryBuilder
 {
@@ -16,7 +17,21 @@ namespace TSI.QueryBuilder
             }
             else
             {
-                string deleteQuery = "update " + TableName + " set " + IsDeletedField + "=" + "'" + "1" + "'" + ", " + DeleterIdField + "=" + "'" + deleterId + "'" + ", " + DeletionTimeField + "=" + "'" + DateTime.Now.ToString() + "'";
+                string parameterValues = "";
+                string IsDeletedParamField = "@P0";
+                string DeleterIdParamField = "@P1";
+                string DeletionTimeParamField = "@P2";
+
+                //string deleteQuery = "update " + TableName + " set " + IsDeletedField + "=" + "'" + "1" + "'" + ", " + DeleterIdField + "=" + "'" + deleterId + "'" + ", " + DeletionTimeField + "=" + "'" + DateTime.Now.ToString() + "'";
+
+                string deleteQuery = "update " + TableName + " set " + IsDeletedField + "=" + IsDeletedParamField + ", " + DeleterIdField + "=" + DeleterIdParamField + ", " + DeletionTimeField + "=" + DeletionTimeParamField;
+
+                parameterValues = IsDeletedParamField + "=" + "1";
+                parameterValues = parameterValues + "," + DeleterIdParamField + "=" + deleterId;
+                parameterValues = parameterValues + "," + DeletionTimeParamField + "=" + DateTime.Now.ToString();
+
+                deleteQuery = deleteQuery + QueryConstants.QueryParamsConstant + parameterValues;
+
                 Sql = deleteQuery;
             }
 

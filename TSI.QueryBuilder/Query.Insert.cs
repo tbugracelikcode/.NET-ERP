@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.MappingAttributes;
 
 namespace TSI.QueryBuilder
@@ -94,40 +95,126 @@ namespace TSI.QueryBuilder
 
             string insertQuery = "insert into " + TableName;
 
+            string parameterValues = "";
+
             for (int i = 0; i < valuesList.Count; i++)
             {
+                string parameterName = "@P" + i;
+
                 if (valuesList.Count == 1)
                 {
                     if (i == 0)
                     {
+                        object value = null;
+
+                        if (valuesList[i].PropertyType == typeof(Nullable<DateTime>))
+                        {
+                            var date = valuesList[i].GetValue(dto, null);
+
+                            if (date == null)
+                            {
+                                value = new DateTime(1900, 1, 1);
+                            }
+                            else
+                            {
+                                value = date;
+                            }
+                        }
+                        else if (valuesList[i].PropertyType == typeof(Nullable<Guid>))
+                        {
+                            var guidValue = valuesList[i].GetValue(dto, null);
+
+                            if (guidValue == null)
+                            {
+                                value = Guid.Empty;
+                            }
+                            else
+                            {
+                                value = guidValue;
+                            }
+                        }
+                        else if (valuesList[i].PropertyType == typeof(Decimal))
+                        {
+                            value = Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".");
+                        }
+                        else
+                        {
+                            value = valuesList[i].GetValue(dto, null);
+                        }
+
+
                         columnsQuery = " (" + columns[i] + ")";
-                        valuesQuery = " (" + "'" + (valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'" + ")";
+                        //valuesQuery = " (" + "'" + (valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'" + ")";
+
+                        valuesQuery = columns[i] + "=" + parameterName;
+                        parameterValues = parameterName + "=" + value;
                     }
                 }
                 else
                 {
+                    object value = null;
+
+                    if (valuesList[i].PropertyType == typeof(Nullable<DateTime>))
+                    {
+                        var date = valuesList[i].GetValue(dto, null);
+
+                        if (date == null)
+                        {
+                            value = new DateTime(1900, 1, 1);
+                        }
+                        else
+                        {
+                            value = date;
+                        }
+                    }
+                    else if (valuesList[i].PropertyType == typeof(Nullable<Guid>))
+                    {
+                        var guidValue = valuesList[i].GetValue(dto, null);
+
+                        if (guidValue == null)
+                        {
+                            value = Guid.Empty;
+                        }
+                        else
+                        {
+                            value = guidValue;
+                        }
+                    }
+                    else if (valuesList[i].PropertyType == typeof(Decimal))
+                    {
+                        value = Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".");
+                    }
+                    else
+                    {
+                        value = valuesList[i].GetValue(dto, null);
+                    }
+
                     if (i == 0)
                     {
                         columnsQuery = " (" + columns[i] + ",";
-                        valuesQuery = " (" + "'" + (valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'" + ",";
+                        valuesQuery =  parameterName;
+                        parameterValues = parameterName + "=" + value;
+                        //valuesQuery = " (" + "'" + (valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'" + ",";
                     }
                     else
                     {
                         columnsQuery = columnsQuery + columns[i] + ",";
-                        valuesQuery = valuesQuery + "'" + (valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'" + ",";
+                        valuesQuery = valuesQuery + "," +  parameterName;
+                        parameterValues = parameterValues + "," + parameterName + "=" + value;
+                        //valuesQuery = valuesQuery + "'" + (valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'" + ",";
 
                     }
                 }
 
             }
 
-            valuesQuery = valuesQuery.Substring(0, valuesQuery.Length - 1);
+            //valuesQuery = valuesQuery.Substring(0, valuesQuery.Length - 1);
+            valuesQuery = valuesQuery+ ")" + QueryConstants.QueryParamsConstant + parameterValues;
             columnsQuery = columnsQuery.Substring(0, columnsQuery.Length - 1);
 
-            insertQuery = insertQuery + columnsQuery + ")" + " values " + valuesQuery + ")";
+            insertQuery = insertQuery + columnsQuery + ")" + " values " + "(" + valuesQuery ;
 
             Sql = insertQuery;
-
 
             return this;
         }

@@ -8,5 +8,7 @@ namespace TSI.QueryBuilder.Constants.Join
     {
 
         public static readonly string QueryConstant = "*TSI*";
+        public static readonly string QueryParamsConstant = "*Parameters*";
+        public static readonly string QueryWhereParamsConstant = "*WhereParameters*";
     }
 }
